@@ -45,6 +45,7 @@ TEXT_KINDS = {
     SlotKind.TITLE, SlotKind.SUBTITLE, SlotKind.BODY, SlotKind.CAPTION, SlotKind.NUMBER, SlotKind.LABEL,
     SlotKind.FOOTER, SlotKind.DATE, SlotKind.OTHER,
 }
+PICTURE_KINDS = {SlotKind.PICTURE, SlotKind.ICON}
 # слоты, которые при отсутствии элемента не очищаем: номер слайда/колонтитулы — поля, а не контент
 KEEP_IF_UNFILLED = {SlotKind.SLIDE_NUMBER, SlotKind.FOOTER, SlotKind.DATE}
 # связи, которые новый слайд получает сам (лейаут) или которые не имеют смысла в копии
@@ -230,12 +231,30 @@ class DeckWriter:
             elif el.paragraphs:
                 fill_text(sp, el.paragraphs, el.style_overrides)
                 filled.add(el.slot_id)
-        # незаполненные текстовые слоты очищаем, чтобы не осталось текста-заглушки образца
+        # незаполненные текстовые слоты очищаем, чтобы не осталось текста-заглушки образца;
+        # у пустой рамки под картинку — подпись «Вставить фото» внутри самой рамки
         for slot in exemplar.slots:
-            if slot.id in filled or slot.kind in KEEP_IF_UNFILLED or slot.kind not in TEXT_KINDS:
+            if slot.id in filled or slot.kind in KEEP_IF_UNFILLED or slot.kind not in TEXT_KINDS | PICTURE_KINDS:
                 continue
             sp = shapes.get(slot.id)
-            if sp is not None and sp.find("p:txBody", NS) is not None:
+            if sp is None:
+                continue
+            if slot.kind in PICTURE_KINDS:
+                # подписи зоны («Вставить фото») убираем, пустой плейсхолдер — тоже (рендерится подсказкой)
+                self._clear_picture_captions(sp, el_box=slot.box, shapes=shapes, slot_ids=slot_ids)
+                if sp.find("p:nvSpPr/p:nvPr/p:ph", NS) is not None:
+                    _remove(sp)
+                elif sp.find("p:txBody", NS) is not None:
+                    clear_text(sp)
+            elif sp.find("p:txBody", NS) is not None:
+                clear_text(sp)
+        # текст образца вне слотов и фиксированных элементов («Вставить фото», названия продуктов,
+        # сноски) в колоду не переносим; короткие декоративные подписи вроде «01» оставляем
+        fixed = set(exemplar.fixed)
+        for sid, sp in shapes.items():
+            if sid in slot_ids or sid in fixed or sp.getparent() is None or localname(sp) != "sp":
+                continue
+            if sp.find("p:txBody", NS) is not None and _is_sample_text(shape_text(sp)):
                 clear_text(sp)
 
     def _replace_with_native(
@@ -284,14 +303,21 @@ class DeckWriter:
             _set_blip(blip_fill, rId, src_rect)
             if sp.find("p:txBody", NS) is not None:
                 clear_text(sp)  # «Вставить фото» внутри самой рамки
-            # подписи зоны («Вставить фото», «QR-code») — отдельные короткие текстовые фигуры поверх рамки
-            zone = Box(x=bb[0], y=bb[1], w=bb[2], h=bb[3]) if bb else el.box
-            for sid, other in shapes.items():
-                if sid == el.slot_id or sid in slot_ids or other.getparent() is None:
-                    continue
-                text = shape_text(other).strip()
-                if localname(other) == "sp" and 0 < len(text) <= 40 and _center_inside(other, zone):
-                    _remove(other)
+            self._clear_picture_captions(sp, el.box, shapes, slot_ids)
+
+    @staticmethod
+    def _clear_picture_captions(sp: etree._Element, el_box: Box, shapes: dict[str, etree._Element], slot_ids: set[str]) -> None:
+        """Подписи зоны картинки («Вставить фото», «QR-code») — отдельные короткие текстовые фигуры поверх рамки.
+        Убираем их и когда картинка вставлена, и когда рамка осталась пустой (даже если классификатор
+        счёл подпись фиксированным элементом — она повторяется на многих слайдах-образцах)."""
+        bb = absolute_bbox(sp)
+        zone = Box(x=bb[0], y=bb[1], w=bb[2], h=bb[3]) if bb else el_box
+        for sid, other in shapes.items():
+            if sid == shape_id(sp) or sid in slot_ids or other.getparent() is None:
+                continue
+            text = shape_text(other).strip()
+            if localname(other) == "sp" and 0 < len(text) <= 40 and _center_inside(other, zone):
+                _remove(other)
 
 
 # ──────────────────────────── текст ────────────────────────────
@@ -523,6 +549,11 @@ def _center_inside(sp: etree._Element, box: Box) -> bool:
         return False
     cx, cy = bb[0] + bb[2] / 2, bb[1] + bb[3] / 2
     return box.x <= cx <= box.x2 and box.y <= cy <= box.y2
+
+
+def _is_sample_text(text: str) -> bool:
+    """Текст-образец (слова), а не декор («01», «→», «%»): хотя бы два буквенных символа."""
+    return sum(ch.isalpha() for ch in text) >= 2
 
 
 def _remove(sp: etree._Element) -> None:

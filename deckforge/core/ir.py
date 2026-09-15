@@ -212,6 +212,7 @@ class OutlineSlide(BaseModel):
     archetype: Archetype
     title: str
     subtitle: str | None = None
+    section: str | None = None  # раздел; стратегия решает, ставить ли перед ним слайд-разделитель
     bullets: list[str] = Field(default_factory=list)
     paragraphs: list[str] = Field(default_factory=list)
     kpis: list[KpiSpec] = Field(default_factory=list)

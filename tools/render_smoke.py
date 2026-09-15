@@ -13,7 +13,6 @@ out/smoke/<stem>.pptx, затем рендер в out/render/<stem>_smoke/ (cont
 from __future__ import annotations
 
 import argparse
-import json
 import sys
 from pathlib import Path
 
@@ -31,14 +30,13 @@ from deckforge.core.ir import (  # noqa: E402
     Element,
     Exemplar,
     Paragraph,
-    Slot,
     SlideIR,
     SlotKind,
     TableSpec,
     TextRun,
 )
+from deckforge.parsing.exemplars import load_exemplars  # noqa: E402
 from deckforge.parsing.extract_tokens import extract_tokens  # noqa: E402
-from deckforge.parsing.layout_classifier import classify_template  # noqa: E402
 from deckforge.render import render_pptx  # noqa: E402
 
 FILLER = [
@@ -62,21 +60,6 @@ TABLE = TableSpec(
     rows=[["Время на отчёт", "6 ч", "40 мин", "−89 %"], ["Ошибок в месяц", "31", "4", "−87 %"],
           ["Активных команд", "12", "48", "×4"]],
 )
-
-
-def load_exemplars(pptx: Path) -> list[Exemplar]:
-    js = ROOT / "out" / "archetypes" / f"{pptx.stem}.json"
-    if js.exists():
-        data = json.loads(js.read_text("utf-8"))
-        return [
-            Exemplar(
-                id=f"slide{d['index'] + 1}", source_index=d["index"], layout_name=d["layout"],
-                archetype=Archetype(d["archetype"]), slots=[Slot(**s) for s in d["slots"]], fixed=d["fixed"],
-                tags=d.get("tags", []), confidence=d.get("confidence", 1.0),
-            )
-            for d in data
-        ]
-    return [p.to_exemplar() for p in classify_template(pptx)]
 
 
 def pick(exemplars: list[Exemplar], archetypes: set[str] | None, all_: bool) -> list[Exemplar]:

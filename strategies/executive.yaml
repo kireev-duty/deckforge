@@ -1,4 +1,6 @@
 # Стратегия «executive»: плотно, для руководителей, минимум слайдов, данные в таблицах и KPI.
+# Ось: максимум фактов на слайд, ноль «воздуха»; числа — в таблицах (сравнимо построчно), не в графиках.
+# Схема полей — deckforge/core/strategy.py (Strategy).
 name: executive
 version: v1
 target_slides: {min: 8, max: 10}
@@ -6,7 +8,7 @@ density:
   max_bullets: 6
   max_words_per_bullet: 12
   max_fill_ratio: 0.75
-archetype_priority: [kpi, table, bullets, cards, two_column, chart, process, section, image_text]
+archetype_priority: [kpi, table, cards, bullets, two_column, chart, process, agenda, image_text, section]
 data_visualization: {numeric_series: table, comparison: table, key_metrics: kpi}
 sections: false          # без слайдов-разделителей
 images: minimal          # картинки только если есть в контент-пакете

@@ -1,12 +1,14 @@
 # Стратегия «visual»: данные — графиками, процессы — схемами, иконки и картинки вместо текста.
+# Ось: любой числовой ряд и любое сравнение — диаграмма; текст — короткие тезисы в карточках с пиктограммами.
+# Схема полей — deckforge/core/strategy.py (Strategy).
 name: visual
 version: v1
 target_slides: {min: 10, max: 12}
 density:
-  max_bullets: 4
+  max_bullets: 6
   max_words_per_bullet: 8
   max_fill_ratio: 0.7
-archetype_priority: [chart, process, cards, image_text, kpi, image_full, bullets, section, two_column, table]
+archetype_priority: [chart, process, cards, image_text, kpi, image_full, agenda, bullets, two_column, section, table]
 data_visualization: {numeric_series: chart, comparison: chart, key_metrics: kpi}
 sections: false
 images: always           # каждому слайду без графика/схемы — иконка или иллюстрация

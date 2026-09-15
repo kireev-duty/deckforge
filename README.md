@@ -13,16 +13,21 @@
 
 ## Сетап
 
-Требования: Python ≥ 3.12, LibreOffice (для рендера/PDF), доступ к OpenAI-совместимому inference API.
+Требования: Python ≥ 3.12, Git LFS, LibreOffice (для рендера/PDF), доступ к OpenAI-совместимому inference API.
 
 ```bash
+git lfs install                                      # один раз на машине, ДО clone
+git clone https://github.com/kireev-duty/deckforge.git && cd deckforge
 python -m venv .venv
 .venv\Scripts\python.exe -m pip install -e .[dev]     # Windows
 cp .env.example .env                                 # заполнить LLM_API_KEY и модели
+.venv\Scripts\python.exe tools\check_env.py           # проверка ключей и LibreOffice
 .venv\Scripts\python.exe -m pytest -q
 ```
 
-Переменные окружения — см. [.env.example](.env.example).
+Переменные окружения — см. [.env.example](.env.example). `.env` в репо не хранится — переносить между машинами вручную.
+
+Шаблоны датасета (`data/templates/*.pptx`), holdout-шаблон (`data/holdout/`) и ТЗ (`docs/tz/`) лежат в Git LFS. Если после clone файлы весят ~130 байт — это LFS-указатели: поставьте git-lfs и выполните `git lfs pull`.
 
 ## Запуск
 

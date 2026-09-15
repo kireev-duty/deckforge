@@ -5,7 +5,6 @@ __pycache__/
 .ruff_cache/
 .env
 out/
-data/templates/*.pptx
 examples/output/**/render/
 *.egg-info/
 .streamlit/secrets.toml

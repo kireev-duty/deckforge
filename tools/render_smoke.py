@@ -4,7 +4,7 @@
 (заголовок, буллеты, цифры KPI, картинка-градиент, нативная диаграмма/таблица). Результат —
 out/smoke/<stem>.pptx, затем рендер в out/render/<stem>_smoke/ (contact.png + slide_NN.png).
 
-    .venv\\Scripts\\python.exe tools\\render_smoke.py "..\\Датасет\\VK Tech шаблон.pptx" [--all] [--archetypes cards,kpi] [--no-render]
+    .venv\\Scripts\\python.exe tools\\render_smoke.py "data\\templates\\VK Tech шаблон.pptx" [--all] [--archetypes cards,kpi] [--no-render]
 
 Образцы берутся из out/archetypes/<stem>.json (с VLM-уточнёнными слотами), если он есть; иначе —
 классификация правилами. По умолчанию — один лучший образец на архетип, --all — все по разу.

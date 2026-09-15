@@ -4,7 +4,7 @@
 при --vlm — уточнение неоднозначных слайдов через скилл template_tagger. Результат — markdown-таблица
 в out/archetypes/<stem>.md и JSON профилей рядом.
 
-    .venv\\Scripts\\python.exe tools\\classify_layouts.py "..\\Датасет\\*.pptx" [--vlm] [--no-render] [--parallel 4]
+    .venv\\Scripts\\python.exe tools\\classify_layouts.py "data\\templates\\*.pptx" [--vlm] [--no-render] [--parallel 4]
 """
 
 from __future__ import annotations

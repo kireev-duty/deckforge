@@ -1,6 +1,6 @@
 """build_variants — один контент × один шаблон × N стратегий → N колод, рендер и таблица сравнения.
 
-    .venv\\Scripts\\python.exe tools\\build_variants.py "..\\Датасет\\VK Tech шаблон.pptx" [--outline examples/content_pack/outline.json]
+    .venv\\Scripts\\python.exe tools\\build_variants.py "data\\templates\\VK Tech шаблон.pptx" [--outline examples/content_pack/outline.json]
         [--strategies executive,narrative,visual] [--no-render] [--dpi 72]
 
 Результат: out/variants/<stem>/<strategy>.pptx, <strategy>.ir.json, <strategy>.manifest.json,

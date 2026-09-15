@@ -1,5 +1,5 @@
 # Воспроизводимый прогон: deckforge run --config configs/run.example.yaml
-template: ../Датасет/VK Tech шаблон.pptx
+template: data/templates/VK Tech шаблон.pptx
 content_pack: examples/content_pack          # brief.md + data/*.csv|json + product.md
 purpose: product                             # feature | product | project | initiative | report
 audience: "руководители продуктовых команд"

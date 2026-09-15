@@ -11,7 +11,7 @@ from pathlib import Path
 import pytest
 
 REPO = Path(__file__).resolve().parents[1]
-TEMPLATE_DIRS = [REPO / "data" / "templates", REPO.parent / "Датасет", REPO.parent / "Презентация"]
+TEMPLATE_DIRS = [REPO / "data" / "templates", REPO / "data" / "holdout"]
 
 
 def find_template(name_part: str) -> Path | None:

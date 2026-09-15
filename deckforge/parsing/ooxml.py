@@ -21,14 +21,22 @@ from lxml import etree
 
 from deckforge.core.colors import apply_color_mods, normalize_hex
 
-NS = {
-    "a": "http://schemas.openxmlformats.org/drawingml/2006/main",
-    "p": "http://schemas.openxmlformats.org/presentationml/2006/main",
-    "r": "http://schemas.openxmlformats.org/officeDocument/2006/relationships",
-    "rel": "http://schemas.openxmlformats.org/package/2006/relationships",
-}
-A = f"{{{NS['a']}}}"
-P = f"{{{NS['p']}}}"
+# Чистые XML-хелперы живут в core/ooxml.py (нужны и render/); здесь — re-export для обратной совместимости.
+from deckforge.core.ooxml import (  # noqa: F401
+    A,
+    NS,
+    P,
+    R,
+    absolute_bbox,
+    bbox,
+    graphic_kind,
+    iter_shapes,
+    localname,
+    placeholder,
+    shape_id,
+    shape_name,
+    shape_text,
+)
 
 SLIDE_RE = r"ppt/slides/slide\d+\.xml"
 LAYOUT_RE = r"ppt/slideLayouts/slideLayout\d+\.xml"
@@ -50,41 +58,6 @@ FillList = list[tuple[str, float]]  # [(hex, вес)] — для градиен�
 def _num(name: str) -> int:
     m = re.search(r"(\d+)", name.rsplit("/", 1)[-1])
     return int(m.group(1)) if m else 0
-
-
-def localname(el: etree._Element) -> str:
-    return etree.QName(el).localname
-
-
-def bbox(sp: etree._Element) -> tuple[int, int, int, int] | None:
-    """(x, y, cx, cy) в EMU по первому a:xfrm фигуры; None, если геометрии нет (наследуется)."""
-    xfrm = sp.find("p:spPr/a:xfrm", NS)
-    if xfrm is None:
-        xfrm = sp.find("p:grpSpPr/a:xfrm", NS)
-    if xfrm is None:
-        xfrm = sp.find("p:xfrm", NS)  # graphicFrame
-    if xfrm is None:
-        return None
-    off, ext = xfrm.find("a:off", NS), xfrm.find("a:ext", NS)
-    if off is None or ext is None:
-        return None
-    return int(off.get("x", 0)), int(off.get("y", 0)), int(ext.get("cx", 0)), int(ext.get("cy", 0))
-
-
-def placeholder(sp: etree._Element) -> tuple[str, str | None] | None:
-    """(type, idx) плейсхолдера или None."""
-    ph = sp.find("p:nvSpPr/p:nvPr/p:ph", NS)
-    if ph is None:
-        ph = sp.find("p:nvPicPr/p:nvPr/p:ph", NS)
-    if ph is None:
-        ph = sp.find("p:nvGraphicFramePr/p:nvPr/p:ph", NS)
-    if ph is None:
-        return None
-    return ph.get("type", "body"), ph.get("idx")
-
-
-def shape_text(sp: etree._Element) -> str:
-    return "".join(t.text or "" for t in sp.iter(A + "t"))
 
 
 @dataclass
@@ -436,14 +409,6 @@ def _clr_map(master: etree._Element, *overrides: etree._Element | None) -> dict[
         if o is not None:
             cmap.update(o.attrib)
     return cmap
-
-
-def iter_shapes(tree: etree._Element | None):
-    """Все p:sp / p:pic / p:cxnSp / p:graphicFrame, включая вложенные в группы."""
-    if tree is None:
-        return
-    for el in tree.iter(P + "sp", P + "pic", P + "cxnSp", P + "graphicFrame"):
-        yield el
 
 
 def owner_shape(el: etree._Element) -> etree._Element | None:

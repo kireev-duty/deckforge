@@ -1,0 +1,548 @@
+"""DeckIR → .pptx клонированием слайдов-образцов шаблона.
+
+Почему клонирование, а не сборка по лейаутам: в датасете лейауты почти пустые, весь дизайн
+живёт в свободных фигурах слайдов. Единственный способ воспроизвести стиль буквально —
+скопировать XML слайда-образца и подменить содержимое слотов.
+
+Механика:
+1. Открываем сам шаблон через python-pptx — мастера, лейауты, тема и встроенные шрифты остаются как есть.
+2. Удаляем все исходные слайды из p:sldIdLst (их части остаются в памяти как источник образцов;
+   на диск попадают только части, достижимые из презентации).
+3. Для каждого SlideIR добавляем слайд с лейаутом образца и заменяем его p:cSld + p:clrMapOvr
+   глубокой копией исходных.
+4. Заполняем слоты по slot_id (= p:cNvPr/@id): текст — новые абзацы с rPr/pPr образца, картинки —
+   подмена blip с center-crop, chart/table — нативные объекты python-pptx вместо фигур образца.
+5. Переносим связи (rels): медиа — общие части, chart/diagram/ole — глубокая копия частей
+   (одному образцу может соответствовать несколько слайдов колоды).
+
+Ничего не растеризуется: все объекты остаются редактируемыми.
+"""
+
+from __future__ import annotations
+
+import copy
+import logging
+import re
+from collections.abc import Iterable
+from pathlib import Path
+
+from lxml import etree
+from pptx import Presentation
+from pptx.opc.constants import RELATIONSHIP_TYPE as RT
+from pptx.opc.package import Part, XmlPart
+from pptx.opc.packuri import PackURI
+from pptx.parts.slide import SlidePart
+from pptx.slide import Slide
+
+from deckforge.core.ir import Box, DeckIR, Element, Exemplar, Paragraph, SlideIR, SlotKind, TemplateDNA
+from deckforge.core.ooxml import A, NS, P, R, absolute_bbox, iter_shapes, localname, shape_id, shape_text
+from deckforge.render.charts import add_chart
+from deckforge.render.tables import add_table
+
+log = logging.getLogger(__name__)
+
+TEXT_KINDS = {
+    SlotKind.TITLE, SlotKind.SUBTITLE, SlotKind.BODY, SlotKind.CAPTION, SlotKind.NUMBER, SlotKind.LABEL,
+    SlotKind.FOOTER, SlotKind.DATE, SlotKind.OTHER,
+}
+# слоты, которые при отсутствии элемента не очищаем: номер слайда/колонтитулы — поля, а не контент
+KEEP_IF_UNFILLED = {SlotKind.SLIDE_NUMBER, SlotKind.FOOTER, SlotKind.DATE}
+# связи, которые новый слайд получает сам (лейаут) или которые не имеют смысла в копии
+SKIP_RELTYPES = {RT.SLIDE_LAYOUT, RT.NOTES_SLIDE, RT.SLIDE}
+# бинарные части, которые можно разделять между слайдами, а не копировать
+SHARED_RELTYPES = {RT.IMAGE, RT.MEDIA, RT.VIDEO, RT.AUDIO, RT.FONT}
+R_ATTRS = (R + "embed", R + "id", R + "link", R + "pict")
+FILL_TAGS = ("noFill", "solidFill", "gradFill", "blipFill", "pattFill", "grpFill")
+BULLET_TAGS = ("buNone", "buChar", "buAutoNum", "buBlip")
+DEFAULT_BULLET_MARL = 285750  # 0.3125" — как в Office по умолчанию
+
+
+# ──────────────────────────── публичный API ────────────────────────────
+
+
+def render_pptx(
+    ir: DeckIR, template_path: str | Path, exemplars: Iterable[Exemplar], out_path: str | Path
+) -> Path:
+    """Собрать колоду из DeckIR на базе шаблона и сохранить в out_path."""
+    writer = DeckWriter(template_path, exemplars)
+    return writer.write(ir, out_path)
+
+
+def render_deck(ir: DeckIR, dna: TemplateDNA, out_path: str | Path) -> Path:
+    return render_pptx(ir, dna.source_path, dna.exemplars, out_path)
+
+
+# ──────────────────────────── писатель ────────────────────────────
+
+
+class DeckWriter:
+    def __init__(self, template_path: str | Path, exemplars: Iterable[Exemplar]) -> None:
+        self.template_path = Path(template_path)
+        self.exemplars = {e.id: e for e in exemplars}
+        self.prs = Presentation(str(self.template_path))
+        self.package = self.prs.part.package
+        self.src_parts: list[SlidePart] = [s.part for s in self.prs.slides]
+        self._cloned: dict[Part, Part] = {}  # исходная часть → копия (chart/xlsx/…), чтобы не плодить дубли внутри слайда
+        self._n_source = len(self.src_parts)
+
+    def _detach_source_slides(self) -> None:
+        """Убрать исходные слайды из показа — только перед сохранением.
+
+        Пока они в p:sldIdLst, все их части достижимы, и next_partname не выдаст новой картинке/чарту
+        имя, занятое частью образца (иначе в zip окажутся две записи с одним именем — LibreOffice
+        такой файл не открывает). После отвязки недостижимые части в файл не попадают.
+        """
+        sld_id_lst = self.prs.slides._sldIdLst
+        for sld_id in list(sld_id_lst)[: self._n_source]:
+            self.prs.part.drop_rel(sld_id.rId)
+            sld_id_lst.remove(sld_id)
+        self._n_source = 0
+
+    # ── основной цикл ──
+
+    def write(self, ir: DeckIR, out_path: str | Path) -> Path:
+        sw, sh = self.prs.slide_width, self.prs.slide_height
+        if (ir.slide_w, ir.slide_h) != (sw, sh):
+            log.warning("размер слайда в DeckIR %sx%s не совпадает с шаблоном %sx%s", ir.slide_w, ir.slide_h, sw, sh)
+        for slide_ir in ir.slides:
+            self.add_slide(slide_ir)
+        self._detach_source_slides()
+        out = Path(out_path)
+        out.parent.mkdir(parents=True, exist_ok=True)
+        self.prs.save(str(out))
+        return out
+
+    def add_slide(self, slide_ir: SlideIR) -> Slide:
+        exemplar = self.exemplars.get(slide_ir.exemplar_id)
+        if exemplar is None:
+            raise KeyError(f"образец {slide_ir.exemplar_id!r} не найден среди {sorted(self.exemplars)}")
+        src = self.src_parts[exemplar.source_index]
+        slide = self._clone_slide(src)
+        self._cloned = {}
+        # связи переносим до заполнения: иначе rId новых картинок/чартов коллидируют с rId образца
+        self._copy_rels(src, slide.part, slide.part._element)
+        self._fill(slide, slide_ir, exemplar)
+        self._prune_rels(slide.part)
+        if slide_ir.notes:
+            slide.notes_slide.notes_text_frame.text = slide_ir.notes
+        return slide
+
+    def _clone_slide(self, src: SlidePart) -> Slide:
+        layout_part = src.part_related_by(RT.SLIDE_LAYOUT)
+        slide = self.prs.slides.add_slide(layout_part.slide_layout)
+        root = slide.part._element
+        for tag in ("p:cSld", "p:clrMapOvr"):
+            old = root.find(tag, NS)
+            new = src._element.find(tag, NS)
+            if new is None:
+                continue
+            new = copy.deepcopy(new)
+            if old is not None:
+                root.replace(old, new)
+            else:
+                root.append(new)
+        # у Slide кэшируется shapes со ссылкой на старый spTree — нужен свежий объект над новым деревом
+        return Slide(root, slide.part)
+
+    # ── связи ──
+
+    def _copy_rels(self, src: Part, dst: Part, xml: etree._Element, only_used: bool = True) -> None:
+        """Перенести связи src на dst и переписать rId в xml.
+
+        Для слайда переносим только те, на которые ещё ссылается XML (удалённая фигура не тянет
+        свою картинку/чарт); для чарта — все, т.к. chartStyle/colorStyle — неявные связи без r:id.
+        """
+        used = {el.get(attr) for el in xml.iter() for attr in R_ATTRS if el.get(attr)}
+        mapping: dict[str, str | None] = {}
+        for rId, rel in list(src.rels.items()):
+            if only_used and rId not in used:
+                continue
+            if rel.is_external:
+                mapping[rId] = dst.rels.get_or_add_ext_rel(rel.reltype, rel.target_ref)
+            elif rel.reltype in SKIP_RELTYPES:
+                mapping[rId] = None
+            elif rel.reltype in SHARED_RELTYPES:
+                mapping[rId] = dst.relate_to(rel.target_part, rel.reltype)
+            else:  # chart, diagram, oleObject, package (xlsx) — у каждой копии слайда свой экземпляр
+                mapping[rId] = dst.relate_to(self._clone_part(rel.target_part), rel.reltype)
+        for el in list(xml.iter()):
+            for attr in R_ATTRS:
+                old = el.get(attr)
+                if old is None or old not in mapping:
+                    continue
+                new = mapping[old]
+                if new is None:
+                    # ссылка на другой слайд исходника: гиперссылку убираем, остальное — оставить без связи нельзя
+                    if localname(el) in ("hlinkClick", "hlinkHover", "hlinkMouseOver"):
+                        el.getparent().remove(el)
+                    else:
+                        del el.attrib[attr]
+                else:
+                    el.set(attr, new)
+
+    @staticmethod
+    def _prune_rels(part: Part) -> None:
+        """Убрать связи, на которые после заполнения не ссылается XML (удалённая фигура образца).
+
+        Неявные связи (лейаут, notesSlide) не имеют r:id в XML — их не трогаем. Части, оставшиеся
+        без связей, становятся недостижимыми и в файл не попадают.
+        """
+        used = {el.get(attr) for el in part._element.iter() for attr in R_ATTRS if el.get(attr)}
+        for rId, rel in list(part.rels.items()):
+            if rId not in used and rel.reltype not in SKIP_RELTYPES:
+                part.rels.pop(rId)
+
+    def _clone_part(self, part: Part) -> Part:
+        """Глубокая копия части с новым именем; связи копируются рекурсивно (xlsx чарта, стили)."""
+        if part in self._cloned:
+            return self._cloned[part]
+        new = type(part).load(self.package.next_partname(_partname_template(part.partname)),
+                              part.content_type, self.package, part.blob)
+        self._cloned[part] = new
+        if isinstance(new, XmlPart):
+            self._copy_rels(part, new, new._element, only_used=False)
+        else:
+            for rel in part.rels.values():
+                if rel.is_external:
+                    new.rels.get_or_add_ext_rel(rel.reltype, rel.target_ref)
+                else:
+                    new.relate_to(self._clone_part(rel.target_part), rel.reltype)
+        return new
+
+    # ── заполнение слотов ──
+
+    def _fill(self, slide: Slide, slide_ir: SlideIR, exemplar: Exemplar) -> None:
+        sp_tree = slide.part._element.find("p:cSld/p:spTree", NS)
+        shapes = {shape_id(sp): sp for sp in iter_shapes(sp_tree)}
+        slot_ids = {s.id for s in exemplar.slots}
+        filled: set[str] = set()
+        for el in slide_ir.elements:
+            sp = shapes.get(el.slot_id)
+            if sp is None:
+                log.warning("слайд %s: слот %s не найден в образце %s", slide_ir.idx, el.slot_id, exemplar.id)
+                continue
+            if el.kind in (SlotKind.CHART, SlotKind.TABLE) and (el.chart or el.table):
+                self._replace_with_native(slide, sp, el, shapes, slot_ids, set(exemplar.fixed))
+                filled.add(el.slot_id)
+            elif el.kind in (SlotKind.PICTURE, SlotKind.ICON) and el.image_path:
+                self._fill_picture(slide, sp, el, shapes, slot_ids)
+                filled.add(el.slot_id)
+            elif el.paragraphs:
+                fill_text(sp, el.paragraphs, el.style_overrides)
+                filled.add(el.slot_id)
+        # незаполненные текстовые слоты очищаем, чтобы не осталось текста-заглушки образца
+        for slot in exemplar.slots:
+            if slot.id in filled or slot.kind in KEEP_IF_UNFILLED or slot.kind not in TEXT_KINDS:
+                continue
+            sp = shapes.get(slot.id)
+            if sp is not None and sp.find("p:txBody", NS) is not None:
+                clear_text(sp)
+
+    def _replace_with_native(
+        self, slide: Slide, sp: etree._Element, el: Element, shapes: dict[str, etree._Element],
+        slot_ids: set[str], fixed: set[str],
+    ) -> None:
+        """Убрать фигуру слота (и для «нарисованной» диаграммы — всё, что попало в её бокс), вставить нативный объект."""
+        keep = (slot_ids - {el.slot_id}) | fixed
+        _remove(sp)
+        for sid, other in shapes.items():
+            if sid == el.slot_id or sid in keep or other.getparent() is None:
+                continue
+            if _center_inside(other, el.box):
+                _remove(other)
+        if el.chart:
+            add_chart(slide, el.chart, el.box, el.style_overrides)
+        elif el.table:
+            add_table(slide, el.table, el.box, el.style_overrides)
+
+    def _fill_picture(
+        self, slide: Slide, sp: etree._Element, el: Element, shapes: dict[str, etree._Element], slot_ids: set[str]
+    ) -> None:
+        image_part, rId = slide.part.get_or_add_image_part(el.image_path)
+        img_w, img_h = image_part.image.size
+        bb = absolute_bbox(sp)
+        frame_w, frame_h = (bb[2], bb[3]) if bb else (el.box.w, el.box.h)
+        src_rect = crop_rect(img_w, img_h, frame_w, frame_h)
+        if localname(sp) == "pic":
+            blip_fill = sp.find("p:blipFill", NS)
+            if blip_fill is None:
+                return
+            _set_blip(blip_fill, rId, src_rect)
+        else:
+            sp_pr = sp.find("p:spPr", NS)
+            if sp_pr is None:
+                return
+            for child in list(sp_pr):
+                if localname(child) in FILL_TAGS:
+                    sp_pr.remove(child)
+            blip_fill = etree.Element(A + "blipFill")
+            geom = next((c for c in sp_pr if localname(c) in ("prstGeom", "custGeom")), None)
+            if geom is not None:
+                geom.addnext(blip_fill)
+            else:
+                sp_pr.append(blip_fill)
+            _set_blip(blip_fill, rId, src_rect)
+            if sp.find("p:txBody", NS) is not None:
+                clear_text(sp)  # «Вставить фото» внутри самой рамки
+            # подписи зоны («Вставить фото», «QR-code») — отдельные короткие текстовые фигуры поверх рамки
+            zone = Box(x=bb[0], y=bb[1], w=bb[2], h=bb[3]) if bb else el.box
+            for sid, other in shapes.items():
+                if sid == el.slot_id or sid in slot_ids or other.getparent() is None:
+                    continue
+                text = shape_text(other).strip()
+                if localname(other) == "sp" and 0 < len(text) <= 40 and _center_inside(other, zone):
+                    _remove(other)
+
+
+# ──────────────────────────── текст ────────────────────────────
+
+
+def fill_text(sp: etree._Element, paragraphs: list[Paragraph], overrides: dict | None = None) -> None:
+    """Заменить абзацы p:txBody, унаследовав pPr/rPr от абзацев образца (по уровню lvl)."""
+    tx = sp.find("p:txBody", NS)
+    if tx is None:
+        return
+    overrides = overrides or {}
+    old_paras = tx.findall("a:p", NS)
+    by_lvl: dict[int, etree._Element] = {}
+    for p in old_paras:
+        if p.find("a:r", NS) is None:
+            continue
+        by_lvl.setdefault(_lvl(p), p)
+    fallback = next(iter(by_lvl.values()), old_paras[0] if old_paras else None)
+    for p in old_paras:
+        tx.remove(p)
+    for para in paragraphs:
+        tmpl = by_lvl.get(para.level, fallback)
+        tx.append(_build_paragraph(para, tmpl, overrides))
+
+
+def clear_text(sp: etree._Element) -> None:
+    """Оставить один пустой абзац с endParaRPr образца — фигура и её стиль сохраняются."""
+    tx = sp.find("p:txBody", NS)
+    if tx is None:
+        return
+    old = tx.findall("a:p", NS)
+    first = old[0] if old else None
+    for p in old:
+        tx.remove(p)
+    p = etree.SubElement(tx, A + "p")
+    if first is not None:
+        ppr = first.find("a:pPr", NS)
+        if ppr is not None:
+            p.append(copy.deepcopy(ppr))
+        epr = first.find("a:endParaRPr", NS)
+        if epr is None:
+            rpr = first.find("a:r/a:rPr", NS)
+            if rpr is not None:
+                epr = copy.deepcopy(rpr)
+                epr.tag = A + "endParaRPr"
+        if epr is not None:
+            p.append(copy.deepcopy(epr))
+
+
+def _lvl(p: etree._Element) -> int:
+    ppr = p.find("a:pPr", NS)
+    return int(ppr.get("lvl", "0")) if ppr is not None else 0
+
+
+def _build_paragraph(para: Paragraph, tmpl: etree._Element | None, overrides: dict) -> etree._Element:
+    p = etree.Element(A + "p")
+    ppr = copy.deepcopy(tmpl.find("a:pPr", NS)) if tmpl is not None and tmpl.find("a:pPr", NS) is not None else None
+    if ppr is None:
+        ppr = etree.Element(A + "pPr")
+    if para.level:
+        ppr.set("lvl", str(para.level))
+    elif ppr.get("lvl"):
+        del ppr.attrib["lvl"]
+    _apply_bullet(ppr, para.bullet)
+    if len(ppr) or ppr.attrib:
+        p.append(ppr)
+
+    base_rpr = _template_rpr(tmpl)
+    for run in para.runs:
+        rpr = copy.deepcopy(base_rpr)
+        _apply_run_style(rpr, overrides)
+        _apply_run_style(rpr, {k: v for k, v in run.model_dump().items() if k != "text" and v not in (None, False)})
+        lines = run.text.split("\n")
+        for i, line in enumerate(lines):
+            if i:
+                br = etree.SubElement(p, A + "br")
+                br.append(copy.deepcopy(rpr))
+            r = etree.SubElement(p, A + "r")
+            r.append(copy.deepcopy(rpr))
+            t = etree.SubElement(r, A + "t")
+            t.text = line
+    epr = tmpl.find("a:endParaRPr", NS) if tmpl is not None else None
+    if epr is not None:
+        p.append(copy.deepcopy(epr))
+    return p
+
+
+def _template_rpr(tmpl: etree._Element | None) -> etree._Element:
+    if tmpl is not None:
+        rpr = tmpl.find("a:r/a:rPr", NS)
+        if rpr is None:
+            rpr = tmpl.find("a:fld/a:rPr", NS)
+        if rpr is None:
+            epr = tmpl.find("a:endParaRPr", NS)
+            if epr is not None:
+                rpr = copy.deepcopy(epr)
+                rpr.tag = A + "rPr"
+        if rpr is not None:
+            rpr = copy.deepcopy(rpr)
+            # гиперссылки образца на новый текст не переносим
+            for h in rpr.findall("a:hlinkClick", NS) + rpr.findall("a:hlinkMouseOver", NS):
+                rpr.remove(h)
+            return rpr
+    rpr = etree.Element(A + "rPr")
+    rpr.set("lang", "ru-RU")
+    return rpr
+
+
+def _apply_bullet(ppr: etree._Element, bullet: bool) -> None:
+    has = [c for c in ppr if localname(c) in BULLET_TAGS]
+    if bullet:
+        if not has or all(localname(c) == "buNone" for c in has):
+            for c in has:
+                ppr.remove(c)
+            if int(ppr.get("marL") or 0) <= 0 or int(ppr.get("indent") or 0) >= 0:
+                ppr.set("marL", str(DEFAULT_BULLET_MARL))
+                ppr.set("indent", str(-DEFAULT_BULLET_MARL))
+            bu = etree.Element(A + "buChar")
+            bu.set("char", "•")
+            _insert_bullet(ppr, bu)
+    elif any(localname(c) != "buNone" for c in has):
+        for c in has:
+            ppr.remove(c)
+        _insert_bullet(ppr, etree.Element(A + "buNone"))
+
+
+def _insert_bullet(ppr: etree._Element, bu: etree._Element) -> None:
+    """a:bu* идёт после lnSpc/spcBef/spcAft/buClr/buSzPct/buFont и перед tabLst/defRPr."""
+    after = {"lnSpc", "spcBef", "spcAft", "buClrTx", "buClr", "buSzTx", "buSzPct", "buSzPts", "buFontTx", "buFont"}
+    pos = 0
+    for i, c in enumerate(ppr):
+        if localname(c) in after:
+            pos = i + 1
+    ppr.insert(pos, bu)
+
+
+def _apply_run_style(rpr: etree._Element, style: dict) -> None:
+    """bold/italic/size_pt/color/font поверх rPr образца."""
+    if "bold" in style:
+        rpr.set("b", "1" if style["bold"] else "0")
+    if "italic" in style:
+        rpr.set("i", "1" if style["italic"] else "0")
+    if style.get("size_pt"):
+        rpr.set("sz", str(int(round(float(style["size_pt"]) * 100))))
+    if style.get("color"):
+        for c in list(rpr):
+            if localname(c) in FILL_TAGS:
+                rpr.remove(c)
+        fill = etree.Element(A + "solidFill")
+        clr = etree.SubElement(fill, A + "srgbClr")
+        clr.set("val", str(style["color"]).lstrip("#").upper())
+        _insert_fill(rpr, fill)
+    if style.get("font"):
+        for tag in ("latin", "ea", "cs"):
+            el = rpr.find(f"a:{tag}", NS)
+            if el is None:
+                el = etree.Element(A + tag)
+                _insert_font(rpr, el)
+            el.set("typeface", str(style["font"]))
+
+
+def _insert_fill(rpr: etree._Element, fill: etree._Element) -> None:
+    """Порядок детей rPr: ln, fill, effect*, highlight, uLn*, uFill*, latin, ea, cs, sym, hlink*."""
+    pos = 0
+    for i, c in enumerate(rpr):
+        if localname(c) == "ln":
+            pos = i + 1
+    rpr.insert(pos, fill)
+
+
+def _insert_font(rpr: etree._Element, el: etree._Element) -> None:
+    order = ["latin", "ea", "cs", "sym", "hlinkClick", "hlinkMouseOver", "rtl", "extLst"]
+    idx = order.index(localname(el))
+    pos = len(rpr)
+    for i, c in enumerate(rpr):
+        if localname(c) in order and order.index(localname(c)) > idx:
+            pos = i
+            break
+    rpr.insert(pos, el)
+
+
+# ──────────────────────────── картинки ────────────────────────────
+
+
+def crop_rect(img_w: int, img_h: int, frame_w: int, frame_h: int) -> tuple[int, int, int, int] | None:
+    """(l, t, r, b) в 1/1000 % для a:srcRect: center-crop картинки под аспект рамки. None — аспект совпал."""
+    if not (img_w and img_h and frame_w and frame_h):
+        return None
+    img_ar, frame_ar = img_w / img_h, frame_w / frame_h
+    if abs(img_ar - frame_ar) / frame_ar < 0.01:
+        return None
+    if img_ar > frame_ar:  # картинка шире — режем бока
+        keep = frame_ar / img_ar
+        cut = int(round((1 - keep) / 2 * 100000))
+        return cut, 0, cut, 0
+    keep = img_ar / frame_ar
+    cut = int(round((1 - keep) / 2 * 100000))
+    return 0, cut, 0, cut
+
+
+def _set_blip(blip_fill: etree._Element, rId: str, src_rect: tuple[int, int, int, int] | None) -> None:
+    blip = blip_fill.find("a:blip", NS)
+    if blip is None:
+        blip = etree.Element(A + "blip")
+        blip_fill.insert(0, blip)
+    blip.set(R + "embed", rId)
+    for c in list(blip):  # эффекты образца (duotone, alpha) к новой картинке не относятся
+        blip.remove(c)
+    old = blip_fill.find("a:srcRect", NS)
+    if old is not None:
+        blip_fill.remove(old)
+    if src_rect is not None:
+        sr = etree.Element(A + "srcRect")
+        for k, v in zip(("l", "t", "r", "b"), src_rect):
+            if v:
+                sr.set(k, str(v))
+        blip.addnext(sr)
+    if blip_fill.find("a:stretch", NS) is None and blip_fill.find("a:tile", NS) is None:
+        st = etree.SubElement(blip_fill, A + "stretch")
+        etree.SubElement(st, A + "fillRect")
+
+
+# ──────────────────────────── геометрия и служебное ────────────────────────────
+
+
+def _center_inside(sp: etree._Element, box: Box) -> bool:
+    bb = absolute_bbox(sp)
+    if bb is None:
+        return False
+    cx, cy = bb[0] + bb[2] / 2, bb[1] + bb[3] / 2
+    return box.x <= cx <= box.x2 and box.y <= cy <= box.y2
+
+
+def _remove(sp: etree._Element) -> None:
+    parent = sp.getparent()
+    if parent is None:
+        return
+    parent.remove(sp)
+    # пустую группу после удаления детей тоже убираем
+    if parent.tag == P + "grpSp" and not any(localname(c) in ("sp", "pic", "cxnSp", "graphicFrame", "grpSp") for c in parent):
+        _remove(parent)
+
+
+def _partname_template(partname: PackURI) -> str:
+    """'/ppt/charts/chart3.xml' → '/ppt/charts/chart%d.xml'; без цифр — '/ppt/embeddings/x.xlsx' → 'x%d.xlsx'."""
+    s = str(partname)
+    m = re.search(r"(\d+)(\.[^./]+)$", s)
+    if m:
+        return s[: m.start(1)] + "%d" + m.group(2)
+    stem, ext = s.rsplit(".", 1) if "." in s.rsplit("/", 1)[-1] else (s, "")
+    return f"{stem}%d.{ext}" if ext else f"{s}%d"
+
+
+__all__ = ["DeckWriter", "clear_text", "crop_rect", "fill_text", "render_deck", "render_pptx"]

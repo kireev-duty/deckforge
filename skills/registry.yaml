@@ -7,7 +7,7 @@ skills:
     model_role: vision
     current: v1
     history:
-      - {version: v1, date: 2026-09-15, note: initial}
+      - {version: v1, date: 2026-09-15, note: "initial; входы расширены (candidates, определения архетипов) до первого прогона"}
 
   outline_writer:
     description: Из брифа и контент-пакета строит DeckOutline — состав, порядок и содержание слайдов до вёрстки

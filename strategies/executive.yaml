@@ -6,7 +6,7 @@ density:
   max_bullets: 6
   max_words_per_bullet: 12
   max_fill_ratio: 0.75
-archetype_priority: [kpi, table, bullets, two_column, chart, process, section, image_text]
+archetype_priority: [kpi, table, bullets, cards, two_column, chart, process, section, image_text]
 data_visualization: {numeric_series: table, comparison: table, key_metrics: kpi}
 sections: false          # без слайдов-разделителей
 images: minimal          # картинки только если есть в контент-пакете

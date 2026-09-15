@@ -2,8 +2,9 @@ name: template_tagger
 version: v1
 model_role: vision
 temperature: 0.1
-max_tokens: 800
+max_tokens: 1500
 response_format: json_schema
-inputs: [archetype_guess, shapes_summary, archetypes]
+inputs: [archetype_guess, candidates, archetypes, shapes_summary]
 changelog: |
   v1 — первая версия. Подтверждает/исправляет архетип, размечает слоты и декор по PNG слайда-образца.
+  Входы: догадка алгоритма, топ-кандидаты с причинами, список архетипов с определениями, фигуры с координатами.

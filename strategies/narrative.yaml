@@ -6,7 +6,7 @@ density:
   max_bullets: 4
   max_words_per_bullet: 10
   max_fill_ratio: 0.55
-archetype_priority: [section, kpi, quote, bullets, image_text, chart, process, two_column, table]
+archetype_priority: [section, kpi, quote, bullets, cards, image_text, chart, process, two_column, table]
 data_visualization: {numeric_series: chart, comparison: two_column, key_metrics: kpi}
 sections: true           # разделы обозначаются слайдами section
 images: preferred        # где уместно — иллюстрация (генерируется по image.prompt)

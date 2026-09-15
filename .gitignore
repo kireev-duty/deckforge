@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.env
+out/
+data/templates/*.pptx
+examples/output/**/render/
+*.egg-info/
+.streamlit/secrets.toml

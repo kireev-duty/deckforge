@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SlideFill",
+  "type": "object",
+  "required": ["fills"],
+  "properties": {
+    "fills": {
+      "type": "object",
+      "additionalProperties": {
+        "oneOf": [
+          {"type": "string"},
+          {"type": "array", "items": {"type": "string"}}
+        ]
+      }
+    },
+    "overflow": {"type": "array", "items": {"type": "string"}}
+  }
+}

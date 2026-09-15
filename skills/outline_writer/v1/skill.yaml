@@ -1,0 +1,9 @@
+name: outline_writer
+version: v1
+model_role: text
+temperature: 0.4
+max_tokens: 6000
+response_format: json_schema   # schema.json
+inputs: [brief, purpose, audience, language, target_slides, content_pack, available_archetypes, strategy_rules]
+changelog: |
+  v1 — первая версия. Заголовки-выводы, только факты из контент-пакета, архетипы из списка шаблона.

@@ -1,0 +1,44 @@
+# Реестр скиллов сервиса. Код загружает промпты только отсюда (deckforge/llm/skills.py).
+# Версии неизменяемы: правка промпта = новая папка v<N+1> (см. .claude/skills/skill-bump).
+
+skills:
+  template_tagger:
+    description: VLM размечает слайд-образец шаблона — семантические теги, уточнение архетипа, что является декором
+    model_role: vision
+    current: v1
+    history:
+      - {version: v1, date: 2026-09-15, note: initial}
+
+  outline_writer:
+    description: Из брифа и контент-пакета строит DeckOutline — состав, порядок и содержание слайдов до вёрстки
+    model_role: text
+    current: v1
+    history:
+      - {version: v1, date: 2026-09-15, note: initial}
+
+  slide_filler:
+    description: Подгоняет текст слайда под слоты выбранного образца (лимиты символов/строк), не меняя смысл
+    model_role: text
+    current: v1
+    history:
+      - {version: v1, date: 2026-09-15, note: initial}
+
+  audit_judge:
+    description: Контекстуальный аудит — 11 да/нет вопросов по PNG слайда и исходным материалам
+    model_role: vision
+    current: v1
+    history:
+      - {version: v1, date: 2026-09-15, note: initial}
+
+  image_prompter:
+    description: Формирует промпт для text-to-image с учётом палитры и стиля шаблона
+    model_role: text
+    current: v1
+    history:
+      - {version: v1, date: 2026-09-15, note: initial}
+
+agents:
+  # Оркестраторы, объединяющие скиллы. Конфиги — в agents/<name>.yaml (порядок шагов, ретраи, бюджеты времени).
+  deck_generator:
+    current: v1
+    steps: [outline_writer, layout, slide_filler, render, audit, autofix]

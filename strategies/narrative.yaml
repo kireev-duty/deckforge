@@ -1,0 +1,15 @@
+# Стратегия «narrative»: одна мысль на слайд, разделители, большие цифры, больше слайдов и воздуха.
+name: narrative
+version: v1
+target_slides: {min: 12, max: 15}
+density:
+  max_bullets: 4
+  max_words_per_bullet: 10
+  max_fill_ratio: 0.55
+archetype_priority: [section, kpi, quote, bullets, image_text, chart, process, two_column, table]
+data_visualization: {numeric_series: chart, comparison: two_column, key_metrics: kpi}
+sections: true           # разделы обозначаются слайдами section
+images: preferred        # где уместно — иллюстрация (генерируется по image.prompt)
+outline_rules: |
+  Структура истории: контекст → проблема (с цифрой боли) → решение → как это работает (шаги) → доказательства → что дальше → призыв к действию.
+  Каждый раздел открывается слайдом-разделителем. На слайде не больше 4 буллетов; ключевые цифры — отдельными KPI-слайдами.

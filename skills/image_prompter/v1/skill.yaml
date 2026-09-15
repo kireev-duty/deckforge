@@ -1,0 +1,9 @@
+name: image_prompter
+version: v1
+model_role: text
+temperature: 0.6
+max_tokens: 400
+response_format: json_schema
+inputs: [slide_title, slide_text, palette, style_tags, aspect]
+changelog: |
+  v1 — промпт для text-to-image в стиле шаблона: палитра, теги стиля, запрет текста на картинке.

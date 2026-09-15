@@ -1,0 +1,9 @@
+name: audit_judge
+version: v1
+model_role: vision
+temperature: 0.0
+max_tokens: 1200
+response_format: json_schema
+inputs: [slide_idx, slide_title, slide_text, prev_slide_title, next_slide_title, source_facts, language]
+changelog: |
+  v1 — 11 да/нет вопросов из Приложения 1 ТЗ по PNG слайда + текст слайда + факты из источника.

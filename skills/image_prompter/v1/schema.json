@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ImagePrompt",
+  "type": "object",
+  "required": ["prompt"],
+  "properties": {
+    "prompt": {"type": "string", "minLength": 20},
+    "negative_prompt": {"type": "string"}
+  }
+}

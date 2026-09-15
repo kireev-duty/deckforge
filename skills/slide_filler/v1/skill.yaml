@@ -1,0 +1,9 @@
+name: slide_filler
+version: v1
+model_role: text
+temperature: 0.3
+max_tokens: 2000
+response_format: json_schema
+inputs: [slide_outline, slots, language]
+changelog: |
+  v1 — первая версия. Ужимает/распределяет текст слайда по слотам образца в пределах лимитов.

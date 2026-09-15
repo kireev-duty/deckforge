@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TemplateTag",
+  "type": "object",
+  "required": ["archetype", "tags", "decor_ids", "slot_roles", "confidence"],
+  "properties": {
+    "archetype": {"type": "string"},
+    "tags": {"type": "array", "items": {"type": "string"}, "maxItems": 6},
+    "decor_ids": {"type": "array", "items": {"type": "string"}},
+    "slot_roles": {"type": "object", "additionalProperties": {"type": "string"}},
+    "capacity_hint": {"type": "string"},
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1}
+  }
+}

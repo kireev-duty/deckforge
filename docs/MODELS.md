@@ -5,7 +5,7 @@
 
 | Роль | Модель | Размер | Лицензия | Модальности | Где используется | HuggingFace |
 |---|---|---|---|---|---|---|
-| text + vision (`LLM_MODEL`, `VLM_MODEL`) | Qwen3.8-27B | 27B dense | Apache 2.0 | текст, изображения, видео → текст; контекст 262k | `outline_writer`, `slide_filler`, `image_prompter`, `template_tagger`, `audit_judge` | https://huggingface.co/Qwen/Qwen3.8-27B |
+| text + vision (`LLM_MODEL`, `VLM_MODEL`) | Qwen3.8-27B | 27B dense | Apache 2.0 | текст, изображения, видео → текст; контекст 262k | `outline_writer`, `image_prompter`, `template_tagger`, `audit_judge` (`slide_filler` — скилл есть, в пайплайн не подключён) | https://huggingface.co/Qwen/Qwen3.8-27B |
 | image (`T2I_MODEL`) | FLUX.2 [klein] 4B | 4B | Apache 2.0 | текст → изображение | иллюстрации в слайдах (`image_prompter` → картинка) | https://huggingface.co/black-forest-labs/FLUX.2-klein-4B |
 
 Почему одна модель на текст и зрение: Qwen3.8-27B — та же модель, которую VK предоставляет командам топ-10 на своём инференсе (ТЗ, раздел 3), и она нативно мультимодальна. Один и тот же промпт-стек работает на отборе (через OpenRouter) и в финале (инференс VK) без переписывания.

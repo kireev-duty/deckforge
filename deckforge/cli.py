@@ -18,7 +18,35 @@ app = typer.Typer(help="deckforge — цифровой дизайнер през
 
 @app.callback()
 def _root() -> None:
-    """Подкоманды: run, audit (позже — parse, export)."""
+    """Подкоманды: parse, run, audit."""
+
+
+@app.command("parse")
+def parse_cmd(
+    template: Path = typer.Argument(..., help="шаблон .pptx"),
+    json_out: Optional[Path] = typer.Option(None, "--json", help="сохранить полную TemplateDNA в JSON"),
+) -> None:
+    """Разбор шаблона: палитра с ролями, шрифты, типографическая шкала, сетка, образцы по архетипам."""
+    from deckforge.pipeline import parse_template
+
+    parsed = parse_template(template)
+    s = parsed.summary()
+    typer.echo(f"{s['template_id']}  ({s['slide_w']}×{s['slide_h']} EMU, {s['slides']} слайдов-образцов, "
+               f"{s['seconds']:.1f}s)")
+    typer.echo(f"шрифты: {', '.join(s['fonts'][:4]) or '—'}" + (f"  (встроены: {', '.join(s['embedded_fonts'])})"
+                                                                if s["embedded_fonts"] else ""))
+    for role, hexes in s["palette"].items():
+        typer.echo(f"  {role:<11} " + " ".join(f"#{h}" for h in hexes[:6]))
+    typer.echo("шкала: " + ", ".join(f"{x['role']} {x['size_pt']:g}pt{' b' if x['bold'] else ''}" for x in s["typography"]))
+    g = s["grid"]
+    typer.echo(f"поля (EMU): {g['margin_left']} / {g['margin_right']} / {g['margin_top']} / {g['margin_bottom']}, "
+               f"колонок {g['columns']}, строк {g['rows']}, фиксированных элементов {s['fixed_elements']}")
+    typer.echo("\n| архетип | образцов |\n|---|---|")
+    for name, n in s["archetypes"].items():
+        typer.echo(f"| {name} | {n} |")
+    if json_out:
+        json_out.write_text(parsed.dna.model_dump_json(indent=1), "utf-8")
+        typer.echo(f"\nTemplateDNA → {json_out}")
 
 
 @app.command("run")

@@ -108,6 +108,74 @@ def test_run_with_ready_outline_skips_llm(template_path, tmp_path: Path) -> None
     assert json.loads(res.run_json.read_text("utf-8"))["not_implemented"] == []
 
 
+def _outline():
+    from deckforge.core.ir import DeckOutline
+
+    return DeckOutline.model_validate_json((REPO / "examples" / "content_pack" / "outline.json").read_text("utf-8"))
+
+
+def test_build_deck_matches_run(template_path, tmp_path: Path) -> None:
+    """Этапы по отдельности (parse_template → make_outline → build_deck) дают то же, что run()."""
+    from deckforge.pipeline import RunContext, build_deck, make_outline, parse_template
+
+    cfg = RunConfig(template=template_path("VK Tech"), content_pack=REPO / "examples" / "content_pack",
+                    strategies=["executive"], output_dir=tmp_path / "steps", images="off", audit=NO_JUDGE)
+    parsed = parse_template(cfg.template, cfg.output_dir)
+    assert parsed.meta["sha1"] and parsed.dna.exemplars and (cfg.output_dir / "dna.json").exists()
+    step = make_outline(cfg, parsed, cfg.output_dir, outline=_outline())
+    assert step.path.exists() and step.seconds == 0 and step.skills_used == {}
+    ctx = RunContext.prepare(cfg, parsed, step)
+    assert ctx.contextual_on is False and ctx.client is None
+    deck = build_deck(ctx, "executive")
+    whole = run(cfg.model_copy(update={"output_dir": tmp_path / "whole"}), outline=_outline()).decks[0]
+    assert deck.pptx.exists() and deck.audit_summary["errors"] == whole.audit_summary["errors"]
+    assert set(deck.load_manifest()) == set(whole.load_manifest())
+    assert deck.load_manifest()["exports"] == {"pptx": str(deck.pptx)} and deck.pdf is None
+    assert deck.load_report() is not None and len(deck.load_ir().slides) == deck.stats["slides"]
+
+
+def test_refine_deck_applies_user_fixes(template_path, tmp_path: Path) -> None:
+    """Фиксы по выбору пользователя: без автофиксов есть L03-ошибки → выбираем их индексы → после refine их нет."""
+    from deckforge.pipeline import refine_deck
+
+    cfg = RunConfig(template=template_path("VK Tech"), content_pack=REPO / "examples" / "content_pack",
+                    strategies=["narrative"], output_dir=tmp_path, images="off",
+                    audit={**NO_JUDGE, "autofix": False})
+    res = run(cfg, outline=_outline())
+    deck = res.decks[0]
+    report = deck.load_report()
+    selected = [i for i, f in enumerate(report.findings) if f.check_id == "L03_text_overflow" and f.severity == "error"]
+    assert selected
+    before_errors = deck.audit_summary["errors"]
+    fixed = refine_deck(deck, res.parsed, selected)
+    new_report = fixed.load_report()
+    assert not [f for f in new_report.findings if f.check_id == "L03_text_overflow" and f.severity == "error"]
+    assert fixed.audit_summary["errors"] < before_errors
+    m = fixed.load_manifest()
+    fix = m["audit"]["autofix"]
+    assert fix["user_applied"] >= 1 and fix["applied"] == fix["user_applied"] and fix["after"]["errors"] < before_errors
+    assert "refine" in m["timings_s"] and "contextual_stale" not in m["audit"] and m["audit"]["contextual"] == 0
+    # выбор без фиксируемых находок — ничего не меняется
+    same = refine_deck(fixed, res.parsed, [])
+    assert same.audit_summary["errors"] == fixed.audit_summary["errors"]
+    assert same.load_manifest()["audit"]["autofix"]["applied"] == fix["applied"]
+
+
+@pytest.mark.skipif(not _soffice(), reason="нужен LibreOffice для PDF")
+def test_pdf_export(template_path, tmp_path: Path) -> None:
+    cfg = RunConfig(template=template_path("VK Tech"), content_pack=REPO / "examples" / "content_pack",
+                    strategies=["executive"], output_dir=tmp_path, images="off", export=["pptx", "pdf", "html"],
+                    audit={"deterministic": False, "contextual": False, "autofix": False})
+    res = run(cfg, outline=_outline())
+    d = res.decks[0]
+    assert d.pdf is not None and d.pdf.exists() and d.pdf.name == "executive.pdf" and d.pdf.stat().st_size > 10_000
+    assert not (tmp_path / "_pdf").exists()
+    m = d.load_manifest()
+    assert m["exports"] == {"pptx": str(d.pptx), "pdf": str(d.pdf)} and "export_pdf" in m["timings_s"]
+    run_json = json.loads(res.run_json.read_text("utf-8"))
+    assert run_json["not_implemented"] == ["export:html"] and run_json["decks"][0]["exports"]["pdf"] == str(d.pdf)
+
+
 @pytest.mark.skipif(not _soffice(), reason="нужен LibreOffice для PNG")
 def test_run_with_contextual_judge(template_path, tmp_path: Path) -> None:
     """Судья вызывается по слайду с PNG, находки C.. попадают в тот же audit.json, версия скилла — в manifest."""

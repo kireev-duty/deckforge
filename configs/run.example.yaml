@@ -13,7 +13,7 @@ audit:
   deterministic: true                        # 24 проверки по XML (docs/AUDIT.md) → <strategy>.audit.json
   contextual: true                           # VLM-судья по PNG (нужны LibreOffice и API; --no-judge выключает)
   autofix: true                              # безопасные фиксы без вопросов → re-render → повторный аудит (--no-fix выключает)
-export: [pptx, pdf, html]                    # pdf/html пока не выполняются — см. run.json
+export: [pptx, pdf]                          # pdf — LibreOffice, <strategy>.pdf рядом с .pptx; html пока не выполняется (run.json → not_implemented)
 output_dir: out/run/vk_tech                  # финальные 9 колод складываются в examples/output/ отдельным прогоном
 render_png: false                            # PNG-превью + contact.png (LibreOffice, ~10 с на колоду)
 seed: 42

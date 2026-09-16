@@ -76,7 +76,7 @@ def main() -> None:
         t0 = time.perf_counter()
         try:
             r = c._client.chat.completions.create(
-                model=c.vision_model, max_tokens=60, temperature=0,
+                model=c.vision_model, max_tokens=60, temperature=0, extra_body=c.no_think_extra(),
                 messages=[{"role": "user", "content": [
                     {"type": "text", "text": "Опиши слайд одним предложением по-русски."},
                     {"type": "image_url", "image_url": {"url": _data_url(png)}}]}],
@@ -100,7 +100,7 @@ def main() -> None:
 
     print("5. LibreOffice")
     try:
-        from tools.render_deck import find_soffice
+        from deckforge.export.render import find_soffice
 
         ok(find_soffice())
     except Exception as e:  # noqa: BLE001

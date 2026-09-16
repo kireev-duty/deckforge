@@ -4,6 +4,9 @@ model_role: text
 temperature: 0.4
 max_tokens: 6000
 response_format: json_schema   # schema.json
-inputs: [brief, purpose, audience, language, target_slides, content_pack, available_archetypes, strategy_rules]
+inputs: [brief, purpose, audience, language, target_slides, content_pack, available_archetypes]
 changelog: |
   v1 — первая версия. Заголовки-выводы, только факты из контент-пакета, архетипы из списка шаблона.
+  До первого потребителя (content/outline_writer.py, 2026-09-16) уточнено: outline один на прогон —
+  вход strategy_rules убран (стратегия применяется в layout/); описаны поля данных (chart/table/kpis/steps/quote),
+  `section` на каждом содержательном слайде, слайды-разделители не генерируются.

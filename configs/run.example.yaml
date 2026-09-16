@@ -1,16 +1,19 @@
 # Воспроизводимый прогон: deckforge run --config configs/run.example.yaml
+# (или .venv\Scripts\python.exe -m deckforge.cli run -c configs/run.example.yaml [--png] [--outline готовый.json])
+# Относительные пути — от корня репозитория.
 template: data/templates/VK Tech шаблон.pptx
-content_pack: examples/content_pack          # brief.md + data/*.csv|json + product.md
-purpose: product                             # feature | product | project | initiative | report
-audience: "руководители продуктовых команд"
+content_pack: examples/content_pack          # brief.md + data/*.json|csv (+ другие *.md)
+purpose: product                             # feature | product | project | initiative | report | other
+audience: "руководители продуктовых направлений"
 language: ru
-target_slides: 12                            # или null — по стратегии
-strategies: [executive, narrative, visual]   # три варианта вёрстки
-images: auto                                 # off | auto | always
-audit:
+target_slides: 12                            # ориентир для outline; итоговый объём задаёт стратегия
+strategies: [executive, narrative, visual]   # три варианта вёрстки на одном outline
+images: auto                                 # off | auto | always      (пока не выполняется — см. run.json)
+audit:                                       # (пока не выполняется — см. run.json)
   deterministic: true
   contextual: true
   autofix: true                              # применить безопасные фиксы без вопросов
-export: [pptx, pdf, html]
-output_dir: examples/output/vk_tech
+export: [pptx, pdf, html]                    # pdf/html пока не выполняются — см. run.json
+output_dir: out/run/vk_tech                  # финальные 9 колод складываются в examples/output/ отдельным прогоном
+render_png: false                            # PNG-превью + contact.png (LibreOffice, ~10 с на колоду)
 seed: 42

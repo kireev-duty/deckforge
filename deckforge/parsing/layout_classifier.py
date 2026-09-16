@@ -32,7 +32,7 @@ from typing import TYPE_CHECKING, Callable
 
 from lxml import etree
 
-from deckforge.core.ir import Archetype, Box, Exemplar, Slot, SlotKind
+from deckforge.core.ir import ARCHETYPE_HINTS, Archetype, Box, Exemplar, Slot, SlotKind
 from deckforge.parsing.ooxml import (
     NS,
     A,
@@ -95,25 +95,6 @@ KEYWORDS: dict[str, tuple[str, ...]] = {
 }
 PHOTO_WORDS = ("вставить фото", "вставитьфото", "фото", "photo", "иллюстрация", "изображение", "картинка", "qr", "скриншот", "image")
 QUOTE_MARKS = ("«", "»", "“", "”", "„")
-
-ARCHETYPE_HINTS: dict[Archetype, str] = {
-    Archetype.TITLE: "титульный: крупный заголовок, подзаголовок, автор/дата",
-    Archetype.SECTION: "разделитель: один крупный заголовок, почти пустой слайд",
-    Archetype.AGENDA: "содержание: нумерованный/вертикальный список разделов",
-    Archetype.BULLETS: "заголовок + один текстовый блок/список",
-    Archetype.TWO_COLUMN: "заголовок + две текстовые колонки",
-    Archetype.CARDS: "сетка из 3+ одинаковых карточек: подпись + текст (+иконка)",
-    Archetype.KPI: "2–4 крупные цифры с подписями",
-    Archetype.CHART: "заголовок + диаграмма (нативная или нарисованная/картинка)",
-    Archetype.TABLE: "заголовок + таблица",
-    Archetype.IMAGE_TEXT: "картинка/фото/мокап + текстовый блок рядом",
-    Archetype.IMAGE_FULL: "полноэкранная картинка/скриншот/мокап, максимум подпись",
-    Archetype.QUOTE: "цитата и автор",
-    Archetype.PROCESS: "шаги/таймлайн/схема: элементы, связанные линиями или нумерацией в ряд",
-    Archetype.TEAM: "спикер/команда: фото + имя + роль",
-    Archetype.CLOSING: "финальный: спасибо, контакты, QR",
-    Archetype.FREEFORM: "не образец: библиотека иконок, инструкция, пустой слайд",
-}
 
 
 # ──────────────────────────── структуры ────────────────────────────

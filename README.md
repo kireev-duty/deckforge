@@ -34,8 +34,8 @@ cp .env.example .env                                 # заполнить LLM_AP
 ```bash
 # разбор шаблона
 deckforge parse "path/to/template.pptx"
-# генерация трёх вариантов по конфигу
-deckforge run --config configs/run.example.yaml
+# генерация трёх вариантов по конфигу (бриф + контент-пакет → outline через LLM → колоды + manifest.json)
+deckforge run --config configs/run.example.yaml            # или: python -m deckforge.cli run -c ... [--png] [--outline готовый.json]
 # веб-интерфейс
 streamlit run deckforge/ui/app.py
 ```

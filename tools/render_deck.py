@@ -1,7 +1,6 @@
 """render_deck — рендер .pptx в PNG-превью через LibreOffice (headless) + PyMuPDF.
 
-Используется в парсинге (VLM-разметка образцов), аудите (контекстуальные проверки),
-UI (превью) и как экспорт в PDF. И для визуальной проверки вёрстки Claude'ом.
+Тонкая CLI-обёртка над `deckforge.export.render` — для визуальной проверки вёрстки Claude'ом и вручную.
 
 Использование:
     python tools/render_deck.py <file.pptx> [--out out/render/<name>] [--dpi 72] [--slides 1,3-5] [--contact]
@@ -12,88 +11,19 @@ UI (превью) и как экспорт в PDF. И для визуально�
 from __future__ import annotations
 
 import argparse
-import os
-import shutil
-import subprocess
 import sys
-import tempfile
 from pathlib import Path
 
-import pymupdf
-from PIL import Image
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
 
-SOFFICE_CANDIDATES = [
-    os.environ.get("SOFFICE_PATH", ""),
-    r"C:\Program Files\LibreOffice\program\soffice.exe",
-    r"C:\Program Files (x86)\LibreOffice\program\soffice.exe",
-    "/usr/bin/soffice",
-    "/usr/lib/libreoffice/program/soffice",
-    "/Applications/LibreOffice.app/Contents/MacOS/soffice",
-]
-
-
-def find_soffice() -> str:
-    for c in SOFFICE_CANDIDATES:
-        if c and Path(c).exists():
-            return c
-    found = shutil.which("soffice") or shutil.which("libreoffice")
-    if found:
-        return found
-    raise RuntimeError("LibreOffice не найден: задайте SOFFICE_PATH")
-
-
-def pptx_to_pdf(pptx: Path, out_dir: Path, timeout: int = 180) -> Path:
-    """Конвертирует .pptx → .pdf. Отдельный профиль LibreOffice, чтобы не конфликтовать с открытым GUI."""
-    out_dir.mkdir(parents=True, exist_ok=True)
-    profile = Path(tempfile.gettempdir()) / "deckforge_lo_profile"
-    cmd = [
-        find_soffice(),
-        f"-env:UserInstallation={profile.as_uri()}",
-        "--headless",
-        "--norestore",
-        "--convert-to",
-        "pdf",
-        "--outdir",
-        str(out_dir),
-        str(pptx),
-    ]
-    subprocess.run(cmd, check=True, timeout=timeout, capture_output=True)
-    pdf = out_dir / (pptx.stem + ".pdf")
-    if not pdf.exists():
-        raise RuntimeError(f"LibreOffice не создал {pdf}")
-    return pdf
-
-
-def pdf_to_pngs(pdf: Path, out_dir: Path, dpi: int = 72, pages: set[int] | None = None) -> list[Path]:
-    out_dir.mkdir(parents=True, exist_ok=True)
-    paths = []
-    with pymupdf.open(pdf) as doc:
-        for i, page in enumerate(doc, start=1):
-            if pages and i not in pages:
-                continue
-            pix = page.get_pixmap(dpi=dpi)
-            p = out_dir / f"slide_{i:02d}.png"
-            pix.save(p)
-            paths.append(p)
-    return paths
-
-
-def contact_sheet(pngs: list[Path], out: Path, cols: int = 4, thumb_w: int = 320) -> Path:
-    if not pngs:
-        raise ValueError("нет изображений")
-    first = Image.open(pngs[0])
-    ratio = first.height / first.width
-    tw, th = thumb_w, int(thumb_w * ratio)
-    pad = 8
-    rows = (len(pngs) + cols - 1) // cols
-    sheet = Image.new("RGB", (cols * (tw + pad) + pad, rows * (th + pad) + pad), "#DDDDDD")
-    for i, p in enumerate(pngs):
-        im = Image.open(p).convert("RGB").resize((tw, th))
-        x = pad + (i % cols) * (tw + pad)
-        y = pad + (i // cols) * (th + pad)
-        sheet.paste(im, (x, y))
-    sheet.save(out)
-    return out
+from deckforge.export.render import (  # noqa: E402, F401 — реэкспорт для старых импортов из tools
+    contact_sheet,
+    find_soffice,
+    pdf_to_pngs,
+    pptx_to_pdf,
+    render,
+)
 
 
 def parse_pages(spec: str | None) -> set[int] | None:
@@ -107,16 +37,6 @@ def parse_pages(spec: str | None) -> set[int] | None:
         else:
             pages.add(int(part))
     return pages
-
-
-def render(pptx: Path, out_dir: Path | None = None, dpi: int = 72, pages: set[int] | None = None,
-           contact: bool = False) -> list[Path]:
-    out_dir = out_dir or Path("out/render") / pptx.stem
-    pdf = pptx_to_pdf(pptx, out_dir)
-    pngs = pdf_to_pngs(pdf, out_dir, dpi=dpi, pages=pages)
-    if contact:
-        contact_sheet(pngs, out_dir / "contact.png")
-    return pngs
 
 
 def main() -> None:

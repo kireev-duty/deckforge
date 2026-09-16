@@ -20,6 +20,7 @@
           "archetype": {"type": "string"},
           "title": {"type": "string", "maxLength": 120},
           "subtitle": {"type": ["string", "null"]},
+          "section": {"type": ["string", "null"]},
           "bullets": {"type": "array", "maxItems": 6, "items": {"type": "string"}},
           "paragraphs": {"type": "array", "items": {"type": "string"}},
           "kpis": {

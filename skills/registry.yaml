@@ -14,7 +14,7 @@ skills:
     model_role: text
     current: v1
     history:
-      - {version: v1, date: 2026-09-15, note: initial}
+      - {version: v1, date: 2026-09-15, note: "initial; 2026-09-16 до первого потребителя убран вход strategy_rules (outline один на прогон), добавлен section на слайдах"}
 
   slide_filler:
     description: Подгоняет текст слайда под слоты выбранного образца (лимиты символов/строк), не меняя смысл

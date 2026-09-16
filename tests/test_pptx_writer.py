@@ -186,6 +186,15 @@ def test_unfilled_text_placeholder_is_removed(template_path, tmp_path: Path):
                 and str(sh.placeholder_format.type).startswith("BODY")]
     assert not empty_ph
     assert any(sh.has_text_frame and sh.text_frame.text == "Т" for sh in prs.slides[0].shapes)
+    # подсказки плейсхолдеров лейаутов («Образец текста») тоже сняты — LibreOffice рисует их за слайдом;
+    # поля лейаута (номер слайда ‹#›, дата) остаются
+    for layout in prs.slide_layouts:
+        for sh in layout.placeholders:
+            ph_type = str(sh.placeholder_format.type)
+            if sh.has_text_frame and not any(t in ph_type for t in ("SLIDE_NUMBER", "DATE", "FOOTER")):
+                assert not sh.text_frame.text.strip(), f"{layout.name}: {sh.text_frame.text!r}"
+    assert any(sh.text_frame.text.strip() for layout in prs.slide_layouts for sh in layout.placeholders
+               if sh.has_text_frame and "SLIDE_NUMBER" in str(sh.placeholder_format.type))
 
 
 def test_picture_fill_and_crop(template_path, tmp_path: Path):

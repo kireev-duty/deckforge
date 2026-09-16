@@ -11,14 +11,8 @@ from pptx import Presentation
 from deckforge.audit.context import SPARSE_ARCHETYPES, AuditContext
 from deckforge.audit.deterministic.base import finding
 from deckforge.core.ir import Finding, Severity, SlotKind
+from deckforge.core.placeholders import PLACEHOLDER_PATTERNS, PLACEHOLDER_WHOLE  # noqa: F401 — словарь общий с рендером
 
-PLACEHOLDER_PATTERNS = [re.compile(p, re.I) for p in (
-    r"lorem\s+ipsum", r"\bxxx+\b", r"\btodo\b", r"\btbd\b", r"\{\{", r"\[\s*(текст|text|\.\.\.)\s*\]",
-    r"вставьте\s+(текст|заголовок|фото)", r"вставить\s+(текст|заголовок|фото)", r"insert\s+(text|photo|title)",
-    r"click\s+to\s+add", r"нажмите,?\s+чтобы", r"текст\s+слайда", r"заголовок\s+слайда", r"образец\s+текста",
-)]
-PLACEHOLDER_WHOLE = {"заголовок", "текст", "подзаголовок", "название", "описание", "title", "text", "subtitle", "heading",
-                     "body", "caption", "подпись"}
 EMPTY_PH_TYPES = {"body", "obj", "subTitle", "title", "ctrTitle", "pic", "chart", "tbl"}
 RASTER_MIN_AREA = 0.9
 DUPLICATE_JACCARD = 0.8

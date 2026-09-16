@@ -22,11 +22,8 @@ sys.path.insert(0, str(ROOT))
 from tools.check_env import load_dotenv  # noqa: E402
 from tools.render_deck import render  # noqa: E402
 
-from deckforge.parsing.layout_classifier import (  # noqa: E402
-    classify_template,
-    markdown_table,
-    profiles_json,
-)
+from deckforge.parsing.exemplars import cache_payload  # noqa: E402
+from deckforge.parsing.layout_classifier import classify_template, markdown_table  # noqa: E402
 
 
 def thumbnails_for(pptx: Path, do_render: bool) -> dict[int, Path]:
@@ -67,7 +64,8 @@ def main() -> None:
                f" ({', '.join(str(p.index + 1) for p in changed) or '—'}); {time.perf_counter() - t0:.0f} с")
         print(md, "\n")
         (a.out / f"{f.stem}.md").write_text(md, "utf-8")
-        (a.out / f"{f.stem}.json").write_text(json.dumps(profiles_json(profiles), ensure_ascii=False, indent=1), "utf-8")
+        # кэш: снимок профилей + sha1 шаблона; при загрузке из него берутся только ответы VLM (см. parsing/exemplars)
+        (a.out / f"{f.stem}.json").write_text(json.dumps(cache_payload(f, profiles), ensure_ascii=False, indent=1), "utf-8")
         if client is not None:
             errors = [c for c in client.calls if not c.ok]
             print(f"  VLM-вызовов: {len(client.calls)}, ошибок: {len(errors)}, "

@@ -66,6 +66,7 @@ TABLE_MIN_CELLS = 12  # ≥ 12 строго одинаковых блоков в
 ALIGN_TOL = 0.03  # допуск выравнивания по одной оси (доля слайда)
 TITLE_ZONE = 0.30  # заголовок без плейсхолдера ищем в верхних 30 % слайда
 TITLE_MAX_CHARS = 80
+PLATE_MAX_SHARE = 0.8  # плашка под заголовком уже 80 % его бокса — вместимость считаем по плашке
 BIG_TITLE_RATIO = 1.6  # заголовок «крупный», если кегль ≥ 1.6× медианного на слайде
 BIG_TITLE_H = 0.12  # …или высота бокса ≥ 12 % слайда
 KPI_SIZE_RATIO = 2.0  # число «крупное», если кегль ≥ 2× медианного
@@ -875,18 +876,41 @@ def pick(cands: list[Candidate]) -> tuple[Archetype, float, bool]:
 # ──────────────────────────── слоты ────────────────────────────
 
 
-def _capacity(s: ShapeInfo) -> tuple[int, int]:
+def _capacity(s: ShapeInfo, box: Box | None = None) -> tuple[int, int]:
     size = s.size_pt or 18.0
-    w_pt, h_pt = s.box.w / EMU_PER_PT, s.box.h / EMU_PER_PT
+    box = box or s.box
+    w_pt, h_pt = box.w / EMU_PER_PT, box.h / EMU_PER_PT
     cpl = max(1.0, w_pt / (0.5 * size))
     lines = max(1, int(h_pt / (1.2 * size)))
     return int(0.9 * cpl * lines), lines
 
 
-def _slot(s: ShapeInfo, kind: SlotKind) -> Slot:
+def _backing_plate(s: ShapeInfo, shapes: list[ShapeInfo]) -> Box | None:
+    """Плашка под текстом: фигура без текста, накрывающая начало текстового бокса, но уже его.
+
+    ЛЦТ2026: плейсхолдер заголовка тянется на всю ширину слайда, а видимая цветная плашка —
+    на треть; белый текст за краем плашки пропадает на светлом фоне. Вместимость считаем по
+    пересечению бокса с плашкой.
+    """
+    for p in shapes:
+        if p is s or p.kind != "shape" or p.text or not p.overlaps(s):
+            continue
+        x1, y1 = max(p.box.x, s.box.x), max(p.box.y, s.box.y)
+        x2, y2 = min(p.box.x2, s.box.x2), min(p.box.y2, s.box.y2)
+        if x2 <= x1 or y2 <= y1:
+            continue
+        covers_start = p.box.x <= s.box.x + s.box.w * 0.1 and (y2 - y1) >= s.box.h * 0.6
+        narrower = (x2 - x1) < s.box.w * PLATE_MAX_SHARE
+        if covers_start and narrower:
+            return Box(x=x1, y=y1, w=x2 - x1, h=y2 - y1)
+    return None
+
+
+def _slot(s: ShapeInfo, kind: SlotKind, shapes: list[ShapeInfo] | None = None) -> Slot:
     max_chars = max_lines = max_items = None
     if kind in (SlotKind.TITLE, SlotKind.SUBTITLE, SlotKind.BODY, SlotKind.CAPTION, SlotKind.LABEL, SlotKind.NUMBER):
-        max_chars, max_lines = _capacity(s)
+        plate = _backing_plate(s, shapes) if shapes and kind == SlotKind.TITLE else None
+        max_chars, max_lines = _capacity(s, plate)
         if kind == SlotKind.BODY:
             max_items = max_lines
     return Slot(
@@ -898,7 +922,7 @@ def _slot(s: ShapeInfo, kind: SlotKind) -> Slot:
 def build_slots(f: SlideFeatures, archetype: Archetype) -> list[Slot]:
     slots: list[Slot] = []
     if f.title is not None:
-        slots.append(_slot(f.title, SlotKind.TITLE))
+        slots.append(_slot(f.title, SlotKind.TITLE, f.shapes))
     grouped = {id(s) for g in f.card_groups + f.list_groups for s in g}
     subtitle_taken = False
     for s in sorted(f.content, key=lambda s: (round(s.fy, 2), s.fx)):
@@ -1012,6 +1036,15 @@ def refine_with_vlm(p: SlideProfile, client: LLMClient, png: Path) -> SlideProfi
         return p
     if not isinstance(res, dict):
         return p
+    return apply_vlm(p, res)
+
+
+def apply_vlm(p: SlideProfile, res: dict) -> SlideProfile:
+    """Наложить ответ template_tagger на профиль правил (архетип, теги, роли слотов, декор).
+
+    Отделено от вызова, чтобы кэш разметки (`parsing/exemplars`) хранил только ответ модели,
+    а слоты всегда пересчитывались текущими правилами.
+    """
     p.vlm_raw = res
     p.source = "vlm"
     try:
@@ -1124,6 +1157,7 @@ def profiles_json(profiles: list[SlideProfile]) -> list[dict]:
             "source": p.source, "ambiguous": p.ambiguous, "rules_archetype": p.rules_archetype.value if p.rules_archetype else None,
             "candidates": [str(c) for c in p.candidates[:4]], "tags": p.tags,
             "slots": [s.model_dump() for s in p.slots], "fixed": p.fixed_ids, "shapes": shapes_summary(p),
+            "vlm": p.vlm_raw,  # ответ template_tagger — единственное, что берётся из кэша при загрузке
         }
         for p in profiles
     ]

@@ -22,6 +22,7 @@ GLYPH_WIDTH = {"%": 1.9, "‰": 2.2, "×": 1.4, ",": 0.6, ".": 0.6, " ": 0.5}
 DIGIT_WIDTH = 1.3
 TITLE_LINES = 2  # заголовок может занять две строки, даже если бокс образца рассчитан на одну
 ELLIPSIS = "…"
+MIN_WORDS_TO_CUT = 2  # тексты не длиннее стольких слов по словам не режем (нечего терять — только калечить)
 _WS = re.compile(r"\s+")
 
 
@@ -137,11 +138,12 @@ def _n_words(text: str) -> int:
 
 
 def _cut_words(text: str, max_chars: int) -> str:
-    if max_chars <= len(ELLIPSIS):
-        return text[:max_chars]
+    # одно-два слова («Октябрь», «0,6 дня») не режем: «Октяб…» хуже переноса или лёгкого выхода за слот
+    if _n_words(text) <= MIN_WORDS_TO_CUT:
+        return text
     cut = text[: max_chars - len(ELLIPSIS) + 1]
-    if " " in cut:
-        cut = cut.rsplit(" ", 1)[0]
+    # лимит короче первого слова — оставляем хотя бы его целиком, а не «Подключе…»
+    cut = cut.rsplit(" ", 1)[0] if " " in cut else text.split(" ", 1)[0]
     return cut.rstrip(" ,;:—–(") + ELLIPSIS
 
 

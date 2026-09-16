@@ -36,6 +36,7 @@ from pptx.slide import Slide
 
 from deckforge.core.ir import Box, DeckIR, Element, Exemplar, Paragraph, SlideIR, SlotKind, TemplateDNA
 from deckforge.core.ooxml import A, NS, P, R, absolute_bbox, iter_shapes, localname, shape_id, shape_text
+from deckforge.core.placeholders import is_placeholder_text
 from deckforge.render.charts import add_chart
 from deckforge.render.tables import add_table
 
@@ -48,6 +49,8 @@ TEXT_KINDS = {
 PICTURE_KINDS = {SlotKind.PICTURE, SlotKind.ICON}
 # слоты, которые при отсутствии элемента не очищаем: номер слайда/колонтитулы — поля, а не контент
 KEEP_IF_UNFILLED = {SlotKind.SLIDE_NUMBER, SlotKind.FOOTER, SlotKind.DATE}
+# плейсхолдеры-поля лейаута, чей текст (‹#›, дата) нужен, — подсказки чистим только у контентных
+LAYOUT_FIELD_PH = {"sldNum", "dt", "ftr"}
 # связи, которые новый слайд получает сам (лейаут) или которые не имеют смысла в копии
 SKIP_RELTYPES = {RT.SLIDE_LAYOUT, RT.NOTES_SLIDE, RT.SLIDE}
 # бинарные части, которые можно разделять между слайдами, а не копировать
@@ -99,6 +102,78 @@ class DeckWriter:
             sld_id_lst.remove(sld_id)
         self._n_source = 0
 
+    def _strip_layout_prompts(self) -> None:
+        """Сделать контентные плейсхолдеры лейаутов невидимыми: без текста-подсказки и без заливки/обводки.
+
+        PowerPoint плейсхолдеры лейаута на слайдах не показывает, а LibreOffice рисует их в PDF/PNG
+        за каждым слайдом, где у лейаута есть плейсхолдер без пары на слайде: «Образец текста»
+        и белые карточки с gradFill (ЛЦТ2026: «Стадии», «Статистика»). Геометрия остаётся — слайды
+        наследуют позицию; наследуемую заливку слайды получают явно (`_materialize_placeholders`)
+        до этого шага. Поля (номер, дата, колонтитул) не трогаем.
+        """
+        for layout in self.prs.slide_layouts:
+            for sp in layout.shapes._spTree.iter(P + "sp"):
+                ph = sp.find("p:nvSpPr/p:nvPr/p:ph", NS)
+                if ph is None or ph.get("type") in LAYOUT_FIELD_PH:
+                    continue
+                for para in sp.findall("p:txBody/a:p", NS):
+                    for run in para.findall("a:r", NS) + para.findall("a:fld", NS) + para.findall("a:br", NS):
+                        para.remove(run)
+                sp_pr = sp.find("p:spPr", NS)
+                if sp_pr is None:
+                    continue
+                for child in list(sp_pr):
+                    if localname(child) in FILL_TAGS or localname(child) == "ln":
+                        sp_pr.remove(child)
+                if sp.find("p:style", NS) is not None:  # заливка/обводка по ссылке на тему — тоже гасим
+                    no_fill = etree.Element(A + "noFill")
+                    _insert_after_geom(sp_pr, no_fill)
+                    ln = etree.Element(A + "ln")
+                    etree.SubElement(ln, A + "noFill")
+                    no_fill.addnext(ln)
+
+    @staticmethod
+    def _materialize_placeholders(slide: Slide) -> None:
+        """Перенести в плейсхолдеры слайда то, что они наследуют от плейсхолдеров лейаута: xfrm,
+        заливку, обводку. После этого лейаут можно «погасить» (см. `_strip_layout_prompts`), а вид
+        слайда в PowerPoint не меняется — наследование заменено явными значениями."""
+        layout_tree = slide.slide_layout.shapes._spTree
+        by_idx: dict[str, etree._Element] = {}
+        by_type: dict[str, etree._Element] = {}
+        for lsp in layout_tree.iter(P + "sp"):
+            ph = lsp.find("p:nvSpPr/p:nvPr/p:ph", NS)
+            if ph is None:
+                continue
+            if ph.get("idx"):
+                by_idx[ph.get("idx")] = lsp
+            by_type.setdefault(ph.get("type") or "body", lsp)
+        for sp in slide.shapes._spTree.iter(P + "sp"):
+            ph = sp.find("p:nvSpPr/p:nvPr/p:ph", NS)
+            if ph is None or ph.get("type") in LAYOUT_FIELD_PH:
+                continue
+            lsp = by_idx.get(ph.get("idx") or "")
+            if lsp is None:
+                lsp = by_type.get(ph.get("type") or "body")
+            lay_pr = lsp.find("p:spPr", NS) if lsp is not None else None
+            if lay_pr is None:
+                continue
+            sp_pr = sp.find("p:spPr", NS)
+            if sp_pr is None:
+                sp_pr = etree.SubElement(sp, P + "spPr")
+            have = {localname(c) for c in sp_pr}
+            if "xfrm" not in have and (xfrm := lay_pr.find("a:xfrm", NS)) is not None:
+                sp_pr.insert(0, copy.deepcopy(xfrm))
+            if not have & set(FILL_TAGS):
+                fill = next((c for c in lay_pr if localname(c) in FILL_TAGS), None)
+                if fill is not None:
+                    _insert_after_geom(sp_pr, copy.deepcopy(fill))
+            if "ln" not in have and (ln := lay_pr.find("a:ln", NS)) is not None:
+                anchor = next((c for c in sp_pr if localname(c) in FILL_TAGS), None)
+                if anchor is None:
+                    _insert_after_geom(sp_pr, copy.deepcopy(ln))
+                else:
+                    anchor.addnext(copy.deepcopy(ln))
+
     # ── основной цикл ──
 
     def write(self, ir: DeckIR, out_path: str | Path) -> Path:
@@ -108,6 +183,7 @@ class DeckWriter:
         for slide_ir in ir.slides:
             self.add_slide(slide_ir)
         self._detach_source_slides()
+        self._strip_layout_prompts()
         out = Path(out_path)
         out.parent.mkdir(parents=True, exist_ok=True)
         self.prs.save(str(out))
@@ -123,6 +199,7 @@ class DeckWriter:
         # связи переносим до заполнения: иначе rId новых картинок/чартов коллидируют с rId образца
         self._copy_rels(src, slide.part, slide.part._element)
         self._fill(slide, slide_ir, exemplar)
+        self._materialize_placeholders(slide)
         self._prune_rels(slide.part)
         if slide_ir.notes:
             slide.notes_slide.notes_text_frame.text = slide_ir.notes
@@ -233,6 +310,7 @@ class DeckWriter:
                 filled.add(el.slot_id)
         # незаполненные текстовые слоты очищаем, чтобы не осталось текста-заглушки образца;
         # у пустой рамки под картинку — подпись «Вставить фото» внутри самой рамки
+        unfilled: list[Box] = []
         for slot in exemplar.slots:
             if slot.id in filled or slot.kind in KEEP_IF_UNFILLED or slot.kind not in TEXT_KINDS | PICTURE_KINDS:
                 continue
@@ -246,20 +324,60 @@ class DeckWriter:
                     _remove(sp)
                 elif sp.find("p:txBody", NS) is not None:
                     clear_text(sp)
-            elif sp.find("p:nvSpPr/p:nvPr/p:ph", NS) is not None:
+                continue
+            unfilled.append(slot.box)
+            if sp.find("p:nvSpPr/p:nvPr/p:ph", NS) is not None or _has_visible_frame(sp):
                 # пустой текстовый плейсхолдер в редакторе показывает подсказку лейаута, а LibreOffice
-                # рисует в PDF «Образец текста» — удаляем целиком, а не очищаем (I02 empty_placeholder)
+                # рисует в PDF «Образец текста» — удаляем целиком, а не очищаем (I02 empty_placeholder);
+                # слот с собственной заливкой/обводкой без текста — пустая карточка, её тоже убираем
                 _remove(sp)
             elif sp.find("p:txBody", NS) is not None:
                 clear_text(sp)
+        fixed = set(exemplar.fixed)
+        self._remove_empty_containers(shapes, unfilled, [e.box for e in slide_ir.elements if e.slot_id in filled],
+                                      slot_ids, fixed)
         # текст образца вне слотов и фиксированных элементов («Вставить фото», названия продуктов,
         # сноски) в колоду не переносим; короткие декоративные подписи вроде «01» оставляем
-        fixed = set(exemplar.fixed)
         for sid, sp in shapes.items():
-            if sid in slot_ids or sid in fixed or sp.getparent() is None or localname(sp) != "sp":
+            if sid in slot_ids or sp.getparent() is None or localname(sp) != "sp" or sp.find("p:txBody", NS) is None:
                 continue
-            if sp.find("p:txBody", NS) is not None and _is_sample_text(shape_text(sp)):
+            text = shape_text(sp)
+            # «Вставить / фото» в двух абзацах — заглушка даже у «фиксированного» элемента; абзацы склеиваем пробелом
+            if is_placeholder_text(" ".join(t.text or "" for t in sp.iter(A + "t"))):
                 clear_text(sp)
+            elif sid not in fixed and _is_sample_text(text):
+                clear_text(sp)
+
+    def _remove_empty_containers(
+        self, shapes: dict[str, etree._Element], unfilled: list[Box], filled: list[Box],
+        slot_ids: set[str], fixed: set[str],
+    ) -> None:
+        """Убрать фон карточки/строки образца, в которой не осталось ни одного заполненного слота.
+
+        Контейнер — не-слот и не фиксированная фигура, чей бокс накрывает центр хотя бы одного
+        незаполненного слота и ни одного заполненного; вместе с ним уходит его декор (иконка, номер) —
+        всё не-слотовое с центром внутри. Фон на большую часть слайда контейнером не считаем.
+        """
+        if not unfilled:
+            return
+        max_area = 0.5 * self.prs.slide_width * self.prs.slide_height
+        centers = [(b.x + b.w / 2, b.y + b.h / 2) for b in unfilled]
+        kept = [(b.x + b.w / 2, b.y + b.h / 2) for b in filled]
+        for sid, sp in list(shapes.items()):
+            if sid in slot_ids or sid in fixed or sp.getparent() is None or localname(sp) not in ("sp", "pic"):
+                continue
+            bb = absolute_bbox(sp)
+            if bb is None or bb[2] * bb[3] > max_area:
+                continue
+            box = Box(x=bb[0], y=bb[1], w=bb[2], h=bb[3])
+            inside = lambda c: box.x <= c[0] <= box.x2 and box.y <= c[1] <= box.y2  # noqa: E731
+            if not any(inside(c) for c in centers) or any(inside(c) for c in kept):
+                continue
+            for oid, other in shapes.items():
+                if oid != sid and oid not in slot_ids and oid not in fixed and other.getparent() is not None \
+                        and _center_inside(other, box) and (ob := absolute_bbox(other)) and ob[2] * ob[3] < bb[2] * bb[3]:
+                    _remove(other)
+            _remove(sp)
 
     def _replace_with_native(
         self, slide: Slide, sp: etree._Element, el: Element, shapes: dict[str, etree._Element],
@@ -553,6 +671,36 @@ def _center_inside(sp: etree._Element, box: Box) -> bool:
         return False
     cx, cy = bb[0] + bb[2] / 2, bb[1] + bb[3] / 2
     return box.x <= cx <= box.x2 and box.y <= cy <= box.y2
+
+
+def _insert_after_geom(sp_pr: etree._Element, el: etree._Element) -> None:
+    """Вставить el в spPr на место заливки по схеме: после prstGeom/custGeom (или xfrm), иначе в начало."""
+    anchor = next((c for c in sp_pr if localname(c) in ("prstGeom", "custGeom")), None)
+    anchor = anchor if anchor is not None else sp_pr.find("a:xfrm", NS)
+    if anchor is not None:
+        anchor.addnext(el)
+    else:
+        sp_pr.insert(0, el)
+
+
+def _has_visible_frame(sp: etree._Element) -> bool:
+    """У фигуры своя заливка или обводка (spPr) — без текста она останется пустой рамкой/карточкой."""
+    sp_pr = sp.find("p:spPr", NS)
+    if sp_pr is None:
+        return False
+    if any(localname(c) in ("solidFill", "gradFill", "pattFill", "blipFill") for c in sp_pr):
+        return True
+    ln = sp_pr.find("a:ln", NS)
+    if ln is not None:
+        return ln.find("a:noFill", NS) is None and any(localname(c) in ("solidFill", "gradFill") for c in ln)
+    # заливка/обводка по ссылке на тему (p:style): idx="0" — «нет», остальное — видимая рамка
+    style = sp.find("p:style", NS)
+    if style is not None and not any(localname(c) == "noFill" for c in sp_pr):
+        for ref in ("a:lnRef", "a:fillRef"):
+            el = style.find(ref, NS)
+            if el is not None and el.get("idx", "0") != "0":
+                return True
+    return False
 
 
 def _is_sample_text(text: str) -> bool:

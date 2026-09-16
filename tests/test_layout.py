@@ -76,6 +76,31 @@ def test_kpi_split_by_capacity_only_when_room() -> None:
     assert tight.archetypes.count("kpi") == 1
 
 
+def test_kpi_split_parts_get_distinct_titles() -> None:
+    res = plan(outline(), strategy(target_slides={"min": 8, "max": 15}, data_visualization={"key_metrics": "kpi"}), set(Archetype), kpi_capacity=2)
+    kpi_titles = [s.title for s in res.slides if s.archetype == Archetype.KPI]
+    assert len(kpi_titles) == len(set(kpi_titles)) and any(t.endswith("(1/2)") for t in kpi_titles)
+
+
+def test_executive_compacts_real_outline_without_losing_words() -> None:
+    """Outline модели (кассета, 12 содержательных слайдов) должен ужаться в 8–10 executive:
+    шаги, KPI и цитата становятся пунктами карточек, ни одно слово/число не теряется."""
+    from deckforge.content.outline_writer import repair_outline
+    from tests.conftest import cassette
+
+    o, _ = repair_outline(cassette("outline_writer_pulse"), set(Archetype), set())
+    assert len(o.slides) >= 12
+    res = plan(o, load_strategy("executive"), set(Archetype), kpi_capacity=3)
+    assert 8 <= len(res.slides) <= 10 and not res.warnings
+    planned = " ".join(" ".join(s.bullets + s.steps + [k.value for k in s.kpis] + [k.label for k in s.kpis] + [s.quote or ""]) for s in res.slides)
+    for s in o.slides:
+        for word in " ".join(s.steps + [k.value for k in s.kpis] + [s.quote or ""]).split():
+            assert word in planned, word
+    # текстовые пары сливаются раньше KPI и цитаты: визуальная стратегия при переборе теряет карточки, не цифры
+    vis = plan(o, load_strategy("visual"), set(Archetype), kpi_capacity=3)
+    assert vis.archetypes.count("kpi") == sum(1 for s in o.slides if s.archetype == Archetype.KPI)
+
+
 def test_parse_num() -> None:
     assert parse_num("1 250") == 1250 and parse_num("−89 %") == -89 and parse_num("4,7") == 4.7
     assert parse_num("6 ч") is None and parse_num("×3") == 3
@@ -145,7 +170,43 @@ def test_shorten_prefers_separators_then_words() -> None:
     assert shorten("Статусы вместо работы — до 9,5 часов в неделю", 30) == "Статусы вместо работы"
     assert shorten("Очень длинное предложение без разделителей внутри", 25).endswith("…")
     assert shorten("короткий", 100) == "короткий"
+    # одно-два слова в тесном слоте (подписи месяцев, «0,6 дня» в карточке) не превращаются в «Октяб…»
+    assert shorten("Октябрь", 5) == "Октябрь"
+    assert shorten("0,6 дня", 5) == "0,6 дня"
+    assert shorten("Подключение трекера и календаря", 8) == "Подключение…"
     assert shorten_words("Риски заранее — дайджест приходит в понедельник, до планирования недели", 5) == "Риски заранее"
+
+
+def test_list_element_shrinks_font_before_cutting() -> None:
+    from deckforge.layout.builder import list_element
+
+    slot = _slot("b", SlotKind.BODY, 0.1, 0.2, 0.8, 0.6, max_chars=120, size=18)
+    slot.max_items = 4
+    items = ["Статусы съедают до 9,5 часов в неделю у каждого разработчика", "Трекер показывает задачи, а не людей",
+             "О выгорании узнают слишком поздно"]
+    el = list_element(slot, items, {}, bullet=True)
+    texts = [p.runs[0].text for p in el.paragraphs]
+    assert texts == items, "три пункта по 40 знаков при 120 знаках слота влезают после уменьшения кегля"
+    assert 18 * 0.7 <= el.style_overrides["size_pt"] < 18
+    # если и минимальный кегль не спасает — режем по разделителю, а не по букве
+    el = list_element(slot, items + ["Ручные отчёты устаревают за день — к утру данные уже неверны"] * 3, {}, bullet=True)
+    assert el.style_overrides["size_pt"] == round(18 * 0.7, 1)
+    assert all(not p.runs[0].text.endswith("…") or " " in p.runs[0].text for p in el.paragraphs)
+
+
+def test_number_element_label_inside_shape() -> None:
+    """Образец с цифрами без label-слотов (VK Education): подпись идёт вторым абзацем мелко,
+    цифра ужимается, чтобы обе строки влезли по высоте; в однострочный бокс подпись не лезет."""
+    from deckforge.layout.builder import LABEL_MAX_PT, number_element
+
+    tall = _slot("n", SlotKind.NUMBER, 0.1, 0.2, 0.3, 0.15, max_chars=6, size=60)  # 0.15 × 5.625" ≈ 61 pt
+    el = number_element(tall, "118", {}, label="участников пилота")
+    assert [p.runs[0].text for p in el.paragraphs] == ["118", "участников пилота"]
+    assert el.paragraphs[1].runs[0].size_pt <= LABEL_MAX_PT
+    assert (el.paragraphs[0].runs[0].size_pt or 60) < 60  # цифра ужата ради подписи
+    flat = _slot("n", SlotKind.NUMBER, 0.1, 0.2, 0.3, 0.05, max_chars=6, size=28)  # ≈ 20 pt высоты
+    el = number_element(flat, "118", {}, label="участников пилота")
+    assert len(el.paragraphs) == 1
 
 
 def test_split_label_body_and_numbers() -> None:

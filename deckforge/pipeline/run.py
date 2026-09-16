@@ -512,10 +512,13 @@ def soffice_available() -> bool:
 
 
 def _style(tokens: TemplateTokens) -> dict:
+    # text_color — роль text из палитры: на тёмном шаблоне (WorkSpace) текст таблиц и осей диаграмм
+    # иначе получил бы дефолтный тёмный цвет и пропал на фоне
     return {
         "accent": (tokens.palette("accent") or ["0077FF"])[0],
         "palette": ",".join(tokens.palette("accent") + tokens.palette("secondary")),
         "font": tokens.fonts[0] if tokens.fonts else "Arial",
+        "text_color": (tokens.palette("text") or ["212121"])[0],
     }
 
 

@@ -28,15 +28,19 @@ from deckforge.core.ir import (
 )
 from deckforge.core.strategy import Strategy
 from deckforge.layout.exemplar_picker import pick_exemplar
+from deckforge.core.units import EMU_PER_PT
 from deckforge.layout.fitting import (
-    UNIT_SCALE, chars_at_scale, fit_number, fit_size, normalize, shorten, slot_capacity, split_label_body,
+    DIGIT_WIDTH, GLYPH_WIDTH, MIN_SIZE_SCALE, NUMBER_MIN_SCALE, UNIT_SCALE, chars_at_scale, fit_number, fit_size,
+    normalize, shorten, slot_capacity, split_label_body, split_number_unit,
 )
-from deckforge.layout.planner import PlanResult, plan
+from deckforge.layout.planner import STEP_NUMBERING, PlanResult, plan
 
 log = logging.getLogger(__name__)
 
-STEP_NUMBERING = "{n}. {text}"
 MIN_CONTINUATION = 2  # меньше пунктов на слайд-продолжение не выносим
+LABEL_MIN_PT, LABEL_MAX_PT = 10.0, 14.0  # подпись KPI внутри фигуры с цифрой — в этих пределах
+KPI_IN_LABEL_SCALE = 1.8  # значение KPI в label-слоте карточки крупнее подписи максимум во столько раз
+LINE_SPACING = 1.2  # высота строки в кеглях — как в оценке вместимости слотов (parsing) и L03
 
 
 @dataclass
@@ -58,7 +62,8 @@ class LayoutResult:
 
 def layout_deck(outline: DeckOutline, dna: TemplateDNA, strategy: Strategy) -> LayoutResult:
     style = {"accent": (dna.palette("accent") or ["000000"])[0], "font": dna.fonts[0] if dna.fonts else "Arial",
-             "palette": ",".join(dna.palette("accent") + dna.palette("secondary"))}
+             "palette": ",".join(dna.palette("accent") + dna.palette("secondary")),
+             "text_color": (dna.palette("text") or ["212121"])[0]}
     return build_deck_ir(outline, strategy, dna.exemplars, dna.template_id, dna.slide_w, dna.slide_h, style)
 
 
@@ -126,22 +131,27 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
     # данные
     for slot in by_kind[SlotKind.CHART] + by_kind[SlotKind.TABLE]:
         if s.chart or s.table:
-            elements.append(Element(slot_id=slot.id, kind=slot.kind, box=slot.box, chart=s.chart, table=s.table,
+            chart = s.chart
+            if chart is not None and normalize(chart.title).lower() == normalize(s.title).lower():
+                chart = chart.model_copy(update={"title": ""})  # заголовок слайда не дублируем над графиком
+            elements.append(Element(slot_id=slot.id, kind=slot.kind, box=slot.box, chart=chart, table=s.table,
                                     style_overrides=dict(style)))
             break
     numbers, labels, captions = by_kind[SlotKind.NUMBER], by_kind[SlotKind.LABEL], by_kind[SlotKind.CAPTION]
     bodies = by_kind[SlotKind.BODY]
     labels_used = bodies_used = 0
     if s.kpis and numbers:
-        for k, num in zip(s.kpis, numbers):
-            put(num, k.value)
+        for i, (k, num) in enumerate(zip(s.kpis, numbers)):
+            # цифре без своего label-слота подпись даём внутри той же фигуры вторым абзацем
+            elements.append(number_element(num, k.value, style, label=k.label if i >= len(labels) else None))
         for k, lab in zip(s.kpis, labels):
             put(lab, k.label)
             labels_used += 1
         left_kpis = s.kpis[len(numbers):]
     elif s.kpis and labels:  # образец без крупных цифр (карточки): значение — в подпись, описание — в тело
         for k, lab in zip(s.kpis, labels):
-            put(lab, k.value)
+            if el := kpi_in_label_element(lab, k.value, style):
+                elements.append(el)
             labels_used += 1
         for k, body in zip(s.kpis, bodies):
             put(body, k.label)
@@ -157,6 +167,10 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
     items = s.bullets or ([STEP_NUMBERING.format(n=i + 1, text=t) for i, t in enumerate(s.steps)] if s.steps else [])
     numbered = bool(s.steps) and not s.bullets
     free_labels, bodies = labels[labels_used:], bodies[bodies_used:]
+    if numbered and numbers and not s.kpis:
+        # крупные цифры схемы (кружки «1…5» на таймлайне) — номера шагов, иначе рендер их сотрёт
+        for i, num in enumerate(numbers[: len(s.steps)]):
+            put(num, str(i + 1))
     if quote_as_title:
         pass
     elif s.quote and bodies:
@@ -224,14 +238,44 @@ def text_element(slot: Slot, text: str, style: dict, bullet: bool = False) -> El
                    paragraphs=[Paragraph(runs=[TextRun(text=text)], bullet=bullet)])
 
 
-def number_element(slot: Slot, text: str, style: dict) -> Element:
-    """Крупная цифра KPI одной строкой; единица измерения — мелким кеглем следом («1,8 дня»)."""
-    num, unit, size = fit_number(text, slot)
+def number_element(slot: Slot, text: str, style: dict, label: str | None = None) -> Element:
+    """Крупная цифра KPI одной строкой; единица измерения — мелким кеглем следом («1,8 дня»);
+    `label` — подпись вторым абзацем мелким кеглем, когда у образца нет отдельного label-слота.
+    Подпись добавляется, только если обе строки влезают по высоте — цифру ради неё ужимаем до NUMBER_MIN_SCALE."""
+    num, unit, size = fit_number(normalize(text), slot)
+    base = size or slot.size_pt or 40.0
+    label = normalize(label or "")
+    label_pt = min(LABEL_MAX_PT, max(LABEL_MIN_PT, round(base * UNIT_SCALE, 1)))
+    if label and slot.size_pt:
+        h_pt = slot.box.h / EMU_PER_PT
+        room = h_pt / LINE_SPACING - label_pt  # сколько остаётся кеглю цифры рядом с подписью
+        if room < slot.size_pt * NUMBER_MIN_SCALE:
+            label = ""
+        elif room < base:
+            base = size = round(room, 1)
     runs = [TextRun(text=num, size_pt=size)]
     if unit:
-        runs.append(TextRun(text=f" {unit}", size_pt=round((size or slot.size_pt or 40.0) * UNIT_SCALE, 1)))
-    return Element(slot_id=slot.id, kind=slot.kind, box=slot.box, style_overrides=dict(style),
-                   paragraphs=[Paragraph(runs=runs)])
+        runs.append(TextRun(text=f" {unit}", size_pt=round(base * UNIT_SCALE, 1)))
+    paragraphs = [Paragraph(runs=runs)]
+    if label:
+        paragraphs.append(Paragraph(runs=[TextRun(text=label, size_pt=label_pt)]))
+    return Element(slot_id=slot.id, kind=slot.kind, box=slot.box, style_overrides=dict(style), paragraphs=paragraphs)
+
+
+def kpi_in_label_element(slot: Slot, value: str, style: dict) -> Element | None:
+    """Значение KPI в label-слоте карточки: кегль подписи мелкий, цифру укрупняем, пока она влезает
+    в строку по ширине и в бокс по высоте."""
+    el = text_element(slot, value, style)
+    if el is None or not slot.size_pt or not slot.max_chars:
+        return el
+    num, unit = split_number_unit(value)
+    width = sum(GLYPH_WIDTH.get(ch, DIGIT_WIDTH) for ch in num) + (UNIT_SCALE * (len(unit) + 1) if unit else 0)
+    cpl = slot.max_chars / max(1, slot.max_lines or 1)
+    by_height = (slot.box.h / EMU_PER_PT) / (LINE_SPACING * slot.size_pt)
+    scale = min(KPI_IN_LABEL_SCALE, cpl / width if width else KPI_IN_LABEL_SCALE, by_height)
+    if scale > 1.0 and "size_pt" not in el.style_overrides:
+        el.style_overrides["size_pt"] = round(slot.size_pt * scale, 1)
+    return el
 
 
 def list_element(slot: Slot, items: list[str], style: dict, bullet: bool) -> Element | None:
@@ -240,13 +284,18 @@ def list_element(slot: Slot, items: list[str], style: dict, bullet: bool) -> Ele
         return None
     overrides = dict(style)
     cap = slot.max_items or len(items)
-    if len(items) > cap:  # лишние пункты не выбрасываем — уменьшаем кегль, но не ниже 70 %
-        scale = max(0.7, cap / len(items))
-        if slot.size_pt:
-            overrides["size_pt"] = round(slot.size_pt * scale, 1)
+    scale = 1.0
+    if len(items) > cap:  # лишние пункты не выбрасываем — уменьшаем кегль, но не ниже MIN_SIZE_SCALE
+        scale = max(MIN_SIZE_SCALE, cap / len(items))
     per_item = (slot.max_chars // len(items)) if slot.max_chars else None
-    if per_item and "size_pt" in overrides and slot.size_pt:
-        per_item = int(per_item / (overrides["size_pt"] / slot.size_pt) ** 2)
+    if per_item:
+        # длинный пункт сначала ужимаем кеглем (вместимость ~ 1/size²) и только потом режем: «…» — крайняя мера
+        longest = max(len(t) for t in items)
+        if longest > per_item / (scale * scale):
+            scale = min(scale, max(MIN_SIZE_SCALE, (per_item / longest) ** 0.5))
+        per_item = int(per_item / (scale * scale))
+    if scale < 1.0 and slot.size_pt:
+        overrides["size_pt"] = round(slot.size_pt * scale, 1)
     paras = [Paragraph(runs=[TextRun(text=shorten(t, per_item))], bullet=bullet) for t in items]
     return Element(slot_id=slot.id, kind=slot.kind, box=slot.box, style_overrides=overrides, paragraphs=paras)
 

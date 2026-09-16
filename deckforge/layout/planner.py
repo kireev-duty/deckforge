@@ -27,7 +27,11 @@ log = logging.getLogger(__name__)
 # колонки-«дельты» не тянем в диаграмму: у них другая единица, чем у остальных
 _DELTA_HEADER = re.compile(r"измен|разниц|дельт|Δ|прирост|%", re.I)
 _NUM = re.compile(r"^[+\-−–]?\d+(?:[.,]\d+)?$")
-_MERGEABLE = (Archetype.BULLETS, Archetype.TWO_COLUMN)  # текстовые слайды, которые можно слить в карточки
+# слайды, которые при переборе объёма можно слить в карточки (карточки — чтобы слияние продолжалось
+# цепочкой; шаги, KPI и цитата становятся пунктами: форма теряется, слова и числа — нет)
+_MERGEABLE = (Archetype.BULLETS, Archetype.TWO_COLUMN, Archetype.CARDS, Archetype.PROCESS, Archetype.KPI, Archetype.QUOTE)
+_MERGE_LAST = (Archetype.KPI, Archetype.QUOTE)  # сливаются, только когда текстовых пар не осталось
+STEP_NUMBERING = "{n}. {text}"  # шаг процесса как пункт списка (builder использует тот же формат)
 
 
 @dataclass
@@ -124,7 +128,8 @@ def table_to_chart(table: TableSpec, title: str) -> ChartSpec | None:
             series[name] = [float(v) for v in vals]  # type: ignore[arg-type]
     if not series:
         return None
-    return ChartSpec(kind="column", title=title, categories=[r[0] for r in table.rows], series=series)
+    # title у диаграммы пустой: заголовок слайда уже есть, дубль над графиком — лишний текст
+    return ChartSpec(kind="column", title="", categories=[r[0] for r in table.rows], series=series)
 
 
 def table_to_bullets(table: TableSpec) -> list[str]:
@@ -172,6 +177,7 @@ def split_kpis(slides: list[OutlineSlide], strategy: Strategy, capacity: int) ->
                 idx=s.idx, archetype=Archetype.KPI, title=s.title, section=s.section, sources=list(s.sources),
             )
             part.kpis = s.kpis[i * size : (i + 1) * size]
+            part.title = f"{s.title} ({i + 1}/{n_parts})"  # иначе судья видит два слайда с одним заголовком (C11)
             out.append(part)
     return out
 
@@ -267,19 +273,31 @@ def _shortest_section(slides: list[OutlineSlide]) -> int:
 
 
 def merge_pair(slides: list[OutlineSlide], max_bullets: int) -> list[OutlineSlide] | None:
-    """Слить первую подходящую пару соседних текстовых слайдов в один CARDS. None — сливать нечего."""
-    for i in range(len(slides) - 1):
-        a, b = slides[i], slides[i + 1]
-        if not (_text_only(a) and _text_only(b)) or len(a.bullets) + len(b.bullets) > max_bullets:
-            continue
-        merged = a.model_copy(deep=True)
-        merged.archetype = Archetype.CARDS
-        merged.subtitle = b.title
-        merged.bullets = a.bullets + b.bullets
-        merged.sources = list(dict.fromkeys(a.sources + b.sources))
-        merged.speaker_notes = "\n".join(x for x in (a.speaker_notes, b.speaker_notes) if x)
-        return slides[:i] + [merged] + slides[i + 2 :]
+    """Слить первую подходящую пару соседних слайдов в один CARDS. None — сливать нечего.
+
+    Сначала пары чисто текстовых слайдов (буллеты/шаги), и только если таких нет — с KPI и цитатой:
+    крупная цифра и цитата в карточках теряют больше, чем список.
+    """
+    for lossy in (False, True):
+        for i in range(len(slides) - 1):
+            a, b = slides[i], slides[i + 1]
+            if not (_mergeable(a) and _mergeable(b)) or len(_items(a)) + len(_items(b)) > max_bullets:
+                continue
+            if not lossy and any(x.archetype in _MERGE_LAST for x in (a, b)):
+                continue
+            return slides[:i] + [_merge(a, b)] + slides[i + 2 :]
     return None
+
+
+def _merge(a: OutlineSlide, b: OutlineSlide) -> OutlineSlide:
+    merged = a.model_copy(deep=True)
+    merged.archetype = Archetype.CARDS
+    merged.subtitle = b.title
+    merged.bullets = _items(a) + _items(b)
+    merged.steps, merged.kpis, merged.quote, merged.quote_author = [], [], None, None
+    merged.sources = list(dict.fromkeys(a.sources + b.sources))
+    merged.speaker_notes = "\n".join(x for x in (a.speaker_notes, b.speaker_notes) if x)
+    return merged
 
 
 def extract_kpis(slides: list[OutlineSlide]) -> list[OutlineSlide] | None:
@@ -311,4 +329,26 @@ def _text_only(s: OutlineSlide) -> bool:
     )
 
 
-__all__ = ["PlanResult", "chart_to_kpis", "chart_to_table", "parse_num", "plan", "split_kpis", "split_slide", "table_to_chart", "visualize"]
+def _mergeable(s: OutlineSlide) -> bool:
+    """Слайд с одним видом контента, который можно превратить в пункты карточек: буллеты, шаги,
+    KPI («значение — подпись») или цитата («„…“ — автор»). Диаграммы, таблицы, картинки — нет."""
+    if s.archetype not in _MERGEABLE or s.chart or s.table or s.image:
+        return False
+    kinds = sum(1 for x in (s.bullets, s.steps, s.kpis, s.quote) if x)
+    return kinds == 1
+
+
+def _items(s: OutlineSlide) -> list[str]:
+    """Пункты слайда для слияния (см. _mergeable)."""
+    if s.bullets:
+        return list(s.bullets)
+    if s.steps:
+        return [STEP_NUMBERING.format(n=i + 1, text=t) for i, t in enumerate(s.steps)]
+    if s.kpis:
+        return [f"{k.value} — {k.label}" for k in s.kpis]
+    if s.quote:
+        return [f"«{s.quote}»" + (f" — {s.quote_author}" if s.quote_author else "")]
+    return []
+
+
+__all__ = ["STEP_NUMBERING", "PlanResult", "chart_to_kpis", "chart_to_table", "parse_num", "plan", "split_kpis", "split_slide", "table_to_chart", "visualize"]

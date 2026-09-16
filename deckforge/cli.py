@@ -18,7 +18,7 @@ app = typer.Typer(help="deckforge — цифровой дизайнер през
 
 @app.callback()
 def _root() -> None:
-    """Подкоманды: run (позже — parse, audit, export)."""  # callback нужен, чтобы typer не схлопнул единственную команду
+    """Подкоманды: run, audit (позже — parse, export)."""
 
 
 @app.command("run")
@@ -42,6 +42,29 @@ def run_cmd(
     for w in result.warnings:
         typer.echo(f"  ! {w}")
     typer.echo(f"\n{(result.output_dir / 'compare.md').read_text('utf-8')}")
+
+
+@app.command("audit")
+def audit_cmd(
+    deck: Path = typer.Argument(..., help="колода .pptx"),
+    template: Path = typer.Option(..., "--template", "-t", help="шаблон .pptx, по которому собрана колода"),
+    ir: Optional[Path] = typer.Option(None, "--ir", help="<strategy>.ir.json — точнее проверки шаблонности (T02/T03/T05)"),
+    checks: Optional[str] = typer.Option(None, "--checks", help="какие проверки: L03,T06 (по умолчанию все)"),
+    json_out: Optional[Path] = typer.Option(None, "--json", help="сохранить AuditReport в JSON"),
+    limit: int = typer.Option(80, "--limit", help="сколько строк показать"),
+) -> None:
+    """Детерминированный аудит колоды: таблица находок (слайд, severity, проверка, сообщение, autofix)."""
+    from deckforge.audit import audit_deck, report_markdown
+    from deckforge.core.ir import DeckIR
+    from deckforge.parsing.dna import build_dna
+
+    dna = build_dna(template)
+    deck_ir = DeckIR.model_validate_json(ir.read_text("utf-8")) if ir else None
+    report = audit_deck(deck, dna, deck_ir, checks=checks.split(",") if checks else None)
+    if json_out:
+        json_out.write_text(report.model_dump_json(indent=1), "utf-8")
+    typer.echo(report_markdown(report, max_rows=limit))
+    raise typer.Exit(code=1 if report.errors else 0)
 
 
 def main() -> None:

@@ -34,11 +34,15 @@ def test_run_with_fake_llm(template_path, tmp_path: Path) -> None:
         assert m["skills"] == {"outline_writer": "v1"}
         assert m["models"]["text"] == "fake-text"
         assert m["llm_calls"][0]["skill"] == "outline_writer@v1"
-        assert {"parse", "outline", "layout", "render"} <= set(m["timings_s"])
+        assert {"parse", "outline", "layout", "render", "audit"} <= set(m["timings_s"])
+        assert d.audit is not None and d.audit.exists() and m["audit"]["checks_run"] == 24
+        assert m["audit"]["errors"] == d.audit_summary["errors"] and "by_check" in m["audit"]
         assert m["strategy"]["name"] == d.strategy and m["template"]["sha1"]
         assert len(m["plan"]) == len(m["choices"]) >= 8 and d.stats["skipped"] == 0
     run_json = json.loads(res.run_json.read_text("utf-8"))
-    assert run_json["timings_s"]["total"] > 0 and set(run_json["not_implemented"]) == {"images", "audit"}
+    assert run_json["timings_s"]["total"] > 0
+    assert set(run_json["not_implemented"]) == {"images", "audit.contextual", "audit.autofix"}
+    assert (tmp_path / "run" / "dna.json").exists() and run_json["decks"][0]["audit"]["checks_run"] == 24
     assert (tmp_path / "run" / "compare.md").read_text("utf-8").count("\n") >= 3
     assert any(m.startswith("outline:") for m in messages)
 
@@ -53,4 +57,5 @@ def test_run_with_ready_outline_skips_llm(template_path, tmp_path: Path) -> None
     res = run(cfg, outline=outline)
     m = json.loads(res.decks[0].manifest.read_text("utf-8"))
     assert m["skills"] == {} and m["llm_calls"] == [] and m["timings_s"]["outline"] == 0
+    assert m["audit"] == {} and res.decks[0].audit is None and "audit" not in m["timings_s"]
     assert json.loads(res.run_json.read_text("utf-8"))["not_implemented"] == []

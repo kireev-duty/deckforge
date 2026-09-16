@@ -15,11 +15,14 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Callable
 
+from deckforge.audit import audit_deck
+from deckforge.audit import summary as audit_summary
 from deckforge.content import load_content_pack, write_outline
 from deckforge.core.ir import Archetype, DeckOutline, Exemplar
 from deckforge.core.strategy import load_strategy
 from deckforge.layout import LayoutResult, build_deck_ir
 from deckforge.llm.client import LLMClient
+from deckforge.parsing.dna import build_dna
 from deckforge.parsing.exemplars import load_exemplars
 from deckforge.parsing.extract_tokens import TemplateTokens, extract_tokens
 from deckforge.pipeline.config import RunConfig
@@ -42,6 +45,8 @@ class DeckResult:
     choices: list[dict] = field(default_factory=list)
     pngs: list[Path] = field(default_factory=list)
     timings_s: dict[str, float] = field(default_factory=dict)
+    audit: Path | None = None  # <strategy>.audit.json (AuditReport)
+    audit_summary: dict = field(default_factory=dict)
 
 
 @dataclass
@@ -73,10 +78,12 @@ def run(
     out_dir = cfg.output_dir
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    # 1. parse — токены + образцы (кэш разметки в out/archetypes, если есть)
+    # 1. parse — токены + образцы (кэш разметки в out/archetypes, если есть) + сетка/фиксированные → TemplateDNA
     t0 = time.perf_counter()
     exemplars = load_exemplars(cfg.template)
     tokens = extract_tokens(cfg.template)
+    dna = build_dna(cfg.template, exemplars, tokens)
+    (out_dir / "dna.json").write_text(dna.model_dump_json(indent=1), "utf-8")
     timings["parse"] = round(time.perf_counter() - t0, 3)
     say(f"parse: {len(exemplars)} образцов, шрифт {tokens.fonts[0] if tokens.fonts else '?'}, "
         f"accent #{(tokens.palette('accent') or ['?'])[0]} ({timings['parse']:.1f}s)")
@@ -128,6 +135,15 @@ def run(
 
         st = deck_stats(res)
         deck_timings = {"layout": round(t_layout, 3), "render": round(t_render, 3)}
+        audit_path: Path | None = None
+        audit_info: dict = {}
+        if cfg.audit.deterministic:
+            t0 = time.perf_counter()
+            report = audit_deck(pptx_out, dna, res.ir)
+            audit_path = out_dir / f"{strategy.name}.audit.json"
+            audit_path.write_text(report.model_dump_json(indent=1), "utf-8")
+            audit_info = {**audit_summary(report), "path": str(audit_path), "kind": "deterministic"}
+            deck_timings["audit"] = round(time.perf_counter() - t0, 3)
         pngs: list[Path] = []
         if cfg.render_png:
             from deckforge.export.render import render as render_png
@@ -149,21 +165,26 @@ def run(
             "choices": choices,
             "warnings": [f"outline: {w}" for w in outline_warnings] + res.warnings,
             "stats": st,
+            "audit": audit_info,
             "timings_s": {"parse": timings["parse"], "outline": timings["outline"], **deck_timings},
         }
         manifest_path = out_dir / f"{strategy.name}.manifest.json"
         manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=1), "utf-8")
         decks.append(DeckResult(strategy.name, pptx_out, ir_path, manifest_path, st, list(res.warnings), choices,
-                                pngs, deck_timings))
-        rows[strategy.name] = st
+                                pngs, deck_timings, audit_path, audit_info))
+        rows[strategy.name] = {**st, "audit_errors": audit_info.get("errors", "—"),
+                               "audit_warnings": audit_info.get("warnings", "—")}
         say(f"{strategy.id}: {st['slides']} слайдов → {pptx_out.name} (layout {t_layout:.2f}s, render {t_render:.2f}s"
+            + (f", audit {deck_timings['audit']:.1f}s: {audit_info['errors']} err / {audit_info['warnings']} warn"
+               if audit_info else "")
             + (f", png {deck_timings['png']:.1f}s" if pngs else "") + ")")
         warnings += [w if w.startswith(strategy.name) else f"{strategy.name}: {w}" for w in res.warnings]
 
     (out_dir / "compare.md").write_text(compare_table(rows) + "\n", "utf-8")
     timings["total"] = round(time.perf_counter() - t_start, 3)
     result = RunResult(out_dir, outline, outline_path, decks, timings, warnings)
-    not_implemented = [k for k, on in (("images", cfg.images != "off"), ("audit", cfg.audit.deterministic or cfg.audit.contextual),
+    not_implemented = [k for k, on in (("images", cfg.images != "off"), ("audit.contextual", cfg.audit.contextual),
+                                       ("audit.autofix", cfg.audit.autofix),
                                        ("export", any(e != "pptx" for e in cfg.export))) if on]
     run_json = {
         "created": datetime.now(timezone.utc).isoformat(timespec="seconds"),
@@ -171,7 +192,7 @@ def run(
         "template": template_meta,
         "outline": str(outline_path),
         "decks": [{"strategy": d.strategy, "pptx": str(d.pptx), "manifest": str(d.manifest), "stats": d.stats,
-                   "timings_s": d.timings_s} for d in decks],
+                   "audit": d.audit_summary, "timings_s": d.timings_s} for d in decks],
         "timings_s": timings,
         "warnings": warnings,
         "not_implemented": not_implemented,  # читаются из конфига, но пока не выполняются

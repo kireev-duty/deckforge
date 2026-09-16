@@ -39,7 +39,7 @@ def main() -> None:
         template=a.pptx.resolve(), content_pack=a.outline.resolve().parent, purpose=outline.purpose,
         audience=outline.audience, language=outline.language, strategies=a.strategies.split(","),
         output_dir=ROOT / "out" / "variants" / a.pptx.stem, render_png=not a.no_render, render_dpi=a.dpi,
-        images="off", audit={"deterministic": False, "contextual": False, "autofix": False},
+        images="off", audit={"deterministic": True, "contextual": False, "autofix": False},
     )
     result = run(cfg, outline=outline, progress=lambda m: print("  " + m))
     for d in result.decks:
@@ -50,6 +50,9 @@ def main() -> None:
                   f"{c['exemplar_id'] or '-':<8} {c['score']:6.1f}{mark}")
         for w in d.warnings:
             print(f"  ! {w}")
+        if d.audit_summary:
+            a = d.audit_summary
+            print(f"  аудит: {a['errors']} err / {a['warnings']} warn → {d.audit}  {a['by_check']}")
         if d.pngs:
             print(f"  рендер: {len(d.pngs)} PNG → {d.pngs[0].parent / 'contact.png'}")
     print("\n" + (result.output_dir / "compare.md").read_text("utf-8"))

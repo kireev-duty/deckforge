@@ -39,13 +39,15 @@ def deck_stats(res: LayoutResult) -> dict:
 
 
 def compare_table(rows: dict[str, dict]) -> str:
-    head = "| стратегия | слайдов | архетипы по порядку | пунктов/слайд | слов/пункт | chart | table | kpi | пропущено |"
-    sep = "|---|---|---|---|---|---|---|---|---|"
+    head = ("| стратегия | слайдов | архетипы по порядку | пунктов/слайд | слов/пункт | chart | table | kpi | пропущено "
+            "| аудит err/warn |")
+    sep = "|---|---|---|---|---|---|---|---|---|---|"
     lines = [head, sep]
     for name, st in rows.items():
         lines.append(
             f"| {name} | {st['slides']} | {' → '.join(st['archetypes'])} | {st['text_items_per_slide']} | "
-            f"{st['words_per_item']} | {st['chart']} | {st['table']} | {st['kpi']} | {st['skipped']} |"
+            f"{st['words_per_item']} | {st['chart']} | {st['table']} | {st['kpi']} | {st['skipped']} "
+            f"| {st.get('audit_errors', '—')}/{st.get('audit_warnings', '—')} |"
         )
     return "\n".join(lines)
 

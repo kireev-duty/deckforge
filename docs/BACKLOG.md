@@ -36,7 +36,16 @@
 - [ ] `/code-review`, `/security-review` — загрузка файлов пользователя (`pipeline/workspace.py`: `safe_name`, `check_pptx`, лимиты), распаковка .pptx (python-pptx/zipfile — проверить path traversal при чтении медиа), `FileResponse` только по белому списку; новое: `content/images.py` пишет файлы по sha1 — путь не от пользователя, но проверить `out_dir`.
 - [ ] README: скриншоты UI, `.env` переменные (`T2I_MODEL`, `T2I_BASE_URL`), ограничения; MODELS.md — актуальные ID и лицензии (Qwen3.8-27B, FLUX.2 klein 4B); AUDIT.md — покрытие; ARCHITECTURE — раздел «что видно на контактных листах» пересобрать по `examples/output` (сейчас описан прогон `tools/build_variants.py` дня 7).
 - [ ] Проверить `examples/output/*/*.pptx` в PowerPoint глазами: редактируемость текста/диаграмм/таблиц, вид плейсхолдеров после материализации (день 11 проверял только LibreOffice-рендер).
-- [ ] `data/wild/*.pptx` (3 чужих шаблона, добавлены 16.09) — прогнать `cli parse` и `build_variants` как проверку адаптивности «на случайном .pptx из интернета» (PLAN, раздел «Верификация»); дефекты — сюда.
+- [x] `data/wild/*.pptx` (3 чужих шаблона, LFS) — `cli parse` проходит на всех трёх без ошибок (0.1–0.4 с):
+
+  | шаблон | шрифт | bg / text / accent | образцов | архетипы | что смущает |
+  |---|---|---|---|---|---|
+  | HSE (en) | HSE Sans | `#FFFFFF` / `#0F2C68` / `#234A9B` | 18 | chart 6, title 3, freeform 3, bullets 2, table 2, image_text 1, cards 1 | нет section/kpi/closing; 6 chart-образцов — половина, вероятно, freeform с диаграммой-картинкой |
+  | dark (en) | Open Sans (встроен) | `#000000` / `#FFFFFF` / `#923826` | 22 | image_text 6, freeform 4, title 4, bullets 2, chart 2, process, cards, two_column, quote | `surface #BFBFBF` на чёрном фоне; сетка 4×5 — шум; нет kpi/closing/section |
+  | МТУСИ | Montserrat (встроен) | `#FFFFFF` / `#352379` / `#532494` | 41 | cards 12, title 8, image_text 7, chart 4, freeform 2, process 2, bullets 2, section 2, table 2 | `surface #000000 #E5E5E5` на белом; 8 title-образцов — часть, вероятно, section |
+
+  Общее: «фиксированных элементов 0» у всех трёх — у шаблонов с логотипами/колонтитулами так быть не должно, проверить детектор повторяющихся фигур (`parsing/dna`) на них; `kpi` и `closing` не найдены ни в одном — работают фолбэки picker'а.
+- [ ] `data/wild/*.pptx` — `build_variants` на каждом (рендер, PNG глазами): проверка адаптивности вёрстки, не только парсинга; дефекты — сюда.
 
 ## Мелочи
 

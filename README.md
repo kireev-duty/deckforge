@@ -25,7 +25,7 @@ cp .env.example .env                                 # заполнить LLM_AP
 .venv\Scripts\python.exe -m pytest -q
 ```
 
-Переменные окружения — см. [.env.example](.env.example). `.env` в репо не хранится — переносить между машинами вручную.
+Переменные окружения — см. [.env.example](.env.example): `LLM_BASE_URL` / `LLM_API_KEY` / `LLM_MODEL` / `VLM_MODEL` — текст и зрение (одна модель), `T2I_MODEL` (+ `T2I_BASE_URL` / `T2I_API_KEY`, если провайдер другой) — text-to-image; пустой `T2I_MODEL` отключает картинки, сервис работает без них. `.env` в репо не хранится — переносить между машинами вручную.
 
 Шаблоны датасета (`data/templates/*.pptx`), holdout-шаблон (`data/holdout/`) и ТЗ (`docs/tz/`) лежат в Git LFS. Если после clone файлы весят ~130 байт — это LFS-указатели: поставьте git-lfs и выполните `git lfs pull`.
 
@@ -34,9 +34,9 @@ cp .env.example .env                                 # заполнить LLM_AP
 ```bash
 # разбор шаблона: палитра с ролями, шрифты, шкала, сетка, образцы по архетипам
 deckforge parse "path/to/template.pptx" [--json dna.json]
-# генерация трёх вариантов по конфигу: бриф + контент-пакет → outline (LLM) → колоды по стратегиям
+# генерация трёх вариантов по конфигу: бриф + контент-пакет → outline (LLM) → иллюстрации (T2I) → колоды по стратегиям
 #   → аудит → safe-автофиксы → PNG → VLM-судья → .pptx / .pdf + manifest.json
-deckforge run --config configs/run.example.yaml            # или: python -m deckforge.cli run -c ... [--png] [--no-judge] [--outline готовый.json]
+deckforge run --config configs/run.example.yaml            # или: python -m deckforge.cli run -c ... [--png] [--no-judge] [--no-images] [--outline готовый.json]
 # аудит любой колоды по шаблону (колода не меняется; --fix-plan — что чинилось бы)
 deckforge audit deck.pptx -t template.pptx [--ir deck.ir.json] [--contextual] [--fix-plan]
 # веб-интерфейс: шаблон → бриф → варианты → аудит с выбором фиксов → экспорт
@@ -45,7 +45,7 @@ streamlit run deckforge/ui/app.py
 uvicorn deckforge.api.app:app --reload
 ```
 
-Результат прогона (`out/run/<name>/` или `out/ui/runs/<время>/`): `outline.json`, `dna.json`, на каждую стратегию — `<strategy>.pptx`, `.pdf`, `.ir.json`, `.audit.json`, `.manifest.json` (провенанс: версии скиллов/моделей/стратегии, план, образцы, автофиксы, тайминги) и PNG в `<strategy>/`; сводка — `compare.md`, `run.json`. HTML-экспорт и генерация картинок — в работе (`run.json → not_implemented`).
+Результат прогона (`out/run/<name>/` или `out/ui/runs/<время>/`): `outline.json`, `dna.json`, на каждую стратегию — `<strategy>.pptx`, `.pdf`, `.ir.json`, `.audit.json`, `.manifest.json` (провенанс: версии скиллов/моделей/стратегии, план, образцы, автофиксы, картинки, тайминги) и PNG в `<strategy>/`; сгенерированные иллюстрации — в `images/` (кэш по sha1 входов, повторный прогон их не платит); сводка — `compare.md`, `run.json`. HTML-экспорт — в работе (`run.json → not_implemented`).
 
 Инструменты разработчика: `tools/pptx_xray.py` (структура шаблона), `tools/render_deck.py` (PNG-превью и PDF), `tools/build_variants.py` (три стратегии на одном контенте: `examples/content_pack/` × шаблон → `out/variants/`).
 
@@ -57,4 +57,4 @@ uvicorn deckforge.api.app:app --reload
 
 - Только модели с открытыми весами (Apache 2.0 / MIT) до 35B; text-to-image до 20B.
 - Десктопные браузеры (Chrome, Firefox, Safari, Яндекс).
-- Целевой объём 10–15 слайдов, генерация колоды ≤ 5 минут.
+- Целевой объём 10–15 слайдов (стратегия может дать меньше, если контента мало — например 5); генерация колоды ≤ 5 минут.

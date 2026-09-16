@@ -1,17 +1,60 @@
-"""Общие фикстуры: поиск шаблонов датасета.
+"""Общие фикстуры: поиск шаблонов датасета, подмена LLM.
 
 Шаблоны лежат в репо через Git LFS (`data/templates/*.pptx`, holdout — `data/holdout/`). Если файла нет
-(LFS не подтянут) — тест пропускается, а не падает.
+(LFS не подтянут) — тест пропускается, а не падает. LLM в тестах не вызывается: `FakeClient` отдаёт
+записанные ответы (`tests/cassettes/*.json`) и ведёт журнал вызовов как настоящий клиент.
 """
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import pytest
 
+from deckforge.llm.client import LLMCall
+
 REPO = Path(__file__).resolve().parents[1]
 TEMPLATE_DIRS = [REPO / "data" / "templates", REPO / "data" / "holdout"]
+CASSETTES = REPO / "tests" / "cassettes"
+
+
+def cassette(name: str) -> dict | list:
+    return json.loads((CASSETTES / f"{name}.json").read_text("utf-8"))
+
+
+class FakeClient:
+    """Подменяет LLMClient. Позиционные ответы — по очереди для любого скилла (последний повторяется);
+    `by_skill={"audit_judge": [...]}` — очередь ответов на конкретный скилл. Исключение в очереди — бросается."""
+
+    text_model = "fake-text"
+    vision_model = "fake-vision"
+    image_model = ""
+    images_enabled = False
+    base_url = "fake://"
+
+    def __init__(self, *responses: dict | str, by_skill: dict[str, list] | None = None) -> None:
+        self.responses = list(responses)
+        self.by_skill = {k: list(v) for k, v in (by_skill or {}).items()}
+        self.calls: list[LLMCall] = []
+        self.inputs: list[dict] = []
+        self.images: list[list[Path]] = []
+
+    def run_skill(self, skill, images=None, **inputs):
+        self.inputs.append(inputs)
+        self.images.append(list(images or []))
+        queue = self.by_skill.get(skill.name)
+        if queue is not None:
+            resp = queue.pop(0) if len(queue) > 1 else queue[0]
+        elif self.responses:
+            resp = self.responses.pop(0) if len(self.responses) > 1 else self.responses[0]
+        else:
+            raise RuntimeError(f"FakeClient: нет ответа для скилла {skill.id}")
+        if isinstance(resp, Exception):
+            self.calls.append(LLMCall(skill.id, self.text_model, 0.01, ok=False, error=str(resp)))
+            raise resp
+        self.calls.append(LLMCall(skill.id, self.text_model, 0.01, 10, 10))
+        return resp
 
 
 def find_template(name_part: str) -> Path | None:

@@ -1,44 +1,23 @@
 """outline_writer: кассета реального ответа модели + repair на синтетических «плохих» ответах. LLM не вызывается."""
 
-import json
 from pathlib import Path
 
 import pytest
 
 from deckforge.content import archetypes_prompt, load_content_pack, repair_outline, write_outline
 from deckforge.core.ir import Archetype, DeckOutline
-from deckforge.llm.client import LLMCall
+from tests.conftest import FakeClient
+from tests.conftest import cassette as load_cassette
 
 REPO = Path(__file__).resolve().parents[1]
 PACK = REPO / "examples" / "content_pack"
-CASSETTE = REPO / "tests" / "cassettes" / "outline_writer_pulse.json"
 
 VK_TECH_ARCHETYPES = {Archetype.TITLE, Archetype.CARDS, Archetype.KPI, Archetype.CHART, Archetype.TABLE,
                       Archetype.PROCESS, Archetype.IMAGE_TEXT, Archetype.BULLETS, Archetype.CLOSING, Archetype.SECTION}
 
 
-class FakeClient:
-    """Подменяет LLMClient: отдаёт заранее записанные ответы по очереди и ведёт журнал вызовов как настоящий."""
-
-    text_model = "fake-text"
-    vision_model = "fake-vision"
-    image_model = ""
-    images_enabled = False
-    base_url = "fake://"
-
-    def __init__(self, *responses: dict | str) -> None:
-        self.responses = list(responses)
-        self.calls: list[LLMCall] = []
-        self.inputs: list[dict] = []
-
-    def run_skill(self, skill, images=None, **inputs):
-        self.inputs.append(inputs)
-        self.calls.append(LLMCall(skill.id, self.text_model, 0.01, 10, 10))
-        return self.responses.pop(0) if len(self.responses) > 1 else self.responses[0]
-
-
 def cassette() -> dict:
-    return json.loads(CASSETTE.read_text("utf-8"))
+    return load_cassette("outline_writer_pulse")
 
 
 def test_cassette_becomes_valid_outline() -> None:

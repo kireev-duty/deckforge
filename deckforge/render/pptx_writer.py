@@ -246,6 +246,10 @@ class DeckWriter:
                     _remove(sp)
                 elif sp.find("p:txBody", NS) is not None:
                     clear_text(sp)
+            elif sp.find("p:nvSpPr/p:nvPr/p:ph", NS) is not None:
+                # пустой текстовый плейсхолдер в редакторе показывает подсказку лейаута, а LibreOffice
+                # рисует в PDF «Образец текста» — удаляем целиком, а не очищаем (I02 empty_placeholder)
+                _remove(sp)
             elif sp.find("p:txBody", NS) is not None:
                 clear_text(sp)
         # текст образца вне слотов и фиксированных элементов («Вставить фото», названия продуктов,

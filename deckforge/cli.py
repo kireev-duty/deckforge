@@ -27,9 +27,11 @@ def run_cmd(
     outline: Optional[Path] = typer.Option(None, "--outline", help="готовый outline.json — шаг content и LLM пропускаются"),
     output_dir: Optional[Path] = typer.Option(None, "--output-dir", "-o", help="переопределить output_dir из конфига"),
     render_png: bool = typer.Option(False, "--png", help="PNG-превью и contact.png для каждой колоды"),
+    no_fix: bool = typer.Option(False, "--no-fix", help="не применять автофиксы (audit.autofix: false)"),
+    no_judge: bool = typer.Option(False, "--no-judge", help="без VLM-судьи (audit.contextual: false) — быстрее и без API"),
     verbose: bool = typer.Option(False, "--verbose", "-v"),
 ) -> None:
-    """Прогон по конфигу: шаблон + контент-пакет → outline → колоды по стратегиям + manifest.json."""
+    """Прогон по конфигу: шаблон + контент-пакет → outline → колоды по стратегиям + аудит/автофикс + manifest.json."""
     logging.basicConfig(level=logging.INFO if verbose else logging.WARNING, format="%(levelname)s %(name)s: %(message)s")
     load_dotenv()
     cfg = load_config(config)
@@ -37,6 +39,10 @@ def run_cmd(
         cfg = cfg.model_copy(update={"output_dir": output_dir.resolve()})
     if render_png:
         cfg = cfg.model_copy(update={"render_png": True})
+    if no_fix or no_judge:
+        audit = cfg.audit.model_copy(update={**({"autofix": False} if no_fix else {}),
+                                             **({"contextual": False} if no_judge else {})})
+        cfg = cfg.model_copy(update={"audit": audit})
     ready = DeckOutline.model_validate_json(outline.read_text("utf-8")) if outline else None
     result = run(cfg, outline=ready, progress=lambda m: typer.echo(f"  {m}"))
     for w in result.warnings:
@@ -50,21 +56,65 @@ def audit_cmd(
     template: Path = typer.Option(..., "--template", "-t", help="шаблон .pptx, по которому собрана колода"),
     ir: Optional[Path] = typer.Option(None, "--ir", help="<strategy>.ir.json — точнее проверки шаблонности (T02/T03/T05)"),
     checks: Optional[str] = typer.Option(None, "--checks", help="какие проверки: L03,T06 (по умолчанию все)"),
+    contextual: bool = typer.Option(False, "--contextual", help="плюс VLM-судья по PNG (нужны LibreOffice и API)"),
+    png_dir: Optional[Path] = typer.Option(None, "--png-dir", help="готовые PNG слайдов (иначе рендерятся в out/render)"),
+    outline: Optional[Path] = typer.Option(None, "--outline", help="outline.json — факты для судьи по sources"),
+    content_pack: Optional[Path] = typer.Option(None, "--content-pack", help="папка контент-пакета (факты для C04)"),
+    fix_plan: bool = typer.Option(False, "--fix-plan", help="показать, какие находки чинятся автофиксом и как"),
     json_out: Optional[Path] = typer.Option(None, "--json", help="сохранить AuditReport в JSON"),
     limit: int = typer.Option(80, "--limit", help="сколько строк показать"),
 ) -> None:
-    """Детерминированный аудит колоды: таблица находок (слайд, severity, проверка, сообщение, autofix)."""
-    from deckforge.audit import audit_deck, report_markdown
+    """Аудит колоды: детерминированные проверки (+ VLM-судья) → таблица находок; аудит колоду не меняет."""
+    from deckforge.audit import audit_deck, report_markdown, with_contextual
+    from deckforge.core.autofix import fix_plan_rows
     from deckforge.core.ir import DeckIR
     from deckforge.parsing.dna import build_dna
 
     dna = build_dna(template)
     deck_ir = DeckIR.model_validate_json(ir.read_text("utf-8")) if ir else None
     report = audit_deck(deck, dna, deck_ir, checks=checks.split(",") if checks else None)
+    if contextual:
+        report = _judge(report, deck, dna, deck_ir, png_dir, outline, content_pack)
     if json_out:
         json_out.write_text(report.model_dump_json(indent=1), "utf-8")
     typer.echo(report_markdown(report, max_rows=limit))
+    if fix_plan:
+        rows = fix_plan_rows(report)
+        typer.echo("\n| # | слайд | проверка | фикс | как | что сделает |\n|---|---|---|---|---|---|")
+        for r in rows[:limit]:
+            typer.echo(f"| {r['n']} | {r['slide_idx'] + 1} | {r['check_id']} | {r['fix']} | {r['how']} | {r['description']} |")
+        typer.echo(f"\nsafe — применится в `run` автоматически; ir — по выбору пользователя; replan — только предложение; "
+                   f"template — дизайн шаблона, не чиним. Всего {len(rows)} из {len(report.findings)} находок с фиксом.")
     raise typer.Exit(code=1 if report.errors else 0)
+
+
+def _judge(report, deck: Path, dna, deck_ir, png_dir: Optional[Path], outline: Optional[Path], content_pack: Optional[Path]):
+    """VLM-судья для CLI: PNG (готовые или рендер), текст из IR или из самого pptx."""
+    import time
+
+    from deckforge.audit.contextual import CHECK_IDS, judge_deck, slides_from_context, slides_from_ir
+    from deckforge.llm.client import LLMClient
+
+    load_dotenv()
+    if png_dir is not None:
+        pngs = sorted(p for p in png_dir.glob("*.png") if p.name != "contact.png")
+    else:
+        from deckforge.export.render import render
+
+        pngs = render(deck, Path("out/render") / deck.stem)
+    ready = DeckOutline.model_validate_json(outline.read_text("utf-8")) if outline else None
+    if deck_ir is not None:
+        from deckforge.content import load_content_pack
+
+        pack = load_content_pack(content_pack) if content_pack else None
+        slides = slides_from_ir(deck_ir, ready, pack)
+    else:
+        from deckforge.audit.context import AuditContext
+
+        slides = slides_from_context(AuditContext(deck, dna))
+    t0 = time.perf_counter()
+    found = judge_deck(pngs, slides, LLMClient(), language=ready.language if ready else "ru")
+    return with_contextual(report, found, CHECK_IDS, time.perf_counter() - t0)
 
 
 def main() -> None:

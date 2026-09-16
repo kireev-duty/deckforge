@@ -9,10 +9,10 @@ language: ru
 target_slides: 12                            # ориентир для outline; итоговый объём задаёт стратегия
 strategies: [executive, narrative, visual]   # три варианта вёрстки на одном outline
 images: auto                                 # off | auto | always      (пока не выполняется — см. run.json)
-audit:                                       # (пока не выполняется — см. run.json)
-  deterministic: true
-  contextual: true
-  autofix: true                              # применить безопасные фиксы без вопросов
+audit:
+  deterministic: true                        # 24 проверки по XML (docs/AUDIT.md) → <strategy>.audit.json
+  contextual: true                           # VLM-судья по PNG (нужны LibreOffice и API; --no-judge выключает)
+  autofix: true                              # безопасные фиксы без вопросов → re-render → повторный аудит (--no-fix выключает)
 export: [pptx, pdf, html]                    # pdf/html пока не выполняются — см. run.json
 output_dir: out/run/vk_tech                  # финальные 9 колод складываются в examples/output/ отдельным прогоном
 render_png: false                            # PNG-превью + contact.png (LibreOffice, ~10 с на колоду)

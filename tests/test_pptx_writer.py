@@ -152,14 +152,40 @@ def test_chart_slide_cloned_twice(template_path, tmp_path: Path):
     assert len(xlsx) == 2
     assert _dangling(prs) == 0
 
-    # 2) с ChartSpec → образцовой диаграммы нет, есть новая нативная
-    spec = ChartSpec(kind="column", title="Тест", categories=["a", "b"], series={"s1": [1, 2]})
-    el = Element(slot_id=chart_slot.id, kind=SlotKind.CHART, box=chart_slot.box, chart=spec)
+    # 2) с ChartSpec → образцовой диаграммы нет, есть новая нативная; data_labels (autofix I05) → c:dLbls, y_label → ось
+    spec = ChartSpec(kind="column", title="Тест", categories=["a", "b"], series={"s1": [1, 2]}, y_label="часы")
+    el = Element(slot_id=chart_slot.id, kind=SlotKind.CHART, box=chart_slot.box, chart=spec,
+                 style_overrides={"data_labels": True})
     slides = [SlideIR(idx=0, exemplar_id=e.id, archetype=e.archetype, elements=[el], outline_ref=0)]
     prs = Presentation(str(render_pptx(_deck(exemplars, slides), tpl, exemplars, tmp_path / "spec.pptx")))
     charts = [sh for sh in prs.slides[0].shapes if sh.has_chart]
     assert len(charts) == 1 and charts[0].chart.chart_title.text_frame.text == "Тест"
+    chart = charts[0].chart
+    assert chart.plots[0].has_data_labels and chart.plots[0].data_labels.number_format == "0"
+    assert chart.value_axis.has_title and chart.value_axis.axis_title.text_frame.text == "часы"
     assert _dangling(prs) == 0
+
+
+def test_unfilled_text_placeholder_is_removed(template_path, tmp_path: Path):
+    """ЛЦТ2026: образцы на плейсхолдерах. Незаполненный body-ph удаляется, а не остаётся пустым
+    (в редакторе — подсказка лейаута, у LibreOffice в PDF — «Образец текста»)."""
+    tpl = template_path("ЛЦТ2026")
+    exemplars = [p.to_exemplar() for p in classify_template(tpl)]
+    src = Presentation(str(tpl))
+    with_body = [(i, e) for i, e in enumerate(exemplars)
+                 if any(sh.is_placeholder and sh.placeholder_format.type is not None
+                        and str(sh.placeholder_format.type).startswith("BODY") for sh in src.slides[i].shapes)
+                 and any(s.kind == SlotKind.TITLE for s in e.slots)]
+    assert with_body, "в holdout ожидался образец с body-плейсхолдером"
+    idx, e = with_body[0]
+    title = next(s for s in e.slots if s.kind == SlotKind.TITLE)
+    el = Element(slot_id=title.id, kind=SlotKind.TITLE, box=title.box, paragraphs=[Paragraph(runs=[TextRun(text="Т")])])
+    slides = [SlideIR(idx=0, exemplar_id=e.id, archetype=e.archetype, elements=[el], outline_ref=0)]
+    prs = Presentation(str(render_pptx(_deck(exemplars, slides), tpl, exemplars, tmp_path / "ph.pptx")))
+    empty_ph = [sh for sh in prs.slides[0].shapes if sh.is_placeholder and sh.has_text_frame and not sh.text_frame.text.strip()
+                and str(sh.placeholder_format.type).startswith("BODY")]
+    assert not empty_ph
+    assert any(sh.has_text_frame and sh.text_frame.text == "Т" for sh in prs.slides[0].shapes)
 
 
 def test_picture_fill_and_crop(template_path, tmp_path: Path):

@@ -34,6 +34,12 @@ def shorten(text: str, max_chars: int | None) -> str:
     text = normalize(text)
     if not max_chars or len(text) <= max_chars:
         return text
+    return cut_tail(text, max_chars) or _cut_words(text, max_chars)
+
+
+def cut_tail(text: str, max_chars: int) -> str | None:
+    """Срезать хвост по смысловому разделителю (тире, двоеточие, запятая…) так, чтобы уложиться в max_chars.
+    None — ни один разделитель не подходит (голова короче 40 % лимита или всё равно не влезает)."""
     for sep in TAIL_SEPARATORS:
         idx = text.find(sep)
         while idx > 0:
@@ -41,7 +47,7 @@ def shorten(text: str, max_chars: int | None) -> str:
             if len(head) <= max_chars and len(head) >= max_chars * 0.4:
                 return head
             idx = text.find(sep, idx + 1)
-    return _cut_words(text, max_chars)
+    return None
 
 
 def shorten_words(text: str, max_words: int | None) -> str:
@@ -139,4 +145,4 @@ def _cut_words(text: str, max_chars: int) -> str:
     return cut.rstrip(" ,;:—–(") + ELLIPSIS
 
 
-__all__ = ["chars_at_scale", "fit_number", "fit_size", "normalize", "shorten", "shorten_words", "slot_capacity", "split_label_body", "split_number_unit"]
+__all__ = ["chars_at_scale", "cut_tail", "fit_number", "fit_size", "normalize", "shorten", "shorten_words", "slot_capacity", "split_label_body", "split_number_unit"]

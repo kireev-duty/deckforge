@@ -3,7 +3,7 @@
 Минимальная версия (день 5): тип, данные, заголовок, шрифт/цвета из style_overrides.
 Полная стилизация под палитру DNA (сетка, подписи данных, толщина линий) — отдельный шаг.
 
-style_overrides: font, size_pt, text_color, accent, palette ("0077FF,00AEE8,…").
+style_overrides: font, size_pt, text_color, accent, palette ("0077FF,00AEE8,…"), data_labels (подписи значений).
 """
 
 from __future__ import annotations
@@ -92,9 +92,17 @@ def add_chart(slide: Slide, spec: ChartSpec, box: Box, overrides: dict | None = 
         chart.value_axis.has_major_gridlines = False
         chart.value_axis.format.line.fill.background()
         chart.category_axis.format.line.fill.background()
-        if spec.unit:
+        axis_title = spec.unit or spec.y_label
+        if axis_title:
             chart.value_axis.has_title = True
-            chart.value_axis.axis_title.text_frame.text = spec.unit
+            chart.value_axis.axis_title.text_frame.text = axis_title
+    if overrides.get("data_labels"):
+        # подписи значений на точках (autofix add_chart_labels для I05); целые — без дробной части
+        plot.has_data_labels = True
+        integral = all(float(v).is_integer() for vs in spec.series.values() for v in vs)
+        plot.data_labels.number_format = "0" if integral else "0.0"
+        plot.data_labels.number_format_is_linked = False
+        plot.data_labels.font.size = Pt(max(8.0, float(overrides.get("size_pt") or 12) - 2))
     chart.has_legend = len(spec.series) > 1 or spec.kind in ("pie", "doughnut")
     if chart.has_legend:
         chart.legend.position = XL_LEGEND_POSITION.BOTTOM

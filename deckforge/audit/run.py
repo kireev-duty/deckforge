@@ -47,13 +47,22 @@ def _select(checks: Iterable[str] | None) -> dict:
     return out
 
 
+def with_contextual(report: AuditReport, findings: list[Finding], checks: Iterable[str], duration_s: float = 0.0) -> AuditReport:
+    """Добавить находки VLM-судьи к детерминированному отчёту (один AuditReport на колоду)."""
+    merged = [*report.findings, *findings]
+    merged.sort(key=lambda f: (f.slide_idx, SEVERITY_ORDER[f.severity], f.check_id))
+    return report.model_copy(update={"findings": merged, "checks_run": [*report.checks_run, *checks],
+                                     "duration_s": round(report.duration_s + duration_s, 3)})
+
+
 def summary(report: AuditReport) -> dict:
-    """Компактная сводка для manifest.json: по severity, по проверкам, по слайдам."""
+    """Компактная сводка для manifest.json: по severity, по проверкам, по слайдам, сколько контекстуальных."""
     by_sev = Counter(f.severity.value for f in report.findings)
     by_check = Counter(f.check_id for f in report.findings)
     by_slide = Counter(f.slide_idx for f in report.findings if f.severity != Severity.INFO)
     return {
         "errors": by_sev.get("error", 0), "warnings": by_sev.get("warning", 0), "info": by_sev.get("info", 0),
+        "contextual": sum(1 for f in report.findings if f.kind == "contextual"),
         "by_check": dict(sorted(by_check.items())),
         "slides_with_issues": sorted(by_slide),
         "checks_run": len(report.checks_run), "duration_s": report.duration_s,
@@ -75,4 +84,4 @@ def report_markdown(report: AuditReport, max_rows: int = 80) -> str:
     return "\n".join(lines)
 
 
-__all__ = ["audit_deck", "report_markdown", "summary"]
+__all__ = ["audit_deck", "report_markdown", "summary", "with_contextual"]

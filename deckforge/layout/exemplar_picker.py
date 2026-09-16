@@ -159,7 +159,8 @@ def score_exemplar(e: Exemplar, n: Needs, strategy: Strategy, slide_area: int) -
             score += {"minimal": 0.5, "preferred": 3.0, "always": 5.0}[strategy.images]
             score -= EXTRA_PICTURE_PENALTY * (pics - 1)  # картинка одна — остальные рамки останутся с фото образца
         else:
-            score += {"minimal": -3.0, "preferred": -3.0, "always": -2.0}[strategy.images]
+            # без картинки рамка образца останется чёрным прямоугольником/чужим фото (VK Education image_text)
+            score += {"minimal": -3.0, "preferred": -5.0, "always": -2.0}[strategy.images]
     if icons and strategy.icons:
         score += 1.0
     # плотность

@@ -8,7 +8,7 @@ audience: "руководители продуктовых направлени�
 language: ru
 target_slides: 12                            # ориентир для outline; итоговый объём задаёт стратегия
 strategies: [executive, narrative, visual]   # три варианта вёрстки на одном outline
-images: auto                                 # off | auto | always      (пока не выполняется — см. run.json)
+images: auto                                 # off | auto (по стратегии: executive без картинок, narrative — где уместно, visual — везде) | always
 audit:
   deterministic: true                        # 24 проверки по XML (docs/AUDIT.md) → <strategy>.audit.json
   contextual: true                           # VLM-судья по PNG (нужны LibreOffice и API; --no-judge выключает)

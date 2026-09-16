@@ -67,6 +67,9 @@ ALIGN_TOL = 0.03  # допуск выравнивания по одной оси
 TITLE_ZONE = 0.30  # заголовок без плейсхолдера ищем в верхних 30 % слайда
 TITLE_MAX_CHARS = 80
 PLATE_MAX_SHARE = 0.8  # плашка под заголовком уже 80 % его бокса — вместимость считаем по плашке
+CARD_MAX_AREA = 0.40  # подложка карточки — не больше 40 % слайда (иначе это фон)
+CARD_MARGIN = 0.08  # отступ от нижнего края карточки при расчёте вместимости
+DATA_SLOT_MIN_AREA = 0.08  # chart/table-слот меньше 8 % слайда — это подпись внутри нарисованной диаграммы, растягиваем на декор
 BIG_TITLE_RATIO = 1.6  # заголовок «крупный», если кегль ≥ 1.6× медианного на слайде
 BIG_TITLE_H = 0.12  # …или высота бокса ≥ 12 % слайда
 KPI_SIZE_RATIO = 2.0  # число «крупное», если кегль ≥ 2× медианного
@@ -906,11 +909,35 @@ def _backing_plate(s: ShapeInfo, shapes: list[ShapeInfo]) -> Box | None:
     return None
 
 
+def _card_room(s: ShapeInfo, shapes: list[ShapeInfo]) -> Box | None:
+    """Текст внутри карточки: фигура-подложка без текста накрывает бокс целиком и заметно ниже его края.
+
+    В образцах текстовый бокс карточки часто в одну строку (автоподбор высоты), а сама карточка
+    высокая — вместимость считаем до нижнего края карточки с отступом.
+    """
+    best: ShapeInfo | None = None
+    for p in shapes:
+        if p is s or p.kind != "shape" or p.text or p.area > CARD_MAX_AREA:
+            continue
+        inside = (p.box.x <= s.box.x + s.box.w * 0.05 and p.box.x2 >= s.box.x2 - s.box.w * 0.05
+                  and p.box.y <= s.box.y and p.box.y2 >= s.box.y2)
+        if inside and p.box.y2 - s.box.y2 > s.box.h and (best is None or p.area < best.area):
+            best = p
+    if best is None:
+        return None
+    margin = int(best.box.h * CARD_MARGIN)
+    return Box(x=s.box.x, y=s.box.y, w=s.box.w, h=max(s.box.h, best.box.y2 - margin - s.box.y))
+
+
 def _slot(s: ShapeInfo, kind: SlotKind, shapes: list[ShapeInfo] | None = None) -> Slot:
     max_chars = max_lines = max_items = None
     if kind in (SlotKind.TITLE, SlotKind.SUBTITLE, SlotKind.BODY, SlotKind.CAPTION, SlotKind.LABEL, SlotKind.NUMBER):
-        plate = _backing_plate(s, shapes) if shapes and kind == SlotKind.TITLE else None
-        max_chars, max_lines = _capacity(s, plate)
+        room = None
+        if shapes and kind == SlotKind.TITLE:
+            room = _backing_plate(s, shapes)
+        elif shapes and kind == SlotKind.BODY:
+            room = _card_room(s, shapes)
+        max_chars, max_lines = _capacity(s, room)
         if kind == SlotKind.BODY:
             max_items = max_lines
     return Slot(
@@ -942,7 +969,7 @@ def build_slots(f: SlideFeatures, archetype: Archetype) -> list[Slot]:
             kind = SlotKind.CAPTION
         else:
             kind = SlotKind.BODY
-        slots.append(_slot(s, kind))
+        slots.append(_slot(s, kind, f.shapes))
     for s in f.shapes:
         if s.fixed:
             continue
@@ -1066,17 +1093,19 @@ def apply_vlm(p: SlideProfile, res: dict) -> SlideProfile:
         if role in {k.value for k in SlotKind} and slot.kind != protected:
             slot.kind = SlotKind(role)
         kept.append(slot)
-    p.slots = _normalize_vlm_slots(kept, p)
+    p.slots = _normalize_vlm_slots(kept, p, decor)
     p.fixed_ids = sorted(set(p.fixed_ids) | (decor & {s.id for s in p.features.shapes}))
     p.ambiguous = False
     return p
 
 
-def _normalize_vlm_slots(slots: list[Slot], p: SlideProfile) -> list[Slot]:
+def _normalize_vlm_slots(slots: list[Slot], p: SlideProfile, decor: set[str] | None = None) -> list[Slot]:
     """Модель иногда ставит title на имя спикера или chart на каждый столбец нарисованной диаграммы.
 
     Заголовок — один (плейсхолдер title, если он есть); повторные → label. Несколько chart/table-слотов
     на обычных фигурах схлопываются в один слот с объединённым боксом — туда встанет нативный объект.
+    Chart/table на крошечной фигуре (число в центре нарисованного кольца) растягивается на декор вокруг
+    (`decor_ids` модели) — иначе нативная диаграмма встанет в бокс цифры, а нарисованное кольцо останется.
     """
     title_id = p.features.title.id if p.features.title is not None else None
     titles = [s for s in slots if s.kind == SlotKind.TITLE]
@@ -1095,7 +1124,21 @@ def _normalize_vlm_slots(slots: list[Slot], p: SlideProfile) -> list[Slot]:
             merged = drawn[0].model_copy(update={"box": Box(x=x1, y=y1, w=x2 - x1, h=y2 - y1), "sample_text": None})
             out.append(merged)
             slots = [s for s in slots if s not in drawn]
-    return slots + out
+    slots = slots + out
+    if decor:
+        by_id = {sh.id: sh for sh in p.features.shapes}
+        for slot in slots:
+            if slot.kind not in (SlotKind.CHART, SlotKind.TABLE) or slot.id in native:
+                continue
+            if by_id.get(slot.id) is not None and by_id[slot.id].area >= DATA_SLOT_MIN_AREA:
+                continue
+            around = [by_id[d] for d in decor if d in by_id and not by_id[d].fixed and not by_id[d].is_text]
+            if not around:
+                continue
+            x1, y1 = min([slot.box.x] + [sh.box.x for sh in around]), min([slot.box.y] + [sh.box.y for sh in around])
+            x2, y2 = max([slot.box.x2] + [sh.box.x2 for sh in around]), max([slot.box.y2] + [sh.box.y2 for sh in around])
+            slot.box = Box(x=x1, y=y1, w=x2 - x1, h=y2 - y1)
+    return slots
 
 
 def classify_template(

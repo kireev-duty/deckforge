@@ -46,6 +46,7 @@ TRUNCATION_PENALTY = 3.0  # заголовок или список не влез
 MIN_TABLE_COL_W = int(1.0 * EMU_PER_INCH)  # уже — таблица нечитаема
 OVERLAP_PENALTY = 5.0  # заголовок образца заходит под контентный блок — текст наложится
 OVERLAP_SHARE = 0.2
+EXTRA_PICTURE_PENALTY = 2.5  # каждая лишняя рамка под картинку сверх одной: контент даёт одну иллюстрацию
 IMPOSSIBLE = -1000.0
 
 
@@ -154,7 +155,9 @@ def score_exemplar(e: Exemplar, n: Needs, strategy: Strategy, slide_area: int) -
     pics, icons = kinds[SlotKind.PICTURE], kinds[SlotKind.ICON]
     if pics:
         if n.image:
-            score += {"minimal": 0.5, "preferred": 2.0, "always": 3.0}[strategy.images]
+            # иллюстрация уже сгенерирована — образец с одной рамкой должен обыгрывать текстовый
+            score += {"minimal": 0.5, "preferred": 3.0, "always": 5.0}[strategy.images]
+            score -= EXTRA_PICTURE_PENALTY * (pics - 1)  # картинка одна — остальные рамки останутся с фото образца
         else:
             score += {"minimal": -3.0, "preferred": -3.0, "always": -2.0}[strategy.images]
     if icons and strategy.icons:

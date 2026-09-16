@@ -22,6 +22,7 @@ GLYPH_WIDTH = {"%": 1.9, "‰": 2.2, "×": 1.4, ",": 0.6, ".": 0.6, " ": 0.5}
 DIGIT_WIDTH = 1.3
 TITLE_LINES = 2  # заголовок может занять две строки, даже если бокс образца рассчитан на одну
 ELLIPSIS = "…"
+WORD_TOLERANCE = 3  # превышение лимита слов, при котором пункт не режем (обрезка «…» хуже лишних слов)
 MIN_WORDS_TO_CUT = 2  # тексты не длиннее стольких слов по словам не режем (нечего терять — только калечить)
 _WS = re.compile(r"\s+")
 
@@ -64,6 +65,8 @@ def shorten_words(text: str, max_words: int | None) -> str:
                 return head
             idx = text.find(sep, idx + 1)
     words = text.split(" ")
+    if len(words) <= max_words + WORD_TOLERANCE:  # чуть длиннее лимита — лучше целиком, чем «…» посреди мысли
+        return text
     return " ".join(words[:max_words]).rstrip(" ,;:—–(") + ELLIPSIS
 
 

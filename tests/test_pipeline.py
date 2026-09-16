@@ -66,7 +66,8 @@ def test_run_with_fake_llm(template_path, tmp_path: Path) -> None:
         assert len(m["plan"]) == len(m["choices"]) >= 8 and d.stats["skipped"] == 0
     run_json = json.loads(res.run_json.read_text("utf-8"))
     assert run_json["timings_s"]["total"] > 0
-    assert set(run_json["not_implemented"]) == {"images"}
+    assert run_json["not_implemented"] == []
+    assert all(json.loads(d.manifest.read_text("utf-8"))["images"].get("generated", 0) == 0 for d in res.decks)
     assert (tmp_path / "run" / "dna.json").exists() and run_json["decks"][0]["audit"]["checks_run"] == 24
     assert (tmp_path / "run" / "compare.md").read_text("utf-8").count("\n") >= 3
     assert any(m.startswith("outline:") for m in messages)
@@ -106,6 +107,52 @@ def test_run_with_ready_outline_skips_llm(template_path, tmp_path: Path) -> None
     assert m["skills"] == {} and m["llm_calls"] == [] and m["timings_s"]["outline"] == 0
     assert m["audit"] == {} and res.decks[0].audit is None and "audit" not in m["timings_s"]
     assert json.loads(res.run_json.read_text("utf-8"))["not_implemented"] == []
+
+
+class ImageFakeClient(FakeClient):
+    """FakeClient с text-to-image: пишет 1×1 PNG и считает вызовы."""
+
+    images_enabled = True
+    image_model = "fake-t2i"
+
+    def generate_image(self, prompt: str, out_path: Path, size: str = "1024x576") -> Path:
+        from PIL import Image
+
+        from deckforge.llm.client import LLMCall
+
+        Image.new("RGB", (64, 36), (0, 119, 255)).save(out_path)
+        self.calls.append(LLMCall("image_gen", self.image_model, 0.01))
+        return out_path
+
+
+def test_images_generated_cached_and_rendered(template_path, tmp_path: Path) -> None:
+    """visual (images: always): иллюстрации генерируются до вёрстки, попадают в picture-слот и в .pptx,
+    повторный прогон берёт их из кэша; images: off — ни одного вызова."""
+    from deckforge.content.images import MAX_IMAGES
+
+    cfg = RunConfig(template=template_path("VK Tech"), content_pack=REPO / "examples" / "content_pack",
+                    strategies=["visual"], output_dir=tmp_path / "img", audit=NO_JUDGE)
+    client = ImageFakeClient(by_skill={"image_prompter": [{"prompt": "abstract blue gradient, no text"}]})
+    deck = run(cfg, client=client, outline=_outline()).decks[0]
+    m = json.loads(deck.manifest.read_text("utf-8"))
+    gen = [c for c in client.calls if c.skill == "image_gen"]
+    assert 1 <= len(gen) <= MAX_IMAGES and m["images"]["generated"] == len(gen) and m["images"]["mode"] == "always"
+    assert m["skills"]["image_prompter"] == "v1" and m["timings_s"]["images"] >= 0
+    ir = json.loads(deck.ir_json.read_text("utf-8"))
+    with_pic = [el for s in ir["slides"] for el in s["elements"] if el["image_path"]]
+    assert with_pic, "сгенерированная картинка должна встать в picture-слот"
+    from pptx import Presentation
+
+    prs = Presentation(str(deck.pptx))
+    assert sum(1 for sl in prs.slides for sh in sl.shapes if sh.shape_type is not None and "PICTURE" in str(sh.shape_type)
+               or sh._element.find(".//{http://schemas.openxmlformats.org/drawingml/2006/main}blip") is not None) >= 1
+    # повтор — из кэша, новых генераций нет
+    again = run(cfg, client=client, outline=_outline()).decks[0]
+    m2 = json.loads(again.manifest.read_text("utf-8"))
+    assert m2["images"]["cache"] == len(gen) and m2["images"]["generated"] == 0
+    assert len([c for c in client.calls if c.skill == "image_gen"]) == len(gen)
+    off = run(cfg.model_copy(update={"images": "off", "output_dir": tmp_path / "off"}), client=client, outline=_outline()).decks[0]
+    assert json.loads(off.manifest.read_text("utf-8"))["images"] == {}
 
 
 def _outline():

@@ -295,6 +295,7 @@ def _merge(a: OutlineSlide, b: OutlineSlide) -> OutlineSlide:
     merged.subtitle = b.title
     merged.bullets = _items(a) + _items(b)
     merged.steps, merged.kpis, merged.quote, merged.quote_author = [], [], None, None
+    merged.image = a.image or b.image
     merged.sources = list(dict.fromkeys(a.sources + b.sources))
     merged.speaker_notes = "\n".join(x for x in (a.speaker_notes, b.speaker_notes) if x)
     return merged
@@ -332,8 +333,8 @@ def _text_only(s: OutlineSlide) -> bool:
 def _mergeable(s: OutlineSlide) -> bool:
     """Слайд с одним видом контента, который можно превратить в пункты карточек: буллеты, шаги,
     KPI («значение — подпись») или цитата («„…“ — автор»). Диаграммы, таблицы, картинки — нет."""
-    if s.archetype not in _MERGEABLE or s.chart or s.table or s.image:
-        return False
+    if s.archetype not in _MERGEABLE or s.chart or s.table:
+        return False  # картинка слиянию не мешает: она остаётся у объединённого слайда
     kinds = sum(1 for x in (s.bullets, s.steps, s.kpis, s.quote) if x)
     return kinds == 1
 

@@ -57,6 +57,7 @@ def run_cmd(
     render_png: bool = typer.Option(False, "--png", help="PNG-превью и contact.png для каждой колоды"),
     no_fix: bool = typer.Option(False, "--no-fix", help="не применять автофиксы (audit.autofix: false)"),
     no_judge: bool = typer.Option(False, "--no-judge", help="без VLM-судьи (audit.contextual: false) — быстрее и без API"),
+    no_images: bool = typer.Option(False, "--no-images", help="без иллюстраций (images: off)"),
     verbose: bool = typer.Option(False, "--verbose", "-v"),
 ) -> None:
     """Прогон по конфигу: шаблон + контент-пакет → outline → колоды по стратегиям + аудит/автофикс + manifest.json."""
@@ -71,6 +72,8 @@ def run_cmd(
         audit = cfg.audit.model_copy(update={**({"autofix": False} if no_fix else {}),
                                              **({"contextual": False} if no_judge else {})})
         cfg = cfg.model_copy(update={"audit": audit})
+    if no_images:
+        cfg = cfg.model_copy(update={"images": "off"})
     ready = DeckOutline.model_validate_json(outline.read_text("utf-8")) if outline else None
     result = run(cfg, outline=ready, progress=lambda m: typer.echo(f"  {m}"))
     for w in result.warnings:

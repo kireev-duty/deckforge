@@ -32,6 +32,7 @@ from deckforge.audit import summary as audit_summary
 from deckforge.audit.contextual import CHECK_IDS as CONTEXTUAL_CHECKS
 from deckforge.audit.contextual import judge_deck, slides_from_ir
 from deckforge.content import load_content_pack, write_outline
+from deckforge.content.images import illustrate
 from deckforge.core.autofix import plan_fixes
 from deckforge.core.ir import Archetype, AuditReport, DeckIR, DeckOutline, Exemplar, Finding, TemplateDNA
 from deckforge.core.strategy import load_strategy
@@ -148,6 +149,16 @@ class RunContext:
     contextual_on: bool = False
     warnings: list[str] = field(default_factory=list)
 
+    def client_for_images(self) -> LLMClient | None:
+        """Клиент для иллюстраций: общий клиент прогона, иначе — новый (outline мог быть передан готовым).
+        Без ключа T2I `illustrate` сам напишет предупреждение и ничего не сгенерирует."""
+        if self.client is None and self.cfg.images != "off":
+            try:
+                self.client = LLMClient()
+            except Exception as e:  # noqa: BLE001 — нет .env: колода собирается без картинок
+                self.warnings.append(f"images: клиент LLM недоступен ({str(e)[:80]}) — без иллюстраций")
+        return self.client
+
     @classmethod
     def prepare(cls, cfg: RunConfig, parsed: ParsedTemplate, outline: OutlineStep,
                 client: LLMClient | None = None) -> RunContext:
@@ -230,6 +241,19 @@ def build_deck(ctx: RunContext, strategy_name: str, progress: Progress | None = 
     cfg, parsed, outline = ctx.cfg, ctx.parsed, ctx.outline.outline
     out_dir = cfg.output_dir
     strategy = load_strategy(strategy_name)
+    deck_timings: dict[str, float] = {}
+    deck_warnings: list[str] = []
+    skills_used = dict(ctx.outline.skills_used)
+    images_info: dict = {}
+    if cfg.images != "off":
+        # иллюстрации до вёрстки: picker учитывает наличие картинки при выборе образца
+        ill = illustrate(outline, strategy, parsed.style, ctx.client_for_images(), out_dir, cfg_mode=cfg.images)
+        outline, images_info = ill.outline, ill.summary()
+        deck_warnings.extend(ill.warnings)
+        if ill.seconds:
+            deck_timings["images"] = ill.seconds
+        if ill.skill_version:
+            skills_used["image_prompter"] = ill.skill_version
     t0 = time.perf_counter()
     res: LayoutResult = build_deck_ir(outline, strategy, parsed.exemplars, parsed.tokens.template_id,
                                       parsed.tokens.slide_w, parsed.tokens.slide_h, parsed.style)
@@ -239,8 +263,8 @@ def build_deck(ctx: RunContext, strategy_name: str, progress: Progress | None = 
     render_pptx(res.ir, parsed.template, parsed.exemplars, pptx_out)
     t_render = time.perf_counter() - t0
 
-    deck_timings = {"layout": round(t_layout, 3), "render": round(t_render, 3)}
-    deck_warnings = list(res.warnings)
+    deck_timings.update({"layout": round(t_layout, 3), "render": round(t_render, 3)})
+    deck_warnings.extend(res.warnings)
     audit_path: Path | None = None
     audit_info: dict = {}
     report: AuditReport | None = None
@@ -264,7 +288,6 @@ def build_deck(ctx: RunContext, strategy_name: str, progress: Progress | None = 
         if err:
             deck_warnings.append(err)
         deck_timings["png"] = round(time.perf_counter() - t0, 3)
-    skills_used = dict(ctx.outline.skills_used)
     if ctx.contextual_on and pngs and report is not None:
         t0 = time.perf_counter()
         slides = slides_from_ir(res.ir, outline, ctx.pack)
@@ -305,6 +328,7 @@ def build_deck(ctx: RunContext, strategy_name: str, progress: Progress | None = 
         "warnings": [f"outline: {w}" for w in ctx.outline.warnings] + deck_warnings,
         "stats": st,
         "audit": audit_info,
+        "images": images_info,
         "exports": deck.exports,
         "timings_s": {"parse": parsed.seconds, "outline": ctx.outline.seconds, **deck_timings},
     }
@@ -439,7 +463,7 @@ def run(
 
 def run_summary(cfg: RunConfig, result: RunResult) -> dict:
     """Содержимое run.json — сводка прогона (читают UI и API)."""
-    not_implemented = [k for k, on in (("images", cfg.images != "off"), ("export:html", "html" in cfg.export)) if on]
+    not_implemented = [k for k, on in (("export:html", "html" in cfg.export),) if on]
     return {
         "created": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "config": json.loads(cfg.model_dump_json()),

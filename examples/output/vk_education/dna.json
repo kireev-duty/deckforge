@@ -1,0 +1,9295 @@
+{
+ "template_id": "6576a887482e",
+ "source_path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\data\\templates\\Шаблон презентации VK Education.pptx",
+ "slide_w": 12192000,
+ "slide_h": 6858000,
+ "colors": [
+  {
+   "hex": "FFFFFF",
+   "role": "background",
+   "usage": 142,
+   "source": "slides"
+  },
+  {
+   "hex": "000000",
+   "role": "text",
+   "usage": 472,
+   "source": "slides"
+  },
+  {
+   "hex": "0077FF",
+   "role": "accent",
+   "usage": 151,
+   "source": "slides"
+  },
+  {
+   "hex": "E1E1E1",
+   "role": "muted",
+   "usage": 15,
+   "source": "slides"
+  },
+  {
+   "hex": "3782BA",
+   "role": "unknown",
+   "usage": 10,
+   "source": "master"
+  },
+  {
+   "hex": "FF3885",
+   "role": "unknown",
+   "usage": 7,
+   "source": "slides"
+  },
+  {
+   "hex": "A0DFE0",
+   "role": "unknown",
+   "usage": 6,
+   "source": "slides"
+  }
+ ],
+ "typography": [
+  {
+   "role": "display",
+   "font": "Play",
+   "size_pt": 48.0,
+   "bold": false,
+   "color": "0077FF",
+   "usage": 196
+  },
+  {
+   "role": "h1",
+   "font": "Play",
+   "size_pt": 36.0,
+   "bold": false,
+   "color": "0077FF",
+   "usage": 860
+  },
+  {
+   "role": "h2",
+   "font": "Play",
+   "size_pt": 24.0,
+   "bold": false,
+   "color": "0077FF",
+   "usage": 75
+  },
+  {
+   "role": "h3",
+   "font": "Play",
+   "size_pt": 20.0,
+   "bold": false,
+   "color": "000000",
+   "usage": 458
+  },
+  {
+   "role": "body",
+   "font": "Play",
+   "size_pt": 16.1,
+   "bold": false,
+   "color": "000000",
+   "usage": 3528
+  },
+  {
+   "role": "caption",
+   "font": "Play",
+   "size_pt": 14.1,
+   "bold": false,
+   "color": "000000",
+   "usage": 2108
+  },
+  {
+   "role": "small",
+   "font": "Arial",
+   "size_pt": 9.0,
+   "bold": false,
+   "color": "000000",
+   "usage": 1605
+  }
+ ],
+ "fonts": [
+  "Play",
+  "Arial",
+  "Consolas"
+ ],
+ "grid": {
+  "slide_w": 12192000,
+  "slide_h": 6858000,
+  "margin_left": 658811,
+  "margin_right": 658812,
+  "margin_top": 692150,
+  "margin_bottom": 657225,
+  "columns_x": [
+   640080,
+   685800
+  ],
+  "rows_y": [
+   685800
+  ]
+ },
+ "fixed_elements": [],
+ "exemplars": [
+  {
+   "id": "slide1",
+   "source_index": 0,
+   "layout_name": "1_Титульный слайд",
+   "archetype": "title",
+   "slots": [
+    {
+     "id": "237",
+     "kind": "title",
+     "box": {
+      "x": 622261,
+      "y": 2921912,
+      "w": 10220325,
+      "h": 1661993
+     },
+     "max_chars": 24,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 60.0,
+     "placeholder_type": "title",
+     "sample_text": null
+    },
+    {
+     "id": "236",
+     "kind": "subtitle",
+     "box": {
+      "x": 658813,
+      "y": 4866865,
+      "w": 5012644,
+      "h": 553998
+     },
+     "max_chars": 35,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": "body",
+     "sample_text": null
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.033,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 0.9
+  },
+  {
+   "id": "slide2",
+   "source_index": 1,
+   "layout_name": "3_Титульный слайд",
+   "archetype": "title",
+   "slots": [
+    {
+     "id": "243",
+     "kind": "title",
+     "box": {
+      "x": 622262,
+      "y": 2598003,
+      "w": 7535420,
+      "h": 1661993
+     },
+     "max_chars": 17,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 60.0,
+     "placeholder_type": "title",
+     "sample_text": null
+    },
+    {
+     "id": "242",
+     "kind": "subtitle",
+     "box": {
+      "x": 658813,
+      "y": 4728001,
+      "w": 5012644,
+      "h": 553998
+     },
+     "max_chars": 35,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": "body",
+     "sample_text": null
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.033,
+   "thumbnail": null,
+   "tags": [
+    "титульный слайд",
+    "яркий фон",
+    "геометрический декор",
+    "логотип"
+   ],
+   "confidence": 0.9
+  },
+  {
+   "id": "slide3",
+   "source_index": 2,
+   "layout_name": "3_Титульный слайд",
+   "archetype": "title",
+   "slots": [
+    {
+     "id": "249",
+     "kind": "title",
+     "box": {
+      "x": 622261,
+      "y": 2112702,
+      "w": 6271699,
+      "h": 1994392
+     },
+     "max_chars": 37,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 48.0,
+     "placeholder_type": "title",
+     "sample_text": "Напишите темупрезентации в две или три строчки"
+    },
+    {
+     "id": "248",
+     "kind": "subtitle",
+     "box": {
+      "x": 2685321,
+      "y": 5072811,
+      "w": 5012644,
+      "h": 615553
+     },
+     "max_chars": 71,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": "body",
+     "sample_text": "Имя ФамилияОписание спикеры, должность и регалии"
+    },
+    {
+     "id": "250",
+     "kind": "picture",
+     "box": {
+      "x": 658813,
+      "y": 4577921,
+      "w": 1622854,
+      "h": 1622854
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.068,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 1.0
+  },
+  {
+   "id": "slide4",
+   "source_index": 3,
+   "layout_name": "2_Титульный слайд",
+   "archetype": "title",
+   "slots": [
+    {
+     "id": "256",
+     "kind": "title",
+     "box": {
+      "x": 622261,
+      "y": 2921912,
+      "w": 10220325,
+      "h": 1661993
+     },
+     "max_chars": 24,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 60.0,
+     "placeholder_type": "title",
+     "sample_text": null
+    },
+    {
+     "id": "255",
+     "kind": "subtitle",
+     "box": {
+      "x": 658813,
+      "y": 4866865,
+      "w": 10224000,
+      "h": 553998
+     },
+     "max_chars": 72,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": "body",
+     "sample_text": null
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.068,
+   "thumbnail": null,
+   "tags": [
+    "титульный слайд",
+    "логотип",
+    "геометрический декор",
+    "светлый фон"
+   ],
+   "confidence": 0.9
+  },
+  {
+   "id": "slide5",
+   "source_index": 4,
+   "layout_name": "4_Титульный слайд",
+   "archetype": "title",
+   "slots": [
+    {
+     "id": "262",
+     "kind": "title",
+     "box": {
+      "x": 622261,
+      "y": 2598003,
+      "w": 7597065,
+      "h": 1661993
+     },
+     "max_chars": 17,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 60.0,
+     "placeholder_type": "title",
+     "sample_text": null
+    },
+    {
+     "id": "261",
+     "kind": "subtitle",
+     "box": {
+      "x": 658813,
+      "y": 4728001,
+      "w": 5012644,
+      "h": 553998
+     },
+     "max_chars": 35,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": "body",
+     "sample_text": null
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.033,
+   "thumbnail": null,
+   "tags": [
+    "титульный слайд",
+    "логотип VK education",
+    "декоративные фигуры справа",
+    "светлый фон"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "id": "slide6",
+   "source_index": 5,
+   "layout_name": "Слайд со спикером",
+   "archetype": "image_text",
+   "slots": [
+    {
+     "id": "267",
+     "kind": "title",
+     "box": {
+      "x": 658813,
+      "y": 692150,
+      "w": 6192838,
+      "h": 1380285
+     },
+     "max_chars": 18,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 48.0,
+     "placeholder_type": "title",
+     "sample_text": null
+    },
+    {
+     "id": "268",
+     "kind": "body",
+     "box": {
+      "x": 658813,
+      "y": 2357767,
+      "w": 5142954,
+      "h": 2142466
+     },
+     "max_chars": 255,
+     "max_lines": 7,
+     "max_items": 7,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": "body",
+     "sample_text": null
+    },
+    {
+     "id": "269",
+     "kind": "picture",
+     "box": {
+      "x": 6096000,
+      "y": 0,
+      "w": 6096000,
+      "h": 6858000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": "pic",
+     "sample_text": null
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.632,
+   "thumbnail": null,
+   "tags": [
+    "2 колонки",
+    "текст слева",
+    "картинка справа",
+    "логотип"
+   ],
+   "confidence": 0.9
+  },
+  {
+   "id": "slide7",
+   "source_index": 6,
+   "layout_name": "Заголовок",
+   "archetype": "cards",
+   "slots": [
+    {
+     "id": "276",
+     "kind": "title",
+     "box": {
+      "x": 677334,
+      "y": 692150,
+      "w": 10855854,
+      "h": 644241
+     },
+     "max_chars": 42,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Пример оформления 4 текстовых блоков"
+    },
+    {
+     "id": "274",
+     "kind": "body",
+     "box": {
+      "x": 671512,
+      "y": 1773238,
+      "w": 5365752,
+      "h": 2156481
+     },
+     "max_chars": 295,
+     "max_lines": 7,
+     "max_items": 7,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "Шрифт для заголовков — VK Sans Display Medium Основной цвет — синий, но можно свободно использовать дополнительные."
+    },
+    {
+     "id": "275",
+     "kind": "body",
+     "box": {
+      "x": 6154737,
+      "y": 1775553,
+      "w": 5391150,
+      "h": 2156481
+     },
+     "max_chars": 297,
+     "max_lines": 7,
+     "max_items": 7,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "В заголовках уже заданнужный размер шрифтаВыравниваем текст по левому краю(исключения — схемы и таблицы)."
+    },
+    {
+     "id": "277",
+     "kind": "body",
+     "box": {
+      "x": 671512,
+      "y": 4044294,
+      "w": 5365752,
+      "h": 2156481
+     },
+     "max_chars": 295,
+     "max_lines": 7,
+     "max_items": 7,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "Шрифт для заголовков и акцентов — VK Sans Display Medium Основной цвет — синий, но можно свободно использовать дополнительные."
+    },
+    {
+     "id": "278",
+     "kind": "body",
+     "box": {
+      "x": 6154737,
+      "y": 4044294,
+      "w": 5391150,
+      "h": 2156481
+     },
+     "max_chars": 297,
+     "max_lines": 7,
+     "max_items": 7,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "В заголовках уже заданнужный размер шрифтаВыравниваем текст по левому краю(исключения — схемы и таблицы)."
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.555,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 0.7
+  },
+  {
+   "id": "slide8",
+   "source_index": 7,
+   "layout_name": "Заголовок",
+   "archetype": "cards",
+   "slots": [
+    {
+     "id": "283",
+     "kind": "title",
+     "box": {
+      "x": 677334,
+      "y": 692150,
+      "w": 10855854,
+      "h": 644241
+     },
+     "max_chars": 42,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Пример оформления 6 текстовых блоков"
+    },
+    {
+     "id": "284",
+     "kind": "body",
+     "box": {
+      "x": 677332,
+      "y": 1773238,
+      "w": 3542400,
+      "h": 2156481
+     },
+     "max_chars": 251,
+     "max_lines": 8,
+     "max_items": 8,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Шрифт для заголовковVK Sans Display Medium Основной цвет — синий, но можно свободно использовать дополнительные."
+    },
+    {
+     "id": "285",
+     "kind": "body",
+     "box": {
+      "x": 4334060,
+      "y": 1773238,
+      "w": 3542400,
+      "h": 2156481
+     },
+     "max_chars": 251,
+     "max_lines": 8,
+     "max_items": 8,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "В заголовках уже заданнужный размер шрифтаВыравниваем текст по левому краю (исключения — схемы и таблицы)."
+    },
+    {
+     "id": "286",
+     "kind": "body",
+     "box": {
+      "x": 7990788,
+      "y": 1773238,
+      "w": 3542400,
+      "h": 2156481
+     },
+     "max_chars": 251,
+     "max_lines": 8,
+     "max_items": 8,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Шрифт для заголовковVK Sans Display Medium Основной цвет — синий, но можно свободно использовать дополнительные."
+    },
+    {
+     "id": "287",
+     "kind": "body",
+     "box": {
+      "x": 677332,
+      "y": 4044294,
+      "w": 3542400,
+      "h": 2156481
+     },
+     "max_chars": 251,
+     "max_lines": 8,
+     "max_items": 8,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "В заголовках уже заданнужный размер шрифтаВыравниваем текст по левому краю (исключения — схемы и таблицы)."
+    },
+    {
+     "id": "288",
+     "kind": "body",
+     "box": {
+      "x": 4334060,
+      "y": 4044294,
+      "w": 3542400,
+      "h": 2156481
+     },
+     "max_chars": 251,
+     "max_lines": 8,
+     "max_items": 8,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Шрифт для заголовковVK Sans Display Medium Основной цвет — синий, но можно свободно использовать дополнительные."
+    },
+    {
+     "id": "289",
+     "kind": "body",
+     "box": {
+      "x": 7990788,
+      "y": 4044294,
+      "w": 3542400,
+      "h": 2156481
+     },
+     "max_chars": 251,
+     "max_lines": 8,
+     "max_items": 8,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "В заголовках уже заданнужный размер шрифтаВыравниваем текст по левому краю (исключения — схемы и таблицы)."
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.548,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 0.9
+  },
+  {
+   "id": "slide9",
+   "source_index": 8,
+   "layout_name": "Титульный слайд раздела",
+   "archetype": "section",
+   "slots": [
+    {
+     "id": "294",
+     "kind": "title",
+     "box": {
+      "x": 622628,
+      "y": 692150,
+      "w": 4666064,
+      "h": 1772793
+     },
+     "max_chars": 27,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 48.0,
+     "placeholder_type": "title",
+     "sample_text": "Пример слайда-разделителя"
+    },
+    {
+     "id": "301",
+     "kind": "subtitle",
+     "box": {
+      "x": 625793,
+      "y": 5245768,
+      "w": 3397250,
+      "h": 530970
+     },
+     "max_chars": 68,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 14.0,
+     "placeholder_type": null,
+     "sample_text": "Точки используются для навигации. Число разделов = число точек."
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.022,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 0.85
+  },
+  {
+   "id": "slide10",
+   "source_index": 9,
+   "layout_name": "2_Титульный слайд раздела",
+   "archetype": "section",
+   "slots": [
+    {
+     "id": "306",
+     "kind": "title",
+     "box": {
+      "x": 603172,
+      "y": 692150,
+      "w": 4621372,
+      "h": 1181862
+     },
+     "max_chars": 13,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 48.0,
+     "placeholder_type": "title",
+     "sample_text": null
+    },
+    {
+     "id": "313",
+     "kind": "subtitle",
+     "box": {
+      "x": 625793,
+      "y": 5245768,
+      "w": 3397250,
+      "h": 530970
+     },
+     "max_chars": 68,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 14.0,
+     "placeholder_type": null,
+     "sample_text": "Точки используются для навигации. Число разделов = число точек."
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.022,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 0.85
+  },
+  {
+   "id": "slide11",
+   "source_index": 10,
+   "layout_name": "1_Титульный слайд раздела",
+   "archetype": "section",
+   "slots": [
+    {
+     "id": "325",
+     "kind": "title",
+     "box": {
+      "x": 622628,
+      "y": 692150,
+      "w": 4666064,
+      "h": 1772793
+     },
+     "max_chars": 27,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 48.0,
+     "placeholder_type": "title",
+     "sample_text": "Пример слайда-разделителя"
+    },
+    {
+     "id": "324",
+     "kind": "subtitle",
+     "box": {
+      "x": 625793,
+      "y": 5245768,
+      "w": 3397250,
+      "h": 530970
+     },
+     "max_chars": 68,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 14.0,
+     "placeholder_type": null,
+     "sample_text": "Точки используются для навигации. Число разделов = число точек."
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.022,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 0.85
+  },
+  {
+   "id": "slide12",
+   "source_index": 11,
+   "layout_name": "3_Титульный слайд раздела",
+   "archetype": "section",
+   "slots": [
+    {
+     "id": "330",
+     "kind": "title",
+     "box": {
+      "x": 603172,
+      "y": 692150,
+      "w": 4621372,
+      "h": 1181862
+     },
+     "max_chars": 13,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 48.0,
+     "placeholder_type": "title",
+     "sample_text": null
+    },
+    {
+     "id": "337",
+     "kind": "subtitle",
+     "box": {
+      "x": 625793,
+      "y": 5245768,
+      "w": 3397250,
+      "h": 530970
+     },
+     "max_chars": 68,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 14.0,
+     "placeholder_type": null,
+     "sample_text": "Точки используются для навигации. Число разделов = число точек."
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.022,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 0.85
+  },
+  {
+   "id": "slide13",
+   "source_index": 12,
+   "layout_name": "Заголовок",
+   "archetype": "process",
+   "slots": [
+    {
+     "id": "342",
+     "kind": "title",
+     "box": {
+      "x": 677334,
+      "y": 692150,
+      "w": 10855854,
+      "h": 644241
+     },
+     "max_chars": 42,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Оформление схем"
+    },
+    {
+     "id": "347",
+     "kind": "subtitle",
+     "box": {
+      "x": 671512,
+      "y": 1352491,
+      "w": 10874375,
+      "h": 629202
+     },
+     "max_chars": 181,
+     "max_lines": 2,
+     "max_items": 2,
+     "font": null,
+     "size_pt": 17.0,
+     "placeholder_type": null,
+     "sample_text": "Текст выравниваем по центру и по середине фигуры. Можно использовать акцентные символы и числа"
+    },
+    {
+     "id": "344",
+     "kind": "label",
+     "box": {
+      "x": 671515,
+      "y": 2678282,
+      "w": 1807593,
+      "h": 830242
+     },
+     "max_chars": 48,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Текстовый блок"
+    },
+    {
+     "id": "348",
+     "kind": "label",
+     "box": {
+      "x": 3265841,
+      "y": 2678282,
+      "w": 1807593,
+      "h": 830242
+     },
+     "max_chars": 48,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Текстовый блок"
+    },
+    {
+     "id": "351",
+     "kind": "number",
+     "box": {
+      "x": 8796338,
+      "y": 3864328,
+      "w": 1150359,
+      "h": 1150359
+     },
+     "max_chars": 3,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 44.0,
+     "placeholder_type": null,
+     "sample_text": "10млн"
+    },
+    {
+     "id": "345",
+     "kind": "label",
+     "box": {
+      "x": 671514,
+      "y": 4026791,
+      "w": 1807593,
+      "h": 830242
+     },
+     "max_chars": 48,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Текстовый блок"
+    },
+    {
+     "id": "349",
+     "kind": "label",
+     "box": {
+      "x": 3265840,
+      "y": 4026791,
+      "w": 1807593,
+      "h": 830242
+     },
+     "max_chars": 48,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Текстовый блок"
+    },
+    {
+     "id": "343",
+     "kind": "label",
+     "box": {
+      "x": 6003744,
+      "y": 4024386,
+      "w": 1807593,
+      "h": 830242
+     },
+     "max_chars": 48,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Подпись"
+    },
+    {
+     "id": "346",
+     "kind": "label",
+     "box": {
+      "x": 671513,
+      "y": 5370533,
+      "w": 1807593,
+      "h": 830242
+     },
+     "max_chars": 48,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Текстовый блок"
+    },
+    {
+     "id": "350",
+     "kind": "label",
+     "box": {
+      "x": 3265839,
+      "y": 5370533,
+      "w": 1807593,
+      "h": 830242
+     },
+     "max_chars": 48,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Текстовый блок"
+    },
+    {
+     "id": "353",
+     "kind": "icon",
+     "box": {
+      "x": 10367336,
+      "y": 4099195,
+      "w": 680624,
+      "h": 680624
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    }
+   ],
+   "fixed": [
+    "354",
+    "355",
+    "356",
+    "357",
+    "358",
+    "359",
+    "360",
+    "361",
+    "362",
+    "363",
+    "364",
+    "365",
+    "366",
+    "367",
+    "368"
+   ],
+   "fill_ratio": 0.229,
+   "thumbnail": null,
+   "tags": [
+    "схема",
+    "коннекторы",
+    "3 шага",
+    "инфографика"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "id": "slide14",
+   "source_index": 13,
+   "layout_name": "Заголовок",
+   "archetype": "process",
+   "slots": [
+    {
+     "id": "373",
+     "kind": "title",
+     "box": {
+      "x": 677334,
+      "y": 692150,
+      "w": 10855854,
+      "h": 644241
+     },
+     "max_chars": 42,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Оформление схем"
+    },
+    {
+     "id": "378",
+     "kind": "subtitle",
+     "box": {
+      "x": 671512,
+      "y": 1352491,
+      "w": 10874375,
+      "h": 629202
+     },
+     "max_chars": 181,
+     "max_lines": 2,
+     "max_items": 2,
+     "font": null,
+     "size_pt": 17.0,
+     "placeholder_type": null,
+     "sample_text": "Текст выравниваем по центру и по середине фигуры. Можно использовать акцентные символы и числа"
+    },
+    {
+     "id": "375",
+     "kind": "label",
+     "box": {
+      "x": 671515,
+      "y": 2678282,
+      "w": 1807593,
+      "h": 830242
+     },
+     "max_chars": 48,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Текстовый блок"
+    },
+    {
+     "id": "379",
+     "kind": "label",
+     "box": {
+      "x": 3265841,
+      "y": 2678282,
+      "w": 1807593,
+      "h": 830242
+     },
+     "max_chars": 48,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Текстовый блок"
+    },
+    {
+     "id": "382",
+     "kind": "number",
+     "box": {
+      "x": 8796338,
+      "y": 3864328,
+      "w": 1150359,
+      "h": 1150359
+     },
+     "max_chars": 3,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 44.0,
+     "placeholder_type": null,
+     "sample_text": "10млн"
+    },
+    {
+     "id": "376",
+     "kind": "label",
+     "box": {
+      "x": 671514,
+      "y": 4026791,
+      "w": 1807593,
+      "h": 830242
+     },
+     "max_chars": 48,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Текстовый блок"
+    },
+    {
+     "id": "380",
+     "kind": "label",
+     "box": {
+      "x": 3265840,
+      "y": 4026791,
+      "w": 1807593,
+      "h": 830242
+     },
+     "max_chars": 48,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Текстовый блок"
+    },
+    {
+     "id": "374",
+     "kind": "label",
+     "box": {
+      "x": 6003744,
+      "y": 4024386,
+      "w": 1807593,
+      "h": 830242
+     },
+     "max_chars": 48,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Подпись"
+    },
+    {
+     "id": "377",
+     "kind": "label",
+     "box": {
+      "x": 671513,
+      "y": 5370533,
+      "w": 1807593,
+      "h": 830242
+     },
+     "max_chars": 48,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Текстовый блок"
+    },
+    {
+     "id": "381",
+     "kind": "label",
+     "box": {
+      "x": 3265839,
+      "y": 5370533,
+      "w": 1807593,
+      "h": 830242
+     },
+     "max_chars": 48,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Текстовый блок"
+    },
+    {
+     "id": "384",
+     "kind": "icon",
+     "box": {
+      "x": 10367336,
+      "y": 4099195,
+      "w": 680624,
+      "h": 680624
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    }
+   ],
+   "fixed": [
+    "385",
+    "386",
+    "387",
+    "388",
+    "389",
+    "390",
+    "391",
+    "392",
+    "393",
+    "394",
+    "395",
+    "396",
+    "397",
+    "398",
+    "399"
+   ],
+   "fill_ratio": 0.229,
+   "thumbnail": null,
+   "tags": [
+    "схема",
+    "коннекторы",
+    "стрелки",
+    "блок-схема",
+    "инфографика"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "id": "slide15",
+   "source_index": 14,
+   "layout_name": "Заголовок в 2 строки + объект",
+   "archetype": "image_text",
+   "slots": [
+    {
+     "id": "406",
+     "kind": "title",
+     "box": {
+      "x": 677334,
+      "y": 692150,
+      "w": 5418666,
+      "h": 1081088
+     },
+     "max_chars": 21,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Оформление кода"
+    },
+    {
+     "id": "407",
+     "kind": "picture",
+     "box": {
+      "x": 6642100,
+      "y": 692150,
+      "w": 4738687,
+      "h": 5473700
+     },
+     "max_chars": 923,
+     "max_lines": 22,
+     "max_items": 22,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "body { padding: 0; margin: 0; height: 100vh; overflow: hidden; font-family: ‘MailSans Roman’, sans-serif; background: url(https://github.com/supahfunk/gradientwaves-svg/blob/master/dist/img/bg-gradien"
+    },
+    {
+     "id": "405",
+     "kind": "body",
+     "box": {
+      "x": 671513,
+      "y": 2040889,
+      "w": 4897265,
+      "h": 3107760
+     },
+     "max_chars": 520,
+     "max_lines": 12,
+     "max_items": 12,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": "body",
+     "sample_text": null
+    }
+   ],
+   "fixed": [
+    "404"
+   ],
+   "fill_ratio": 0.492,
+   "thumbnail": null,
+   "tags": [
+    "код",
+    "тёмный фон",
+    "2 колонки",
+    "CSS"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "id": "slide16",
+   "source_index": 15,
+   "layout_name": "Титульный слайд раздела",
+   "archetype": "section",
+   "slots": [
+    {
+     "id": "417",
+     "kind": "title",
+     "box": {
+      "x": 622628,
+      "y": 692150,
+      "w": 4666064,
+      "h": 1772793
+     },
+     "max_chars": 27,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 48.0,
+     "placeholder_type": "title",
+     "sample_text": "Пример слайда-разделителя"
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.0,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 0.85
+  },
+  {
+   "id": "slide17",
+   "source_index": 16,
+   "layout_name": "Заголовок",
+   "archetype": "cards",
+   "slots": [
+    {
+     "id": "430",
+     "kind": "title",
+     "box": {
+      "x": 4308816,
+      "y": 2622416,
+      "w": 3574368,
+      "h": 1613168
+     },
+     "max_chars": 28,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Заголовок + четыре преимущества"
+    },
+    {
+     "id": "437",
+     "kind": "body",
+     "box": {
+      "x": 1622916,
+      "y": 1670771,
+      "w": 2495059,
+      "h": 1059689
+     },
+     "max_chars": 58,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "Описание под буллитом (в три строки и больше)"
+    },
+    {
+     "id": "435",
+     "kind": "body",
+     "box": {
+      "x": 8112125,
+      "y": 1670771,
+      "w": 2495059,
+      "h": 1059689
+     },
+     "max_chars": 58,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "Описание под буллитом (в три строки и больше)"
+    },
+    {
+     "id": "438",
+     "kind": "body",
+     "box": {
+      "x": 1622916,
+      "y": 4325071,
+      "w": 2495059,
+      "h": 1059689
+     },
+     "max_chars": 58,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "Описание под буллитом (в три строки и больше)"
+    },
+    {
+     "id": "436",
+     "kind": "body",
+     "box": {
+      "x": 8112125,
+      "y": 4325071,
+      "w": 2495059,
+      "h": 1059689
+     },
+     "max_chars": 58,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "Описание под буллитом (в три строки и больше)"
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.126,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 0.85
+  },
+  {
+   "id": "slide18",
+   "source_index": 17,
+   "layout_name": "2 фактоида + текст",
+   "archetype": "kpi",
+   "slots": [
+    {
+     "id": "444",
+     "kind": "title",
+     "box": {
+      "x": 677334,
+      "y": 692150,
+      "w": 10855854,
+      "h": 644241
+     },
+     "max_chars": 42,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Заголовок — ключевая мысль слайда"
+    },
+    {
+     "id": "447",
+     "kind": "number",
+     "box": {
+      "x": 8112125,
+      "y": 2139491,
+      "w": 5417327,
+      "h": 1080000
+     },
+     "max_chars": 8,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 88.0,
+     "placeholder_type": "body",
+     "sample_text": "33%"
+    },
+    {
+     "id": "450",
+     "kind": "number",
+     "box": {
+      "x": 1022258,
+      "y": 2740903,
+      "w": 5417327,
+      "h": 2437575
+     },
+     "max_chars": 3,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 239.0,
+     "placeholder_type": null,
+     "sample_text": "43%"
+    },
+    {
+     "id": "448",
+     "kind": "body",
+     "box": {
+      "x": 8112126,
+      "y": 3204251,
+      "w": 4494461,
+      "h": 755440
+     },
+     "max_chars": 119,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": "body",
+     "sample_text": "Объяснение этого показателя"
+    },
+    {
+     "id": "445",
+     "kind": "number",
+     "box": {
+      "x": 8113464,
+      "y": 4251273,
+      "w": 5417327,
+      "h": 1080000
+     },
+     "max_chars": 8,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 88.0,
+     "placeholder_type": "body",
+     "sample_text": "23%"
+    },
+    {
+     "id": "451",
+     "kind": "body",
+     "box": {
+      "x": 1134802,
+      "y": 5213202,
+      "w": 5417326,
+      "h": 1149354
+     },
+     "max_chars": 95,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 24.0,
+     "placeholder_type": null,
+     "sample_text": "Описание — что это за показатель?"
+    },
+    {
+     "id": "446",
+     "kind": "body",
+     "box": {
+      "x": 8113464,
+      "y": 5316033,
+      "w": 4494461,
+      "h": 755440
+     },
+     "max_chars": 119,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": "body",
+     "sample_text": "Объяснение этого показателя"
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.454,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 1.0
+  },
+  {
+   "id": "slide19",
+   "source_index": 18,
+   "layout_name": "Цитата без фото",
+   "archetype": "quote",
+   "slots": [
+    {
+     "id": "456",
+     "kind": "body",
+     "box": {
+      "x": 3359150,
+      "y": 579395,
+      "w": 7520885,
+      "h": 4549196
+     },
+     "max_chars": 186,
+     "max_lines": 7,
+     "max_items": 7,
+     "font": null,
+     "size_pt": 40.0,
+     "placeholder_type": "body",
+     "sample_text": "VK активно развивается и стремится стать центром технологической экспертизы в России. Уверен, что опыт коллег поможет в достижении этой амбициозной цели. Их практическая экспертиза в разработке и внед"
+    },
+    {
+     "id": "457",
+     "kind": "caption",
+     "box": {
+      "x": 3359150,
+      "y": 5738829,
+      "w": 8200516,
+      "h": 461946
+     },
+     "max_chars": 48,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 24.0,
+     "placeholder_type": "body",
+     "sample_text": "Владимир Кириенко, генеральный директор VK"
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.455,
+   "thumbnail": null,
+   "tags": [
+    "цитата",
+    "автор",
+    "декоративные кавычки",
+    "светлый фон"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "id": "slide20",
+   "source_index": 19,
+   "layout_name": "Заголовок",
+   "archetype": "team",
+   "slots": [
+    {
+     "id": "462",
+     "kind": "label",
+     "box": {
+      "x": 671513,
+      "y": 2591423,
+      "w": 2687637,
+      "h": 349251
+     },
+     "max_chars": 19,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Имя Фамилия"
+    },
+    {
+     "id": "465",
+     "kind": "label",
+     "box": {
+      "x": 3371655,
+      "y": 2591423,
+      "w": 2687637,
+      "h": 349251
+     },
+     "max_chars": 19,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Имя Фамилия"
+    },
+    {
+     "id": "468",
+     "kind": "label",
+     "box": {
+      "x": 6096196,
+      "y": 2591423,
+      "w": 2687637,
+      "h": 349251
+     },
+     "max_chars": 19,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Имя Фамилия"
+    },
+    {
+     "id": "471",
+     "kind": "label",
+     "box": {
+      "x": 8796338,
+      "y": 2591423,
+      "w": 2687637,
+      "h": 349251
+     },
+     "max_chars": 19,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Имя Фамилия"
+    },
+    {
+     "id": "463",
+     "kind": "label",
+     "box": {
+      "x": 671513,
+      "y": 2949045,
+      "w": 2540001,
+      "h": 269754
+     },
+     "max_chars": 25,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 14.0,
+     "placeholder_type": null,
+     "sample_text": "Должность"
+    },
+    {
+     "id": "466",
+     "kind": "label",
+     "box": {
+      "x": 3371655,
+      "y": 2949045,
+      "w": 2540001,
+      "h": 269754
+     },
+     "max_chars": 25,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 14.0,
+     "placeholder_type": null,
+     "sample_text": "Должность"
+    },
+    {
+     "id": "469",
+     "kind": "label",
+     "box": {
+      "x": 6096196,
+      "y": 2949045,
+      "w": 2540001,
+      "h": 269754
+     },
+     "max_chars": 25,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 14.0,
+     "placeholder_type": null,
+     "sample_text": "Должность"
+    },
+    {
+     "id": "472",
+     "kind": "label",
+     "box": {
+      "x": 8796338,
+      "y": 2949045,
+      "w": 2540001,
+      "h": 269754
+     },
+     "max_chars": 25,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 14.0,
+     "placeholder_type": null,
+     "sample_text": "Должность"
+    },
+    {
+     "id": "474",
+     "kind": "label",
+     "box": {
+      "x": 671513,
+      "y": 5334623,
+      "w": 2687637,
+      "h": 349251
+     },
+     "max_chars": 19,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Имя Фамилия"
+    },
+    {
+     "id": "477",
+     "kind": "label",
+     "box": {
+      "x": 3371655,
+      "y": 5334623,
+      "w": 2687637,
+      "h": 349251
+     },
+     "max_chars": 19,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Имя Фамилия"
+    },
+    {
+     "id": "480",
+     "kind": "label",
+     "box": {
+      "x": 6096196,
+      "y": 5334623,
+      "w": 2687637,
+      "h": 349251
+     },
+     "max_chars": 19,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Имя Фамилия"
+    },
+    {
+     "id": "483",
+     "kind": "label",
+     "box": {
+      "x": 8796338,
+      "y": 5334623,
+      "w": 2687637,
+      "h": 349251
+     },
+     "max_chars": 19,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Имя Фамилия"
+    },
+    {
+     "id": "475",
+     "kind": "label",
+     "box": {
+      "x": 671513,
+      "y": 5692245,
+      "w": 2540001,
+      "h": 269754
+     },
+     "max_chars": 25,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 14.0,
+     "placeholder_type": null,
+     "sample_text": "Должность"
+    },
+    {
+     "id": "478",
+     "kind": "label",
+     "box": {
+      "x": 3371655,
+      "y": 5692245,
+      "w": 2540001,
+      "h": 269754
+     },
+     "max_chars": 25,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 14.0,
+     "placeholder_type": null,
+     "sample_text": "Должность"
+    },
+    {
+     "id": "481",
+     "kind": "label",
+     "box": {
+      "x": 6096196,
+      "y": 5692245,
+      "w": 2540001,
+      "h": 269754
+     },
+     "max_chars": 25,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 14.0,
+     "placeholder_type": null,
+     "sample_text": "Должность"
+    },
+    {
+     "id": "484",
+     "kind": "label",
+     "box": {
+      "x": 8796338,
+      "y": 5692245,
+      "w": 2540001,
+      "h": 269754
+     },
+     "max_chars": 25,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 14.0,
+     "placeholder_type": null,
+     "sample_text": "Должность"
+    },
+    {
+     "id": "464",
+     "kind": "picture",
+     "box": {
+      "x": 671513,
+      "y": 1110546,
+      "w": 1325366,
+      "h": 1325383
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "467",
+     "kind": "picture",
+     "box": {
+      "x": 3371655,
+      "y": 1110546,
+      "w": 1325366,
+      "h": 1325383
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "470",
+     "kind": "picture",
+     "box": {
+      "x": 6096196,
+      "y": 1110546,
+      "w": 1325366,
+      "h": 1325383
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "473",
+     "kind": "picture",
+     "box": {
+      "x": 8796338,
+      "y": 1110546,
+      "w": 1325366,
+      "h": 1325383
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "476",
+     "kind": "picture",
+     "box": {
+      "x": 671513,
+      "y": 3853746,
+      "w": 1325366,
+      "h": 1325383
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "479",
+     "kind": "picture",
+     "box": {
+      "x": 3371655,
+      "y": 3853746,
+      "w": 1325366,
+      "h": 1325383
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "482",
+     "kind": "picture",
+     "box": {
+      "x": 6096196,
+      "y": 3853746,
+      "w": 1325366,
+      "h": 1325383
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "485",
+     "kind": "picture",
+     "box": {
+      "x": 8796338,
+      "y": 3853746,
+      "w": 1325366,
+      "h": 1325383
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.323,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 0.9
+  },
+  {
+   "id": "slide21",
+   "source_index": 20,
+   "layout_name": "Заголовок",
+   "archetype": "process",
+   "slots": [
+    {
+     "id": "490",
+     "kind": "title",
+     "box": {
+      "x": 677863,
+      "y": 692150,
+      "w": 10874375,
+      "h": 1081088
+     },
+     "max_chars": 42,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Заголовок — ключевая мысль слайда"
+    },
+    {
+     "id": "496",
+     "kind": "number",
+     "box": {
+      "x": 658813,
+      "y": 2232530,
+      "w": 866699,
+      "h": 866699
+     },
+     "max_chars": 3,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 32.0,
+     "placeholder_type": null,
+     "sample_text": "1"
+    },
+    {
+     "id": "497",
+     "kind": "number",
+     "box": {
+      "x": 3371322,
+      "y": 2232530,
+      "w": 866699,
+      "h": 866699
+     },
+     "max_chars": 3,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 32.0,
+     "placeholder_type": null,
+     "sample_text": "2"
+    },
+    {
+     "id": "498",
+     "kind": "number",
+     "box": {
+      "x": 6083830,
+      "y": 2232530,
+      "w": 866698,
+      "h": 866699
+     },
+     "max_chars": 3,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 32.0,
+     "placeholder_type": null,
+     "sample_text": "3"
+    },
+    {
+     "id": "499",
+     "kind": "number",
+     "box": {
+      "x": 8796337,
+      "y": 2232530,
+      "w": 866699,
+      "h": 866699
+     },
+     "max_chars": 3,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 32.0,
+     "placeholder_type": null,
+     "sample_text": "4"
+    },
+    {
+     "id": "495",
+     "kind": "body",
+     "box": {
+      "x": 658812,
+      "y": 3344593,
+      "w": 2502840,
+      "h": 2187524
+     },
+     "max_chars": 325,
+     "max_lines": 11,
+     "max_items": 11,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "Описание первого преимущества или шага(в три строки и больше)"
+    },
+    {
+     "id": "492",
+     "kind": "body",
+     "box": {
+      "x": 3371889,
+      "y": 3344593,
+      "w": 2501665,
+      "h": 2187524
+     },
+     "max_chars": 325,
+     "max_lines": 11,
+     "max_items": 11,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "Описание второго преимущества или шага(в три строки и больше)"
+    },
+    {
+     "id": "493",
+     "kind": "body",
+     "box": {
+      "x": 6084112,
+      "y": 3344593,
+      "w": 2501665,
+      "h": 2187524
+     },
+     "max_chars": 325,
+     "max_lines": 11,
+     "max_items": 11,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "Описание третьего преимущества или шага(в три строки и больше)"
+    },
+    {
+     "id": "494",
+     "kind": "body",
+     "box": {
+      "x": 8796337,
+      "y": 3344593,
+      "w": 2501665,
+      "h": 2139313
+     },
+     "max_chars": 325,
+     "max_lines": 11,
+     "max_items": 11,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "Описание четвертого преимущества или шага(в три строки и больше)"
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.296,
+   "thumbnail": null,
+   "tags": [
+    "4 шага",
+    "нумерация",
+    "горизонтальный ряд",
+    "синие круги"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "id": "slide22",
+   "source_index": 21,
+   "layout_name": "Заголовок",
+   "archetype": "cards",
+   "slots": [
+    {
+     "id": "504",
+     "kind": "title",
+     "box": {
+      "x": 677863,
+      "y": 692150,
+      "w": 10874375,
+      "h": 1081088
+     },
+     "max_chars": 42,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Заголовок — ключевая мысль слайда"
+    },
+    {
+     "id": "511",
+     "kind": "number",
+     "box": {
+      "x": 658813,
+      "y": 2232530,
+      "w": 866700,
+      "h": 866699
+     },
+     "max_chars": 3,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 32.0,
+     "placeholder_type": null,
+     "sample_text": "1"
+    },
+    {
+     "id": "512",
+     "kind": "number",
+     "box": {
+      "x": 2947173,
+      "y": 2232530,
+      "w": 866700,
+      "h": 866699
+     },
+     "max_chars": 3,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 32.0,
+     "placeholder_type": null,
+     "sample_text": "2"
+    },
+    {
+     "id": "513",
+     "kind": "number",
+     "box": {
+      "x": 5300861,
+      "y": 2232530,
+      "w": 866699,
+      "h": 866699
+     },
+     "max_chars": 3,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 32.0,
+     "placeholder_type": null,
+     "sample_text": "3"
+    },
+    {
+     "id": "514",
+     "kind": "number",
+     "box": {
+      "x": 7492689,
+      "y": 2232530,
+      "w": 866700,
+      "h": 866699
+     },
+     "max_chars": 3,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 32.0,
+     "placeholder_type": null,
+     "sample_text": "4"
+    },
+    {
+     "id": "515",
+     "kind": "number",
+     "box": {
+      "x": 9733328,
+      "y": 2239402,
+      "w": 866700,
+      "h": 866699
+     },
+     "max_chars": 3,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 32.0,
+     "placeholder_type": null,
+     "sample_text": "5"
+    },
+    {
+     "id": "510",
+     "kind": "body",
+     "box": {
+      "x": 658813,
+      "y": 3344593,
+      "w": 1953310,
+      "h": 2187524
+     },
+     "max_chars": 253,
+     "max_lines": 11,
+     "max_items": 11,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "Описание первого преимущества или шага(в три строки и больше)"
+    },
+    {
+     "id": "506",
+     "kind": "body",
+     "box": {
+      "x": 2947173,
+      "y": 3344593,
+      "w": 1952393,
+      "h": 2187524
+     },
+     "max_chars": 253,
+     "max_lines": 11,
+     "max_items": 11,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "Описание второго преимущества или шага(в три строки и больше)"
+    },
+    {
+     "id": "507",
+     "kind": "body",
+     "box": {
+      "x": 5300861,
+      "y": 3344593,
+      "w": 1952393,
+      "h": 2187524
+     },
+     "max_chars": 253,
+     "max_lines": 11,
+     "max_items": 11,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "Описание третьего преимущества или шага(в три строки и больше)"
+    },
+    {
+     "id": "508",
+     "kind": "body",
+     "box": {
+      "x": 7492689,
+      "y": 3344593,
+      "w": 1952393,
+      "h": 2139313
+     },
+     "max_chars": 253,
+     "max_lines": 11,
+     "max_items": 11,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "Описание четвертого преимущества или шага(в три строки и больше)"
+    },
+    {
+     "id": "509",
+     "kind": "body",
+     "box": {
+      "x": 9733328,
+      "y": 3344593,
+      "w": 1952393,
+      "h": 2187524
+     },
+     "max_chars": 253,
+     "max_lines": 11,
+     "max_items": 11,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "Описание пятого преимущества или шага(в три строки и больше)"
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.299,
+   "thumbnail": null,
+   "tags": [
+    "5 карточек",
+    "нумерация",
+    "сетка",
+    "преимущества"
+   ],
+   "confidence": 0.9
+  },
+  {
+   "id": "slide23",
+   "source_index": 22,
+   "layout_name": "Заголовок",
+   "archetype": "cards",
+   "slots": [
+    {
+     "id": "536",
+     "kind": "title",
+     "box": {
+      "x": 677863,
+      "y": 692150,
+      "w": 10874375,
+      "h": 655883
+     },
+     "max_chars": 42,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Заголовок — ключевая мысль слайда"
+    },
+    {
+     "id": "524",
+     "kind": "number",
+     "box": {
+      "x": 658813,
+      "y": 1779874,
+      "w": 866700,
+      "h": 866700
+     },
+     "max_chars": 3,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 32.0,
+     "placeholder_type": null,
+     "sample_text": "1"
+    },
+    {
+     "id": "525",
+     "kind": "number",
+     "box": {
+      "x": 3371322,
+      "y": 1779874,
+      "w": 866700,
+      "h": 866700
+     },
+     "max_chars": 3,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 32.0,
+     "placeholder_type": null,
+     "sample_text": "2"
+    },
+    {
+     "id": "526",
+     "kind": "number",
+     "box": {
+      "x": 6083830,
+      "y": 1779874,
+      "w": 866699,
+      "h": 866700
+     },
+     "max_chars": 3,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 32.0,
+     "placeholder_type": null,
+     "sample_text": "3"
+    },
+    {
+     "id": "527",
+     "kind": "number",
+     "box": {
+      "x": 8796338,
+      "y": 1779874,
+      "w": 866700,
+      "h": 866700
+     },
+     "max_chars": 3,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 32.0,
+     "placeholder_type": null,
+     "sample_text": "4"
+    },
+    {
+     "id": "523",
+     "kind": "body",
+     "box": {
+      "x": 658813,
+      "y": 2891939,
+      "w": 2268472,
+      "h": 866699
+     },
+     "max_chars": 107,
+     "max_lines": 4,
+     "max_items": 4,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "Описание первого преимущества или шага(в три строки и больше)"
+    },
+    {
+     "id": "520",
+     "kind": "body",
+     "box": {
+      "x": 3371889,
+      "y": 2891938,
+      "w": 2267407,
+      "h": 866700
+     },
+     "max_chars": 107,
+     "max_lines": 4,
+     "max_items": 4,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "Описание второго преимущества или шага(в три строки и больше)"
+    },
+    {
+     "id": "521",
+     "kind": "body",
+     "box": {
+      "x": 6084113,
+      "y": 2891938,
+      "w": 2267407,
+      "h": 866700
+     },
+     "max_chars": 107,
+     "max_lines": 4,
+     "max_items": 4,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "Описание третьего преимущества или шага(в три строки и больше)"
+    },
+    {
+     "id": "522",
+     "kind": "body",
+     "box": {
+      "x": 8796338,
+      "y": 2891938,
+      "w": 2532922,
+      "h": 866700
+     },
+     "max_chars": 119,
+     "max_lines": 4,
+     "max_items": 4,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "Описание четвертого преимущества или шага(в три строки и больше)"
+    },
+    {
+     "id": "532",
+     "kind": "number",
+     "box": {
+      "x": 658813,
+      "y": 4296842,
+      "w": 866700,
+      "h": 866700
+     },
+     "max_chars": 3,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 32.0,
+     "placeholder_type": null,
+     "sample_text": "5"
+    },
+    {
+     "id": "533",
+     "kind": "number",
+     "box": {
+      "x": 3371322,
+      "y": 4296842,
+      "w": 866700,
+      "h": 866700
+     },
+     "max_chars": 3,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 32.0,
+     "placeholder_type": null,
+     "sample_text": "6"
+    },
+    {
+     "id": "534",
+     "kind": "number",
+     "box": {
+      "x": 6083831,
+      "y": 4296842,
+      "w": 866699,
+      "h": 866700
+     },
+     "max_chars": 3,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 32.0,
+     "placeholder_type": null,
+     "sample_text": "7"
+    },
+    {
+     "id": "535",
+     "kind": "number",
+     "box": {
+      "x": 8796338,
+      "y": 4296842,
+      "w": 866700,
+      "h": 866700
+     },
+     "max_chars": 3,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 32.0,
+     "placeholder_type": null,
+     "sample_text": "8"
+    },
+    {
+     "id": "531",
+     "kind": "body",
+     "box": {
+      "x": 658813,
+      "y": 5408907,
+      "w": 2268472,
+      "h": 866700
+     },
+     "max_chars": 107,
+     "max_lines": 4,
+     "max_items": 4,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "Описание пятого преимущества или шага(в три строки и больше)"
+    },
+    {
+     "id": "528",
+     "kind": "body",
+     "box": {
+      "x": 3371889,
+      "y": 5408907,
+      "w": 2267407,
+      "h": 866700
+     },
+     "max_chars": 107,
+     "max_lines": 4,
+     "max_items": 4,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "Описание шестого преимущества или шага(в три строки и больше)"
+    },
+    {
+     "id": "529",
+     "kind": "body",
+     "box": {
+      "x": 6084113,
+      "y": 5408907,
+      "w": 2267407,
+      "h": 866700
+     },
+     "max_chars": 107,
+     "max_lines": 4,
+     "max_items": 4,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "Описание седьмого преимущества или шага(в три строки и больше)"
+    },
+    {
+     "id": "530",
+     "kind": "body",
+     "box": {
+      "x": 8796338,
+      "y": 5408906,
+      "w": 2267407,
+      "h": 866701
+     },
+     "max_chars": 107,
+     "max_lines": 4,
+     "max_items": 4,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "Описание восьмого преимущества или шага(в три строки и больше)"
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.263,
+   "thumbnail": null,
+   "tags": [
+    "8 карточек",
+    "сетка 4×2",
+    "нумерация",
+    "иконки-круги"
+   ],
+   "confidence": 0.9
+  },
+  {
+   "id": "slide24",
+   "source_index": 23,
+   "layout_name": "2_Заголовок + текст в две колонки",
+   "archetype": "two_column",
+   "slots": [
+    {
+     "id": "543",
+     "kind": "title",
+     "box": {
+      "x": 677334,
+      "y": 692150,
+      "w": 10855854,
+      "h": 644241
+     },
+     "max_chars": 42,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Заголовок слайда и несколько тезисов под буллитами"
+    },
+    {
+     "id": "541",
+     "kind": "body",
+     "box": {
+      "x": 677334,
+      "y": 2603500,
+      "w": 5304365,
+      "h": 3597275
+     },
+     "max_chars": 657,
+     "max_lines": 14,
+     "max_items": 14,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": "body",
+     "sample_text": "​​здесь текст в две строки или более (любые детали проекта)​​здесь текст в две строки или более (любые детали проекта)​​здесь текст в две строки или более (любые детали проекта)​​здесь текст в две стр"
+    },
+    {
+     "id": "542",
+     "kind": "body",
+     "box": {
+      "x": 6228824,
+      "y": 2603501,
+      "w": 5304364,
+      "h": 3597275
+     },
+     "max_chars": 657,
+     "max_lines": 14,
+     "max_items": 14,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": "body",
+     "sample_text": "​​здесь текст в две строки или более (любые детали проекта)​​здесь текст в две строки или более (любые детали проекта)​​здесь текст в две строки или более (любые детали проекта)​​здесь текст в две стр"
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.456,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 0.8
+  },
+  {
+   "id": "slide25",
+   "source_index": 24,
+   "layout_name": "2_Заголовок + текст в две колонки",
+   "archetype": "freeform",
+   "slots": [
+    {
+     "id": "548",
+     "kind": "title",
+     "box": {
+      "x": 677334,
+      "y": 692150,
+      "w": 10855854,
+      "h": 1003086
+     },
+     "max_chars": 42,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Интерфейсные иконки"
+    },
+    {
+     "id": "757",
+     "kind": "body",
+     "box": {
+      "x": 658811,
+      "y": 6003053,
+      "w": 7830594,
+      "h": 325593
+     },
+     "max_chars": 69,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Иконки можно брать из этого слайда, масштабировать и изменять цвет"
+    },
+    {
+     "id": "549",
+     "kind": "icon",
+     "box": {
+      "x": 3169197,
+      "y": 1687311,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "550",
+     "kind": "icon",
+     "box": {
+      "x": 5218387,
+      "y": 1687311,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "551",
+     "kind": "icon",
+     "box": {
+      "x": 6858559,
+      "y": 1687311,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "552",
+     "kind": "icon",
+     "box": {
+      "x": 691736,
+      "y": 1687311,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "553",
+     "kind": "icon",
+     "box": {
+      "x": 2346801,
+      "y": 1687311,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "554",
+     "kind": "icon",
+     "box": {
+      "x": 1520075,
+      "y": 1687311,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "555",
+     "kind": "icon",
+     "box": {
+      "x": 1105099,
+      "y": 1687311,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "556",
+     "kind": "icon",
+     "box": {
+      "x": 2760164,
+      "y": 1687311,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "557",
+     "kind": "icon",
+     "box": {
+      "x": 3580302,
+      "y": 1687311,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "558",
+     "kind": "icon",
+     "box": {
+      "x": 4403451,
+      "y": 1687311,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "559",
+     "kind": "icon",
+     "box": {
+      "x": 3991407,
+      "y": 1687311,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "560",
+     "kind": "icon",
+     "box": {
+      "x": 4811545,
+      "y": 1687311,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "561",
+     "kind": "icon",
+     "box": {
+      "x": 5626835,
+      "y": 1687311,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "562",
+     "kind": "icon",
+     "box": {
+      "x": 6037215,
+      "y": 1687311,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "563",
+     "kind": "icon",
+     "box": {
+      "x": 6447887,
+      "y": 1687311,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "564",
+     "kind": "icon",
+     "box": {
+      "x": 7689111,
+      "y": 1687311,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "565",
+     "kind": "icon",
+     "box": {
+      "x": 7272009,
+      "y": 1687311,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "566",
+     "kind": "icon",
+     "box": {
+      "x": 8101659,
+      "y": 1687311,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "567",
+     "kind": "icon",
+     "box": {
+      "x": 8513897,
+      "y": 1687311,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "568",
+     "kind": "icon",
+     "box": {
+      "x": 8923998,
+      "y": 1687311,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "569",
+     "kind": "icon",
+     "box": {
+      "x": 9344604,
+      "y": 1687311,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "570",
+     "kind": "icon",
+     "box": {
+      "x": 10170340,
+      "y": 1687311,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "571",
+     "kind": "icon",
+     "box": {
+      "x": 9756715,
+      "y": 1687311,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "572",
+     "kind": "icon",
+     "box": {
+      "x": 1933438,
+      "y": 1687311,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "573",
+     "kind": "icon",
+     "box": {
+      "x": 10988940,
+      "y": 1687311,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "574",
+     "kind": "icon",
+     "box": {
+      "x": 10579491,
+      "y": 1687311,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "575",
+     "kind": "icon",
+     "box": {
+      "x": 691736,
+      "y": 2155389,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "576",
+     "kind": "icon",
+     "box": {
+      "x": 1518462,
+      "y": 2155389,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "577",
+     "kind": "icon",
+     "box": {
+      "x": 1105099,
+      "y": 2155389,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "578",
+     "kind": "icon",
+     "box": {
+      "x": 1933438,
+      "y": 2155389,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "579",
+     "kind": "icon",
+     "box": {
+      "x": 2760164,
+      "y": 2155389,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "580",
+     "kind": "icon",
+     "box": {
+      "x": 2346801,
+      "y": 2155389,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "581",
+     "kind": "icon",
+     "box": {
+      "x": 3169197,
+      "y": 2155389,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "582",
+     "kind": "icon",
+     "box": {
+      "x": 3580302,
+      "y": 2155389,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "583",
+     "kind": "icon",
+     "box": {
+      "x": 4403451,
+      "y": 2155389,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "584",
+     "kind": "icon",
+     "box": {
+      "x": 3977043,
+      "y": 2155389,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "585",
+     "kind": "icon",
+     "box": {
+      "x": 4829859,
+      "y": 2155389,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "586",
+     "kind": "icon",
+     "box": {
+      "x": 5222036,
+      "y": 2155389,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "587",
+     "kind": "icon",
+     "box": {
+      "x": 5626835,
+      "y": 2155389,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "588",
+     "kind": "icon",
+     "box": {
+      "x": 6447595,
+      "y": 2155389,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "589",
+     "kind": "icon",
+     "box": {
+      "x": 6037215,
+      "y": 2155389,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "590",
+     "kind": "icon",
+     "box": {
+      "x": 6857975,
+      "y": 2155389,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "591",
+     "kind": "icon",
+     "box": {
+      "x": 7274820,
+      "y": 2155389,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "592",
+     "kind": "icon",
+     "box": {
+      "x": 7689111,
+      "y": 2155389,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "593",
+     "kind": "icon",
+     "box": {
+      "x": 8095580,
+      "y": 2155389,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "594",
+     "kind": "icon",
+     "box": {
+      "x": 8929885,
+      "y": 2155389,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "595",
+     "kind": "icon",
+     "box": {
+      "x": 8505960,
+      "y": 2155389,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "596",
+     "kind": "icon",
+     "box": {
+      "x": 9757623,
+      "y": 2155389,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "597",
+     "kind": "icon",
+     "box": {
+      "x": 9340265,
+      "y": 2155389,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "598",
+     "kind": "icon",
+     "box": {
+      "x": 10176014,
+      "y": 2155389,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "599",
+     "kind": "icon",
+     "box": {
+      "x": 10984077,
+      "y": 2155389,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "600",
+     "kind": "icon",
+     "box": {
+      "x": 10563418,
+      "y": 2155389,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "601",
+     "kind": "icon",
+     "box": {
+      "x": 691736,
+      "y": 2623467,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "602",
+     "kind": "icon",
+     "box": {
+      "x": 1518462,
+      "y": 2623467,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "603",
+     "kind": "icon",
+     "box": {
+      "x": 1105099,
+      "y": 2623467,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "604",
+     "kind": "icon",
+     "box": {
+      "x": 2346801,
+      "y": 2623467,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "605",
+     "kind": "icon",
+     "box": {
+      "x": 1933438,
+      "y": 2623467,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "606",
+     "kind": "icon",
+     "box": {
+      "x": 3169197,
+      "y": 2623467,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "607",
+     "kind": "icon",
+     "box": {
+      "x": 2760164,
+      "y": 2623467,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "608",
+     "kind": "icon",
+     "box": {
+      "x": 3991407,
+      "y": 2623467,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "609",
+     "kind": "icon",
+     "box": {
+      "x": 3580302,
+      "y": 2623467,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "610",
+     "kind": "icon",
+     "box": {
+      "x": 4829859,
+      "y": 2623467,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "611",
+     "kind": "icon",
+     "box": {
+      "x": 4400440,
+      "y": 2623467,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "612",
+     "kind": "icon",
+     "box": {
+      "x": 5626835,
+      "y": 2623467,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "613",
+     "kind": "icon",
+     "box": {
+      "x": 5224908,
+      "y": 2623467,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "614",
+     "kind": "icon",
+     "box": {
+      "x": 6037215,
+      "y": 2623467,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "615",
+     "kind": "icon",
+     "box": {
+      "x": 6432531,
+      "y": 2623467,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "616",
+     "kind": "icon",
+     "box": {
+      "x": 6861639,
+      "y": 2623467,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "617",
+     "kind": "icon",
+     "box": {
+      "x": 7689111,
+      "y": 2623467,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "618",
+     "kind": "icon",
+     "box": {
+      "x": 7280740,
+      "y": 2623467,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "619",
+     "kind": "icon",
+     "box": {
+      "x": 8493506,
+      "y": 2623467,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "620",
+     "kind": "icon",
+     "box": {
+      "x": 8098896,
+      "y": 2623467,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "621",
+     "kind": "icon",
+     "box": {
+      "x": 9350024,
+      "y": 2623467,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "622",
+     "kind": "icon",
+     "box": {
+      "x": 8928881,
+      "y": 2623467,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "623",
+     "kind": "icon",
+     "box": {
+      "x": 9746644,
+      "y": 2623467,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "624",
+     "kind": "icon",
+     "box": {
+      "x": 10566613,
+      "y": 2623467,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "625",
+     "kind": "icon",
+     "box": {
+      "x": 10176014,
+      "y": 2623467,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "626",
+     "kind": "icon",
+     "box": {
+      "x": 10984077,
+      "y": 2623467,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "627",
+     "kind": "icon",
+     "box": {
+      "x": 1105099,
+      "y": 3091545,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "628",
+     "kind": "icon",
+     "box": {
+      "x": 691736,
+      "y": 3091545,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "629",
+     "kind": "icon",
+     "box": {
+      "x": 1933438,
+      "y": 3091545,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "630",
+     "kind": "icon",
+     "box": {
+      "x": 1549278,
+      "y": 3091545,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "631",
+     "kind": "icon",
+     "box": {
+      "x": 2345710,
+      "y": 3091545,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "632",
+     "kind": "icon",
+     "box": {
+      "x": 3169197,
+      "y": 3091545,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "633",
+     "kind": "icon",
+     "box": {
+      "x": 2730816,
+      "y": 3091545,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "634",
+     "kind": "icon",
+     "box": {
+      "x": 3574326,
+      "y": 3091545,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "635",
+     "kind": "icon",
+     "box": {
+      "x": 3977043,
+      "y": 3091545,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "636",
+     "kind": "icon",
+     "box": {
+      "x": 4838288,
+      "y": 3091545,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "637",
+     "kind": "icon",
+     "box": {
+      "x": 4400440,
+      "y": 3091545,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "638",
+     "kind": "icon",
+     "box": {
+      "x": 5227529,
+      "y": 3091545,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "639",
+     "kind": "icon",
+     "box": {
+      "x": 5626835,
+      "y": 3091545,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "640",
+     "kind": "icon",
+     "box": {
+      "x": 6037215,
+      "y": 3091545,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "641",
+     "kind": "icon",
+     "box": {
+      "x": 6432531,
+      "y": 3091545,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "642",
+     "kind": "icon",
+     "box": {
+      "x": 7280648,
+      "y": 3091545,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "643",
+     "kind": "icon",
+     "box": {
+      "x": 6857975,
+      "y": 3091545,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "644",
+     "kind": "icon",
+     "box": {
+      "x": 7689111,
+      "y": 3091545,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "645",
+     "kind": "icon",
+     "box": {
+      "x": 8093837,
+      "y": 3091545,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "646",
+     "kind": "icon",
+     "box": {
+      "x": 8495755,
+      "y": 3091545,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "647",
+     "kind": "icon",
+     "box": {
+      "x": 9350024,
+      "y": 3091545,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "648",
+     "kind": "icon",
+     "box": {
+      "x": 8923998,
+      "y": 3091545,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "649",
+     "kind": "icon",
+     "box": {
+      "x": 1517518,
+      "y": 3559623,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "650",
+     "kind": "icon",
+     "box": {
+      "x": 9756715,
+      "y": 3091545,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "651",
+     "kind": "icon",
+     "box": {
+      "x": 692680,
+      "y": 3559623,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "652",
+     "kind": "icon",
+     "box": {
+      "x": 10170340,
+      "y": 3091545,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "653",
+     "kind": "icon",
+     "box": {
+      "x": 1105099,
+      "y": 3559623,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "654",
+     "kind": "icon",
+     "box": {
+      "x": 10977879,
+      "y": 3091545,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "655",
+     "kind": "icon",
+     "box": {
+      "x": 10564254,
+      "y": 3091545,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "656",
+     "kind": "icon",
+     "box": {
+      "x": 1929937,
+      "y": 3559623,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "657",
+     "kind": "icon",
+     "box": {
+      "x": 2345710,
+      "y": 3559623,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "658",
+     "kind": "icon",
+     "box": {
+      "x": 3169197,
+      "y": 3559623,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "659",
+     "kind": "icon",
+     "box": {
+      "x": 2760164,
+      "y": 3559623,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "660",
+     "kind": "icon",
+     "box": {
+      "x": 3574326,
+      "y": 3559623,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "661",
+     "kind": "icon",
+     "box": {
+      "x": 3977043,
+      "y": 3559623,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "662",
+     "kind": "icon",
+     "box": {
+      "x": 8923027,
+      "y": 4963857,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "663",
+     "kind": "icon",
+     "box": {
+      "x": 4400440,
+      "y": 3559623,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "664",
+     "kind": "icon",
+     "box": {
+      "x": 4814894,
+      "y": 3559623,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "665",
+     "kind": "icon",
+     "box": {
+      "x": 5224908,
+      "y": 3559623,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "666",
+     "kind": "icon",
+     "box": {
+      "x": 5634922,
+      "y": 3559623,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "667",
+     "kind": "icon",
+     "box": {
+      "x": 6037215,
+      "y": 3559623,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "668",
+     "kind": "icon",
+     "box": {
+      "x": 6432531,
+      "y": 3559623,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "669",
+     "kind": "icon",
+     "box": {
+      "x": 6853808,
+      "y": 3559623,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "670",
+     "kind": "icon",
+     "box": {
+      "x": 7280648,
+      "y": 3559623,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "671",
+     "kind": "icon",
+     "box": {
+      "x": 7689111,
+      "y": 3559623,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "672",
+     "kind": "icon",
+     "box": {
+      "x": 8072807,
+      "y": 3559623,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "673",
+     "kind": "icon",
+     "box": {
+      "x": 8489405,
+      "y": 3559623,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "674",
+     "kind": "icon",
+     "box": {
+      "x": 8923027,
+      "y": 3559623,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "675",
+     "kind": "icon",
+     "box": {
+      "x": 9745985,
+      "y": 3559623,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "676",
+     "kind": "icon",
+     "box": {
+      "x": 9357941,
+      "y": 3559623,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "677",
+     "kind": "icon",
+     "box": {
+      "x": 10170340,
+      "y": 3559623,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "678",
+     "kind": "icon",
+     "box": {
+      "x": 10579491,
+      "y": 3559623,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "679",
+     "kind": "icon",
+     "box": {
+      "x": 691736,
+      "y": 4027701,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "680",
+     "kind": "icon",
+     "box": {
+      "x": 10988940,
+      "y": 3559623,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "681",
+     "kind": "icon",
+     "box": {
+      "x": 1517518,
+      "y": 4027701,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "682",
+     "kind": "icon",
+     "box": {
+      "x": 1105099,
+      "y": 4027701,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "683",
+     "kind": "icon",
+     "box": {
+      "x": 1939130,
+      "y": 4027701,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "684",
+     "kind": "icon",
+     "box": {
+      "x": 2345710,
+      "y": 4027701,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "685",
+     "kind": "icon",
+     "box": {
+      "x": 2730816,
+      "y": 4027701,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "686",
+     "kind": "icon",
+     "box": {
+      "x": 3574326,
+      "y": 4027701,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "687",
+     "kind": "icon",
+     "box": {
+      "x": 3174017,
+      "y": 4027701,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "688",
+     "kind": "icon",
+     "box": {
+      "x": 4400440,
+      "y": 4027701,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "689",
+     "kind": "icon",
+     "box": {
+      "x": 3991407,
+      "y": 4027701,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "690",
+     "kind": "icon",
+     "box": {
+      "x": 4838288,
+      "y": 4027701,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "691",
+     "kind": "icon",
+     "box": {
+      "x": 5224908,
+      "y": 4027701,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "692",
+     "kind": "icon",
+     "box": {
+      "x": 5634922,
+      "y": 4027701,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "693",
+     "kind": "icon",
+     "box": {
+      "x": 6037215,
+      "y": 4027701,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "694",
+     "kind": "icon",
+     "box": {
+      "x": 6432531,
+      "y": 4027701,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "695",
+     "kind": "icon",
+     "box": {
+      "x": 6861639,
+      "y": 4027701,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "696",
+     "kind": "icon",
+     "box": {
+      "x": 7272009,
+      "y": 4027701,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "697",
+     "kind": "icon",
+     "box": {
+      "x": 7689111,
+      "y": 4027701,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "698",
+     "kind": "icon",
+     "box": {
+      "x": 8101659,
+      "y": 4027701,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "699",
+     "kind": "icon",
+     "box": {
+      "x": 8513897,
+      "y": 4027701,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "700",
+     "kind": "icon",
+     "box": {
+      "x": 8923027,
+      "y": 4027701,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "701",
+     "kind": "icon",
+     "box": {
+      "x": 9340265,
+      "y": 4027701,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "702",
+     "kind": "icon",
+     "box": {
+      "x": 9756715,
+      "y": 4027701,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "703",
+     "kind": "icon",
+     "box": {
+      "x": 10165550,
+      "y": 4027701,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "704",
+     "kind": "icon",
+     "box": {
+      "x": 10563418,
+      "y": 4027701,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "705",
+     "kind": "icon",
+     "box": {
+      "x": 10988940,
+      "y": 4027701,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "706",
+     "kind": "icon",
+     "box": {
+      "x": 1105099,
+      "y": 4495779,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "707",
+     "kind": "icon",
+     "box": {
+      "x": 691736,
+      "y": 4495779,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "708",
+     "kind": "icon",
+     "box": {
+      "x": 1517518,
+      "y": 4495779,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "709",
+     "kind": "icon",
+     "box": {
+      "x": 1929937,
+      "y": 4495779,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "710",
+     "kind": "icon",
+     "box": {
+      "x": 2345710,
+      "y": 4495779,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "711",
+     "kind": "icon",
+     "box": {
+      "x": 3169197,
+      "y": 4495779,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "712",
+     "kind": "icon",
+     "box": {
+      "x": 2760164,
+      "y": 4495779,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "713",
+     "kind": "icon",
+     "box": {
+      "x": 3574326,
+      "y": 4495779,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "714",
+     "kind": "icon",
+     "box": {
+      "x": 3991407,
+      "y": 4495779,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "715",
+     "kind": "icon",
+     "box": {
+      "x": 4400440,
+      "y": 4495779,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "716",
+     "kind": "icon",
+     "box": {
+      "x": 4805717,
+      "y": 4495779,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "717",
+     "kind": "icon",
+     "box": {
+      "x": 5224908,
+      "y": 4495779,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "718",
+     "kind": "icon",
+     "box": {
+      "x": 6037215,
+      "y": 4495779,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "719",
+     "kind": "icon",
+     "box": {
+      "x": 5634922,
+      "y": 4495779,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "720",
+     "kind": "icon",
+     "box": {
+      "x": 6853808,
+      "y": 4495779,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "721",
+     "kind": "icon",
+     "box": {
+      "x": 6447595,
+      "y": 4495779,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "722",
+     "kind": "icon",
+     "box": {
+      "x": 7280648,
+      "y": 4495779,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "723",
+     "kind": "icon",
+     "box": {
+      "x": 7689111,
+      "y": 4495779,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "724",
+     "kind": "icon",
+     "box": {
+      "x": 8101659,
+      "y": 4495779,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "725",
+     "kind": "icon",
+     "box": {
+      "x": 8513897,
+      "y": 4495779,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "726",
+     "kind": "icon",
+     "box": {
+      "x": 8929885,
+      "y": 4495779,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "727",
+     "kind": "icon",
+     "box": {
+      "x": 9744481,
+      "y": 4495779,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "728",
+     "kind": "icon",
+     "box": {
+      "x": 9349035,
+      "y": 4495779,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "729",
+     "kind": "icon",
+     "box": {
+      "x": 10170340,
+      "y": 4495779,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "730",
+     "kind": "icon",
+     "box": {
+      "x": 10563418,
+      "y": 4495779,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "731",
+     "kind": "icon",
+     "box": {
+      "x": 677334,
+      "y": 4963857,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "732",
+     "kind": "icon",
+     "box": {
+      "x": 10988940,
+      "y": 4495779,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "733",
+     "kind": "icon",
+     "box": {
+      "x": 1105099,
+      "y": 4963857,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "734",
+     "kind": "icon",
+     "box": {
+      "x": 1517518,
+      "y": 4963857,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "735",
+     "kind": "icon",
+     "box": {
+      "x": 1939101,
+      "y": 4963857,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "736",
+     "kind": "icon",
+     "box": {
+      "x": 2345710,
+      "y": 4963857,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "737",
+     "kind": "icon",
+     "box": {
+      "x": 2760164,
+      "y": 4963857,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "738",
+     "kind": "icon",
+     "box": {
+      "x": 3169197,
+      "y": 4963857,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "739",
+     "kind": "icon",
+     "box": {
+      "x": 3574326,
+      "y": 4963857,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "740",
+     "kind": "icon",
+     "box": {
+      "x": 3991407,
+      "y": 4963857,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "741",
+     "kind": "icon",
+     "box": {
+      "x": 4400440,
+      "y": 4963857,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "742",
+     "kind": "icon",
+     "box": {
+      "x": 4829859,
+      "y": 4963857,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "743",
+     "kind": "icon",
+     "box": {
+      "x": 5218387,
+      "y": 4963857,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "744",
+     "kind": "icon",
+     "box": {
+      "x": 5626835,
+      "y": 4963857,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "745",
+     "kind": "icon",
+     "box": {
+      "x": 6041640,
+      "y": 4963857,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "746",
+     "kind": "icon",
+     "box": {
+      "x": 6447595,
+      "y": 4963857,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "747",
+     "kind": "icon",
+     "box": {
+      "x": 6853808,
+      "y": 4963857,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "748",
+     "kind": "icon",
+     "box": {
+      "x": 7280648,
+      "y": 4963857,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "749",
+     "kind": "icon",
+     "box": {
+      "x": 7689111,
+      "y": 4963857,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "750",
+     "kind": "icon",
+     "box": {
+      "x": 8521570,
+      "y": 4963857,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "751",
+     "kind": "icon",
+     "box": {
+      "x": 8101659,
+      "y": 4963857,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "752",
+     "kind": "icon",
+     "box": {
+      "x": 9340265,
+      "y": 4963857,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "753",
+     "kind": "icon",
+     "box": {
+      "x": 9745985,
+      "y": 4963857,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "754",
+     "kind": "icon",
+     "box": {
+      "x": 10170340,
+      "y": 4963857,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "755",
+     "kind": "icon",
+     "box": {
+      "x": 10563418,
+      "y": 4963857,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "756",
+     "kind": "icon",
+     "box": {
+      "x": 10988940,
+      "y": 4963857,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.207,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 0.9
+  },
+  {
+   "id": "slide26",
+   "source_index": 25,
+   "layout_name": "Заголовок",
+   "archetype": "cards",
+   "slots": [
+    {
+     "id": "763",
+     "kind": "title",
+     "box": {
+      "x": 677334,
+      "y": 692150,
+      "w": 10855854,
+      "h": 644241
+     },
+     "max_chars": 42,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Заголовок — ключевая мысль слайда"
+    },
+    {
+     "id": "765",
+     "kind": "body",
+     "box": {
+      "x": 658811,
+      "y": 3780646,
+      "w": 2880000,
+      "h": 1233637
+     },
+     "max_chars": 127,
+     "max_lines": 5,
+     "max_items": 5,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Тезис под тематическойиконкой (например,об идее проекта)"
+    },
+    {
+     "id": "766",
+     "kind": "body",
+     "box": {
+      "x": 4385469,
+      "y": 3774296,
+      "w": 2880000,
+      "h": 1233637
+     },
+     "max_chars": 127,
+     "max_lines": 5,
+     "max_items": 5,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Ещё тезис под иконкой (например, о месте проекта в экосистеме)"
+    },
+    {
+     "id": "767",
+     "kind": "body",
+     "box": {
+      "x": 8112126,
+      "y": 3774296,
+      "w": 2880000,
+      "h": 1464969
+     },
+     "max_chars": 153,
+     "max_lines": 6,
+     "max_items": 6,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "И третий тезис (что-то о срокахи расписании)"
+    },
+    {
+     "id": "773",
+     "kind": "body",
+     "box": {
+      "x": 658811,
+      "y": 6003053,
+      "w": 6421611,
+      "h": 325593
+     },
+     "max_chars": 61,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 14.8,
+     "placeholder_type": null,
+     "sample_text": "Иконки можно брать из VKUI Icons Library. Фирменный синий #0077FF"
+    },
+    {
+     "id": "762",
+     "kind": "icon",
+     "box": {
+      "x": 8105070,
+      "y": 2562300,
+      "w": 866700,
+      "h": 866700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "769",
+     "kind": "icon",
+     "box": {
+      "x": 879438,
+      "y": 2770225,
+      "w": 450850,
+      "h": 450850
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "770",
+     "kind": "icon",
+     "box": {
+      "x": 8307349,
+      "y": 2772418,
+      "w": 450851,
+      "h": 450851
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "771",
+     "kind": "icon",
+     "box": {
+      "x": 4385469,
+      "y": 2562300,
+      "w": 866700,
+      "h": 866700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "772",
+     "kind": "icon",
+     "box": {
+      "x": 4593394,
+      "y": 2770225,
+      "w": 450850,
+      "h": 450850
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.186,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 0.75
+  },
+  {
+   "id": "slide27",
+   "source_index": 26,
+   "layout_name": "Заголовок",
+   "archetype": "cards",
+   "slots": [
+    {
+     "id": "781",
+     "kind": "title",
+     "box": {
+      "x": 677334,
+      "y": 692150,
+      "w": 10855854,
+      "h": 644241
+     },
+     "max_chars": 42,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Заголовок — ключевая мысль слайда"
+    },
+    {
+     "id": "786",
+     "kind": "body",
+     "box": {
+      "x": 658811,
+      "y": 3780646,
+      "w": 2880000,
+      "h": 1233637
+     },
+     "max_chars": 127,
+     "max_lines": 5,
+     "max_items": 5,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Тезис под тематическойиконкой (например,об идее проекта)"
+    },
+    {
+     "id": "787",
+     "kind": "body",
+     "box": {
+      "x": 4385469,
+      "y": 3774296,
+      "w": 2880000,
+      "h": 1233637
+     },
+     "max_chars": 127,
+     "max_lines": 5,
+     "max_items": 5,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Ещё тезис под иконкой (например, о месте проекта в экосистеме)"
+    },
+    {
+     "id": "788",
+     "kind": "body",
+     "box": {
+      "x": 8112126,
+      "y": 3774296,
+      "w": 2880000,
+      "h": 1464969
+     },
+     "max_chars": 153,
+     "max_lines": 6,
+     "max_items": 6,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "И третий тезис (что-то о срокахи расписании)"
+    },
+    {
+     "id": "789",
+     "kind": "body",
+     "box": {
+      "x": 658811,
+      "y": 6003053,
+      "w": 6421611,
+      "h": 325593
+     },
+     "max_chars": 61,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 14.8,
+     "placeholder_type": null,
+     "sample_text": "Иконки можно брать из VKUI Icons Library. Фирменный синий #0077FF"
+    },
+    {
+     "id": "778",
+     "kind": "icon",
+     "box": {
+      "x": 8099424,
+      "y": 2562300,
+      "w": 866700,
+      "h": 866700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "779",
+     "kind": "icon",
+     "box": {
+      "x": 4385469,
+      "y": 2562300,
+      "w": 866700,
+      "h": 866700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "780",
+     "kind": "icon",
+     "box": {
+      "x": 671513,
+      "y": 2562300,
+      "w": 866700,
+      "h": 866700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "783",
+     "kind": "icon",
+     "box": {
+      "x": 879438,
+      "y": 2770225,
+      "w": 450850,
+      "h": 450850
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "784",
+     "kind": "icon",
+     "box": {
+      "x": 8316973,
+      "y": 2791669,
+      "w": 450851,
+      "h": 450851
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "785",
+     "kind": "icon",
+     "box": {
+      "x": 4574144,
+      "y": 2770225,
+      "w": 450850,
+      "h": 450850
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.195,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 0.75
+  },
+  {
+   "id": "slide28",
+   "source_index": 27,
+   "layout_name": "Заголовок",
+   "archetype": "cards",
+   "slots": [
+    {
+     "id": "794",
+     "kind": "title",
+     "box": {
+      "x": 677334,
+      "y": 692150,
+      "w": 10855854,
+      "h": 644241
+     },
+     "max_chars": 42,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Заголовок — ключевая мысль слайда"
+    },
+    {
+     "id": "800",
+     "kind": "body",
+     "box": {
+      "x": 658811,
+      "y": 3279808,
+      "w": 2880000,
+      "h": 1233637
+     },
+     "max_chars": 127,
+     "max_lines": 5,
+     "max_items": 5,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Тезис под тематическойиконкой (например,об идее проекта)"
+    },
+    {
+     "id": "801",
+     "kind": "body",
+     "box": {
+      "x": 4385469,
+      "y": 3273458,
+      "w": 2880000,
+      "h": 1233637
+     },
+     "max_chars": 127,
+     "max_lines": 5,
+     "max_items": 5,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Ещё тезис под иконкой (например, о месте проекта в экосистеме)"
+    },
+    {
+     "id": "802",
+     "kind": "body",
+     "box": {
+      "x": 8112126,
+      "y": 3273458,
+      "w": 2880000,
+      "h": 1464969
+     },
+     "max_chars": 153,
+     "max_lines": 6,
+     "max_items": 6,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "И третий тезис (что-то о срокахи расписании)"
+    },
+    {
+     "id": "796",
+     "kind": "body",
+     "box": {
+      "x": 658811,
+      "y": 6003053,
+      "w": 6421611,
+      "h": 325593
+     },
+     "max_chars": 61,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 14.8,
+     "placeholder_type": null,
+     "sample_text": "Иконки можно брать из VKUI Icons Library. Фирменный синий #0077FF"
+    },
+    {
+     "id": "797",
+     "kind": "icon",
+     "box": {
+      "x": 669096,
+      "y": 2601017,
+      "w": 450850,
+      "h": 450850
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "798",
+     "kind": "icon",
+     "box": {
+      "x": 8097007,
+      "y": 2603210,
+      "w": 450851,
+      "h": 450851
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "799",
+     "kind": "icon",
+     "box": {
+      "x": 4383052,
+      "y": 2601017,
+      "w": 450850,
+      "h": 450850
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.168,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 0.75
+  },
+  {
+   "id": "slide29",
+   "source_index": 28,
+   "layout_name": "Титульный слайд раздела",
+   "archetype": "section",
+   "slots": [
+    {
+     "id": "808",
+     "kind": "title",
+     "box": {
+      "x": 622628,
+      "y": 692150,
+      "w": 4666064,
+      "h": 1772793
+     },
+     "max_chars": 27,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 48.0,
+     "placeholder_type": null,
+     "sample_text": "Пример слайда-разделителя"
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.0,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 0.85
+  },
+  {
+   "id": "slide30",
+   "source_index": 29,
+   "layout_name": "Мокап телефона ",
+   "archetype": "image_text",
+   "slots": [
+    {
+     "id": "820",
+     "kind": "title",
+     "box": {
+      "x": 677334,
+      "y": 692150,
+      "w": 5418666,
+      "h": 1081088
+     },
+     "max_chars": 21,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Слайды со скриншотами"
+    },
+    {
+     "id": "819",
+     "kind": "body",
+     "box": {
+      "x": 671514,
+      "y": 2055970,
+      "w": 4841390,
+      "h": 4144805
+     },
+     "max_chars": 686,
+     "max_lines": 16,
+     "max_items": 16,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": "body",
+     "sample_text": "Рамки адаптированы под безрамочный Android и iPhone 12. Скачать другие мокапы (iPad, iPhone 7, телефоны Samsung и Xiaomi) можно на Facebook Devices.Можно скопировать скриншот и просто вставить его на "
+    },
+    {
+     "id": "821",
+     "kind": "picture",
+     "box": {
+      "x": 7951157,
+      "y": 814745,
+      "w": 2430752,
+      "h": 5260770
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": "pic",
+     "sample_text": null
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.393,
+   "thumbnail": null,
+   "tags": [
+    "мокап телефона",
+    "скриншот",
+    "текст слева",
+    "изображение справа"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "id": "slide31",
+   "source_index": 30,
+   "layout_name": "Заголовок",
+   "archetype": "image_text",
+   "slots": [
+    {
+     "id": "826",
+     "kind": "title",
+     "box": {
+      "x": 677334,
+      "y": 692150,
+      "w": 3931736,
+      "h": 1371428
+     },
+     "max_chars": 30,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Слайды со скриншотами"
+    },
+    {
+     "id": "827",
+     "kind": "picture",
+     "box": {
+      "x": 4696725,
+      "y": 1022676,
+      "w": 6562880,
+      "h": 4278648
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "828",
+     "kind": "picture",
+     "box": {
+      "x": 3472536,
+      "y": 261820,
+      "w": 8968986,
+      "h": 5542632
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.93,
+   "thumbnail": null,
+   "tags": [
+    "мокап ноутбука",
+    "скриншот",
+    "тёмный фон",
+    "один заголовок"
+   ],
+   "confidence": 0.9
+  },
+  {
+   "id": "slide32",
+   "source_index": 31,
+   "layout_name": "Заголовок",
+   "archetype": "image_text",
+   "slots": [
+    {
+     "id": "833",
+     "kind": "title",
+     "box": {
+      "x": 677334,
+      "y": 692150,
+      "w": 3931736,
+      "h": 1371428
+     },
+     "max_chars": 30,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Слайды со скриншотами"
+    },
+    {
+     "id": "834",
+     "kind": "picture",
+     "box": {
+      "x": 7354252,
+      "y": 1005401,
+      "w": 4837748,
+      "h": 4278648
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "835",
+     "kind": "picture",
+     "box": {
+      "x": 6096000,
+      "y": 261820,
+      "w": 6096000,
+      "h": 5542632
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "837",
+     "kind": "picture",
+     "box": {
+      "x": 5371893,
+      "y": 1595959,
+      "w": 2084508,
+      "h": 4544855
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "838",
+     "kind": "picture",
+     "box": {
+      "x": 5036822,
+      "y": 1271376,
+      "w": 2746965,
+      "h": 5184000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.935,
+   "thumbnail": null,
+   "tags": [
+    "мокап устройств",
+    "скриншоты",
+    "тёмный текст",
+    "демонстрация интерфейса"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "id": "slide33",
+   "source_index": 32,
+   "layout_name": "Заголовок + скриншот (1)",
+   "archetype": "image_text",
+   "slots": [
+    {
+     "id": "843",
+     "kind": "title",
+     "box": {
+      "x": 677334,
+      "y": 692150,
+      "w": 4663017,
+      "h": 1081088
+     },
+     "max_chars": 18,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Слайдысо скриншотами"
+    },
+    {
+     "id": "844",
+     "kind": "body",
+     "box": {
+      "x": 671514,
+      "y": 2018599,
+      "w": 4828211,
+      "h": 4182176
+     },
+     "max_chars": 727,
+     "max_lines": 17,
+     "max_items": 17,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": "body",
+     "sample_text": "Если нужно показать несколько скриншотов постов или интерфейса, можно продублировать слайд и менять скрины на том же месте. Только проследите, чтобы остальные элементы слайда не сместились.Для навигац"
+    },
+    {
+     "id": "851",
+     "kind": "picture",
+     "box": {
+      "x": 6430992,
+      "y": 702659,
+      "w": 5102196,
+      "h": 5007006
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.547,
+   "thumbnail": null,
+   "tags": [
+    "скриншот",
+    "инструкция",
+    "текст слева",
+    "изображение справа"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "id": "slide34",
+   "source_index": 33,
+   "layout_name": "Заголовок + текст",
+   "archetype": "image_text",
+   "slots": [
+    {
+     "id": "857",
+     "kind": "title",
+     "box": {
+      "x": 677334,
+      "y": 692150,
+      "w": 4424055,
+      "h": 1560162
+     },
+     "max_chars": 34,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Построй своё будущее в IT вместе с VK"
+    },
+    {
+     "id": "856",
+     "kind": "body",
+     "box": {
+      "x": 671512,
+      "y": 2579572,
+      "w": 4853389,
+      "h": 3621203
+     },
+     "max_chars": 786,
+     "max_lines": 16,
+     "max_items": 16,
+     "font": null,
+     "size_pt": 14.0,
+     "placeholder_type": "body",
+     "sample_text": "С 2011 года мы создаём бесплатные образовательные и развивающие проекты и инициативы вокруг технологий с ведущими экспертами VK в каждой специальности и с самым широким спектром программ в IT и non-te"
+    },
+    {
+     "id": "858",
+     "kind": "picture",
+     "box": {
+      "x": 6096000,
+      "y": 0,
+      "w": 6096000,
+      "h": 6857999
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.71,
+   "thumbnail": null,
+   "tags": [
+    "фото людей",
+    "текст слева",
+    "изображение справа",
+    "корпоративный стиль"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "id": "slide35",
+   "source_index": 34,
+   "layout_name": "Паттерн + фото",
+   "archetype": "section",
+   "slots": [
+    {
+     "id": "864",
+     "kind": "title",
+     "box": {
+      "x": 677334,
+      "y": 692149,
+      "w": 3180792,
+      "h": 1348739
+     },
+     "max_chars": 25,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": null
+    },
+    {
+     "id": "863",
+     "kind": "subtitle",
+     "box": {
+      "x": 671514,
+      "y": 2558715,
+      "w": 4165182,
+      "h": 3642059
+     },
+     "max_chars": 516,
+     "max_lines": 14,
+     "max_items": null,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": "body",
+     "sample_text": null
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.181,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 0.7
+  },
+  {
+   "id": "slide36",
+   "source_index": 35,
+   "layout_name": "1_Паттерн + фото",
+   "archetype": "section",
+   "slots": [
+    {
+     "id": "870",
+     "kind": "title",
+     "box": {
+      "x": 677334,
+      "y": 692149,
+      "w": 3180792,
+      "h": 1348739
+     },
+     "max_chars": 25,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": null
+    },
+    {
+     "id": "869",
+     "kind": "subtitle",
+     "box": {
+      "x": 671514,
+      "y": 2558715,
+      "w": 4165182,
+      "h": 3642059
+     },
+     "max_chars": 516,
+     "max_lines": 14,
+     "max_items": null,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": "body",
+     "sample_text": null
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.181,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 0.7
+  },
+  {
+   "id": "slide37",
+   "source_index": 36,
+   "layout_name": "Титульный слайд раздела",
+   "archetype": "section",
+   "slots": [
+    {
+     "id": "876",
+     "kind": "title",
+     "box": {
+      "x": 622628,
+      "y": 692150,
+      "w": 4666064,
+      "h": 1772793
+     },
+     "max_chars": 27,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 48.0,
+     "placeholder_type": null,
+     "sample_text": "Пример слайда-разделителя"
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.0,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 0.85
+  },
+  {
+   "id": "slide38",
+   "source_index": 37,
+   "layout_name": "Заголовок",
+   "archetype": "table",
+   "slots": [
+    {
+     "id": "887",
+     "kind": "title",
+     "box": {
+      "x": 677334,
+      "y": 692150,
+      "w": 10855854,
+      "h": 644241
+     },
+     "max_chars": 42,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Оформление таблиц"
+    },
+    {
+     "id": "888",
+     "kind": "body",
+     "box": {
+      "x": 677863,
+      "y": 1773238,
+      "w": 4454525,
+      "h": 4427537
+     },
+     "max_chars": 710,
+     "max_lines": 18,
+     "max_items": 18,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": "body",
+     "sample_text": "Удаляем все лишние заливки, границы ячеек и выделения в тексте. Границы уместны, когда хотим обозначить легенду или размещаем на слайде большую таблицу.Выравниваем содержимое текстовых ячеек по левому"
+    },
+    {
+     "id": "889",
+     "kind": "table",
+     "box": {
+      "x": 6096000,
+      "y": 1773238,
+      "w": 3000000,
+      "h": 3000000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": "Заголовок столбца, млнЗаголовок столбца, млнАкцент1510Строка144Строка119Строка85Строка53"
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.344,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 0.95
+  },
+  {
+   "id": "slide39",
+   "source_index": 38,
+   "layout_name": "Заголовок",
+   "archetype": "table",
+   "slots": [
+    {
+     "id": "894",
+     "kind": "title",
+     "box": {
+      "x": 677334,
+      "y": 692150,
+      "w": 10855854,
+      "h": 644241
+     },
+     "max_chars": 42,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Оформление большой таблицы: пример"
+    },
+    {
+     "id": "895",
+     "kind": "table",
+     "box": {
+      "x": 658813,
+      "y": 1773238,
+      "w": 3000000,
+      "h": 3000000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": "1 кв. 20182 кв. 20183 кв. 20184 кв. 20181 кв. 20192 кв. 20193 кв. 20194 кв. 20191 кв. 20202 кв. 2020ИтогоПлатежные карты32%38%39%39%37%29%40%31%37%30%35%Потребительские кредиты33%29%26%23%27%26%23%23%"
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.108,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 0.95
+  },
+  {
+   "id": "slide40",
+   "source_index": 39,
+   "layout_name": "Заголовок",
+   "archetype": "table",
+   "slots": [
+    {
+     "id": "900",
+     "kind": "title",
+     "box": {
+      "x": 677334,
+      "y": 692150,
+      "w": 10855854,
+      "h": 644241
+     },
+     "max_chars": 42,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Оформление большой таблицы: пример"
+    },
+    {
+     "id": "901",
+     "kind": "table",
+     "box": {
+      "x": 658812,
+      "y": 1531802,
+      "w": 3000000,
+      "h": 3000000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": "ВремяТемаВладелец сессииКлючевые вопросы10:00 – 10:05Вступительное словоЛюбовь ПшеничниковаДиректор по развитию стратегических партнерствЦели проведения мероприятия;Ожидаемые результаты 10:05 – 10:25К"
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.108,
+   "thumbnail": null,
+   "tags": [
+    "таблица",
+    "расписание",
+    "4 колонки",
+    "много строк"
+   ],
+   "confidence": 0.98
+  },
+  {
+   "id": "slide41",
+   "source_index": 40,
+   "layout_name": "Титульный слайд раздела",
+   "archetype": "section",
+   "slots": [
+    {
+     "id": "907",
+     "kind": "title",
+     "box": {
+      "x": 622628,
+      "y": 692150,
+      "w": 4666064,
+      "h": 1772793
+     },
+     "max_chars": 27,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 48.0,
+     "placeholder_type": null,
+     "sample_text": "Пример слайда-разделителя"
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.0,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 0.85
+  },
+  {
+   "id": "slide42",
+   "source_index": 41,
+   "layout_name": "Заголовок",
+   "archetype": "process",
+   "slots": [
+    {
+     "id": "920",
+     "kind": "title",
+     "box": {
+      "x": 677334,
+      "y": 692150,
+      "w": 10855854,
+      "h": 644241
+     },
+     "max_chars": 42,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Таймлайн без акцентов"
+    },
+    {
+     "id": "922",
+     "kind": "date",
+     "box": {
+      "x": 658813,
+      "y": 2434478,
+      "w": 1143001,
+      "h": 597087
+     },
+     "max_chars": 5,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 32.0,
+     "placeholder_type": null,
+     "sample_text": "2010"
+    },
+    {
+     "id": "924",
+     "kind": "date",
+     "box": {
+      "x": 3363214,
+      "y": 2434478,
+      "w": 1143001,
+      "h": 597087
+     },
+     "max_chars": 5,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 32.0,
+     "placeholder_type": null,
+     "sample_text": "2011"
+    },
+    {
+     "id": "926",
+     "kind": "date",
+     "box": {
+      "x": 6073860,
+      "y": 2434478,
+      "w": 1143001,
+      "h": 597087
+     },
+     "max_chars": 5,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 32.0,
+     "placeholder_type": null,
+     "sample_text": "2012"
+    },
+    {
+     "id": "940",
+     "kind": "date",
+     "box": {
+      "x": 8796338,
+      "y": 2434478,
+      "w": 1143001,
+      "h": 597087
+     },
+     "max_chars": 5,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 32.0,
+     "placeholder_type": null,
+     "sample_text": "2013"
+    },
+    {
+     "id": "921",
+     "kind": "body",
+     "box": {
+      "x": 658813,
+      "y": 3057872,
+      "w": 2038265,
+      "h": 565669
+     },
+     "max_chars": 36,
+     "max_lines": 2,
+     "max_items": 2,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Важное событиев жизни компании"
+    },
+    {
+     "id": "923",
+     "kind": "body",
+     "box": {
+      "x": 3363214,
+      "y": 3057872,
+      "w": 2038265,
+      "h": 565669
+     },
+     "max_chars": 36,
+     "max_lines": 2,
+     "max_items": 2,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Важное событиев жизни компании"
+    },
+    {
+     "id": "925",
+     "kind": "body",
+     "box": {
+      "x": 6073860,
+      "y": 3057872,
+      "w": 2038265,
+      "h": 565669
+     },
+     "max_chars": 36,
+     "max_lines": 2,
+     "max_items": 2,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Важное событиев жизни компании"
+    },
+    {
+     "id": "939",
+     "kind": "body",
+     "box": {
+      "x": 8796338,
+      "y": 3057872,
+      "w": 2038265,
+      "h": 565669
+     },
+     "max_chars": 36,
+     "max_lines": 2,
+     "max_items": 2,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Важное событиев жизни компании"
+    },
+    {
+     "id": "931",
+     "kind": "date",
+     "box": {
+      "x": 658813,
+      "y": 4621356,
+      "w": 1143001,
+      "h": 597087
+     },
+     "max_chars": 5,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 32.0,
+     "placeholder_type": null,
+     "sample_text": "2014"
+    },
+    {
+     "id": "933",
+     "kind": "date",
+     "box": {
+      "x": 3363214,
+      "y": 4621356,
+      "w": 1143001,
+      "h": 597087
+     },
+     "max_chars": 5,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 32.0,
+     "placeholder_type": null,
+     "sample_text": "2015"
+    },
+    {
+     "id": "935",
+     "kind": "date",
+     "box": {
+      "x": 6073860,
+      "y": 4621356,
+      "w": 1143001,
+      "h": 597087
+     },
+     "max_chars": 5,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 32.0,
+     "placeholder_type": null,
+     "sample_text": "2016"
+    },
+    {
+     "id": "930",
+     "kind": "body",
+     "box": {
+      "x": 658813,
+      "y": 5225427,
+      "w": 2038265,
+      "h": 565669
+     },
+     "max_chars": 36,
+     "max_lines": 2,
+     "max_items": 2,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Важное событиев жизни компании"
+    },
+    {
+     "id": "932",
+     "kind": "body",
+     "box": {
+      "x": 3363214,
+      "y": 5225427,
+      "w": 2038265,
+      "h": 565669
+     },
+     "max_chars": 36,
+     "max_lines": 2,
+     "max_items": 2,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Важное событиев жизни компании"
+    },
+    {
+     "id": "934",
+     "kind": "body",
+     "box": {
+      "x": 6073860,
+      "y": 5225427,
+      "w": 2038265,
+      "h": 724109
+     },
+     "max_chars": 36,
+     "max_lines": 2,
+     "max_items": 2,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Важное событиев жизни компании"
+    }
+   ],
+   "fixed": [
+    "918",
+    "919"
+   ],
+   "fill_ratio": 0.158,
+   "thumbnail": null,
+   "tags": [
+    "таймлайн",
+    "2 ряда",
+    "7 шагов",
+    "годовые вехи"
+   ],
+   "confidence": 0.98
+  },
+  {
+   "id": "slide43",
+   "source_index": 42,
+   "layout_name": "Заголовок",
+   "archetype": "process",
+   "slots": [
+    {
+     "id": "946",
+     "kind": "title",
+     "box": {
+      "x": 677334,
+      "y": 692150,
+      "w": 10855854,
+      "h": 644241
+     },
+     "max_chars": 42,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Диаграмма Ганта"
+    },
+    {
+     "id": "977",
+     "kind": "label",
+     "box": {
+      "x": 620176,
+      "y": 1913757,
+      "w": 1186317,
+      "h": 309507
+     },
+     "max_chars": 12,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 14.0,
+     "placeholder_type": null,
+     "sample_text": "Задача №1"
+    },
+    {
+     "id": "978",
+     "kind": "label",
+     "box": {
+      "x": 620176,
+      "y": 2598327,
+      "w": 1186317,
+      "h": 309507
+     },
+     "max_chars": 12,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 14.0,
+     "placeholder_type": null,
+     "sample_text": "Задача №2"
+    },
+    {
+     "id": "979",
+     "kind": "label",
+     "box": {
+      "x": 620176,
+      "y": 3282899,
+      "w": 1186317,
+      "h": 309507
+     },
+     "max_chars": 12,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 14.0,
+     "placeholder_type": null,
+     "sample_text": "Задача №3"
+    },
+    {
+     "id": "980",
+     "kind": "label",
+     "box": {
+      "x": 620176,
+      "y": 3967469,
+      "w": 1186317,
+      "h": 309507
+     },
+     "max_chars": 12,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 14.0,
+     "placeholder_type": null,
+     "sample_text": "Задача №4"
+    },
+    {
+     "id": "981",
+     "kind": "label",
+     "box": {
+      "x": 620176,
+      "y": 4652040,
+      "w": 1186317,
+      "h": 309507
+     },
+     "max_chars": 12,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 14.0,
+     "placeholder_type": null,
+     "sample_text": "Задача №5"
+    },
+    {
+     "id": "957",
+     "kind": "label",
+     "box": {
+      "x": 1615236,
+      "y": 5606846,
+      "w": 523272,
+      "h": 342979
+     },
+     "max_chars": 4,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Апр"
+    },
+    {
+     "id": "958",
+     "kind": "label",
+     "box": {
+      "x": 2833803,
+      "y": 5606847,
+      "w": 637606,
+      "h": 342979
+     },
+     "max_chars": 5,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Май"
+    },
+    {
+     "id": "959",
+     "kind": "label",
+     "box": {
+      "x": 4131498,
+      "y": 5606847,
+      "w": 685200,
+      "h": 342979
+     },
+     "max_chars": 6,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Июнь"
+    },
+    {
+     "id": "960",
+     "kind": "label",
+     "box": {
+      "x": 5516371,
+      "y": 5606847,
+      "w": 685200,
+      "h": 342979
+     },
+     "max_chars": 6,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Июль"
+    },
+    {
+     "id": "961",
+     "kind": "label",
+     "box": {
+      "x": 6891556,
+      "y": 5606847,
+      "w": 685200,
+      "h": 342979
+     },
+     "max_chars": 6,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Авг"
+    },
+    {
+     "id": "962",
+     "kind": "label",
+     "box": {
+      "x": 8286119,
+      "y": 5606847,
+      "w": 685200,
+      "h": 342979
+     },
+     "max_chars": 6,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Сен"
+    },
+    {
+     "id": "963",
+     "kind": "label",
+     "box": {
+      "x": 9680681,
+      "y": 5606847,
+      "w": 685200,
+      "h": 342979
+     },
+     "max_chars": 6,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Окт"
+    },
+    {
+     "id": "964",
+     "kind": "label",
+     "box": {
+      "x": 10938834,
+      "y": 5606847,
+      "w": 685200,
+      "h": 342979
+     },
+     "max_chars": 6,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Ноя"
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.044,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 0.8
+  },
+  {
+   "id": "slide44",
+   "source_index": 43,
+   "layout_name": "Заголовок",
+   "archetype": "process",
+   "slots": [
+    {
+     "id": "987",
+     "kind": "title",
+     "box": {
+      "x": 677334,
+      "y": 692150,
+      "w": 10855854,
+      "h": 644241
+     },
+     "max_chars": 42,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Нумерация"
+    },
+    {
+     "id": "991",
+     "kind": "body",
+     "box": {
+      "x": 665918,
+      "y": 3157870,
+      "w": 869519,
+      "h": 869519
+     },
+     "max_chars": 3,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": null,
+     "sample_text": "1"
+    },
+    {
+     "id": "990",
+     "kind": "body",
+     "box": {
+      "x": 3508870,
+      "y": 3172750,
+      "w": 869519,
+      "h": 869519
+     },
+     "max_chars": 3,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": null,
+     "sample_text": "2"
+    },
+    {
+     "id": "988",
+     "kind": "body",
+     "box": {
+      "x": 6351822,
+      "y": 3172750,
+      "w": 869519,
+      "h": 869519
+     },
+     "max_chars": 3,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": null,
+     "sample_text": "3"
+    },
+    {
+     "id": "989",
+     "kind": "body",
+     "box": {
+      "x": 9194774,
+      "y": 3156753,
+      "w": 869519,
+      "h": 869519
+     },
+     "max_chars": 3,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": null,
+     "sample_text": "4"
+    },
+    {
+     "id": "992",
+     "kind": "body",
+     "box": {
+      "x": 627281,
+      "y": 4250028,
+      "w": 2550017,
+      "h": 596436
+     },
+     "max_chars": 45,
+     "max_lines": 2,
+     "max_items": 2,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Здесь можно добавить пояснение к этапу"
+    },
+    {
+     "id": "993",
+     "kind": "body",
+     "box": {
+      "x": 3508870,
+      "y": 4250028,
+      "w": 2550017,
+      "h": 596436
+     },
+     "max_chars": 45,
+     "max_lines": 2,
+     "max_items": 2,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Второй этап важный, поэтому яркий"
+    },
+    {
+     "id": "994",
+     "kind": "body",
+     "box": {
+      "x": 6351822,
+      "y": 4250028,
+      "w": 2550017,
+      "h": 596436
+     },
+     "max_chars": 45,
+     "max_lines": 2,
+     "max_items": 2,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Здесь можно добавить пояснение к этапу"
+    },
+    {
+     "id": "995",
+     "kind": "body",
+     "box": {
+      "x": 9156136,
+      "y": 4250028,
+      "w": 2550017,
+      "h": 596436
+     },
+     "max_chars": 45,
+     "max_lines": 2,
+     "max_items": 2,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Здесь можно добавить пояснение к этапу"
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.109,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 0.8
+  },
+  {
+   "id": "slide45",
+   "source_index": 44,
+   "layout_name": "Заголовок",
+   "archetype": "chart",
+   "slots": [
+    {
+     "id": "1000",
+     "kind": "title",
+     "box": {
+      "x": 677334,
+      "y": 692150,
+      "w": 10855854,
+      "h": 644241
+     },
+     "max_chars": 42,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Примеры диаграмм"
+    },
+    {
+     "id": "1002",
+     "kind": "caption",
+     "box": {
+      "x": 2333959,
+      "y": 3210059,
+      "w": 1921808,
+      "h": 1065283
+     },
+     "max_chars": 40,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Сравнение всех городов сразу"
+    },
+    {
+     "id": "1004",
+     "kind": "caption",
+     "box": {
+      "x": 7939480,
+      "y": 3210059,
+      "w": 1921808,
+      "h": 1065283
+     },
+     "max_chars": 40,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Диаграмма про Петербург"
+    },
+    {
+     "id": "1001",
+     "kind": "chart",
+     "box": {
+      "x": 645934,
+      "y": 1773238,
+      "w": 10887254,
+      "h": 4427537
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.61,
+   "thumbnail": null,
+   "tags": [
+    "2 диаграммы",
+    "кольцевые",
+    "сравнение",
+    "легенды"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "id": "slide46",
+   "source_index": 45,
+   "layout_name": "Заголовок",
+   "archetype": "kpi",
+   "slots": [
+    {
+     "id": "1009",
+     "kind": "title",
+     "box": {
+      "x": 677334,
+      "y": 692150,
+      "w": 10855854,
+      "h": 644241
+     },
+     "max_chars": 42,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Примеры диаграмм"
+    },
+    {
+     "id": "1016",
+     "kind": "number",
+     "box": {
+      "x": 6648939,
+      "y": 1285423,
+      "w": 2212283,
+      "h": 766739
+     },
+     "max_chars": 7,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 44.0,
+     "placeholder_type": null,
+     "sample_text": "42%"
+    },
+    {
+     "id": "1017",
+     "kind": "number",
+     "box": {
+      "x": 9063201,
+      "y": 1285422,
+      "w": 2212283,
+      "h": 766739
+     },
+     "max_chars": 7,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 44.0,
+     "placeholder_type": null,
+     "sample_text": "32%"
+    },
+    {
+     "id": "1011",
+     "kind": "number",
+     "box": {
+      "x": 1741564,
+      "y": 2836571,
+      "w": 2212283,
+      "h": 1877813
+     },
+     "max_chars": 3,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 88.0,
+     "placeholder_type": null,
+     "sample_text": "22%пояснение"
+    },
+    {
+     "id": "1020",
+     "kind": "caption",
+     "box": {
+      "x": 7112852,
+      "y": 2810565,
+      "w": 1282971,
+      "h": 357205
+     },
+     "max_chars": 10,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "пояснение"
+    },
+    {
+     "id": "1021",
+     "kind": "caption",
+     "box": {
+      "x": 9527114,
+      "y": 2810565,
+      "w": 1282971,
+      "h": 357205
+     },
+     "max_chars": 10,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "пояснение"
+    },
+    {
+     "id": "1018",
+     "kind": "number",
+     "box": {
+      "x": 6648939,
+      "y": 4161796,
+      "w": 2212283,
+      "h": 766739
+     },
+     "max_chars": 7,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 44.0,
+     "placeholder_type": null,
+     "sample_text": "22%"
+    },
+    {
+     "id": "1019",
+     "kind": "number",
+     "box": {
+      "x": 9063201,
+      "y": 4161795,
+      "w": 2212283,
+      "h": 766739
+     },
+     "max_chars": 7,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 44.0,
+     "placeholder_type": null,
+     "sample_text": "12%"
+    },
+    {
+     "id": "1022",
+     "kind": "caption",
+     "box": {
+      "x": 7112852,
+      "y": 5708748,
+      "w": 1282971,
+      "h": 357205
+     },
+     "max_chars": 10,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "пояснение"
+    },
+    {
+     "id": "1023",
+     "kind": "caption",
+     "box": {
+      "x": 9527114,
+      "y": 5708748,
+      "w": 1282971,
+      "h": 357205
+     },
+     "max_chars": 10,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "пояснение"
+    }
+   ],
+   "fixed": [
+    "1010",
+    "1012",
+    "1013",
+    "1014",
+    "1015",
+    "1024"
+   ],
+   "fill_ratio": 0.668,
+   "thumbnail": null,
+   "tags": [
+    "5 KPI",
+    "кольцевые диаграммы",
+    "цифры с подписями",
+    "сетка 2x2 + крупный"
+   ],
+   "confidence": 0.9
+  },
+  {
+   "id": "slide47",
+   "source_index": 46,
+   "layout_name": "Заголовок",
+   "archetype": "chart",
+   "slots": [
+    {
+     "id": "1029",
+     "kind": "title",
+     "box": {
+      "x": 677334,
+      "y": 692150,
+      "w": 10855854,
+      "h": 644241
+     },
+     "max_chars": 42,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Гистограмма и диаграмма с областями"
+    },
+    {
+     "id": "1030",
+     "kind": "chart",
+     "box": {
+      "x": 671513,
+      "y": 1773238,
+      "w": 10848974,
+      "h": 4427537
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.539,
+   "thumbnail": null,
+   "tags": [
+    "2 диаграммы",
+    "гистограмма",
+    "области",
+    "линии",
+    "белый фон"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "id": "slide48",
+   "source_index": 47,
+   "layout_name": "Заголовок",
+   "archetype": "chart",
+   "slots": [
+    {
+     "id": "1036",
+     "kind": "title",
+     "box": {
+      "x": 677334,
+      "y": 692150,
+      "w": 10855854,
+      "h": 644241
+     },
+     "max_chars": 42,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Пример оформления графика"
+    },
+    {
+     "id": "1040",
+     "kind": "label",
+     "box": {
+      "x": 1016581,
+      "y": 1604431,
+      "w": 505514,
+      "h": 325593
+     },
+     "max_chars": 4,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "DAU"
+    },
+    {
+     "id": "1043",
+     "kind": "label",
+     "box": {
+      "x": 2301581,
+      "y": 1610441,
+      "w": 534368,
+      "h": 325593
+     },
+     "max_chars": 4,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "MAU"
+    },
+    {
+     "id": "1037",
+     "kind": "chart",
+     "box": {
+      "x": 677862,
+      "y": 2152833,
+      "w": 10868025,
+      "h": 4047942
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.53,
+   "thumbnail": null,
+   "tags": [
+    "линейный график",
+    "2 линии",
+    "легенда",
+    "скриншот диаграммы"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "id": "slide49",
+   "source_index": 48,
+   "layout_name": "Заголовок",
+   "archetype": "chart",
+   "slots": [
+    {
+     "id": "1048",
+     "kind": "title",
+     "box": {
+      "x": 677334,
+      "y": 692150,
+      "w": 10855854,
+      "h": 644241
+     },
+     "max_chars": 42,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Пример оформления графика"
+    },
+    {
+     "id": "1049",
+     "kind": "chart",
+     "box": {
+      "x": 658813,
+      "y": 1773237,
+      "w": 10855854,
+      "h": 4427537
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.575,
+   "thumbnail": null,
+   "tags": [
+    "диаграмма",
+    "столбчатая",
+    "линейная",
+    "один график"
+   ],
+   "confidence": 0.98
+  },
+  {
+   "id": "slide50",
+   "source_index": 49,
+   "layout_name": "Заголовок",
+   "archetype": "chart",
+   "slots": [
+    {
+     "id": "1054",
+     "kind": "title",
+     "box": {
+      "x": 677334,
+      "y": 692150,
+      "w": 4008966,
+      "h": 1746250
+     },
+     "max_chars": 47,
+     "max_lines": 3,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Пример оформления графика"
+    },
+    {
+     "id": "1055",
+     "kind": "chart",
+     "box": {
+      "x": 4624388,
+      "y": 692150,
+      "w": 7502525,
+      "h": 5508625
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.494,
+   "thumbnail": null,
+   "tags": [
+    "горизонтальная диаграмма",
+    "картинка-график",
+    "заголовок слева",
+    "аналитика"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "id": "slide51",
+   "source_index": 50,
+   "layout_name": "Заголовок",
+   "archetype": "chart",
+   "slots": [
+    {
+     "id": "1060",
+     "kind": "title",
+     "box": {
+      "x": 677334,
+      "y": 692150,
+      "w": 10855854,
+      "h": 644241
+     },
+     "max_chars": 42,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Оформление диаграмм"
+    },
+    {
+     "id": "1069",
+     "kind": "body",
+     "box": {
+      "x": 8355728,
+      "y": 627078,
+      "w": 3409196,
+      "h": 3951457
+     },
+     "max_chars": 621,
+     "max_lines": 18,
+     "max_items": 18,
+     "font": null,
+     "size_pt": 14.0,
+     "placeholder_type": null,
+     "sample_text": "Перекрытие рядов = ±50%.Боковой зазор = 0%. Избавляемся от линий сетки, засечек. В примере — метки данных вместо вертикальной оси. Оси можно использовать, если данных много (например, показываем динам"
+    },
+    {
+     "id": "1065",
+     "kind": "label",
+     "box": {
+      "x": 8677024,
+      "y": 5881287,
+      "w": 429336,
+      "h": 278862
+     },
+     "max_chars": 4,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 14.0,
+     "placeholder_type": null,
+     "sample_text": "DAU"
+    },
+    {
+     "id": "1068",
+     "kind": "label",
+     "box": {
+      "x": 9728509,
+      "y": 5886987,
+      "w": 453665,
+      "h": 278862
+     },
+     "max_chars": 4,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 14.0,
+     "placeholder_type": null,
+     "sample_text": "MAU"
+    },
+    {
+     "id": "1061",
+     "kind": "chart",
+     "box": {
+      "x": 671514,
+      "y": 1773238,
+      "w": 6929992,
+      "h": 4427537
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.531,
+   "thumbnail": null,
+   "tags": [
+    "диаграмма",
+    "столбчатая",
+    "инструкция",
+    "легенда"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "id": "slide52",
+   "source_index": 51,
+   "layout_name": "Финальный с QR + подпись",
+   "archetype": "closing",
+   "slots": [
+    {
+     "id": "1075",
+     "kind": "title",
+     "box": {
+      "x": 620713,
+      "y": 2483712,
+      "w": 5475287,
+      "h": 1477328
+     },
+     "max_chars": 12,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 60.0,
+     "placeholder_type": "title",
+     "sample_text": "Спасибо за внимание!"
+    },
+    {
+     "id": "1077",
+     "kind": "subtitle",
+     "box": {
+      "x": 658813,
+      "y": 4161565,
+      "w": 5437187,
+      "h": 355600
+     },
+     "max_chars": 48,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": "body",
+     "sample_text": "Василий Иванов, должность/подзаголовок"
+    },
+    {
+     "id": "1076",
+     "kind": "picture",
+     "box": {
+      "x": 658813,
+      "y": 692150,
+      "w": 1081088,
+      "h": 1081088
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": "pic",
+     "sample_text": null
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.037,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 0.95
+  },
+  {
+   "id": "slide53",
+   "source_index": 52,
+   "layout_name": "3_Финальный с QR + подпись",
+   "archetype": "closing",
+   "slots": [
+    {
+     "id": "1082",
+     "kind": "title",
+     "box": {
+      "x": 620713,
+      "y": 2483712,
+      "w": 5475287,
+      "h": 1477328
+     },
+     "max_chars": 12,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 60.0,
+     "placeholder_type": "title",
+     "sample_text": null
+    },
+    {
+     "id": "1084",
+     "kind": "footer",
+     "box": {
+      "x": 658813,
+      "y": 4161565,
+      "w": 5437187,
+      "h": 355600
+     },
+     "max_chars": 48,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": "body",
+     "sample_text": null
+    }
+   ],
+   "fixed": [
+    "1083"
+   ],
+   "fill_ratio": 0.037,
+   "thumbnail": null,
+   "tags": [
+    "тёмный фон",
+    "логотип",
+    "декоративные круги",
+    "финальный слайд"
+   ],
+   "confidence": 0.85
+  },
+  {
+   "id": "slide54",
+   "source_index": 53,
+   "layout_name": "2_Финальный с QR + подпись",
+   "archetype": "closing",
+   "slots": [
+    {
+     "id": "1089",
+     "kind": "title",
+     "box": {
+      "x": 620713,
+      "y": 2483712,
+      "w": 5475287,
+      "h": 1477328
+     },
+     "max_chars": 12,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 60.0,
+     "placeholder_type": "title",
+     "sample_text": null
+    },
+    {
+     "id": "1090",
+     "kind": "picture",
+     "box": {
+      "x": 658813,
+      "y": 692150,
+      "w": 1081088,
+      "h": 1081088
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": "pic",
+     "sample_text": null
+    }
+   ],
+   "fixed": [
+    "1091"
+   ],
+   "fill_ratio": 0.037,
+   "thumbnail": null,
+   "tags": [
+    "финальный слайд",
+    "тёмный фон",
+    "декоративные фигуры",
+    "логотип"
+   ],
+   "confidence": 0.85
+  },
+  {
+   "id": "slide55",
+   "source_index": 54,
+   "layout_name": "4_Финальный с QR + подпись",
+   "archetype": "closing",
+   "slots": [
+    {
+     "id": "1096",
+     "kind": "title",
+     "box": {
+      "x": 620713,
+      "y": 2483712,
+      "w": 5475287,
+      "h": 1477328
+     },
+     "max_chars": 12,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 60.0,
+     "placeholder_type": "title",
+     "sample_text": null
+    },
+    {
+     "id": "1097",
+     "kind": "picture",
+     "box": {
+      "x": 658813,
+      "y": 692150,
+      "w": 1081088,
+      "h": 1081088
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": "pic",
+     "sample_text": null
+    }
+   ],
+   "fixed": [
+    "1098"
+   ],
+   "fill_ratio": 0.037,
+   "thumbnail": null,
+   "tags": [
+    "финальный слайд",
+    "тёмный фон",
+    "декоративные фигуры",
+    "логотип"
+   ],
+   "confidence": 0.85
+  }
+ ],
+ "embedded_fonts": [
+  "Play"
+ ],
+ "theme_colors": {
+  "dk1": "000000",
+  "lt1": "EBF3F9",
+  "dk2": "0077FF",
+  "lt2": "FFFFFF",
+  "accent1": "0077FF",
+  "accent2": "FF3885",
+  "accent3": "7CEDF8",
+  "accent4": "EBF3F9",
+  "accent5": "D8FAFD",
+  "accent6": "FFEBF3",
+  "hlink": "0077FF",
+  "folHlink": "005EFF"
+ },
+ "stats": {
+  "shapes": 628,
+  "text_runs": 539,
+  "text_chars": 10889,
+  "pictures": 256,
+  "autofit_scaled_runs": 9,
+  "tables": 3,
+  "slides": 55,
+  "layouts": 30,
+  "masters": 2,
+  "color_clusters": 13
+ }
+}

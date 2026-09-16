@@ -1,0 +1,857 @@
+{
+ "deck_path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_workspace\\narrative.pptx",
+ "findings": [
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 1,
+   "element_id": "441",
+   "box": {
+    "x": 5383513,
+    "y": 860119,
+    "w": 2873051,
+    "h": 191441
+   },
+   "message": "Блоки «Руководитель не видит перегруз…» и «Статусы вместо работы — До 9,5…» наложились (11% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "442",
+    "ratio": 0.112,
+    "in_exemplar": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 1,
+   "element_id": "442",
+   "box": {
+    "x": 5383513,
+    "y": 860119,
+    "w": 5917558,
+    "h": 1705685
+   },
+   "message": "Контраст текста #0077FF к фону #151515 = 4.4:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.42,
+    "text_color": "0077FF",
+    "background": "151515",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 1,
+   "element_id": "446",
+   "box": {
+    "x": 5383513,
+    "y": 2710690,
+    "w": 5917558,
+    "h": 1705685
+   },
+   "message": "Контраст текста #0077FF к фону #151515 = 4.4:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.42,
+    "text_color": "0077FF",
+    "background": "151515",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 1,
+   "element_id": "450",
+   "box": {
+    "x": 5383513,
+    "y": 4561261,
+    "w": 5917558,
+    "h": 1705685
+   },
+   "message": "Контраст текста #0077FF к фону #151515 = 4.4:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.42,
+    "text_color": "0077FF",
+    "background": "151515",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "C03_one_message",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 2,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд содержит три отдельных тезиса, которые нельзя логично объединить в одно предложение без потери смысла.",
+   "autofix": null,
+   "evidence": {
+    "question": "Слайд пересказывается одним предложением",
+    "sources": "m:pilot"
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 2,
+   "element_id": "547",
+   "box": {
+    "x": 5383513,
+    "y": 860119,
+    "w": 2873051,
+    "h": 191441
+   },
+   "message": "Блоки «Руководитель не видит перегруз…» и «Ручные отчёты — Данные устарев…» наложились (11% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "548",
+    "ratio": 0.112,
+    "in_exemplar": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 2,
+   "element_id": "548",
+   "box": {
+    "x": 5383513,
+    "y": 860119,
+    "w": 5917558,
+    "h": 1705685
+   },
+   "message": "Контраст текста #FFFFFF к фону #0077FF = 4.1:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.13,
+    "text_color": "FFFFFF",
+    "background": "0077FF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 2,
+   "element_id": "552",
+   "box": {
+    "x": 5383513,
+    "y": 2710690,
+    "w": 5917558,
+    "h": 1705685
+   },
+   "message": "Контраст текста #FFFFFF к фону #0077FF = 4.1:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.13,
+    "text_color": "FFFFFF",
+    "background": "0077FF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 2,
+   "element_id": "556",
+   "box": {
+    "x": 5383513,
+    "y": 4561261,
+    "w": 5917558,
+    "h": 1705685
+   },
+   "message": "Контраст текста #FFFFFF к фону #0077FF = 4.1:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.13,
+    "text_color": "FFFFFF",
+    "background": "0077FF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "C07_no_garbage",
+   "kind": "contextual",
+   "severity": "error",
+   "slide_idx": 3,
+   "element_id": null,
+   "box": null,
+   "message": "На слайде присутствуют служебные элементы: кнопки «Дата» и пустые иконки-заглушки, не несущие смысловой нагрузки.",
+   "autofix": null,
+   "evidence": {
+    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
+    "sources": "doc:product:как-работает-сервис-пять-шагов"
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 3,
+   "element_id": "568",
+   "box": {
+    "x": 2840761,
+    "y": 1650577,
+    "w": 659183,
+    "h": 340508
+   },
+   "message": "Блоки «12» и «Дата» наложились (60% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "579",
+    "ratio": 0.601,
+    "in_exemplar": 1
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 3,
+   "element_id": "582",
+   "box": {
+    "x": 6775947,
+    "y": 1650577,
+    "w": 659183,
+    "h": 340508
+   },
+   "message": "Блоки «118» и «Дата» наложились (60% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "593",
+    "ratio": 0.601,
+    "in_exemplar": 1
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 3,
+   "element_id": "596",
+   "box": {
+    "x": 10711133,
+    "y": 1650577,
+    "w": 659183,
+    "h": 340508
+   },
+   "message": "Блоки «4» и «Дата» наложились (60% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "607",
+    "ratio": 0.601,
+    "in_exemplar": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 3,
+   "element_id": "566",
+   "box": {
+    "x": 427866,
+    "y": 2216240,
+    "w": 3375704,
+    "h": 684000
+   },
+   "message": "Контраст текста #FFFFFF к фону #0077FF = 4.1:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.13,
+    "text_color": "FFFFFF",
+    "background": "0077FF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 3,
+   "element_id": "580",
+   "box": {
+    "x": 4363052,
+    "y": 2216240,
+    "w": 3375704,
+    "h": 684000
+   },
+   "message": "Контраст текста #FFFFFF к фону #0077FF = 4.1:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.13,
+    "text_color": "FFFFFF",
+    "background": "0077FF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 3,
+   "element_id": "594",
+   "box": {
+    "x": 8298238,
+    "y": 2216240,
+    "w": 3375704,
+    "h": 684000
+   },
+   "message": "Контраст текста #FFFFFF к фону #0077FF = 4.1:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.13,
+    "text_color": "FFFFFF",
+    "background": "0077FF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "C07_no_garbage",
+   "kind": "contextual",
+   "severity": "error",
+   "slide_idx": 4,
+   "element_id": null,
+   "box": null,
+   "message": "В левом нижнем углу под заголовком присутствует «висячий» текст «Модель нагрузки — Оценка перегрузки...», который дублирует третий пункт списка и выглядит как артефакт верстки.",
+   "autofix": null,
+   "evidence": {
+    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
+    "sources": "doc:product:что-получает-команда-и-руководитель"
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 4,
+   "element_id": "768",
+   "box": {
+    "x": 429253,
+    "y": 2327310,
+    "w": 4499229,
+    "h": 1167572
+   },
+   "message": "Кегль 29.3 pt не из шкалы шаблона (ближайший 36 pt) (подгонка: 81% от кегля образца 36 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 29.3,
+    "nearest_pt": 36.0,
+    "base_pt": 36.0
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 6,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд перегружен: контент занимает 96% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.957
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 7,
+   "element_id": "672",
+   "box": {
+    "x": 427864,
+    "y": 1404525,
+    "w": 2572136,
+    "h": 187738
+   },
+   "message": "Блоки «Доля времени на разработку выр…» и «Тип работы До пилота После пил…» наложились (5% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "673",
+    "ratio": 0.054,
+    "in_exemplar": 1
+   }
+  },
+  {
+   "check_id": "C02_content_matches_title",
+   "kind": "contextual",
+   "severity": "error",
+   "slide_idx": 8,
+   "element_id": null,
+   "box": null,
+   "message": "Текст слайда обрывается на полуслове и не раскрывает тему заголовка.",
+   "autofix": null,
+   "evidence": {
+    "question": "Содержимое слайда соответствует заголовку",
+    "sources": "m:score,m:response_days"
+   }
+  },
+  {
+   "check_id": "C05_has_content",
+   "kind": "contextual",
+   "severity": "error",
+   "slide_idx": 8,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд содержит только заголовок и обрывок текста, не являющийся полноценным содержанием.",
+   "autofix": null,
+   "evidence": {
+    "question": "На слайде есть содержание, а не только заголовок",
+    "sources": "m:score,m:response_days"
+   }
+  },
+  {
+   "check_id": "C07_no_garbage",
+   "kind": "contextual",
+   "severity": "error",
+   "slide_idx": 8,
+   "element_id": null,
+   "box": null,
+   "message": "Текст слайда является незавершенным фрагментом (текст-заглушка).",
+   "autofix": null,
+   "evidence": {
+    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
+    "sources": "m:score,m:response_days"
+   }
+  },
+  {
+   "check_id": "C03_one_message",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд не пересказывается, так как текст является незавершенным фрагментом.",
+   "autofix": null,
+   "evidence": {
+    "question": "Слайд пересказывается одним предложением",
+    "sources": "m:score,m:response_days"
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд пустоват: контент занимает 16% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.164
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": "812",
+   "box": {
+    "x": 1036774,
+    "y": 1354821,
+    "w": 1941953,
+    "h": 237442
+   },
+   "message": "Блоки «Команды перестали спорить о по…» и ««За месяц мы впервые увидели» наложились (50% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "813",
+    "ratio": 0.5,
+    "in_exemplar": 1
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": "812",
+   "box": {
+    "x": 558184,
+    "y": 1484262,
+    "w": 216000,
+    "h": 108001
+   },
+   "message": "Блоки «Команды перестали спорить о по…» и картинка наложились (50% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "816",
+    "ratio": 0.5,
+    "in_exemplar": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 9,
+   "element_id": "684",
+   "box": {
+    "x": 423103,
+    "y": 5533764,
+    "w": 6565676,
+    "h": 395438
+   },
+   "message": "Контраст текста #FFFFFF к фону #0077FF = 4.1:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.13,
+    "text_color": "FFFFFF",
+    "background": "0077FF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 10,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд перегружен: контент занимает 76% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.763
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 10,
+   "element_id": "460",
+   "box": {
+    "x": 7911859,
+    "y": 3258988,
+    "w": 3057144,
+    "h": 251795
+   },
+   "message": "Блоки «Калибровка порога по первым дв…» и «Ложные тревоги» наложились (100% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "467",
+    "ratio": 1.0,
+    "in_exemplar": 1
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 10,
+   "element_id": "461",
+   "box": {
+    "x": 4240405,
+    "y": 3258988,
+    "w": 3057144,
+    "h": 251795
+   },
+   "message": "Блоки «Подключение волнами по 20 кома…» и «Нагрузка на инфраструктуру» наложились (100% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "465",
+    "ratio": 1.0,
+    "in_exemplar": 1
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 10,
+   "element_id": "462",
+   "box": {
+    "x": 596659,
+    "y": 3258988,
+    "w": 3057144,
+    "h": 251795
+   },
+   "message": "Блоки «Доступ только к метаданным, от…» и «Недоверие команд» наложились (100% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "463",
+    "ratio": 1.0,
+    "in_exemplar": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 10,
+   "element_id": "460",
+   "box": {
+    "x": 7729481,
+    "y": 1666499,
+    "w": 3420000,
+    "h": 3525002
+   },
+   "message": "Контраст текста #0077FF к фону #212121 = 3.9:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 3.9,
+    "text_color": "0077FF",
+    "background": "212121",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 10,
+   "element_id": "461",
+   "box": {
+    "x": 4056891,
+    "y": 1666499,
+    "w": 3420000,
+    "h": 3525002
+   },
+   "message": "Контраст текста #0077FF к фону #212121 = 3.9:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 3.9,
+    "text_color": "0077FF",
+    "background": "212121",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 10,
+   "element_id": "462",
+   "box": {
+    "x": 415687,
+    "y": 1666499,
+    "w": 3420000,
+    "h": 3525002
+   },
+   "message": "Контраст текста #0077FF к фону #212121 = 3.9:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 3.9,
+    "text_color": "0077FF",
+    "background": "212121",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "L03_text_overflow",
+   "kind": "deterministic",
+   "severity": "error",
+   "slide_idx": 11,
+   "element_id": "863",
+   "box": {
+    "x": 429254,
+    "y": 2794729,
+    "w": 1767681,
+    "h": 896498
+   },
+   "message": "Текст «Октябрь» не влезает по высоте: нужно 83 pt, есть 71 pt (noAutofit)",
+   "autofix": "shrink_font_by_scale",
+   "evidence": {
+    "need_pt": 83.2,
+    "have_pt": 70.6,
+    "mode": "height",
+    "autofit": "noAutofit"
+   }
+  },
+  {
+   "check_id": "L03_text_overflow",
+   "kind": "deterministic",
+   "severity": "error",
+   "slide_idx": 11,
+   "element_id": "864",
+   "box": {
+    "x": 3314958,
+    "y": 2794729,
+    "w": 1767681,
+    "h": 896498
+   },
+   "message": "Текст «Ноябрь» не влезает по высоте: нужно 83 pt, есть 71 pt (noAutofit)",
+   "autofix": "shrink_font_by_scale",
+   "evidence": {
+    "need_pt": 83.2,
+    "have_pt": 70.6,
+    "mode": "height",
+    "autofit": "noAutofit"
+   }
+  },
+  {
+   "check_id": "L03_text_overflow",
+   "kind": "deterministic",
+   "severity": "error",
+   "slide_idx": 11,
+   "element_id": "865",
+   "box": {
+    "x": 6200662,
+    "y": 2794729,
+    "w": 1767681,
+    "h": 896498
+   },
+   "message": "Текст «Декабрь» не влезает по высоте: нужно 83 pt, есть 71 pt (noAutofit)",
+   "autofix": "shrink_font_by_scale",
+   "evidence": {
+    "need_pt": 83.2,
+    "have_pt": 70.6,
+    "mode": "height",
+    "autofit": "noAutofit"
+   }
+  },
+  {
+   "check_id": "C08_no_typos",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 11,
+   "element_id": null,
+   "box": null,
+   "message": "Визуально текст месяцев (Октябрь, Ноябрь, Декабрь) разорван на две строки, что выглядит как опечатка или ошибка верстки.",
+   "autofix": null,
+   "evidence": {
+    "question": "Текст без опечаток",
+    "sources": "doc:product:контакты"
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 11,
+   "element_id": "863",
+   "box": {
+    "x": 429254,
+    "y": 2794729,
+    "w": 1767681,
+    "h": 896498
+   },
+   "message": "Кегль 46.2 pt не из шкалы шаблона (ближайший 54 pt) (подгонка: 70% от кегля образца 66 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 46.2,
+    "nearest_pt": 54.0,
+    "base_pt": 66.0
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 11,
+   "element_id": "864",
+   "box": {
+    "x": 3314958,
+    "y": 2794729,
+    "w": 1767681,
+    "h": 896498
+   },
+   "message": "Кегль 46.2 pt не из шкалы шаблона (ближайший 54 pt) (подгонка: 70% от кегля образца 66 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 46.2,
+    "nearest_pt": 54.0,
+    "base_pt": 66.0
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 11,
+   "element_id": "865",
+   "box": {
+    "x": 6200662,
+    "y": 2794729,
+    "w": 1767681,
+    "h": 896498
+   },
+   "message": "Кегль 46.2 pt не из шкалы шаблона (ближайший 54 pt) (подгонка: 70% от кегля образца 66 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 46.2,
+    "nearest_pt": 54.0,
+    "base_pt": 66.0
+   }
+  },
+  {
+   "check_id": "C08_no_typos",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 12,
+   "element_id": null,
+   "box": null,
+   "message": "В заголовке слово «команды» некорректно разбито на две строки с переносом буквы.",
+   "autofix": null,
+   "evidence": {
+    "question": "Текст без опечаток",
+    "sources": ""
+   }
+  }
+ ],
+ "checks_run": [
+  "L01_out_of_bounds",
+  "L02_overlap",
+  "L03_text_overflow",
+  "L04_text_clipped",
+  "L05_off_grid",
+  "L06_in_margins",
+  "L07_picture_stretched",
+  "T01_font",
+  "T02_font_size",
+  "T03_color",
+  "T04_layout",
+  "T05_fixed_moved",
+  "T06_contrast",
+  "D01_bullets",
+  "D02_bullet_words",
+  "D03_table_size",
+  "D04_chart_series",
+  "D05_fill",
+  "I01_file",
+  "I02_placeholder_text",
+  "I03_empty_slide",
+  "I04_raster_slide",
+  "I05_chart_labels",
+  "I06_duplicate_slides",
+  "C01_title_insight",
+  "C02_content_matches_title",
+  "C03_one_message",
+  "C04_facts_in_sources",
+  "C05_has_content",
+  "C06_images_relevant",
+  "C07_no_garbage",
+  "C08_no_typos",
+  "C09_one_language",
+  "C10_table_legend_relevant",
+  "C11_flow"
+ ],
+ "duration_s": 46.543
+}

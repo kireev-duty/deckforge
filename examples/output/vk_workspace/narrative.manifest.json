@@ -1,0 +1,575 @@
+{
+ "created": "2026-09-16T14:04:30+00:00",
+ "template": {
+  "id": "69e4a68c4372",
+  "path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\data\\templates\\VK_WorkSpace_Клиентская_конференция_Шаблон_03.pptx",
+  "sha1": "69e4a68c4372"
+ },
+ "content_pack": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\content_pack",
+ "outline": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_workspace\\outline.json",
+ "strategy": {
+  "name": "narrative",
+  "version": "v1"
+ },
+ "skills": {
+  "audit_judge": "v1"
+ },
+ "models": {
+  "text": "qwen/qwen3.8-27b-20260814",
+  "vision": "qwen/qwen3.8-27b-20260814",
+  "image": "black-forest-labs/flux.2-klein-4b",
+  "base_url": "https://openrouter.ai/api/v1"
+ },
+ "llm_calls": [
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 7.5915542999973695,
+   "prompt_tokens": 2724,
+   "completion_tokens": 232,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 14.987553000002663,
+   "prompt_tokens": 2796,
+   "completion_tokens": 450,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 15.05597619999753,
+   "prompt_tokens": 2734,
+   "completion_tokens": 445,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 15.444671899997047,
+   "prompt_tokens": 2771,
+   "completion_tokens": 456,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 12.594768700000714,
+   "prompt_tokens": 2738,
+   "completion_tokens": 492,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 10.861453399997117,
+   "prompt_tokens": 2784,
+   "completion_tokens": 467,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 12.327497300000687,
+   "prompt_tokens": 2766,
+   "completion_tokens": 526,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 6.617578199999116,
+   "prompt_tokens": 2671,
+   "completion_tokens": 387,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 20.210322399998404,
+   "prompt_tokens": 2757,
+   "completion_tokens": 449,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 15.838624800002435,
+   "prompt_tokens": 2771,
+   "completion_tokens": 436,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 7.89209800000026,
+   "prompt_tokens": 2750,
+   "completion_tokens": 201,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 8.843155400001706,
+   "prompt_tokens": 2749,
+   "completion_tokens": 454,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 6.232567800001561,
+   "prompt_tokens": 2738,
+   "completion_tokens": 472,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 15.734609800001635,
+   "prompt_tokens": 2727,
+   "completion_tokens": 579,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 21.661260000000766,
+   "prompt_tokens": 2739,
+   "completion_tokens": 360,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 13.08708420000039,
+   "prompt_tokens": 2784,
+   "completion_tokens": 282,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 23.900965500000893,
+   "prompt_tokens": 2771,
+   "completion_tokens": 475,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 17.651598500000546,
+   "prompt_tokens": 2761,
+   "completion_tokens": 453,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 9.230868500002543,
+   "prompt_tokens": 2710,
+   "completion_tokens": 397,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 17.89447719999953,
+   "prompt_tokens": 2699,
+   "completion_tokens": 449,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 9.958209699998406,
+   "prompt_tokens": 2738,
+   "completion_tokens": 454,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 10.891620000002149,
+   "prompt_tokens": 2707,
+   "completion_tokens": 486,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 8.163245700001426,
+   "prompt_tokens": 2671,
+   "completion_tokens": 394,
+   "ok": true,
+   "error": null
+  }
+ ],
+ "plan": [
+  {
+   "idx": 0,
+   "archetype": "title",
+   "title": "Пульс команды: итоги пилота и план запуска"
+  },
+  {
+   "idx": 1,
+   "archetype": "cards",
+   "title": "Руководитель не видит перегрузку из-за шести системных причин (1/2)"
+  },
+  {
+   "idx": 2,
+   "archetype": "cards",
+   "title": "Руководитель не видит перегрузку из-за шести системных причин (2/2)"
+  },
+  {
+   "idx": 3,
+   "archetype": "kpi",
+   "title": "Пилот охватил 12 команд и 118 человек за 4 месяца"
+  },
+  {
+   "idx": 4,
+   "archetype": "process",
+   "title": "Сервис работает по пяти шагам от подключения до ретро"
+  },
+  {
+   "idx": 5,
+   "archetype": "cards",
+   "title": "Команда получает ранние риски и честное ретро"
+  },
+  {
+   "idx": 6,
+   "archetype": "chart",
+   "title": "Время на согласования в пилоте упало почти вдвое"
+  },
+  {
+   "idx": 7,
+   "archetype": "table",
+   "title": "Доля времени на разработку выросла на 16 п.п."
+  },
+  {
+   "idx": 8,
+   "archetype": "quote",
+   "title": "Команды перестали спорить о потере времени на ретро"
+  },
+  {
+   "idx": 9,
+   "archetype": "kpi",
+   "title": "Оценка пилота командами выросла с 3,4 до 4,7"
+  },
+  {
+   "idx": 10,
+   "archetype": "cards",
+   "title": "Три ключевых риска запуска и их закрытие"
+  },
+  {
+   "idx": 11,
+   "archetype": "process",
+   "title": "Запуск для всех команд завершится в декабре"
+  },
+  {
+   "idx": 12,
+   "archetype": "closing",
+   "title": "Пульс команды"
+  }
+ ],
+ "choices": [
+  {
+   "idx": 0,
+   "archetype": "title",
+   "exemplar_id": "slide1",
+   "exemplar_archetype": "title",
+   "score": 1.0
+  },
+  {
+   "idx": 1,
+   "archetype": "cards",
+   "exemplar_id": "slide5",
+   "exemplar_archetype": "cards",
+   "score": 0.9500000000000002
+  },
+  {
+   "idx": 2,
+   "archetype": "cards",
+   "exemplar_id": "slide10",
+   "exemplar_archetype": "cards",
+   "score": 0.8999999999999999
+  },
+  {
+   "idx": 3,
+   "archetype": "kpi",
+   "exemplar_id": "slide11",
+   "exemplar_archetype": "cards",
+   "score": -2.05
+  },
+  {
+   "idx": 4,
+   "archetype": "process",
+   "exemplar_id": "slide22",
+   "exemplar_archetype": "cards",
+   "score": -1.0499999999999998
+  },
+  {
+   "idx": 5,
+   "archetype": "cards",
+   "exemplar_id": "slide13",
+   "exemplar_archetype": "cards",
+   "score": -0.1499999999999999
+  },
+  {
+   "idx": 6,
+   "archetype": "chart",
+   "exemplar_id": "slide21",
+   "exemplar_archetype": "chart",
+   "score": 0.7472398867320891
+  },
+  {
+   "idx": 7,
+   "archetype": "table",
+   "exemplar_id": "slide14",
+   "exemplar_archetype": "table",
+   "score": -0.04999999999999982
+  },
+  {
+   "idx": 8,
+   "archetype": "quote",
+   "exemplar_id": "slide25",
+   "exemplar_archetype": "image_text",
+   "score": -7.05
+  },
+  {
+   "idx": 9,
+   "archetype": "kpi",
+   "exemplar_id": "slide15",
+   "exemplar_archetype": "cards",
+   "score": -2.05
+  },
+  {
+   "idx": 10,
+   "archetype": "cards",
+   "exemplar_id": "slide6",
+   "exemplar_archetype": "cards",
+   "score": 0.679797629235336
+  },
+  {
+   "idx": 11,
+   "archetype": "process",
+   "exemplar_id": "slide27",
+   "exemplar_archetype": "process",
+   "score": -0.5
+  },
+  {
+   "idx": 12,
+   "archetype": "closing",
+   "exemplar_id": "slide28",
+   "exemplar_archetype": "closing",
+   "score": 0.95
+  }
+ ],
+ "warnings": [],
+ "stats": {
+  "slides": 13,
+  "archetypes": [
+   "title",
+   "cards",
+   "cards",
+   "cards",
+   "cards",
+   "cards",
+   "chart",
+   "table",
+   "image_text",
+   "cards",
+   "cards",
+   "process",
+   "closing"
+  ],
+  "exemplars": [
+   "slide1",
+   "slide5",
+   "slide10",
+   "slide11",
+   "slide22",
+   "slide13",
+   "slide21",
+   "slide14",
+   "slide25",
+   "slide15",
+   "slide6",
+   "slide27",
+   "slide28"
+  ],
+  "text_items_per_slide": 4.7,
+  "words_per_item": 4.7,
+  "chart": 1,
+  "table": 1,
+  "kpi": 0,
+  "picture": 0,
+  "skipped": 0
+ },
+ "audit": {
+  "errors": 8,
+  "warnings": 31,
+  "info": 4,
+  "contextual": 9,
+  "by_check": {
+   "C02_content_matches_title": 1,
+   "C03_one_message": 2,
+   "C05_has_content": 1,
+   "C07_no_garbage": 3,
+   "C08_no_typos": 2,
+   "D05_fill": 3,
+   "L02_overlap": 11,
+   "L03_text_overflow": 3,
+   "T02_font_size": 4,
+   "T06_contrast": 13
+  },
+  "slides_with_issues": [
+   1,
+   2,
+   3,
+   4,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12
+  ],
+  "checks_run": 35,
+  "duration_s": 46.543,
+  "path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_workspace\\narrative.audit.json",
+  "kind": "deterministic+contextual",
+  "autofix": {
+   "applied": 7,
+   "skipped": 2,
+   "before": {
+    "errors": 3,
+    "warnings": 33
+   },
+   "after": {
+    "errors": 3,
+    "warnings": 27
+   },
+   "items": [
+    {
+     "slide_idx": 3,
+     "element_id": "568",
+     "check_id": "T02_font_size",
+     "fix": "snap_font_size",
+     "before": "26.2 pt",
+     "after": "20 pt"
+    },
+    {
+     "slide_idx": 3,
+     "element_id": "582",
+     "check_id": "T02_font_size",
+     "fix": "snap_font_size",
+     "before": "26.2 pt",
+     "after": "20 pt"
+    },
+    {
+     "slide_idx": 3,
+     "element_id": "596",
+     "check_id": "T02_font_size",
+     "fix": "snap_font_size",
+     "before": "26.2 pt",
+     "after": "20 pt"
+    },
+    {
+     "slide_idx": 9,
+     "element_id": "681",
+     "check_id": "T02_font_size",
+     "fix": "snap_font_size",
+     "before": "32.4 pt",
+     "after": "36 pt"
+    },
+    {
+     "slide_idx": 9,
+     "element_id": "682",
+     "check_id": "T02_font_size",
+     "fix": "snap_font_size",
+     "before": "32.4 pt",
+     "after": "36 pt"
+    },
+    {
+     "slide_idx": 9,
+     "element_id": "683",
+     "check_id": "T02_font_size",
+     "fix": "snap_font_size",
+     "before": "32.4 pt",
+     "after": "36 pt"
+    },
+    {
+     "slide_idx": 11,
+     "element_id": "864",
+     "check_id": "L03_text_overflow",
+     "fix": "shrink_font_by_scale",
+     "before": "46.7 pt",
+     "after": "46.2 pt"
+    },
+    {
+     "slide_idx": 11,
+     "element_id": "863",
+     "check_id": "L03_text_overflow",
+     "fix": "shrink_font_by_scale",
+     "reason": "нечего менять"
+    },
+    {
+     "slide_idx": 11,
+     "element_id": "865",
+     "check_id": "L03_text_overflow",
+     "fix": "shrink_font_by_scale",
+     "reason": "нечего менять"
+    }
+   ]
+  }
+ },
+ "images": {
+  "mode": "preferred",
+  "generated": 0,
+  "cache": 0,
+  "content": 0,
+  "failed": 0,
+  "items": []
+ },
+ "exports": {
+  "pptx": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_workspace\\narrative.pptx",
+  "pdf": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_workspace\\narrative.pdf"
+ },
+ "timings_s": {
+  "parse": 0.222,
+  "outline": 0.0,
+  "layout": 0.003,
+  "render": 0.463,
+  "audit": 0.303,
+  "autofix": 0.768,
+  "png": 8.469,
+  "audit_contextual": 46.234,
+  "export_pdf": 0.003
+ }
+}

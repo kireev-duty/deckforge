@@ -1,0 +1,347 @@
+{
+ "deck_path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_education\\executive.pptx",
+ "findings": [
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 0,
+   "element_id": "262",
+   "box": {
+    "x": 622261,
+    "y": 2598003,
+    "w": 7597065,
+    "h": 1661993
+   },
+   "message": "Кегль 54 pt не из шкалы шаблона (ближайший 48 pt) (подгонка: 90% от кегля образца 60 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 54.0,
+    "nearest_pt": 48.0,
+    "base_pt": 60.0
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 1,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд перегружен: контент занимает 88% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.882
+   }
+  },
+  {
+   "check_id": "L04_text_clipped",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 2,
+   "element_id": "445",
+   "box": {
+    "x": 8113464,
+    "y": 4251273,
+    "w": 5417327,
+    "h": 1080000
+   },
+   "message": "Текст выходит за край слайда (right на 105 pt)",
+   "autofix": "clamp_to_slide",
+   "evidence": {
+    "in_exemplar": 1,
+    "over_right": 1338791
+   }
+  },
+  {
+   "check_id": "L04_text_clipped",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 2,
+   "element_id": "447",
+   "box": {
+    "x": 8112125,
+    "y": 2139491,
+    "w": 5417327,
+    "h": 1080000
+   },
+   "message": "Текст выходит за край слайда (right на 105 pt)",
+   "autofix": "clamp_to_slide",
+   "evidence": {
+    "in_exemplar": 1,
+    "over_right": 1337452
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 2,
+   "element_id": "445",
+   "box": {
+    "x": 8113464,
+    "y": 4251273,
+    "w": 5417327,
+    "h": 1080000
+   },
+   "message": "Кегль 56.9 pt не из шкалы шаблона (ближайший 48 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 56.9,
+    "nearest_pt": 48.0,
+    "base_pt": 88.0
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 2,
+   "element_id": "447",
+   "box": {
+    "x": 8112125,
+    "y": 2139491,
+    "w": 5417327,
+    "h": 1080000
+   },
+   "message": "Кегль 56.9 pt не из шкалы шаблона (ближайший 48 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 56.9,
+    "nearest_pt": 48.0,
+    "base_pt": 88.0
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 2,
+   "element_id": "450",
+   "box": {
+    "x": 1022258,
+    "y": 2740903,
+    "w": 5417327,
+    "h": 2437575
+   },
+   "message": "Кегль 145.9 pt не из шкалы шаблона (ближайший 48 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 145.9,
+    "nearest_pt": 48.0,
+    "base_pt": 239.0
+   }
+  },
+  {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 3,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок является констатацией факта (называет тему), а не выводом, как требуется в брифе.",
+   "autofix": null,
+   "evidence": {
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "doc:product:как-работает-сервис-пять-шагов"
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 4,
+   "element_id": "430",
+   "box": {
+    "x": 4308816,
+    "y": 2622416,
+    "w": 3574368,
+    "h": 1613168
+   },
+   "message": "Кегль 28.4 pt не из шкалы шаблона (ближайший 24 pt) (подгонка: 79% от кегля образца 36 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 28.4,
+    "nearest_pt": 24.0,
+    "base_pt": 36.0
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 5,
+   "element_id": "901",
+   "box": {
+    "x": 658812,
+    "y": 1531802,
+    "w": 3000000,
+    "h": 3000000
+   },
+   "message": "Контраст текста #FFFFFF к фону #FFFFFF = 1.0:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 1.0,
+    "text_color": "FFFFFF",
+    "background": "FFFFFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "C03_one_message",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 6,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд содержит таблицу с четырьмя строками данных, что не укладывается в одно предложение.",
+   "autofix": null,
+   "evidence": {
+    "question": "Слайд пересказывается одним предложением",
+    "sources": "m:time_structure"
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 6,
+   "element_id": "889",
+   "box": {
+    "x": 6096000,
+    "y": 1773238,
+    "w": 3000000,
+    "h": 3000000
+   },
+   "message": "Контраст текста #FFFFFF к фону #FFFFFF = 1.0:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 1.0,
+    "text_color": "FFFFFF",
+    "background": "FFFFFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "C02_content_matches_title",
+   "kind": "contextual",
+   "severity": "error",
+   "slide_idx": 7,
+   "element_id": null,
+   "box": null,
+   "message": "Цифры о сроках ответа на запросы не подтверждают тезис об отсутствии споров на ретро.",
+   "autofix": null,
+   "evidence": {
+    "question": "Содержимое слайда соответствует заголовку",
+    "sources": "m:quote"
+   }
+  },
+  {
+   "check_id": "D02_bullet_words",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 7,
+   "element_id": "765",
+   "box": {
+    "x": 658811,
+    "y": 3780646,
+    "w": 2880000,
+    "h": 1233637
+   },
+   "message": "Пункт из 23 слов (норма ≤ 15): ««За месяц мы впервые увидели, где реально теряется время, — …»",
+   "autofix": "refill_slot",
+   "evidence": {
+    "words": 23
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд перегружен: контент занимает 88% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.882
+   }
+  },
+  {
+   "check_id": "I02_placeholder_text",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 9,
+   "element_id": "1083",
+   "box": {
+    "x": 658813,
+    "y": 692150,
+    "w": 1081088,
+    "h": 1081088
+   },
+   "message": "Пустой плейсхолдер «pic» — в редакторе покажется подсказка лейаута",
+   "autofix": "drop_shape",
+   "evidence": {
+    "pattern": "empty_placeholder"
+   }
+  },
+  {
+   "check_id": "I02_placeholder_text",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 9,
+   "element_id": "1084",
+   "box": {
+    "x": 658813,
+    "y": 4161565,
+    "w": 5437187,
+    "h": 355600
+   },
+   "message": "Пустой плейсхолдер «body» — в редакторе покажется подсказка лейаута",
+   "autofix": "drop_shape",
+   "evidence": {
+    "pattern": "empty_placeholder"
+   }
+  }
+ ],
+ "checks_run": [
+  "L01_out_of_bounds",
+  "L02_overlap",
+  "L03_text_overflow",
+  "L04_text_clipped",
+  "L05_off_grid",
+  "L06_in_margins",
+  "L07_picture_stretched",
+  "T01_font",
+  "T02_font_size",
+  "T03_color",
+  "T04_layout",
+  "T05_fixed_moved",
+  "T06_contrast",
+  "D01_bullets",
+  "D02_bullet_words",
+  "D03_table_size",
+  "D04_chart_series",
+  "D05_fill",
+  "I01_file",
+  "I02_placeholder_text",
+  "I03_empty_slide",
+  "I04_raster_slide",
+  "I05_chart_labels",
+  "I06_duplicate_slides",
+  "C01_title_insight",
+  "C02_content_matches_title",
+  "C03_one_message",
+  "C04_facts_in_sources",
+  "C05_has_content",
+  "C06_images_relevant",
+  "C07_no_garbage",
+  "C08_no_typos",
+  "C09_one_language",
+  "C10_table_legend_relevant",
+  "C11_flow"
+ ],
+ "duration_s": 47.622
+}

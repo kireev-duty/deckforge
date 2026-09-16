@@ -1,0 +1,761 @@
+{
+ "deck_path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\visual.pptx",
+ "findings": [
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 0,
+   "element_id": "407",
+   "box": {
+    "x": 581272,
+    "y": 1531415,
+    "w": 4288279,
+    "h": 800046
+   },
+   "message": "Кегль 33 pt не из шкалы шаблона (ближайший 24 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 33.0,
+    "nearest_pt": 24.0,
+    "base_pt": 48.6
+   }
+  },
+  {
+   "check_id": "C07_no_garbage",
+   "kind": "contextual",
+   "severity": "error",
+   "slide_idx": 1,
+   "element_id": null,
+   "box": null,
+   "message": "В первой карточке текст обрывается на многоточии («До 9,5 часов в…»), что выглядит как служебный мусор или ошибка вёрстки.",
+   "autofix": null,
+   "evidence": {
+    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
+    "sources": "doc:product:почему-перегрузка-не-видна-руководителю-"
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 1,
+   "element_id": "781",
+   "box": {
+    "x": 438148,
+    "y": 1819373,
+    "w": 2527287,
+    "h": 854757
+   },
+   "message": "Контраст текста #8F8F8F к фону #FFFFFF = 3.2:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 3.23,
+    "text_color": "8F8F8F",
+    "background": "FFFFFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 1,
+   "element_id": "786",
+   "box": {
+    "x": 3327380,
+    "y": 1819373,
+    "w": 2527287,
+    "h": 854757
+   },
+   "message": "Контраст текста #8F8F8F к фону #FFFFFF = 3.2:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 3.23,
+    "text_color": "8F8F8F",
+    "background": "FFFFFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 1,
+   "element_id": "791",
+   "box": {
+    "x": 6216621,
+    "y": 1819373,
+    "w": 2527287,
+    "h": 854757
+   },
+   "message": "Контраст текста #8F8F8F к фону #FFFFFF = 3.2:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 3.23,
+    "text_color": "8F8F8F",
+    "background": "FFFFFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 1,
+   "element_id": "797",
+   "box": {
+    "x": 438148,
+    "y": 3493174,
+    "w": 2527287,
+    "h": 854757
+   },
+   "message": "Контраст текста #8F8F8F к фону #FFFFFF = 3.2:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 3.23,
+    "text_color": "8F8F8F",
+    "background": "FFFFFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 1,
+   "element_id": "802",
+   "box": {
+    "x": 3327380,
+    "y": 3493174,
+    "w": 2527287,
+    "h": 854757
+   },
+   "message": "Контраст текста #8F8F8F к фону #FFFFFF = 3.2:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 3.23,
+    "text_color": "8F8F8F",
+    "background": "FFFFFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 1,
+   "element_id": "807",
+   "box": {
+    "x": 6216621,
+    "y": 3493174,
+    "w": 2527287,
+    "h": 854757
+   },
+   "message": "Контраст текста #8F8F8F к фону #FFFFFF = 3.2:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 3.23,
+    "text_color": "8F8F8F",
+    "background": "FFFFFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 2,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд пустоват: контент занимает 18% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.177
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 2,
+   "element_id": "2342",
+   "box": {
+    "x": 285749,
+    "y": 1307494,
+    "w": 1614880,
+    "h": 149630
+   },
+   "message": "Контраст текста #0077FF к фону #FAFCFF = 4.0:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.02,
+    "text_color": "0077FF",
+    "background": "FAFCFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 2,
+   "element_id": "2344",
+   "box": {
+    "x": 3333728,
+    "y": 1307494,
+    "w": 1614880,
+    "h": 149630
+   },
+   "message": "Контраст текста #0077FF к фону #FAFCFF = 4.0:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.02,
+    "text_color": "0077FF",
+    "background": "FAFCFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 2,
+   "element_id": "2346",
+   "box": {
+    "x": 6381707,
+    "y": 1306712,
+    "w": 1614880,
+    "h": 149630
+   },
+   "message": "Контраст текста #0077FF к фону #FAFCFF = 4.0:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.02,
+    "text_color": "0077FF",
+    "background": "FAFCFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 3,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд пустоват: контент занимает 19% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.186
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 3,
+   "element_id": "2402",
+   "box": {
+    "x": 285749,
+    "y": 1383651,
+    "w": 1614880,
+    "h": 149630
+   },
+   "message": "Контраст текста #0077FF к фону #FAFCFF = 4.0:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.02,
+    "text_color": "0077FF",
+    "background": "FAFCFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 3,
+   "element_id": "2405",
+   "box": {
+    "x": 2600311,
+    "y": 1383651,
+    "w": 1614880,
+    "h": 149630
+   },
+   "message": "Контраст текста #0077FF к фону #FAFCFF = 4.0:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.02,
+    "text_color": "0077FF",
+    "background": "FAFCFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 3,
+   "element_id": "2408",
+   "box": {
+    "x": 4853011,
+    "y": 1383651,
+    "w": 1614880,
+    "h": 149630
+   },
+   "message": "Контраст текста #0077FF к фону #FAFCFF = 4.0:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.02,
+    "text_color": "0077FF",
+    "background": "FAFCFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 3,
+   "element_id": "2411",
+   "box": {
+    "x": 7162762,
+    "y": 1383651,
+    "w": 1614880,
+    "h": 149630
+   },
+   "message": "Контраст текста #0077FF к фону #FAFCFF = 4.0:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.02,
+    "text_color": "0077FF",
+    "background": "FAFCFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 3,
+   "element_id": "2414",
+   "box": {
+    "x": 318685,
+    "y": 3129704,
+    "w": 1614880,
+    "h": 149630
+   },
+   "message": "Контраст текста #0077FF к фону #FAFCFF = 4.0:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.02,
+    "text_color": "0077FF",
+    "background": "FAFCFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 3,
+   "element_id": "2410",
+   "box": {
+    "x": 4853011,
+    "y": 2198570,
+    "w": 1614880,
+    "h": 202471
+   },
+   "message": "Кегль 6.3 pt не из шкалы шаблона (ближайший 6.9 pt) (подгонка: 70% от кегля образца 9 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 6.3,
+    "nearest_pt": 6.9,
+    "base_pt": 9.0
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 3,
+   "element_id": "2413",
+   "box": {
+    "x": 7162762,
+    "y": 2198570,
+    "w": 1614880,
+    "h": 202471
+   },
+   "message": "Кегль 7.8 pt не из шкалы шаблона (ближайший 6.9 pt) (подгонка: 87% от кегля образца 9 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 7.8,
+    "nearest_pt": 6.9,
+    "base_pt": 9.0
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 4,
+   "element_id": "669",
+   "box": {
+    "x": 438148,
+    "y": 1819373,
+    "w": 1804978,
+    "h": 2290464
+   },
+   "message": "Контраст текста #8F8F8F к фону #FEFFFF = 3.2:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 3.23,
+    "text_color": "8F8F8F",
+    "background": "FEFFFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 4,
+   "element_id": "674",
+   "box": {
+    "x": 2605074,
+    "y": 1819373,
+    "w": 1804978,
+    "h": 2290464
+   },
+   "message": "Контраст текста #8F8F8F к фону #FEFFFF = 3.2:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 3.23,
+    "text_color": "8F8F8F",
+    "background": "FEFFFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 4,
+   "element_id": "679",
+   "box": {
+    "x": 4772001,
+    "y": 1819373,
+    "w": 1804978,
+    "h": 2290464
+   },
+   "message": "Контраст текста #8F8F8F к фону #FEFFFF = 3.2:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 3.23,
+    "text_color": "8F8F8F",
+    "background": "FEFFFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 4,
+   "element_id": "684",
+   "box": {
+    "x": 6938927,
+    "y": 1819373,
+    "w": 1804978,
+    "h": 2290464
+   },
+   "message": "Контраст текста #8F8F8F к фону #FEFFFF = 3.2:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 3.23,
+    "text_color": "8F8F8F",
+    "background": "FEFFFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 5,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд перегружен: контент занимает 85% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.853
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 6,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд перегружен: контент занимает 85% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.848
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 7,
+   "element_id": "2262",
+   "box": {
+    "x": 3195621,
+    "y": 1157472,
+    "w": 1092919,
+    "h": 261746
+   },
+   "message": "Блоки картинка и ««За месяц мы впервые увидели, …» наложились (21% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "2264",
+    "ratio": 0.213,
+    "in_exemplar": 1
+   }
+  },
+  {
+   "check_id": "C02_content_matches_title",
+   "kind": "contextual",
+   "severity": "error",
+   "slide_idx": 8,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд содержит метрику срока ответа (0,6 дня), которая не отражена в заголовке.",
+   "autofix": null,
+   "evidence": {
+    "question": "Содержимое слайда соответствует заголовку",
+    "sources": "m:score,m:response_days"
+   }
+  },
+  {
+   "check_id": "C07_no_garbage",
+   "kind": "contextual",
+   "severity": "error",
+   "slide_idx": 8,
+   "element_id": null,
+   "box": null,
+   "message": "В подписи третьей диаграммы есть обрезанный текст «на…», что выглядит как служебный мусор или ошибка верстки.",
+   "autofix": null,
+   "evidence": {
+    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
+    "sources": "m:score,m:response_days"
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд пустоват: контент занимает 18% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.177
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": "2342",
+   "box": {
+    "x": 285749,
+    "y": 1307494,
+    "w": 1614880,
+    "h": 149630
+   },
+   "message": "Контраст текста #0077FF к фону #FAFCFF = 4.0:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.02,
+    "text_color": "0077FF",
+    "background": "FAFCFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": "2344",
+   "box": {
+    "x": 3333728,
+    "y": 1307494,
+    "w": 1614880,
+    "h": 149630
+   },
+   "message": "Контраст текста #0077FF к фону #FAFCFF = 4.0:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.02,
+    "text_color": "0077FF",
+    "background": "FAFCFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": "2346",
+   "box": {
+    "x": 6381707,
+    "y": 1306712,
+    "w": 1614880,
+    "h": 149630
+   },
+   "message": "Контраст текста #0077FF к фону #FAFCFF = 4.0:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.02,
+    "text_color": "0077FF",
+    "background": "FAFCFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 8,
+   "element_id": "2342",
+   "box": {
+    "x": 285749,
+    "y": 1307494,
+    "w": 1614880,
+    "h": 149630
+   },
+   "message": "Кегль 11 pt не из шкалы шаблона (ближайший 10.1 pt) (подгонка: 79% от кегля образца 14 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 11.0,
+    "nearest_pt": 10.1,
+    "base_pt": 14.0
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 10,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд пустоват: контент занимает 15% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.153
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 10,
+   "element_id": "2439",
+   "box": {
+    "x": 3565736,
+    "y": 2111328,
+    "w": 1614880,
+    "h": 149630
+   },
+   "message": "Контраст текста #0077FF к фону #FAFCFF = 4.0:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.02,
+    "text_color": "0077FF",
+    "background": "FAFCFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "C06_images_relevant",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 11,
+   "element_id": null,
+   "box": null,
+   "message": "Иконка курсора и пустой блок не относятся к теме слайда.",
+   "autofix": null,
+   "evidence": {
+    "question": "Картинки и иконки относятся к теме слайда",
+    "sources": "doc:product:контакты"
+   }
+  }
+ ],
+ "checks_run": [
+  "L01_out_of_bounds",
+  "L02_overlap",
+  "L03_text_overflow",
+  "L04_text_clipped",
+  "L05_off_grid",
+  "L06_in_margins",
+  "L07_picture_stretched",
+  "T01_font",
+  "T02_font_size",
+  "T03_color",
+  "T04_layout",
+  "T05_fixed_moved",
+  "T06_contrast",
+  "D01_bullets",
+  "D02_bullet_words",
+  "D03_table_size",
+  "D04_chart_series",
+  "D05_fill",
+  "I01_file",
+  "I02_placeholder_text",
+  "I03_empty_slide",
+  "I04_raster_slide",
+  "I05_chart_labels",
+  "I06_duplicate_slides",
+  "C01_title_insight",
+  "C02_content_matches_title",
+  "C03_one_message",
+  "C04_facts_in_sources",
+  "C05_has_content",
+  "C06_images_relevant",
+  "C07_no_garbage",
+  "C08_no_typos",
+  "C09_one_language",
+  "C10_table_legend_relevant",
+  "C11_flow"
+ ],
+ "duration_s": 43.552
+}

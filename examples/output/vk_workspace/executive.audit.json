@@ -1,0 +1,405 @@
+{
+ "deck_path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_workspace\\executive.pptx",
+ "findings": [
+  {
+   "check_id": "C05_has_content",
+   "kind": "contextual",
+   "severity": "error",
+   "slide_idx": 2,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд содержит только заголовок и дублирующие его цифры без дополнительного контекста или вывода.",
+   "autofix": null,
+   "evidence": {
+    "question": "На слайде есть содержание, а не только заголовок",
+    "sources": "m:pilot"
+   }
+  },
+  {
+   "check_id": "C07_no_garbage",
+   "kind": "contextual",
+   "severity": "error",
+   "slide_idx": 2,
+   "element_id": null,
+   "box": null,
+   "message": "На слайде присутствуют служебные элементы: кнопки «Дата» и пустые иконки-заглушки в виде галочек.",
+   "autofix": null,
+   "evidence": {
+    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
+    "sources": "m:pilot"
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 2,
+   "element_id": "568",
+   "box": {
+    "x": 2840761,
+    "y": 1650577,
+    "w": 659183,
+    "h": 340508
+   },
+   "message": "Блоки «12» и «Дата» наложились (60% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "579",
+    "ratio": 0.601,
+    "in_exemplar": 1
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 2,
+   "element_id": "582",
+   "box": {
+    "x": 6775947,
+    "y": 1650577,
+    "w": 659183,
+    "h": 340508
+   },
+   "message": "Блоки «118» и «Дата» наложились (60% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "593",
+    "ratio": 0.601,
+    "in_exemplar": 1
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 2,
+   "element_id": "596",
+   "box": {
+    "x": 10711133,
+    "y": 1650577,
+    "w": 659183,
+    "h": 340508
+   },
+   "message": "Блоки «4» и «Дата» наложились (60% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "607",
+    "ratio": 0.601,
+    "in_exemplar": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 2,
+   "element_id": "566",
+   "box": {
+    "x": 427866,
+    "y": 2216240,
+    "w": 3375704,
+    "h": 684000
+   },
+   "message": "Контраст текста #FFFFFF к фону #0077FF = 4.1:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.13,
+    "text_color": "FFFFFF",
+    "background": "0077FF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 2,
+   "element_id": "580",
+   "box": {
+    "x": 4363052,
+    "y": 2216240,
+    "w": 3375704,
+    "h": 684000
+   },
+   "message": "Контраст текста #FFFFFF к фону #0077FF = 4.1:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.13,
+    "text_color": "FFFFFF",
+    "background": "0077FF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 2,
+   "element_id": "594",
+   "box": {
+    "x": 8298238,
+    "y": 2216240,
+    "w": 3375704,
+    "h": 684000
+   },
+   "message": "Контраст текста #FFFFFF к фону #0077FF = 4.1:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.13,
+    "text_color": "FFFFFF",
+    "background": "0077FF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 3,
+   "element_id": "768",
+   "box": {
+    "x": 429253,
+    "y": 2327310,
+    "w": 4499229,
+    "h": 1167572
+   },
+   "message": "Кегль 29.3 pt не из шкалы шаблона (ближайший 36 pt) (подгонка: 81% от кегля образца 36 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 29.3,
+    "nearest_pt": 36.0,
+    "base_pt": 36.0
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 5,
+   "element_id": "672",
+   "box": {
+    "x": 427864,
+    "y": 1404525,
+    "w": 2572136,
+    "h": 187738
+   },
+   "message": "Блоки «Время на согласования в пилоте…» и «Пилотные команды, ч/нед Контро…» наложились (5% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "673",
+    "ratio": 0.054,
+    "in_exemplar": 1
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 6,
+   "element_id": "672",
+   "box": {
+    "x": 427864,
+    "y": 1404525,
+    "w": 2572136,
+    "h": 187738
+   },
+   "message": "Блоки «Доля времени на разработку выр…» и «Тип работы До пилота После пил…» наложились (5% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "673",
+    "ratio": 0.054,
+    "in_exemplar": 1
+   }
+  },
+  {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок называет тему (риски и их закрытие), а не содержит вывод.",
+   "autofix": null,
+   "evidence": {
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "m:score,m:response_days"
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": "487",
+   "box": {
+    "x": 437111,
+    "y": 2883834,
+    "w": 3437027,
+    "h": 105822
+   },
+   "message": "Блоки «Недоверие команд» и «Доступ только к метаданным, от…» наложились (21% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "489",
+    "ratio": 0.209,
+    "in_exemplar": 1
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": "490",
+   "box": {
+    "x": 4370093,
+    "y": 2883834,
+    "w": 3437027,
+    "h": 105822
+   },
+   "message": "Блоки «Нагрузка на инфраструктуру» и «Подключение волнами по 20 кома…» наложились (21% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "492",
+    "ratio": 0.209,
+    "in_exemplar": 1
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": "493",
+   "box": {
+    "x": 437111,
+    "y": 4971714,
+    "w": 3437027,
+    "h": 105822
+   },
+   "message": "Блоки «1. Октябрь» и «Подключение 20 команд, политик…» наложились (21% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "495",
+    "ratio": 0.209,
+    "in_exemplar": 1
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": "496",
+   "box": {
+    "x": 4370093,
+    "y": 4971714,
+    "w": 3437027,
+    "h": 105822
+   },
+   "message": "Блоки «2. Ноябрь» и «Ещё 40 команд, интеграция с це…» наложились (21% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "498",
+    "ratio": 0.209,
+    "in_exemplar": 1
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": "499",
+   "box": {
+    "x": 8303177,
+    "y": 2883834,
+    "w": 3437027,
+    "h": 105822
+   },
+   "message": "Блоки «Ложные тревоги» и «Калибровка порога по первым дв…» наложились (21% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "501",
+    "ratio": 0.209,
+    "in_exemplar": 1
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": "502",
+   "box": {
+    "x": 8303177,
+    "y": 4971714,
+    "w": 3437027,
+    "h": 105822
+   },
+   "message": "Блоки «3. Декабрь» и «Все команды, отчёт для руковод…» наложились (21% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "504",
+    "ratio": 0.209,
+    "in_exemplar": 1
+   }
+  },
+  {
+   "check_id": "C08_no_typos",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 9,
+   "element_id": null,
+   "box": null,
+   "message": "Слово «команды» некорректно разбито на строки, что выглядит как опечатка или сбой верстки.",
+   "autofix": null,
+   "evidence": {
+    "question": "Текст без опечаток",
+    "sources": "doc:product:риски-запуска-и-как-они-закрываются"
+   }
+  }
+ ],
+ "checks_run": [
+  "L01_out_of_bounds",
+  "L02_overlap",
+  "L03_text_overflow",
+  "L04_text_clipped",
+  "L05_off_grid",
+  "L06_in_margins",
+  "L07_picture_stretched",
+  "T01_font",
+  "T02_font_size",
+  "T03_color",
+  "T04_layout",
+  "T05_fixed_moved",
+  "T06_contrast",
+  "D01_bullets",
+  "D02_bullet_words",
+  "D03_table_size",
+  "D04_chart_series",
+  "D05_fill",
+  "I01_file",
+  "I02_placeholder_text",
+  "I03_empty_slide",
+  "I04_raster_slide",
+  "I05_chart_labels",
+  "I06_duplicate_slides",
+  "C01_title_insight",
+  "C02_content_matches_title",
+  "C03_one_message",
+  "C04_facts_in_sources",
+  "C05_has_content",
+  "C06_images_relevant",
+  "C07_no_garbage",
+  "C08_no_typos",
+  "C09_one_language",
+  "C10_table_legend_relevant",
+  "C11_flow"
+ ],
+ "duration_s": 36.333
+}

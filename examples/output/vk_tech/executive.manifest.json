@@ -1,0 +1,394 @@
+{
+ "created": "2026-09-16T13:58:13+00:00",
+ "template": {
+  "id": "33d997b25b4c",
+  "path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\data\\templates\\VK Tech шаблон.pptx",
+  "sha1": "33d997b25b4c"
+ },
+ "content_pack": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\content_pack",
+ "outline": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\outline.json",
+ "strategy": {
+  "name": "executive",
+  "version": "v1"
+ },
+ "skills": {
+  "outline_writer": "v1",
+  "audit_judge": "v1"
+ },
+ "models": {
+  "text": "qwen/qwen3.8-27b-20260814",
+  "vision": "qwen/qwen3.8-27b-20260814",
+  "image": "black-forest-labs/flux.2-klein-4b",
+  "base_url": "https://openrouter.ai/api/v1"
+ },
+ "llm_calls": [
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 5.400704400002724,
+   "prompt_tokens": 2575,
+   "completion_tokens": 201,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 5.6199617000020226,
+   "prompt_tokens": 2544,
+   "completion_tokens": 431,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 6.609394200000679,
+   "prompt_tokens": 2498,
+   "completion_tokens": 534,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 6.618929199998092,
+   "prompt_tokens": 2510,
+   "completion_tokens": 354,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 4.625784799998655,
+   "prompt_tokens": 2533,
+   "completion_tokens": 411,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 4.727255300000252,
+   "prompt_tokens": 2562,
+   "completion_tokens": 203,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 5.609483299998828,
+   "prompt_tokens": 2547,
+   "completion_tokens": 479,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 15.501600799998414,
+   "prompt_tokens": 2602,
+   "completion_tokens": 297,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 15.501713000001473,
+   "prompt_tokens": 0,
+   "completion_tokens": 0,
+   "ok": false,
+   "error": "Expecting ',' delimiter: line 1 column 802 (char 801)"
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 19.006718500000716,
+   "prompt_tokens": 2447,
+   "completion_tokens": 382,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 25.510040799999842,
+   "prompt_tokens": 2574,
+   "completion_tokens": 444,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 13.12252019999869,
+   "prompt_tokens": 2542,
+   "completion_tokens": 520,
+   "ok": true,
+   "error": null
+  }
+ ],
+ "plan": [
+  {
+   "idx": 0,
+   "archetype": "title",
+   "title": "Пульс команды: итоги пилота и план запуска"
+  },
+  {
+   "idx": 1,
+   "archetype": "cards",
+   "title": "Руководитель не видит перегрузку из-за шести системных причин"
+  },
+  {
+   "idx": 2,
+   "archetype": "kpi",
+   "title": "Пилот охватил 12 команд и 118 человек за 4 месяца"
+  },
+  {
+   "idx": 3,
+   "archetype": "process",
+   "title": "Сервис работает по пяти шагам от подключения до ретро"
+  },
+  {
+   "idx": 4,
+   "archetype": "cards",
+   "title": "Команда получает ранние риски и честное ретро"
+  },
+  {
+   "idx": 5,
+   "archetype": "table",
+   "title": "Время на согласования в пилоте упало почти вдвое"
+  },
+  {
+   "idx": 6,
+   "archetype": "table",
+   "title": "Доля времени на разработку выросла на 16 п.п."
+  },
+  {
+   "idx": 7,
+   "archetype": "cards",
+   "title": "Команды перестали спорить о потере времени на ретро"
+  },
+  {
+   "idx": 8,
+   "archetype": "cards",
+   "title": "Три ключевых риска запуска и их закрытие"
+  },
+  {
+   "idx": 9,
+   "archetype": "closing",
+   "title": "Пульс команды"
+  }
+ ],
+ "choices": [
+  {
+   "idx": 0,
+   "archetype": "title",
+   "exemplar_id": "slide2",
+   "exemplar_archetype": "title",
+   "score": 0.95
+  },
+  {
+   "idx": 1,
+   "archetype": "cards",
+   "exemplar_id": "slide17",
+   "exemplar_archetype": "cards",
+   "score": 3.0
+  },
+  {
+   "idx": 2,
+   "archetype": "kpi",
+   "exemplar_id": "slide45",
+   "exemplar_archetype": "kpi",
+   "score": 2.9
+  },
+  {
+   "idx": 3,
+   "archetype": "process",
+   "exemplar_id": "slide47",
+   "exemplar_archetype": "process",
+   "score": -2.05
+  },
+  {
+   "idx": 4,
+   "archetype": "cards",
+   "exemplar_id": "slide14",
+   "exemplar_archetype": "cards",
+   "score": 3.0
+  },
+  {
+   "idx": 5,
+   "archetype": "table",
+   "exemplar_id": "slide34",
+   "exemplar_archetype": "table",
+   "score": 2.95
+  },
+  {
+   "idx": 6,
+   "archetype": "table",
+   "exemplar_id": "slide35",
+   "exemplar_archetype": "table",
+   "score": 2.95
+  },
+  {
+   "idx": 7,
+   "archetype": "cards",
+   "exemplar_id": "slide19",
+   "exemplar_archetype": "cards",
+   "score": 3.0
+  },
+  {
+   "idx": 8,
+   "archetype": "cards",
+   "exemplar_id": "slide17",
+   "exemplar_archetype": "cards",
+   "score": 1.0
+  },
+  {
+   "idx": 9,
+   "archetype": "closing",
+   "exemplar_id": "slide6",
+   "exemplar_archetype": "closing",
+   "score": 0.95
+  }
+ ],
+ "warnings": [
+  "outline: слайд 1 «Руководитель не видит перегрузку из-за ш»: поле «cards» → bullets",
+  "outline: слайд 4 «Команда получает ранние риски и честное »: поле «cards» → bullets",
+  "outline: слайд 9 «Три ключевых риска запуска и их закрытие»: поле «cards» → bullets"
+ ],
+ "stats": {
+  "slides": 10,
+  "archetypes": [
+   "title",
+   "cards",
+   "kpi",
+   "process",
+   "cards",
+   "table",
+   "table",
+   "cards",
+   "cards",
+   "closing"
+  ],
+  "exemplars": [
+   "slide2",
+   "slide17",
+   "slide45",
+   "slide47",
+   "slide14",
+   "slide34",
+   "slide35",
+   "slide19",
+   "slide17",
+   "slide6"
+  ],
+  "text_items_per_slide": 8.8,
+  "words_per_item": 4.0,
+  "chart": 0,
+  "table": 2,
+  "kpi": 1,
+  "picture": 0,
+  "skipped": 0
+ },
+ "audit": {
+  "errors": 0,
+  "warnings": 36,
+  "info": 3,
+  "contextual": 4,
+  "by_check": {
+   "C03_one_message": 1,
+   "C06_images_relevant": 1,
+   "C08_no_typos": 1,
+   "C09_one_language": 1,
+   "D05_fill": 3,
+   "T02_font_size": 4,
+   "T06_contrast": 28
+  },
+  "slides_with_issues": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   6,
+   7,
+   8
+  ],
+  "checks_run": 35,
+  "duration_s": 37.159,
+  "path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\executive.audit.json",
+  "kind": "deterministic+contextual",
+  "autofix": {
+   "applied": 3,
+   "skipped": 1,
+   "before": {
+    "errors": 3,
+    "warnings": 32
+   },
+   "after": {
+    "errors": 0,
+    "warnings": 32
+   },
+   "items": [
+    {
+     "slide_idx": 3,
+     "element_id": "2410",
+     "check_id": "L03_text_overflow",
+     "fix": "shrink_font_by_scale",
+     "before": "7.2 pt",
+     "after": "6.3 pt, текст укорочен"
+    },
+    {
+     "slide_idx": 3,
+     "element_id": "2411",
+     "check_id": "L03_text_overflow",
+     "fix": "shrink_font_by_scale",
+     "before": "12.2 pt",
+     "after": "10 pt"
+    },
+    {
+     "slide_idx": 3,
+     "element_id": "2416",
+     "check_id": "L03_text_overflow",
+     "fix": "shrink_font_by_scale",
+     "before": "7.5 pt",
+     "after": "6.3 pt, текст укорочен"
+    },
+    {
+     "slide_idx": 0,
+     "element_id": "407",
+     "check_id": "T02_font_size",
+     "fix": "snap_font_size",
+     "reason": "нечего менять"
+    }
+   ]
+  }
+ },
+ "images": {
+  "mode": "minimal",
+  "generated": 0,
+  "cache": 0,
+  "content": 0,
+  "failed": 0,
+  "items": []
+ },
+ "exports": {
+  "pptx": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\executive.pptx",
+  "pdf": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\executive.pdf"
+ },
+ "timings_s": {
+  "parse": 0.877,
+  "outline": 57.66,
+  "layout": 0.01,
+  "render": 1.027,
+  "audit": 0.447,
+  "autofix": 1.488,
+  "png": 6.606,
+  "audit_contextual": 36.756,
+  "export_pdf": 0.002
+ }
+}

@@ -1,0 +1,454 @@
+{
+ "created": "2026-09-16T14:00:00+00:00",
+ "config": {
+  "template": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\data\\templates\\VK Tech шаблон.pptx",
+  "content_pack": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\content_pack",
+  "purpose": "product",
+  "audience": "руководители продуктовых направлений",
+  "language": "ru",
+  "target_slides": 12,
+  "strategies": [
+   "executive",
+   "narrative",
+   "visual"
+  ],
+  "images": "auto",
+  "audit": {
+   "deterministic": true,
+   "contextual": true,
+   "autofix": true
+  },
+  "export": [
+   "pptx",
+   "pdf"
+  ],
+  "output_dir": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech",
+  "seed": 42,
+  "render_png": true,
+  "render_dpi": 72
+ },
+ "template": {
+  "id": "33d997b25b4c",
+  "path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\data\\templates\\VK Tech шаблон.pptx",
+  "sha1": "33d997b25b4c"
+ },
+ "outline": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\outline.json",
+ "decks": [
+  {
+   "strategy": "executive",
+   "pptx": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\executive.pptx",
+   "manifest": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\executive.manifest.json",
+   "stats": {
+    "slides": 10,
+    "archetypes": [
+     "title",
+     "cards",
+     "kpi",
+     "process",
+     "cards",
+     "table",
+     "table",
+     "cards",
+     "cards",
+     "closing"
+    ],
+    "exemplars": [
+     "slide2",
+     "slide17",
+     "slide45",
+     "slide47",
+     "slide14",
+     "slide34",
+     "slide35",
+     "slide19",
+     "slide17",
+     "slide6"
+    ],
+    "text_items_per_slide": 8.8,
+    "words_per_item": 4.0,
+    "chart": 0,
+    "table": 2,
+    "kpi": 1,
+    "picture": 0,
+    "skipped": 0
+   },
+   "audit": {
+    "errors": 0,
+    "warnings": 36,
+    "info": 3,
+    "contextual": 4,
+    "by_check": {
+     "C03_one_message": 1,
+     "C06_images_relevant": 1,
+     "C08_no_typos": 1,
+     "C09_one_language": 1,
+     "D05_fill": 3,
+     "T02_font_size": 4,
+     "T06_contrast": 28
+    },
+    "slides_with_issues": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     6,
+     7,
+     8
+    ],
+    "checks_run": 35,
+    "duration_s": 37.159,
+    "path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\executive.audit.json",
+    "kind": "deterministic+contextual",
+    "autofix": {
+     "applied": 3,
+     "skipped": 1,
+     "before": {
+      "errors": 3,
+      "warnings": 32
+     },
+     "after": {
+      "errors": 0,
+      "warnings": 32
+     },
+     "items": [
+      {
+       "slide_idx": 3,
+       "element_id": "2410",
+       "check_id": "L03_text_overflow",
+       "fix": "shrink_font_by_scale",
+       "before": "7.2 pt",
+       "after": "6.3 pt, текст укорочен"
+      },
+      {
+       "slide_idx": 3,
+       "element_id": "2411",
+       "check_id": "L03_text_overflow",
+       "fix": "shrink_font_by_scale",
+       "before": "12.2 pt",
+       "after": "10 pt"
+      },
+      {
+       "slide_idx": 3,
+       "element_id": "2416",
+       "check_id": "L03_text_overflow",
+       "fix": "shrink_font_by_scale",
+       "before": "7.5 pt",
+       "after": "6.3 pt, текст укорочен"
+      },
+      {
+       "slide_idx": 0,
+       "element_id": "407",
+       "check_id": "T02_font_size",
+       "fix": "snap_font_size",
+       "reason": "нечего менять"
+      }
+     ]
+    }
+   },
+   "exports": {
+    "pptx": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\executive.pptx",
+    "pdf": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\executive.pdf"
+   },
+   "timings_s": {
+    "layout": 0.01,
+    "render": 1.027,
+    "audit": 0.447,
+    "autofix": 1.488,
+    "png": 6.606,
+    "audit_contextual": 36.756,
+    "export_pdf": 0.002
+   }
+  },
+  {
+   "strategy": "narrative",
+   "pptx": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\narrative.pptx",
+   "manifest": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\narrative.manifest.json",
+   "stats": {
+    "slides": 15,
+    "archetypes": [
+     "title",
+     "section",
+     "cards",
+     "cards",
+     "kpi",
+     "process",
+     "cards",
+     "chart",
+     "table",
+     "section",
+     "section",
+     "kpi",
+     "cards",
+     "process",
+     "closing"
+    ],
+    "exemplars": [
+     "slide2",
+     "slide3",
+     "slide24",
+     "slide24",
+     "slide45",
+     "slide47",
+     "slide14",
+     "slide52",
+     "slide34",
+     "slide3",
+     "slide3",
+     "slide45",
+     "slide19",
+     "slide48",
+     "slide6"
+    ],
+    "text_items_per_slide": 5.2,
+    "words_per_item": 4.5,
+    "chart": 1,
+    "table": 1,
+    "kpi": 2,
+    "picture": 0,
+    "skipped": 0
+   },
+   "audit": {
+    "errors": 3,
+    "warnings": 27,
+    "info": 6,
+    "contextual": 5,
+    "by_check": {
+     "C01_title_insight": 1,
+     "C02_content_matches_title": 1,
+     "C07_no_garbage": 2,
+     "C10_table_legend_relevant": 1,
+     "D02_bullet_words": 1,
+     "D05_fill": 5,
+     "T02_font_size": 6,
+     "T06_contrast": 19
+    },
+    "slides_with_issues": [
+     0,
+     4,
+     5,
+     6,
+     7,
+     9,
+     11,
+     12,
+     13
+    ],
+    "checks_run": 35,
+    "duration_s": 39.582,
+    "path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\narrative.audit.json",
+    "kind": "deterministic+contextual",
+    "autofix": {
+     "applied": 3,
+     "skipped": 2,
+     "before": {
+      "errors": 3,
+      "warnings": 26
+     },
+     "after": {
+      "errors": 0,
+      "warnings": 26
+     },
+     "items": [
+      {
+       "slide_idx": 5,
+       "element_id": "2410",
+       "check_id": "L03_text_overflow",
+       "fix": "shrink_font_by_scale",
+       "before": "7.2 pt",
+       "after": "6.3 pt, текст укорочен"
+      },
+      {
+       "slide_idx": 5,
+       "element_id": "2411",
+       "check_id": "L03_text_overflow",
+       "fix": "shrink_font_by_scale",
+       "before": "12.2 pt",
+       "after": "10 pt"
+      },
+      {
+       "slide_idx": 5,
+       "element_id": "2416",
+       "check_id": "L03_text_overflow",
+       "fix": "shrink_font_by_scale",
+       "before": "7.5 pt",
+       "after": "6.3 pt, текст укорочен"
+      },
+      {
+       "slide_idx": 0,
+       "element_id": "407",
+       "check_id": "T02_font_size",
+       "fix": "snap_font_size",
+       "reason": "нечего менять"
+      },
+      {
+       "slide_idx": 9,
+       "element_id": "417",
+       "check_id": "D02_bullet_words",
+       "fix": "refill_slot",
+       "reason": "нечего менять"
+      }
+     ]
+    }
+   },
+   "exports": {
+    "pptx": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\narrative.pptx",
+    "pdf": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\narrative.pdf"
+   },
+   "timings_s": {
+    "layout": 0.005,
+    "render": 0.721,
+    "audit": 0.347,
+    "autofix": 1.023,
+    "png": 5.751,
+    "audit_contextual": 39.236,
+    "export_pdf": 0.002
+   }
+  },
+  {
+   "strategy": "visual",
+   "pptx": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\visual.pptx",
+   "manifest": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\visual.manifest.json",
+   "stats": {
+    "slides": 12,
+    "archetypes": [
+     "title",
+     "cards",
+     "kpi",
+     "process",
+     "cards",
+     "chart",
+     "chart",
+     "image_text",
+     "kpi",
+     "cards",
+     "process",
+     "closing"
+    ],
+    "exemplars": [
+     "slide2",
+     "slide17",
+     "slide45",
+     "slide47",
+     "slide14",
+     "slide44",
+     "slide52",
+     "slide43",
+     "slide45",
+     "slide24",
+     "slide48",
+     "slide6"
+    ],
+    "text_items_per_slide": 5.8,
+    "words_per_item": 3.9,
+    "chart": 2,
+    "table": 0,
+    "kpi": 2,
+    "picture": 1,
+    "skipped": 0
+   },
+   "audit": {
+    "errors": 3,
+    "warnings": 31,
+    "info": 3,
+    "contextual": 4,
+    "by_check": {
+     "C02_content_matches_title": 1,
+     "C06_images_relevant": 1,
+     "C07_no_garbage": 2,
+     "D05_fill": 6,
+     "L02_overlap": 1,
+     "T02_font_size": 4,
+     "T06_contrast": 22
+    },
+    "slides_with_issues": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     10,
+     11
+    ],
+    "checks_run": 35,
+    "duration_s": 43.552,
+    "path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\visual.audit.json",
+    "kind": "deterministic+contextual",
+    "autofix": {
+     "applied": 3,
+     "skipped": 1,
+     "before": {
+      "errors": 2,
+      "warnings": 31
+     },
+     "after": {
+      "errors": 0,
+      "warnings": 30
+     },
+     "items": [
+      {
+       "slide_idx": 3,
+       "element_id": "2410",
+       "check_id": "L03_text_overflow",
+       "fix": "shrink_font_by_scale",
+       "before": "7.2 pt",
+       "after": "6.3 pt, текст укорочен"
+      },
+      {
+       "slide_idx": 3,
+       "element_id": "2411",
+       "check_id": "L03_text_overflow",
+       "fix": "shrink_font_by_scale",
+       "before": "12.2 pt",
+       "after": "10 pt"
+      },
+      {
+       "slide_idx": 6,
+       "element_id": "2570",
+       "check_id": "I05_chart_labels",
+       "fix": "add_chart_labels",
+       "before": "без подписей",
+       "after": "подписи данных"
+      },
+      {
+       "slide_idx": 0,
+       "element_id": "407",
+       "check_id": "T02_font_size",
+       "fix": "snap_font_size",
+       "reason": "нечего менять"
+      }
+     ]
+    }
+   },
+   "exports": {
+    "pptx": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\visual.pptx",
+    "pdf": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\visual.pdf"
+   },
+   "timings_s": {
+    "images": 8.952,
+    "layout": 0.005,
+    "render": 0.655,
+    "audit": 0.335,
+    "autofix": 1.201,
+    "png": 5.531,
+    "audit_contextual": 43.016,
+    "export_pdf": 0.004
+   }
+  }
+ ],
+ "timings_s": {
+  "parse": 0.877,
+  "outline": 57.66,
+  "total": 211.695
+ },
+ "warnings": [
+  "outline: слайд 1 «Руководитель не видит перегрузку из-за ш»: поле «cards» → bullets",
+  "outline: слайд 4 «Команда получает ранние риски и честное »: поле «cards» → bullets",
+  "outline: слайд 9 «Три ключевых риска запуска и их закрытие»: поле «cards» → bullets"
+ ],
+ "not_implemented": []
+}

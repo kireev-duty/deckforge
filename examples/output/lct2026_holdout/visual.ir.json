@@ -1,0 +1,2395 @@
+{
+ "template_id": "974401af1ab9",
+ "strategy": "visual@v1",
+ "slides": [
+  {
+   "idx": 0,
+   "exemplar_id": "slide7",
+   "archetype": "title",
+   "elements": [
+    {
+     "slot_id": "3",
+     "kind": "title",
+     "box": {
+      "x": 1,
+      "y": 3894513,
+      "w": 6271845,
+      "h": 1706743
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Пульс команды: итоги пилота и план запуска",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000",
+      "size_pt": 37.9
+     }
+    },
+    {
+     "slot_id": "5",
+     "kind": "subtitle",
+     "box": {
+      "x": 0,
+      "y": 5659501,
+      "w": 8930641,
+      "h": 757174
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Аналитика нагрузки для продуктовых команд",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    }
+   ],
+   "notes": "",
+   "outline_ref": 0
+  },
+  {
+   "idx": 1,
+   "exemplar_id": "slide28",
+   "archetype": "cards",
+   "elements": [
+    {
+     "slot_id": "39",
+     "kind": "title",
+     "box": {
+      "x": 525817,
+      "y": 421226,
+      "w": 9862734,
+      "h": 376138
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Руководитель не видит перегрузку из-за шести системных причин",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000",
+      "size_pt": 16.2
+     }
+    },
+    {
+     "slot_id": "4",
+     "kind": "body",
+     "box": {
+      "x": 356349,
+      "y": 1641283,
+      "w": 3812931,
+      "h": 1021701
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Статусы вместо работы — До 9,5 часов в…",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "6",
+     "kind": "body",
+     "box": {
+      "x": 8040021,
+      "y": 1641283,
+      "w": 3812931,
+      "h": 1021701
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Скрытая перегрузка — Трекер показывает задачи",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "5",
+     "kind": "body",
+     "box": {
+      "x": 356349,
+      "y": 2020820,
+      "w": 3812931,
+      "h": 1290596
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Поздние сигналы — О выгорании узнают на ретро или при увольнении",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "7",
+     "kind": "body",
+     "box": {
+      "x": 8040021,
+      "y": 2020820,
+      "w": 3812931,
+      "h": 1290596
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Ручные отчёты — Данные устаревают за день",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "8",
+     "kind": "body",
+     "box": {
+      "x": 356349,
+      "y": 3864598,
+      "w": 3812931,
+      "h": 1021701
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Спор об ощущениях — Обсуждение впечатлений",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "10",
+     "kind": "body",
+     "box": {
+      "x": 8040021,
+      "y": 3864598,
+      "w": 3812931,
+      "h": 1021701
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Нет общей картины — Разные представления о приоритетах у смежных команд",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    }
+   ],
+   "notes": "",
+   "outline_ref": 1
+  },
+  {
+   "idx": 2,
+   "exemplar_id": "slide17",
+   "archetype": "cards",
+   "elements": [
+    {
+     "slot_id": "14",
+     "kind": "title",
+     "box": {
+      "x": 525816,
+      "y": 335426,
+      "w": 11331221,
+      "h": 376138
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Пилот охватил 12 команд и 118 человек за 4 месяца",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "15",
+     "kind": "label",
+     "box": {
+      "x": 780565,
+      "y": 1772415,
+      "w": 1311031,
+      "h": 601141
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "12",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000",
+      "size_pt": 36.4
+     }
+    },
+    {
+     "slot_id": "16",
+     "kind": "label",
+     "box": {
+      "x": 4615219,
+      "y": 1766200,
+      "w": 1311031,
+      "h": 572942
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "118",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000",
+      "size_pt": 35.4
+     }
+    },
+    {
+     "slot_id": "17",
+     "kind": "label",
+     "box": {
+      "x": 8547959,
+      "y": 1766043,
+      "w": 1311031,
+      "h": 573165
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "4",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000",
+      "size_pt": 35.4
+     }
+    },
+    {
+     "slot_id": "3",
+     "kind": "body",
+     "box": {
+      "x": 780565,
+      "y": 3128740,
+      "w": 2965633,
+      "h": 2797928
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "команд в пилоте",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "5",
+     "kind": "body",
+     "box": {
+      "x": 4623178,
+      "y": 3128740,
+      "w": 3034896,
+      "h": 2797928
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "участников",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "7",
+     "kind": "body",
+     "box": {
+      "x": 8547959,
+      "y": 3128740,
+      "w": 2945464,
+      "h": 2797928
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "месяца (май–август 2026)",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    }
+   ],
+   "notes": "",
+   "outline_ref": 2
+  },
+  {
+   "idx": 3,
+   "exemplar_id": "slide25",
+   "archetype": "process",
+   "elements": [
+    {
+     "slot_id": "15",
+     "kind": "title",
+     "box": {
+      "x": 525817,
+      "y": 421226,
+      "w": 9862734,
+      "h": 376138
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Сервис работает по пяти шагам от подключения до ретро",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000",
+      "size_pt": 17.4
+     }
+    },
+    {
+     "slot_id": "43",
+     "kind": "number",
+     "box": {
+      "x": 1191126,
+      "y": 3508049,
+      "w": 874814,
+      "h": 708179
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "1",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "44",
+     "kind": "number",
+     "box": {
+      "x": 3412397,
+      "y": 3506136,
+      "w": 874814,
+      "h": 708179
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "2",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "45",
+     "kind": "number",
+     "box": {
+      "x": 5658594,
+      "y": 3516255,
+      "w": 874814,
+      "h": 708179
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "3",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "53",
+     "kind": "number",
+     "box": {
+      "x": 7889752,
+      "y": 3506135,
+      "w": 874814,
+      "h": 708179
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "4",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "54",
+     "kind": "number",
+     "box": {
+      "x": 10113012,
+      "y": 3538626,
+      "w": 874814,
+      "h": 708179
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "5",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "2",
+     "kind": "label",
+     "box": {
+      "x": 346075,
+      "y": 1458075,
+      "w": 2526079,
+      "h": 1476687
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Подключение",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "3",
+     "kind": "body",
+     "box": {
+      "x": 346075,
+      "y": 1814077,
+      "w": 2526079,
+      "h": 1120685
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Трекер и календарь через OAuth за 15 минут",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "4",
+     "kind": "label",
+     "box": {
+      "x": 4832960,
+      "y": 1458075,
+      "w": 2526079,
+      "h": 1476687
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Сбор сигналов",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "5",
+     "kind": "body",
+     "box": {
+      "x": 4832960,
+      "y": 1814077,
+      "w": 2526079,
+      "h": 1120685
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Сроки, статусы, участники, длительность встреч",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "6",
+     "kind": "label",
+     "box": {
+      "x": 9330862,
+      "y": 1458075,
+      "w": 2526079,
+      "h": 1476687
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Модель нагрузки",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "7",
+     "kind": "body",
+     "box": {
+      "x": 9330862,
+      "y": 1814077,
+      "w": 2526079,
+      "h": 1120685
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Оценка перегрузки на человека и команду",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "8",
+     "kind": "label",
+     "box": {
+      "x": 2593517,
+      "y": 4825338,
+      "w": 2526079,
+      "h": 1476687
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Еженедельный дайджест",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "9",
+     "kind": "body",
+     "box": {
+      "x": 2593517,
+      "y": 5181340,
+      "w": 2526079,
+      "h": 1120685
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Три риска и три рекомендации лиду",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "10",
+     "kind": "label",
+     "box": {
+      "x": 7080402,
+      "y": 4825338,
+      "w": 2526079,
+      "h": 1476687
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Ретро с данными",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "11",
+     "kind": "body",
+     "box": {
+      "x": 7080402,
+      "y": 5181340,
+      "w": 2526079,
+      "h": 1120685
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Обсуждение по фактам",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    }
+   ],
+   "notes": "",
+   "outline_ref": 3
+  },
+  {
+   "idx": 4,
+   "exemplar_id": "slide29",
+   "archetype": "cards",
+   "elements": [
+    {
+     "slot_id": "13",
+     "kind": "title",
+     "box": {
+      "x": 525817,
+      "y": 421226,
+      "w": 9862734,
+      "h": 376138
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Команда получает ранние риски и честное ретро",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000",
+      "size_pt": 18.9
+     }
+    },
+    {
+     "slot_id": "6",
+     "kind": "body",
+     "box": {
+      "x": 449155,
+      "y": 5035451,
+      "w": 2658088,
+      "h": 1271340
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Риски заранее — Дайджест приходит в понедельник до планирования",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "7",
+     "kind": "body",
+     "box": {
+      "x": 3302624,
+      "y": 5035451,
+      "w": 2706185,
+      "h": 1271340
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Меньше статусов — Отчёты собираются автоматически",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "8",
+     "kind": "body",
+     "box": {
+      "x": 6204192,
+      "y": 5035451,
+      "w": 2728103,
+      "h": 1271340
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Честное ретро — Обсуждение цифр, а не впечатлений",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "9",
+     "kind": "body",
+     "box": {
+      "x": 9116535,
+      "y": 5035451,
+      "w": 2739248,
+      "h": 1271340
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Приватность — Сервис видит только метаданные",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    }
+   ],
+   "notes": "",
+   "outline_ref": 4
+  },
+  {
+   "idx": 5,
+   "exemplar_id": "slide21",
+   "archetype": "chart",
+   "elements": [
+    {
+     "slot_id": "13",
+     "kind": "title",
+     "box": {
+      "x": 525817,
+      "y": 421226,
+      "w": 2763648,
+      "h": 376138
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Время на согласования в пилоте упало почти вдвое",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000",
+      "size_pt": 14.0
+     }
+    },
+    {
+     "slot_id": "10",
+     "kind": "chart",
+     "box": {
+      "x": 346075,
+      "y": 1424510,
+      "w": 5749925,
+      "h": 4401748
+     },
+     "paragraphs": [],
+     "chart": {
+      "kind": "line",
+      "title": "Время на согласования и статусы, часов в неделю на человека",
+      "categories": [
+       "Май",
+       "Июнь",
+       "Июль",
+       "Август"
+      ],
+      "series": {
+       "Пилотные команды": [
+        9.5,
+        7.1,
+        5.8,
+        5.2
+       ],
+       "Контрольная группа": [
+        9.3,
+        9.6,
+        9.1,
+        9.4
+       ]
+      },
+      "unit": "ч/нед",
+      "x_label": null,
+      "y_label": null
+     },
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    }
+   ],
+   "notes": "",
+   "outline_ref": 5
+  },
+  {
+   "idx": 6,
+   "exemplar_id": "slide23",
+   "archetype": "chart",
+   "elements": [
+    {
+     "slot_id": "14",
+     "kind": "title",
+     "box": {
+      "x": 525817,
+      "y": 421226,
+      "w": 9862734,
+      "h": 376138
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Доля времени на разработку выросла на 16 п.п.",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000",
+      "size_pt": 18.9
+     }
+    },
+    {
+     "slot_id": "12",
+     "kind": "chart",
+     "box": {
+      "x": 625096,
+      "y": 1360288,
+      "w": 5125748,
+      "h": 4385667
+     },
+     "paragraphs": [],
+     "chart": {
+      "kind": "column",
+      "title": "",
+      "categories": [
+       "Согласования",
+       "Статусы и отчёты",
+       "Разработка и дизайн",
+       "Прочее"
+      ],
+      "series": {
+       "До пилота": [
+        31.0,
+        18.0,
+        38.0,
+        13.0
+       ],
+       "После пилота": [
+        17.0,
+        9.0,
+        54.0,
+        20.0
+       ]
+      },
+      "unit": null,
+      "x_label": null,
+      "y_label": null
+     },
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000",
+      "data_labels": true
+     }
+    }
+   ],
+   "notes": "",
+   "outline_ref": 6
+  },
+  {
+   "idx": 7,
+   "exemplar_id": "slide26",
+   "archetype": "image_text",
+   "elements": [
+    {
+     "slot_id": "9",
+     "kind": "title",
+     "box": {
+      "x": 525817,
+      "y": 421226,
+      "w": 9862734,
+      "h": 376138
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Команды перестали спорить о потере времени на ретро",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000",
+      "size_pt": 17.7
+     }
+    },
+    {
+     "slot_id": "4",
+     "kind": "body",
+     "box": {
+      "x": 346075,
+      "y": 4656083,
+      "w": 3626835,
+      "h": 1544692
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "«За месяц мы впервые увидели, где реально теряется время, — и перестали спорить об этом на ретро»",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    }
+   ],
+   "notes": "",
+   "outline_ref": 7
+  },
+  {
+   "idx": 8,
+   "exemplar_id": "slide4",
+   "archetype": "cards",
+   "elements": [
+    {
+     "slot_id": "7",
+     "kind": "title",
+     "box": {
+      "x": 1260867,
+      "y": 451168,
+      "w": 7262838,
+      "h": 454025
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Оценка пилота командами выросла с 3,4 до 4,7",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "69",
+     "kind": "number",
+     "box": {
+      "x": 1542416,
+      "y": 1945277,
+      "w": 1718251,
+      "h": 640725
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "4,7",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": 22.7
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      },
+      {
+       "runs": [
+        {
+         "text": "оценка после пилота (из 5)",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": 9.7
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "70",
+     "kind": "number",
+     "box": {
+      "x": 4110879,
+      "y": 1945277,
+      "w": 1718251,
+      "h": 640725
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "3,4",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": 22.7
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      },
+      {
+       "runs": [
+        {
+         "text": "оценка до пилота (из 5)",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": 9.7
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "71",
+     "kind": "number",
+     "box": {
+      "x": 6718121,
+      "y": 1945277,
+      "w": 1718251,
+      "h": 640725
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "0,6",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": 20.5
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      },
+      {
+       "runs": [
+        {
+         "text": "дня: средний срок ответа на запрос",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": 8.8
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    }
+   ],
+   "notes": "",
+   "outline_ref": 8
+  },
+  {
+   "idx": 9,
+   "exemplar_id": "slide24",
+   "archetype": "cards",
+   "elements": [
+    {
+     "slot_id": "9",
+     "kind": "title",
+     "box": {
+      "x": 525817,
+      "y": 421226,
+      "w": 9862734,
+      "h": 376138
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Три ключевых риска запуска и их закрытие",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "3",
+     "kind": "body",
+     "box": {
+      "x": 616304,
+      "y": 3286814,
+      "w": 3264113,
+      "h": 2375115
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Недоверие команд — Доступ только к метаданным",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "4",
+     "kind": "body",
+     "box": {
+      "x": 4569890,
+      "y": 3264544,
+      "w": 3264113,
+      "h": 2375115
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Нагрузка на инфраструктуру — Подключение волнами по 20 команд в месяц",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "5",
+     "kind": "body",
+     "box": {
+      "x": 8405081,
+      "y": 3277471,
+      "w": 3264113,
+      "h": 2375115
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Ложные тревоги — Калибровка порога по первым двум неделям",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    }
+   ],
+   "notes": "",
+   "outline_ref": 9
+  },
+  {
+   "idx": 10,
+   "exemplar_id": "slide10",
+   "archetype": "process",
+   "elements": [
+    {
+     "slot_id": "7",
+     "kind": "title",
+     "box": {
+      "x": 507849,
+      "y": 449787,
+      "w": 9862734,
+      "h": 376138
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Запуск для всех команд завершится в декабре",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "9",
+     "kind": "number",
+     "box": {
+      "x": 11015788,
+      "y": 1279645,
+      "w": 956838,
+      "h": 353935
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "1",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "11",
+     "kind": "number",
+     "box": {
+      "x": 11015788,
+      "y": 2900091,
+      "w": 930595,
+      "h": 528909
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "2",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "12",
+     "kind": "number",
+     "box": {
+      "x": 11015788,
+      "y": 4571473,
+      "w": 930596,
+      "h": 567782
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "3",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "38",
+     "kind": "label",
+     "box": {
+      "x": 533607,
+      "y": 1279645,
+      "w": 2990173,
+      "h": 353935
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Октябрь",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "37",
+     "kind": "body",
+     "box": {
+      "x": 533607,
+      "y": 1602273,
+      "w": 4425822,
+      "h": 934263
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Подключение 20 команд, политика доступа",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "44",
+     "kind": "label",
+     "box": {
+      "x": 533607,
+      "y": 2900091,
+      "w": 5629858,
+      "h": 528909
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Ноябрь",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "43",
+     "kind": "body",
+     "box": {
+      "x": 533607,
+      "y": 3429000,
+      "w": 4945565,
+      "h": 1078529
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Ещё 40 команд, интеграция с целями",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "41",
+     "kind": "label",
+     "box": {
+      "x": 533608,
+      "y": 4571473,
+      "w": 6438692,
+      "h": 629056
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Декабрь",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "40",
+     "kind": "body",
+     "box": {
+      "x": 533607,
+      "y": 5139255,
+      "w": 7318749,
+      "h": 1055362
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Все команды, отчёт для руководителей",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    }
+   ],
+   "notes": "",
+   "outline_ref": 10
+  },
+  {
+   "idx": 11,
+   "exemplar_id": "slide7",
+   "archetype": "title",
+   "elements": [
+    {
+     "slot_id": "3",
+     "kind": "title",
+     "box": {
+      "x": 1,
+      "y": 3894513,
+      "w": 6271845,
+      "h": 1706743
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Пульс команды",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "5",
+     "kind": "subtitle",
+     "box": {
+      "x": 0,
+      "y": 5659501,
+      "w": 8930641,
+      "h": 757174
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "pulse-team@example.com",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    }
+   ],
+   "notes": "",
+   "outline_ref": 11
+  }
+ ],
+ "slide_w": 12192000,
+ "slide_h": 6858000
+}

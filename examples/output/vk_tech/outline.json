@@ -1,0 +1,360 @@
+{
+ "title": "Пульс команды: итоги пилота и план запуска",
+ "purpose": "product",
+ "audience": "руководители продуктовых направлений",
+ "language": "ru",
+ "slides": [
+  {
+   "idx": 0,
+   "archetype": "title",
+   "title": "Пульс команды: итоги пилота и план запуска",
+   "subtitle": "Аналитика нагрузки для продуктовых команд",
+   "section": null,
+   "bullets": [],
+   "paragraphs": [],
+   "kpis": [],
+   "chart": null,
+   "table": null,
+   "image": null,
+   "steps": [],
+   "quote": null,
+   "quote_author": null,
+   "speaker_notes": "",
+   "sources": [
+    "doc:product"
+   ]
+  },
+  {
+   "idx": 1,
+   "archetype": "cards",
+   "title": "Руководитель не видит перегрузку из-за шести системных причин",
+   "subtitle": null,
+   "section": "Проблема",
+   "bullets": [
+    "Статусы вместо работы — До 9,5 часов в неделю на встречи и отчёты",
+    "Скрытая перегрузка — Трекер показывает задачи, а не людей",
+    "Поздние сигналы — О выгорании узнают на ретро или при увольнении",
+    "Ручные отчёты — Данные устаревают за день",
+    "Спор об ощущениях — Обсуждение впечатлений, а не фактов",
+    "Нет общей картины — Разные представления о приоритетах у смежных команд"
+   ],
+   "paragraphs": [],
+   "kpis": [],
+   "chart": null,
+   "table": null,
+   "image": null,
+   "steps": [],
+   "quote": null,
+   "quote_author": null,
+   "speaker_notes": "",
+   "sources": [
+    "doc:product:почему-перегрузка-не-видна-руководителю-"
+   ]
+  },
+  {
+   "idx": 2,
+   "archetype": "kpi",
+   "title": "Пилот охватил 12 команд и 118 человек за 4 месяца",
+   "subtitle": null,
+   "section": "Масштаб",
+   "bullets": [],
+   "paragraphs": [],
+   "kpis": [
+    {
+     "value": "12",
+     "label": "команд в пилоте"
+    },
+    {
+     "value": "118",
+     "label": "участников"
+    },
+    {
+     "value": "4",
+     "label": "месяца (май–август 2026)"
+    }
+   ],
+   "chart": null,
+   "table": null,
+   "image": null,
+   "steps": [],
+   "quote": null,
+   "quote_author": null,
+   "speaker_notes": "",
+   "sources": [
+    "m:pilot"
+   ]
+  },
+  {
+   "idx": 3,
+   "archetype": "process",
+   "title": "Сервис работает по пяти шагам от подключения до ретро",
+   "subtitle": null,
+   "section": "Решение",
+   "bullets": [],
+   "paragraphs": [],
+   "kpis": [],
+   "chart": null,
+   "table": null,
+   "image": null,
+   "steps": [
+    "Подключение — Трекер и календарь через OAuth за 15 минут",
+    "Сбор сигналов — Сроки, статусы, участники, длительность встреч",
+    "Модель нагрузки — Оценка перегрузки на человека и команду",
+    "Еженедельный дайджест — Три риска и три рекомендации лиду",
+    "Ретро с данными — Обсуждение по фактам, а не ощущениям"
+   ],
+   "quote": null,
+   "quote_author": null,
+   "speaker_notes": "",
+   "sources": [
+    "doc:product:как-работает-сервис-пять-шагов"
+   ]
+  },
+  {
+   "idx": 4,
+   "archetype": "cards",
+   "title": "Команда получает ранние риски и честное ретро",
+   "subtitle": null,
+   "section": "Решение",
+   "bullets": [
+    "Риски заранее — Дайджест приходит в понедельник до планирования",
+    "Меньше статусов — Отчёты собираются автоматически",
+    "Честное ретро — Обсуждение цифр, а не впечатлений",
+    "Приватность — Сервис видит только метаданные"
+   ],
+   "paragraphs": [],
+   "kpis": [],
+   "chart": null,
+   "table": null,
+   "image": null,
+   "steps": [],
+   "quote": null,
+   "quote_author": null,
+   "speaker_notes": "",
+   "sources": [
+    "doc:product:что-получает-команда-и-руководитель"
+   ]
+  },
+  {
+   "idx": 5,
+   "archetype": "chart",
+   "title": "Время на согласования в пилоте упало почти вдвое",
+   "subtitle": null,
+   "section": "Доказательства",
+   "bullets": [],
+   "paragraphs": [],
+   "kpis": [],
+   "chart": {
+    "kind": "line",
+    "title": "Время на согласования и статусы, часов в неделю на человека",
+    "categories": [
+     "Май",
+     "Июнь",
+     "Июль",
+     "Август"
+    ],
+    "series": {
+     "Пилотные команды": [
+      9.5,
+      7.1,
+      5.8,
+      5.2
+     ],
+     "Контрольная группа": [
+      9.3,
+      9.6,
+      9.1,
+      9.4
+     ]
+    },
+    "unit": "ч/нед",
+    "x_label": null,
+    "y_label": null
+   },
+   "table": null,
+   "image": null,
+   "steps": [],
+   "quote": null,
+   "quote_author": null,
+   "speaker_notes": "",
+   "sources": [
+    "m:coordination_hours"
+   ]
+  },
+  {
+   "idx": 6,
+   "archetype": "table",
+   "title": "Доля времени на разработку выросла на 16 п.п.",
+   "subtitle": null,
+   "section": "Доказательства",
+   "bullets": [],
+   "paragraphs": [],
+   "kpis": [],
+   "chart": null,
+   "table": {
+    "header": [
+     "Тип работы",
+     "До пилота",
+     "После пилота",
+     "Изменение"
+    ],
+    "rows": [
+     [
+      "Согласования",
+      "31",
+      "17",
+      "−14 п.п."
+     ],
+     [
+      "Статусы и отчёты",
+      "18",
+      "9",
+      "−9 п.п."
+     ],
+     [
+      "Разработка и дизайн",
+      "38",
+      "54",
+      "+16 п.п."
+     ],
+     [
+      "Прочее",
+      "13",
+      "20",
+      "+7 п.п."
+     ]
+    ]
+   },
+   "image": null,
+   "steps": [],
+   "quote": null,
+   "quote_author": null,
+   "speaker_notes": "",
+   "sources": [
+    "m:time_structure"
+   ]
+  },
+  {
+   "idx": 7,
+   "archetype": "quote",
+   "title": "Команды перестали спорить о потере времени на ретро",
+   "subtitle": null,
+   "section": "Доказательства",
+   "bullets": [],
+   "paragraphs": [],
+   "kpis": [],
+   "chart": null,
+   "table": null,
+   "image": null,
+   "steps": [],
+   "quote": "За месяц мы впервые увидели, где реально теряется время, — и перестали спорить об этом на ретро",
+   "quote_author": "Руководитель разработки, команда платёжного шлюза",
+   "speaker_notes": "",
+   "sources": [
+    "m:quote"
+   ]
+  },
+  {
+   "idx": 8,
+   "archetype": "kpi",
+   "title": "Оценка пилота командами выросла с 3,4 до 4,7",
+   "subtitle": null,
+   "section": "Результаты",
+   "bullets": [],
+   "paragraphs": [],
+   "kpis": [
+    {
+     "value": "4,7",
+     "label": "оценка после пилота (из 5)"
+    },
+    {
+     "value": "3,4",
+     "label": "оценка до пилота (из 5)"
+    },
+    {
+     "value": "0,6",
+     "label": "дня: средний срок ответа на запрос"
+    }
+   ],
+   "chart": null,
+   "table": null,
+   "image": null,
+   "steps": [],
+   "quote": null,
+   "quote_author": null,
+   "speaker_notes": "",
+   "sources": [
+    "m:score",
+    "m:response_days"
+   ]
+  },
+  {
+   "idx": 9,
+   "archetype": "cards",
+   "title": "Три ключевых риска запуска и их закрытие",
+   "subtitle": null,
+   "section": "Риски",
+   "bullets": [
+    "Недоверие команд — Доступ только к метаданным, отчёт видит команда",
+    "Нагрузка на инфраструктуру — Подключение волнами по 20 команд в месяц",
+    "Ложные тревоги — Калибровка порога по первым двум неделям"
+   ],
+   "paragraphs": [],
+   "kpis": [],
+   "chart": null,
+   "table": null,
+   "image": null,
+   "steps": [],
+   "quote": null,
+   "quote_author": null,
+   "speaker_notes": "",
+   "sources": [
+    "doc:product:риски-запуска-и-как-они-закрываются"
+   ]
+  },
+  {
+   "idx": 10,
+   "archetype": "process",
+   "title": "Запуск для всех команд завершится в декабре",
+   "subtitle": null,
+   "section": "План",
+   "bullets": [],
+   "paragraphs": [],
+   "kpis": [],
+   "chart": null,
+   "table": null,
+   "image": null,
+   "steps": [
+    "Октябрь — Подключение 20 команд, политика доступа",
+    "Ноябрь — Ещё 40 команд, интеграция с целями",
+    "Декабрь — Все команды, отчёт для руководителей"
+   ],
+   "quote": null,
+   "quote_author": null,
+   "speaker_notes": "",
+   "sources": [
+    "doc:product:план-на-квартал"
+   ]
+  },
+  {
+   "idx": 11,
+   "archetype": "closing",
+   "title": "Пульс команды",
+   "subtitle": "pulse-team@example.com",
+   "section": null,
+   "bullets": [],
+   "paragraphs": [],
+   "kpis": [],
+   "chart": null,
+   "table": null,
+   "image": null,
+   "steps": [],
+   "quote": null,
+   "quote_author": null,
+   "speaker_notes": "",
+   "sources": [
+    "doc:product:контакты"
+   ]
+  }
+ ]
+}

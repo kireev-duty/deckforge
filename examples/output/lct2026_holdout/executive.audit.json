@@ -1,0 +1,372 @@
+{
+ "deck_path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\lct2026_holdout\\executive.pptx",
+ "findings": [
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 1,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд пустоват: контент занимает 22% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.217
+   }
+  },
+  {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 3,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок является констатацией темы, а не выводом (в соответствии с требованием брифа).",
+   "autofix": null,
+   "evidence": {
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "doc:product:как-работает-сервис-пять-шагов"
+   }
+  },
+  {
+   "check_id": "D01_bullets",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 3,
+   "element_id": "2",
+   "box": {
+    "x": 346075,
+    "y": 1458075,
+    "w": 2526079,
+    "h": 1476687
+   },
+   "message": "На слайде 10 пунктов (норма ≤ 6)",
+   "autofix": "split_slide",
+   "evidence": {
+    "bullets": 10
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 3,
+   "element_id": "2",
+   "box": {
+    "x": 346075,
+    "y": 1814077,
+    "w": 2526079,
+    "h": 1120685
+   },
+   "message": "Блоки «Подключение» и «Трекер и календарь через OAuth…» наложились (100% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "3",
+    "ratio": 1.0,
+    "in_exemplar": 1
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 3,
+   "element_id": "4",
+   "box": {
+    "x": 4832960,
+    "y": 1814077,
+    "w": 2526079,
+    "h": 1120685
+   },
+   "message": "Блоки «Сбор сигналов» и «Сроки, статусы, участники, дли…» наложились (100% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "5",
+    "ratio": 1.0,
+    "in_exemplar": 1
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 3,
+   "element_id": "6",
+   "box": {
+    "x": 9330862,
+    "y": 1814077,
+    "w": 2526079,
+    "h": 1120685
+   },
+   "message": "Блоки «Модель нагрузки» и «Оценка перегрузки на человека …» наложились (100% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "7",
+    "ratio": 1.0,
+    "in_exemplar": 1
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 3,
+   "element_id": "8",
+   "box": {
+    "x": 2593517,
+    "y": 5181340,
+    "w": 2526079,
+    "h": 1120685
+   },
+   "message": "Блоки «Еженедельный дайджест» и «Три риска и три рекомендации л…» наложились (100% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "9",
+    "ratio": 1.0,
+    "in_exemplar": 1
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 3,
+   "element_id": "10",
+   "box": {
+    "x": 7080402,
+    "y": 5181340,
+    "w": 2526079,
+    "h": 1120685
+   },
+   "message": "Блоки «Ретро с данными» и «Обсуждение по фактам, а не ощу…» наложились (100% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "11",
+    "ratio": 1.0,
+    "in_exemplar": 1
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 3,
+   "element_id": "15",
+   "box": {
+    "x": 525817,
+    "y": 421226,
+    "w": 9862734,
+    "h": 376138
+   },
+   "message": "Кегль 17.4 pt не из шкалы шаблона (ближайший 15.8 pt) (подгонка: 87% от кегля образца 20 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 17.4,
+    "nearest_pt": 15.8,
+    "base_pt": 20.0
+   }
+  },
+  {
+   "check_id": "L03_text_overflow",
+   "kind": "deterministic",
+   "severity": "error",
+   "slide_idx": 4,
+   "element_id": "2",
+   "box": {
+    "x": 1260867,
+    "y": 451168,
+    "w": 2016723,
+    "h": 454025
+   },
+   "message": "Текст «Команда получает ранние риски …» не влезает по высоте: нужно 50 pt, есть 34 pt",
+   "autofix": "shrink_font_by_scale",
+   "evidence": {
+    "need_pt": 50.4,
+    "have_pt": 33.6,
+    "mode": "height",
+    "autofit": ""
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 4,
+   "element_id": "2",
+   "box": {
+    "x": 1260867,
+    "y": 451168,
+    "w": 2016723,
+    "h": 454025
+   },
+   "message": "Контраст текста #FFFFFF к фону #FF0053 = 3.9:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 3.91,
+    "text_color": "FFFFFF",
+    "background": "FF0053",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "L03_text_overflow",
+   "kind": "deterministic",
+   "severity": "error",
+   "slide_idx": 5,
+   "element_id": "13",
+   "box": {
+    "x": 525817,
+    "y": 421226,
+    "w": 2763648,
+    "h": 376138
+   },
+   "message": "Текст «Время на согласования в пилоте…» не влезает по высоте: нужно 50 pt, есть 34 pt",
+   "autofix": "shrink_font_by_scale",
+   "evidence": {
+    "need_pt": 50.4,
+    "have_pt": 33.6,
+    "mode": "height",
+    "autofit": ""
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 5,
+   "element_id": "13",
+   "box": {
+    "x": 525817,
+    "y": 421226,
+    "w": 2763648,
+    "h": 376138
+   },
+   "message": "Контраст текста #F2F2F2 к фону #FF0053 = 3.5:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 3.49,
+    "text_color": "F2F2F2",
+    "background": "FF0053",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "D02_bullet_words",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 7,
+   "element_id": "3",
+   "box": {
+    "x": 623888,
+    "y": 1556279,
+    "w": 10789619,
+    "h": 3745441
+   },
+   "message": "Пункт из 23 слов (норма ≤ 15): ««За месяц мы впервые увидели, где реально теряется время, — …»",
+   "autofix": "refill_slot",
+   "evidence": {
+    "words": 23
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 7,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд перегружен: контент занимает 88% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.877
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 7,
+   "element_id": "2",
+   "box": {
+    "x": 533104,
+    "y": 414049,
+    "w": 5994696,
+    "h": 552061
+   },
+   "message": "Кегль 26.5 pt не из шкалы шаблона (ближайший 24 pt) (подгонка: 74% от кегля образца 36 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 26.5,
+    "nearest_pt": 24.0,
+    "base_pt": 36.0
+   }
+  },
+  {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок называет тему (риски и закрытие), а не содержит вывод (например, «Риски запуска закрыты планом на квартал»).",
+   "autofix": null,
+   "evidence": {
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "m:score,m:response_days"
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд пустоват: контент занимает 23% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.228
+   }
+  }
+ ],
+ "checks_run": [
+  "L01_out_of_bounds",
+  "L02_overlap",
+  "L03_text_overflow",
+  "L04_text_clipped",
+  "L05_off_grid",
+  "L06_in_margins",
+  "L07_picture_stretched",
+  "T01_font",
+  "T02_font_size",
+  "T03_color",
+  "T04_layout",
+  "T05_fixed_moved",
+  "T06_contrast",
+  "D01_bullets",
+  "D02_bullet_words",
+  "D03_table_size",
+  "D04_chart_series",
+  "D05_fill",
+  "I01_file",
+  "I02_placeholder_text",
+  "I03_empty_slide",
+  "I04_raster_slide",
+  "I05_chart_labels",
+  "I06_duplicate_slides",
+  "C01_title_insight",
+  "C02_content_matches_title",
+  "C03_one_message",
+  "C04_facts_in_sources",
+  "C05_has_content",
+  "C06_images_relevant",
+  "C07_no_garbage",
+  "C08_no_typos",
+  "C09_one_language",
+  "C10_table_legend_relevant",
+  "C11_flow"
+ ],
+ "duration_s": 56.058
+}

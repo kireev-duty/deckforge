@@ -1,0 +1,4838 @@
+{
+ "template_id": "69e4a68c4372",
+ "source_path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\data\\templates\\VK_WorkSpace_Клиентская_конференция_Шаблон_03.pptx",
+ "slide_w": 12192000,
+ "slide_h": 6858000,
+ "colors": [
+  {
+   "hex": "000000",
+   "role": "background",
+   "usage": 94,
+   "source": "slides"
+  },
+  {
+   "hex": "FFFFFF",
+   "role": "text",
+   "usage": 52,
+   "source": "slides"
+  },
+  {
+   "hex": "0077FF",
+   "role": "accent",
+   "usage": 68,
+   "source": "slides"
+  },
+  {
+   "hex": "00AEE8",
+   "role": "secondary",
+   "usage": 27,
+   "source": "slides"
+  },
+  {
+   "hex": "212121",
+   "role": "surface",
+   "usage": 22,
+   "source": "slides"
+  },
+  {
+   "hex": "E4E7EA",
+   "role": "muted",
+   "usage": 12,
+   "source": "slides"
+  },
+  {
+   "hex": "808080",
+   "role": "unknown",
+   "usage": 62,
+   "source": "layouts"
+  },
+  {
+   "hex": "6DBCFF",
+   "role": "unknown",
+   "usage": 21,
+   "source": "slides"
+  },
+  {
+   "hex": "EE5959",
+   "role": "unknown",
+   "usage": 16,
+   "source": "slides"
+  },
+  {
+   "hex": "AFB8C2",
+   "role": "unknown",
+   "usage": 3,
+   "source": "slides"
+  },
+  {
+   "hex": "5A6775",
+   "role": "unknown",
+   "usage": 3,
+   "source": "slides"
+  },
+  {
+   "hex": "CAD0D5",
+   "role": "unknown",
+   "usage": 3,
+   "source": "slides"
+  },
+  {
+   "hex": "EB4250",
+   "role": "unknown",
+   "usage": 2,
+   "source": "slides"
+  },
+  {
+   "hex": "00326B",
+   "role": "unknown",
+   "usage": 2,
+   "source": "slides"
+  }
+ ],
+ "typography": [
+  {
+   "role": "display",
+   "font": "Play",
+   "size_pt": 54.0,
+   "bold": false,
+   "color": "FFFFFF",
+   "usage": 24
+  },
+  {
+   "role": "h1",
+   "font": "Play",
+   "size_pt": 36.0,
+   "bold": false,
+   "color": "FFFFFF",
+   "usage": 228
+  },
+  {
+   "role": "h2",
+   "font": "Play",
+   "size_pt": 20.0,
+   "bold": false,
+   "color": "FFFFFF",
+   "usage": 306
+  },
+  {
+   "role": "h3",
+   "font": "Play",
+   "size_pt": 18.0,
+   "bold": false,
+   "color": "0077FF",
+   "usage": 204
+  },
+  {
+   "role": "body",
+   "font": "Play",
+   "size_pt": 16.0,
+   "bold": false,
+   "color": "FFFFFF",
+   "usage": 456
+  },
+  {
+   "role": "caption",
+   "font": "Play",
+   "size_pt": 13.8,
+   "bold": false,
+   "color": "FFFFFF",
+   "usage": 297
+  },
+  {
+   "role": "small",
+   "font": "Play",
+   "size_pt": 11.0,
+   "bold": false,
+   "color": "E4E7EA",
+   "usage": 100
+  }
+ ],
+ "fonts": [
+  "Play"
+ ],
+ "grid": {
+  "slide_w": 12192000,
+  "slide_h": 6858000,
+  "margin_left": 427865,
+  "margin_right": 429254,
+  "margin_top": 424691,
+  "margin_bottom": 911282,
+  "columns_x": [
+   411480
+  ],
+  "rows_y": [
+   411480,
+   1600200,
+   1645920,
+   2194560
+  ]
+ },
+ "fixed_elements": [],
+ "exemplars": [
+  {
+   "id": "slide1",
+   "source_index": 0,
+   "layout_name": "7_Титульный слайд",
+   "archetype": "title",
+   "slots": [
+    {
+     "id": "381",
+     "kind": "title",
+     "box": {
+      "x": 429253,
+      "y": 2490555,
+      "w": 7827335,
+      "h": 1876890
+     },
+     "max_chars": 46,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 48.0,
+     "placeholder_type": "title",
+     "sample_text": "Названиепрезентации"
+    },
+    {
+     "id": "383",
+     "kind": "subtitle",
+     "box": {
+      "x": 1510259,
+      "y": 4682209,
+      "w": 2213844,
+      "h": 834283
+     },
+     "max_chars": 58,
+     "max_lines": 3,
+     "max_items": null,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Имя Спикера,должность"
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.022,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 1.0
+  },
+  {
+   "id": "slide2",
+   "source_index": 1,
+   "layout_name": "9_Титульный слайд",
+   "archetype": "agenda",
+   "slots": [
+    {
+     "id": "388",
+     "kind": "title",
+     "box": {
+      "x": 429254,
+      "y": 1609196,
+      "w": 4803146,
+      "h": 1876890
+     },
+     "max_chars": 56,
+     "max_lines": 3,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Оглавление"
+    },
+    {
+     "id": "389",
+     "kind": "label",
+     "box": {
+      "x": 4909649,
+      "y": 1016001,
+      "w": 1594338,
+      "h": 697914
+     },
+     "max_chars": 5,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 40.0,
+     "placeholder_type": null,
+     "sample_text": "01"
+    },
+    {
+     "id": "394",
+     "kind": "body",
+     "box": {
+      "x": 6793020,
+      "y": 1016001,
+      "w": 4969726,
+      "h": 593196
+     },
+     "max_chars": 35,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Название раздела"
+    },
+    {
+     "id": "390",
+     "kind": "label",
+     "box": {
+      "x": 4909649,
+      "y": 2074202,
+      "w": 1594338,
+      "h": 697914
+     },
+     "max_chars": 5,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 40.0,
+     "placeholder_type": null,
+     "sample_text": "02"
+    },
+    {
+     "id": "395",
+     "kind": "body",
+     "box": {
+      "x": 6793020,
+      "y": 2119587,
+      "w": 4969726,
+      "h": 593196
+     },
+     "max_chars": 35,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Название раздела"
+    },
+    {
+     "id": "391",
+     "kind": "label",
+     "box": {
+      "x": 4909649,
+      "y": 3132403,
+      "w": 1594338,
+      "h": 697914
+     },
+     "max_chars": 5,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 40.0,
+     "placeholder_type": null,
+     "sample_text": "04"
+    },
+    {
+     "id": "396",
+     "kind": "body",
+     "box": {
+      "x": 6793020,
+      "y": 3175878,
+      "w": 4969726,
+      "h": 593196
+     },
+     "max_chars": 35,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Название раздела"
+    },
+    {
+     "id": "392",
+     "kind": "label",
+     "box": {
+      "x": 4909649,
+      "y": 4190604,
+      "w": 1594338,
+      "h": 697914
+     },
+     "max_chars": 5,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 40.0,
+     "placeholder_type": null,
+     "sample_text": "05"
+    },
+    {
+     "id": "397",
+     "kind": "body",
+     "box": {
+      "x": 6793020,
+      "y": 4247932,
+      "w": 4969726,
+      "h": 593196
+     },
+     "max_chars": 35,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Название раздела"
+    },
+    {
+     "id": "393",
+     "kind": "label",
+     "box": {
+      "x": 4909649,
+      "y": 5248804,
+      "w": 1594338,
+      "h": 697914
+     },
+     "max_chars": 5,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 40.0,
+     "placeholder_type": null,
+     "sample_text": "06"
+    },
+    {
+     "id": "398",
+     "kind": "body",
+     "box": {
+      "x": 6793020,
+      "y": 5304222,
+      "w": 4969726,
+      "h": 593196
+     },
+     "max_chars": 35,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Название раздела"
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.243,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 1.0
+  },
+  {
+   "id": "slide3",
+   "source_index": 2,
+   "layout_name": "19_Заголовок",
+   "archetype": "freeform",
+   "slots": [
+    {
+     "id": "404",
+     "kind": "title",
+     "box": {
+      "x": 429253,
+      "y": 1460299,
+      "w": 3865161,
+      "h": 1167572
+     },
+     "max_chars": 30,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "417",
+     "kind": "label",
+     "box": {
+      "x": 429255,
+      "y": 424691,
+      "w": 1693460,
+      "h": 555023
+     },
+     "max_chars": 26,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "Кейс"
+    },
+    {
+     "id": "405",
+     "kind": "body",
+     "box": {
+      "x": 6490839,
+      "y": 1657446,
+      "w": 4743224,
+      "h": 638322
+     },
+     "max_chars": 84,
+     "max_lines": 2,
+     "max_items": 2,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "406",
+     "kind": "body",
+     "box": {
+      "x": 6490839,
+      "y": 3204643,
+      "w": 4743224,
+      "h": 638322
+     },
+     "max_chars": 84,
+     "max_lines": 2,
+     "max_items": 2,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "414",
+     "kind": "caption",
+     "box": {
+      "x": 5808913,
+      "y": 4939905,
+      "w": 5440648,
+      "h": 1341625
+     },
+     "max_chars": 330,
+     "max_lines": 6,
+     "max_items": 6,
+     "font": null,
+     "size_pt": 14.0,
+     "placeholder_type": null,
+     "sample_text": "Заметка"
+    }
+   ],
+   "fixed": [
+    "409",
+    "412",
+    "416"
+   ],
+   "fill_ratio": 0.174,
+   "thumbnail": null,
+   "tags": [
+    "тёмный фон",
+    "синие акценты",
+    "шаблон",
+    "несколько блоков"
+   ],
+   "confidence": 0.6
+  },
+  {
+   "id": "slide4",
+   "source_index": 3,
+   "layout_name": "18_Титульный слайд",
+   "archetype": "agenda",
+   "slots": [
+    {
+     "id": "423",
+     "kind": "title",
+     "box": {
+      "x": 429253,
+      "y": 424691,
+      "w": 7827311,
+      "h": 1167572
+     },
+     "max_chars": 61,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Кейс"
+    },
+    {
+     "id": "436",
+     "kind": "subtitle",
+     "box": {
+      "x": 5916189,
+      "y": 1442224,
+      "w": 5782981,
+      "h": 496940
+     },
+     "max_chars": 34,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 24.0,
+     "placeholder_type": null,
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "424",
+     "kind": "label",
+     "box": {
+      "x": 6830705,
+      "y": 2116408,
+      "w": 4680000,
+      "h": 678239
+     },
+     "max_chars": 73,
+     "max_lines": 2,
+     "max_items": 2,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "427",
+     "kind": "label",
+     "box": {
+      "x": 6830705,
+      "y": 3075476,
+      "w": 4680000,
+      "h": 678239
+     },
+     "max_chars": 73,
+     "max_lines": 2,
+     "max_items": 2,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "430",
+     "kind": "label",
+     "box": {
+      "x": 6830705,
+      "y": 4047606,
+      "w": 4680000,
+      "h": 678239
+     },
+     "max_chars": 73,
+     "max_lines": 2,
+     "max_items": 2,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "433",
+     "kind": "label",
+     "box": {
+      "x": 6830705,
+      "y": 5033027,
+      "w": 4680000,
+      "h": 678239
+     },
+     "max_chars": 73,
+     "max_lines": 2,
+     "max_items": 2,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    }
+   ],
+   "fixed": [
+    "426",
+    "429",
+    "432",
+    "435"
+   ],
+   "fill_ratio": 0.191,
+   "thumbnail": null,
+   "tags": [
+    "содержание",
+    "4 пункта",
+    "иконки-стрелки",
+    "тёмный фон",
+    "3D декор"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "id": "slide5",
+   "source_index": 4,
+   "layout_name": "19_Заголовок",
+   "archetype": "cards",
+   "slots": [
+    {
+     "id": "441",
+     "kind": "title",
+     "box": {
+      "x": 429253,
+      "y": 424691,
+      "w": 7827311,
+      "h": 626869
+     },
+     "max_chars": 30,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "442",
+     "kind": "body",
+     "box": {
+      "x": 5383513,
+      "y": 860119,
+      "w": 5917558,
+      "h": 1705685
+     },
+     "max_chars": 279,
+     "max_lines": 6,
+     "max_items": 6,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокТекст"
+    },
+    {
+     "id": "446",
+     "kind": "body",
+     "box": {
+      "x": 5383513,
+      "y": 2710690,
+      "w": 5917558,
+      "h": 1705685
+     },
+     "max_chars": 279,
+     "max_lines": 6,
+     "max_items": 6,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокТекст"
+    },
+    {
+     "id": "450",
+     "kind": "body",
+     "box": {
+      "x": 5383513,
+      "y": 4561261,
+      "w": 5917558,
+      "h": 1705685
+     },
+     "max_chars": 279,
+     "max_lines": 6,
+     "max_items": 6,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокТекст"
+    }
+   ],
+   "fixed": [
+    "445",
+    "449",
+    "453"
+   ],
+   "fill_ratio": 0.365,
+   "thumbnail": null,
+   "tags": [
+    "3 карточки",
+    "тёмный фон",
+    "иконки",
+    "вертикальный стек"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "id": "slide6",
+   "source_index": 5,
+   "layout_name": "15_Титульный слайд",
+   "archetype": "cards",
+   "slots": [
+    {
+     "id": "459",
+     "kind": "title",
+     "box": {
+      "x": 429253,
+      "y": 424691,
+      "w": 7827311,
+      "h": 1167572
+     },
+     "max_chars": 61,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "462",
+     "kind": "body",
+     "box": {
+      "x": 415687,
+      "y": 1666499,
+      "w": 3420000,
+      "h": 3525002
+     },
+     "max_chars": 266,
+     "max_lines": 11,
+     "max_items": 11,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "461",
+     "kind": "body",
+     "box": {
+      "x": 4056891,
+      "y": 1666499,
+      "w": 3420000,
+      "h": 3525002
+     },
+     "max_chars": 266,
+     "max_lines": 11,
+     "max_items": 11,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "460",
+     "kind": "body",
+     "box": {
+      "x": 7729481,
+      "y": 1666499,
+      "w": 3420000,
+      "h": 3525002
+     },
+     "max_chars": 266,
+     "max_lines": 11,
+     "max_items": 11,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "463",
+     "kind": "label",
+     "box": {
+      "x": 596659,
+      "y": 3258988,
+      "w": 3057144,
+      "h": 251795
+     },
+     "max_chars": 30,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 14.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "465",
+     "kind": "label",
+     "box": {
+      "x": 4240405,
+      "y": 3258988,
+      "w": 3057144,
+      "h": 251795
+     },
+     "max_chars": 30,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 14.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "467",
+     "kind": "label",
+     "box": {
+      "x": 7911859,
+      "y": 3258988,
+      "w": 3057144,
+      "h": 251795
+     },
+     "max_chars": 30,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 14.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "464",
+     "kind": "icon",
+     "box": {
+      "x": 596658,
+      "y": 2888071,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "466",
+     "kind": "icon",
+     "box": {
+      "x": 4240404,
+      "y": 2888071,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "468",
+     "kind": "icon",
+     "box": {
+      "x": 7911858,
+      "y": 2888071,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.463,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 0.9
+  },
+  {
+   "id": "slide7",
+   "source_index": 6,
+   "layout_name": "13_Титульный слайд",
+   "archetype": "cards",
+   "slots": [
+    {
+     "id": "474",
+     "kind": "title",
+     "box": {
+      "x": 429253,
+      "y": 424691,
+      "w": 7827311,
+      "h": 1167572
+     },
+     "max_chars": 61,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "475",
+     "kind": "body",
+     "box": {
+      "x": 427864,
+      "y": 1664169,
+      "w": 3636000,
+      "h": 1800000
+     },
+     "max_chars": 171,
+     "max_lines": 6,
+     "max_items": 6,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокТекст"
+    },
+    {
+     "id": "476",
+     "kind": "body",
+     "box": {
+      "x": 4217594,
+      "y": 1664169,
+      "w": 3636000,
+      "h": 1800000
+     },
+     "max_chars": 171,
+     "max_lines": 6,
+     "max_items": 6,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокТекст"
+    },
+    {
+     "id": "477",
+     "kind": "body",
+     "box": {
+      "x": 8007324,
+      "y": 1664169,
+      "w": 3636000,
+      "h": 1800000
+     },
+     "max_chars": 171,
+     "max_lines": 6,
+     "max_items": 6,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокТекст"
+    },
+    {
+     "id": "478",
+     "kind": "body",
+     "box": {
+      "x": 427864,
+      "y": 3617743,
+      "w": 3636000,
+      "h": 1800000
+     },
+     "max_chars": 171,
+     "max_lines": 6,
+     "max_items": 6,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокТекст"
+    },
+    {
+     "id": "479",
+     "kind": "body",
+     "box": {
+      "x": 4217594,
+      "y": 3617743,
+      "w": 3636000,
+      "h": 1800000
+     },
+     "max_chars": 171,
+     "max_lines": 6,
+     "max_items": 6,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокТекст"
+    },
+    {
+     "id": "480",
+     "kind": "body",
+     "box": {
+      "x": 8005823,
+      "y": 3617743,
+      "w": 3636000,
+      "h": 1800000
+     },
+     "max_chars": 171,
+     "max_lines": 6,
+     "max_items": 6,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокТекст"
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.47,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 0.9
+  },
+  {
+   "id": "slide8",
+   "source_index": 7,
+   "layout_name": "13_Титульный слайд",
+   "archetype": "cards",
+   "slots": [
+    {
+     "id": "486",
+     "kind": "title",
+     "box": {
+      "x": 429253,
+      "y": 424691,
+      "w": 7827311,
+      "h": 1167572
+     },
+     "max_chars": 61,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "488",
+     "kind": "number",
+     "box": {
+      "x": 437041,
+      "y": 1592263,
+      "w": 676173,
+      "h": 676089
+     },
+     "max_chars": 11,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "01"
+    },
+    {
+     "id": "491",
+     "kind": "number",
+     "box": {
+      "x": 4370023,
+      "y": 1592263,
+      "w": 676173,
+      "h": 676089
+     },
+     "max_chars": 11,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "02"
+    },
+    {
+     "id": "500",
+     "kind": "number",
+     "box": {
+      "x": 8303107,
+      "y": 1592263,
+      "w": 676173,
+      "h": 676089
+     },
+     "max_chars": 11,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "03"
+    },
+    {
+     "id": "487",
+     "kind": "label",
+     "box": {
+      "x": 437086,
+      "y": 2483590,
+      "w": 3437052,
+      "h": 506066
+     },
+     "max_chars": 24,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "490",
+     "kind": "label",
+     "box": {
+      "x": 4370068,
+      "y": 2483590,
+      "w": 3437052,
+      "h": 506066
+     },
+     "max_chars": 24,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "499",
+     "kind": "label",
+     "box": {
+      "x": 8303152,
+      "y": 2483590,
+      "w": 3437052,
+      "h": 506066
+     },
+     "max_chars": 24,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "489",
+     "kind": "body",
+     "box": {
+      "x": 437111,
+      "y": 2883834,
+      "w": 3437052,
+      "h": 801927
+     },
+     "max_chars": 91,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Основной текст"
+    },
+    {
+     "id": "492",
+     "kind": "body",
+     "box": {
+      "x": 4370093,
+      "y": 2883834,
+      "w": 3437052,
+      "h": 801927
+     },
+     "max_chars": 91,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Основной текст"
+    },
+    {
+     "id": "501",
+     "kind": "body",
+     "box": {
+      "x": 8303177,
+      "y": 2883834,
+      "w": 3437052,
+      "h": 801927
+     },
+     "max_chars": 91,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Основной текст"
+    },
+    {
+     "id": "494",
+     "kind": "number",
+     "box": {
+      "x": 437041,
+      "y": 3680143,
+      "w": 676173,
+      "h": 676089
+     },
+     "max_chars": 11,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "04"
+    },
+    {
+     "id": "497",
+     "kind": "number",
+     "box": {
+      "x": 4370023,
+      "y": 3680143,
+      "w": 676173,
+      "h": 676089
+     },
+     "max_chars": 11,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "05"
+    },
+    {
+     "id": "503",
+     "kind": "number",
+     "box": {
+      "x": 8303107,
+      "y": 3680143,
+      "w": 676173,
+      "h": 676089
+     },
+     "max_chars": 11,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "06"
+    },
+    {
+     "id": "493",
+     "kind": "label",
+     "box": {
+      "x": 437086,
+      "y": 4571470,
+      "w": 3437052,
+      "h": 506066
+     },
+     "max_chars": 24,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "496",
+     "kind": "label",
+     "box": {
+      "x": 4370068,
+      "y": 4571470,
+      "w": 3437052,
+      "h": 506066
+     },
+     "max_chars": 24,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "502",
+     "kind": "label",
+     "box": {
+      "x": 8303152,
+      "y": 4571470,
+      "w": 3437052,
+      "h": 506066
+     },
+     "max_chars": 24,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "495",
+     "kind": "body",
+     "box": {
+      "x": 437111,
+      "y": 4971714,
+      "w": 3437052,
+      "h": 801927
+     },
+     "max_chars": 91,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Основной текст"
+    },
+    {
+     "id": "498",
+     "kind": "body",
+     "box": {
+      "x": 4370093,
+      "y": 4971714,
+      "w": 3437052,
+      "h": 801927
+     },
+     "max_chars": 91,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Основной текст"
+    },
+    {
+     "id": "504",
+     "kind": "body",
+     "box": {
+      "x": 8303177,
+      "y": 4971714,
+      "w": 3437052,
+      "h": 801927
+     },
+     "max_chars": 91,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Основной текст"
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.355,
+   "thumbnail": null,
+   "tags": [
+    "6 карточек",
+    "тёмный фон",
+    "сетка 3×2",
+    "нумерация"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "id": "slide9",
+   "source_index": 8,
+   "layout_name": "13_Титульный слайд",
+   "archetype": "cards",
+   "slots": [
+    {
+     "id": "510",
+     "kind": "title",
+     "box": {
+      "x": 429253,
+      "y": 424691,
+      "w": 7827311,
+      "h": 1167572
+     },
+     "max_chars": 61,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "511",
+     "kind": "body",
+     "box": {
+      "x": 427865,
+      "y": 1492599,
+      "w": 2712369,
+      "h": 1936401
+     },
+     "max_chars": 168,
+     "max_lines": 7,
+     "max_items": 7,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокТекст"
+    },
+    {
+     "id": "513",
+     "kind": "body",
+     "box": {
+      "x": 3298655,
+      "y": 1492599,
+      "w": 2712369,
+      "h": 1936401
+     },
+     "max_chars": 168,
+     "max_lines": 7,
+     "max_items": 7,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокТекст"
+    },
+    {
+     "id": "515",
+     "kind": "body",
+     "box": {
+      "x": 6176766,
+      "y": 1492599,
+      "w": 2712369,
+      "h": 1936401
+     },
+     "max_chars": 168,
+     "max_lines": 7,
+     "max_items": 7,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокТекст"
+    },
+    {
+     "id": "517",
+     "kind": "body",
+     "box": {
+      "x": 9054078,
+      "y": 1492599,
+      "w": 2712369,
+      "h": 1936401
+     },
+     "max_chars": 168,
+     "max_lines": 7,
+     "max_items": 7,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокТекст"
+    },
+    {
+     "id": "512",
+     "kind": "body",
+     "box": {
+      "x": 427865,
+      "y": 3570772,
+      "w": 2712369,
+      "h": 1936401
+     },
+     "max_chars": 168,
+     "max_lines": 7,
+     "max_items": 7,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокТекст"
+    },
+    {
+     "id": "514",
+     "kind": "body",
+     "box": {
+      "x": 3298655,
+      "y": 3570772,
+      "w": 2712369,
+      "h": 1936401
+     },
+     "max_chars": 168,
+     "max_lines": 7,
+     "max_items": 7,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокТекст"
+    },
+    {
+     "id": "516",
+     "kind": "body",
+     "box": {
+      "x": 6176766,
+      "y": 3570772,
+      "w": 2712369,
+      "h": 1936401
+     },
+     "max_chars": 168,
+     "max_lines": 7,
+     "max_items": 7,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокТекст"
+    },
+    {
+     "id": "518",
+     "kind": "body",
+     "box": {
+      "x": 9054078,
+      "y": 3570772,
+      "w": 2712369,
+      "h": 1936401
+     },
+     "max_chars": 168,
+     "max_lines": 7,
+     "max_items": 7,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокТекст"
+    },
+    {
+     "id": "520",
+     "kind": "icon",
+     "box": {
+      "x": 2625590,
+      "y": 1624527,
+      "w": 381000,
+      "h": 381000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "521",
+     "kind": "icon",
+     "box": {
+      "x": 2708090,
+      "y": 1707027,
+      "w": 216000,
+      "h": 216000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "523",
+     "kind": "icon",
+     "box": {
+      "x": 5494296,
+      "y": 1624527,
+      "w": 381000,
+      "h": 381000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "524",
+     "kind": "icon",
+     "box": {
+      "x": 5576796,
+      "y": 1707027,
+      "w": 216000,
+      "h": 216000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "526",
+     "kind": "icon",
+     "box": {
+      "x": 8374491,
+      "y": 1624527,
+      "w": 381000,
+      "h": 381000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "527",
+     "kind": "icon",
+     "box": {
+      "x": 8456991,
+      "y": 1707027,
+      "w": 216000,
+      "h": 216000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "529",
+     "kind": "icon",
+     "box": {
+      "x": 11246177,
+      "y": 1624527,
+      "w": 381000,
+      "h": 381000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "530",
+     "kind": "icon",
+     "box": {
+      "x": 11328677,
+      "y": 1707027,
+      "w": 216000,
+      "h": 216000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "532",
+     "kind": "icon",
+     "box": {
+      "x": 2625590,
+      "y": 3704339,
+      "w": 381000,
+      "h": 381000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "533",
+     "kind": "icon",
+     "box": {
+      "x": 2708090,
+      "y": 3786839,
+      "w": 216000,
+      "h": 216000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "535",
+     "kind": "icon",
+     "box": {
+      "x": 5494296,
+      "y": 3704339,
+      "w": 381000,
+      "h": 381000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "536",
+     "kind": "icon",
+     "box": {
+      "x": 5576796,
+      "y": 3786839,
+      "w": 216000,
+      "h": 216000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "538",
+     "kind": "icon",
+     "box": {
+      "x": 8374491,
+      "y": 3704339,
+      "w": 381000,
+      "h": 381000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "539",
+     "kind": "icon",
+     "box": {
+      "x": 8456991,
+      "y": 3786839,
+      "w": 216000,
+      "h": 216000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "541",
+     "kind": "icon",
+     "box": {
+      "x": 11246177,
+      "y": 3704339,
+      "w": 381000,
+      "h": 381000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "542",
+     "kind": "icon",
+     "box": {
+      "x": 11328677,
+      "y": 3786839,
+      "w": 216000,
+      "h": 216000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.521,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 1.0
+  },
+  {
+   "id": "slide10",
+   "source_index": 9,
+   "layout_name": "19_Заголовок",
+   "archetype": "cards",
+   "slots": [
+    {
+     "id": "547",
+     "kind": "title",
+     "box": {
+      "x": 429253,
+      "y": 424691,
+      "w": 7827311,
+      "h": 626869
+     },
+     "max_chars": 30,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "548",
+     "kind": "body",
+     "box": {
+      "x": 5383513,
+      "y": 860119,
+      "w": 5917558,
+      "h": 1705685
+     },
+     "max_chars": 279,
+     "max_lines": 6,
+     "max_items": 6,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокТекст"
+    },
+    {
+     "id": "552",
+     "kind": "body",
+     "box": {
+      "x": 5383513,
+      "y": 2710690,
+      "w": 5917558,
+      "h": 1705685
+     },
+     "max_chars": 279,
+     "max_lines": 6,
+     "max_items": 6,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокТекст"
+    },
+    {
+     "id": "556",
+     "kind": "body",
+     "box": {
+      "x": 5383513,
+      "y": 4561261,
+      "w": 5917558,
+      "h": 1705685
+     },
+     "max_chars": 279,
+     "max_lines": 6,
+     "max_items": 6,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокТекст"
+    },
+    {
+     "id": "551",
+     "kind": "icon",
+     "box": {
+      "x": 5648109,
+      "y": 1117786,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "555",
+     "kind": "icon",
+     "box": {
+      "x": 5648109,
+      "y": 2968357,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "559",
+     "kind": "icon",
+     "box": {
+      "x": 5648109,
+      "y": 4818928,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.365,
+   "thumbnail": null,
+   "tags": [
+    "3 карточки",
+    "тёмный фон",
+    "иконки",
+    "вертикальный стек"
+   ],
+   "confidence": 0.9
+  },
+  {
+   "id": "slide11",
+   "source_index": 10,
+   "layout_name": "15_Титульный слайд",
+   "archetype": "cards",
+   "slots": [
+    {
+     "id": "565",
+     "kind": "title",
+     "box": {
+      "x": 429253,
+      "y": 424691,
+      "w": 7827311,
+      "h": 1167572
+     },
+     "max_chars": 61,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "568",
+     "kind": "label",
+     "box": {
+      "x": 427865,
+      "y": 1592263,
+      "w": 3072079,
+      "h": 398822
+     },
+     "max_chars": 21,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "582",
+     "kind": "label",
+     "box": {
+      "x": 4363051,
+      "y": 1592263,
+      "w": 3072079,
+      "h": 398822
+     },
+     "max_chars": 21,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "596",
+     "kind": "label",
+     "box": {
+      "x": 8298237,
+      "y": 1592263,
+      "w": 3072079,
+      "h": 398822
+     },
+     "max_chars": 21,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "579",
+     "kind": "date",
+     "box": {
+      "x": 2840761,
+      "y": 1650577,
+      "w": 962809,
+      "h": 388186
+     },
+     "max_chars": 9,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 14.0,
+     "placeholder_type": null,
+     "sample_text": "Дата"
+    },
+    {
+     "id": "593",
+     "kind": "date",
+     "box": {
+      "x": 6775947,
+      "y": 1650577,
+      "w": 962809,
+      "h": 388186
+     },
+     "max_chars": 9,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 14.0,
+     "placeholder_type": null,
+     "sample_text": "Дата"
+    },
+    {
+     "id": "607",
+     "kind": "date",
+     "box": {
+      "x": 10711133,
+      "y": 1650577,
+      "w": 962809,
+      "h": 388186
+     },
+     "max_chars": 9,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 14.0,
+     "placeholder_type": null,
+     "sample_text": "Дата"
+    },
+    {
+     "id": "566",
+     "kind": "body",
+     "box": {
+      "x": 427866,
+      "y": 2216240,
+      "w": 3375704,
+      "h": 684000
+     },
+     "max_chars": 110,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 13.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "580",
+     "kind": "body",
+     "box": {
+      "x": 4363052,
+      "y": 2216240,
+      "w": 3375704,
+      "h": 684000
+     },
+     "max_chars": 110,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 13.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "594",
+     "kind": "body",
+     "box": {
+      "x": 8298238,
+      "y": 2216240,
+      "w": 3375704,
+      "h": 684000
+     },
+     "max_chars": 110,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 13.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "570",
+     "kind": "body",
+     "box": {
+      "x": 427866,
+      "y": 2979638,
+      "w": 3375704,
+      "h": 684000
+     },
+     "max_chars": 110,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 13.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "584",
+     "kind": "body",
+     "box": {
+      "x": 4363052,
+      "y": 2979638,
+      "w": 3375704,
+      "h": 684000
+     },
+     "max_chars": 110,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 13.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "598",
+     "kind": "body",
+     "box": {
+      "x": 8298238,
+      "y": 2979638,
+      "w": 3375704,
+      "h": 684000
+     },
+     "max_chars": 110,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 13.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "573",
+     "kind": "body",
+     "box": {
+      "x": 427866,
+      "y": 3743036,
+      "w": 3375704,
+      "h": 684000
+     },
+     "max_chars": 110,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 13.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "587",
+     "kind": "body",
+     "box": {
+      "x": 4363052,
+      "y": 3743036,
+      "w": 3375704,
+      "h": 684000
+     },
+     "max_chars": 110,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 13.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "601",
+     "kind": "body",
+     "box": {
+      "x": 8298238,
+      "y": 3743036,
+      "w": 3375704,
+      "h": 684000
+     },
+     "max_chars": 110,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 13.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "576",
+     "kind": "body",
+     "box": {
+      "x": 427866,
+      "y": 4506434,
+      "w": 3375704,
+      "h": 684000
+     },
+     "max_chars": 110,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 13.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "590",
+     "kind": "body",
+     "box": {
+      "x": 4363052,
+      "y": 4506434,
+      "w": 3375704,
+      "h": 684000
+     },
+     "max_chars": 110,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 13.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "604",
+     "kind": "body",
+     "box": {
+      "x": 8298238,
+      "y": 4506434,
+      "w": 3375704,
+      "h": 684000
+     },
+     "max_chars": 110,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 13.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    }
+   ],
+   "fixed": [
+    "569",
+    "572",
+    "575",
+    "578",
+    "583",
+    "586",
+    "589",
+    "592",
+    "597",
+    "600",
+    "603",
+    "606"
+   ],
+   "fill_ratio": 0.395,
+   "thumbnail": null,
+   "tags": [
+    "3 карточки",
+    "тёмный фон",
+    "чек-листы",
+    "иконки"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "id": "slide12",
+   "source_index": 11,
+   "layout_name": "13_Титульный слайд",
+   "archetype": "cards",
+   "slots": [
+    {
+     "id": "613",
+     "kind": "title",
+     "box": {
+      "x": 429253,
+      "y": 424691,
+      "w": 7827311,
+      "h": 1167572
+     },
+     "max_chars": 61,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "614",
+     "kind": "body",
+     "box": {
+      "x": 427866,
+      "y": 1504190,
+      "w": 4658484,
+      "h": 405719
+     },
+     "max_chars": 33,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "616",
+     "kind": "label",
+     "box": {
+      "x": 1036774,
+      "y": 1988424,
+      "w": 1941953,
+      "h": 474884
+     },
+     "max_chars": 45,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "622",
+     "kind": "label",
+     "box": {
+      "x": 3932374,
+      "y": 1988424,
+      "w": 1941953,
+      "h": 474884
+     },
+     "max_chars": 45,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "623",
+     "kind": "label",
+     "box": {
+      "x": 6703283,
+      "y": 1988424,
+      "w": 1941953,
+      "h": 474884
+     },
+     "max_chars": 45,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "624",
+     "kind": "label",
+     "box": {
+      "x": 9598883,
+      "y": 1988424,
+      "w": 1941953,
+      "h": 474884
+     },
+     "max_chars": 45,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "615",
+     "kind": "body",
+     "box": {
+      "x": 427866,
+      "y": 2959836,
+      "w": 4658484,
+      "h": 405719
+     },
+     "max_chars": 33,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "625",
+     "kind": "body",
+     "box": {
+      "x": 427865,
+      "y": 3429000,
+      "w": 2810752,
+      "h": 956688
+     },
+     "max_chars": 165,
+     "max_lines": 5,
+     "max_items": 5,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "626",
+     "kind": "body",
+     "box": {
+      "x": 3310726,
+      "y": 3429000,
+      "w": 2810752,
+      "h": 956688
+     },
+     "max_chars": 165,
+     "max_lines": 5,
+     "max_items": 5,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "627",
+     "kind": "body",
+     "box": {
+      "x": 6193587,
+      "y": 3429000,
+      "w": 2810752,
+      "h": 956688
+     },
+     "max_chars": 165,
+     "max_lines": 5,
+     "max_items": 5,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "628",
+     "kind": "body",
+     "box": {
+      "x": 9076448,
+      "y": 3429000,
+      "w": 2810752,
+      "h": 956688
+     },
+     "max_chars": 165,
+     "max_lines": 5,
+     "max_items": 5,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "629",
+     "kind": "body",
+     "box": {
+      "x": 427865,
+      "y": 4454236,
+      "w": 2810752,
+      "h": 956688
+     },
+     "max_chars": 165,
+     "max_lines": 5,
+     "max_items": 5,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "630",
+     "kind": "body",
+     "box": {
+      "x": 3310726,
+      "y": 4454236,
+      "w": 2810752,
+      "h": 956688
+     },
+     "max_chars": 165,
+     "max_lines": 5,
+     "max_items": 5,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "631",
+     "kind": "body",
+     "box": {
+      "x": 6193587,
+      "y": 4454236,
+      "w": 2810752,
+      "h": 956688
+     },
+     "max_chars": 165,
+     "max_lines": 5,
+     "max_items": 5,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "632",
+     "kind": "body",
+     "box": {
+      "x": 9076448,
+      "y": 4454236,
+      "w": 2810752,
+      "h": 956688
+     },
+     "max_chars": 165,
+     "max_lines": 5,
+     "max_items": 5,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "619",
+     "kind": "icon",
+     "box": {
+      "x": 558184,
+      "y": 2117865,
+      "w": 216000,
+      "h": 216000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "635",
+     "kind": "icon",
+     "box": {
+      "x": 3453784,
+      "y": 2117865,
+      "w": 216000,
+      "h": 216000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "638",
+     "kind": "icon",
+     "box": {
+      "x": 6224693,
+      "y": 2117865,
+      "w": 216000,
+      "h": 216000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "641",
+     "kind": "icon",
+     "box": {
+      "x": 9120293,
+      "y": 2117865,
+      "w": 216000,
+      "h": 216000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.357,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 1.0
+  },
+  {
+   "id": "slide13",
+   "source_index": 12,
+   "layout_name": "8_Заголовок",
+   "archetype": "cards",
+   "slots": [
+    {
+     "id": "647",
+     "kind": "title",
+     "box": {
+      "x": 429253,
+      "y": 424691,
+      "w": 7827311,
+      "h": 672923
+     },
+     "max_chars": 30,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "650",
+     "kind": "label",
+     "box": {
+      "x": 429253,
+      "y": 1615786,
+      "w": 3841965,
+      "h": 418061
+     },
+     "max_chars": 30,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "Цели:"
+    },
+    {
+     "id": "649",
+     "kind": "label",
+     "box": {
+      "x": 1160059,
+      "y": 2184933,
+      "w": 1822292,
+      "h": 579468
+     },
+     "max_chars": 36,
+     "max_lines": 2,
+     "max_items": 2,
+     "font": null,
+     "size_pt": 14.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "658",
+     "kind": "label",
+     "box": {
+      "x": 3889191,
+      "y": 2184933,
+      "w": 1822292,
+      "h": 579468
+     },
+     "max_chars": 36,
+     "max_lines": 2,
+     "max_items": 2,
+     "font": null,
+     "size_pt": 14.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "662",
+     "kind": "label",
+     "box": {
+      "x": 6632391,
+      "y": 2184933,
+      "w": 1822292,
+      "h": 579468
+     },
+     "max_chars": 36,
+     "max_lines": 2,
+     "max_items": 2,
+     "font": null,
+     "size_pt": 14.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "654",
+     "kind": "label",
+     "box": {
+      "x": 429253,
+      "y": 3444059,
+      "w": 3841965,
+      "h": 418061
+     },
+     "max_chars": 30,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "Решения:"
+    },
+    {
+     "id": "648",
+     "kind": "body",
+     "box": {
+      "x": 418676,
+      "y": 3902697,
+      "w": 2563675,
+      "h": 1277378
+     },
+     "max_chars": 181,
+     "max_lines": 6,
+     "max_items": 6,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "655",
+     "kind": "body",
+     "box": {
+      "x": 3147809,
+      "y": 3902697,
+      "w": 2563675,
+      "h": 1277378
+     },
+     "max_chars": 181,
+     "max_lines": 6,
+     "max_items": 6,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "656",
+     "kind": "body",
+     "box": {
+      "x": 5876940,
+      "y": 3902697,
+      "w": 2563675,
+      "h": 1277378
+     },
+     "max_chars": 181,
+     "max_lines": 6,
+     "max_items": 6,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "657",
+     "kind": "body",
+     "box": {
+      "x": 8606073,
+      "y": 3902697,
+      "w": 2563675,
+      "h": 1277378
+     },
+     "max_chars": 181,
+     "max_lines": 6,
+     "max_items": 6,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "653",
+     "kind": "icon",
+     "box": {
+      "x": 537046,
+      "y": 2308192,
+      "w": 342726,
+      "h": 342726
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "661",
+     "kind": "icon",
+     "box": {
+      "x": 3266178,
+      "y": 2308192,
+      "w": 342726,
+      "h": 342726
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "665",
+     "kind": "icon",
+     "box": {
+      "x": 6009378,
+      "y": 2308192,
+      "w": 342726,
+      "h": 342726
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    }
+   ],
+   "fixed": [
+    "666"
+   ],
+   "fill_ratio": 0.422,
+   "thumbnail": null,
+   "tags": [
+    "4 карточки",
+    "тёмный фон",
+    "иконки",
+    "3D-мокап",
+    "две секции"
+   ],
+   "confidence": 0.85
+  },
+  {
+   "id": "slide14",
+   "source_index": 13,
+   "layout_name": "17_Титульный слайд",
+   "archetype": "table",
+   "slots": [
+    {
+     "id": "672",
+     "kind": "title",
+     "box": {
+      "x": 427864,
+      "y": 424691,
+      "w": 7827311,
+      "h": 1167572
+     },
+     "max_chars": 61,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "673",
+     "kind": "table",
+     "box": {
+      "x": 0,
+      "y": 1404525,
+      "w": 3000000,
+      "h": 3000000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокЗаголовокТекстТекстТекстТекстТекстТекстТекстТекстТекстТекстТекстТекстТекстТекстТекстТекстТекстТекстТекстТекст"
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.108,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 0.95
+  },
+  {
+   "id": "slide15",
+   "source_index": 14,
+   "layout_name": "17_Титульный слайд",
+   "archetype": "cards",
+   "slots": [
+    {
+     "id": "680",
+     "kind": "title",
+     "box": {
+      "x": 427864,
+      "y": 424691,
+      "w": 7827311,
+      "h": 1167572
+     },
+     "max_chars": 61,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "681",
+     "kind": "label",
+     "box": {
+      "x": 427864,
+      "y": 1837067,
+      "w": 3636000,
+      "h": 2022006
+     },
+     "max_chars": 200,
+     "max_lines": 7,
+     "max_items": 7,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокТекст"
+    },
+    {
+     "id": "682",
+     "kind": "label",
+     "box": {
+      "x": 4217594,
+      "y": 1837067,
+      "w": 3636000,
+      "h": 2022006
+     },
+     "max_chars": 200,
+     "max_lines": 7,
+     "max_items": 7,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокТекст"
+    },
+    {
+     "id": "683",
+     "kind": "label",
+     "box": {
+      "x": 8007324,
+      "y": 1837067,
+      "w": 3636000,
+      "h": 2022006
+     },
+     "max_chars": 200,
+     "max_lines": 7,
+     "max_items": 7,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокТекст"
+    },
+    {
+     "id": "685",
+     "kind": "caption",
+     "box": {
+      "x": 427864,
+      "y": 4932833,
+      "w": 1785581,
+      "h": 396000
+     },
+     "max_chars": 18,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 14.0,
+     "placeholder_type": null,
+     "sample_text": "Примечание"
+    },
+    {
+     "id": "684",
+     "kind": "body",
+     "box": {
+      "x": 423103,
+      "y": 5533764,
+      "w": 6565676,
+      "h": 395438
+     },
+     "max_chars": 66,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 14.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    }
+   ],
+   "fixed": [
+    "679"
+   ],
+   "fill_ratio": 0.303,
+   "thumbnail": null,
+   "tags": [
+    "3 карточки",
+    "тёмный фон",
+    "синий футер",
+    "декоративные точки"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "id": "slide16",
+   "source_index": 15,
+   "layout_name": "15_Титульный слайд",
+   "archetype": "cards",
+   "slots": [
+    {
+     "id": "703",
+     "kind": "title",
+     "box": {
+      "x": 429253,
+      "y": 424691,
+      "w": 7827311,
+      "h": 1167572
+     },
+     "max_chars": 61,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "702",
+     "kind": "body",
+     "box": {
+      "x": 431328,
+      "y": 1243208,
+      "w": 9699808,
+      "h": 644241
+     },
+     "max_chars": 171,
+     "max_lines": 2,
+     "max_items": 2,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Текст описания"
+    },
+    {
+     "id": "693",
+     "kind": "body",
+     "box": {
+      "x": 590229,
+      "y": 2182506,
+      "w": 3129499,
+      "h": 307777
+     },
+     "max_chars": 199,
+     "max_lines": 9,
+     "max_items": 9,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "697",
+     "kind": "body",
+     "box": {
+      "x": 4289871,
+      "y": 2182506,
+      "w": 3129499,
+      "h": 307777
+     },
+     "max_chars": 199,
+     "max_lines": 9,
+     "max_items": 9,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "700",
+     "kind": "body",
+     "box": {
+      "x": 7989513,
+      "y": 2196653,
+      "w": 3435150,
+      "h": 307777
+     },
+     "max_chars": 219,
+     "max_lines": 9,
+     "max_items": 9,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "694",
+     "kind": "body",
+     "box": {
+      "x": 590229,
+      "y": 2841868,
+      "w": 3129499,
+      "h": 861774
+     },
+     "max_chars": 443,
+     "max_lines": 12,
+     "max_items": 12,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "ТекстТекстТекст"
+    },
+    {
+     "id": "698",
+     "kind": "body",
+     "box": {
+      "x": 4289871,
+      "y": 2841868,
+      "w": 3129499,
+      "h": 861774
+     },
+     "max_chars": 443,
+     "max_lines": 12,
+     "max_items": 12,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "ТекстТекстТекст"
+    },
+    {
+     "id": "701",
+     "kind": "body",
+     "box": {
+      "x": 7989513,
+      "y": 2841868,
+      "w": 3129499,
+      "h": 861774
+     },
+     "max_chars": 443,
+     "max_lines": 12,
+     "max_items": 12,
+     "font": null,
+     "size_pt": 12.0,
+     "placeholder_type": null,
+     "sample_text": "ТекстТекстТекст"
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.207,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 0.75
+  },
+  {
+   "id": "slide17",
+   "source_index": 16,
+   "layout_name": "14_Титульный слайд",
+   "archetype": "kpi",
+   "slots": [
+    {
+     "id": "709",
+     "kind": "title",
+     "box": {
+      "x": 429253,
+      "y": 424691,
+      "w": 7827311,
+      "h": 1167572
+     },
+     "max_chars": 61,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "712",
+     "kind": "body",
+     "box": {
+      "x": 431328,
+      "y": 1243208,
+      "w": 3630033,
+      "h": 644241
+     },
+     "max_chars": 64,
+     "max_lines": 2,
+     "max_items": 2,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Текст описания"
+    },
+    {
+     "id": "710",
+     "kind": "number",
+     "box": {
+      "x": 6316808,
+      "y": 1243208,
+      "w": 4739119,
+      "h": 1912853
+     },
+     "max_chars": 8,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 80.0,
+     "placeholder_type": null,
+     "sample_text": "ххх%данные показателя"
+    },
+    {
+     "id": "711",
+     "kind": "number",
+     "box": {
+      "x": 6316808,
+      "y": 3598223,
+      "w": 4739119,
+      "h": 2589746
+     },
+     "max_chars": 16,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 80.0,
+     "placeholder_type": null,
+     "sample_text": "ххх%данные показателя"
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.283,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 0.9
+  },
+  {
+   "id": "slide18",
+   "source_index": 17,
+   "layout_name": "14_Титульный слайд",
+   "archetype": "kpi",
+   "slots": [
+    {
+     "id": "718",
+     "kind": "title",
+     "box": {
+      "x": 429253,
+      "y": 424691,
+      "w": 7827311,
+      "h": 1167572
+     },
+     "max_chars": 61,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "720",
+     "kind": "body",
+     "box": {
+      "x": 429253,
+      "y": 1773238,
+      "w": 3879511,
+      "h": 3166268
+     },
+     "max_chars": 30,
+     "max_lines": 3,
+     "max_items": null,
+     "font": null,
+     "size_pt": 54.0,
+     "placeholder_type": null,
+     "sample_text": "x% данныепоказателятекст"
+    },
+    {
+     "id": "719",
+     "kind": "picture",
+     "box": {
+      "x": 4736123,
+      "y": 1773238,
+      "w": 5973441,
+      "h": 3782435
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "Иллюстрация"
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.417,
+   "thumbnail": null,
+   "tags": [
+    "1 KPI",
+    "тёмный фон",
+    "иллюстрация",
+    "крупная цифра"
+   ],
+   "confidence": 0.7
+  },
+  {
+   "id": "slide19",
+   "source_index": 18,
+   "layout_name": "11_Заголовок",
+   "archetype": "kpi",
+   "slots": [
+    {
+     "id": "726",
+     "kind": "title",
+     "box": {
+      "x": 429253,
+      "y": 424691,
+      "w": 11354760,
+      "h": 767295
+     },
+     "max_chars": 44,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Графики"
+    },
+    {
+     "id": "735",
+     "kind": "body",
+     "box": {
+      "x": 429253,
+      "y": 1727924,
+      "w": 1849252,
+      "h": 507508
+     },
+     "max_chars": 32,
+     "max_lines": 2,
+     "max_items": 2,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "734",
+     "kind": "number",
+     "box": {
+      "x": 439193,
+      "y": 2517730,
+      "w": 2850777,
+      "h": 483181
+     },
+     "max_chars": 7,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 54.0,
+     "placeholder_type": null,
+     "sample_text": "ХХ"
+    },
+    {
+     "id": "729",
+     "kind": "number",
+     "box": {
+      "x": 6938670,
+      "y": 2804349,
+      "w": 2850777,
+      "h": 483181
+     },
+     "max_chars": 6,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 60.0,
+     "placeholder_type": null,
+     "sample_text": "ХХ"
+    },
+    {
+     "id": "730",
+     "kind": "number",
+     "box": {
+      "x": 5520295,
+      "y": 3175974,
+      "w": 1346144,
+      "h": 483181
+     },
+     "max_chars": 5,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 32.0,
+     "placeholder_type": null,
+     "sample_text": "ХХ%"
+    },
+    {
+     "id": "728",
+     "kind": "body",
+     "box": {
+      "x": 7456475,
+      "y": 3601281,
+      "w": 2003424,
+      "h": 547502
+     },
+     "max_chars": 14,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "733",
+     "kind": "body",
+     "box": {
+      "x": 429253,
+      "y": 3930752,
+      "w": 1849252,
+      "h": 507508
+     },
+     "max_chars": 32,
+     "max_lines": 2,
+     "max_items": 2,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "732",
+     "kind": "number",
+     "box": {
+      "x": 439193,
+      "y": 4720558,
+      "w": 2850777,
+      "h": 483181
+     },
+     "max_chars": 7,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 54.0,
+     "placeholder_type": null,
+     "sample_text": "ХХ"
+    },
+    {
+     "id": "731",
+     "kind": "number",
+     "box": {
+      "x": 7967707,
+      "y": 5401904,
+      "w": 1346144,
+      "h": 483181
+     },
+     "max_chars": 6,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 28.0,
+     "placeholder_type": null,
+     "sample_text": "ХХ%"
+    },
+    {
+     "id": "727",
+     "kind": "picture",
+     "box": {
+      "x": 1562756,
+      "y": 27789,
+      "w": 11737014,
+      "h": 7082851
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 1.0,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 0.85
+  },
+  {
+   "id": "slide20",
+   "source_index": 19,
+   "layout_name": "11_Заголовок",
+   "archetype": "chart",
+   "slots": [
+    {
+     "id": "742",
+     "kind": "chart",
+     "box": {
+      "x": 0,
+      "y": 863148,
+      "w": 11173527,
+      "h": 5131703
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    }
+   ],
+   "fixed": [
+    "741"
+   ],
+   "fill_ratio": 0.672,
+   "thumbnail": null,
+   "tags": [
+    "2 диаграммы",
+    "кольцевые графики",
+    "тёмный фон"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "id": "slide21",
+   "source_index": 20,
+   "layout_name": "11_Заголовок",
+   "archetype": "chart",
+   "slots": [
+    {
+     "id": "749",
+     "kind": "title",
+     "box": {
+      "x": 429253,
+      "y": 424691,
+      "w": 11354760,
+      "h": 767295
+     },
+     "max_chars": 44,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Графики"
+    },
+    {
+     "id": "750",
+     "kind": "chart",
+     "box": {
+      "x": 0,
+      "y": 1431024,
+      "w": 12192000,
+      "h": 4567949
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.666,
+   "thumbnail": null,
+   "tags": [
+    "столбчатая диаграмма",
+    "тёмный фон",
+    "3 серии",
+    "4 категории"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "id": "slide22",
+   "source_index": 21,
+   "layout_name": "17_Заголовок",
+   "archetype": "cards",
+   "slots": [
+    {
+     "id": "768",
+     "kind": "title",
+     "box": {
+      "x": 429253,
+      "y": 2327310,
+      "w": 4499229,
+      "h": 1167572
+     },
+     "max_chars": 35,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Проблемы /Вызовы"
+    },
+    {
+     "id": "756",
+     "kind": "body",
+     "box": {
+      "x": 6559297,
+      "y": 976912,
+      "w": 4403675,
+      "h": 941360
+     },
+     "max_chars": 117,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокОписание"
+    },
+    {
+     "id": "758",
+     "kind": "body",
+     "box": {
+      "x": 6559297,
+      "y": 2327473,
+      "w": 4403675,
+      "h": 941360
+     },
+     "max_chars": 117,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокОписание"
+    },
+    {
+     "id": "769",
+     "kind": "body",
+     "box": {
+      "x": 431328,
+      "y": 3528845,
+      "w": 4497154,
+      "h": 644241
+     },
+     "max_chars": 79,
+     "max_lines": 2,
+     "max_items": 2,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Текст описания"
+    },
+    {
+     "id": "760",
+     "kind": "body",
+     "box": {
+      "x": 6559297,
+      "y": 3702406,
+      "w": 4403675,
+      "h": 941360
+     },
+     "max_chars": 117,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокОписание"
+    },
+    {
+     "id": "762",
+     "kind": "body",
+     "box": {
+      "x": 6559297,
+      "y": 5117750,
+      "w": 4403675,
+      "h": 941360
+     },
+     "max_chars": 117,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокОписание"
+    },
+    {
+     "id": "764",
+     "kind": "icon",
+     "box": {
+      "x": 5939536,
+      "y": 1156764,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "765",
+     "kind": "icon",
+     "box": {
+      "x": 5939536,
+      "y": 2506062,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "766",
+     "kind": "icon",
+     "box": {
+      "x": 5939536,
+      "y": 3877662,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "767",
+     "kind": "icon",
+     "box": {
+      "x": 5939536,
+      "y": 5293867,
+      "w": 266700,
+      "h": 266700
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.236,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 0.95
+  },
+  {
+   "id": "slide23",
+   "source_index": 22,
+   "layout_name": "17_Заголовок",
+   "archetype": "cards",
+   "slots": [
+    {
+     "id": "775",
+     "kind": "title",
+     "box": {
+      "x": 429253,
+      "y": 424691,
+      "w": 7827311,
+      "h": 1167572
+     },
+     "max_chars": 61,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Проблемы / Вызовы"
+    },
+    {
+     "id": "776",
+     "kind": "body",
+     "box": {
+      "x": 427866,
+      "y": 2200719,
+      "w": 3623880,
+      "h": 1228281
+     },
+     "max_chars": 160,
+     "max_lines": 5,
+     "max_items": 5,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокОписание"
+    },
+    {
+     "id": "777",
+     "kind": "body",
+     "box": {
+      "x": 4277482,
+      "y": 2200719,
+      "w": 3623880,
+      "h": 1228281
+     },
+     "max_chars": 160,
+     "max_lines": 5,
+     "max_items": 5,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокОписание"
+    },
+    {
+     "id": "778",
+     "kind": "body",
+     "box": {
+      "x": 8127098,
+      "y": 2200719,
+      "w": 3623880,
+      "h": 1228281
+     },
+     "max_chars": 160,
+     "max_lines": 5,
+     "max_items": 5,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокОписание"
+    },
+    {
+     "id": "779",
+     "kind": "body",
+     "box": {
+      "x": 427866,
+      "y": 3582043,
+      "w": 3623880,
+      "h": 1228281
+     },
+     "max_chars": 160,
+     "max_lines": 5,
+     "max_items": 5,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокОписание"
+    },
+    {
+     "id": "780",
+     "kind": "body",
+     "box": {
+      "x": 4277482,
+      "y": 3582043,
+      "w": 3623880,
+      "h": 1228281
+     },
+     "max_chars": 160,
+     "max_lines": 5,
+     "max_items": 5,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокОписание"
+    },
+    {
+     "id": "781",
+     "kind": "body",
+     "box": {
+      "x": 8127098,
+      "y": 3582043,
+      "w": 3623880,
+      "h": 1228281
+     },
+     "max_chars": 160,
+     "max_lines": 5,
+     "max_items": 5,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "ЗаголовокОписание"
+    },
+    {
+     "id": "788",
+     "kind": "icon",
+     "box": {
+      "x": 799557,
+      "y": 2706859,
+      "w": 216000,
+      "h": 216000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "789",
+     "kind": "icon",
+     "box": {
+      "x": 799557,
+      "y": 4091522,
+      "w": 216000,
+      "h": 216000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "790",
+     "kind": "icon",
+     "box": {
+      "x": 4653100,
+      "y": 4091522,
+      "w": 216000,
+      "h": 216000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "791",
+     "kind": "icon",
+     "box": {
+      "x": 4653100,
+      "y": 2706859,
+      "w": 216000,
+      "h": 216000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "792",
+     "kind": "icon",
+     "box": {
+      "x": 8498789,
+      "y": 2706859,
+      "w": 216000,
+      "h": 216000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "793",
+     "kind": "icon",
+     "box": {
+      "x": 8498789,
+      "y": 4091521,
+      "w": 216000,
+      "h": 216000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.323,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 1.0
+  },
+  {
+   "id": "slide24",
+   "source_index": 23,
+   "layout_name": "11_Титульный слайд",
+   "archetype": "closing",
+   "slots": [
+    {
+     "id": "802",
+     "kind": "title",
+     "box": {
+      "x": 429254,
+      "y": 1609196,
+      "w": 4803146,
+      "h": 1876890
+     },
+     "max_chars": 10,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 66.0,
+     "placeholder_type": "title",
+     "sample_text": "Call to action"
+    },
+    {
+     "id": "804",
+     "kind": "body",
+     "box": {
+      "x": 429254,
+      "y": 3937561,
+      "w": 2645228,
+      "h": 751114
+     },
+     "max_chars": 70,
+     "max_lines": 3,
+     "max_items": null,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Ссылка"
+    },
+    {
+     "id": "803",
+     "kind": "picture",
+     "box": {
+      "x": 7772400,
+      "y": 1498563,
+      "w": 3485318,
+      "h": 3485318
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": 24.0,
+     "placeholder_type": null,
+     "sample_text": "QR-code"
+    },
+    {
+     "id": "806",
+     "kind": "picture",
+     "box": {
+      "x": 6268133,
+      "y": 2670334,
+      "w": 4113929,
+      "h": 3938706
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    }
+   ],
+   "fixed": [
+    "799",
+    "800",
+    "801",
+    "805"
+   ],
+   "fill_ratio": 0.472,
+   "thumbnail": null,
+   "tags": [
+    "финальный слайд",
+    "QR-код",
+    "тёмный фон",
+    "call to action"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "id": "slide25",
+   "source_index": 24,
+   "layout_name": "8_Заголовок",
+   "archetype": "image_text",
+   "slots": [
+    {
+     "id": "812",
+     "kind": "title",
+     "box": {
+      "x": 429253,
+      "y": 424691,
+      "w": 7827311,
+      "h": 1167572
+     },
+     "max_chars": 61,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Заголовок"
+    },
+    {
+     "id": "813",
+     "kind": "body",
+     "box": {
+      "x": 1036774,
+      "y": 1354821,
+      "w": 1941953,
+      "h": 474884
+     },
+     "max_chars": 17,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "817",
+     "kind": "body",
+     "box": {
+      "x": 1036774,
+      "y": 2067341,
+      "w": 1941953,
+      "h": 474884
+     },
+     "max_chars": 17,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "821",
+     "kind": "body",
+     "box": {
+      "x": 1036774,
+      "y": 2791736,
+      "w": 1941953,
+      "h": 474884
+     },
+     "max_chars": 17,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "825",
+     "kind": "body",
+     "box": {
+      "x": 1036774,
+      "y": 3516130,
+      "w": 1941953,
+      "h": 474884
+     },
+     "max_chars": 17,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "829",
+     "kind": "body",
+     "box": {
+      "x": 1036774,
+      "y": 4240525,
+      "w": 1941953,
+      "h": 474884
+     },
+     "max_chars": 17,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Текст"
+    },
+    {
+     "id": "816",
+     "kind": "icon",
+     "box": {
+      "x": 558184,
+      "y": 1484262,
+      "w": 216000,
+      "h": 216000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "820",
+     "kind": "icon",
+     "box": {
+      "x": 558184,
+      "y": 2196782,
+      "w": 216000,
+      "h": 216000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "824",
+     "kind": "icon",
+     "box": {
+      "x": 558184,
+      "y": 2921177,
+      "w": 216000,
+      "h": 216000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "828",
+     "kind": "icon",
+     "box": {
+      "x": 558184,
+      "y": 3645571,
+      "w": 216000,
+      "h": 216000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    },
+    {
+     "id": "832",
+     "kind": "icon",
+     "box": {
+      "x": 558184,
+      "y": 4369966,
+      "w": 216000,
+      "h": 216000
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": null,
+     "placeholder_type": null,
+     "sample_text": null
+    }
+   ],
+   "fixed": [
+    "833"
+   ],
+   "fill_ratio": 0.62,
+   "thumbnail": null,
+   "tags": [
+    "фото справа",
+    "список с иконками",
+    "тёмный фон",
+    "3D-объект"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "id": "slide26",
+   "source_index": 25,
+   "layout_name": "8_Заголовок",
+   "archetype": "process",
+   "slots": [
+    {
+     "id": "839",
+     "kind": "title",
+     "box": {
+      "x": 429253,
+      "y": 424691,
+      "w": 7827311,
+      "h": 1167572
+     },
+     "max_chars": 61,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Таймлайн"
+    },
+    {
+     "id": "849",
+     "kind": "date",
+     "box": {
+      "x": 935850,
+      "y": 2600695,
+      "w": 1779556,
+      "h": 549619
+     },
+     "max_chars": 28,
+     "max_lines": 2,
+     "max_items": 2,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "Дата"
+    },
+    {
+     "id": "850",
+     "kind": "date",
+     "box": {
+      "x": 3750944,
+      "y": 2600695,
+      "w": 1779556,
+      "h": 549619
+     },
+     "max_chars": 28,
+     "max_lines": 2,
+     "max_items": 2,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "Дата"
+    },
+    {
+     "id": "851",
+     "kind": "date",
+     "box": {
+      "x": 6642404,
+      "y": 2600695,
+      "w": 1779556,
+      "h": 549619
+     },
+     "max_chars": 28,
+     "max_lines": 2,
+     "max_items": 2,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "Дата"
+    },
+    {
+     "id": "852",
+     "kind": "date",
+     "box": {
+      "x": 9476594,
+      "y": 2600695,
+      "w": 1779556,
+      "h": 549619
+     },
+     "max_chars": 28,
+     "max_lines": 2,
+     "max_items": 2,
+     "font": null,
+     "size_pt": 18.0,
+     "placeholder_type": null,
+     "sample_text": "Дата"
+    },
+    {
+     "id": "840",
+     "kind": "label",
+     "box": {
+      "x": 429253,
+      "y": 3650071,
+      "w": 2645228,
+      "h": 593196
+     },
+     "max_chars": 18,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Описание"
+    },
+    {
+     "id": "841",
+     "kind": "label",
+     "box": {
+      "x": 3319410,
+      "y": 3650071,
+      "w": 2645228,
+      "h": 593196
+     },
+     "max_chars": 18,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Описание"
+    },
+    {
+     "id": "842",
+     "kind": "label",
+     "box": {
+      "x": 6209568,
+      "y": 3650071,
+      "w": 2645228,
+      "h": 593196
+     },
+     "max_chars": 18,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Описание"
+    },
+    {
+     "id": "843",
+     "kind": "label",
+     "box": {
+      "x": 9099725,
+      "y": 3650071,
+      "w": 2645228,
+      "h": 593196
+     },
+     "max_chars": 18,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Описание"
+    }
+   ],
+   "fixed": [
+    "844"
+   ],
+   "fill_ratio": 0.122,
+   "thumbnail": null,
+   "tags": [
+    "таймлайн",
+    "4 шага",
+    "тёмный фон",
+    "горизонтальная линия"
+   ],
+   "confidence": 0.95
+  },
+  {
+   "id": "slide27",
+   "source_index": 26,
+   "layout_name": "8_Заголовок",
+   "archetype": "process",
+   "slots": [
+    {
+     "id": "858",
+     "kind": "title",
+     "box": {
+      "x": 429253,
+      "y": 424691,
+      "w": 7827311,
+      "h": 1167572
+     },
+     "max_chars": 61,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 36.0,
+     "placeholder_type": "title",
+     "sample_text": "Таймлайн"
+    },
+    {
+     "id": "863",
+     "kind": "label",
+     "box": {
+      "x": 429254,
+      "y": 2794729,
+      "w": 1767681,
+      "h": 896498
+     },
+     "max_chars": 3,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 66.0,
+     "placeholder_type": null,
+     "sample_text": "01"
+    },
+    {
+     "id": "864",
+     "kind": "label",
+     "box": {
+      "x": 3314958,
+      "y": 2794729,
+      "w": 1767681,
+      "h": 896498
+     },
+     "max_chars": 3,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 66.0,
+     "placeholder_type": null,
+     "sample_text": "02"
+    },
+    {
+     "id": "865",
+     "kind": "label",
+     "box": {
+      "x": 6200662,
+      "y": 2794729,
+      "w": 1767681,
+      "h": 896498
+     },
+     "max_chars": 3,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 66.0,
+     "placeholder_type": null,
+     "sample_text": "03"
+    },
+    {
+     "id": "866",
+     "kind": "label",
+     "box": {
+      "x": 9098242,
+      "y": 2794729,
+      "w": 1767681,
+      "h": 896498
+     },
+     "max_chars": 3,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 66.0,
+     "placeholder_type": null,
+     "sample_text": "04"
+    },
+    {
+     "id": "859",
+     "kind": "body",
+     "box": {
+      "x": 429253,
+      "y": 3899453,
+      "w": 2645228,
+      "h": 593196
+     },
+     "max_chars": 18,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Описание"
+    },
+    {
+     "id": "860",
+     "kind": "body",
+     "box": {
+      "x": 3319410,
+      "y": 3899453,
+      "w": 2645228,
+      "h": 593196
+     },
+     "max_chars": 18,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Описание"
+    },
+    {
+     "id": "861",
+     "kind": "body",
+     "box": {
+      "x": 6209568,
+      "y": 3899453,
+      "w": 2645228,
+      "h": 593196
+     },
+     "max_chars": 18,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Описание"
+    },
+    {
+     "id": "862",
+     "kind": "body",
+     "box": {
+      "x": 9099725,
+      "y": 3899453,
+      "w": 2645228,
+      "h": 593196
+     },
+     "max_chars": 18,
+     "max_lines": 1,
+     "max_items": 1,
+     "font": null,
+     "size_pt": 20.0,
+     "placeholder_type": null,
+     "sample_text": "Описание"
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.151,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 1.0
+  },
+  {
+   "id": "slide28",
+   "source_index": 27,
+   "layout_name": "16_Титульный слайд",
+   "archetype": "closing",
+   "slots": [
+    {
+     "id": "874",
+     "kind": "title",
+     "box": {
+      "x": 429253,
+      "y": 2291422,
+      "w": 7827335,
+      "h": 1876890
+     },
+     "max_chars": 7,
+     "max_lines": 1,
+     "max_items": null,
+     "font": null,
+     "size_pt": 144.0,
+     "placeholder_type": "title",
+     "sample_text": "Q&A"
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.0,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 0.95
+  },
+  {
+   "id": "slide29",
+   "source_index": 28,
+   "layout_name": "12_Титульный слайд",
+   "archetype": "closing",
+   "slots": [
+    {
+     "id": "880",
+     "kind": "title",
+     "box": {
+      "x": 429253,
+      "y": 2291422,
+      "w": 7827335,
+      "h": 1876890
+     },
+     "max_chars": 41,
+     "max_lines": 2,
+     "max_items": null,
+     "font": null,
+     "size_pt": 54.0,
+     "placeholder_type": "title",
+     "sample_text": "Спасибо за внимание"
+    },
+    {
+     "id": "882",
+     "kind": "subtitle",
+     "box": {
+      "x": 1510259,
+      "y": 4567906,
+      "w": 2213844,
+      "h": 834283
+     },
+     "max_chars": 58,
+     "max_lines": 3,
+     "max_items": null,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Имя Спикера,должность"
+    },
+    {
+     "id": "884",
+     "kind": "body",
+     "box": {
+      "x": 4580031,
+      "y": 4567906,
+      "w": 2213844,
+      "h": 834283
+     },
+     "max_chars": 58,
+     "max_lines": 3,
+     "max_items": 3,
+     "font": null,
+     "size_pt": 16.0,
+     "placeholder_type": null,
+     "sample_text": "Имя Спикера,должность"
+    },
+    {
+     "id": "885",
+     "kind": "picture",
+     "box": {
+      "x": 9282341,
+      "y": 633414,
+      "w": 2501672,
+      "h": 2501672
+     },
+     "max_chars": null,
+     "max_lines": null,
+     "max_items": null,
+     "font": null,
+     "size_pt": 24.0,
+     "placeholder_type": null,
+     "sample_text": "QR-code"
+    }
+   ],
+   "fixed": [],
+   "fill_ratio": 0.119,
+   "thumbnail": null,
+   "tags": [],
+   "confidence": 1.0
+  }
+ ],
+ "embedded_fonts": [
+  "Play"
+ ],
+ "theme_colors": {
+  "dk1": "000000",
+  "lt1": "FFFFFF",
+  "dk2": "0077FF",
+  "lt2": "FFFFFF",
+  "accent1": "0077FF",
+  "accent2": "00E9FF",
+  "accent3": "AAFBFF",
+  "accent4": "EDF3FC",
+  "accent5": "7C8A9A",
+  "accent6": "202020",
+  "hlink": "0077FF",
+  "folHlink": "00E9FF"
+ },
+ "stats": {
+  "shapes": 341,
+  "text_runs": 268,
+  "text_chars": 1889,
+  "pictures": 77,
+  "tables": 1,
+  "slides": 29,
+  "layouts": 15,
+  "masters": 1,
+  "color_clusters": 14
+ }
+}

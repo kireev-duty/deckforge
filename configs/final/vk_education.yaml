@@ -1,0 +1,21 @@
+# Финальный прогон (день 11): три варианта на шаблоне «vk_education» → examples/output/vk_education/
+#   .venv\Scripts\python.exe -m deckforge.cli run -c configs/final/vk_education.yaml
+# Один outline на все шаблоны: сначала прогнать vk_tech, затем остальные с --outline examples/output/vk_tech/outline.json
+
+template: data/templates/Шаблон презентации VK Education.pptx
+content_pack: examples/content_pack
+purpose: product
+audience: "руководители продуктовых направлений"
+language: ru
+target_slides: 12
+strategies: [executive, narrative, visual]
+images: auto
+audit:
+  deterministic: true
+  contextual: true
+  autofix: true
+export: [pptx, pdf]
+output_dir: examples/output/vk_education
+render_png: true
+render_dpi: 72
+seed: 42

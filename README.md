@@ -9,7 +9,7 @@
 - [ARCHITECTURE.md](docs/ARCHITECTURE.md) — пайплайн и границы слоёв
 - [AUDIT.md](docs/AUDIT.md) — проверки и их покрытие
 - [MODELS.md](docs/MODELS.md) — модели, лицензии, требования
-- [PLAN.md](docs/PLAN.md) — план разработки
+- [PLAN.md](docs/PLAN.md) — план разработки, [BACKLOG.md](docs/BACKLOG.md) — известные дефекты и что дальше
 
 ## Сетап
 
@@ -32,13 +32,20 @@ cp .env.example .env                                 # заполнить LLM_AP
 ## Запуск
 
 ```bash
-# разбор шаблона
-deckforge parse "path/to/template.pptx"
-# генерация трёх вариантов по конфигу (бриф + контент-пакет → outline через LLM → колоды + manifest.json)
-deckforge run --config configs/run.example.yaml            # или: python -m deckforge.cli run -c ... [--png] [--outline готовый.json]
-# веб-интерфейс
+# разбор шаблона: палитра с ролями, шрифты, шкала, сетка, образцы по архетипам
+deckforge parse "path/to/template.pptx" [--json dna.json]
+# генерация трёх вариантов по конфигу: бриф + контент-пакет → outline (LLM) → колоды по стратегиям
+#   → аудит → safe-автофиксы → PNG → VLM-судья → .pptx / .pdf + manifest.json
+deckforge run --config configs/run.example.yaml            # или: python -m deckforge.cli run -c ... [--png] [--no-judge] [--outline готовый.json]
+# аудит любой колоды по шаблону (колода не меняется; --fix-plan — что чинилось бы)
+deckforge audit deck.pptx -t template.pptx [--ir deck.ir.json] [--contextual] [--fix-plan]
+# веб-интерфейс: шаблон → бриф → варианты → аудит с выбором фиксов → экспорт
 streamlit run deckforge/ui/app.py
+# HTTP API (Swagger на /docs): GET /templates, POST /generate → GET /jobs/{id} → .../decks/{strategy}/audit | fix | files/{name}
+uvicorn deckforge.api.app:app --reload
 ```
+
+Результат прогона (`out/run/<name>/` или `out/ui/runs/<время>/`): `outline.json`, `dna.json`, на каждую стратегию — `<strategy>.pptx`, `.pdf`, `.ir.json`, `.audit.json`, `.manifest.json` (провенанс: версии скиллов/моделей/стратегии, план, образцы, автофиксы, тайминги) и PNG в `<strategy>/`; сводка — `compare.md`, `run.json`. HTML-экспорт и генерация картинок — в работе (`run.json → not_implemented`).
 
 Инструменты разработчика: `tools/pptx_xray.py` (структура шаблона), `tools/render_deck.py` (PNG-превью и PDF), `tools/build_variants.py` (три стратегии на одном контенте: `examples/content_pack/` × шаблон → `out/variants/`).
 

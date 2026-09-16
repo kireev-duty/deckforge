@@ -8,3 +8,5 @@ out/
 examples/output/**/render/
 *.egg-info/
 .streamlit/secrets.toml
+examples/output/**/*.png
+examples/output/**/outline.raw.json

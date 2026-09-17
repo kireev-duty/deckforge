@@ -9,11 +9,13 @@ from __future__ import annotations
 import pytest
 from lxml import etree
 
-from deckforge.core.ir import Archetype, SlotKind
-from deckforge.parsing.layout_classifier import SlideProfile, classify_template
+from deckforge.core.ir import Archetype, Box, SlotKind
+from deckforge.parsing.layout_classifier import ShapeInfo, SlideProfile, build_features, build_slots, classify_template
 from deckforge.parsing.ooxml import NS, absolute_bbox
+from tests.conftest import REPO
 
 A = Archetype
+SW, SH = 12192000, 6858000  # 13.33 × 7.5"
 
 EXPECTED: dict[str, dict[int, Archetype]] = {
     "VK Tech": {1: A.TITLE, 3: A.SECTION, 4: A.CLOSING, 5: A.CLOSING, 6: A.CLOSING, 12: A.TEAM, 13: A.TEAM,
@@ -96,6 +98,74 @@ def test_every_template_has_core_archetypes(profiles: list[SlideProfile]) -> Non
     assert Archetype.TITLE in found
     assert Archetype.CARDS in found
     assert len(found - {Archetype.FREEFORM}) >= 6
+
+
+# ── чужие шаблоны (data/wild, не в LFS датасета — пропускаются, если файла нет) ──
+
+WILD_EXPECTED: dict[str, dict[int, Archetype]] = {
+    # goslide: обложка — титул, «Содержание» на 48 пунктов — agenda, а не title; «лестница» без body — не bullets
+    "Презентация в оформлении РУДН": {1: A.TITLE, 2: A.AGENDA, 63: A.CLOSING},
+}
+
+
+@pytest.mark.parametrize("name", list(WILD_EXPECTED))
+def test_wild_archetypes(name: str) -> None:
+    path = REPO / "data" / "wild" / f"{name}.pptx"
+    if not path.exists() or path.stat().st_size < 10_000:
+        pytest.skip(f"нет {path.name}")
+    by_no = {p.index + 1: p for p in classify_template(path)}
+    wrong = {no: (by_no[no].archetype.value, arch.value) for no, arch in WILD_EXPECTED[name].items() if by_no[no].archetype != arch}
+    assert not wrong, wrong
+    # «➜» перед пунктами и номер страницы — не слоты под текст
+    for p in by_no.values():
+        for s in p.slots:
+            assert s.sample_text != "➜", f"слайд {p.index + 1}: глиф стал слотом"
+            if s.kind == SlotKind.SLIDE_NUMBER:
+                assert s.placeholder_type is None and s.sample_text == str(p.index + 1)
+        low = [s for s in p.features.numbers if s.text == str(p.index + 1) and s.fy > 0.8]
+        assert not low, f"слайд {p.index + 1}: номер страницы в подвале как KPI"
+
+
+# ── синтетические фигуры ──
+
+
+def _shape(id_: str, text: str, x: float, y: float, w: float, h: float, size: float = 18.0, kind: str = "text",
+           bold: bool = False) -> ShapeInfo:
+    return ShapeInfo(id=id_, name=id_, kind=kind, box=Box(x=int(x * SW), y=int(y * SH), w=int(w * SW), h=int(h * SH)),
+                     fx=x, fy=y, fw=w, fh=h, text=text, chars=len(text), paragraphs=1 if text else 0, size_pt=size, bold=bold)
+
+
+def test_glyph_boxes_and_edge_caption_are_not_body_slots() -> None:
+    shapes = [
+        _shape("t", "Заголовок слайда", 0.05, 0.12, 0.6, 0.08, size=24),
+        _shape("hdr", "Раздел 2", 0.3, 0.02, 0.6, 0.06, size=12),  # подпись раздела в шапке (РГУП)
+        _shape("g1", "➜", 0.05, 0.3, 0.03, 0.09, size=19), _shape("b1", "Первый тезис", 0.1, 0.3, 0.8, 0.09),
+        _shape("g2", "➜", 0.05, 0.42, 0.03, 0.09, size=19), _shape("b2", "Второй тезис", 0.1, 0.42, 0.8, 0.09),
+    ]
+    f = build_features(shapes, index=4, n_slides=20)
+    assert f.title is not None and f.title.id == "t"
+    assert {s.id for s in f.content} == {"hdr", "b1", "b2"}, "глифы не входят в контент"
+    kinds = {s.id: s.kind for s in build_slots(f, Archetype.BULLETS)}
+    assert "g1" not in kinds and kinds["hdr"] == SlotKind.CAPTION and kinds["b1"] != SlotKind.CAPTION
+
+
+def test_cover_title_found_below_top_zone() -> None:
+    def shapes():  # build_features помечает найденный заголовок в самих фигурах — каждый вызов на свежих
+        return [_shape("name", "Все макеты оформления", 0.1, 0.73, 0.82, 0.1, size=39),
+                _shape("sub", "Фирменный стиль · GoSlide", 0.11, 0.86, 0.81, 0.04, size=15)]
+
+    assert build_features(shapes(), index=0, n_slides=20).title.id == "name"
+    assert build_features(shapes(), index=5, n_slides=20).title is None, "не на обложке зона заголовка — верхние 30 %"
+
+
+def test_title_over_decor_line_gets_hard_lines() -> None:
+    title = _shape("t", "Заголовок", 0.06, 0.06, 0.88, 0.1, size=28)
+    line = _shape("ln", "", 0.06, 0.18, 0.88, 0.0, kind="connector")
+    f = build_features([title, line], index=3, n_slides=20)
+    slot = next(s for s in build_slots(f, Archetype.BULLETS) if s.kind == SlotKind.TITLE)
+    assert slot.hard_lines and slot.max_lines == 1
+    f2 = build_features([title], index=3, n_slides=20)
+    assert not next(s for s in build_slots(f2, Archetype.BULLETS)).hard_lines
 
 
 # ── геометрия групп ──

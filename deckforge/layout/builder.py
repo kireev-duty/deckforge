@@ -92,12 +92,12 @@ def build_deck_ir(
         slide_ir, leftover = build_slide(len(result.ir.slides), s, e, slide_h, style or {})
         result.ir.slides.append(slide_ir)
         if leftover is not None:
+            # в образец не влезло — продолжение на следующем слайде; даже одинокий пункт: лишний слайд
+            # заметен и правится пользователем, потерянный факт — нет
             n_left = len(leftover.kpis) + len(leftover.bullets) + len(leftover.steps)
-            if n_left >= MIN_CONTINUATION:  # в образец не влезло — продолжение на следующем слайде
-                queue.insert(0, leftover)
-                result.warnings.append(f"слайд {s.idx} «{s.title[:40]}»: {n_left} пунктов перенесены на продолжение")
-            else:  # одинокий пункт на отдельном слайде хуже, чем его отсутствие
-                result.warnings.append(f"слайд {s.idx} «{s.title[:40]}»: пункт не влез в образец {e.id} и отброшен")
+            queue.insert(0, leftover)
+            result.warnings.append(f"слайд {s.idx} «{s.title[:40]}»: {n_left} пунктов перенесены на продолжение"
+                                   + (f" (одинокий пункт: образец {e.id} тесен)" if n_left < MIN_CONTINUATION else ""))
             log.warning(result.warnings[-1])
     return result
 
@@ -121,12 +121,15 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
             elements.append(el)
 
     quote_as_title = bool(s.quote) and e.archetype in (Archetype.SECTION, Archetype.TITLE)  # цитата крупно
+    subtitles = list(by_kind[SlotKind.SUBTITLE])
     if by_kind[SlotKind.TITLE]:
         put(by_kind[SlotKind.TITLE][0], f"«{s.quote}»" if quote_as_title else s.title)
-    if by_kind[SlotKind.SUBTITLE]:
+    elif subtitles:  # образец без заголовка, но с подзаголовком («Спасибо за внимание!» финала) — заголовок туда
+        put(subtitles.pop(0), f"«{s.quote}»" if quote_as_title else s.title)
+    if subtitles:
         sub = (s.quote_author or s.title) if quote_as_title else s.subtitle
         if sub:
-            put(by_kind[SlotKind.SUBTITLE][0], sub)
+            put(subtitles[0], sub)
 
     # данные
     for slot in by_kind[SlotKind.CHART] + by_kind[SlotKind.TABLE]:
@@ -148,15 +151,31 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
             put(lab, k.label)
             labels_used += 1
         left_kpis = s.kpis[len(numbers):]
-    elif s.kpis and labels:  # образец без крупных цифр (карточки): значение — в подпись, описание — в тело
-        for k, lab in zip(s.kpis, labels):
+    elif s.kpis and labels and (e.archetype == Archetype.CARDS or len(labels) >= len(s.kpis)):
+        # образец без крупных цифр (карточки): значение — в подпись, описание — в тело
+        # (bullets-образец с одной подписью-колонтитулом (HSE) сюда не попадает — там список в body)
+        # по карточкам: label и body одной карточки — пара по геометрии (pair_labels), а не по порядку чтения,
+        # иначе подпись уезжает в соседнюю карточку (Пифагор: «42 %» в одной, его подпись — в предыдущей)
+        paired = pair_labels(bodies, labels)
+        cards = [(paired.get(b.id), b) for b in bodies if paired.get(b.id) is not None]
+        cards += [(lab, None) for lab in labels if all(lab is not l for l, _ in cards)]
+        taken_labels: list[Slot] = []
+        taken_bodies: list[Slot] = []
+        for k, (lab, body) in zip(s.kpis, cards):
             if el := kpi_in_label_element(lab, k.value, style):
                 elements.append(el)
-            labels_used += 1
-        for k, body in zip(s.kpis, bodies):
-            put(body, k.label)
-            bodies_used += 1
-        left_kpis = s.kpis[len(labels):]
+            taken_labels.append(lab)
+            if body is not None:
+                put(body, k.label)
+                taken_bodies.append(body)
+        # занятые слоты — в начало списков: ниже свободные берутся срезом [used:]
+        labels = taken_labels + [l for l in labels if l not in taken_labels]
+        bodies = taken_bodies + [b for b in bodies if b not in taken_bodies]
+        labels_used, bodies_used = len(taken_labels), len(taken_bodies)
+        left_kpis = s.kpis[len(cards):]
+    elif s.kpis and len(bodies) == 1:  # ни цифр, ни карточек (HSE): список «значение — подпись» в один body
+        put_list(bodies[0], [f"{k.value} — {k.label}" for k in s.kpis], bullet=False)
+        bodies_used = 1
     elif s.kpis:
         for k, body in zip(s.kpis, bodies):
             put(body, f"{k.value} — {k.label}")
@@ -197,6 +216,12 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
         left_items = (s.steps if numbered else items)[len(free_labels):]
     elif s.paragraphs and bodies:
         put_list(bodies[0], s.paragraphs, bullet=False)
+
+    # «ручной» номер страницы (текст «19» без плейсхолдера sldNum) — перенумеровать; поле sldNum рендер не трогает
+    for num_slot in by_kind[SlotKind.SLIDE_NUMBER]:
+        if num_slot.placeholder_type is None:
+            elements.append(Element(slot_id=num_slot.id, kind=num_slot.kind, box=num_slot.box,
+                                    paragraphs=[Paragraph(runs=[TextRun(text=str(idx + 1))])]))
 
     # картинка — только первый picture-слот
     if s.image and s.image.path and by_kind[SlotKind.PICTURE]:

@@ -163,6 +163,37 @@ def test_chart_without_data_slot_is_impossible() -> None:
     assert e is None
 
 
+def test_quote_needs_body_or_big_title() -> None:
+    """Цитата в «лестницу» из label-слотов (goslide slide27) давала пустой слайд: без body — отказ,
+    section/title-образец годится (цитата уходит в крупный заголовок)."""
+    quote = OutlineSlide(idx=1, archetype=Archetype.QUOTE, title="Т", quote="За месяц мы впервые увидели, куда уходит время",
+                         quote_author="Лид")
+    title = _slot("t", SlotKind.TITLE, 0.05, 0.05, 0.9, 0.12, max_chars=60, size=24)
+    ladder = Exemplar(id="s27", source_index=26, layout_name="a", archetype=Archetype.BULLETS,
+                      slots=[title] + [_slot(f"l{i}", SlotKind.LABEL, 0.05 + 0.1 * i, 0.3 + 0.15 * i, 0.5, 0.1, max_chars=40) for i in range(4)])
+    e, score = pick_exemplar(quote, [ladder], strategy(), SLIDE_W * SLIDE_H)
+    assert e is None
+    e, _ = pick_exemplar(quote, [ladder] + _exemplars(), strategy(), SLIDE_W * SLIDE_H)
+    assert e is not None and e.id != "s27"
+    sec = [x for x in _exemplars() if x.archetype == Archetype.TITLE]
+    e, _ = pick_exemplar(quote, sec, strategy(), SLIDE_W * SLIDE_H)
+    assert e is not None and e.archetype == Archetype.TITLE
+
+
+def test_kpis_fall_back_to_bullets_when_no_numbers_or_cards() -> None:
+    kpi = OutlineSlide(idx=1, archetype=Archetype.KPI, title="Т",
+                       kpis=[{"value": "42%", "label": "перегружены"}, {"value": "12", "label": "команд"}])
+    bullets = [x for x in _exemplars() if x.archetype == Archetype.BULLETS]
+    e, score = pick_exemplar(kpi, bullets, strategy(), SLIDE_W * SLIDE_H)
+    assert e is not None and score > -10
+    from deckforge.layout.builder import build_slide
+
+    ir, left = build_slide(0, kpi, e, SLIDE_H, {})
+    assert left is None
+    body = next(el for el in ir.elements if el.kind == SlotKind.BODY)
+    assert [p.runs[0].text for p in body.paragraphs] == ["42% — перегружены", "12 — команд"]
+
+
 # ──────────────────────────── fitting ────────────────────────────
 
 
@@ -207,6 +238,43 @@ def test_number_element_label_inside_shape() -> None:
     flat = _slot("n", SlotKind.NUMBER, 0.1, 0.2, 0.3, 0.05, max_chars=6, size=28)  # ≈ 20 pt высоты
     el = number_element(flat, "118", {}, label="участников пилота")
     assert len(el.paragraphs) == 1
+
+
+def test_kpis_in_cards_stay_in_their_card() -> None:
+    """Карточки под KPI: значение → label карточки, подпись → body той же карточки (пара по геометрии),
+    даже если в порядке чтения label второй карточки идёт раньше body первой (Пифагор: подписи со сдвигом)."""
+    from deckforge.layout.builder import build_slide
+
+    title = _slot("t", SlotKind.TITLE, 0.05, 0.05, 0.9, 0.12, max_chars=60, size=24)
+    slots = [title]
+    for i in range(4):  # label чуть ниже у чётных карточек, чтобы порядок чтения перемешался
+        x = 0.05 + 0.23 * i
+        slots.append(_slot(f"l{i}", SlotKind.LABEL, x, 0.30 + (0.03 if i % 2 else 0), 0.2, 0.06, max_chars=12))
+        slots.append(_slot(f"b{i}", SlotKind.BODY, x, 0.40, 0.2, 0.3, max_chars=120))
+    cards = Exemplar(id="c", source_index=0, layout_name="a", archetype=Archetype.CARDS, slots=slots)
+    kpis = [{"value": "42%", "label": "перегружены"}, {"value": "12", "label": "команд"},
+            {"value": "1,8 дня", "label": "срок ответа"}, {"value": "4,7", "label": "оценка пилота"}]
+    ir, left = build_slide(0, OutlineSlide(idx=1, archetype=Archetype.KPI, title="Т", kpis=kpis), cards, SLIDE_H, {})
+    assert left is None
+    by_slot = {el.slot_id: el.paragraphs[0].runs[0].text for el in ir.elements}
+    for i, k in enumerate(kpis):
+        assert by_slot[f"l{i}"] == k["value"] and by_slot[f"b{i}"] == k["label"], (i, by_slot)
+
+
+def test_lone_leftover_goes_to_continuation_not_dropped() -> None:
+    """Пятый KPI в образец на четыре цифры: раньше «отброшен», теперь — слайд-продолжение (факт не теряется)."""
+    title = _slot("t", SlotKind.TITLE, 0.05, 0.05, 0.9, 0.12, max_chars=60, size=24)
+    nums = [_slot(f"n{i}", SlotKind.NUMBER, 0.05 + 0.23 * i, 0.3, 0.2, 0.2, max_chars=6, size=48) for i in range(4)]
+    kpi_ex = Exemplar(id="k", source_index=0, layout_name="a", archetype=Archetype.KPI, slots=[title] + nums)
+    kpis = [{"value": str(i), "label": f"п{i}"} for i in range(5)]
+    o = DeckOutline(title="t", purpose="other", slides=[
+        OutlineSlide(idx=0, archetype=Archetype.TITLE, title="Т"),
+        OutlineSlide(idx=1, archetype=Archetype.KPI, title="Пять цифр", kpis=kpis),
+    ])
+    res = build_deck_ir(o, strategy(target_slides={"min": 3, "max": 20}), [kpi_ex] + _exemplars(), "t", SLIDE_W, SLIDE_H)
+    assert not [w for w in res.warnings if "отброшен" in w]
+    values = [r.text for s in res.ir.slides for el in s.elements if el.kind == SlotKind.NUMBER for p in el.paragraphs for r in p.runs]
+    assert "4" in values, values
 
 
 def test_split_label_body_and_numbers() -> None:

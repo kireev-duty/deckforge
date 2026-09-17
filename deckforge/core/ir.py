@@ -156,6 +156,7 @@ class Slot(BaseModel):
     size_pt: float | None = None
     placeholder_type: str | None = None  # ph type из OOXML, если это плейсхолдер
     sample_text: str | None = None  # исходный текст (для отладки и few-shot)
+    hard_lines: bool = False  # под слотом декор (линия) — строк больше max_lines не разрешать (title обычно может две)
 
 
 class Exemplar(BaseModel):

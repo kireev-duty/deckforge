@@ -65,6 +65,11 @@ CARD_STACK_MIN_H = 0.10  # блок в одной колонке — карто�
 TABLE_MIN_CELLS = 12  # ≥ 12 строго одинаковых блоков в ≥2 колонках и ≥4 рядах — таблица из фигур
 ALIGN_TOL = 0.03  # допуск выравнивания по одной оси (доля слайда)
 TITLE_ZONE = 0.30  # заголовок без плейсхолдера ищем в верхних 30 % слайда
+COVER_TITLE_ZONE = 1.0  # …а на первом слайде (обложка) название может стоять и по центру, и внизу
+AGENDA_MANY_BLOCKS = 6  # столько и больше текстовых блоков — не титул (оглавление, сетка)
+UNDERLINE_BELOW = 0.4  # линия-декор не дальше 40 % высоты бокса под заголовком — вторая строка легла бы на неё
+BACKGROUND_PIC_AREA = 0.9  # картинка ≥ 90 % слайда — фон, слотом становится только на image_full/image_text
+LOGO_PIC_AREA = 0.05  # картинка ≤ 5 % слайда у верхнего/нижнего края — логотип, не слот
 TITLE_MAX_CHARS = 80
 PLATE_MAX_SHARE = 0.8  # плашка под заголовком уже 80 % его бокса — вместимость считаем по плашке
 CARD_MAX_AREA = 0.40  # подложка карточки — не больше 40 % слайда (иначе это фон)
@@ -73,6 +78,7 @@ DATA_SLOT_MIN_AREA = 0.08  # chart/table-слот меньше 8 % слайда 
 BIG_TITLE_RATIO = 1.6  # заголовок «крупный», если кегль ≥ 1.6× медианного на слайде
 BIG_TITLE_H = 0.12  # …или высота бокса ≥ 12 % слайда
 KPI_SIZE_RATIO = 2.0  # число «крупное», если кегль ≥ 2× медианного
+KPI_MIN_SIZE_RATIO = 1.3  # число-кандидат в KPI хотя бы на 30 % крупнее медианного текста (иначе это номер шага)
 LIBRARY_PICS = 30  # ≥ 30 картинок — библиотека иконок, не образец
 AMBIGUOUS_BELOW = 0.70  # уверенность ниже — в VLM
 AMBIGUOUS_MARGIN = 0.15  # разрыв между двумя лучшими кандидатами меньше — в VLM
@@ -83,6 +89,8 @@ MAX_SUMMARY_ROWS = 40  # больше фигур VLM не показываем (
 
 NUMBER_RE = re.compile(r"^[\dхx]{1,4}([.,]\d+)?\s*[%+]?\s*$|^[\dхx]{1,4}\s*%|^\d+([.,]\d+)?\s*(млн|тыс|млрд|k|m|b|x|×)\b", re.I)
 SEQ_RE = re.compile(r"^0?(\d{1,2})\s*$")
+GLYPH_RE = re.compile(r"^[^\w\s]{1,2}$")  # «➜», «•», «→», «✓» — маркер/стрелка в боксе, а не текст
+PAGE_NUMBER_RE = re.compile(r"^\d{1,3}$")
 ARROW_PRSTS = {"rightArrow", "leftArrow", "chevron", "homePlate", "notchedRightArrow", "curvedRightArrow", "bentArrow"}
 ROUND_PRSTS = {"ellipse", "roundRect", "round2SameRect"}
 THIN_LINE = 0.005  # прямоугольник тоньше 0.5 % слайда и длиннее 10 % — линия, а не фигура
@@ -349,17 +357,17 @@ def find_fixed_signatures(pkg: Package) -> set[tuple]:
                 continue
             tag = localname(sp)
             text = _norm_text(sp) if tag == "sp" else ""
-            if text:
-                fy, fh = bb[1] / sh, bb[3] / sh
-                if not (fy + fh <= FIXED_TEXT_ZONE or fy >= 1 - FIXED_TEXT_ZONE):
-                    continue
+            if text and not _in_edge_band(bb[1] / sh, bb[3] / sh):
+                continue
             seen.add(_signature(tag, text, bb))
         counts.update(seen)
     threshold = max(FIXED_MIN_SLIDES, len(pkg.slides) // 4)
     return {sig for sig, n in counts.items() if n >= threshold}
 
 
-def collect_shapes(ctx: PartCtx, fixed_sigs: set[tuple]) -> list[ShapeInfo]:
+def collect_shapes(ctx: PartCtx, fixed_sigs: set[tuple], index: int | None = None) -> list[ShapeInfo]:
+    """Фигуры слайда; `index` (0-based) нужен, чтобы узнать «ручной» номер страницы — текст «19» в колонтитуле
+    19-го слайда без плейсхолдера sldNum (goslide): это sldnum, а не слот под подпись."""
     sw, sh = ctx.pkg.slide_size
     out: list[ShapeInfo] = []
     for sp in iter_shapes(ctx.sp_tree):
@@ -378,6 +386,8 @@ def collect_shapes(ctx: PartCtx, fixed_sigs: set[tuple]) -> list[ShapeInfo]:
         if kind != "connector" and (bb[2] <= 0 or bb[3] <= 0):
             continue
         text = _norm_text(sp) if tag in ("sp", "graphicFrame") else ""
+        if kind == "text" and index is not None and _is_page_number(text, index, bb, sh):
+            kind = "sldnum"
         size, bold, italic, n_paras = _text_props(ctx, sp) if tag == "sp" else (0.0, False, False, 0)
         info = ShapeInfo(
             id=shape_id(sp),
@@ -400,6 +410,19 @@ def collect_shapes(ctx: PartCtx, fixed_sigs: set[tuple]) -> list[ShapeInfo]:
         out.append(info)
     _mark_photo_zones(out)
     return out
+
+
+def _is_page_number(text: str, index: int, bb: tuple[int, int, int, int], sh: int) -> bool:
+    """Текст = номер этого слайда, в зоне колонтитула."""
+    if not PAGE_NUMBER_RE.match(text) or int(text) != index + 1:
+        return False
+    return _in_edge_band(bb[1] / sh, bb[3] / sh)
+
+
+def _in_edge_band(fy: float, fh: float) -> bool:
+    """Бокс начинается в верхней полосе колонтитула или кончается в нижней (сам бокс может быть выше полосы:
+    название вуза в шапке РГУП — 9 % высоты слайда при полосе 12 %, но начинается на 4.6 %)."""
+    return fy <= FIXED_TEXT_ZONE or fy + fh >= 1 - FIXED_TEXT_ZONE
 
 
 def _mark_photo_zones(shapes: list[ShapeInfo]) -> None:
@@ -489,12 +512,15 @@ def _sequence(blocks: list[ShapeInfo], axis: str) -> int:
 
 def build_features(shapes: list[ShapeInfo], index: int, n_slides: int) -> SlideFeatures:
     live = [s for s in shapes if not s.fixed]
-    texts = [s for s in live if s.is_text and (s.chars > 0 or s.is_placeholder)]
+    # бокс с одним глифом («➜» перед пунктом, «•») — маркер, а не текст: слотом не становится
+    texts = [s for s in live if s.is_text and (s.chars > 0 or s.is_placeholder) and not GLYPH_RE.match(s.text)]
 
     title = next((s for s in texts if s.kind == "title"), None)
     if title is None:
-        # заголовок без плейсхолдера: самый крупный короткий текст в верхней зоне
-        cands = [s for s in texts if s.fy < TITLE_ZONE and 0 < s.chars <= TITLE_MAX_CHARS]
+        # заголовок без плейсхолдера: самый крупный короткий текст в верхней зоне;
+        # у обложки (первый слайд) название часто по центру — зона шире
+        zone = COVER_TITLE_ZONE if index == 0 else TITLE_ZONE
+        cands = [s for s in texts if s.fy < zone and 0 < s.chars <= TITLE_MAX_CHARS]
         if cands:
             top = max(cands, key=lambda s: (s.size_pt, -s.fy))
             others = [s.size_pt for s in texts if s is not top and s.chars > 0]
@@ -506,9 +532,16 @@ def build_features(shapes: list[ShapeInfo], index: int, n_slides: int) -> SlideF
     sizes = [s.size_pt for s in content if s.size_pt > 0] or ([title.size_pt] if title and title.size_pt else [18.0])
     med = median(sizes)
 
+    # KPI-цифра не мельче основного текста: номера шагов «1 2 3» в кружках 14 pt — не показатели;
+    # крупный короткий текст без цифр («АС» в аватаре) — тоже
+    words = [s.size_pt for s in content if s.size_pt > 0 and not NUMBER_RE.match(s.text)]  # медиана без самих цифр
+    text_med = median(words) if words else med
     numbers = [
         s for s in content
-        if s.chars > 0 and (NUMBER_RE.match(s.text) or (s.size_pt >= KPI_SIZE_RATIO * med and s.chars <= 6))
+        if s.chars > 0 and (
+            (NUMBER_RE.match(s.text) and s.size_pt >= KPI_MIN_SIZE_RATIO * text_med)
+            or (s.size_pt >= KPI_SIZE_RATIO * med and s.chars <= 6 and any(ch.isdigit() for ch in s.text))
+        )
     ]
     pics = [s for s in live if s.kind in ("pic", "pic_ph")]
     big_pics = [s for s in pics if s.area >= BIG_PIC_AREA]
@@ -652,6 +685,14 @@ def rule_title(f: SlideFeatures) -> Candidate | None:
         parts.append((0.1, "имя/должность"))
     if "title" in f.keywords:
         parts.append((0.2, "«название/тема презентации»"))
+    # оглавление и сетки текста в начале колоды не титул: у goslide «Содержание» с 48 пунктами шло вторым слайдом,
+    # «Введение» с тремя абзацами — третьим
+    if len(f.content) >= AGENDA_MANY_BLOCKS:
+        parts.append((-0.5, f"{len(f.content)} текстовых блоков"))
+    elif len(f.content) >= 3 and not f.title_is_big():
+        parts.append((-0.3, "несколько текстовых блоков при обычном заголовке"))
+    if "agenda" in f.keywords:
+        parts.append((-0.3, "«содержание»"))
     return _cand(Archetype.TITLE, parts)
 
 
@@ -693,10 +734,12 @@ def rule_agenda(f: SlideFeatures) -> Candidate | None:
     parts: list[tuple[float, str]] = []
     if "agenda" in f.keywords:
         parts.append((0.5, "«содержание/оглавление»"))
-    lists = [g for g in f.list_groups if len(g) >= 4]
+    # список в одну колонку — или в несколько (оглавление в три колонки), если блоки тонкие и короткие
+    thin = [g for g in f.card_groups if all(b.fh < CARD_STACK_MIN_H and b.chars <= 60 for b in g)]
+    lists = [g for g in f.list_groups + thin if len(g) >= 4]
     if lists:
         n = max(len(g) for g in lists)
-        parts.append((min(0.45, 0.3 + 0.05 * (n - 4)), f"вертикальный список из {n} блоков"))
+        parts.append((min(0.45, 0.3 + 0.05 * (n - 4)), f"список из {n} коротких блоков"))
         if len(f.round_marks) >= n or len(f.icons) >= n:
             parts.append((0.2, "маркеры/иконки у пунктов"))
     if f.sequence_col >= 3:
@@ -929,12 +972,50 @@ def _card_room(s: ShapeInfo, shapes: list[ShapeInfo]) -> Box | None:
     return Box(x=s.box.x, y=s.box.y, w=s.box.w, h=max(s.box.h, best.box.y2 - margin - s.box.y))
 
 
+def _in_edge_zone(s: ShapeInfo) -> bool:
+    """Бокс целиком в полосе колонтитула (строже, чем `_in_edge_band`: подзаголовок под шапкой не трогаем)."""
+    return s.fy + s.fh <= FIXED_TEXT_ZONE or s.fy >= 1 - FIXED_TEXT_ZONE
+
+
+def _is_background_or_logo(s: ShapeInfo, archetype: Archetype) -> bool:
+    """Картинка-фон (почти весь слайд) на структурных слайдах и мелкая картинка у края (логотип) — не слоты.
+
+    На image_full/image_text полноэкранная картинка — сам слот под иллюстрацию, её не трогаем.
+    """
+    if s.area >= BACKGROUND_PIC_AREA:
+        return archetype not in (Archetype.IMAGE_FULL, Archetype.IMAGE_TEXT)
+    return s.area <= LOGO_PIC_AREA and (_in_edge_zone(s) or s.fy + s.fh <= 0.2)
+
+
+def _underline_room(s: ShapeInfo, shapes: list[ShapeInfo]) -> Box | None:
+    """Линия-декор под заголовком (goslide, МЭИ, Пифагор): вторая строка заголовка легла бы на неё.
+
+    Ищем коннектор/тонкую фигуру (в т.ч. фиксированную) шириной ≥ половины бокса, пересекающую его по x,
+    в нижней половине бокса или чуть ниже; вместимость считаем до линии, лишних строк не разрешаем.
+    """
+    best: ShapeInfo | None = None
+    for p in shapes:
+        if p is s or p.kind != "connector" or p.box.w < s.box.w * 0.5:
+            continue
+        if p.box.x >= s.box.x2 or p.box.x2 <= s.box.x:
+            continue
+        lo, hi = s.box.y + s.box.h * 0.5, s.box.y2 + s.box.h * UNDERLINE_BELOW
+        if lo <= p.box.y <= hi and (best is None or p.box.y < best.box.y):
+            best = p
+    if best is None:
+        return None
+    return Box(x=s.box.x, y=s.box.y, w=s.box.w, h=max(1, min(s.box.h, best.box.y - s.box.y)))
+
+
 def _slot(s: ShapeInfo, kind: SlotKind, shapes: list[ShapeInfo] | None = None) -> Slot:
     max_chars = max_lines = max_items = None
+    hard_lines = False
     if kind in (SlotKind.TITLE, SlotKind.SUBTITLE, SlotKind.BODY, SlotKind.CAPTION, SlotKind.LABEL, SlotKind.NUMBER):
         room = None
         if shapes and kind == SlotKind.TITLE:
             room = _backing_plate(s, shapes)
+            if (under := _underline_room(s, shapes)) is not None:
+                room, hard_lines = (under if room is None else Box(x=room.x, y=room.y, w=room.w, h=min(room.h, under.h))), True
         elif shapes and kind == SlotKind.BODY:
             room = _card_room(s, shapes)
         max_chars, max_lines = _capacity(s, room)
@@ -942,7 +1023,7 @@ def _slot(s: ShapeInfo, kind: SlotKind, shapes: list[ShapeInfo] | None = None) -
             max_items = max_lines
     return Slot(
         id=s.id, kind=kind, box=s.box, max_chars=max_chars, max_lines=max_lines, max_items=max_items,
-        size_pt=s.size_pt or None, placeholder_type=s.ph_type, sample_text=s.text[:200] or None,
+        size_pt=s.size_pt or None, placeholder_type=s.ph_type, sample_text=s.text[:200] or None, hard_lines=hard_lines,
     )
 
 
@@ -963,6 +1044,9 @@ def build_slots(f: SlideFeatures, archetype: Archetype) -> list[Slot]:
             kind, subtitle_taken = SlotKind.SUBTITLE, True
         elif archetype == Archetype.QUOTE:
             kind = SlotKind.BODY if s.chars >= 60 else SlotKind.CAPTION
+        elif _in_edge_zone(s):
+            # одиночный текст в шапке/подвале (подпись раздела в плашке РГУП) — не место для буллета
+            kind = SlotKind.CAPTION
         elif (s.bold and s.chars <= 40) or (s.chars <= 30 and s.fh < 0.07 and (id(s) in grouped or s.size_pt <= f.median_size)):
             kind = SlotKind.LABEL
         elif s.chars > 0 and s.chars <= 40 and s.fh < 0.06 and s.size_pt < f.median_size:
@@ -982,6 +1066,8 @@ def build_slots(f: SlideFeatures, archetype: Archetype) -> list[Slot]:
         elif s.kind in ("pic", "pic_ph"):
             if s in f.icons:
                 slots.append(_slot(s, SlotKind.ICON))
+            elif s.kind == "pic" and _is_background_or_logo(s, archetype):
+                continue  # фон обложки/финала и логотип в колонтитуле — декор, иллюстрацию туда не ставим
             elif s.kind == "pic_ph" or s.area >= PICTURE_MIN_AREA:
                 slots.append(_slot(s, SlotKind.PICTURE))
         elif s.kind == "sldnum":
@@ -1012,7 +1098,7 @@ def _collapse(slots: list[Slot], group: list[ShapeInfo], kind: SlotKind) -> list
 
 
 def classify_slide(ctx: PartCtx, index: int, n_slides: int, fixed_sigs: set[tuple]) -> SlideProfile:
-    shapes = collect_shapes(ctx, fixed_sigs)
+    shapes = collect_shapes(ctx, fixed_sigs, index)
     f = build_features(shapes, index, n_slides)
     cands = score_rules(f)
     arch, conf, ambiguous = pick(cands)

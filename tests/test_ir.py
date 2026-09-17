@@ -8,7 +8,19 @@ from deckforge.core.ir import (
     Finding,
     OutlineSlide,
     Severity,
+    Slot,
+    SlotKind,
 )
+from deckforge.layout.fitting import slot_capacity
+
+
+def test_slot_hard_lines_is_optional_and_caps_title() -> None:
+    """Старый JSON без hard_lines читается (False); с флагом заголовку не разрешаются две строки."""
+    old = {"id": "5", "kind": "title", "box": {"x": 0, "y": 0, "w": 100, "h": 10}, "max_chars": 40, "max_lines": 1}
+    s = Slot.model_validate(old)
+    assert s.hard_lines is False and slot_capacity(s) == 80
+    hard = Slot(id="5", kind=SlotKind.TITLE, box=Box(x=0, y=0, w=100, h=10), max_chars=40, max_lines=1, hard_lines=True)
+    assert slot_capacity(hard) == 40 and Slot.model_validate_json(hard.model_dump_json()).hard_lines
 
 
 def test_box_intersection() -> None:

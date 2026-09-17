@@ -92,10 +92,10 @@ def chars_at_scale(slot: Slot, scale: float = MIN_SIZE_SCALE) -> int | None:
 
 
 def slot_capacity(slot: Slot) -> int | None:
-    """Вместимость при базовом кегле; заголовку разрешаем TITLE_LINES строк."""
+    """Вместимость при базовом кегле; заголовку разрешаем TITLE_LINES строк, если под ним нет декора (hard_lines)."""
     if not slot.max_chars:
         return None
-    if slot.kind == SlotKind.TITLE and (slot.max_lines or 1) < TITLE_LINES:
+    if slot.kind == SlotKind.TITLE and not slot.hard_lines and (slot.max_lines or 1) < TITLE_LINES:
         return slot.max_chars * TITLE_LINES
     return slot.max_chars
 

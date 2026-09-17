@@ -96,7 +96,7 @@ def audit_cmd(
     limit: int = typer.Option(80, "--limit", help="сколько строк показать"),
 ) -> None:
     """Аудит колоды: детерминированные проверки (+ VLM-судья) → таблица находок; аудит колоду не меняет."""
-    from deckforge.audit import audit_deck, report_markdown, with_contextual
+    from deckforge.audit import audit_deck, report_markdown
     from deckforge.core.autofix import fix_plan_rows
     from deckforge.core.ir import DeckIR
     from deckforge.parsing.dna import build_dna
@@ -123,6 +123,7 @@ def _judge(report, deck: Path, dna, deck_ir, png_dir: Optional[Path], outline: O
     """VLM-судья для CLI: PNG (готовые или рендер), текст из IR или из самого pptx."""
     import time
 
+    from deckforge.audit import with_contextual
     from deckforge.audit.contextual import CHECK_IDS, judge_deck, slides_from_context, slides_from_ir
     from deckforge.llm.client import LLMClient
 

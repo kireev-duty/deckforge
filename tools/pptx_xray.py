@@ -139,7 +139,6 @@ def analyze(path: Path) -> dict:
     size_by_font: dict[str, Counter] = defaultdict(Counter)
     kinds: Counter[str] = Counter()
     position_sig: Counter[tuple] = Counter()  # для поиска повторяющихся фигур
-    pic_by_sig: dict[tuple, int] = Counter()
     slide_rows = []
 
     for sn in slides:

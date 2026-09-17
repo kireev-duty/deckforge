@@ -211,7 +211,7 @@ def create_app(root: Path | str = Path("out/api"), client_factory: Callable[[], 
     def deck_file(s: S, job_id: str, strategy: str, name: str) -> FileResponse:
         """Только белый список имён: <strategy>.pptx/.pdf/.ir.json/.audit.json/.manifest.json, slide_NN.png, contact.png."""
         j = _job(s, job_id)
-        d = _deck(j, strategy)
+        _deck(j, strategy)  # 404, если стратегии нет в job'е
         if name in {f"{strategy}.{ext}" for ext in DECK_FILES}:
             return _file(j.dir / name)
         if _PNG.match(name):

@@ -15,7 +15,7 @@ from typing import Any, get_args
 from pydantic import ValidationError
 
 from deckforge.content.content_pack import ContentPack
-from deckforge.core.ir import ARCHETYPE_HINTS, Archetype, DeckOutline, OutlineSlide
+from deckforge.core.ir import ARCHETYPE_HINTS, Archetype, DeckOutline
 from deckforge.llm.client import LLMClient
 from deckforge.llm.skills import load_skill
 

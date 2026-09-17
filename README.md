@@ -13,7 +13,7 @@
 
 ## Сетап
 
-Требования: Python ≥ 3.12, Git LFS, LibreOffice (для рендера/PDF), доступ к OpenAI-совместимому inference API.
+Требования: Python ≥ 3.12, Git LFS, LibreOffice (для рендера/PDF), доступ к OpenAI-совместимому inference API. Либо Docker — см. ниже.
 
 ```bash
 git lfs install                                      # один раз на машине, ДО clone
@@ -39,15 +39,31 @@ deckforge parse "path/to/template.pptx" [--json dna.json]
 deckforge run --config configs/run.example.yaml            # или: python -m deckforge.cli run -c ... [--png] [--no-judge] [--no-images] [--outline готовый.json]
 # аудит любой колоды по шаблону (колода не меняется; --fix-plan — что чинилось бы)
 deckforge audit deck.pptx -t template.pptx [--ir deck.ir.json] [--contextual] [--fix-plan]
+# экспорт готовой колоды (своей или чужой): .html — один файл без LibreOffice; --pdf / --png — через LibreOffice
+deckforge export deck.pptx [--html out.html] [--pdf] [--png] [--ir deck.ir.json]
 # веб-интерфейс: шаблон → бриф → варианты → аудит с выбором фиксов → экспорт
 streamlit run deckforge/ui/app.py
 # HTTP API (Swagger на /docs): GET /templates, POST /generate → GET /jobs/{id} → .../decks/{strategy}/audit | fix | files/{name}
 uvicorn deckforge.api.app:app --reload
 ```
 
-Результат прогона (`out/run/<name>/` или `out/ui/runs/<время>/`): `outline.json`, `dna.json`, на каждую стратегию — `<strategy>.pptx`, `.pdf`, `.ir.json`, `.audit.json`, `.manifest.json` (провенанс: версии скиллов/моделей/стратегии, план, образцы, автофиксы, картинки, тайминги) и PNG в `<strategy>/`; сгенерированные иллюстрации — в `images/` (кэш по sha1 входов, повторный прогон их не платит); сводка — `compare.md`, `run.json`. HTML-экспорт — в работе (`run.json → not_implemented`).
+Результат прогона (`out/run/<name>/` или `out/ui/runs/<время>/`): `outline.json`, `dna.json`, на каждую стратегию — `<strategy>.pptx`, `.pdf`, `.html`, `.ir.json`, `.audit.json`, `.manifest.json` (провенанс: версии скиллов/моделей/стратегии, план, образцы, автофиксы, картинки, тайминги) и PNG в `<strategy>/`; сгенерированные иллюстрации — в `images/` (кэш по sha1 входов, повторный прогон их не платит); сводка — `compare.md`, `run.json`.
 
-Инструменты разработчика: `tools/pptx_xray.py` (структура шаблона), `tools/render_deck.py` (PNG-превью и PDF), `tools/build_variants.py` (три стратегии на одном контенте: `examples/content_pack/` × шаблон → `out/variants/`).
+HTML-экспорт — собственный рендер по XML готовой колоды (`deckforge/export/html.py`), а не растр: один самодостаточный файл, текст остаётся текстом, диаграммы — SVG, таблицы — `<table>`, картинки вшиты (WebP), фон/декор мастера и лейаута на месте. Открывается с `file://` в Chrome, Firefox, Яндекс; ←/→ — листать, F — режим показа, печать — слайд на страницу. Встроенные шрифты датасета (Play) хранятся в .pptx в сжатом EOT и в HTML не вшиваются — при наличии сети подключаются с Google Fonts (OFL), офлайн — Arial. Примеры: `examples/output/<template>/<strategy>.html`.
+
+## Docker
+
+```bash
+cp .env.example .env                 # ключи и модели; без ключей работают parse и run --outline --no-judge --no-images
+docker compose build                 # python 3.12 + LibreOffice Impress, ≈1,6 ГБ
+docker compose up                    # API http://localhost:8000/docs и UI http://localhost:8501
+docker compose run --rm cli run -c configs/run.example.yaml --png     # прогон конфигом → ./out/run/vk_tech
+docker compose run --rm cli parse "data/templates/VK Tech шаблон.pptx"
+```
+
+`./data` (шаблоны из Git LFS), `./examples`, `./out` (в т.ч. кэш VLM-разметки `out/archetypes`) и `./configs` монтируются с хоста. Шрифтов Play/Montserrat в образе нет — LibreOffice подставляет DejaVu/Liberation, поэтому PDF/PNG из контейнера чуть отличаются от локальных; .pptx и .html от этого не зависят.
+
+Инструменты разработчика: `tools/pptx_xray.py` (структура шаблона), `tools/render_deck.py` (PNG-превью и PDF), `tools/build_variants.py` (три стратегии на одном контенте: `examples/content_pack/` × шаблон → `out/variants/`). Примеры: `examples/output/<template>/` — 4 шаблона × 3 стратегии (день 11: .pptx/.pdf с судьёй и картинками; .html добавлен командой `export` поверх тех же колод), `examples/pitch/` — бриф питча для защиты (`configs/pitch.yaml`).
 
 ## Стратегии вёрстки
 

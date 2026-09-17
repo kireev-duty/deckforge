@@ -487,13 +487,17 @@ def read_chart(ctx: PartCtx, sp: etree._Element) -> ChartRec | None:
     series = plot.findall(f".//{C}ser")
     colors: list[str] = []
     for ser in series:
-        sppr = ser.find(f"{C}spPr")
-        for fill in (sppr.find("a:solidFill", NS) if sppr is not None else None,
-                     sppr.find("a:ln/a:solidFill", NS) if sppr is not None else None):
-            if fill is not None:
-                c = ctx.color_of(next(iter(fill), None))
-                if c:
-                    colors.append(c)
+        # цвет серии — c:ser/c:spPr; у pie/doughnut цвета по точкам — c:dPt/c:spPr (так пишет render/charts.py)
+        holders = [ser.find(f"{C}spPr")] + [dpt.find(f"{C}spPr") for dpt in ser.findall(f"{C}dPt")]
+        for sppr in holders:
+            if sppr is None:
+                continue
+            for fill in (sppr.find("a:solidFill", NS), sppr.find("a:ln/a:solidFill", NS)):
+                if fill is not None:
+                    c = ctx.color_of(next(iter(fill), None))
+                    if c:
+                        colors.append(c)
+                        break
     dlbls = [d for d in plot.iter(f"{C}dLbls") if _show_val(d)]
     val_ax = plot.find(f"{C}valAx")
     cat_ax = plot.find(f"{C}catAx")

@@ -31,6 +31,7 @@ from deckforge.core.deck_reader import (
     read_shapes,
 )
 from deckforge.core.ir import ChartSpec, DeckIR
+from deckforge.core.ooxml import NS, R
 from deckforge.core.package import Package, PartCtx
 from deckforge.core.units import emu_to_px
 
@@ -110,9 +111,10 @@ class HtmlExporter:
             return f'<section class="slide" id="s{idx + 1}"><div class="sp" style="left:0;top:0;width:{self.w}px;height:{self.h}px"></div></section>'
         _, layout_part, master_part = part_chain(ctx)
         body: list[str] = [self._background(ctx)]
-        if ctx.root.get("showMasterSp", "1") not in ("0", "false") and master_part:
+        show_master = _flag_on(ctx.root, "showMasterSp") and (ctx.layout is None or _flag_on(ctx.layout, "showMasterSp"))
+        if show_master and master_part:
             body.append(self._inherited_shapes(PartCtx.for_master(self.pkg, master_part)))
-        if layout_part and ctx.layout is not None and ctx.layout.get("showMasterSp", "1") not in ("0", "false"):
+        if layout_part:  # собственные фигуры лейаута (декор) видны всегда; showMasterSp лейаута относится к мастеру
             lctx = PartCtx.for_layout(self.pkg, layout_part)
             if lctx is not None:
                 body.append(self._inherited_shapes(lctx, cache=False))
@@ -189,11 +191,15 @@ class HtmlExporter:
         w, h = max(emu_to_px(s.box.w), 1), max(emu_to_px(s.box.h), 1)
         sw = max(emu_to_px(s.line_w_emu or 9525), 1)
         css[2:4] = [f"width:{max(w, sw):.1f}px", f"height:{max(h, sw):.1f}px"]  # линия нулевой высоты иначе невидима
-        x1, y1, x2, y2 = (0, h, w, 0) if s.flip_v != s.flip_h and s.flip_v else (0, 0, w, h)
+        if s.rot:
+            css.append(f"transform:rotate({s.rot:.1f}deg)")
+        # без флипов линия идёт из левого верхнего угла в правый нижний; flipH/flipV зеркалят свою ось
+        x1, x2 = (w, 0) if s.flip_h else (0, w)
+        y1, y2 = (h, 0) if s.flip_v else (0, h)
         if s.box.h < s.box.w * 0.02:  # горизонтальная
-            x1, y1, x2, y2 = 0, h / 2, w, h / 2
-        elif s.box.w < s.box.h * 0.02:
-            x1, y1, x2, y2 = w / 2, 0, w / 2, h
+            y1 = y2 = h / 2
+        elif s.box.w < s.box.h * 0.02:  # вертикальная
+            x1 = x2 = w / 2
         return (f'<div class="sp" style="{";".join(css)}"><svg width="100%" height="100%" viewBox="0 0 {w:.1f} {h:.1f}" '
                 f'preserveAspectRatio="none"><line x1="{x1:.1f}" y1="{y1:.1f}" x2="{x2:.1f}" y2="{y2:.1f}" '
                 f'stroke="#{_hex(s.line[0])}" stroke-width="{sw:.1f}"/></svg></div>')
@@ -331,22 +337,32 @@ class HtmlExporter:
     # ── шрифты ──
 
     def _embed_fonts(self) -> None:
-        for part in self.pkg.parts(r"ppt/fonts/.+"):
-            try:
-                ttf = eot_to_ttf(self.pkg.zip.read(part))
-            except Exception as e:  # noqa: BLE001
-                log.info("шрифт %s не встроен: %s", part, e)
-                continue
-            if ttf is None:
-                continue
-            stem = Path(part).stem  # Play-bold, Montserrat-regular …
-            family, _, style = stem.partition("-")
+        """@font-face по p:embeddedFontLst: typeface → части regular/bold/italic/boldItalic через rels презентации."""
+        pres_part = next(iter(self.pkg.parts(r"ppt/presentation\.xml")), None)
+        if pres_part is None:
+            return
+        for ef in self.pkg.presentation.findall("p:embeddedFontLst/p:embeddedFont", NS):
+            font = ef.find("p:font", NS)
+            family = font.get("typeface", "") if font is not None else ""
             if not SAFE_NAME.match(family):
                 continue
-            weight = "700" if "bold" in style.lower() else "400"
-            fstyle = "italic" if "italic" in style.lower() else "normal"
-            self.assets.fonts[stem] = (f'@font-face{{font-family:"{family}";font-weight:{weight};font-style:{fstyle};'
-                                       f'src:url(data:font/ttf;base64,{base64.b64encode(ttf).decode()}) format("truetype")}}')
+            for tag, weight, fstyle in (("regular", "400", "normal"), ("bold", "700", "normal"),
+                                        ("italic", "400", "italic"), ("boldItalic", "700", "italic")):
+                el = ef.find(f"p:{tag}", NS)
+                part = self.pkg.rel_by_id(pres_part, el.get(R + "id") or "") if el is not None else None
+                if not part or part not in self.pkg.names:
+                    continue
+                try:
+                    ttf = eot_to_ttf(self.pkg.zip.read(part))
+                except Exception as e:  # noqa: BLE001
+                    log.info("шрифт %s не встроен: %s", part, e)
+                    continue
+                if ttf is None:
+                    continue
+                b64 = base64.b64encode(ttf).decode()
+                self.assets.fonts[f"{family}-{tag}"] = (
+                    f'@font-face{{font-family:"{family}";font-weight:{weight};font-style:{fstyle};'
+                    f'src:url(data:font/ttf;base64,{b64}) format("truetype")}}')
 
 
 def eot_to_ttf(data: bytes) -> bytes | None:
@@ -436,7 +452,7 @@ def _svg_bars(spec: ChartSpec, col: dict[str, str], area: tuple[float, float, fl
     vmax, vmin = max(vals + [0]), min(vals + [0])
     ticks = _ticks(vmax, vmin)
     lo, hi = ticks[0], ticks[-1]
-    label_w = max(len(c) for c in spec.categories) * CHART_FONT_PX * 0.58 if horizontal else 0
+    label_w = max((len(c) for c in spec.categories), default=0) * CHART_FONT_PX * 0.58 if horizontal else 0
     pl, pr, pt, pb = (ax + 8 + label_w, 8, 8, 20) if horizontal else (ax + 8 + len(_fmt(hi)) * 7, 8, (26 if spec.y_label else 12), 20)
     x0, y0 = pl, ay + pt
     pw, ph = aw - pl - pr + ax, ah - pt - pb
@@ -562,6 +578,10 @@ def _svg_pie(spec: ChartSpec, palette: list[str], area: tuple[float, float, floa
 
 
 # ──────────────────────────── вспомогательное ────────────────────────────
+
+
+def _flag_on(el, name: str) -> bool:
+    return el.get(name, "1") not in ("0", "false")
 
 
 def _bg_color(ctx: PartCtx) -> str:

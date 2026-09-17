@@ -1,0 +1,29 @@
+# docker compose up            → API :8000 (Swagger /docs) и UI :8501
+# docker compose run --rm cli run -c configs/run.example.yaml --png   → прогон конфигом, результат в ./out/run/vk_tech
+# Ключи и модели — в .env (см. .env.example). Шаблоны датасета (Git LFS) и кэш VLM-разметки (out/archetypes)
+# монтируются с хоста: без кэша шаблоны размечаются одними правилами.
+x-common: &common
+  build: .
+  image: deckforge:latest
+  env_file:
+    - path: .env
+      required: false   # без ключей: parse / run --outline --no-judge --no-images работают
+  volumes:
+    - ./data:/app/data:ro
+    - ./examples:/app/examples
+    - ./out:/app/out
+    - ./configs:/app/configs:ro
+
+services:
+  api:
+    <<: *common
+    entrypoint: ["python", "-m", "uvicorn", "deckforge.api.app:app", "--host", "0.0.0.0", "--port", "8000"]
+    ports: ["8000:8000"]
+  ui:
+    <<: *common
+    entrypoint: ["python", "-m", "streamlit", "run", "deckforge/ui/app.py", "--server.address", "0.0.0.0",
+                 "--server.port", "8501", "--server.headless", "true", "--browser.gatherUsageStats", "false"]
+    ports: ["8501:8501"]
+  cli:
+    <<: *common
+    profiles: ["cli"]  # не поднимается по `up`; только `docker compose run --rm cli <команда>`

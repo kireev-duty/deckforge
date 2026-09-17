@@ -1,0 +1,13 @@
+.git
+.venv
+out
+data
+examples/output
+docs/tz
+**/__pycache__
+*.egg-info
+.pytest_cache
+.ruff_cache
+.env
+.claude
+agents

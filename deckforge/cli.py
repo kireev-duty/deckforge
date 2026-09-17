@@ -18,7 +18,7 @@ app = typer.Typer(help="deckforge — цифровой дизайнер през
 
 @app.callback()
 def _root() -> None:
-    """Подкоманды: parse, run, audit."""
+    """Подкоманды: parse, run, audit, export."""
 
 
 @app.command("parse")
@@ -117,6 +117,34 @@ def audit_cmd(
         typer.echo(f"\nsafe — применится в `run` автоматически; ir — по выбору пользователя; replan — только предложение; "
                    f"template — дизайн шаблона, не чиним. Всего {len(rows)} из {len(report.findings)} находок с фиксом.")
     raise typer.Exit(code=1 if report.errors else 0)
+
+
+@app.command("export")
+def export_cmd(
+    deck: Path = typer.Argument(..., help="колода .pptx (своя или чужая)"),
+    html: Optional[Path] = typer.Option(None, "--html", help="куда писать .html (по умолчанию рядом с .pptx)"),
+    pdf: bool = typer.Option(False, "--pdf", help="плюс .pdf через LibreOffice"),
+    png: bool = typer.Option(False, "--png", help="плюс PNG по слайдам и contact.png (LibreOffice) в out/render/<stem>"),
+    ir: Optional[Path] = typer.Option(None, "--ir", help="<strategy>.ir.json — заметки к слайдам в HTML"),
+    title: Optional[str] = typer.Option(None, "--title", help="заголовок HTML-страницы"),
+) -> None:
+    """Экспорт готовой колоды: .html (свой рендер, один файл, без LibreOffice), опционально .pdf и PNG."""
+    import shutil
+
+    from deckforge.core.ir import DeckIR
+    from deckforge.export import export_html, pptx_to_pdf, render
+
+    deck_ir = DeckIR.model_validate_json(ir.read_text("utf-8")) if ir else None
+    out = export_html(deck, html or deck.with_suffix(".html"), ir=deck_ir, title=title)
+    typer.echo(f"html → {out} ({out.stat().st_size / 1e6:.1f} МБ)")
+    if png:
+        pngs = render(deck, Path("out/render") / deck.stem, contact=True)
+        typer.echo(f"png → {pngs[0].parent} ({len(pngs)} слайдов)")
+    if pdf:
+        tmp = pptx_to_pdf(deck, deck.parent / "_pdf")
+        shutil.move(str(tmp), deck.with_suffix(".pdf"))
+        shutil.rmtree(deck.parent / "_pdf", ignore_errors=True)
+        typer.echo(f"pdf → {deck.with_suffix('.pdf')}")
 
 
 def _judge(report, deck: Path, dna, deck_ir, png_dir: Optional[Path], outline: Optional[Path], content_pack: Optional[Path]):

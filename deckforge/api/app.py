@@ -47,7 +47,7 @@ from deckforge.llm.client import LLMClient
 from deckforge.pipeline import RunConfig, refine_deck, run, soffice_available
 from deckforge.pipeline.config import Purpose
 
-DECK_FILES = ("pptx", "pdf", "ir.json", "audit.json", "manifest.json")
+DECK_FILES = ("pptx", "pdf", "html", "ir.json", "audit.json", "manifest.json")
 RUN_FILES = ("outline.json", "outline.raw.json", "run.json", "compare.md", "dna.json")
 _PNG = re.compile(r"^(slide_\d{2}\.png|contact\.png)$")
 
@@ -135,7 +135,7 @@ def create_app(root: Path | str = Path("out/api"), client_factory: Callable[[], 
         judge: bool = Form(True, description="VLM-судья по PNG"),
         autofix: bool = Form(True, description="безопасные автофиксы"),
         render_png: bool = Form(True),
-        export: str = Form("pptx,pdf", description="через запятую: pptx, pdf"),
+        export: str = Form("pptx,pdf,html", description="через запятую: pptx, pdf, html"),
         files: list[UploadFile] = File(default=[], description="контент-пакет: *.md, *.txt, data/*.json, data/*.csv"),
     ) -> JobCreated:
         """Запустить прогон: бриф + файлы → outline (LLM) → колоды по стратегиям → аудит → PDF. Ответ — id job'а."""
@@ -209,7 +209,7 @@ def create_app(root: Path | str = Path("out/api"), client_factory: Callable[[], 
 
     @app.get("/jobs/{job_id}/decks/{strategy}/files/{name}")
     def deck_file(s: S, job_id: str, strategy: str, name: str) -> FileResponse:
-        """Только белый список имён: <strategy>.pptx/.pdf/.ir.json/.audit.json/.manifest.json, slide_NN.png, contact.png."""
+        """Только белый список имён: <strategy>.pptx/.pdf/.html/.ir.json/.audit.json/.manifest.json, slide_NN.png, contact.png."""
         j = _job(s, job_id)
         _deck(j, strategy)  # 404, если стратегии нет в job'е
         if name in {f"{strategy}.{ext}" for ext in DECK_FILES}:

@@ -14,7 +14,7 @@ audit:
   deterministic: true
   contextual: true
   autofix: true
-export: [pptx, pdf]
+export: [pptx, pdf, html]
 output_dir: examples/output/vk_workspace
 render_png: true
 render_dpi: 72

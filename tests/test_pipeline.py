@@ -217,10 +217,12 @@ def test_pdf_export(template_path, tmp_path: Path) -> None:
     d = res.decks[0]
     assert d.pdf is not None and d.pdf.exists() and d.pdf.name == "executive.pdf" and d.pdf.stat().st_size > 10_000
     assert not (tmp_path / "_pdf").exists()
+    assert d.html is not None and d.html.exists() and d.html.name == "executive.html"
     m = d.load_manifest()
-    assert m["exports"] == {"pptx": str(d.pptx), "pdf": str(d.pdf)} and "export_pdf" in m["timings_s"]
+    assert m["exports"] == {"pptx": str(d.pptx), "pdf": str(d.pdf), "html": str(d.html)}
+    assert "export_pdf" in m["timings_s"] and "export_html" in m["timings_s"]
     run_json = json.loads(res.run_json.read_text("utf-8"))
-    assert run_json["not_implemented"] == ["export:html"] and run_json["decks"][0]["exports"]["pdf"] == str(d.pdf)
+    assert run_json["not_implemented"] == [] and run_json["decks"][0]["exports"]["html"] == str(d.html)
 
 
 @pytest.mark.skipif(not _soffice(), reason="нужен LibreOffice для PNG")

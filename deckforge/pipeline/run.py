@@ -36,6 +36,7 @@ from deckforge.content.images import illustrate
 from deckforge.core.autofix import plan_fixes
 from deckforge.core.ir import Archetype, AuditReport, DeckIR, DeckOutline, Exemplar, Finding, TemplateDNA
 from deckforge.core.strategy import load_strategy
+from deckforge.export.html import export_html
 from deckforge.export.render import find_soffice, pptx_to_pdf
 from deckforge.layout import LayoutResult, apply_fixes, build_deck_ir
 from deckforge.llm.client import LLMClient
@@ -117,12 +118,15 @@ class DeckResult:
     audit: Path | None = None  # <strategy>.audit.json (AuditReport)
     audit_summary: dict = field(default_factory=dict)
     pdf: Path | None = None
+    html: Path | None = None
 
     @property
     def exports(self) -> dict[str, str]:
         out = {"pptx": str(self.pptx)}
         if self.pdf is not None:
             out["pdf"] = str(self.pdf)
+        if self.html is not None:
+            out["html"] = str(self.html)
         return out
 
     def load_report(self) -> AuditReport | None:
@@ -309,16 +313,24 @@ def build_deck(ctx: RunContext, strategy_name: str, progress: Progress | None = 
         if err:
             deck_warnings.append(err)
         deck_timings["export_pdf"] = round(time.perf_counter() - t0, 3)
+    html_path: Path | None = None
+    if "html" in cfg.export:
+        t0 = time.perf_counter()
+        html_path, err = _export_html(pptx_out, res.ir, outline.title)
+        if err:
+            deck_warnings.append(err)
+        deck_timings["export_html"] = round(time.perf_counter() - t0, 3)
 
     llm_calls = [asdict(c) for c in ctx.client.calls] if ctx.client is not None else list(ctx.outline.llm_calls)
     choices = [c.__dict__ for c in res.choices]
     deck = DeckResult(strategy.name, pptx_out, ir_path, out_dir / f"{strategy.name}.manifest.json", st, deck_warnings,
-                      choices, pngs, deck_timings, audit_path, audit_info, pdf_path)
+                      choices, pngs, deck_timings, audit_path, audit_info, pdf_path, html_path)
     manifest = {
         "created": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "template": parsed.meta,
         "content_pack": str(cfg.content_pack),
         "outline": str(ctx.outline.path),
+        "outline_title": outline.title,
         "strategy": {"name": strategy.name, "version": strategy.version},
         "skills": skills_used,
         "models": _models(ctx.client),
@@ -344,7 +356,8 @@ def build_deck(ctx: RunContext, strategy_name: str, progress: Progress | None = 
         + (f", judge {deck_timings['audit_contextual']:.1f}s: {audit_info.get('contextual', 0)} находок"
            if "audit_contextual" in deck_timings else "")
         + (f", png {deck_timings['png']:.1f}s" if pngs else "")
-        + (f", pdf {deck_timings['export_pdf']:.1f}s" if pdf_path else "") + ")")
+        + (f", pdf {deck_timings['export_pdf']:.1f}s" if pdf_path else "")
+        + (f", html {deck_timings['export_html']:.1f}s" if html_path else "") + ")")
     return deck
 
 
@@ -375,6 +388,7 @@ def refine_deck(deck: DeckResult, parsed: ParsedTemplate, selected: Iterable[int
     timings = dict(deck.timings_s)
     pngs = list(deck.pngs)
     pdf = deck.pdf
+    html = deck.html
     if changed:
         deck.ir_json.write_text(ir.model_dump_json(indent=1), "utf-8")
         want_png = render_png if render_png is not None else bool(deck.pngs)
@@ -390,6 +404,12 @@ def refine_deck(deck: DeckResult, parsed: ParsedTemplate, selected: Iterable[int
             if err:
                 deck.warnings.append(err)
             timings["export_pdf"] = round(time.perf_counter() - t0, 3)
+        if html is not None:
+            t0 = time.perf_counter()
+            html, err = _export_html(deck.pptx, ir, manifest.get("outline_title"))
+            if err:
+                deck.warnings.append(err)
+            timings["export_html"] = round(time.perf_counter() - t0, 3)
     deck.audit.write_text(new_report.model_dump_json(indent=1), "utf-8")  # type: ignore[union-attr]
 
     prev = manifest.get("audit", {}).get("autofix") or {"applied": 0, "skipped": 0, "items": [],
@@ -406,13 +426,14 @@ def refine_deck(deck: DeckResult, parsed: ParsedTemplate, selected: Iterable[int
     timings["refine"] = round(timings.get("refine", 0.0) + time.perf_counter() - t_start, 3)
     manifest["audit"] = audit_info
     manifest["timings_s"] = {**manifest.get("timings_s", {}), **timings}
-    manifest["exports"] = {"pptx": str(deck.pptx), **({"pdf": str(pdf)} if pdf else {})}
+    manifest["exports"] = {"pptx": str(deck.pptx), **({"pdf": str(pdf)} if pdf else {}),
+                           **({"html": str(html)} if html else {})}
     manifest["warnings"] = list(dict.fromkeys([*manifest.get("warnings", []), *deck.warnings]))
     deck.manifest.write_text(json.dumps(manifest, ensure_ascii=False, indent=1), "utf-8")
     say(f"{deck.strategy}: применено {info['applied']} из {len(chosen)} выбранных фиксов, "
         f"{info['before']['errors']}→{info['after']['errors']} err, {info['before']['warnings']}→{info['after']['warnings']} warn")
     return DeckResult(deck.strategy, deck.pptx, deck.ir_json, deck.manifest, deck.stats, deck.warnings, deck.choices,
-                      pngs, timings, deck.audit, audit_info, pdf)
+                      pngs, timings, deck.audit, audit_info, pdf, html)
 
 
 def run(
@@ -463,7 +484,6 @@ def run(
 
 def run_summary(cfg: RunConfig, result: RunResult) -> dict:
     """Содержимое run.json — сводка прогона (читают UI и API)."""
-    not_implemented = [k for k, on in (("export:html", "html" in cfg.export),) if on]
     return {
         "created": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "config": json.loads(cfg.model_dump_json()),
@@ -473,7 +493,7 @@ def run_summary(cfg: RunConfig, result: RunResult) -> dict:
                    "audit": d.audit_summary, "exports": d.exports, "timings_s": d.timings_s} for d in result.decks],
         "timings_s": result.timings_s,
         "warnings": result.warnings,
-        "not_implemented": not_implemented,  # читаются из конфига, но пока не выполняются
+        "not_implemented": [],  # все шаги конфига выполняются; ключ оставлен для читателей run.json
     }
 
 
@@ -525,6 +545,14 @@ def _export_pdf(pptx: Path, rendered_dir: Path | None) -> tuple[Path | None, str
         return target, None
     except Exception as e:  # noqa: BLE001
         return None, f"export.pdf: {str(e)[:120]}"
+
+
+def _export_html(pptx: Path, ir: DeckIR | None, title: str | None) -> tuple[Path | None, str | None]:
+    """<strategy>.html рядом с .pptx — свой рендер без LibreOffice (export/html.py)."""
+    try:
+        return export_html(pptx, pptx.with_suffix(".html"), ir=ir, title=title), None
+    except Exception as e:  # noqa: BLE001
+        return None, f"export.html: {str(e)[:120]}"
 
 
 def soffice_available() -> bool:

@@ -8,6 +8,7 @@
 
 from __future__ import annotations
 
+import copy
 import io
 import logging
 from dataclasses import dataclass, field
@@ -52,6 +53,7 @@ class RunRec:
     color: str | None
     italic: bool = False
     underline: bool = False
+    field: str | None = None  # a:fld/@type (slidenum, datetime…) — потребитель подставляет актуальное значение
 
 
 @dataclass
@@ -66,7 +68,8 @@ class ParaRec:
     align: str = "l"  # l | ctr | r | just
     bullet_char: str | None = None  # символ маркера (a:buChar); None при нумерации или без маркера
     bullet_auto: bool = False  # a:buAutoNum — нумерованный список
-    indent_emu: int = 0  # a:pPr/@marL
+    indent_emu: int = 0  # a:pPr/@marL — отступ абзаца слева
+    first_indent_emu: int = 0  # a:pPr/@indent — сдвиг первой строки (отрицательный — висячий, под маркер)
 
     @property
     def words(self) -> int:
@@ -148,8 +151,10 @@ class ShapeRec:
     is_ours: bool = False
     is_decor: bool = False  # картинка образца вне слотов (иконка, подложка) — дизайн шаблона, не контент
     anchor: str = "t"  # a:bodyPr/@anchor: t | ctr | b
+    fill_alpha: float = 1.0  # a:alpha у сплошной заливки (0..1)
     line_w_emu: int = 0  # толщина обводки; 0 — обводки нет
     geom: str = "rect"  # a:prstGeom/@prst
+    geom_adj: float | None = None  # a:avLst/a:gd[adj] в долях (радиус скругления roundRect); None — по умолчанию
     rot: float = 0.0  # градусы по часовой
     flip_h: bool = False
     flip_v: bool = False
@@ -209,6 +214,7 @@ def read_shape(ctx: PartCtx, sp: etree._Element, z: int = 0) -> ShapeRec | None:
         rec.fill = [c for c, _ in ctx.shape_fill(sp)]
         rec.line = [c for c, _ in ctx.shape_line(sp)]
         rec.line_w_emu = _line_width(sp, bool(rec.line))
+        rec.fill_alpha = _fill_alpha(sp)
     if tag == "sp":
         _text(ctx, sp, rec)
         blip_fill = sp.find("p:spPr/a:blipFill", NS)
@@ -267,11 +273,24 @@ def _geometry(sp: etree._Element, rec: ShapeRec) -> None:
     geom = sp.find("p:spPr/a:prstGeom", NS)
     if geom is not None and geom.get("prst"):
         rec.geom = geom.get("prst")
+        gd = geom.find("a:avLst/a:gd[@name='adj']", NS)
+        if gd is not None and (gd.get("fmla") or "").startswith("val "):
+            try:
+                rec.geom_adj = int(gd.get("fmla").split()[1]) / 100000
+            except ValueError:
+                pass
     for tag in ("p:nvSpPr", "p:nvPicPr", "p:nvGraphicFramePr", "p:nvCxnSpPr"):
         nv = sp.find(f"{tag}/p:cNvPr", NS)
         if nv is not None:
             rec.hidden = nv.get("hidden") in ("1", "true")
             break
+
+
+def _fill_alpha(sp: etree._Element) -> float:
+    a = sp.find("p:spPr/a:solidFill/*/a:alpha", NS)
+    if a is None or not a.get("val"):
+        return 1.0
+    return max(0.0, min(1.0, int(a.get("val")) / 100000))
 
 
 def _line_width(sp: etree._Element, has_line: bool) -> int:
@@ -318,14 +337,16 @@ def read_paragraphs(ctx: PartCtx, paras: list[etree._Element], sp: etree._Elemen
             runs.append(RunRec(text=text, font=ctx.resolve_font(chain, placeholder(sp) if sp is not None else None),
                                size_pt=round(ctx.resolve_size(chain) * scale, 1), bold=ctx.resolve_bold(chain),
                                color=ctx.resolve_text_color(chain, sp),
-                               italic=_flag(chain, "i"), underline=_underline(chain)))
+                               italic=_flag(chain, "i"), underline=_underline(chain),
+                               field=run.get("type") if localname(run) == "fld" else None))
         text = "".join(r.text for r in runs)
         if not text.strip():
             continue
         chain = para_props_chain(ctx, ppr, sp, lvl)
         bu = _bullet_el(chain)
         rec = ParaRec(text=text, runs=runs, level=lvl, bullet=bu is not None and localname(bu) != "buNone",
-                      align=_attr(chain, "algn", "l"), indent_emu=int(_attr(chain, "marL", "0") or 0))
+                      align=_attr(chain, "algn", "l"), indent_emu=int(_attr(chain, "marL", "0") or 0),
+                      first_indent_emu=int(_attr(chain, "indent", "0") or 0))
         if bu is not None:
             n = localname(bu)
             rec.bullet_char = bu.get("char") if n == "buChar" else ("•" if n == "buBlip" else None)
@@ -363,7 +384,9 @@ def para_props_chain(ctx: PartCtx, ppr: etree._Element | None, sp: etree._Elemen
                 chain.append(d)
     tx = ctx.master.find("p:txStyles", NS)
     if tx is not None:
-        style = "titleStyle" if ph[0] in ("title", "ctrTitle") else "bodyStyle"
+        # заголовки → titleStyle, тело/подзаголовок → bodyStyle, колонтитулы/номер/дата и прочее → otherStyle
+        style = ("titleStyle" if ph[0] in ("title", "ctrTitle")
+                 else "bodyStyle" if ph[0] in ("body", "obj", "subTitle") else "otherStyle")
         if (d := tx.find(f"p:{style}/{lvl_tag}", NS)) is not None:
             if style == "titleStyle" or ph[0] == "subTitle":
                 d = _without_bullets(d)
@@ -376,7 +399,7 @@ def _without_bullets(ppr: etree._Element) -> etree._Element:
     clone = etree.Element(ppr.tag, attrib=dict(ppr.attrib))
     for c in ppr:
         if not localname(c).startswith("bu"):
-            clone.append(c)
+            clone.append(copy.deepcopy(c))  # deepcopy: append переносит элемент из кэшированного дерева мастера
     return clone
 
 

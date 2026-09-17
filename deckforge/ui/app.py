@@ -87,6 +87,7 @@ def sidebar() -> tuple[TemplateEntry | None, dict]:
         "render_png": st.sidebar.checkbox("PNG-превью", soffice_available(), disabled=not soffice_available(),
                                           help="LibreOffice не найден" if not soffice_available() else "≈10 с на колоду"),
         "pdf": st.sidebar.checkbox("Экспорт PDF", soffice_available(), disabled=not soffice_available()),
+        "html": st.sidebar.checkbox("Экспорт HTML", True, help="Один файл, без LibreOffice; открывается в браузере"),
     }
     if not soffice_available():
         st.sidebar.warning("LibreOffice не найден: без PNG, PDF и VLM-судьи. Задайте SOFFICE_PATH.")
@@ -166,7 +167,8 @@ def generate(entry: TemplateEntry, opts: dict, brief: str, files: list, use_exam
     cfg = RunConfig(
         template=entry.path, content_pack=pack_dir, purpose=opts["purpose"], audience=opts["audience"],
         language=opts["language"], target_slides=opts["target_slides"], strategies=opts["strategies"], images="off",
-        output_dir=run_dir, render_png=opts["render_png"], export=["pptx", "pdf"] if opts["pdf"] else ["pptx"],
+        output_dir=run_dir, render_png=opts["render_png"],
+        export=["pptx", *(["pdf"] if opts["pdf"] else []), *(["html"] if opts["html"] else [])],
         audit={"deterministic": True, "contextual": opts["judge"], "autofix": opts["autofix"]},
     )
     with st.status("Генерация…", expanded=True) as status:
@@ -230,7 +232,7 @@ def show_deck(name: str, deck: DeckResult) -> None:
 
     # ── экспорт ──
     st.markdown("#### Экспорт")
-    c = st.columns(5)
+    c = st.columns(6)
     c[0].download_button("⬇ .pptx", deck.pptx.read_bytes(), file_name=f"{name}.pptx", key=f"dl_pptx_{name}",
                          mime="application/vnd.openxmlformats-officedocument.presentationml.presentation")
     if deck.pdf and deck.pdf.exists():
@@ -238,15 +240,19 @@ def show_deck(name: str, deck: DeckResult) -> None:
                              mime="application/pdf")
     else:
         c[1].button("PDF — нет", disabled=True, key=f"dl_pdf_{name}")
-    c[2].download_button("⬇ manifest.json", deck.manifest.read_bytes(), file_name=f"{name}.manifest.json",
+    if deck.html and deck.html.exists():
+        c[2].download_button("⬇ .html", deck.html.read_bytes(), file_name=f"{name}.html", key=f"dl_html_{name}",
+                             mime="text/html")
+    else:
+        c[2].button("HTML — нет", disabled=True, key=f"dl_html_{name}")
+    c[3].download_button("⬇ manifest.json", deck.manifest.read_bytes(), file_name=f"{name}.manifest.json",
                          key=f"dl_m_{name}", mime="application/json")
-    c[3].download_button("⬇ ir.json", deck.ir_json.read_bytes(), file_name=f"{name}.ir.json", key=f"dl_ir_{name}",
+    c[4].download_button("⬇ ir.json", deck.ir_json.read_bytes(), file_name=f"{name}.ir.json", key=f"dl_ir_{name}",
                          mime="application/json")
     if deck.audit and deck.audit.exists():
-        c[4].download_button("⬇ audit.json", deck.audit.read_bytes(), file_name=f"{name}.audit.json",
+        c[5].download_button("⬇ audit.json", deck.audit.read_bytes(), file_name=f"{name}.audit.json",
                              key=f"dl_a_{name}", mime="application/json")
-    st.caption("HTML-экспорт — в следующей версии. Тайминги: "
-               + ", ".join(f"{k} {v:.1f}с" for k, v in manifest.get("timings_s", {}).items()))
+    st.caption("Тайминги: " + ", ".join(f"{k} {v:.1f}с" for k, v in manifest.get("timings_s", {}).items()))
 
 
 def audit_block(name: str, deck: DeckResult, report: AuditReport, ir, parsed: ParsedTemplate, manifest: dict) -> None:

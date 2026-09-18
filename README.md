@@ -30,6 +30,8 @@ cp .env.example .env                                 # заполнить LLM_AP
 
 Шаблоны датасета (`data/templates/*.pptx`), holdout-шаблон (`data/holdout/`) и ТЗ (`docs/tz/`) лежат в Git LFS. Если после clone файлы весят ~130 байт — это LFS-указатели: поставьте git-lfs и выполните `git lfs pull`.
 
+Разметка образцов этих шаблонов (ответы VLM `template_tagger` по неоднозначным слайдам, привязаны к sha1 файла) лежит в репо в `data/archetypes/<шаблон>.json` — с ней `examples/output` воспроизводятся без вызова VLM на этапе парсинга. Для нового шаблона разметка — правилами; VLM-уточнение: `tools/classify_layouts.py --vlm "path/to/template.pptx"` (кэш в `out/archetypes/`, `--publish` — в `data/archetypes/`).
+
 ## Инференс и модели
 
 Все колоды в репозитории (`examples/output/`, `examples/pitch/`) сгенерированы **через OpenRouter** (`https://openrouter.ai/api/v1`, OpenAI-совместимый API) этими моделями и с этими параметрами. [.env.example](.env.example) — это рабочая конфигурация проекта без ключа: `cp .env.example .env`, вписать `LLM_API_KEY` — и прогон воспроизводится. Ключ в репозитории не хранится.
@@ -86,7 +88,7 @@ docker compose run --rm cli run -c configs/run.example.yaml --png     # прог
 docker compose run --rm cli parse "data/templates/VK Tech шаблон.pptx"
 ```
 
-`./data` (шаблоны из Git LFS), `./examples`, `./out` (в т.ч. кэш VLM-разметки `out/archetypes`) и `./configs` монтируются с хоста. Шрифтов Play/Montserrat в образе нет — LibreOffice подставляет DejaVu/Liberation, поэтому PDF/PNG из контейнера чуть отличаются от локальных; .pptx и .html от этого не зависят.
+`./data` (шаблоны из Git LFS и разметка их образцов `data/archetypes` — ответы VLM, с которыми собраны примеры; без API чистый clone размечает шаблоны датасета так же), `./examples`, `./out` (в т.ч. рабочий кэш разметки `out/archetypes`) и `./configs` монтируются с хоста. Шрифтов Play/Montserrat в образе нет — LibreOffice подставляет DejaVu/Liberation, поэтому PDF/PNG из контейнера чуть отличаются от локальных; .pptx и .html от этого не зависят.
 
 Инструменты разработчика: `tools/pptx_xray.py` (структура шаблона), `tools/render_deck.py` (PNG-превью и PDF), `tools/build_variants.py` (три стратегии на одном контенте: `examples/content_pack/` × шаблон → `out/variants/`). Примеры: `examples/output/<template>/` — 4 шаблона × 3 стратегии (.pptx/.pdf/.html с судьёй и картинками, один outline на все шаблоны — `configs/final/*.yaml`; перегенерированы финальным кодом, пути в manifest относительные), `examples/pitch/` — бриф питча для защиты (`configs/pitch.yaml`).
 

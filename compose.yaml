@@ -1,7 +1,7 @@
 # docker compose up            → API :8000 (Swagger /docs) и UI :8501
 # docker compose run --rm cli run -c configs/run.example.yaml --png   → прогон конфигом, результат в ./out/run/vk_tech
-# Ключи и модели — в .env (см. .env.example). Шаблоны датасета (Git LFS) и кэш VLM-разметки (out/archetypes)
-# монтируются с хоста: без кэша шаблоны размечаются одними правилами.
+# Ключи и модели — в .env (см. .env.example). Шаблоны датасета (Git LFS) с разметкой образцов (data/archetypes, в репо)
+# и рабочий кэш VLM-разметки (out/archetypes) монтируются с хоста; чужие шаблоны без кэша размечаются правилами.
 x-common: &common
   build: .
   image: deckforge:latest

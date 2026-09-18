@@ -1,0 +1,496 @@
+{
+ "template_sha1": "974401af1ab96cf3e2fdd05d6fddaa824c162b1d",
+ "slides": [
+  {
+   "index": 1,
+   "vlm": {
+    "archetype": "bullets",
+    "tags": [
+     "тёмный фон",
+     "один текстовый блок",
+     "логотипы",
+     "декоративная 3D-графика"
+    ],
+    "decor_ids": [
+     "20"
+    ],
+    "slot_roles": {
+     "2": "title",
+     "6": "body",
+     "21": "slide_number"
+    },
+    "capacity_hint": "1 заголовок + 1 текстовый блок (до 5-6 строк)",
+    "confidence": 0.95
+   }
+  },
+  {
+   "index": 2,
+   "vlm": {
+    "archetype": "agenda",
+    "tags": [
+     "содержание",
+     "3 карточки",
+     "структура презентации",
+     "тёмный фон"
+    ],
+    "decor_ids": [
+     "2",
+     "3"
+    ],
+    "slot_roles": {
+     "4": "title",
+     "10": "label",
+     "11": "body",
+     "20": "caption",
+     "22": "label",
+     "23": "body",
+     "27": "caption",
+     "29": "label",
+     "31": "body",
+     "40": "caption"
+    },
+    "capacity_hint": "3 раздела с описанием структуры",
+    "confidence": 0.95
+   }
+  },
+  {
+   "index": 3,
+   "vlm": {
+    "archetype": "cards",
+    "tags": [
+     "6 карточек",
+     "сетка 3x2",
+     "нумерация",
+     "структура"
+    ],
+    "decor_ids": [
+     "2",
+     "10",
+     "11",
+     "12",
+     "13",
+     "14",
+     "15",
+     "3"
+    ],
+    "slot_roles": {
+     "7": "title",
+     "4": "subtitle",
+     "69": "number",
+     "63": "body",
+     "70": "number",
+     "64": "body",
+     "71": "number",
+     "65": "body",
+     "72": "number",
+     "66": "body",
+     "73": "number",
+     "67": "body",
+     "74": "number",
+     "68": "body"
+    },
+    "capacity_hint": "6 карточек",
+    "confidence": 0.95
+   }
+  },
+  {
+   "index": 4,
+   "vlm": {
+    "archetype": "freeform",
+    "tags": [
+     "инструкция",
+     "цветовая палитра",
+     "шрифты",
+     "гайдлайн"
+    ],
+    "decor_ids": [
+     "36",
+     "7",
+     "10",
+     "30",
+     "20"
+    ],
+    "slot_roles": {
+     "3": "label",
+     "5": "label",
+     "6": "body",
+     "26": "label",
+     "27": "label",
+     "21": "caption",
+     "23": "caption",
+     "24": "caption",
+     "25": "caption",
+     "29": "caption",
+     "9": "caption",
+     "32": "caption",
+     "37": "caption",
+     "33": "caption"
+    },
+    "capacity_hint": "1 инструкция по оформлению (шрифт + палитра)",
+    "confidence": 0.95
+   }
+  },
+  {
+   "index": 5,
+   "vlm": {
+    "archetype": "freeform",
+    "tags": [
+     "логотипы",
+     "спонсоры",
+     "сетка",
+     "тёмный фон"
+    ],
+    "decor_ids": [
+     "2",
+     "3"
+    ],
+    "slot_roles": {
+     "4": "title",
+     "7": "caption",
+     "2175": "label",
+     "2176": "label",
+     "5": "icon",
+     "2161": "icon",
+     "2163": "icon",
+     "2164": "icon",
+     "2156": "icon",
+     "2158": "icon",
+     "2153": "icon",
+     "2154": "icon",
+     "2157": "icon",
+     "2159": "icon",
+     "2160": "icon",
+     "2155": "icon",
+     "2167": "icon",
+     "2168": "icon",
+     "2169": "icon",
+     "2170": "icon",
+     "2171": "icon",
+     "2166": "icon",
+     "2165": "icon",
+     "2172": "icon",
+     "2173": "icon",
+     "2174": "icon"
+    },
+    "capacity_hint": "20 логотипов в 2 группах",
+    "confidence": 0.95
+   }
+  },
+  {
+   "index": 7,
+   "vlm": {
+    "archetype": "image_text",
+    "tags": [
+     "2 колонки",
+     "фото команды",
+     "описание решения",
+     "логотипы"
+    ],
+    "decor_ids": [
+     "3",
+     "7",
+     "16",
+     "17"
+    ],
+    "slot_roles": {
+     "2": "picture",
+     "14": "body",
+     "15": "label",
+     "18": "title",
+     "6": "label",
+     "5": "body",
+     "4": "label",
+     "8": "body",
+     "10": "slide_number"
+    },
+    "capacity_hint": "1 фото, 1 блок о команде, 2 блока описания решения",
+    "confidence": 0.9
+   }
+  },
+  {
+   "index": 9,
+   "vlm": {
+    "archetype": "process",
+    "tags": [
+     "3 шага",
+     "таймлайн",
+     "горизонтальные разделители",
+     "нумерация справа"
+    ],
+    "decor_ids": [
+     "2",
+     "5",
+     "6",
+     "8",
+     "18"
+    ],
+    "slot_roles": {
+     "7": "title",
+     "38": "label",
+     "37": "body",
+     "9": "number",
+     "44": "label",
+     "43": "body",
+     "11": "number",
+     "41": "label",
+     "40": "body",
+     "12": "number"
+    },
+    "capacity_hint": "3 шага с заголовком и описанием",
+    "confidence": 0.95
+   }
+  },
+  {
+   "index": 10,
+   "vlm": {
+    "archetype": "two_column",
+    "tags": [
+     "2 колонки",
+     "тёмный фон",
+     "логотипы",
+     "сравнение"
+    ],
+    "decor_ids": [
+     "10",
+     "24",
+     "27",
+     "21"
+    ],
+    "slot_roles": {
+     "14": "title",
+     "15": "label",
+     "17": "label",
+     "3": "body",
+     "7": "body"
+    },
+    "capacity_hint": "2 колонки",
+    "confidence": 0.95
+   }
+  },
+  {
+   "index": 12,
+   "vlm": {
+    "archetype": "bullets",
+    "tags": [
+     "тёмный фон",
+     "один текстовый блок",
+     "логотипы"
+    ],
+    "decor_ids": [
+     "4"
+    ],
+    "slot_roles": {
+     "2": "title",
+     "3": "body",
+     "21": "slide_number"
+    },
+    "capacity_hint": "1 заголовок + 1 текстовый блок",
+    "confidence": 0.9
+   }
+  },
+  {
+   "index": 13,
+   "vlm": {
+    "archetype": "image_text",
+    "tags": [
+     "фото слева",
+     "текст справа",
+     "тёмный фон",
+     "логотипы"
+    ],
+    "decor_ids": [
+     "9",
+     "2"
+    ],
+    "slot_roles": {
+     "3": "title",
+     "4": "picture",
+     "7": "body"
+    },
+    "capacity_hint": "1 изображение + 1 текстовый блок",
+    "confidence": 0.95
+   }
+  },
+  {
+   "index": 18,
+   "vlm": {
+    "archetype": "image_text",
+    "tags": [
+     "3 изображения",
+     "текстовый блок",
+     "логотипы",
+     "декоративный фон"
+    ],
+    "decor_ids": [
+     "7"
+    ],
+    "slot_roles": {
+     "3": "picture",
+     "4": "picture",
+     "5": "picture",
+     "6": "body",
+     "10": "title"
+    },
+    "capacity_hint": "1 заголовок, 1 текстовый блок, 3 изображения",
+    "confidence": 0.9
+   }
+  },
+  {
+   "index": 19,
+   "vlm": {
+    "archetype": "agenda",
+    "tags": [
+     "содержание",
+     "5 пунктов",
+     "вертикальный список",
+     "логотипы"
+    ],
+    "decor_ids": [
+     "15",
+     "17",
+     "18",
+     "19",
+     "23",
+     "24"
+    ],
+    "slot_roles": {
+     "4": "title",
+     "5": "label",
+     "6": "label",
+     "7": "label",
+     "8": "label",
+     "9": "label",
+     "10": "slide_number",
+     "14": "footer"
+    },
+    "capacity_hint": "5 пунктов списка",
+    "confidence": 0.95
+   }
+  },
+  {
+   "index": 23,
+   "vlm": {
+    "archetype": "cards",
+    "tags": [
+     "3 карточки",
+     "иконки",
+     "тёмный фон",
+     "связи линиями"
+    ],
+    "decor_ids": [
+     "6"
+    ],
+    "slot_roles": {
+     "9": "title",
+     "8": "icon",
+     "10": "icon",
+     "11": "icon",
+     "7": "picture",
+     "17": "picture",
+     "18": "picture",
+     "3": "body",
+     "4": "body",
+     "5": "body"
+    },
+    "capacity_hint": "3 карточки (иконка + текст)",
+    "confidence": 0.9
+   }
+  },
+  {
+   "index": 24,
+   "vlm": {
+    "archetype": "process",
+    "tags": [
+     "5 шагов",
+     "таймлайн",
+     "схема",
+     "коннекторы"
+    ],
+    "decor_ids": [
+     "13",
+     "34",
+     "35",
+     "36",
+     "37",
+     "38",
+     "39",
+     "40",
+     "41",
+     "42"
+    ],
+    "slot_roles": {
+     "15": "title",
+     "14": "picture",
+     "16": "picture",
+     "17": "picture",
+     "18": "picture",
+     "19": "picture",
+     "2": "label",
+     "3": "body",
+     "4": "label",
+     "5": "body",
+     "6": "label",
+     "7": "body",
+     "8": "label",
+     "9": "body",
+     "10": "label",
+     "11": "body",
+     "43": "number",
+     "44": "number",
+     "45": "number",
+     "53": "number",
+     "54": "number"
+    },
+    "capacity_hint": "5 шагов с картинками и подписями",
+    "confidence": 0.95
+   }
+  },
+  {
+   "index": 25,
+   "vlm": {
+    "archetype": "image_text",
+    "tags": [
+     "мокап планшета",
+     "3 текстовых блока",
+     "логотипы",
+     "светлый фон"
+    ],
+    "decor_ids": [
+     "12",
+     "7"
+    ],
+    "slot_roles": {
+     "2": "picture",
+     "4": "body",
+     "5": "body",
+     "6": "body"
+    },
+    "capacity_hint": "1 мокап + 3 текстовых блока",
+    "confidence": 0.95
+   }
+  },
+  {
+   "index": 36,
+   "vlm": {
+    "archetype": "freeform",
+    "tags": [
+     "библиотека иконок",
+     "тёмный фон",
+     "декоративные элементы",
+     "инструкция"
+    ],
+    "decor_ids": [
+     "1144",
+     "1768",
+     "8"
+    ],
+    "slot_roles": {
+     "3": "title",
+     "4": "slide_number"
+    },
+    "capacity_hint": "1 заголовок, библиотека иконок",
+    "confidence": 0.95
+   }
+  }
+ ]
+}

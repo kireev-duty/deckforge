@@ -6,6 +6,8 @@
 
 from __future__ import annotations
 
+import json
+
 import pytest
 from lxml import etree
 
@@ -213,3 +215,37 @@ def test_absolute_bbox_applies_group_transform() -> None:
     # масштаб 2× по x, 1× по y; сдвиг (1000, 2000)
     assert absolute_bbox(sp) == (2000, 2500, 200, 200)
     assert absolute_bbox(grp) == (1000, 2000, 2000, 1000)
+
+
+# ── кэш ответов VLM: out/archetypes → data/archetypes (в репо), привязка к sha1 ──
+
+
+def test_bundled_vlm_cache_covers_dataset_and_holdout(template_path) -> None:
+    from deckforge.parsing.exemplars import ARCHETYPES_BUNDLED, find_vlm_cache, template_sha1
+
+    for name in EXPECTED:
+        pptx = template_path(name)
+        cache = find_vlm_cache(pptx, ARCHETYPES_BUNDLED)
+        assert cache is not None, f"{name}: нет data/archetypes/{pptx.stem}.json — tools/classify_layouts.py --publish"
+        data = json.loads(cache.read_text("utf-8"))
+        assert data["template_sha1"] == template_sha1(pptx), f"{name}: кэш от другого файла шаблона"
+        assert data["slides"] and all(s["vlm"] for s in data["slides"])
+
+
+def test_vlm_cache_prefers_work_dir_and_checks_sha1(template_path, tmp_path, monkeypatch) -> None:
+    from deckforge.parsing import exemplars as ex
+
+    pptx = template_path("VK Tech")
+    work, bundled = tmp_path / "out", tmp_path / "data"
+    work.mkdir(), bundled.mkdir()
+    monkeypatch.setattr(ex, "ARCHETYPES_CACHE", work)
+    monkeypatch.setattr(ex, "ARCHETYPES_BUNDLED", bundled)
+    assert ex.find_vlm_cache(pptx) is None
+    good = {"template_sha1": ex.template_sha1(pptx), "slides": []}
+    (bundled / f"{pptx.stem}.json").write_text(json.dumps(good), "utf-8")
+    assert ex.find_vlm_cache(pptx) == bundled / f"{pptx.stem}.json"
+    # рабочий кэш от другого файла с тем же именем пропускается, берётся бандл
+    (work / f"{pptx.stem}.json").write_text(json.dumps({"template_sha1": "0" * 40, "slides": []}), "utf-8")
+    assert ex.find_vlm_cache(pptx) == bundled / f"{pptx.stem}.json"
+    (work / f"{pptx.stem}.json").write_text(json.dumps(good), "utf-8")
+    assert ex.find_vlm_cache(pptx) == work / f"{pptx.stem}.json"

@@ -2,9 +2,10 @@
 
 Для каждого .pptx: рендер в PNG (если ещё нет в out/render/<stem>/), классификация правилами,
 при --vlm — уточнение неоднозначных слайдов через скилл template_tagger. Результат — markdown-таблица
-в out/archetypes/<stem>.md и JSON профилей рядом.
+в out/archetypes/<stem>.md и JSON профилей рядом. --publish дополнительно кладёт только ответы VLM
+в data/archetypes/<stem>.json (в репо) — чистый clone размечает шаблоны датасета так же, как примеры.
 
-    .venv\\Scripts\\python.exe tools\\classify_layouts.py "data\\templates\\*.pptx" [--vlm] [--no-render] [--parallel 4]
+    .venv\\Scripts\\python.exe tools\\classify_layouts.py "data\\templates\\*.pptx" [--vlm] [--publish] [--no-render] [--parallel 4]
 """
 
 from __future__ import annotations
@@ -22,7 +23,7 @@ sys.path.insert(0, str(ROOT))
 from tools.check_env import load_dotenv  # noqa: E402
 from tools.render_deck import render  # noqa: E402
 
-from deckforge.parsing.exemplars import cache_payload  # noqa: E402
+from deckforge.parsing.exemplars import ARCHETYPES_BUNDLED, cache_payload, vlm_payload  # noqa: E402
 from deckforge.parsing.layout_classifier import classify_template, markdown_table  # noqa: E402
 
 
@@ -42,6 +43,8 @@ def main() -> None:
     ap.add_argument("--no-render", action="store_true", help="не рендерить, использовать только готовые PNG")
     ap.add_argument("--parallel", type=int, default=4)
     ap.add_argument("--out", type=Path, default=ROOT / "out" / "archetypes")
+    ap.add_argument("--publish", action="store_true",
+                    help="ответы VLM также в data/archetypes/<stem>.json (в репо, для чистого clone)")
     a = ap.parse_args()
 
     files = [Path(p) for pat in a.patterns for p in (glob.glob(pat) or [pat])]
@@ -66,6 +69,10 @@ def main() -> None:
         (a.out / f"{f.stem}.md").write_text(md, "utf-8")
         # кэш: снимок профилей + sha1 шаблона; при загрузке из него берутся только ответы VLM (см. parsing/exemplars)
         (a.out / f"{f.stem}.json").write_text(json.dumps(cache_payload(f, profiles), ensure_ascii=False, indent=1), "utf-8")
+        if a.publish:
+            ARCHETYPES_BUNDLED.mkdir(parents=True, exist_ok=True)
+            (ARCHETYPES_BUNDLED / f"{f.stem}.json").write_text(
+                json.dumps(vlm_payload(f, profiles), ensure_ascii=False, indent=1), "utf-8")
         if client is not None:
             errors = [c for c in client.calls if not c.ok]
             print(f"  VLM-вызовов: {len(client.calls)}, ошибок: {len(errors)}, "

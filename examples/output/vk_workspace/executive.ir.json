@@ -337,17 +337,17 @@
   },
   {
    "idx": 2,
-   "exemplar_id": "slide11",
-   "archetype": "cards",
+   "exemplar_id": "slide19",
+   "archetype": "kpi",
    "elements": [
     {
-     "slot_id": "565",
+     "slot_id": "726",
      "kind": "title",
      "box": {
       "x": 429253,
       "y": 424691,
-      "w": 7827311,
-      "h": 1167572
+      "w": 11354760,
+      "h": 767295
      },
      "paragraphs": [
       {
@@ -376,13 +376,13 @@
      }
     },
     {
-     "slot_id": "568",
-     "kind": "label",
+     "slot_id": "734",
+     "kind": "number",
      "box": {
-      "x": 427865,
-      "y": 1592263,
-      "w": 3072079,
-      "h": 398822
+      "x": 439193,
+      "y": 2517730,
+      "w": 2850777,
+      "h": 483181
      },
      "paragraphs": [
       {
@@ -408,17 +408,17 @@
       "palette": "0077FF,00AEE8",
       "font": "Play",
       "text_color": "FFFFFF",
-      "size_pt": 20.0
+      "size_pt": 45.4
      }
     },
     {
-     "slot_id": "582",
-     "kind": "label",
+     "slot_id": "729",
+     "kind": "number",
      "box": {
-      "x": 4363051,
-      "y": 1592263,
-      "w": 3072079,
-      "h": 398822
+      "x": 6938670,
+      "y": 2804349,
+      "w": 2850777,
+      "h": 483181
      },
      "paragraphs": [
       {
@@ -444,17 +444,17 @@
       "palette": "0077FF,00AEE8",
       "font": "Play",
       "text_color": "FFFFFF",
-      "size_pt": 20.0
+      "size_pt": 47.8
      }
     },
     {
-     "slot_id": "596",
-     "kind": "label",
+     "slot_id": "730",
+     "kind": "number",
      "box": {
-      "x": 8298237,
-      "y": 1592263,
-      "w": 3072079,
-      "h": 398822
+      "x": 5520295,
+      "y": 3175974,
+      "w": 1346144,
+      "h": 483181
      },
      "paragraphs": [
       {
@@ -464,105 +464,12 @@
          "bold": false,
          "italic": false,
          "color": null,
-         "size_pt": null
+         "size_pt": 20.5
         }
        ],
        "level": 0,
        "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF,00AEE8",
-      "font": "Play",
-      "text_color": "FFFFFF",
-      "size_pt": 20.0
-     }
-    },
-    {
-     "slot_id": "566",
-     "kind": "body",
-     "box": {
-      "x": 427866,
-      "y": 2216240,
-      "w": 3375704,
-      "h": 684000
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "команд в пилоте",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF,00AEE8",
-      "font": "Play",
-      "text_color": "FFFFFF"
-     }
-    },
-    {
-     "slot_id": "580",
-     "kind": "body",
-     "box": {
-      "x": 4363052,
-      "y": 2216240,
-      "w": 3375704,
-      "h": 684000
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "участников",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF,00AEE8",
-      "font": "Play",
-      "text_color": "FFFFFF"
-     }
-    },
-    {
-     "slot_id": "594",
-     "kind": "body",
-     "box": {
-      "x": 8298238,
-      "y": 2216240,
-      "w": 3375704,
-      "h": 684000
-     },
-     "paragraphs": [
+      },
       {
        "runs": [
         {
@@ -570,7 +477,7 @@
          "bold": false,
          "italic": false,
          "color": null,
-         "size_pt": null
+         "size_pt": 11.2
         }
        ],
        "level": 0,
@@ -610,7 +517,7 @@
       {
        "runs": [
         {
-         "text": "Сервис работает по пяти шагам от подключения до ретро",
+         "text": "Сервис работает по пяти шагам от подключения до…",
          "bold": false,
          "italic": false,
          "color": null,
@@ -630,7 +537,7 @@
       "palette": "0077FF,00AEE8",
       "font": "Play",
       "text_color": "FFFFFF",
-      "size_pt": 29.3
+      "size_pt": 25.2
      }
     },
     {
@@ -1380,7 +1287,7 @@
       {
        "runs": [
         {
-         "text": "«За месяц мы впервые увидели, где реально теряется время,",
+         "text": "«За месяц мы впервые увидели",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1400,7 +1307,7 @@
       "palette": "0077FF,00AEE8",
       "font": "Play",
       "text_color": "FFFFFF",
-      "size_pt": 13.1
+      "size_pt": 12.6
      }
     },
     {
@@ -1795,7 +1702,7 @@
       "palette": "0077FF,00AEE8",
       "font": "Play",
       "text_color": "FFFFFF",
-      "size_pt": 19.2
+      "size_pt": 18.0
      }
     },
     {

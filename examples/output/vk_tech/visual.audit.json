@@ -13,12 +13,32 @@
     "w": 4288279,
     "h": 800046
    },
-   "message": "Кегль 33 pt не из шкалы шаблона (ближайший 24 pt)",
+   "message": "Кегль 30.6 pt не из шкалы шаблона (ближайший 24 pt)",
    "autofix": "snap_font_size",
    "evidence": {
-    "size_pt": 33.0,
+    "size_pt": 30.6,
     "nearest_pt": 24.0,
     "base_pt": 48.6
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 0,
+   "element_id": "408",
+   "box": {
+    "x": 581272,
+    "y": 2362284,
+    "w": 4288279,
+    "h": 285750
+   },
+   "message": "Кегль 14.4 pt не из шкалы шаблона (ближайший 16.2 pt) (подгонка: 90% от кегля образца 16 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 14.4,
+    "nearest_pt": 16.2,
+    "base_pt": 16.0
    }
   },
   {
@@ -28,10 +48,24 @@
    "slide_idx": 1,
    "element_id": null,
    "box": null,
-   "message": "В первой карточке текст обрывается на многоточии («До 9,5 часов в…»), что выглядит как служебный мусор или ошибка вёрстки.",
+   "message": "В первом пункте текст обрывается на «До 9,5 часов в…», что выглядит как служебный мусор или ошибка рендеринга.",
    "autofix": null,
    "evidence": {
     "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
+    "sources": "doc:product:почему-перегрузка-не-видна-руководителю-"
+   }
+  },
+  {
+   "check_id": "C08_no_typos",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 1,
+   "element_id": null,
+   "box": null,
+   "message": "Текст в первом пункте обрывается на «До 9,5 часов в…», что является ошибкой оформления.",
+   "autofix": null,
+   "evidence": {
+    "question": "Текст без опечаток",
     "sources": "doc:product:почему-перегрузка-не-видна-руководителю-"
    }
   },
@@ -168,6 +202,20 @@
    }
   },
   {
+   "check_id": "C07_no_garbage",
+   "kind": "contextual",
+   "severity": "error",
+   "slide_idx": 2,
+   "element_id": null,
+   "box": null,
+   "message": "В подписи третьего графика присутствует многоточие, что выглядит как обрезанный текст или служебный мусор.",
+   "autofix": null,
+   "evidence": {
+    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
+    "sources": "m:pilot"
+   }
+  },
+  {
    "check_id": "D05_fill",
    "kind": "deterministic",
    "severity": "warning",
@@ -244,6 +292,20 @@
     "background": "FAFCFF",
     "need": 4.5,
     "template_color": 1
+   }
+  },
+  {
+   "check_id": "C08_no_typos",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 3,
+   "element_id": null,
+   "box": null,
+   "message": "В описаниях шагов 1 и 3 текст обрывается многоточием, что выглядит как опечатка или незавершенность.",
+   "autofix": null,
+   "evidence": {
+    "question": "Текст без опечаток",
+    "sources": "doc:product:как-работает-сервис-пять-шагов"
    }
   },
   {
@@ -374,6 +436,46 @@
    "kind": "deterministic",
    "severity": "info",
    "slide_idx": 3,
+   "element_id": "2404",
+   "box": {
+    "x": 285749,
+    "y": 2198570,
+    "w": 1614880,
+    "h": 202471
+   },
+   "message": "Кегль 6.3 pt не из шкалы шаблона (ближайший 6.9 pt) (подгонка: 70% от кегля образца 9 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 6.3,
+    "nearest_pt": 6.9,
+    "base_pt": 9.0
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 3,
+   "element_id": "2407",
+   "box": {
+    "x": 2600311,
+    "y": 2198570,
+    "w": 1614880,
+    "h": 202471
+   },
+   "message": "Кегль 6.3 pt не из шкалы шаблона (ближайший 6.9 pt) (подгонка: 70% от кегля образца 9 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 6.3,
+    "nearest_pt": 6.9,
+    "base_pt": 9.0
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 3,
    "element_id": "2410",
    "box": {
     "x": 4853011,
@@ -401,10 +503,10 @@
     "w": 1614880,
     "h": 202471
    },
-   "message": "Кегль 7.8 pt не из шкалы шаблона (ближайший 6.9 pt) (подгонка: 87% от кегля образца 9 pt)",
+   "message": "Кегль 6.3 pt не из шкалы шаблона (ближайший 6.9 pt) (подгонка: 70% от кегля образца 9 pt)",
    "autofix": "snap_font_size",
    "evidence": {
-    "size_pt": 7.8,
+    "size_pt": 6.3,
     "nearest_pt": 6.9,
     "base_pt": 9.0
    }
@@ -524,37 +626,76 @@
    }
   },
   {
-   "check_id": "L02_overlap",
+   "check_id": "D02_bullet_words",
    "kind": "deterministic",
    "severity": "warning",
    "slide_idx": 7,
-   "element_id": "2262",
+   "element_id": "505",
    "box": {
-    "x": 3195621,
-    "y": 1157472,
-    "w": 1092919,
-    "h": 261746
+    "x": 4637088,
+    "y": 676278,
+    "w": 3862387,
+    "h": 3737102
    },
-   "message": "Блоки картинка и ««За месяц мы впервые увидели, …» наложились (21% площади меньшего)",
-   "autofix": "reflow_vertical",
+   "message": "Пункт из 17 слов (норма ≤ 15): ««За месяц мы впервые увидели, где реально теряется время, — …»",
+   "autofix": "refill_slot",
    "evidence": {
-    "other_id": "2264",
-    "ratio": 0.213,
-    "in_exemplar": 1
+    "words": 17
    }
   },
   {
-   "check_id": "C02_content_matches_title",
-   "kind": "contextual",
-   "severity": "error",
-   "slide_idx": 8,
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 7,
    "element_id": null,
    "box": null,
-   "message": "Слайд содержит метрику срока ответа (0,6 дня), которая не отражена в заголовке.",
-   "autofix": null,
+   "message": "Слайд перегружен: контент занимает 76% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
    "evidence": {
-    "question": "Содержимое слайда соответствует заголовку",
-    "sources": "m:score,m:response_days"
+    "fill": 0.756
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 7,
+   "element_id": "504",
+   "box": {
+    "x": 4637088,
+    "y": 338139,
+    "w": 3862387,
+    "h": 246062
+   },
+   "message": "Контраст текста #0077FF к фону #FAFCFF = 4.0:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.02,
+    "text_color": "0077FF",
+    "background": "FAFCFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 7,
+   "element_id": "503",
+   "box": {
+    "x": 430360,
+    "y": 338829,
+    "w": 3945697,
+    "h": 753371
+   },
+   "message": "Кегль 21.6 pt не из шкалы шаблона (ближайший 24 pt) (подгонка: 90% от кегля образца 24 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 21.6,
+    "nearest_pt": 24.0,
+    "base_pt": 24.0
    }
   },
   {
@@ -564,7 +705,7 @@
    "slide_idx": 8,
    "element_id": null,
    "box": null,
-   "message": "В подписи третьей диаграммы есть обрезанный текст «на…», что выглядит как служебный мусор или ошибка верстки.",
+   "message": "В подписи третьей диаграммы присутствует многоточие («дня: средний срок…»), что выглядит как служебный мусор или незавершенный текст.",
    "autofix": null,
    "evidence": {
     "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
@@ -651,26 +792,6 @@
    }
   },
   {
-   "check_id": "T02_font_size",
-   "kind": "deterministic",
-   "severity": "info",
-   "slide_idx": 8,
-   "element_id": "2342",
-   "box": {
-    "x": 285749,
-    "y": 1307494,
-    "w": 1614880,
-    "h": 149630
-   },
-   "message": "Кегль 11 pt не из шкалы шаблона (ближайший 10.1 pt) (подгонка: 79% от кегля образца 14 pt)",
-   "autofix": "snap_font_size",
-   "evidence": {
-    "size_pt": 11.0,
-    "nearest_pt": 10.1,
-    "base_pt": 14.0
-   }
-  },
-  {
    "check_id": "D05_fill",
    "kind": "deterministic",
    "severity": "warning",
@@ -706,13 +827,27 @@
    }
   },
   {
+   "check_id": "C07_no_garbage",
+   "kind": "contextual",
+   "severity": "error",
+   "slide_idx": 11,
+   "element_id": null,
+   "box": null,
+   "message": "На слайде присутствует визуальный элемент-заглушка (пустой квадрат).",
+   "autofix": null,
+   "evidence": {
+    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
+    "sources": "doc:product:контакты"
+   }
+  },
+  {
    "check_id": "C06_images_relevant",
    "kind": "contextual",
    "severity": "warning",
    "slide_idx": 11,
    "element_id": null,
    "box": null,
-   "message": "Иконка курсора и пустой блок не относятся к теме слайда.",
+   "message": "Изображение представляет собой пустую заглушку, не относящуюся к теме.",
    "autofix": null,
    "evidence": {
     "question": "Картинки и иконки относятся к теме слайда",
@@ -757,5 +892,5 @@
   "C10_table_legend_relevant",
   "C11_flow"
  ],
- "duration_s": 43.552
+ "duration_s": 46.224
 }

@@ -1,12 +1,13 @@
 {
- "created": "2026-09-16T14:04:30+00:00",
+ "created": "2026-09-18T07:58:54+00:00",
  "template": {
   "id": "69e4a68c4372",
-  "path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\data\\templates\\VK_WorkSpace_Клиентская_конференция_Шаблон_03.pptx",
+  "path": "data/templates/VK_WorkSpace_Клиентская_конференция_Шаблон_03.pptx",
   "sha1": "69e4a68c4372"
  },
- "content_pack": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\content_pack",
- "outline": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_workspace\\outline.json",
+ "content_pack": "examples/content_pack",
+ "outline": "outline.json",
+ "outline_title": "Пульс команды: итоги пилота и план запуска",
  "strategy": {
   "name": "narrative",
   "version": "v1"
@@ -24,107 +25,17 @@
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 7.5915542999973695,
-   "prompt_tokens": 2724,
-   "completion_tokens": 232,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 14.987553000002663,
-   "prompt_tokens": 2796,
-   "completion_tokens": 450,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 15.05597619999753,
+   "duration_s": 8.642427799999496,
    "prompt_tokens": 2734,
-   "completion_tokens": 445,
+   "completion_tokens": 452,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 15.444671899997047,
-   "prompt_tokens": 2771,
-   "completion_tokens": 456,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 12.594768700000714,
-   "prompt_tokens": 2738,
-   "completion_tokens": 492,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 10.861453399997117,
-   "prompt_tokens": 2784,
-   "completion_tokens": 467,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 12.327497300000687,
-   "prompt_tokens": 2766,
-   "completion_tokens": 526,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 6.617578199999116,
-   "prompt_tokens": 2671,
-   "completion_tokens": 387,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 20.210322399998404,
-   "prompt_tokens": 2757,
-   "completion_tokens": 449,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 15.838624800002435,
-   "prompt_tokens": 2771,
-   "completion_tokens": 436,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 7.89209800000026,
-   "prompt_tokens": 2750,
-   "completion_tokens": 201,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 8.843155400001706,
-   "prompt_tokens": 2749,
+   "duration_s": 8.770551399999931,
+   "prompt_tokens": 2770,
    "completion_tokens": 454,
    "ok": true,
    "error": null
@@ -132,53 +43,107 @@
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 6.232567800001561,
-   "prompt_tokens": 2738,
-   "completion_tokens": 472,
+   "duration_s": 10.978177699999833,
+   "prompt_tokens": 2796,
+   "completion_tokens": 435,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 15.734609800001635,
-   "prompt_tokens": 2727,
-   "completion_tokens": 579,
+   "duration_s": 12.087797999999566,
+   "prompt_tokens": 2708,
+   "completion_tokens": 536,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 21.661260000000766,
-   "prompt_tokens": 2739,
-   "completion_tokens": 360,
+   "duration_s": 11.148951999999554,
+   "prompt_tokens": 2757,
+   "completion_tokens": 446,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 13.08708420000039,
+   "duration_s": 8.987875600000734,
    "prompt_tokens": 2784,
-   "completion_tokens": 282,
+   "completion_tokens": 479,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 23.900965500000893,
+   "duration_s": 12.84107589999985,
+   "prompt_tokens": 2759,
+   "completion_tokens": 473,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 6.586025900000095,
+   "prompt_tokens": 2671,
+   "completion_tokens": 392,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 6.738543000000391,
    "prompt_tokens": 2771,
-   "completion_tokens": 475,
+   "completion_tokens": 411,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 17.651598500000546,
-   "prompt_tokens": 2761,
+   "duration_s": 19.240909699999975,
+   "prompt_tokens": 2784,
+   "completion_tokens": 481,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 4.794938500000171,
+   "prompt_tokens": 2749,
+   "completion_tokens": 461,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 7.30631429999994,
+   "prompt_tokens": 2739,
+   "completion_tokens": 452,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 9.707744399999683,
+   "prompt_tokens": 2737,
+   "completion_tokens": 459,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 12.509189500000502,
+   "prompt_tokens": 2770,
    "completion_tokens": 453,
    "ok": true,
    "error": null
@@ -186,45 +151,81 @@
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 9.230868500002543,
-   "prompt_tokens": 2710,
-   "completion_tokens": 397,
+   "duration_s": 21.437827599999764,
+   "prompt_tokens": 2713,
+   "completion_tokens": 531,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 17.89447719999953,
-   "prompt_tokens": 2699,
-   "completion_tokens": 449,
+   "duration_s": 12.248636399999668,
+   "prompt_tokens": 2784,
+   "completion_tokens": 472,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 9.958209699998406,
+   "duration_s": 32.17027859999962,
+   "prompt_tokens": 2795,
+   "completion_tokens": 471,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 13.455872399999862,
+   "prompt_tokens": 2698,
+   "completion_tokens": 496,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 7.37005500000032,
+   "prompt_tokens": 2705,
+   "completion_tokens": 433,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 10.246745999999803,
    "prompt_tokens": 2738,
-   "completion_tokens": 454,
+   "completion_tokens": 473,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 10.891620000002149,
-   "prompt_tokens": 2707,
-   "completion_tokens": 486,
+   "duration_s": 26.835822900000494,
+   "prompt_tokens": 2761,
+   "completion_tokens": 473,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 8.163245700001426,
+   "duration_s": 16.81417640000018,
    "prompt_tokens": 2671,
-   "completion_tokens": 394,
+   "completion_tokens": 399,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 19.36235569999917,
+   "prompt_tokens": 2751,
+   "completion_tokens": 475,
    "ok": true,
    "error": null
   }
@@ -321,16 +322,16 @@
   {
    "idx": 3,
    "archetype": "kpi",
-   "exemplar_id": "slide11",
-   "exemplar_archetype": "cards",
-   "score": -2.05
+   "exemplar_id": "slide19",
+   "exemplar_archetype": "kpi",
+   "score": 2.85
   },
   {
    "idx": 4,
    "archetype": "process",
    "exemplar_id": "slide22",
    "exemplar_archetype": "cards",
-   "score": -1.0499999999999998
+   "score": -4.05
   },
   {
    "idx": 5,
@@ -358,14 +359,14 @@
    "archetype": "quote",
    "exemplar_id": "slide25",
    "exemplar_archetype": "image_text",
-   "score": -7.05
+   "score": -10.05
   },
   {
    "idx": 9,
    "archetype": "kpi",
-   "exemplar_id": "slide15",
-   "exemplar_archetype": "cards",
-   "score": -2.05
+   "exemplar_id": "slide19",
+   "exemplar_archetype": "kpi",
+   "score": 0.8500000000000001
   },
   {
    "idx": 10,
@@ -396,13 +397,13 @@
    "title",
    "cards",
    "cards",
-   "cards",
+   "kpi",
    "cards",
    "cards",
    "chart",
    "table",
    "image_text",
-   "cards",
+   "kpi",
    "cards",
    "process",
    "closing"
@@ -411,41 +412,42 @@
    "slide1",
    "slide5",
    "slide10",
-   "slide11",
+   "slide19",
    "slide22",
    "slide13",
    "slide21",
    "slide14",
    "slide25",
-   "slide15",
+   "slide19",
    "slide6",
    "slide27",
    "slide28"
   ],
-  "text_items_per_slide": 4.7,
-  "words_per_item": 4.7,
+  "text_items_per_slide": 4.6,
+  "words_per_item": 5.6,
   "chart": 1,
   "table": 1,
-  "kpi": 0,
+  "kpi": 2,
   "picture": 0,
   "skipped": 0
  },
  "audit": {
-  "errors": 8,
-  "warnings": 31,
-  "info": 4,
-  "contextual": 9,
+  "errors": 2,
+  "warnings": 29,
+  "info": 7,
+  "contextual": 6,
   "by_check": {
-   "C02_content_matches_title": 1,
-   "C03_one_message": 2,
+   "C01_title_insight": 1,
    "C05_has_content": 1,
-   "C07_no_garbage": 3,
+   "C06_images_relevant": 1,
+   "C07_no_garbage": 1,
    "C08_no_typos": 2,
-   "D05_fill": 3,
-   "L02_overlap": 11,
-   "L03_text_overflow": 3,
-   "T02_font_size": 4,
-   "T06_contrast": 13
+   "D05_fill": 6,
+   "L02_overlap": 8,
+   "L05_off_grid": 1,
+   "L06_in_margins": 1,
+   "T02_font_size": 7,
+   "T06_contrast": 9
   },
   "slides_with_issues": [
    1,
@@ -461,90 +463,52 @@
    12
   ],
   "checks_run": 35,
-  "duration_s": 46.543,
-  "path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_workspace\\narrative.audit.json",
+  "duration_s": 54.934,
+  "path": "narrative.audit.json",
   "kind": "deterministic+contextual",
   "autofix": {
-   "applied": 7,
-   "skipped": 2,
+   "applied": 4,
+   "skipped": 0,
    "before": {
-    "errors": 3,
-    "warnings": 33
+    "errors": 4,
+    "warnings": 25
    },
    "after": {
-    "errors": 3,
-    "warnings": 27
+    "errors": 0,
+    "warnings": 25
    },
    "items": [
     {
      "slide_idx": 3,
-     "element_id": "568",
-     "check_id": "T02_font_size",
-     "fix": "snap_font_size",
-     "before": "26.2 pt",
-     "after": "20 pt"
+     "element_id": "729",
+     "check_id": "L03_text_overflow",
+     "fix": "shrink_font_by_scale",
+     "before": "60 pt",
+     "after": "47.8 pt"
     },
     {
      "slide_idx": 3,
-     "element_id": "582",
-     "check_id": "T02_font_size",
-     "fix": "snap_font_size",
-     "before": "26.2 pt",
-     "after": "20 pt"
-    },
-    {
-     "slide_idx": 3,
-     "element_id": "596",
-     "check_id": "T02_font_size",
-     "fix": "snap_font_size",
-     "before": "26.2 pt",
-     "after": "20 pt"
+     "element_id": "734",
+     "check_id": "L03_text_overflow",
+     "fix": "shrink_font_by_scale",
+     "before": "54 pt",
+     "after": "45.4 pt"
     },
     {
      "slide_idx": 9,
-     "element_id": "681",
-     "check_id": "T02_font_size",
-     "fix": "snap_font_size",
-     "before": "32.4 pt",
-     "after": "36 pt"
+     "element_id": "729",
+     "check_id": "L03_text_overflow",
+     "fix": "shrink_font_by_scale",
+     "before": "60 pt",
+     "after": "47.8 pt"
     },
     {
      "slide_idx": 9,
-     "element_id": "682",
-     "check_id": "T02_font_size",
-     "fix": "snap_font_size",
-     "before": "32.4 pt",
-     "after": "36 pt"
-    },
-    {
-     "slide_idx": 9,
-     "element_id": "683",
-     "check_id": "T02_font_size",
-     "fix": "snap_font_size",
-     "before": "32.4 pt",
-     "after": "36 pt"
-    },
-    {
-     "slide_idx": 11,
-     "element_id": "864",
+     "element_id": "734",
      "check_id": "L03_text_overflow",
      "fix": "shrink_font_by_scale",
-     "before": "46.7 pt",
-     "after": "46.2 pt"
-    },
-    {
-     "slide_idx": 11,
-     "element_id": "863",
-     "check_id": "L03_text_overflow",
-     "fix": "shrink_font_by_scale",
-     "reason": "нечего менять"
-    },
-    {
-     "slide_idx": 11,
-     "element_id": "865",
-     "check_id": "L03_text_overflow",
-     "fix": "shrink_font_by_scale",
-     "reason": "нечего менять"
+     "before": "54 pt",
+     "after": "45.4 pt"
     }
    ]
   }
@@ -558,18 +522,20 @@
   "items": []
  },
  "exports": {
-  "pptx": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_workspace\\narrative.pptx",
-  "pdf": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_workspace\\narrative.pdf"
+  "pptx": "narrative.pptx",
+  "pdf": "narrative.pdf",
+  "html": "narrative.html"
  },
  "timings_s": {
-  "parse": 0.222,
+  "parse": 0.48,
   "outline": 0.0,
-  "layout": 0.003,
-  "render": 0.463,
-  "audit": 0.303,
-  "autofix": 0.768,
-  "png": 8.469,
-  "audit_contextual": 46.234,
-  "export_pdf": 0.003
+  "layout": 0.019,
+  "render": 1.542,
+  "audit": 0.694,
+  "autofix": 1.892,
+  "png": 15.784,
+  "audit_contextual": 54.279,
+  "export_pdf": 0.014,
+  "export_html": 14.735
  }
 }

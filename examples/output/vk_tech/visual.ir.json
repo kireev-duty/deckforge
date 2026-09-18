@@ -20,7 +20,7 @@
       {
        "runs": [
         {
-         "text": "Пульс команды: итоги пилота и план запуска",
+         "text": "Пульс команды",
          "bold": false,
          "italic": false,
          "color": null,
@@ -40,7 +40,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 36.7
+      "size_pt": 34.0
      }
     },
     {
@@ -76,7 +76,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 15.2
+      "size_pt": 14.4
      }
     }
    ],
@@ -775,7 +775,7 @@
       {
        "runs": [
         {
-         "text": "месяца (май–август 2026)",
+         "text": "месяца (май–август…",
          "bold": false,
          "italic": false,
          "color": null,
@@ -795,7 +795,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 11.4
+      "size_pt": 9.8
      }
     }
    ],
@@ -890,7 +890,7 @@
       {
        "runs": [
         {
-         "text": "Трекер и календарь через OAuth за 15 минут",
+         "text": "Трекер и календарь через OAuth за…",
          "bold": false,
          "italic": false,
          "color": null,
@@ -910,7 +910,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 6.9
+      "size_pt": 6.3
      }
     },
     {
@@ -961,7 +961,7 @@
       {
        "runs": [
         {
-         "text": "Сроки, статусы, участники, длительность встреч",
+         "text": "Сроки, статусы",
          "bold": false,
          "italic": false,
          "color": null,
@@ -981,7 +981,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 6.6
+      "size_pt": 6.3
      }
     },
     {
@@ -1088,7 +1088,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 10.0
+      "size_pt": 9.8
      }
     },
     {
@@ -1124,7 +1124,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 7.8
+      "size_pt": 6.3
      }
     },
     {
@@ -1710,17 +1710,17 @@
   },
   {
    "idx": 7,
-   "exemplar_id": "slide43",
+   "exemplar_id": "slide9",
    "archetype": "image_text",
    "elements": [
     {
-     "slot_id": "2263",
+     "slot_id": "503",
      "kind": "title",
      "box": {
-      "x": 177970,
-      "y": 282949,
-      "w": 6792985,
-      "h": 724203
+      "x": 430360,
+      "y": 338829,
+      "w": 3945697,
+      "h": 753371
      },
      "paragraphs": [
       {
@@ -1745,23 +1745,59 @@
       "accent": "0077FF",
       "palette": "0077FF",
       "font": "Play",
-      "text_color": "000000"
+      "text_color": "000000",
+      "size_pt": 21.6
      }
     },
     {
-     "slot_id": "2264",
+     "slot_id": "505",
      "kind": "body",
      "box": {
-      "x": 181435,
-      "y": 1091781,
-      "w": 4107105,
-      "h": 327437
+      "x": 4637088,
+      "y": 676278,
+      "w": 3862387,
+      "h": 3737102
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "«За месяц мы впервые увидели, где реально теряется время",
+         "text": "«За месяц мы впервые увидели, где реально теряется время, — и перестали спорить об этом на ретро»",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "504",
+     "kind": "label",
+     "box": {
+      "x": 4637088,
+      "y": 338139,
+      "w": 3862387,
+      "h": 246062
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Руководитель разработки, команда платёжного шлюза",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1781,17 +1817,17 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 11.2
+      "size_pt": 10.8
      }
     },
     {
-     "slot_id": "2262",
+     "slot_id": "506",
      "kind": "picture",
      "box": {
-      "x": 3195621,
-      "y": 1157472,
-      "w": 5634008,
-      "h": 3642838
+      "x": 354563,
+      "y": 2341984,
+      "w": 4142792,
+      "h": 2090058
      },
      "paragraphs": [],
      "chart": null,
@@ -1962,7 +1998,7 @@
       {
        "runs": [
         {
-         "text": "оценка после пилота (из 5)",
+         "text": "оценка после пилота",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1982,7 +2018,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 11.0
+      "size_pt": 9.8
      }
     },
     {
@@ -1998,7 +2034,7 @@
       {
        "runs": [
         {
-         "text": "оценка до пилота (из 5)",
+         "text": "оценка до пилота",
          "bold": false,
          "italic": false,
          "color": null,
@@ -2018,7 +2054,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 11.7
+      "size_pt": 9.8
      }
     },
     {
@@ -2034,7 +2070,7 @@
       {
        "runs": [
         {
-         "text": "дня: средний срок ответа на…",
+         "text": "дня: средний срок…",
          "bold": false,
          "italic": false,
          "color": null,
@@ -2369,7 +2405,7 @@
       {
        "runs": [
         {
-         "text": "Ещё 40 команд, интеграция с целями",
+         "text": "Ещё 40 команд",
          "bold": false,
          "italic": false,
          "color": null,
@@ -2389,7 +2425,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 9.0
+      "size_pt": 8.4
      }
     },
     {
@@ -2440,7 +2476,7 @@
       {
        "runs": [
         {
-         "text": "Все команды, отчёт для руководителей",
+         "text": "Все команды",
          "bold": false,
          "italic": false,
          "color": null,
@@ -2460,7 +2496,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 8.7
+      "size_pt": 8.4
      }
     }
    ],

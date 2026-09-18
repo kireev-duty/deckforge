@@ -40,7 +40,7 @@
       "palette": "FF0053,520977",
       "font": "Montserrat",
       "text_color": "000000",
-      "size_pt": 37.9
+      "size_pt": 38.4
      }
     },
     {
@@ -84,17 +84,17 @@
   },
   {
    "idx": 1,
-   "exemplar_id": "slide13",
+   "exemplar_id": "slide12",
    "archetype": "bullets",
    "elements": [
     {
-     "slot_id": "2",
+     "slot_id": "28",
      "kind": "title",
      "box": {
-      "x": 533104,
-      "y": 414049,
-      "w": 5994696,
-      "h": 552061
+      "x": 527444,
+      "y": 395288,
+      "w": 5574868,
+      "h": 425729
      },
      "paragraphs": [
       {
@@ -119,18 +119,17 @@
       "accent": "FF0053",
       "palette": "FF0053,520977",
       "font": "Montserrat",
-      "text_color": "000000",
-      "size_pt": 25.2
+      "text_color": "000000"
      }
     },
     {
-     "slot_id": "3",
+     "slot_id": "29",
      "kind": "body",
      "box": {
-      "x": 623888,
-      "y": 1556279,
-      "w": 10789619,
-      "h": 3745441
+      "x": 521133,
+      "y": 1263123,
+      "w": 5574868,
+      "h": 4937652
      },
      "paragraphs": [
       {
@@ -296,7 +295,7 @@
   {
    "idx": 3,
    "exemplar_id": "slide17",
-   "archetype": "cards",
+   "archetype": "kpi",
    "elements": [
     {
      "slot_id": "14",
@@ -335,7 +334,7 @@
     },
     {
      "slot_id": "15",
-     "kind": "label",
+     "kind": "number",
      "box": {
       "x": 780565,
       "y": 1772415,
@@ -371,7 +370,7 @@
     },
     {
      "slot_id": "16",
-     "kind": "label",
+     "kind": "number",
      "box": {
       "x": 4615219,
       "y": 1766200,
@@ -407,7 +406,7 @@
     },
     {
      "slot_id": "17",
-     "kind": "label",
+     "kind": "number",
      "box": {
       "x": 8547959,
       "y": 1766043,
@@ -442,13 +441,13 @@
      }
     },
     {
-     "slot_id": "3",
-     "kind": "body",
+     "slot_id": "2",
+     "kind": "label",
      "box": {
       "x": 780565,
-      "y": 3128740,
-      "w": 2965633,
-      "h": 2797928
+      "y": 2493074,
+      "w": 2965634,
+      "h": 423628
      },
      "paragraphs": [
       {
@@ -477,13 +476,13 @@
      }
     },
     {
-     "slot_id": "5",
-     "kind": "body",
+     "slot_id": "4",
+     "kind": "label",
      "box": {
       "x": 4623178,
-      "y": 3128740,
+      "y": 2493074,
       "w": 3034896,
-      "h": 2797928
+      "h": 403756
      },
      "paragraphs": [
       {
@@ -512,19 +511,19 @@
      }
     },
     {
-     "slot_id": "7",
-     "kind": "body",
+     "slot_id": "6",
+     "kind": "label",
      "box": {
       "x": 8547959,
-      "y": 3128740,
+      "y": 2493074,
       "w": 2945464,
-      "h": 2797928
+      "h": 403913
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "месяца (май–август 2026)",
+         "text": "месяца (май–август…",
          "bold": false,
          "italic": false,
          "color": null,
@@ -543,7 +542,8 @@
       "accent": "FF0053",
       "palette": "FF0053,520977",
       "font": "Montserrat",
-      "text_color": "000000"
+      "text_color": "000000",
+      "size_pt": 12.6
      }
     }
    ],
@@ -552,17 +552,17 @@
   },
   {
    "idx": 4,
-   "exemplar_id": "slide25",
+   "exemplar_id": "slide15",
    "archetype": "process",
    "elements": [
     {
-     "slot_id": "15",
+     "slot_id": "6",
      "kind": "title",
      "box": {
-      "x": 525817,
-      "y": 421226,
-      "w": 9862734,
-      "h": 376138
+      "x": 533490,
+      "y": 370426,
+      "w": 5562510,
+      "h": 442374
      },
      "paragraphs": [
       {
@@ -587,409 +587,23 @@
       "accent": "FF0053",
       "palette": "FF0053,520977",
       "font": "Montserrat",
-      "text_color": "000000",
-      "size_pt": 17.4
-     }
-    },
-    {
-     "slot_id": "43",
-     "kind": "number",
-     "box": {
-      "x": 1191126,
-      "y": 3508049,
-      "w": 874814,
-      "h": 708179
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "1",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "FF0053",
-      "palette": "FF0053,520977",
-      "font": "Montserrat",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "44",
-     "kind": "number",
-     "box": {
-      "x": 3412397,
-      "y": 3506136,
-      "w": 874814,
-      "h": 708179
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "2",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "FF0053",
-      "palette": "FF0053,520977",
-      "font": "Montserrat",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "45",
-     "kind": "number",
-     "box": {
-      "x": 5658594,
-      "y": 3516255,
-      "w": 874814,
-      "h": 708179
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "3",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "FF0053",
-      "palette": "FF0053,520977",
-      "font": "Montserrat",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "53",
-     "kind": "number",
-     "box": {
-      "x": 7889752,
-      "y": 3506135,
-      "w": 874814,
-      "h": 708179
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "4",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "FF0053",
-      "palette": "FF0053,520977",
-      "font": "Montserrat",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "54",
-     "kind": "number",
-     "box": {
-      "x": 10113012,
-      "y": 3538626,
-      "w": 874814,
-      "h": 708179
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "5",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "FF0053",
-      "palette": "FF0053,520977",
-      "font": "Montserrat",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "2",
-     "kind": "label",
-     "box": {
-      "x": 346075,
-      "y": 1458075,
-      "w": 2526079,
-      "h": 1476687
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Подключение",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "FF0053",
-      "palette": "FF0053,520977",
-      "font": "Montserrat",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "3",
-     "kind": "body",
-     "box": {
-      "x": 346075,
-      "y": 1814077,
-      "w": 2526079,
-      "h": 1120685
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Трекер и календарь через OAuth за 15 минут",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "FF0053",
-      "palette": "FF0053,520977",
-      "font": "Montserrat",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "4",
-     "kind": "label",
-     "box": {
-      "x": 4832960,
-      "y": 1458075,
-      "w": 2526079,
-      "h": 1476687
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Сбор сигналов",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "FF0053",
-      "palette": "FF0053,520977",
-      "font": "Montserrat",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "5",
-     "kind": "body",
-     "box": {
-      "x": 4832960,
-      "y": 1814077,
-      "w": 2526079,
-      "h": 1120685
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Сроки, статусы, участники, длительность встреч",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "FF0053",
-      "palette": "FF0053,520977",
-      "font": "Montserrat",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "6",
-     "kind": "label",
-     "box": {
-      "x": 9330862,
-      "y": 1458075,
-      "w": 2526079,
-      "h": 1476687
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Модель нагрузки",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "FF0053",
-      "palette": "FF0053,520977",
-      "font": "Montserrat",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "7",
-     "kind": "body",
-     "box": {
-      "x": 9330862,
-      "y": 1814077,
-      "w": 2526079,
-      "h": 1120685
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Оценка перегрузки на человека и команду",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "FF0053",
-      "palette": "FF0053,520977",
-      "font": "Montserrat",
       "text_color": "000000"
      }
     },
     {
      "slot_id": "8",
-     "kind": "label",
+     "kind": "body",
      "box": {
-      "x": 2593517,
-      "y": 4825338,
-      "w": 2526079,
-      "h": 1476687
+      "x": 521133,
+      "y": 1695025,
+      "w": 4902200,
+      "h": 712587
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "Еженедельный дайджест",
+         "text": "Подключение — Трекер и календарь через OAuth за 15 минут",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1015,16 +629,16 @@
      "slot_id": "9",
      "kind": "body",
      "box": {
-      "x": 2593517,
-      "y": 5181340,
-      "w": 2526079,
-      "h": 1120685
+      "x": 521133,
+      "y": 2552035,
+      "w": 4902200,
+      "h": 712587
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "Три риска и три рекомендации лиду",
+         "text": "Сбор сигналов — Сроки, статусы, участники, длительность встреч",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1048,18 +662,18 @@
     },
     {
      "slot_id": "10",
-     "kind": "label",
+     "kind": "body",
      "box": {
-      "x": 7080402,
-      "y": 4825338,
-      "w": 2526079,
-      "h": 1476687
+      "x": 521133,
+      "y": 3409044,
+      "w": 4902200,
+      "h": 712587
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "Ретро с данными",
+         "text": "Модель нагрузки — Оценка перегрузки на человека и команду",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1085,16 +699,51 @@
      "slot_id": "11",
      "kind": "body",
      "box": {
-      "x": 7080402,
-      "y": 5181340,
-      "w": 2526079,
-      "h": 1120685
+      "x": 521133,
+      "y": 4266053,
+      "w": 4902200,
+      "h": 712587
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "Обсуждение по фактам, а не ощущениям",
+         "text": "Еженедельный дайджест — Три риска и три рекомендации лиду",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "12",
+     "kind": "body",
+     "box": {
+      "x": 521133,
+      "y": 5123063,
+      "w": 4902200,
+      "h": 712587
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Ретро с данными — Обсуждение по фактам, а не ощущениям",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1122,17 +771,17 @@
   },
   {
    "idx": 5,
-   "exemplar_id": "slide2",
+   "exemplar_id": "slide13",
    "archetype": "bullets",
    "elements": [
     {
      "slot_id": "2",
      "kind": "title",
      "box": {
-      "x": 1260867,
-      "y": 451168,
-      "w": 2016723,
-      "h": 454025
+      "x": 533104,
+      "y": 414049,
+      "w": 5994696,
+      "h": 552061
      },
      "paragraphs": [
       {
@@ -1158,17 +807,17 @@
       "palette": "FF0053,520977",
       "font": "Montserrat",
       "text_color": "000000",
-      "size_pt": 14.0
+      "size_pt": 27.9
      }
     },
     {
-     "slot_id": "6",
+     "slot_id": "3",
      "kind": "body",
      "box": {
-      "x": 857185,
-      "y": 1973274,
-      "w": 7698308,
-      "h": 3693319
+      "x": 623888,
+      "y": 1556279,
+      "w": 10789619,
+      "h": 3745441
      },
      "paragraphs": [
       {
@@ -1257,7 +906,7 @@
       {
        "runs": [
         {
-         "text": "Время на согласования в пилоте упало почти вдвое",
+         "text": "Время на согласования в…",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1349,7 +998,7 @@
       {
        "runs": [
         {
-         "text": "Доля времени на разработку выросла на 16 п.п.",
+         "text": "Доля времени на разработку…",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1369,12 +1018,12 @@
       "palette": "FF0053,520977",
       "font": "Montserrat",
       "text_color": "000000",
-      "size_pt": 18.9
+      "size_pt": 14.0
      }
     },
     {
      "slot_id": "12",
-     "kind": "chart",
+     "kind": "table",
      "box": {
       "x": 625096,
       "y": 1360288,
@@ -1432,17 +1081,17 @@
   },
   {
    "idx": 8,
-   "exemplar_id": "slide26",
+   "exemplar_id": "slide8",
    "archetype": "image_text",
    "elements": [
     {
-     "slot_id": "9",
+     "slot_id": "18",
      "kind": "title",
      "box": {
-      "x": 525817,
-      "y": 421226,
-      "w": 9862734,
-      "h": 376138
+      "x": 6819903,
+      "y": 1039236,
+      "w": 3636703,
+      "h": 1015128
      },
      "paragraphs": [
       {
@@ -1468,17 +1117,17 @@
       "palette": "FF0053,520977",
       "font": "Montserrat",
       "text_color": "000000",
-      "size_pt": 17.7
+      "size_pt": 19.2
      }
     },
     {
-     "slot_id": "4",
+     "slot_id": "5",
      "kind": "body",
      "box": {
-      "x": 346075,
-      "y": 4656083,
-      "w": 3626835,
-      "h": 1544692
+      "x": 6808027,
+      "y": 2619903,
+      "w": 4945565,
+      "h": 890039
      },
      "paragraphs": [
       {
@@ -1505,6 +1154,71 @@
       "font": "Montserrat",
       "text_color": "000000"
      }
+    },
+    {
+     "slot_id": "6",
+     "kind": "label",
+     "box": {
+      "x": 6819904,
+      "y": 2303118,
+      "w": 4945564,
+      "h": 668667
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Руководитель разработки, команда платёжного шлюза",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "10",
+     "kind": "slide_number",
+     "box": {
+      "x": 11413507,
+      "y": 6356358,
+      "w": 559119,
+      "h": 365125
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "9",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {}
     }
    ],
    "notes": "",
@@ -1512,17 +1226,17 @@
   },
   {
    "idx": 9,
-   "exemplar_id": "slide4",
-   "archetype": "cards",
+   "exemplar_id": "slide17",
+   "archetype": "kpi",
    "elements": [
     {
-     "slot_id": "7",
+     "slot_id": "14",
      "kind": "title",
      "box": {
-      "x": 1260867,
-      "y": 451168,
-      "w": 7262838,
-      "h": 454025
+      "x": 525816,
+      "y": 335426,
+      "w": 11331221,
+      "h": 376138
      },
      "paragraphs": [
       {
@@ -1551,13 +1265,13 @@
      }
     },
     {
-     "slot_id": "69",
+     "slot_id": "15",
      "kind": "number",
      "box": {
-      "x": 1542416,
-      "y": 1945277,
-      "w": 1718251,
-      "h": 640725
+      "x": 780565,
+      "y": 1772415,
+      "w": 1311031,
+      "h": 601141
      },
      "paragraphs": [
       {
@@ -1567,20 +1281,7 @@
          "bold": false,
          "italic": false,
          "color": null,
-         "size_pt": 22.7
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      },
-      {
-       "runs": [
-        {
-         "text": "оценка после пилота (из 5)",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": 9.7
+         "size_pt": null
         }
        ],
        "level": 0,
@@ -1595,17 +1296,18 @@
       "accent": "FF0053",
       "palette": "FF0053,520977",
       "font": "Montserrat",
-      "text_color": "000000"
+      "text_color": "000000",
+      "size_pt": 36.4
      }
     },
     {
-     "slot_id": "70",
+     "slot_id": "16",
      "kind": "number",
      "box": {
-      "x": 4110879,
-      "y": 1945277,
-      "w": 1718251,
-      "h": 640725
+      "x": 4615219,
+      "y": 1766200,
+      "w": 1311031,
+      "h": 572942
      },
      "paragraphs": [
       {
@@ -1615,20 +1317,7 @@
          "bold": false,
          "italic": false,
          "color": null,
-         "size_pt": 22.7
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      },
-      {
-       "runs": [
-        {
-         "text": "оценка до пилота (из 5)",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": 9.7
+         "size_pt": null
         }
        ],
        "level": 0,
@@ -1643,17 +1332,18 @@
       "accent": "FF0053",
       "palette": "FF0053,520977",
       "font": "Montserrat",
-      "text_color": "000000"
+      "text_color": "000000",
+      "size_pt": 35.4
      }
     },
     {
-     "slot_id": "71",
+     "slot_id": "17",
      "kind": "number",
      "box": {
-      "x": 6718121,
-      "y": 1945277,
-      "w": 1718251,
-      "h": 640725
+      "x": 8547959,
+      "y": 1766043,
+      "w": 1311031,
+      "h": 573165
      },
      "paragraphs": [
       {
@@ -1663,20 +1353,7 @@
          "bold": false,
          "italic": false,
          "color": null,
-         "size_pt": 20.5
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      },
-      {
-       "runs": [
-        {
-         "text": "дня: средний срок ответа на запрос",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": 8.8
+         "size_pt": null
         }
        ],
        "level": 0,
@@ -1691,7 +1368,116 @@
       "accent": "FF0053",
       "palette": "FF0053,520977",
       "font": "Montserrat",
-      "text_color": "000000"
+      "text_color": "000000",
+      "size_pt": 35.4
+     }
+    },
+    {
+     "slot_id": "2",
+     "kind": "label",
+     "box": {
+      "x": 780565,
+      "y": 2493074,
+      "w": 2965634,
+      "h": 423628
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "оценка после пилота (из 5)",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000",
+      "size_pt": 14.4
+     }
+    },
+    {
+     "slot_id": "4",
+     "kind": "label",
+     "box": {
+      "x": 4623178,
+      "y": 2493074,
+      "w": 3034896,
+      "h": 403756
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "оценка до пилота (из 5)",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000",
+      "size_pt": 12.9
+     }
+    },
+    {
+     "slot_id": "6",
+     "kind": "label",
+     "box": {
+      "x": 8547959,
+      "y": 2493074,
+      "w": 2945464,
+      "h": 403913
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "дня: средний срок ответа на…",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000",
+      "size_pt": 12.6
      }
     }
    ],
@@ -1700,17 +1486,17 @@
   },
   {
    "idx": 10,
-   "exemplar_id": "slide24",
-   "archetype": "cards",
+   "exemplar_id": "slide13",
+   "archetype": "bullets",
    "elements": [
     {
-     "slot_id": "9",
+     "slot_id": "2",
      "kind": "title",
      "box": {
-      "x": 525817,
-      "y": 421226,
-      "w": 9862734,
-      "h": 376138
+      "x": 533104,
+      "y": 414049,
+      "w": 5994696,
+      "h": 552061
      },
      "paragraphs": [
       {
@@ -1742,10 +1528,10 @@
      "slot_id": "3",
      "kind": "body",
      "box": {
-      "x": 616304,
-      "y": 3286814,
-      "w": 3264113,
-      "h": 2375115
+      "x": 623888,
+      "y": 1556279,
+      "w": 10789619,
+      "h": 3745441
      },
      "paragraphs": [
       {
@@ -1759,30 +1545,8 @@
         }
        ],
        "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "FF0053",
-      "palette": "FF0053,520977",
-      "font": "Montserrat",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "4",
-     "kind": "body",
-     "box": {
-      "x": 4569890,
-      "y": 3264544,
-      "w": 3264113,
-      "h": 2375115
-     },
-     "paragraphs": [
+       "bullet": true
+      },
       {
        "runs": [
         {
@@ -1794,30 +1558,8 @@
         }
        ],
        "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "FF0053",
-      "palette": "FF0053,520977",
-      "font": "Montserrat",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "5",
-     "kind": "body",
-     "box": {
-      "x": 8405081,
-      "y": 3277471,
-      "w": 3264113,
-      "h": 2375115
-     },
-     "paragraphs": [
+       "bullet": true
+      },
       {
        "runs": [
         {
@@ -1829,7 +1571,7 @@
         }
        ],
        "level": 0,
-       "bullet": false
+       "bullet": true
       }
      ],
      "chart": null,
@@ -1865,7 +1607,7 @@
       {
        "runs": [
         {
-         "text": "Запуск для всех команд завершится в декабре",
+         "text": "Запуск для всех команд завершится в…",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1884,7 +1626,8 @@
       "accent": "FF0053",
       "palette": "FF0053,520977",
       "font": "Montserrat",
-      "text_color": "000000"
+      "text_color": "000000",
+      "size_pt": 14.0
      }
     },
     {

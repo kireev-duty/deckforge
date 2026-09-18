@@ -52,6 +52,21 @@ log = logging.getLogger(__name__)
 Progress = Callable[[str], None]
 
 
+def rel_path(p: Path | str | None, base: Path) -> str:
+    """Путь для manifest.json / run.json: относительно папки прогона (файлы колоды), иначе относительно
+    текущей папки (шаблон датасета, контент-пакет — `data/…`, `examples/…`), иначе как есть. POSIX-слэши,
+    чтобы примеры в репо не несли `C:\\Users\\…` машины сборки. Объекты `Path` в памяти (UI/API) не трогаются."""
+    if p is None:
+        return ""
+    p = Path(p)
+    for root in (base, Path.cwd()):
+        try:
+            return p.resolve().relative_to(root.resolve()).as_posix()
+        except (ValueError, OSError):
+            continue
+    return p.as_posix()
+
+
 # ──────────────────────────── результаты этапов ────────────────────────────
 
 
@@ -122,11 +137,13 @@ class DeckResult:
 
     @property
     def exports(self) -> dict[str, str]:
-        out = {"pptx": str(self.pptx)}
+        """Экспорты для manifest/run.json — пути относительно папки колоды (см. `rel_path`)."""
+        base = self.pptx.parent
+        out = {"pptx": rel_path(self.pptx, base)}
         if self.pdf is not None:
-            out["pdf"] = str(self.pdf)
+            out["pdf"] = rel_path(self.pdf, base)
         if self.html is not None:
-            out["html"] = str(self.html)
+            out["html"] = rel_path(self.html, base)
         return out
 
     def load_report(self) -> AuditReport | None:
@@ -253,6 +270,8 @@ def build_deck(ctx: RunContext, strategy_name: str, progress: Progress | None = 
         # иллюстрации до вёрстки: picker учитывает наличие картинки при выборе образца
         ill = illustrate(outline, strategy, parsed.style, ctx.client_for_images(), out_dir, cfg_mode=cfg.images)
         outline, images_info = ill.outline, ill.summary()
+        for item in images_info.get("items", []):
+            item["path"] = rel_path(item["path"], out_dir) if item.get("path") else item.get("path")
         deck_warnings.extend(ill.warnings)
         if ill.seconds:
             deck_timings["images"] = ill.seconds
@@ -302,7 +321,7 @@ def build_deck(ctx: RunContext, strategy_name: str, progress: Progress | None = 
     if report is not None:
         audit_path = out_dir / f"{strategy.name}.audit.json"
         audit_path.write_text(report.model_dump_json(indent=1), "utf-8")
-        audit_info = {**audit_summary(report), "path": str(audit_path),
+        audit_info = {**audit_summary(report), "path": rel_path(audit_path, out_dir),
                       "kind": "deterministic+contextual" if "audit_contextual" in deck_timings else "deterministic",
                       **audit_info}
 
@@ -327,9 +346,9 @@ def build_deck(ctx: RunContext, strategy_name: str, progress: Progress | None = 
                       choices, pngs, deck_timings, audit_path, audit_info, pdf_path, html_path)
     manifest = {
         "created": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-        "template": parsed.meta,
-        "content_pack": str(cfg.content_pack),
-        "outline": str(ctx.outline.path),
+        "template": {**parsed.meta, "path": rel_path(parsed.template, out_dir)},
+        "content_pack": rel_path(cfg.content_pack, out_dir),
+        "outline": rel_path(ctx.outline.path, out_dir),
         "outline_title": outline.title,
         "strategy": {"name": strategy.name, "version": strategy.version},
         "skills": skills_used,
@@ -419,21 +438,21 @@ def refine_deck(deck: DeckResult, parsed: ParsedTemplate, selected: Iterable[int
         "user_applied": prev.get("user_applied", 0) + info["applied"],
         "before": prev["before"], "after": info["after"], "items": prev["items"] + info["items"],
     }
-    audit_info = {**audit_summary(new_report), "path": str(deck.audit),
+    audit_info = {**audit_summary(new_report), "path": rel_path(deck.audit, deck.pptx.parent),
                   "kind": manifest.get("audit", {}).get("kind", "deterministic"), "autofix": fix_info}
     if contextual and changed:
         audit_info["contextual_stale"] = True
     timings["refine"] = round(timings.get("refine", 0.0) + time.perf_counter() - t_start, 3)
     manifest["audit"] = audit_info
     manifest["timings_s"] = {**manifest.get("timings_s", {}), **timings}
-    manifest["exports"] = {"pptx": str(deck.pptx), **({"pdf": str(pdf)} if pdf else {}),
-                           **({"html": str(html)} if html else {})}
+    new = DeckResult(deck.strategy, deck.pptx, deck.ir_json, deck.manifest, deck.stats, deck.warnings, deck.choices,
+                     pngs, timings, deck.audit, audit_info, pdf, html)
+    manifest["exports"] = new.exports
     manifest["warnings"] = list(dict.fromkeys([*manifest.get("warnings", []), *deck.warnings]))
     deck.manifest.write_text(json.dumps(manifest, ensure_ascii=False, indent=1), "utf-8")
     say(f"{deck.strategy}: применено {info['applied']} из {len(chosen)} выбранных фиксов, "
         f"{info['before']['errors']}→{info['after']['errors']} err, {info['before']['warnings']}→{info['after']['warnings']} warn")
-    return DeckResult(deck.strategy, deck.pptx, deck.ir_json, deck.manifest, deck.stats, deck.warnings, deck.choices,
-                      pngs, timings, deck.audit, audit_info, pdf, html)
+    return new
 
 
 def run(
@@ -483,14 +502,16 @@ def run(
 
 
 def run_summary(cfg: RunConfig, result: RunResult) -> dict:
-    """Содержимое run.json — сводка прогона (читают UI и API)."""
+    """Содержимое run.json — сводка прогона (читают UI и API); пути — относительно папки прогона."""
+    out = result.output_dir
     return {
         "created": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "config": json.loads(cfg.model_dump_json()),
-        "template": result.parsed.meta if result.parsed else {},
-        "outline": str(result.outline_path),
-        "decks": [{"strategy": d.strategy, "pptx": str(d.pptx), "manifest": str(d.manifest), "stats": d.stats,
-                   "audit": d.audit_summary, "exports": d.exports, "timings_s": d.timings_s} for d in result.decks],
+        "template": {**result.parsed.meta, "path": rel_path(result.parsed.template, out)} if result.parsed else {},
+        "outline": rel_path(result.outline_path, out),
+        "decks": [{"strategy": d.strategy, "pptx": rel_path(d.pptx, out), "manifest": rel_path(d.manifest, out),
+                   "stats": d.stats, "audit": d.audit_summary, "exports": d.exports, "timings_s": d.timings_s}
+                  for d in result.decks],
         "timings_s": result.timings_s,
         "warnings": result.warnings,
         "not_implemented": [],  # все шаги конфига выполняются; ключ оставлен для читателей run.json

@@ -142,8 +142,11 @@ def _illustrate_one(s: OutlineSlide, client: LLMClient, skill: Any, style: dict,
     if meta.exists():
         try:
             d = json.loads(meta.read_text("utf-8"))
-            if d.get("path") and Path(d["path"]).exists():
-                return ImageItem(s.idx, s.title, "cache", d["path"], d.get("prompt"))
+            cached = Path(d.get("path") or "")
+            if not cached.is_absolute():  # в кэше — имя файла рядом с .json (кэш переносим вместе с папкой)
+                cached = img_dir / cached
+            if d.get("path") and cached.exists():
+                return ImageItem(s.idx, s.title, "cache", str(cached), d.get("prompt"))
         except (OSError, ValueError):
             pass
     try:
@@ -158,7 +161,7 @@ def _illustrate_one(s: OutlineSlide, client: LLMClient, skill: Any, style: dict,
     except Exception as e:  # noqa: BLE001 — картинка не должна ронять колоду
         log.warning("images: слайд %s: %s", s.idx, e)
         return ImageItem(s.idx, s.title, "failed", error=str(e)[:160])
-    meta.write_text(json.dumps({"prompt": prompt, "path": str(path)}, ensure_ascii=False, indent=1), "utf-8")
+    meta.write_text(json.dumps({"prompt": prompt, "path": Path(path).name}, ensure_ascii=False, indent=1), "utf-8")
     return ImageItem(s.idx, s.title, "generated", str(path), prompt)
 
 

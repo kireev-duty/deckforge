@@ -15,7 +15,7 @@ import pytest
 from deckforge.llm.client import LLMCall
 
 REPO = Path(__file__).resolve().parents[1]
-TEMPLATE_DIRS = [REPO / "data" / "templates", REPO / "data" / "holdout"]
+TEMPLATE_DIRS = [REPO / "data" / "templates", REPO / "data" / "holdout", REPO / "data" / "wild"]
 CASSETTES = REPO / "tests" / "cassettes"
 
 

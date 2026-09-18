@@ -7,35 +7,35 @@ skills:
     model_role: vision
     current: v1
     history:
-      - {version: v1, date: 2026-09-15, note: "initial; входы расширены (candidates, определения архетипов) до первого прогона"}
+      - {version: v1, day: 1, note: "initial; входы расширены (candidates, определения архетипов) до первого прогона"}
 
   outline_writer:
     description: Из брифа и контент-пакета строит DeckOutline — состав, порядок и содержание слайдов до вёрстки
     model_role: text
     current: v1
     history:
-      - {version: v1, date: 2026-09-15, note: "initial; 2026-09-16 до первого потребителя убран вход strategy_rules (outline один на прогон), добавлен section на слайдах"}
+      - {version: v1, day: 1, note: "initial; в день 4 до первого потребителя убран вход strategy_rules (outline один на прогон), добавлен section на слайдах"}
 
   slide_filler:
     description: Подгоняет текст слайда под слоты выбранного образца (лимиты символов/строк), не меняя смысл
     model_role: text
     current: v1
     history:
-      - {version: v1, date: 2026-09-15, note: initial}
+      - {version: v1, day: 1, note: initial}
 
   audit_judge:
     description: Контекстуальный аудит — 11 да/нет вопросов по PNG слайда и исходным материалам
     model_role: vision
     current: v1
     history:
-      - {version: v1, date: 2026-09-15, note: initial}
+      - {version: v1, day: 1, note: initial}
 
   image_prompter:
     description: Формирует промпт для text-to-image с учётом палитры и стиля шаблона
     model_role: text
     current: v1
     history:
-      - {version: v1, date: 2026-09-15, note: initial}
+      - {version: v1, day: 1, note: initial}
 
 agents:
   # Оркестраторы, объединяющие скиллы. Конфиги — в agents/<name>.yaml (порядок шагов, ретраи, бюджеты времени).

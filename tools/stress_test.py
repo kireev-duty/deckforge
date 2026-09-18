@@ -33,6 +33,28 @@ MAX_PER_REF = 4  # слайдов колоды на один слайд outline 
 BLOAT = 2.0  # слайдов колоды к max(len(outline), target_slides.max)
 
 
+def per_ref_max(slides: list) -> int:
+    """Сколько слайдов колоды породил самый «плодовитый» слайд outline (каскад продолжений)."""
+    per_ref: dict[int, int] = {}
+    for sl in slides:
+        per_ref[sl.outline_ref] = per_ref.get(sl.outline_ref, 0) + 1
+    return max(per_ref.values(), default=0)
+
+
+def bloat_problems(slides: list, n_outline: int, strategy, case: str = "") -> list[str]:
+    """Критерии раздувания/пустоты колоды (те же в `tests/test_stress.py`): пустая колода, больше BLOAT× от
+    max(outline, target_slides.max), больше MAX_PER_REF слайдов на один слайд outline."""
+    limit = int(BLOAT * max(n_outline, strategy.target_slides.max))
+    problems: list[str] = []
+    if case != "empty" and len(slides) < 1:
+        problems.append("колода пустая")
+    if len(slides) > limit:
+        problems.append(f"slides={len(slides)} > {limit}")
+    if (m := per_ref_max(slides)) > MAX_PER_REF:
+        problems.append(f"на один слайд outline — {m} слайдов колоды")
+    return problems
+
+
 # ──────────────────────────── worker: один кейс × один шаблон ────────────────────────────
 
 
@@ -55,21 +77,10 @@ def worker(case: str, template: Path, strategies: list[str], out_dir: Path, html
     for d in res.decks:
         m = d.load_manifest()
         ir = d.load_ir()
-        per_ref: dict[int, int] = {}
-        for sl in ir.slides:
-            per_ref[sl.outline_ref] = per_ref.get(sl.outline_ref, 0) + 1
-        max_per_ref = max(per_ref.values(), default=0)
-        hi = load_strategy(d.strategy).target_slides.max
-        limit = int(BLOAT * max(len(outline.slides), hi))
-        problems = []
+        max_per_ref = per_ref_max(ir.slides)
+        problems = bloat_problems(ir.slides, len(outline.slides), load_strategy(d.strategy), case)
         if d.stats["skipped"]:
-            problems.append(f"skipped={d.stats['skipped']}")
-        if case != "empty" and d.stats["slides"] < 1:
-            problems.append("колода пустая")
-        if d.stats["slides"] > limit:
-            problems.append(f"slides={d.stats['slides']} > {limit}")
-        if max_per_ref > MAX_PER_REF:
-            problems.append(f"на один слайд outline — {max_per_ref} слайдов колоды")
+            problems.insert(0, f"skipped={d.stats['skipped']}")
         if not d.pptx.exists() or d.pptx.stat().st_size < 1000:
             problems.append("pptx пустой/нет")
         if "html" in cfg.export and d.html is None:

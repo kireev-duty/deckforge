@@ -1,18 +1,18 @@
 {
- "created": "2026-09-16T14:00:00+00:00",
+ "created": "2026-09-18T07:52:52+00:00",
  "template": {
   "id": "33d997b25b4c",
-  "path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\data\\templates\\VK Tech шаблон.pptx",
+  "path": "data/templates/VK Tech шаблон.pptx",
   "sha1": "33d997b25b4c"
  },
- "content_pack": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\content_pack",
- "outline": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\outline.json",
+ "content_pack": "examples/content_pack",
+ "outline": "outline.json",
+ "outline_title": "Пульс команды: итоги пилота и план запуска",
  "strategy": {
   "name": "visual",
   "version": "v1"
  },
  "skills": {
-  "outline_writer": "v1",
   "image_prompter": "v1",
   "audit_judge": "v1"
  },
@@ -26,71 +26,89 @@
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 5.400704400002724,
-   "prompt_tokens": 2575,
-   "completion_tokens": 201,
+   "duration_s": 8.543314499999724,
+   "prompt_tokens": 2565,
+   "completion_tokens": 470,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 5.6199617000020226,
-   "prompt_tokens": 2544,
-   "completion_tokens": 431,
+   "duration_s": 14.956222300000263,
+   "prompt_tokens": 2493,
+   "completion_tokens": 536,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 6.609394200000679,
-   "prompt_tokens": 2498,
-   "completion_tokens": 534,
+   "duration_s": 18.680867499999295,
+   "prompt_tokens": 2595,
+   "completion_tokens": 410,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 6.618929199998092,
-   "prompt_tokens": 2510,
-   "completion_tokens": 354,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 4.625784799998655,
+   "duration_s": 5.824615999999878,
    "prompt_tokens": 2533,
-   "completion_tokens": 411,
+   "completion_tokens": 405,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 4.727255300000252,
-   "prompt_tokens": 2562,
-   "completion_tokens": 203,
+   "duration_s": 6.040244900000289,
+   "prompt_tokens": 2560,
+   "completion_tokens": 474,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 5.609483299998828,
+   "duration_s": 17.49136660000022,
+   "prompt_tokens": 2574,
+   "completion_tokens": 443,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 27.96521119999943,
+   "prompt_tokens": 2502,
+   "completion_tokens": 461,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 2.998416200000065,
+   "prompt_tokens": 2447,
+   "completion_tokens": 264,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 6.170057600000291,
    "prompt_tokens": 2547,
-   "completion_tokens": 479,
+   "completion_tokens": 383,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 15.501600799998414,
-   "prompt_tokens": 2602,
+   "duration_s": 13.298234799999591,
+   "prompt_tokens": 2595,
    "completion_tokens": 297,
    "ok": true,
    "error": null
@@ -98,7 +116,7 @@
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 15.501713000001473,
+   "duration_s": 13.298296599999958,
    "prompt_tokens": 0,
    "completion_tokens": 0,
    "ok": false,
@@ -107,143 +125,26 @@
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 19.006718500000716,
-   "prompt_tokens": 2447,
-   "completion_tokens": 382,
+   "duration_s": 8.821508899999571,
+   "prompt_tokens": 2535,
+   "completion_tokens": 515,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 25.510040799999842,
-   "prompt_tokens": 2574,
-   "completion_tokens": 444,
+   "duration_s": 6.422645499999817,
+   "prompt_tokens": 2490,
+   "completion_tokens": 457,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 13.12252019999869,
-   "prompt_tokens": 2542,
-   "completion_tokens": 520,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 4.695614899999782,
-   "prompt_tokens": 2455,
-   "completion_tokens": 352,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 5.944244700000127,
-   "prompt_tokens": 2524,
-   "completion_tokens": 481,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 8.083410600000207,
-   "prompt_tokens": 2498,
-   "completion_tokens": 461,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 5.876900200000819,
+   "duration_s": 6.8851824000003035,
    "prompt_tokens": 2514,
-   "completion_tokens": 494,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 9.862766800000827,
-   "prompt_tokens": 2503,
-   "completion_tokens": 487,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 10.833331899997575,
-   "prompt_tokens": 2544,
-   "completion_tokens": 488,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 4.425283900000068,
-   "prompt_tokens": 2537,
-   "completion_tokens": 419,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 19.13506050000069,
-   "prompt_tokens": 2574,
-   "completion_tokens": 308,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 8.31629360000079,
-   "prompt_tokens": 2572,
-   "completion_tokens": 462,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 9.831235199999355,
-   "prompt_tokens": 2476,
-   "completion_tokens": 449,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 12.085959500000172,
-   "prompt_tokens": 2492,
-   "completion_tokens": 493,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 11.670622600002389,
-   "prompt_tokens": 2514,
-   "completion_tokens": 483,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 12.115946000001713,
-   "prompt_tokens": 2483,
    "completion_tokens": 470,
    "ok": true,
    "error": null
@@ -251,198 +152,225 @@
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 7.945390900000348,
-   "prompt_tokens": 2447,
-   "completion_tokens": 370,
+   "duration_s": 7.8089566000007835,
+   "prompt_tokens": 2524,
+   "completion_tokens": 478,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 20.841525400002865,
-   "prompt_tokens": 2531,
+   "duration_s": 9.114905700000236,
+   "prompt_tokens": 2447,
+   "completion_tokens": 364,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 11.349274900000637,
+   "prompt_tokens": 2498,
+   "completion_tokens": 490,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 18.627195699999902,
+   "prompt_tokens": 2574,
+   "completion_tokens": 475,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 19.17142370000056,
+   "prompt_tokens": 2597,
+   "completion_tokens": 507,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 26.669725599999765,
+   "prompt_tokens": 2535,
+   "completion_tokens": 492,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 6.884904800000186,
+   "prompt_tokens": 2480,
+   "completion_tokens": 473,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 14.472558400000707,
+   "prompt_tokens": 2519,
    "completion_tokens": 361,
    "ok": true,
    "error": null
   },
   {
-   "skill": "image_prompter@v1",
+   "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 2.8189931999986584,
-   "prompt_tokens": 367,
-   "completion_tokens": 127,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "image_prompter@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 3.6304453999982798,
-   "prompt_tokens": 420,
-   "completion_tokens": 130,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "image_gen",
-   "model": "black-forest-labs/flux.2-klein-4b",
-   "duration_s": 2.3359444999987318,
-   "prompt_tokens": 0,
-   "completion_tokens": 0,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "image_prompter@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 5.72937859999729,
-   "prompt_tokens": 371,
-   "completion_tokens": 107,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "image_prompter@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 5.743423800002347,
-   "prompt_tokens": 346,
-   "completion_tokens": 146,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "image_gen",
-   "model": "black-forest-labs/flux.2-klein-4b",
-   "duration_s": 3.1220874000027834,
-   "prompt_tokens": 0,
-   "completion_tokens": 0,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "image_gen",
-   "model": "black-forest-labs/flux.2-klein-4b",
-   "duration_s": 2.5580693000010797,
-   "prompt_tokens": 0,
-   "completion_tokens": 0,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "image_gen",
-   "model": "black-forest-labs/flux.2-klein-4b",
-   "duration_s": 3.200012399996922,
-   "prompt_tokens": 0,
-   "completion_tokens": 0,
+   "duration_s": 19.847025699999904,
+   "prompt_tokens": 2524,
+   "completion_tokens": 503,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 6.040026799997577,
-   "prompt_tokens": 2544,
-   "completion_tokens": 414,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 9.721173400001135,
-   "prompt_tokens": 2498,
-   "completion_tokens": 536,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 11.20776990000013,
-   "prompt_tokens": 2557,
-   "completion_tokens": 469,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 10.849316399999225,
+   "duration_s": 8.07890959999986,
    "prompt_tokens": 2514,
-   "completion_tokens": 426,
+   "completion_tokens": 493,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 10.975679299997864,
+   "duration_s": 33.36468010000044,
+   "prompt_tokens": 2620,
+   "completion_tokens": 479,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 11.579963199999838,
+   "prompt_tokens": 2472,
+   "completion_tokens": 422,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 16.26818850000018,
+   "prompt_tokens": 2507,
+   "completion_tokens": 368,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 9.320239499999843,
+   "prompt_tokens": 2502,
+   "completion_tokens": 468,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 17.641043999999965,
+   "prompt_tokens": 2553,
+   "completion_tokens": 450,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 21.79712610000024,
+   "prompt_tokens": 2549,
+   "completion_tokens": 513,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 14.000814399999399,
+   "prompt_tokens": 2514,
+   "completion_tokens": 479,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 6.18741510000018,
    "prompt_tokens": 2537,
-   "completion_tokens": 452,
+   "completion_tokens": 448,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 25.19557889999851,
-   "prompt_tokens": 2570,
-   "completion_tokens": 447,
+   "duration_s": 6.7120482000000266,
+   "prompt_tokens": 2508,
+   "completion_tokens": 485,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 5.236459700001433,
-   "prompt_tokens": 2505,
-   "completion_tokens": 444,
+   "duration_s": 8.67755439999928,
+   "prompt_tokens": 2547,
+   "completion_tokens": 523,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 23.583480900000723,
-   "prompt_tokens": 2607,
-   "completion_tokens": 552,
+   "duration_s": 34.47616480000033,
+   "prompt_tokens": 2595,
+   "completion_tokens": 428,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 13.627553700000135,
+   "duration_s": 7.251435899999706,
    "prompt_tokens": 2506,
-   "completion_tokens": 454,
+   "completion_tokens": 471,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 13.683419000000868,
-   "prompt_tokens": 2483,
-   "completion_tokens": 417,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 25.46036770000137,
-   "prompt_tokens": 2481,
-   "completion_tokens": 474,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 8.18348799999876,
+   "duration_s": 5.4959374999998545,
    "prompt_tokens": 2447,
-   "completion_tokens": 391,
+   "completion_tokens": 406,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 13.288273400000435,
+   "prompt_tokens": 2472,
+   "completion_tokens": 433,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 21.774178099999517,
+   "prompt_tokens": 2553,
+   "completion_tokens": 543,
    "ok": true,
    "error": null
   }
@@ -515,7 +443,7 @@
    "archetype": "title",
    "exemplar_id": "slide2",
    "exemplar_archetype": "title",
-   "score": 0.95
+   "score": -2.05
   },
   {
    "idx": 1,
@@ -562,9 +490,9 @@
   {
    "idx": 7,
    "archetype": "quote",
-   "exemplar_id": "slide43",
+   "exemplar_id": "slide9",
    "exemplar_archetype": "image_text",
-   "score": -2.05
+   "score": -2.0999999999999996
   },
   {
    "idx": 8,
@@ -595,11 +523,7 @@
    "score": 0.95
   }
  ],
- "warnings": [
-  "outline: слайд 1 «Руководитель не видит перегрузку из-за ш»: поле «cards» → bullets",
-  "outline: слайд 4 «Команда получает ранние риски и честное »: поле «cards» → bullets",
-  "outline: слайд 9 «Три ключевых риска запуска и их закрытие»: поле «cards» → bullets"
- ],
+ "warnings": [],
  "stats": {
   "slides": 12,
   "archetypes": [
@@ -624,14 +548,14 @@
    "slide14",
    "slide44",
    "slide52",
-   "slide43",
+   "slide9",
    "slide45",
    "slide24",
    "slide48",
    "slide6"
   ],
-  "text_items_per_slide": 5.8,
-  "words_per_item": 3.9,
+  "text_items_per_slide": 5.9,
+  "words_per_item": 3.7,
   "chart": 2,
   "table": 0,
   "kpi": 2,
@@ -639,18 +563,18 @@
   "skipped": 0
  },
  "audit": {
-  "errors": 3,
-  "warnings": 31,
-  "info": 3,
-  "contextual": 4,
+  "errors": 4,
+  "warnings": 35,
+  "info": 6,
+  "contextual": 7,
   "by_check": {
-   "C02_content_matches_title": 1,
    "C06_images_relevant": 1,
-   "C07_no_garbage": 2,
-   "D05_fill": 6,
-   "L02_overlap": 1,
-   "T02_font_size": 4,
-   "T06_contrast": 22
+   "C07_no_garbage": 4,
+   "C08_no_typos": 2,
+   "D02_bullet_words": 1,
+   "D05_fill": 7,
+   "T02_font_size": 7,
+   "T06_contrast": 23
   },
   "slides_with_issues": [
    0,
@@ -666,37 +590,21 @@
    11
   ],
   "checks_run": 35,
-  "duration_s": 43.552,
-  "path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\visual.audit.json",
+  "duration_s": 46.224,
+  "path": "visual.audit.json",
   "kind": "deterministic+contextual",
   "autofix": {
-   "applied": 3,
-   "skipped": 1,
+   "applied": 1,
+   "skipped": 2,
    "before": {
-    "errors": 2,
-    "warnings": 31
+    "errors": 0,
+    "warnings": 33
    },
    "after": {
     "errors": 0,
-    "warnings": 30
+    "warnings": 32
    },
    "items": [
-    {
-     "slide_idx": 3,
-     "element_id": "2410",
-     "check_id": "L03_text_overflow",
-     "fix": "shrink_font_by_scale",
-     "before": "7.2 pt",
-     "after": "6.3 pt, текст укорочен"
-    },
-    {
-     "slide_idx": 3,
-     "element_id": "2411",
-     "check_id": "L03_text_overflow",
-     "fix": "shrink_font_by_scale",
-     "before": "12.2 pt",
-     "after": "10 pt"
-    },
     {
      "slide_idx": 6,
      "element_id": "2570",
@@ -711,65 +619,74 @@
      "check_id": "T02_font_size",
      "fix": "snap_font_size",
      "reason": "нечего менять"
+    },
+    {
+     "slide_idx": 7,
+     "element_id": "505",
+     "check_id": "D02_bullet_words",
+     "fix": "refill_slot",
+     "reason": "нечего менять"
     }
    ]
   }
  },
  "images": {
   "mode": "always",
-  "generated": 4,
-  "cache": 0,
+  "generated": 0,
+  "cache": 4,
   "content": 0,
   "failed": 0,
   "items": [
    {
     "slide_idx": 1,
     "title": "Руководитель не видит перегрузку из-за шести системных причин",
-    "source": "generated",
-    "path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\images\\171335515e842a3e.jpg",
+    "source": "cache",
+    "path": "images/171335515e842a3e.jpg",
     "prompt": "Abstract 3D illustration of fragmented digital layers and floating geometric shapes representing systemic disconnect. Soft gradients in vibrant blue (#0077FF) and light white on a clean light background. Minimal corporate style, glassmorphism elements. Wide 16:9 composition with ample negative space on the left for text overlay. No people, no logos, no text, no letters, no watermark.",
     "error": null
    },
    {
     "slide_idx": 4,
     "title": "Команда получает ранние риски и честное ретро",
-    "source": "generated",
-    "path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\images\\2e5416dcb75cb70d.jpg",
+    "source": "cache",
+    "path": "images/2e5416dcb75cb70d.jpg",
     "prompt": "Minimalist corporate illustration on a light background with soft gradients. Abstract geometric shapes in vibrant blue (#0077FF) and white symbolizing data flow and transparency. Clean composition with significant negative space on the left for text overlay. No people, no logos, no text, no letters, no watermark.",
     "error": null
    },
    {
     "slide_idx": 7,
     "title": "Команды перестали спорить о потере времени на ретро",
-    "source": "generated",
-    "path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\images\\61e5f30b2ce0d53d.jpg",
+    "source": "cache",
+    "path": "images/61e5f30b2ce0d53d.jpg",
     "prompt": "Abstract 3D illustration of interlocking geometric shapes forming a cohesive structure, symbolizing team alignment and resolved conflict. Clean, minimal corporate style with soft gradients. Color palette: vibrant blue (#0077FF), light white background, and subtle sky blue accents. Wide 16:9 composition with significant negative space on the left for text overlay. No people, no logos, no text, no letters, no watermark.",
     "error": null
    },
    {
     "slide_idx": 9,
     "title": "Три ключевых риска запуска и их закрытие",
-    "source": "generated",
-    "path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\images\\d366610eafacd58d.jpg",
+    "source": "cache",
+    "path": "images/d366610eafacd58d.jpg",
     "prompt": "Minimal corporate illustration depicting three interconnected abstract shields and gears on a clean white background. Soft blue gradients using #0077FF, light blue, and white. Wide 16:9 composition with significant negative space on the left for text overlay. Flat vector style, soft gradients, no people close-up, no logos, no text, no letters, no watermark.",
     "error": null
    }
   ]
  },
  "exports": {
-  "pptx": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\visual.pptx",
-  "pdf": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\visual.pdf"
+  "pptx": "visual.pptx",
+  "pdf": "visual.pdf",
+  "html": "visual.html"
  },
  "timings_s": {
-  "parse": 0.877,
-  "outline": 57.66,
-  "images": 8.952,
-  "layout": 0.005,
-  "render": 0.655,
-  "audit": 0.335,
-  "autofix": 1.201,
-  "png": 5.531,
-  "audit_contextual": 43.016,
-  "export_pdf": 0.004
+  "parse": 1.418,
+  "outline": 0.0,
+  "images": 0.009,
+  "layout": 0.013,
+  "render": 1.135,
+  "audit": 0.692,
+  "autofix": 1.816,
+  "png": 9.926,
+  "audit_contextual": 45.628,
+  "export_pdf": 0.004,
+  "export_html": 9.117
  }
 }

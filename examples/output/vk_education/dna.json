@@ -148,7 +148,8 @@
      "font": null,
      "size_pt": 60.0,
      "placeholder_type": "title",
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "236",
@@ -165,7 +166,8 @@
      "font": null,
      "size_pt": 20.0,
      "placeholder_type": "body",
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -195,7 +197,8 @@
      "font": null,
      "size_pt": 60.0,
      "placeholder_type": "title",
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "242",
@@ -212,7 +215,8 @@
      "font": null,
      "size_pt": 20.0,
      "placeholder_type": "body",
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -247,7 +251,8 @@
      "font": null,
      "size_pt": 48.0,
      "placeholder_type": "title",
-     "sample_text": "Напишите темупрезентации в две или три строчки"
+     "sample_text": "Напишите темупрезентации в две или три строчки",
+     "hard_lines": false
     },
     {
      "id": "248",
@@ -264,7 +269,8 @@
      "font": null,
      "size_pt": 20.0,
      "placeholder_type": "body",
-     "sample_text": "Имя ФамилияОписание спикеры, должность и регалии"
+     "sample_text": "Имя ФамилияОписание спикеры, должность и регалии",
+     "hard_lines": false
     },
     {
      "id": "250",
@@ -281,7 +287,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -311,7 +318,8 @@
      "font": null,
      "size_pt": 60.0,
      "placeholder_type": "title",
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "255",
@@ -328,7 +336,8 @@
      "font": null,
      "size_pt": 20.0,
      "placeholder_type": "body",
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -363,7 +372,8 @@
      "font": null,
      "size_pt": 60.0,
      "placeholder_type": "title",
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "261",
@@ -380,7 +390,8 @@
      "font": null,
      "size_pt": 20.0,
      "placeholder_type": "body",
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -415,7 +426,8 @@
      "font": null,
      "size_pt": 48.0,
      "placeholder_type": "title",
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "268",
@@ -432,7 +444,8 @@
      "font": null,
      "size_pt": 20.0,
      "placeholder_type": "body",
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "269",
@@ -449,7 +462,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": "pic",
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -484,7 +498,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": "Пример оформления 4 текстовых блоков"
+     "sample_text": "Пример оформления 4 текстовых блоков",
+     "hard_lines": false
     },
     {
      "id": "274",
@@ -501,7 +516,8 @@
      "font": null,
      "size_pt": 18.0,
      "placeholder_type": null,
-     "sample_text": "Шрифт для заголовков — VK Sans Display Medium Основной цвет — синий, но можно свободно использовать дополнительные."
+     "sample_text": "Шрифт для заголовков — VK Sans Display Medium Основной цвет — синий, но можно свободно использовать дополнительные.",
+     "hard_lines": false
     },
     {
      "id": "275",
@@ -518,7 +534,8 @@
      "font": null,
      "size_pt": 18.0,
      "placeholder_type": null,
-     "sample_text": "В заголовках уже заданнужный размер шрифтаВыравниваем текст по левому краю(исключения — схемы и таблицы)."
+     "sample_text": "В заголовках уже заданнужный размер шрифтаВыравниваем текст по левому краю(исключения — схемы и таблицы).",
+     "hard_lines": false
     },
     {
      "id": "277",
@@ -535,7 +552,8 @@
      "font": null,
      "size_pt": 18.0,
      "placeholder_type": null,
-     "sample_text": "Шрифт для заголовков и акцентов — VK Sans Display Medium Основной цвет — синий, но можно свободно использовать дополнительные."
+     "sample_text": "Шрифт для заголовков и акцентов — VK Sans Display Medium Основной цвет — синий, но можно свободно использовать дополнительные.",
+     "hard_lines": false
     },
     {
      "id": "278",
@@ -552,7 +570,8 @@
      "font": null,
      "size_pt": 18.0,
      "placeholder_type": null,
-     "sample_text": "В заголовках уже заданнужный размер шрифтаВыравниваем текст по левому краю(исключения — схемы и таблицы)."
+     "sample_text": "В заголовках уже заданнужный размер шрифтаВыравниваем текст по левому краю(исключения — схемы и таблицы).",
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -582,7 +601,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": "Пример оформления 6 текстовых блоков"
+     "sample_text": "Пример оформления 6 текстовых блоков",
+     "hard_lines": false
     },
     {
      "id": "284",
@@ -599,7 +619,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Шрифт для заголовковVK Sans Display Medium Основной цвет — синий, но можно свободно использовать дополнительные."
+     "sample_text": "Шрифт для заголовковVK Sans Display Medium Основной цвет — синий, но можно свободно использовать дополнительные.",
+     "hard_lines": false
     },
     {
      "id": "285",
@@ -616,7 +637,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "В заголовках уже заданнужный размер шрифтаВыравниваем текст по левому краю (исключения — схемы и таблицы)."
+     "sample_text": "В заголовках уже заданнужный размер шрифтаВыравниваем текст по левому краю (исключения — схемы и таблицы).",
+     "hard_lines": false
     },
     {
      "id": "286",
@@ -633,7 +655,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Шрифт для заголовковVK Sans Display Medium Основной цвет — синий, но можно свободно использовать дополнительные."
+     "sample_text": "Шрифт для заголовковVK Sans Display Medium Основной цвет — синий, но можно свободно использовать дополнительные.",
+     "hard_lines": false
     },
     {
      "id": "287",
@@ -650,7 +673,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "В заголовках уже заданнужный размер шрифтаВыравниваем текст по левому краю (исключения — схемы и таблицы)."
+     "sample_text": "В заголовках уже заданнужный размер шрифтаВыравниваем текст по левому краю (исключения — схемы и таблицы).",
+     "hard_lines": false
     },
     {
      "id": "288",
@@ -667,7 +691,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Шрифт для заголовковVK Sans Display Medium Основной цвет — синий, но можно свободно использовать дополнительные."
+     "sample_text": "Шрифт для заголовковVK Sans Display Medium Основной цвет — синий, но можно свободно использовать дополнительные.",
+     "hard_lines": false
     },
     {
      "id": "289",
@@ -684,7 +709,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "В заголовках уже заданнужный размер шрифтаВыравниваем текст по левому краю (исключения — схемы и таблицы)."
+     "sample_text": "В заголовках уже заданнужный размер шрифтаВыравниваем текст по левому краю (исключения — схемы и таблицы).",
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -714,7 +740,8 @@
      "font": null,
      "size_pt": 48.0,
      "placeholder_type": "title",
-     "sample_text": "Пример слайда-разделителя"
+     "sample_text": "Пример слайда-разделителя",
+     "hard_lines": false
     },
     {
      "id": "301",
@@ -731,7 +758,8 @@
      "font": null,
      "size_pt": 14.0,
      "placeholder_type": null,
-     "sample_text": "Точки используются для навигации. Число разделов = число точек."
+     "sample_text": "Точки используются для навигации. Число разделов = число точек.",
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -761,7 +789,8 @@
      "font": null,
      "size_pt": 48.0,
      "placeholder_type": "title",
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "313",
@@ -778,7 +807,8 @@
      "font": null,
      "size_pt": 14.0,
      "placeholder_type": null,
-     "sample_text": "Точки используются для навигации. Число разделов = число точек."
+     "sample_text": "Точки используются для навигации. Число разделов = число точек.",
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -808,7 +838,8 @@
      "font": null,
      "size_pt": 48.0,
      "placeholder_type": "title",
-     "sample_text": "Пример слайда-разделителя"
+     "sample_text": "Пример слайда-разделителя",
+     "hard_lines": false
     },
     {
      "id": "324",
@@ -825,7 +856,8 @@
      "font": null,
      "size_pt": 14.0,
      "placeholder_type": null,
-     "sample_text": "Точки используются для навигации. Число разделов = число точек."
+     "sample_text": "Точки используются для навигации. Число разделов = число точек.",
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -855,7 +887,8 @@
      "font": null,
      "size_pt": 48.0,
      "placeholder_type": "title",
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "337",
@@ -872,7 +905,8 @@
      "font": null,
      "size_pt": 14.0,
      "placeholder_type": null,
-     "sample_text": "Точки используются для навигации. Число разделов = число точек."
+     "sample_text": "Точки используются для навигации. Число разделов = число точек.",
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -902,7 +936,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": "Оформление схем"
+     "sample_text": "Оформление схем",
+     "hard_lines": false
     },
     {
      "id": "347",
@@ -919,7 +954,8 @@
      "font": null,
      "size_pt": 17.0,
      "placeholder_type": null,
-     "sample_text": "Текст выравниваем по центру и по середине фигуры. Можно использовать акцентные символы и числа"
+     "sample_text": "Текст выравниваем по центру и по середине фигуры. Можно использовать акцентные символы и числа",
+     "hard_lines": false
     },
     {
      "id": "344",
@@ -936,7 +972,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Текстовый блок"
+     "sample_text": "Текстовый блок",
+     "hard_lines": false
     },
     {
      "id": "348",
@@ -953,7 +990,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Текстовый блок"
+     "sample_text": "Текстовый блок",
+     "hard_lines": false
     },
     {
      "id": "351",
@@ -970,7 +1008,8 @@
      "font": null,
      "size_pt": 44.0,
      "placeholder_type": null,
-     "sample_text": "10млн"
+     "sample_text": "10млн",
+     "hard_lines": false
     },
     {
      "id": "345",
@@ -987,7 +1026,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Текстовый блок"
+     "sample_text": "Текстовый блок",
+     "hard_lines": false
     },
     {
      "id": "349",
@@ -1004,7 +1044,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Текстовый блок"
+     "sample_text": "Текстовый блок",
+     "hard_lines": false
     },
     {
      "id": "343",
@@ -1021,7 +1062,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Подпись"
+     "sample_text": "Подпись",
+     "hard_lines": false
     },
     {
      "id": "346",
@@ -1038,7 +1080,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Текстовый блок"
+     "sample_text": "Текстовый блок",
+     "hard_lines": false
     },
     {
      "id": "350",
@@ -1055,7 +1098,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Текстовый блок"
+     "sample_text": "Текстовый блок",
+     "hard_lines": false
     },
     {
      "id": "353",
@@ -1072,7 +1116,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     }
    ],
    "fixed": [
@@ -1123,7 +1168,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": "Оформление схем"
+     "sample_text": "Оформление схем",
+     "hard_lines": false
     },
     {
      "id": "378",
@@ -1140,7 +1186,8 @@
      "font": null,
      "size_pt": 17.0,
      "placeholder_type": null,
-     "sample_text": "Текст выравниваем по центру и по середине фигуры. Можно использовать акцентные символы и числа"
+     "sample_text": "Текст выравниваем по центру и по середине фигуры. Можно использовать акцентные символы и числа",
+     "hard_lines": false
     },
     {
      "id": "375",
@@ -1157,7 +1204,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Текстовый блок"
+     "sample_text": "Текстовый блок",
+     "hard_lines": false
     },
     {
      "id": "379",
@@ -1174,7 +1222,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Текстовый блок"
+     "sample_text": "Текстовый блок",
+     "hard_lines": false
     },
     {
      "id": "382",
@@ -1191,7 +1240,8 @@
      "font": null,
      "size_pt": 44.0,
      "placeholder_type": null,
-     "sample_text": "10млн"
+     "sample_text": "10млн",
+     "hard_lines": false
     },
     {
      "id": "376",
@@ -1208,7 +1258,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Текстовый блок"
+     "sample_text": "Текстовый блок",
+     "hard_lines": false
     },
     {
      "id": "380",
@@ -1225,7 +1276,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Текстовый блок"
+     "sample_text": "Текстовый блок",
+     "hard_lines": false
     },
     {
      "id": "374",
@@ -1242,7 +1294,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Подпись"
+     "sample_text": "Подпись",
+     "hard_lines": false
     },
     {
      "id": "377",
@@ -1259,7 +1312,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Текстовый блок"
+     "sample_text": "Текстовый блок",
+     "hard_lines": false
     },
     {
      "id": "381",
@@ -1276,7 +1330,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Текстовый блок"
+     "sample_text": "Текстовый блок",
+     "hard_lines": false
     },
     {
      "id": "384",
@@ -1293,7 +1348,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     }
    ],
    "fixed": [
@@ -1345,7 +1401,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": "Оформление кода"
+     "sample_text": "Оформление кода",
+     "hard_lines": false
     },
     {
      "id": "407",
@@ -1362,7 +1419,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "body { padding: 0; margin: 0; height: 100vh; overflow: hidden; font-family: ‘MailSans Roman’, sans-serif; background: url(https://github.com/supahfunk/gradientwaves-svg/blob/master/dist/img/bg-gradien"
+     "sample_text": "body { padding: 0; margin: 0; height: 100vh; overflow: hidden; font-family: ‘MailSans Roman’, sans-serif; background: url(https://github.com/supahfunk/gradientwaves-svg/blob/master/dist/img/bg-gradien",
+     "hard_lines": false
     },
     {
      "id": "405",
@@ -1379,7 +1437,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": "body",
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     }
    ],
    "fixed": [
@@ -1416,7 +1475,8 @@
      "font": null,
      "size_pt": 48.0,
      "placeholder_type": "title",
-     "sample_text": "Пример слайда-разделителя"
+     "sample_text": "Пример слайда-разделителя",
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -1446,7 +1506,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": "Заголовок + четыре преимущества"
+     "sample_text": "Заголовок + четыре преимущества",
+     "hard_lines": false
     },
     {
      "id": "437",
@@ -1463,7 +1524,8 @@
      "font": null,
      "size_pt": 18.0,
      "placeholder_type": null,
-     "sample_text": "Описание под буллитом (в три строки и больше)"
+     "sample_text": "Описание под буллитом (в три строки и больше)",
+     "hard_lines": false
     },
     {
      "id": "435",
@@ -1480,7 +1542,8 @@
      "font": null,
      "size_pt": 18.0,
      "placeholder_type": null,
-     "sample_text": "Описание под буллитом (в три строки и больше)"
+     "sample_text": "Описание под буллитом (в три строки и больше)",
+     "hard_lines": false
     },
     {
      "id": "438",
@@ -1497,7 +1560,8 @@
      "font": null,
      "size_pt": 18.0,
      "placeholder_type": null,
-     "sample_text": "Описание под буллитом (в три строки и больше)"
+     "sample_text": "Описание под буллитом (в три строки и больше)",
+     "hard_lines": false
     },
     {
      "id": "436",
@@ -1514,7 +1578,8 @@
      "font": null,
      "size_pt": 18.0,
      "placeholder_type": null,
-     "sample_text": "Описание под буллитом (в три строки и больше)"
+     "sample_text": "Описание под буллитом (в три строки и больше)",
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -1544,7 +1609,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": "Заголовок — ключевая мысль слайда"
+     "sample_text": "Заголовок — ключевая мысль слайда",
+     "hard_lines": false
     },
     {
      "id": "447",
@@ -1561,7 +1627,8 @@
      "font": null,
      "size_pt": 88.0,
      "placeholder_type": "body",
-     "sample_text": "33%"
+     "sample_text": "33%",
+     "hard_lines": false
     },
     {
      "id": "450",
@@ -1578,7 +1645,8 @@
      "font": null,
      "size_pt": 239.0,
      "placeholder_type": null,
-     "sample_text": "43%"
+     "sample_text": "43%",
+     "hard_lines": false
     },
     {
      "id": "448",
@@ -1595,7 +1663,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": "body",
-     "sample_text": "Объяснение этого показателя"
+     "sample_text": "Объяснение этого показателя",
+     "hard_lines": false
     },
     {
      "id": "445",
@@ -1612,7 +1681,8 @@
      "font": null,
      "size_pt": 88.0,
      "placeholder_type": "body",
-     "sample_text": "23%"
+     "sample_text": "23%",
+     "hard_lines": false
     },
     {
      "id": "451",
@@ -1629,7 +1699,8 @@
      "font": null,
      "size_pt": 24.0,
      "placeholder_type": null,
-     "sample_text": "Описание — что это за показатель?"
+     "sample_text": "Описание — что это за показатель?",
+     "hard_lines": false
     },
     {
      "id": "446",
@@ -1646,7 +1717,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": "body",
-     "sample_text": "Объяснение этого показателя"
+     "sample_text": "Объяснение этого показателя",
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -1676,7 +1748,8 @@
      "font": null,
      "size_pt": 40.0,
      "placeholder_type": "body",
-     "sample_text": "VK активно развивается и стремится стать центром технологической экспертизы в России. Уверен, что опыт коллег поможет в достижении этой амбициозной цели. Их практическая экспертиза в разработке и внед"
+     "sample_text": "VK активно развивается и стремится стать центром технологической экспертизы в России. Уверен, что опыт коллег поможет в достижении этой амбициозной цели. Их практическая экспертиза в разработке и внед",
+     "hard_lines": false
     },
     {
      "id": "457",
@@ -1693,7 +1766,8 @@
      "font": null,
      "size_pt": 24.0,
      "placeholder_type": "body",
-     "sample_text": "Владимир Кириенко, генеральный директор VK"
+     "sample_text": "Владимир Кириенко, генеральный директор VK",
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -1728,7 +1802,8 @@
      "font": null,
      "size_pt": 20.0,
      "placeholder_type": null,
-     "sample_text": "Имя Фамилия"
+     "sample_text": "Имя Фамилия",
+     "hard_lines": false
     },
     {
      "id": "465",
@@ -1745,7 +1820,8 @@
      "font": null,
      "size_pt": 20.0,
      "placeholder_type": null,
-     "sample_text": "Имя Фамилия"
+     "sample_text": "Имя Фамилия",
+     "hard_lines": false
     },
     {
      "id": "468",
@@ -1762,7 +1838,8 @@
      "font": null,
      "size_pt": 20.0,
      "placeholder_type": null,
-     "sample_text": "Имя Фамилия"
+     "sample_text": "Имя Фамилия",
+     "hard_lines": false
     },
     {
      "id": "471",
@@ -1779,7 +1856,8 @@
      "font": null,
      "size_pt": 20.0,
      "placeholder_type": null,
-     "sample_text": "Имя Фамилия"
+     "sample_text": "Имя Фамилия",
+     "hard_lines": false
     },
     {
      "id": "463",
@@ -1796,7 +1874,8 @@
      "font": null,
      "size_pt": 14.0,
      "placeholder_type": null,
-     "sample_text": "Должность"
+     "sample_text": "Должность",
+     "hard_lines": false
     },
     {
      "id": "466",
@@ -1813,7 +1892,8 @@
      "font": null,
      "size_pt": 14.0,
      "placeholder_type": null,
-     "sample_text": "Должность"
+     "sample_text": "Должность",
+     "hard_lines": false
     },
     {
      "id": "469",
@@ -1830,7 +1910,8 @@
      "font": null,
      "size_pt": 14.0,
      "placeholder_type": null,
-     "sample_text": "Должность"
+     "sample_text": "Должность",
+     "hard_lines": false
     },
     {
      "id": "472",
@@ -1847,7 +1928,8 @@
      "font": null,
      "size_pt": 14.0,
      "placeholder_type": null,
-     "sample_text": "Должность"
+     "sample_text": "Должность",
+     "hard_lines": false
     },
     {
      "id": "474",
@@ -1864,7 +1946,8 @@
      "font": null,
      "size_pt": 20.0,
      "placeholder_type": null,
-     "sample_text": "Имя Фамилия"
+     "sample_text": "Имя Фамилия",
+     "hard_lines": false
     },
     {
      "id": "477",
@@ -1881,7 +1964,8 @@
      "font": null,
      "size_pt": 20.0,
      "placeholder_type": null,
-     "sample_text": "Имя Фамилия"
+     "sample_text": "Имя Фамилия",
+     "hard_lines": false
     },
     {
      "id": "480",
@@ -1898,7 +1982,8 @@
      "font": null,
      "size_pt": 20.0,
      "placeholder_type": null,
-     "sample_text": "Имя Фамилия"
+     "sample_text": "Имя Фамилия",
+     "hard_lines": false
     },
     {
      "id": "483",
@@ -1915,7 +2000,8 @@
      "font": null,
      "size_pt": 20.0,
      "placeholder_type": null,
-     "sample_text": "Имя Фамилия"
+     "sample_text": "Имя Фамилия",
+     "hard_lines": false
     },
     {
      "id": "475",
@@ -1932,7 +2018,8 @@
      "font": null,
      "size_pt": 14.0,
      "placeholder_type": null,
-     "sample_text": "Должность"
+     "sample_text": "Должность",
+     "hard_lines": false
     },
     {
      "id": "478",
@@ -1949,7 +2036,8 @@
      "font": null,
      "size_pt": 14.0,
      "placeholder_type": null,
-     "sample_text": "Должность"
+     "sample_text": "Должность",
+     "hard_lines": false
     },
     {
      "id": "481",
@@ -1966,7 +2054,8 @@
      "font": null,
      "size_pt": 14.0,
      "placeholder_type": null,
-     "sample_text": "Должность"
+     "sample_text": "Должность",
+     "hard_lines": false
     },
     {
      "id": "484",
@@ -1983,7 +2072,8 @@
      "font": null,
      "size_pt": 14.0,
      "placeholder_type": null,
-     "sample_text": "Должность"
+     "sample_text": "Должность",
+     "hard_lines": false
     },
     {
      "id": "464",
@@ -2000,7 +2090,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "467",
@@ -2017,7 +2108,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "470",
@@ -2034,7 +2126,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "473",
@@ -2051,7 +2144,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "476",
@@ -2068,7 +2162,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "479",
@@ -2085,7 +2180,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "482",
@@ -2102,7 +2198,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "485",
@@ -2119,7 +2216,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -2149,7 +2247,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": "Заголовок — ключевая мысль слайда"
+     "sample_text": "Заголовок — ключевая мысль слайда",
+     "hard_lines": false
     },
     {
      "id": "496",
@@ -2166,7 +2265,8 @@
      "font": null,
      "size_pt": 32.0,
      "placeholder_type": null,
-     "sample_text": "1"
+     "sample_text": "1",
+     "hard_lines": false
     },
     {
      "id": "497",
@@ -2183,7 +2283,8 @@
      "font": null,
      "size_pt": 32.0,
      "placeholder_type": null,
-     "sample_text": "2"
+     "sample_text": "2",
+     "hard_lines": false
     },
     {
      "id": "498",
@@ -2200,7 +2301,8 @@
      "font": null,
      "size_pt": 32.0,
      "placeholder_type": null,
-     "sample_text": "3"
+     "sample_text": "3",
+     "hard_lines": false
     },
     {
      "id": "499",
@@ -2217,7 +2319,8 @@
      "font": null,
      "size_pt": 32.0,
      "placeholder_type": null,
-     "sample_text": "4"
+     "sample_text": "4",
+     "hard_lines": false
     },
     {
      "id": "495",
@@ -2234,7 +2337,8 @@
      "font": null,
      "size_pt": 12.0,
      "placeholder_type": null,
-     "sample_text": "Описание первого преимущества или шага(в три строки и больше)"
+     "sample_text": "Описание первого преимущества или шага(в три строки и больше)",
+     "hard_lines": false
     },
     {
      "id": "492",
@@ -2251,7 +2355,8 @@
      "font": null,
      "size_pt": 12.0,
      "placeholder_type": null,
-     "sample_text": "Описание второго преимущества или шага(в три строки и больше)"
+     "sample_text": "Описание второго преимущества или шага(в три строки и больше)",
+     "hard_lines": false
     },
     {
      "id": "493",
@@ -2268,7 +2373,8 @@
      "font": null,
      "size_pt": 12.0,
      "placeholder_type": null,
-     "sample_text": "Описание третьего преимущества или шага(в три строки и больше)"
+     "sample_text": "Описание третьего преимущества или шага(в три строки и больше)",
+     "hard_lines": false
     },
     {
      "id": "494",
@@ -2285,7 +2391,8 @@
      "font": null,
      "size_pt": 12.0,
      "placeholder_type": null,
-     "sample_text": "Описание четвертого преимущества или шага(в три строки и больше)"
+     "sample_text": "Описание четвертого преимущества или шага(в три строки и больше)",
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -2320,7 +2427,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": "Заголовок — ключевая мысль слайда"
+     "sample_text": "Заголовок — ключевая мысль слайда",
+     "hard_lines": false
     },
     {
      "id": "511",
@@ -2337,7 +2445,8 @@
      "font": null,
      "size_pt": 32.0,
      "placeholder_type": null,
-     "sample_text": "1"
+     "sample_text": "1",
+     "hard_lines": false
     },
     {
      "id": "512",
@@ -2354,7 +2463,8 @@
      "font": null,
      "size_pt": 32.0,
      "placeholder_type": null,
-     "sample_text": "2"
+     "sample_text": "2",
+     "hard_lines": false
     },
     {
      "id": "513",
@@ -2371,7 +2481,8 @@
      "font": null,
      "size_pt": 32.0,
      "placeholder_type": null,
-     "sample_text": "3"
+     "sample_text": "3",
+     "hard_lines": false
     },
     {
      "id": "514",
@@ -2388,7 +2499,8 @@
      "font": null,
      "size_pt": 32.0,
      "placeholder_type": null,
-     "sample_text": "4"
+     "sample_text": "4",
+     "hard_lines": false
     },
     {
      "id": "515",
@@ -2405,7 +2517,8 @@
      "font": null,
      "size_pt": 32.0,
      "placeholder_type": null,
-     "sample_text": "5"
+     "sample_text": "5",
+     "hard_lines": false
     },
     {
      "id": "510",
@@ -2422,7 +2535,8 @@
      "font": null,
      "size_pt": 12.0,
      "placeholder_type": null,
-     "sample_text": "Описание первого преимущества или шага(в три строки и больше)"
+     "sample_text": "Описание первого преимущества или шага(в три строки и больше)",
+     "hard_lines": false
     },
     {
      "id": "506",
@@ -2439,7 +2553,8 @@
      "font": null,
      "size_pt": 12.0,
      "placeholder_type": null,
-     "sample_text": "Описание второго преимущества или шага(в три строки и больше)"
+     "sample_text": "Описание второго преимущества или шага(в три строки и больше)",
+     "hard_lines": false
     },
     {
      "id": "507",
@@ -2456,7 +2571,8 @@
      "font": null,
      "size_pt": 12.0,
      "placeholder_type": null,
-     "sample_text": "Описание третьего преимущества или шага(в три строки и больше)"
+     "sample_text": "Описание третьего преимущества или шага(в три строки и больше)",
+     "hard_lines": false
     },
     {
      "id": "508",
@@ -2473,7 +2589,8 @@
      "font": null,
      "size_pt": 12.0,
      "placeholder_type": null,
-     "sample_text": "Описание четвертого преимущества или шага(в три строки и больше)"
+     "sample_text": "Описание четвертого преимущества или шага(в три строки и больше)",
+     "hard_lines": false
     },
     {
      "id": "509",
@@ -2490,7 +2607,8 @@
      "font": null,
      "size_pt": 12.0,
      "placeholder_type": null,
-     "sample_text": "Описание пятого преимущества или шага(в три строки и больше)"
+     "sample_text": "Описание пятого преимущества или шага(в три строки и больше)",
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -2525,7 +2643,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": "Заголовок — ключевая мысль слайда"
+     "sample_text": "Заголовок — ключевая мысль слайда",
+     "hard_lines": false
     },
     {
      "id": "524",
@@ -2542,7 +2661,8 @@
      "font": null,
      "size_pt": 32.0,
      "placeholder_type": null,
-     "sample_text": "1"
+     "sample_text": "1",
+     "hard_lines": false
     },
     {
      "id": "525",
@@ -2559,7 +2679,8 @@
      "font": null,
      "size_pt": 32.0,
      "placeholder_type": null,
-     "sample_text": "2"
+     "sample_text": "2",
+     "hard_lines": false
     },
     {
      "id": "526",
@@ -2576,7 +2697,8 @@
      "font": null,
      "size_pt": 32.0,
      "placeholder_type": null,
-     "sample_text": "3"
+     "sample_text": "3",
+     "hard_lines": false
     },
     {
      "id": "527",
@@ -2593,7 +2715,8 @@
      "font": null,
      "size_pt": 32.0,
      "placeholder_type": null,
-     "sample_text": "4"
+     "sample_text": "4",
+     "hard_lines": false
     },
     {
      "id": "523",
@@ -2610,7 +2733,8 @@
      "font": null,
      "size_pt": 12.0,
      "placeholder_type": null,
-     "sample_text": "Описание первого преимущества или шага(в три строки и больше)"
+     "sample_text": "Описание первого преимущества или шага(в три строки и больше)",
+     "hard_lines": false
     },
     {
      "id": "520",
@@ -2627,7 +2751,8 @@
      "font": null,
      "size_pt": 12.0,
      "placeholder_type": null,
-     "sample_text": "Описание второго преимущества или шага(в три строки и больше)"
+     "sample_text": "Описание второго преимущества или шага(в три строки и больше)",
+     "hard_lines": false
     },
     {
      "id": "521",
@@ -2644,7 +2769,8 @@
      "font": null,
      "size_pt": 12.0,
      "placeholder_type": null,
-     "sample_text": "Описание третьего преимущества или шага(в три строки и больше)"
+     "sample_text": "Описание третьего преимущества или шага(в три строки и больше)",
+     "hard_lines": false
     },
     {
      "id": "522",
@@ -2661,7 +2787,8 @@
      "font": null,
      "size_pt": 12.0,
      "placeholder_type": null,
-     "sample_text": "Описание четвертого преимущества или шага(в три строки и больше)"
+     "sample_text": "Описание четвертого преимущества или шага(в три строки и больше)",
+     "hard_lines": false
     },
     {
      "id": "532",
@@ -2678,7 +2805,8 @@
      "font": null,
      "size_pt": 32.0,
      "placeholder_type": null,
-     "sample_text": "5"
+     "sample_text": "5",
+     "hard_lines": false
     },
     {
      "id": "533",
@@ -2695,7 +2823,8 @@
      "font": null,
      "size_pt": 32.0,
      "placeholder_type": null,
-     "sample_text": "6"
+     "sample_text": "6",
+     "hard_lines": false
     },
     {
      "id": "534",
@@ -2712,7 +2841,8 @@
      "font": null,
      "size_pt": 32.0,
      "placeholder_type": null,
-     "sample_text": "7"
+     "sample_text": "7",
+     "hard_lines": false
     },
     {
      "id": "535",
@@ -2729,7 +2859,8 @@
      "font": null,
      "size_pt": 32.0,
      "placeholder_type": null,
-     "sample_text": "8"
+     "sample_text": "8",
+     "hard_lines": false
     },
     {
      "id": "531",
@@ -2746,7 +2877,8 @@
      "font": null,
      "size_pt": 12.0,
      "placeholder_type": null,
-     "sample_text": "Описание пятого преимущества или шага(в три строки и больше)"
+     "sample_text": "Описание пятого преимущества или шага(в три строки и больше)",
+     "hard_lines": false
     },
     {
      "id": "528",
@@ -2763,7 +2895,8 @@
      "font": null,
      "size_pt": 12.0,
      "placeholder_type": null,
-     "sample_text": "Описание шестого преимущества или шага(в три строки и больше)"
+     "sample_text": "Описание шестого преимущества или шага(в три строки и больше)",
+     "hard_lines": false
     },
     {
      "id": "529",
@@ -2780,7 +2913,8 @@
      "font": null,
      "size_pt": 12.0,
      "placeholder_type": null,
-     "sample_text": "Описание седьмого преимущества или шага(в три строки и больше)"
+     "sample_text": "Описание седьмого преимущества или шага(в три строки и больше)",
+     "hard_lines": false
     },
     {
      "id": "530",
@@ -2797,7 +2931,8 @@
      "font": null,
      "size_pt": 12.0,
      "placeholder_type": null,
-     "sample_text": "Описание восьмого преимущества или шага(в три строки и больше)"
+     "sample_text": "Описание восьмого преимущества или шага(в три строки и больше)",
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -2832,7 +2967,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": "Заголовок слайда и несколько тезисов под буллитами"
+     "sample_text": "Заголовок слайда и несколько тезисов под буллитами",
+     "hard_lines": false
     },
     {
      "id": "541",
@@ -2849,7 +2985,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": "body",
-     "sample_text": "​​здесь текст в две строки или более (любые детали проекта)​​здесь текст в две строки или более (любые детали проекта)​​здесь текст в две строки или более (любые детали проекта)​​здесь текст в две стр"
+     "sample_text": "​​здесь текст в две строки или более (любые детали проекта)​​здесь текст в две строки или более (любые детали проекта)​​здесь текст в две строки или более (любые детали проекта)​​здесь текст в две стр",
+     "hard_lines": false
     },
     {
      "id": "542",
@@ -2866,7 +3003,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": "body",
-     "sample_text": "​​здесь текст в две строки или более (любые детали проекта)​​здесь текст в две строки или более (любые детали проекта)​​здесь текст в две строки или более (любые детали проекта)​​здесь текст в две стр"
+     "sample_text": "​​здесь текст в две строки или более (любые детали проекта)​​здесь текст в две строки или более (любые детали проекта)​​здесь текст в две строки или более (любые детали проекта)​​здесь текст в две стр",
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -2896,7 +3034,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": "Интерфейсные иконки"
+     "sample_text": "Интерфейсные иконки",
+     "hard_lines": false
     },
     {
      "id": "757",
@@ -2913,7 +3052,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Иконки можно брать из этого слайда, масштабировать и изменять цвет"
+     "sample_text": "Иконки можно брать из этого слайда, масштабировать и изменять цвет",
+     "hard_lines": false
     },
     {
      "id": "549",
@@ -2930,7 +3070,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "550",
@@ -2947,7 +3088,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "551",
@@ -2964,7 +3106,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "552",
@@ -2981,7 +3124,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "553",
@@ -2998,7 +3142,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "554",
@@ -3015,7 +3160,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "555",
@@ -3032,7 +3178,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "556",
@@ -3049,7 +3196,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "557",
@@ -3066,7 +3214,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "558",
@@ -3083,7 +3232,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "559",
@@ -3100,7 +3250,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "560",
@@ -3117,7 +3268,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "561",
@@ -3134,7 +3286,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "562",
@@ -3151,7 +3304,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "563",
@@ -3168,7 +3322,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "564",
@@ -3185,7 +3340,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "565",
@@ -3202,7 +3358,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "566",
@@ -3219,7 +3376,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "567",
@@ -3236,7 +3394,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "568",
@@ -3253,7 +3412,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "569",
@@ -3270,7 +3430,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "570",
@@ -3287,7 +3448,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "571",
@@ -3304,7 +3466,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "572",
@@ -3321,7 +3484,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "573",
@@ -3338,7 +3502,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "574",
@@ -3355,7 +3520,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "575",
@@ -3372,7 +3538,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "576",
@@ -3389,7 +3556,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "577",
@@ -3406,7 +3574,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "578",
@@ -3423,7 +3592,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "579",
@@ -3440,7 +3610,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "580",
@@ -3457,7 +3628,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "581",
@@ -3474,7 +3646,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "582",
@@ -3491,7 +3664,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "583",
@@ -3508,7 +3682,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "584",
@@ -3525,7 +3700,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "585",
@@ -3542,7 +3718,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "586",
@@ -3559,7 +3736,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "587",
@@ -3576,7 +3754,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "588",
@@ -3593,7 +3772,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "589",
@@ -3610,7 +3790,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "590",
@@ -3627,7 +3808,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "591",
@@ -3644,7 +3826,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "592",
@@ -3661,7 +3844,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "593",
@@ -3678,7 +3862,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "594",
@@ -3695,7 +3880,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "595",
@@ -3712,7 +3898,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "596",
@@ -3729,7 +3916,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "597",
@@ -3746,7 +3934,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "598",
@@ -3763,7 +3952,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "599",
@@ -3780,7 +3970,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "600",
@@ -3797,7 +3988,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "601",
@@ -3814,7 +4006,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "602",
@@ -3831,7 +4024,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "603",
@@ -3848,7 +4042,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "604",
@@ -3865,7 +4060,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "605",
@@ -3882,7 +4078,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "606",
@@ -3899,7 +4096,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "607",
@@ -3916,7 +4114,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "608",
@@ -3933,7 +4132,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "609",
@@ -3950,7 +4150,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "610",
@@ -3967,7 +4168,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "611",
@@ -3984,7 +4186,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "612",
@@ -4001,7 +4204,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "613",
@@ -4018,7 +4222,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "614",
@@ -4035,7 +4240,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "615",
@@ -4052,7 +4258,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "616",
@@ -4069,7 +4276,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "617",
@@ -4086,7 +4294,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "618",
@@ -4103,7 +4312,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "619",
@@ -4120,7 +4330,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "620",
@@ -4137,7 +4348,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "621",
@@ -4154,7 +4366,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "622",
@@ -4171,7 +4384,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "623",
@@ -4188,7 +4402,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "624",
@@ -4205,7 +4420,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "625",
@@ -4222,7 +4438,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "626",
@@ -4239,7 +4456,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "627",
@@ -4256,7 +4474,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "628",
@@ -4273,7 +4492,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "629",
@@ -4290,7 +4510,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "630",
@@ -4307,7 +4528,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "631",
@@ -4324,7 +4546,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "632",
@@ -4341,7 +4564,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "633",
@@ -4358,7 +4582,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "634",
@@ -4375,7 +4600,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "635",
@@ -4392,7 +4618,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "636",
@@ -4409,7 +4636,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "637",
@@ -4426,7 +4654,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "638",
@@ -4443,7 +4672,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "639",
@@ -4460,7 +4690,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "640",
@@ -4477,7 +4708,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "641",
@@ -4494,7 +4726,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "642",
@@ -4511,7 +4744,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "643",
@@ -4528,7 +4762,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "644",
@@ -4545,7 +4780,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "645",
@@ -4562,7 +4798,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "646",
@@ -4579,7 +4816,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "647",
@@ -4596,7 +4834,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "648",
@@ -4613,7 +4852,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "649",
@@ -4630,7 +4870,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "650",
@@ -4647,7 +4888,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "651",
@@ -4664,7 +4906,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "652",
@@ -4681,7 +4924,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "653",
@@ -4698,7 +4942,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "654",
@@ -4715,7 +4960,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "655",
@@ -4732,7 +4978,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "656",
@@ -4749,7 +4996,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "657",
@@ -4766,7 +5014,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "658",
@@ -4783,7 +5032,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "659",
@@ -4800,7 +5050,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "660",
@@ -4817,7 +5068,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "661",
@@ -4834,7 +5086,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "662",
@@ -4851,7 +5104,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "663",
@@ -4868,7 +5122,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "664",
@@ -4885,7 +5140,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "665",
@@ -4902,7 +5158,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "666",
@@ -4919,7 +5176,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "667",
@@ -4936,7 +5194,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "668",
@@ -4953,7 +5212,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "669",
@@ -4970,7 +5230,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "670",
@@ -4987,7 +5248,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "671",
@@ -5004,7 +5266,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "672",
@@ -5021,7 +5284,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "673",
@@ -5038,7 +5302,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "674",
@@ -5055,7 +5320,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "675",
@@ -5072,7 +5338,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "676",
@@ -5089,7 +5356,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "677",
@@ -5106,7 +5374,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "678",
@@ -5123,7 +5392,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "679",
@@ -5140,7 +5410,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "680",
@@ -5157,7 +5428,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "681",
@@ -5174,7 +5446,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "682",
@@ -5191,7 +5464,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "683",
@@ -5208,7 +5482,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "684",
@@ -5225,7 +5500,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "685",
@@ -5242,7 +5518,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "686",
@@ -5259,7 +5536,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "687",
@@ -5276,7 +5554,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "688",
@@ -5293,7 +5572,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "689",
@@ -5310,7 +5590,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "690",
@@ -5327,7 +5608,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "691",
@@ -5344,7 +5626,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "692",
@@ -5361,7 +5644,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "693",
@@ -5378,7 +5662,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "694",
@@ -5395,7 +5680,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "695",
@@ -5412,7 +5698,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "696",
@@ -5429,7 +5716,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "697",
@@ -5446,7 +5734,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "698",
@@ -5463,7 +5752,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "699",
@@ -5480,7 +5770,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "700",
@@ -5497,7 +5788,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "701",
@@ -5514,7 +5806,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "702",
@@ -5531,7 +5824,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "703",
@@ -5548,7 +5842,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "704",
@@ -5565,7 +5860,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "705",
@@ -5582,7 +5878,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "706",
@@ -5599,7 +5896,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "707",
@@ -5616,7 +5914,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "708",
@@ -5633,7 +5932,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "709",
@@ -5650,7 +5950,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "710",
@@ -5667,7 +5968,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "711",
@@ -5684,7 +5986,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "712",
@@ -5701,7 +6004,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "713",
@@ -5718,7 +6022,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "714",
@@ -5735,7 +6040,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "715",
@@ -5752,7 +6058,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "716",
@@ -5769,7 +6076,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "717",
@@ -5786,7 +6094,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "718",
@@ -5803,7 +6112,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "719",
@@ -5820,7 +6130,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "720",
@@ -5837,7 +6148,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "721",
@@ -5854,7 +6166,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "722",
@@ -5871,7 +6184,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "723",
@@ -5888,7 +6202,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "724",
@@ -5905,7 +6220,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "725",
@@ -5922,7 +6238,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "726",
@@ -5939,7 +6256,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "727",
@@ -5956,7 +6274,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "728",
@@ -5973,7 +6292,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "729",
@@ -5990,7 +6310,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "730",
@@ -6007,7 +6328,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "731",
@@ -6024,7 +6346,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "732",
@@ -6041,7 +6364,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "733",
@@ -6058,7 +6382,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "734",
@@ -6075,7 +6400,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "735",
@@ -6092,7 +6418,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "736",
@@ -6109,7 +6436,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "737",
@@ -6126,7 +6454,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "738",
@@ -6143,7 +6472,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "739",
@@ -6160,7 +6490,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "740",
@@ -6177,7 +6508,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "741",
@@ -6194,7 +6526,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "742",
@@ -6211,7 +6544,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "743",
@@ -6228,7 +6562,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "744",
@@ -6245,7 +6580,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "745",
@@ -6262,7 +6598,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "746",
@@ -6279,7 +6616,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "747",
@@ -6296,7 +6634,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "748",
@@ -6313,7 +6652,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "749",
@@ -6330,7 +6670,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "750",
@@ -6347,7 +6688,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "751",
@@ -6364,7 +6706,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "752",
@@ -6381,7 +6724,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "753",
@@ -6398,7 +6742,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "754",
@@ -6415,7 +6760,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "755",
@@ -6432,7 +6778,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "756",
@@ -6449,7 +6796,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -6479,7 +6827,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": "Заголовок — ключевая мысль слайда"
+     "sample_text": "Заголовок — ключевая мысль слайда",
+     "hard_lines": false
     },
     {
      "id": "765",
@@ -6496,7 +6845,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Тезис под тематическойиконкой (например,об идее проекта)"
+     "sample_text": "Тезис под тематическойиконкой (например,об идее проекта)",
+     "hard_lines": false
     },
     {
      "id": "766",
@@ -6513,7 +6863,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Ещё тезис под иконкой (например, о месте проекта в экосистеме)"
+     "sample_text": "Ещё тезис под иконкой (например, о месте проекта в экосистеме)",
+     "hard_lines": false
     },
     {
      "id": "767",
@@ -6530,7 +6881,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "И третий тезис (что-то о срокахи расписании)"
+     "sample_text": "И третий тезис (что-то о срокахи расписании)",
+     "hard_lines": false
     },
     {
      "id": "773",
@@ -6547,7 +6899,8 @@
      "font": null,
      "size_pt": 14.8,
      "placeholder_type": null,
-     "sample_text": "Иконки можно брать из VKUI Icons Library. Фирменный синий #0077FF"
+     "sample_text": "Иконки можно брать из VKUI Icons Library. Фирменный синий #0077FF",
+     "hard_lines": false
     },
     {
      "id": "762",
@@ -6564,7 +6917,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "769",
@@ -6581,7 +6935,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "770",
@@ -6598,7 +6953,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "771",
@@ -6615,7 +6971,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "772",
@@ -6632,7 +6989,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -6662,7 +7020,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": "Заголовок — ключевая мысль слайда"
+     "sample_text": "Заголовок — ключевая мысль слайда",
+     "hard_lines": false
     },
     {
      "id": "786",
@@ -6679,7 +7038,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Тезис под тематическойиконкой (например,об идее проекта)"
+     "sample_text": "Тезис под тематическойиконкой (например,об идее проекта)",
+     "hard_lines": false
     },
     {
      "id": "787",
@@ -6696,7 +7056,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Ещё тезис под иконкой (например, о месте проекта в экосистеме)"
+     "sample_text": "Ещё тезис под иконкой (например, о месте проекта в экосистеме)",
+     "hard_lines": false
     },
     {
      "id": "788",
@@ -6713,7 +7074,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "И третий тезис (что-то о срокахи расписании)"
+     "sample_text": "И третий тезис (что-то о срокахи расписании)",
+     "hard_lines": false
     },
     {
      "id": "789",
@@ -6730,7 +7092,8 @@
      "font": null,
      "size_pt": 14.8,
      "placeholder_type": null,
-     "sample_text": "Иконки можно брать из VKUI Icons Library. Фирменный синий #0077FF"
+     "sample_text": "Иконки можно брать из VKUI Icons Library. Фирменный синий #0077FF",
+     "hard_lines": false
     },
     {
      "id": "778",
@@ -6747,7 +7110,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "779",
@@ -6764,7 +7128,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "780",
@@ -6781,7 +7146,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "783",
@@ -6798,7 +7164,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "784",
@@ -6815,7 +7182,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "785",
@@ -6832,7 +7200,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -6862,7 +7231,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": "Заголовок — ключевая мысль слайда"
+     "sample_text": "Заголовок — ключевая мысль слайда",
+     "hard_lines": false
     },
     {
      "id": "800",
@@ -6879,7 +7249,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Тезис под тематическойиконкой (например,об идее проекта)"
+     "sample_text": "Тезис под тематическойиконкой (например,об идее проекта)",
+     "hard_lines": false
     },
     {
      "id": "801",
@@ -6896,7 +7267,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Ещё тезис под иконкой (например, о месте проекта в экосистеме)"
+     "sample_text": "Ещё тезис под иконкой (например, о месте проекта в экосистеме)",
+     "hard_lines": false
     },
     {
      "id": "802",
@@ -6913,7 +7285,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "И третий тезис (что-то о срокахи расписании)"
+     "sample_text": "И третий тезис (что-то о срокахи расписании)",
+     "hard_lines": false
     },
     {
      "id": "796",
@@ -6930,7 +7303,8 @@
      "font": null,
      "size_pt": 14.8,
      "placeholder_type": null,
-     "sample_text": "Иконки можно брать из VKUI Icons Library. Фирменный синий #0077FF"
+     "sample_text": "Иконки можно брать из VKUI Icons Library. Фирменный синий #0077FF",
+     "hard_lines": false
     },
     {
      "id": "797",
@@ -6947,7 +7321,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "798",
@@ -6964,7 +7339,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "799",
@@ -6981,7 +7357,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -7011,7 +7388,8 @@
      "font": null,
      "size_pt": 48.0,
      "placeholder_type": null,
-     "sample_text": "Пример слайда-разделителя"
+     "sample_text": "Пример слайда-разделителя",
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -7041,7 +7419,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": "Слайды со скриншотами"
+     "sample_text": "Слайды со скриншотами",
+     "hard_lines": false
     },
     {
      "id": "819",
@@ -7058,7 +7437,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": "body",
-     "sample_text": "Рамки адаптированы под безрамочный Android и iPhone 12. Скачать другие мокапы (iPad, iPhone 7, телефоны Samsung и Xiaomi) можно на Facebook Devices.Можно скопировать скриншот и просто вставить его на "
+     "sample_text": "Рамки адаптированы под безрамочный Android и iPhone 12. Скачать другие мокапы (iPad, iPhone 7, телефоны Samsung и Xiaomi) можно на Facebook Devices.Можно скопировать скриншот и просто вставить его на ",
+     "hard_lines": false
     },
     {
      "id": "821",
@@ -7075,7 +7455,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": "pic",
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -7110,7 +7491,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": "Слайды со скриншотами"
+     "sample_text": "Слайды со скриншотами",
+     "hard_lines": false
     },
     {
      "id": "827",
@@ -7127,7 +7509,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "828",
@@ -7144,7 +7527,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -7179,7 +7563,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": "Слайды со скриншотами"
+     "sample_text": "Слайды со скриншотами",
+     "hard_lines": false
     },
     {
      "id": "834",
@@ -7196,7 +7581,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "835",
@@ -7213,7 +7599,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "837",
@@ -7230,7 +7617,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "838",
@@ -7247,7 +7635,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -7282,7 +7671,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": "Слайдысо скриншотами"
+     "sample_text": "Слайдысо скриншотами",
+     "hard_lines": false
     },
     {
      "id": "844",
@@ -7299,7 +7689,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": "body",
-     "sample_text": "Если нужно показать несколько скриншотов постов или интерфейса, можно продублировать слайд и менять скрины на том же месте. Только проследите, чтобы остальные элементы слайда не сместились.Для навигац"
+     "sample_text": "Если нужно показать несколько скриншотов постов или интерфейса, можно продублировать слайд и менять скрины на том же месте. Только проследите, чтобы остальные элементы слайда не сместились.Для навигац",
+     "hard_lines": false
     },
     {
      "id": "851",
@@ -7316,7 +7707,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -7351,7 +7743,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": "Построй своё будущее в IT вместе с VK"
+     "sample_text": "Построй своё будущее в IT вместе с VK",
+     "hard_lines": false
     },
     {
      "id": "856",
@@ -7368,7 +7761,8 @@
      "font": null,
      "size_pt": 14.0,
      "placeholder_type": "body",
-     "sample_text": "С 2011 года мы создаём бесплатные образовательные и развивающие проекты и инициативы вокруг технологий с ведущими экспертами VK в каждой специальности и с самым широким спектром программ в IT и non-te"
+     "sample_text": "С 2011 года мы создаём бесплатные образовательные и развивающие проекты и инициативы вокруг технологий с ведущими экспертами VK в каждой специальности и с самым широким спектром программ в IT и non-te",
+     "hard_lines": false
     },
     {
      "id": "858",
@@ -7385,7 +7779,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -7420,7 +7815,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "863",
@@ -7437,7 +7833,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": "body",
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -7467,7 +7864,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "869",
@@ -7484,7 +7882,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": "body",
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -7514,7 +7913,8 @@
      "font": null,
      "size_pt": 48.0,
      "placeholder_type": null,
-     "sample_text": "Пример слайда-разделителя"
+     "sample_text": "Пример слайда-разделителя",
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -7544,7 +7944,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": "Оформление таблиц"
+     "sample_text": "Оформление таблиц",
+     "hard_lines": false
     },
     {
      "id": "888",
@@ -7561,7 +7962,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": "body",
-     "sample_text": "Удаляем все лишние заливки, границы ячеек и выделения в тексте. Границы уместны, когда хотим обозначить легенду или размещаем на слайде большую таблицу.Выравниваем содержимое текстовых ячеек по левому"
+     "sample_text": "Удаляем все лишние заливки, границы ячеек и выделения в тексте. Границы уместны, когда хотим обозначить легенду или размещаем на слайде большую таблицу.Выравниваем содержимое текстовых ячеек по левому",
+     "hard_lines": false
     },
     {
      "id": "889",
@@ -7578,7 +7980,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": "Заголовок столбца, млнЗаголовок столбца, млнАкцент1510Строка144Строка119Строка85Строка53"
+     "sample_text": "Заголовок столбца, млнЗаголовок столбца, млнАкцент1510Строка144Строка119Строка85Строка53",
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -7608,7 +8011,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": "Оформление большой таблицы: пример"
+     "sample_text": "Оформление большой таблицы: пример",
+     "hard_lines": false
     },
     {
      "id": "895",
@@ -7625,7 +8029,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": "1 кв. 20182 кв. 20183 кв. 20184 кв. 20181 кв. 20192 кв. 20193 кв. 20194 кв. 20191 кв. 20202 кв. 2020ИтогоПлатежные карты32%38%39%39%37%29%40%31%37%30%35%Потребительские кредиты33%29%26%23%27%26%23%23%"
+     "sample_text": "1 кв. 20182 кв. 20183 кв. 20184 кв. 20181 кв. 20192 кв. 20193 кв. 20194 кв. 20191 кв. 20202 кв. 2020ИтогоПлатежные карты32%38%39%39%37%29%40%31%37%30%35%Потребительские кредиты33%29%26%23%27%26%23%23%",
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -7655,7 +8060,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": "Оформление большой таблицы: пример"
+     "sample_text": "Оформление большой таблицы: пример",
+     "hard_lines": false
     },
     {
      "id": "901",
@@ -7672,7 +8078,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": "ВремяТемаВладелец сессииКлючевые вопросы10:00 – 10:05Вступительное словоЛюбовь ПшеничниковаДиректор по развитию стратегических партнерствЦели проведения мероприятия;Ожидаемые результаты 10:05 – 10:25К"
+     "sample_text": "ВремяТемаВладелец сессииКлючевые вопросы10:00 – 10:05Вступительное словоЛюбовь ПшеничниковаДиректор по развитию стратегических партнерствЦели проведения мероприятия;Ожидаемые результаты 10:05 – 10:25К",
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -7707,7 +8114,8 @@
      "font": null,
      "size_pt": 48.0,
      "placeholder_type": null,
-     "sample_text": "Пример слайда-разделителя"
+     "sample_text": "Пример слайда-разделителя",
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -7737,11 +8145,12 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": "Таймлайн без акцентов"
+     "sample_text": "Таймлайн без акцентов",
+     "hard_lines": false
     },
     {
      "id": "922",
-     "kind": "date",
+     "kind": "label",
      "box": {
       "x": 658813,
       "y": 2434478,
@@ -7754,11 +8163,12 @@
      "font": null,
      "size_pt": 32.0,
      "placeholder_type": null,
-     "sample_text": "2010"
+     "sample_text": "2010",
+     "hard_lines": false
     },
     {
      "id": "924",
-     "kind": "date",
+     "kind": "label",
      "box": {
       "x": 3363214,
       "y": 2434478,
@@ -7771,11 +8181,12 @@
      "font": null,
      "size_pt": 32.0,
      "placeholder_type": null,
-     "sample_text": "2011"
+     "sample_text": "2011",
+     "hard_lines": false
     },
     {
      "id": "926",
-     "kind": "date",
+     "kind": "label",
      "box": {
       "x": 6073860,
       "y": 2434478,
@@ -7788,11 +8199,12 @@
      "font": null,
      "size_pt": 32.0,
      "placeholder_type": null,
-     "sample_text": "2012"
+     "sample_text": "2012",
+     "hard_lines": false
     },
     {
      "id": "940",
-     "kind": "date",
+     "kind": "label",
      "box": {
       "x": 8796338,
       "y": 2434478,
@@ -7805,7 +8217,8 @@
      "font": null,
      "size_pt": 32.0,
      "placeholder_type": null,
-     "sample_text": "2013"
+     "sample_text": "2013",
+     "hard_lines": false
     },
     {
      "id": "921",
@@ -7822,7 +8235,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Важное событиев жизни компании"
+     "sample_text": "Важное событиев жизни компании",
+     "hard_lines": false
     },
     {
      "id": "923",
@@ -7839,7 +8253,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Важное событиев жизни компании"
+     "sample_text": "Важное событиев жизни компании",
+     "hard_lines": false
     },
     {
      "id": "925",
@@ -7856,7 +8271,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Важное событиев жизни компании"
+     "sample_text": "Важное событиев жизни компании",
+     "hard_lines": false
     },
     {
      "id": "939",
@@ -7873,11 +8289,12 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Важное событиев жизни компании"
+     "sample_text": "Важное событиев жизни компании",
+     "hard_lines": false
     },
     {
      "id": "931",
-     "kind": "date",
+     "kind": "label",
      "box": {
       "x": 658813,
       "y": 4621356,
@@ -7890,11 +8307,12 @@
      "font": null,
      "size_pt": 32.0,
      "placeholder_type": null,
-     "sample_text": "2014"
+     "sample_text": "2014",
+     "hard_lines": false
     },
     {
      "id": "933",
-     "kind": "date",
+     "kind": "label",
      "box": {
       "x": 3363214,
       "y": 4621356,
@@ -7907,11 +8325,12 @@
      "font": null,
      "size_pt": 32.0,
      "placeholder_type": null,
-     "sample_text": "2015"
+     "sample_text": "2015",
+     "hard_lines": false
     },
     {
      "id": "935",
-     "kind": "date",
+     "kind": "label",
      "box": {
       "x": 6073860,
       "y": 4621356,
@@ -7924,7 +8343,8 @@
      "font": null,
      "size_pt": 32.0,
      "placeholder_type": null,
-     "sample_text": "2016"
+     "sample_text": "2016",
+     "hard_lines": false
     },
     {
      "id": "930",
@@ -7941,7 +8361,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Важное событиев жизни компании"
+     "sample_text": "Важное событиев жизни компании",
+     "hard_lines": false
     },
     {
      "id": "932",
@@ -7958,7 +8379,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Важное событиев жизни компании"
+     "sample_text": "Важное событиев жизни компании",
+     "hard_lines": false
     },
     {
      "id": "934",
@@ -7975,7 +8397,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Важное событиев жизни компании"
+     "sample_text": "Важное событиев жизни компании",
+     "hard_lines": false
     }
    ],
    "fixed": [
@@ -8013,7 +8436,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": "Диаграмма Ганта"
+     "sample_text": "Диаграмма Ганта",
+     "hard_lines": false
     },
     {
      "id": "977",
@@ -8030,7 +8454,8 @@
      "font": null,
      "size_pt": 14.0,
      "placeholder_type": null,
-     "sample_text": "Задача №1"
+     "sample_text": "Задача №1",
+     "hard_lines": false
     },
     {
      "id": "978",
@@ -8047,7 +8472,8 @@
      "font": null,
      "size_pt": 14.0,
      "placeholder_type": null,
-     "sample_text": "Задача №2"
+     "sample_text": "Задача №2",
+     "hard_lines": false
     },
     {
      "id": "979",
@@ -8064,7 +8490,8 @@
      "font": null,
      "size_pt": 14.0,
      "placeholder_type": null,
-     "sample_text": "Задача №3"
+     "sample_text": "Задача №3",
+     "hard_lines": false
     },
     {
      "id": "980",
@@ -8081,7 +8508,8 @@
      "font": null,
      "size_pt": 14.0,
      "placeholder_type": null,
-     "sample_text": "Задача №4"
+     "sample_text": "Задача №4",
+     "hard_lines": false
     },
     {
      "id": "981",
@@ -8098,7 +8526,8 @@
      "font": null,
      "size_pt": 14.0,
      "placeholder_type": null,
-     "sample_text": "Задача №5"
+     "sample_text": "Задача №5",
+     "hard_lines": false
     },
     {
      "id": "957",
@@ -8115,7 +8544,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Апр"
+     "sample_text": "Апр",
+     "hard_lines": false
     },
     {
      "id": "958",
@@ -8132,7 +8562,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Май"
+     "sample_text": "Май",
+     "hard_lines": false
     },
     {
      "id": "959",
@@ -8149,7 +8580,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Июнь"
+     "sample_text": "Июнь",
+     "hard_lines": false
     },
     {
      "id": "960",
@@ -8166,7 +8598,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Июль"
+     "sample_text": "Июль",
+     "hard_lines": false
     },
     {
      "id": "961",
@@ -8183,7 +8616,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Авг"
+     "sample_text": "Авг",
+     "hard_lines": false
     },
     {
      "id": "962",
@@ -8200,7 +8634,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Сен"
+     "sample_text": "Сен",
+     "hard_lines": false
     },
     {
      "id": "963",
@@ -8217,7 +8652,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Окт"
+     "sample_text": "Окт",
+     "hard_lines": false
     },
     {
      "id": "964",
@@ -8234,7 +8670,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Ноя"
+     "sample_text": "Ноя",
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -8264,7 +8701,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": "Нумерация"
+     "sample_text": "Нумерация",
+     "hard_lines": false
     },
     {
      "id": "991",
@@ -8281,7 +8719,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": null,
-     "sample_text": "1"
+     "sample_text": "1",
+     "hard_lines": false
     },
     {
      "id": "990",
@@ -8298,7 +8737,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": null,
-     "sample_text": "2"
+     "sample_text": "2",
+     "hard_lines": false
     },
     {
      "id": "988",
@@ -8315,7 +8755,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": null,
-     "sample_text": "3"
+     "sample_text": "3",
+     "hard_lines": false
     },
     {
      "id": "989",
@@ -8332,7 +8773,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": null,
-     "sample_text": "4"
+     "sample_text": "4",
+     "hard_lines": false
     },
     {
      "id": "992",
@@ -8349,7 +8791,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Здесь можно добавить пояснение к этапу"
+     "sample_text": "Здесь можно добавить пояснение к этапу",
+     "hard_lines": false
     },
     {
      "id": "993",
@@ -8366,7 +8809,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Второй этап важный, поэтому яркий"
+     "sample_text": "Второй этап важный, поэтому яркий",
+     "hard_lines": false
     },
     {
      "id": "994",
@@ -8383,7 +8827,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Здесь можно добавить пояснение к этапу"
+     "sample_text": "Здесь можно добавить пояснение к этапу",
+     "hard_lines": false
     },
     {
      "id": "995",
@@ -8400,7 +8845,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "Здесь можно добавить пояснение к этапу"
+     "sample_text": "Здесь можно добавить пояснение к этапу",
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -8430,7 +8876,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": "Примеры диаграмм"
+     "sample_text": "Примеры диаграмм",
+     "hard_lines": false
     },
     {
      "id": "1002",
@@ -8447,7 +8894,8 @@
      "font": null,
      "size_pt": 20.0,
      "placeholder_type": null,
-     "sample_text": "Сравнение всех городов сразу"
+     "sample_text": "Сравнение всех городов сразу",
+     "hard_lines": false
     },
     {
      "id": "1004",
@@ -8464,7 +8912,8 @@
      "font": null,
      "size_pt": 20.0,
      "placeholder_type": null,
-     "sample_text": "Диаграмма про Петербург"
+     "sample_text": "Диаграмма про Петербург",
+     "hard_lines": false
     },
     {
      "id": "1001",
@@ -8481,7 +8930,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -8516,7 +8966,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": "Примеры диаграмм"
+     "sample_text": "Примеры диаграмм",
+     "hard_lines": false
     },
     {
      "id": "1016",
@@ -8533,7 +8984,8 @@
      "font": null,
      "size_pt": 44.0,
      "placeholder_type": null,
-     "sample_text": "42%"
+     "sample_text": "42%",
+     "hard_lines": false
     },
     {
      "id": "1017",
@@ -8550,7 +9002,8 @@
      "font": null,
      "size_pt": 44.0,
      "placeholder_type": null,
-     "sample_text": "32%"
+     "sample_text": "32%",
+     "hard_lines": false
     },
     {
      "id": "1011",
@@ -8567,7 +9020,8 @@
      "font": null,
      "size_pt": 88.0,
      "placeholder_type": null,
-     "sample_text": "22%пояснение"
+     "sample_text": "22%пояснение",
+     "hard_lines": false
     },
     {
      "id": "1020",
@@ -8584,7 +9038,8 @@
      "font": null,
      "size_pt": 18.0,
      "placeholder_type": null,
-     "sample_text": "пояснение"
+     "sample_text": "пояснение",
+     "hard_lines": false
     },
     {
      "id": "1021",
@@ -8601,7 +9056,8 @@
      "font": null,
      "size_pt": 18.0,
      "placeholder_type": null,
-     "sample_text": "пояснение"
+     "sample_text": "пояснение",
+     "hard_lines": false
     },
     {
      "id": "1018",
@@ -8618,7 +9074,8 @@
      "font": null,
      "size_pt": 44.0,
      "placeholder_type": null,
-     "sample_text": "22%"
+     "sample_text": "22%",
+     "hard_lines": false
     },
     {
      "id": "1019",
@@ -8635,7 +9092,8 @@
      "font": null,
      "size_pt": 44.0,
      "placeholder_type": null,
-     "sample_text": "12%"
+     "sample_text": "12%",
+     "hard_lines": false
     },
     {
      "id": "1022",
@@ -8652,7 +9110,8 @@
      "font": null,
      "size_pt": 18.0,
      "placeholder_type": null,
-     "sample_text": "пояснение"
+     "sample_text": "пояснение",
+     "hard_lines": false
     },
     {
      "id": "1023",
@@ -8669,7 +9128,8 @@
      "font": null,
      "size_pt": 18.0,
      "placeholder_type": null,
-     "sample_text": "пояснение"
+     "sample_text": "пояснение",
+     "hard_lines": false
     }
    ],
    "fixed": [
@@ -8711,7 +9171,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": "Гистограмма и диаграмма с областями"
+     "sample_text": "Гистограмма и диаграмма с областями",
+     "hard_lines": false
     },
     {
      "id": "1030",
@@ -8728,7 +9189,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -8764,7 +9226,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": "Пример оформления графика"
+     "sample_text": "Пример оформления графика",
+     "hard_lines": false
     },
     {
      "id": "1040",
@@ -8781,7 +9244,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "DAU"
+     "sample_text": "DAU",
+     "hard_lines": false
     },
     {
      "id": "1043",
@@ -8798,7 +9262,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": null,
-     "sample_text": "MAU"
+     "sample_text": "MAU",
+     "hard_lines": false
     },
     {
      "id": "1037",
@@ -8815,7 +9280,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -8850,7 +9316,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": "Пример оформления графика"
+     "sample_text": "Пример оформления графика",
+     "hard_lines": false
     },
     {
      "id": "1049",
@@ -8867,7 +9334,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -8902,7 +9370,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": "Пример оформления графика"
+     "sample_text": "Пример оформления графика",
+     "hard_lines": false
     },
     {
      "id": "1055",
@@ -8919,7 +9388,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -8954,7 +9424,8 @@
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
-     "sample_text": "Оформление диаграмм"
+     "sample_text": "Оформление диаграмм",
+     "hard_lines": false
     },
     {
      "id": "1069",
@@ -8971,7 +9442,8 @@
      "font": null,
      "size_pt": 14.0,
      "placeholder_type": null,
-     "sample_text": "Перекрытие рядов = ±50%.Боковой зазор = 0%. Избавляемся от линий сетки, засечек. В примере — метки данных вместо вертикальной оси. Оси можно использовать, если данных много (например, показываем динам"
+     "sample_text": "Перекрытие рядов = ±50%.Боковой зазор = 0%. Избавляемся от линий сетки, засечек. В примере — метки данных вместо вертикальной оси. Оси можно использовать, если данных много (например, показываем динам",
+     "hard_lines": false
     },
     {
      "id": "1065",
@@ -8988,7 +9460,8 @@
      "font": null,
      "size_pt": 14.0,
      "placeholder_type": null,
-     "sample_text": "DAU"
+     "sample_text": "DAU",
+     "hard_lines": false
     },
     {
      "id": "1068",
@@ -9005,7 +9478,8 @@
      "font": null,
      "size_pt": 14.0,
      "placeholder_type": null,
-     "sample_text": "MAU"
+     "sample_text": "MAU",
+     "hard_lines": false
     },
     {
      "id": "1061",
@@ -9022,7 +9496,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": null,
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -9057,7 +9532,8 @@
      "font": null,
      "size_pt": 60.0,
      "placeholder_type": "title",
-     "sample_text": "Спасибо за внимание!"
+     "sample_text": "Спасибо за внимание!",
+     "hard_lines": false
     },
     {
      "id": "1077",
@@ -9074,7 +9550,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": "body",
-     "sample_text": "Василий Иванов, должность/подзаголовок"
+     "sample_text": "Василий Иванов, должность/подзаголовок",
+     "hard_lines": false
     },
     {
      "id": "1076",
@@ -9091,7 +9568,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": "pic",
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -9121,7 +9599,8 @@
      "font": null,
      "size_pt": 60.0,
      "placeholder_type": "title",
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "1084",
@@ -9138,7 +9617,8 @@
      "font": null,
      "size_pt": 16.0,
      "placeholder_type": "body",
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     }
    ],
    "fixed": [
@@ -9175,7 +9655,8 @@
      "font": null,
      "size_pt": 60.0,
      "placeholder_type": "title",
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "1090",
@@ -9192,7 +9673,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": "pic",
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     }
    ],
    "fixed": [
@@ -9229,7 +9711,8 @@
      "font": null,
      "size_pt": 60.0,
      "placeholder_type": "title",
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     },
     {
      "id": "1097",
@@ -9246,7 +9729,8 @@
      "font": null,
      "size_pt": null,
      "placeholder_type": "pic",
-     "sample_text": null
+     "sample_text": null,
+     "hard_lines": false
     }
    ],
    "fixed": [

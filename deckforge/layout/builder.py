@@ -29,7 +29,7 @@ from deckforge.core.ir import (
     TextRun,
 )
 from deckforge.core.strategy import Strategy
-from deckforge.layout.exemplar_picker import STRUCTURAL, has_image, pick_exemplar
+from deckforge.layout.exemplar_picker import STRUCTURAL, Needs, has_image, pick_exemplar, score_exemplar
 from deckforge.core.units import EMU_PER_PT
 from deckforge.layout.fitting import (
     DIGIT_WIDTH, GLYPH_WIDTH, MIN_SIZE_SCALE, NUMBER_MIN_SCALE, UNIT_SCALE, chars_at_scale, fit_number, fit_size,
@@ -40,7 +40,17 @@ from deckforge.layout.planner import STEP_NUMBERING, PlanResult, plan
 log = logging.getLogger(__name__)
 
 MIN_CONTINUATION = 2  # меньше пунктов на слайд-продолжение не выносим
+BADGE_MAX_CHARS = 4  # label-слот с номером-образцом («1», «02») и такой вместимостью — кружок шага: туда только номер
 MAX_RETRIES = 3  # сколько образцов перебрать, если в выбранный не лёг ни один пункт
+CONTINUATION = " (продолжение)"
+# колода уже сверх объёма стратегии, а слайд в образец не влез: вместо каскада продолжений (8 KPI на образце
+# с двумя цифрами — 4 слайда, 20 таких слайдов — 67 в колоде) тот же контент в компактной форме — карточки
+# «значение — подпись» или список нумерованных шагов. Форма меняется, ни один пункт не теряется.
+COMPACT_FORMS: dict[Archetype, tuple[Archetype, ...]] = {
+    Archetype.KPI: (Archetype.CARDS, Archetype.BULLETS),
+    Archetype.PROCESS: (Archetype.BULLETS, Archetype.CARDS),
+}
+COMPACT_TRIES = 12  # сколько образцов на форму перебрать в поиске самого вместительного (build_slide дёшев)
 LABEL_MIN_PT, LABEL_MAX_PT = 10.0, 14.0  # подпись KPI внутри фигуры с цифрой — в этих пределах
 KPI_IN_LABEL_SCALE = 1.8  # значение KPI в label-слоте карточки крупнее подписи максимум во столько раз
 LINE_SPACING = 1.2  # высота строки в кеглях — как в оценке вместимости слотов (parsing) и L03
@@ -100,6 +110,14 @@ def build_deck_ir(
                 break
             first = first or (e, score, slide_ir, leftover)
             tried.add(e.id)
+        if e is not None and leftover is not None and len(result.ir.slides) + len(queue) >= strategy.target_slides.max:
+            alt = _compact_alternative(s, leftover, exemplars, strategy, slide_w * slide_h, used,
+                                       len(result.ir.slides), slide_h, style or {})
+            if alt is not None:
+                e, score, slide_ir, leftover = alt
+                result.warnings.append(f"слайд {s.idx} «{s.title[:40]}»: {s.archetype.value} свёрнут в образец "
+                                       f"{e.archetype.value} — колода сверх объёма ({strategy.target_slides.max})")
+                log.warning(result.warnings[-1])
         result.choices.append(Choice(s.idx, s.archetype.value, e.id if e else None, e.archetype.value if e else None, score))
         if e is None:
             msg = f"слайд {s.idx} ({s.archetype.value} «{s.title[:40]}»): нет подходящего образца — пропущен"
@@ -123,6 +141,42 @@ def build_deck_ir(
                                    + (f" (одинокий пункт: образец {e.id} тесен)" if n_left < MIN_CONTINUATION else ""))
             log.warning(result.warnings[-1])
     return result
+
+
+def _compact_alternative(
+    s: OutlineSlide, leftover: OutlineSlide, exemplars: list[Exemplar], strategy: Strategy, slide_area: int,
+    used: dict[str, int], idx: int, slide_h: int, style: dict,
+) -> tuple[Exemplar, float, SlideIR, OutlineSlide | None] | None:
+    """Тот же слайд в компактной форме (COMPACT_FORMS) — вариант с наименьшим остатком, если он меньше исходного.
+    Контент не меняется (kpis/steps остаются), меняется только архетип — builder сам кладёт KPI в карточки
+    или списком «значение — подпись», шаги — нумерованным списком. На каждую форму перебираются несколько
+    лучших по скору образцов (`exclude=`): штраф за повторы (REUSE_PENALTY) на длинной колоде уводит picker
+    к мелким образцам, а здесь важна вместимость, не вкус. Среди вместивших всё выбирается лучший по «сырому»
+    скору образца (без штрафов за ранг и повторы — иначе на 20-м слайде выигрывает тесный слот мокапа, у которого
+    штраф за тесноту меньше накопленного штрафа за повторы у нормальных), равные вращаются по числу использований."""
+    best: tuple[tuple, float, Exemplar, SlideIR, OutlineSlide | None] | None = None
+    for arch in (s.archetype, *COMPACT_FORMS.get(s.archetype, ())):
+        compact = s if arch == s.archetype else s.model_copy(update={"archetype": arch})
+        needs = Needs.of(compact)
+        tried: set[str] = set()
+        while len(tried) < COMPACT_TRIES:
+            e, score = pick_exemplar(compact, exemplars, strategy, slide_area, used, exclude=tried)
+            if e is None or e.archetype in STRUCTURAL:
+                break  # структурные — второй проход picker'а: контентных кандидатов больше нет
+            tried.add(e.id)
+            if e.archetype == Archetype.AGENDA:
+                continue  # оглавление с десятками подписей формально вместит всё — но это не список шагов
+            slide_ir, left = build_slide(idx, compact, e, slide_h, style)
+            n_left = _n_items(left) if left is not None else 0
+            raw = round(score_exemplar(e, needs, strategy, slide_area), 1)
+            key = (n_left, -raw, used.get(e.id, 0))
+            if best is None or key < best[0]:
+                best = (key, score, e, slide_ir, left)
+        if best is not None and best[0][0] == 0:
+            break  # эта форма вместила всё — следующие формы (менее естественные) не нужны
+    if best is None or best[0][0] >= _n_items(leftover):
+        return None
+    return best[2], best[1], best[3], best[4]
 
 
 def _n_items(s: OutlineSlide) -> int:
@@ -250,8 +304,14 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
             lead, rest = split_label_body(item)
             lab = paired.get(body.id)
             if lab is not None:
-                put(lab, f"{i + 1:02d}" if numbered and not rest else lead)
-                put(body, rest or (item if numbered else ""))
+                if is_badge(lab):
+                    # кружок «1 2 3» рядом с текстом шага: лид «Шаг 12» туда не влезет (L03) — только номер,
+                    # в формате образца («1» → «12», «01» → «12»), сам пункт целиком в тело
+                    put(lab, f"{i + 1:02d}" if len((lab.sample_text or "").strip()) >= 2 else str(i + 1))
+                    put(body, item)
+                else:
+                    put(lab, f"{i + 1:02d}" if numbered and not rest else lead)
+                    put(body, rest or (item if numbered else ""))
             else:
                 put(body, item)
         left_items = raw[len(bodies):]
@@ -282,7 +342,8 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
     # остаток со структурного слайда (title/section/closing: буллеты в подписи титула) — обычным текстовым
     # слайдом, иначе пункты капали бы по одному в подпись каждого следующего титульного образца
     arch = s.archetype if s.archetype not in STRUCTURAL else (Archetype.KPI if left_kpis else Archetype.BULLETS)
-    leftover = OutlineSlide(idx=s.idx, archetype=arch, title=f"{s.title} (продолжение)", section=s.section,
+    title = s.title if s.title.endswith(CONTINUATION) else s.title + CONTINUATION  # не «(продолжение) (продолжение)»
+    leftover = OutlineSlide(idx=s.idx, archetype=arch, title=title, section=s.section,
                             kpis=left_kpis, sources=list(s.sources))
     if numbered:
         leftover.steps = left_items
@@ -394,8 +455,15 @@ def _clean_table(table: TableSpec | None) -> TableSpec | None:
     return TableSpec(header=[normalize(h) for h in table.header], rows=[[normalize(c) for c in r] for r in table.rows])
 
 
+def is_badge(slot: Slot) -> bool:
+    """Кружок с номером шага: label-слот, в образце которого стоит голое число, вместимостью в пару знаков."""
+    sample = (slot.sample_text or "").strip()
+    return slot.kind == SlotKind.LABEL and sample.isdigit() and len(sample) <= 2 and (slot.max_chars or 0) <= BADGE_MAX_CHARS
+
+
 def pair_labels(bodies: list[Slot], labels: list[Slot]) -> dict[str, Slot]:
-    """Каждому body — ближайший label над ним в той же колонке (карточка), иначе — по порядку."""
+    """Каждому body — ближайший label над ним в той же колонке (карточка) или вплотную слева в том же ряду
+    (кружок шага перед текстом на таймлайне), иначе — по порядку."""
     out: dict[str, Slot] = {}
     free = list(labels)
     for body in bodies:
@@ -403,10 +471,16 @@ def pair_labels(bodies: list[Slot], labels: list[Slot]) -> dict[str, Slot]:
         for lab in free:
             same_col = lab.box.x < body.box.x2 and body.box.x < lab.box.x2
             above = lab.box.y <= body.box.y + body.box.h // 4
+            same_row = lab.box.y < body.box.y2 and body.box.y < lab.box.y2
+            beside = lab.box.x2 <= body.box.x + body.box.w // 4 and body.box.x - lab.box.x2 <= lab.box.h
             if same_col and above:
                 dist = abs(body.box.y - lab.box.y2)
-                if best is None or dist < best[0]:
-                    best = (dist, lab)
+            elif same_row and beside:
+                dist = abs(body.box.x - lab.box.x2)
+            else:
+                continue
+            if best is None or dist < best[0]:
+                best = (dist, lab)
         if best is not None:
             out[body.id] = best[1]
             free.remove(best[1])

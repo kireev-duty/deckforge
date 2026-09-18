@@ -7,6 +7,6 @@ response_format: json_schema   # schema.json
 inputs: [brief, purpose, audience, language, target_slides, content_pack, available_archetypes]
 changelog: |
   v1 — первая версия. Заголовки-выводы, только факты из контент-пакета, архетипы из списка шаблона.
-  До первого потребителя (content/outline_writer.py, 2026-09-16) уточнено: outline один на прогон —
+  До первого потребителя (content/outline_writer.py, день 4) уточнено: outline один на прогон —
   вход strategy_rules убран (стратегия применяется в layout/); описаны поля данных (chart/table/kpis/steps/quote),
   `section` на каждом содержательном слайде, слайды-разделители не генерируются.

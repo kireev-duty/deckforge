@@ -2,36 +2,30 @@
  "deck_path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_education\\visual.pptx",
  "findings": [
   {
-   "check_id": "T02_font_size",
-   "kind": "deterministic",
-   "severity": "info",
-   "slide_idx": 0,
-   "element_id": "262",
-   "box": {
-    "x": 622261,
-    "y": 2598003,
-    "w": 7597065,
-    "h": 1661993
-   },
-   "message": "Кегль 54 pt не из шкалы шаблона (ближайший 48 pt) (подгонка: 90% от кегля образца 60 pt)",
-   "autofix": "snap_font_size",
-   "evidence": {
-    "size_pt": 54.0,
-    "nearest_pt": 48.0,
-    "base_pt": 60.0
-   }
-  },
-  {
    "check_id": "C07_no_garbage",
    "kind": "contextual",
    "severity": "error",
    "slide_idx": 1,
    "element_id": null,
    "box": null,
-   "message": "В первой карточке текст обрывается на многоточии («До 9,5 часов в...»), что является дефектом оформления.",
+   "message": "В первой карточке текст обрывается на «в...», что является служебным мусором или ошибкой верстки.",
    "autofix": null,
    "evidence": {
     "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
+    "sources": "doc:product:почему-перегрузка-не-видна-руководителю-"
+   }
+  },
+  {
+   "check_id": "C08_no_typos",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 1,
+   "element_id": null,
+   "box": null,
+   "message": "В первой карточке текст обрывается на «в...», что является опечаткой или ошибкой.",
+   "autofix": null,
+   "evidence": {
+    "question": "Текст без опечаток",
     "sources": "doc:product:почему-перегрузка-не-видна-руководителю-"
    }
   },
@@ -147,6 +141,20 @@
    }
   },
   {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 3,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок называет тему процесса, а не содержит вывод о его ценности или результате.",
+   "autofix": null,
+   "evidence": {
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "doc:product:как-работает-сервис-пять-шагов"
+   }
+  },
+  {
    "check_id": "T06_contrast",
    "kind": "deterministic",
    "severity": "warning",
@@ -202,10 +210,10 @@
     "w": 1807593,
     "h": 830242
    },
-   "message": "Кегль 12.6 pt не из шкалы шаблона (ближайший 14.1 pt) (подгонка: 79% от кегля образца 16 pt)",
+   "message": "Кегль 12.8 pt не из шкалы шаблона (ближайший 14.1 pt) (подгонка: 80% от кегля образца 16 pt)",
    "autofix": "snap_font_size",
    "evidence": {
-    "size_pt": 12.6,
+    "size_pt": 12.8,
     "nearest_pt": 14.1,
     "base_pt": 16.0
    }
@@ -222,11 +230,31 @@
     "w": 1807593,
     "h": 830242
    },
-   "message": "Кегль 12.5 pt не из шкалы шаблона (ближайший 14.1 pt) (подгонка: 78% от кегля образца 16 pt)",
+   "message": "Кегль 12.8 pt не из шкалы шаблона (ближайший 14.1 pt) (подгонка: 80% от кегля образца 16 pt)",
    "autofix": "snap_font_size",
    "evidence": {
-    "size_pt": 12.5,
+    "size_pt": 12.8,
     "nearest_pt": 14.1,
+    "base_pt": 16.0
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 3,
+   "element_id": "348",
+   "box": {
+    "x": 3265841,
+    "y": 2678282,
+    "w": 1807593,
+    "h": 830242
+   },
+   "message": "Кегль 11.2 pt не из шкалы шаблона (ближайший 9 pt) (подгонка: 70% от кегля образца 16 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 11.2,
+    "nearest_pt": 9.0,
     "base_pt": 16.0
    }
   },
@@ -242,10 +270,10 @@
     "w": 1807593,
     "h": 830242
    },
-   "message": "Кегль 12.5 pt не из шкалы шаблона (ближайший 14.1 pt) (подгонка: 78% от кегля образца 16 pt)",
+   "message": "Кегль 12.8 pt не из шкалы шаблона (ближайший 14.1 pt) (подгонка: 80% от кегля образца 16 pt)",
    "autofix": "snap_font_size",
    "evidence": {
-    "size_pt": 12.5,
+    "size_pt": 12.8,
     "nearest_pt": 14.1,
     "base_pt": 16.0
    }
@@ -317,17 +345,23 @@
    }
   },
   {
-   "check_id": "C02_content_matches_title",
-   "kind": "contextual",
-   "severity": "error",
-   "slide_idx": 8,
-   "element_id": null,
-   "box": null,
-   "message": "Слайд содержит метрику о сроке ответа на запрос, которая не отражена в заголовке.",
-   "autofix": null,
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 7,
+   "element_id": "457",
+   "box": {
+    "x": 3359150,
+    "y": 5738829,
+    "w": 8200516,
+    "h": 461946
+   },
+   "message": "Кегль 21.6 pt не из шкалы шаблона (ближайший 20 pt) (подгонка: 90% от кегля образца 24 pt)",
+   "autofix": "snap_font_size",
    "evidence": {
-    "question": "Содержимое слайда соответствует заголовку",
-    "sources": "m:score,m:response_days"
+    "size_pt": 21.6,
+    "nearest_pt": 20.0,
+    "base_pt": 24.0
    }
   },
   {
@@ -502,5 +536,5 @@
   "C10_table_legend_relevant",
   "C11_flow"
  ],
- "duration_s": 34.379
+ "duration_s": 60.578
 }

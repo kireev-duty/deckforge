@@ -119,7 +119,7 @@
       "palette": "0077FF,00AEE8",
       "font": "Play",
       "text_color": "FFFFFF",
-      "size_pt": 34.1
+      "size_pt": 28.8
      }
     },
     {
@@ -269,7 +269,7 @@
       "palette": "0077FF,00AEE8",
       "font": "Play",
       "text_color": "FFFFFF",
-      "size_pt": 34.1
+      "size_pt": 28.8
      }
     },
     {
@@ -383,17 +383,17 @@
   },
   {
    "idx": 3,
-   "exemplar_id": "slide11",
-   "archetype": "cards",
+   "exemplar_id": "slide19",
+   "archetype": "kpi",
    "elements": [
     {
-     "slot_id": "565",
+     "slot_id": "726",
      "kind": "title",
      "box": {
       "x": 429253,
       "y": 424691,
-      "w": 7827311,
-      "h": 1167572
+      "w": 11354760,
+      "h": 767295
      },
      "paragraphs": [
       {
@@ -422,13 +422,13 @@
      }
     },
     {
-     "slot_id": "568",
-     "kind": "label",
+     "slot_id": "734",
+     "kind": "number",
      "box": {
-      "x": 427865,
-      "y": 1592263,
-      "w": 3072079,
-      "h": 398822
+      "x": 439193,
+      "y": 2517730,
+      "w": 2850777,
+      "h": 483181
      },
      "paragraphs": [
       {
@@ -454,17 +454,17 @@
       "palette": "0077FF,00AEE8",
       "font": "Play",
       "text_color": "FFFFFF",
-      "size_pt": 20.0
+      "size_pt": 45.4
      }
     },
     {
-     "slot_id": "582",
-     "kind": "label",
+     "slot_id": "729",
+     "kind": "number",
      "box": {
-      "x": 4363051,
-      "y": 1592263,
-      "w": 3072079,
-      "h": 398822
+      "x": 6938670,
+      "y": 2804349,
+      "w": 2850777,
+      "h": 483181
      },
      "paragraphs": [
       {
@@ -490,17 +490,17 @@
       "palette": "0077FF,00AEE8",
       "font": "Play",
       "text_color": "FFFFFF",
-      "size_pt": 20.0
+      "size_pt": 47.8
      }
     },
     {
-     "slot_id": "596",
-     "kind": "label",
+     "slot_id": "730",
+     "kind": "number",
      "box": {
-      "x": 8298237,
-      "y": 1592263,
-      "w": 3072079,
-      "h": 398822
+      "x": 5520295,
+      "y": 3175974,
+      "w": 1346144,
+      "h": 483181
      },
      "paragraphs": [
       {
@@ -510,105 +510,12 @@
          "bold": false,
          "italic": false,
          "color": null,
-         "size_pt": null
+         "size_pt": 20.5
         }
        ],
        "level": 0,
        "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF,00AEE8",
-      "font": "Play",
-      "text_color": "FFFFFF",
-      "size_pt": 20.0
-     }
-    },
-    {
-     "slot_id": "566",
-     "kind": "body",
-     "box": {
-      "x": 427866,
-      "y": 2216240,
-      "w": 3375704,
-      "h": 684000
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "команд в пилоте",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF,00AEE8",
-      "font": "Play",
-      "text_color": "FFFFFF"
-     }
-    },
-    {
-     "slot_id": "580",
-     "kind": "body",
-     "box": {
-      "x": 4363052,
-      "y": 2216240,
-      "w": 3375704,
-      "h": 684000
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "участников",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF,00AEE8",
-      "font": "Play",
-      "text_color": "FFFFFF"
-     }
-    },
-    {
-     "slot_id": "594",
-     "kind": "body",
-     "box": {
-      "x": 8298238,
-      "y": 2216240,
-      "w": 3375704,
-      "h": 684000
-     },
-     "paragraphs": [
+      },
       {
        "runs": [
         {
@@ -616,7 +523,7 @@
          "bold": false,
          "italic": false,
          "color": null,
-         "size_pt": null
+         "size_pt": 11.2
         }
        ],
        "level": 0,
@@ -656,7 +563,7 @@
       {
        "runs": [
         {
-         "text": "Сервис работает по пяти шагам от подключения до ретро",
+         "text": "Сервис работает по пяти шагам от подключения до…",
          "bold": false,
          "italic": false,
          "color": null,
@@ -676,7 +583,7 @@
       "palette": "0077FF,00AEE8",
       "font": "Play",
       "text_color": "FFFFFF",
-      "size_pt": 29.3
+      "size_pt": 25.2
      }
     },
     {
@@ -1424,7 +1331,7 @@
       {
        "runs": [
         {
-         "text": "«За месяц мы впервые увидели",
+         "text": "«За месяц мы впервые…",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1453,17 +1360,17 @@
   },
   {
    "idx": 9,
-   "exemplar_id": "slide15",
-   "archetype": "cards",
+   "exemplar_id": "slide19",
+   "archetype": "kpi",
    "elements": [
     {
-     "slot_id": "680",
+     "slot_id": "726",
      "kind": "title",
      "box": {
-      "x": 427864,
+      "x": 429253,
       "y": 424691,
-      "w": 7827311,
-      "h": 1167572
+      "w": 11354760,
+      "h": 767295
      },
      "paragraphs": [
       {
@@ -1492,13 +1399,13 @@
      }
     },
     {
-     "slot_id": "681",
-     "kind": "label",
+     "slot_id": "734",
+     "kind": "number",
      "box": {
-      "x": 427864,
-      "y": 1837067,
-      "w": 3636000,
-      "h": 2022006
+      "x": 439193,
+      "y": 2517730,
+      "w": 2850777,
+      "h": 483181
      },
      "paragraphs": [
       {
@@ -1524,17 +1431,17 @@
       "palette": "0077FF,00AEE8",
       "font": "Play",
       "text_color": "FFFFFF",
-      "size_pt": 36.0
+      "size_pt": 45.4
      }
     },
     {
-     "slot_id": "682",
-     "kind": "label",
+     "slot_id": "729",
+     "kind": "number",
      "box": {
-      "x": 4217594,
-      "y": 1837067,
-      "w": 3636000,
-      "h": 2022006
+      "x": 6938670,
+      "y": 2804349,
+      "w": 2850777,
+      "h": 483181
      },
      "paragraphs": [
       {
@@ -1560,17 +1467,17 @@
       "palette": "0077FF,00AEE8",
       "font": "Play",
       "text_color": "FFFFFF",
-      "size_pt": 36.0
+      "size_pt": 47.8
      }
     },
     {
-     "slot_id": "683",
-     "kind": "label",
+     "slot_id": "730",
+     "kind": "number",
      "box": {
-      "x": 8007324,
-      "y": 1837067,
-      "w": 3636000,
-      "h": 2022006
+      "x": 5520295,
+      "y": 3175974,
+      "w": 1346144,
+      "h": 483181
      },
      "paragraphs": [
       {
@@ -1580,43 +1487,20 @@
          "bold": false,
          "italic": false,
          "color": null,
-         "size_pt": null
+         "size_pt": 20.5
         }
        ],
        "level": 0,
        "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF,00AEE8",
-      "font": "Play",
-      "text_color": "FFFFFF",
-      "size_pt": 36.0
-     }
-    },
-    {
-     "slot_id": "684",
-     "kind": "body",
-     "box": {
-      "x": 423103,
-      "y": 5533764,
-      "w": 6565676,
-      "h": 395438
-     },
-     "paragraphs": [
+      },
       {
        "runs": [
         {
-         "text": "оценка после пилота (из 5)",
+         "text": "дня: средний срок ответа на запрос",
          "bold": false,
          "italic": false,
          "color": null,
-         "size_pt": null
+         "size_pt": 11.2
         }
        ],
        "level": 0,
@@ -1945,7 +1829,7 @@
       {
        "runs": [
         {
-         "text": "Октябрь",
+         "text": "01",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1964,8 +1848,7 @@
       "accent": "0077FF",
       "palette": "0077FF,00AEE8",
       "font": "Play",
-      "text_color": "FFFFFF",
-      "size_pt": 46.2
+      "text_color": "FFFFFF"
      }
     },
     {
@@ -1981,7 +1864,7 @@
       {
        "runs": [
         {
-         "text": "Подключение 20 команд",
+         "text": "Октябрь — Подключение 20…",
          "bold": false,
          "italic": false,
          "color": null,
@@ -2017,7 +1900,7 @@
       {
        "runs": [
         {
-         "text": "Ноябрь",
+         "text": "02",
          "bold": false,
          "italic": false,
          "color": null,
@@ -2036,8 +1919,7 @@
       "accent": "0077FF",
       "palette": "0077FF,00AEE8",
       "font": "Play",
-      "text_color": "FFFFFF",
-      "size_pt": 46.2
+      "text_color": "FFFFFF"
      }
     },
     {
@@ -2053,7 +1935,7 @@
       {
        "runs": [
         {
-         "text": "Ещё 40 команд, интеграция с целями",
+         "text": "Ноябрь — Ещё 40 команд",
          "bold": false,
          "italic": false,
          "color": null,
@@ -2073,7 +1955,7 @@
       "palette": "0077FF,00AEE8",
       "font": "Play",
       "text_color": "FFFFFF",
-      "size_pt": 14.6
+      "size_pt": 14.0
      }
     },
     {
@@ -2089,7 +1971,7 @@
       {
        "runs": [
         {
-         "text": "Декабрь",
+         "text": "03",
          "bold": false,
          "italic": false,
          "color": null,
@@ -2108,8 +1990,7 @@
       "accent": "0077FF",
       "palette": "0077FF,00AEE8",
       "font": "Play",
-      "text_color": "FFFFFF",
-      "size_pt": 46.2
+      "text_color": "FFFFFF"
      }
     },
     {
@@ -2125,7 +2006,7 @@
       {
        "runs": [
         {
-         "text": "Все команды, отчёт для руководителей",
+         "text": "Декабрь — Все команды",
          "bold": false,
          "italic": false,
          "color": null,
@@ -2145,7 +2026,7 @@
       "palette": "0077FF,00AEE8",
       "font": "Play",
       "text_color": "FFFFFF",
-      "size_pt": 14.1
+      "size_pt": 14.0
      }
     }
    ],

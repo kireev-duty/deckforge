@@ -291,6 +291,53 @@ def test_lone_leftover_goes_to_continuation_not_dropped() -> None:
     assert "4" in values, values
 
 
+def test_over_budget_kpi_compacts_into_list_instead_of_cascade() -> None:
+    """Колода сверх объёма, 8 KPI на образце с четырьмя цифрами: раньше два слайда-продолжения на каждый
+    (стресс: 20 таких слайдов → 67 в колоде), теперь тот же контент списком «значение — подпись» на одном."""
+    title = _slot("t", SlotKind.TITLE, 0.05, 0.05, 0.9, 0.12, max_chars=60, size=24)
+    nums = [_slot(f"n{i}", SlotKind.NUMBER, 0.05 + 0.23 * i, 0.3, 0.2, 0.2, max_chars=6, size=48) for i in range(4)]
+    kpi_ex = Exemplar(id="k", source_index=0, layout_name="a", archetype=Archetype.KPI, slots=[title] + nums)
+    kpis = [{"value": str(i), "label": f"п{i}"} for i in range(8)]
+    slides = [OutlineSlide(idx=0, archetype=Archetype.TITLE, title="Т")]
+    slides += [OutlineSlide(idx=i, archetype=Archetype.KPI, title=f"Метрики {i}", kpis=kpis) for i in range(1, 7)]
+    o = DeckOutline(title="t", purpose="other", slides=slides)
+    res = build_deck_ir(o, strategy(target_slides={"min": 3, "max": 5}), [kpi_ex] + _exemplars(), "t", SLIDE_W, SLIDE_H)
+    assert len(res.ir.slides) == 7, [s.exemplar_id for s in res.ir.slides]  # по слайду на слайд outline
+    assert all("свёрнут" in w for w in res.warnings if "Метрики" in w), res.warnings
+    texts = " ".join(r.text for s in res.ir.slides for el in s.elements for p in el.paragraphs for r in p.runs)
+    assert all(f"п{i}" in texts for i in range(8))  # ни один пункт не потерян
+    assert res.plan.slides[1].archetype == Archetype.KPI  # план стратегии не переписан — сжатие только в IR
+    # в пределах объёма — как раньше: крупные цифры и продолжение
+    res2 = build_deck_ir(o, strategy(target_slides={"min": 3, "max": 25}), [kpi_ex] + _exemplars(), "t", SLIDE_W, SLIDE_H)
+    assert len(res2.ir.slides) >= 13 and not [w for w in res2.warnings if "свёрнут" in w]
+
+
+def test_over_budget_process_compacts_into_numbered_list() -> None:
+    title = _slot("t", SlotKind.TITLE, 0.05, 0.05, 0.9, 0.12, max_chars=60, size=24)
+    proc = Exemplar(id="p", source_index=0, layout_name="a", archetype=Archetype.PROCESS, slots=[title] + [
+        _slot(f"s{i}", SlotKind.BODY, 0.05 + 0.23 * i, 0.4, 0.2, 0.3, max_chars=80) for i in range(4)])
+    steps = [f"Шаг {i}: сделать" for i in range(12)]
+    slides = [OutlineSlide(idx=0, archetype=Archetype.TITLE, title="Т")]
+    slides += [OutlineSlide(idx=i, archetype=Archetype.PROCESS, title=f"Процесс {i}", steps=steps) for i in range(1, 7)]
+    o = DeckOutline(title="t", purpose="other", slides=slides)
+    res = build_deck_ir(o, strategy(target_slides={"min": 3, "max": 5}), [proc] + _exemplars(), "t", SLIDE_W, SLIDE_H)
+    assert len(res.ir.slides) == 7, [s.exemplar_id for s in res.ir.slides]
+    assert not [w for w in res.warnings if "продолжение" in w]
+    texts = " ".join(r.text for s in res.ir.slides for el in s.elements for p in el.paragraphs for r in p.runs)
+    assert "Шаг 11" in texts and "12." in texts  # нумерация шагов сохранена в списке
+
+
+def test_continuation_title_suffix_not_stacked() -> None:
+    title = _slot("t", SlotKind.TITLE, 0.05, 0.05, 0.9, 0.12, max_chars=60, size=24)
+    nums = [_slot(f"n{i}", SlotKind.NUMBER, 0.05 + 0.3 * i, 0.3, 0.2, 0.2, max_chars=6, size=48) for i in range(2)]
+    kpi_ex = Exemplar(id="k", source_index=0, layout_name="a", archetype=Archetype.KPI, slots=[title] + nums)
+    kpis = [{"value": str(i), "label": f"п{i}"} for i in range(8)]  # 4 части при запасе объёма 2 — planner не делит
+    o = DeckOutline(title="t", purpose="other", slides=[OutlineSlide(idx=1, archetype=Archetype.KPI, title="Восемь", kpis=kpis)])
+    res = build_deck_ir(o, strategy(target_slides={"min": 3, "max": 3}), [kpi_ex], "t", SLIDE_W, SLIDE_H)
+    titles = [r.text for s in res.ir.slides for el in s.elements if el.kind == SlotKind.TITLE for p in el.paragraphs for r in p.runs]
+    assert titles == ["Восемь"] + ["Восемь (продолжение)"] * 3, titles
+
+
 def test_split_label_body_and_numbers() -> None:
     assert split_label_body("Лид — пояснение текста") == ("Лид", "пояснение текста")
     assert split_label_body("Просто пункт") == ("Просто пункт", "")

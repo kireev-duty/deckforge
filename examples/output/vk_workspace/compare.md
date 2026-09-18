@@ -1,5 +1,5 @@
 | стратегия | слайдов | архетипы по порядку | пунктов/слайд | слов/пункт | chart | table | kpi | пропущено | аудит err/warn |
 |---|---|---|---|---|---|---|---|---|---|
-| executive | 10 | title → cards → cards → cards → cards → table → table → cards → cards → closing | 7.5 | 5.1 | 0 | 2 | 0 | 0 | 2/16 |
-| narrative | 13 | title → cards → cards → cards → cards → cards → chart → table → image_text → cards → cards → process → closing | 4.7 | 4.7 | 1 | 1 | 0 | 0 | 8/31 |
-| visual | 12 | title → cards → cards → cards → cards → chart → chart → image_text → cards → cards → process → closing | 5.1 | 4.8 | 2 | 0 | 0 | 0 | 8/26 |
+| executive | 10 | title → cards → kpi → cards → cards → table → table → cards → cards → closing | 7.8 | 5.6 | 0 | 2 | 1 | 0 | 1/17 |
+| narrative | 13 | title → cards → cards → kpi → cards → cards → chart → table → image_text → kpi → cards → process → closing | 4.6 | 5.6 | 1 | 1 | 2 | 0 | 2/29 |
+| visual | 12 | title → cards → kpi → cards → cards → chart → chart → image_text → kpi → cards → cards → closing | 4.8 | 5.8 | 2 | 0 | 2 | 0 | 4/21 |

@@ -1,12 +1,13 @@
 {
- "created": "2026-09-16T14:09:26+00:00",
+ "created": "2026-09-18T08:07:35+00:00",
  "template": {
   "id": "974401af1ab9",
-  "path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\data\\holdout\\ЛЦТ2026 Шаблон презентации.pptx",
+  "path": "data/holdout/ЛЦТ2026 Шаблон презентации.pptx",
   "sha1": "974401af1ab9"
  },
- "content_pack": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\content_pack",
- "outline": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\lct2026_holdout\\outline.json",
+ "content_pack": "examples/content_pack",
+ "outline": "outline.json",
+ "outline_title": "Пульс команды: итоги пилота и план запуска",
  "strategy": {
   "name": "visual",
   "version": "v1"
@@ -25,359 +26,8 @@
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 22.222684799999115,
-   "prompt_tokens": 2781,
-   "completion_tokens": 347,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 23.6980169999988,
-   "prompt_tokens": 2834,
-   "completion_tokens": 403,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 25.94410869999774,
-   "prompt_tokens": 2783,
-   "completion_tokens": 473,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 27.187690999999177,
-   "prompt_tokens": 2722,
-   "completion_tokens": 527,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 10.952057900001819,
+   "duration_s": 11.904244299999846,
    "prompt_tokens": 2734,
-   "completion_tokens": 499,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 11.468951000002562,
-   "prompt_tokens": 2757,
-   "completion_tokens": 446,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 5.785424800000328,
-   "prompt_tokens": 2761,
-   "completion_tokens": 498,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 22.184386599998106,
-   "prompt_tokens": 2784,
-   "completion_tokens": 470,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 15.658962399997108,
-   "prompt_tokens": 2717,
-   "completion_tokens": 377,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 28.578830899998138,
-   "prompt_tokens": 2764,
-   "completion_tokens": 457,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 9.683458300001803,
-   "prompt_tokens": 2739,
-   "completion_tokens": 341,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 10.80615620000026,
-   "prompt_tokens": 2748,
-   "completion_tokens": 226,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 12.250268300002062,
-   "prompt_tokens": 2727,
-   "completion_tokens": 498,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 6.8985608000002685,
-   "prompt_tokens": 2734,
-   "completion_tokens": 495,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 9.025854999999865,
-   "prompt_tokens": 2783,
-   "completion_tokens": 499,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 7.987443000001804,
-   "prompt_tokens": 2784,
-   "completion_tokens": 469,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 26.323267599997052,
-   "prompt_tokens": 2792,
-   "completion_tokens": 374,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 13.468747099999746,
-   "prompt_tokens": 2719,
-   "completion_tokens": 468,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 24.50175809999928,
-   "prompt_tokens": 2808,
-   "completion_tokens": 517,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 6.942719399998168,
-   "prompt_tokens": 2670,
-   "completion_tokens": 434,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 19.809881099998165,
-   "prompt_tokens": 2735,
-   "completion_tokens": 479,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 22.959417200003372,
-   "prompt_tokens": 2725,
-   "completion_tokens": 434,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 18.0515149999992,
-   "prompt_tokens": 2716,
-   "completion_tokens": 464,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "image_prompter@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 3.153596500000276,
-   "prompt_tokens": 377,
-   "completion_tokens": 126,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "image_prompter@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 4.02357960000154,
-   "prompt_tokens": 426,
-   "completion_tokens": 130,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "image_prompter@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 4.559484599998541,
-   "prompt_tokens": 352,
-   "completion_tokens": 120,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "image_gen",
-   "model": "black-forest-labs/flux.2-klein-4b",
-   "duration_s": 3.1062973000007332,
-   "prompt_tokens": 0,
-   "completion_tokens": 0,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "image_gen",
-   "model": "black-forest-labs/flux.2-klein-4b",
-   "duration_s": 2.9105722999993304,
-   "prompt_tokens": 0,
-   "completion_tokens": 0,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "image_prompter@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 7.470395899999858,
-   "prompt_tokens": 373,
-   "completion_tokens": 118,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "image_gen",
-   "model": "black-forest-labs/flux.2-klein-4b",
-   "duration_s": 3.9436187999999675,
-   "prompt_tokens": 0,
-   "completion_tokens": 0,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "image_gen",
-   "model": "black-forest-labs/flux.2-klein-4b",
-   "duration_s": 3.6894238000022597,
-   "prompt_tokens": 0,
-   "completion_tokens": 0,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 6.351485400002275,
-   "prompt_tokens": 2778,
-   "completion_tokens": 465,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 9.746545999998489,
-   "prompt_tokens": 2780,
-   "completion_tokens": 460,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 12.703072999996948,
-   "prompt_tokens": 2734,
-   "completion_tokens": 454,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 15.828974899999594,
-   "prompt_tokens": 2722,
-   "completion_tokens": 540,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 9.222346099999413,
-   "prompt_tokens": 2761,
-   "completion_tokens": 429,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 15.715945700001612,
-   "prompt_tokens": 2738,
-   "completion_tokens": 532,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 10.611374600001,
-   "prompt_tokens": 2771,
-   "completion_tokens": 509,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 5.61714099999881,
-   "prompt_tokens": 2724,
-   "completion_tokens": 453,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 6.029835500001354,
-   "prompt_tokens": 2716,
    "completion_tokens": 441,
    "ok": true,
    "error": null
@@ -385,27 +35,306 @@
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 15.870836099998996,
+   "duration_s": 6.70920389999992,
+   "prompt_tokens": 2727,
+   "completion_tokens": 486,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 22.825952600000164,
    "prompt_tokens": 2719,
-   "completion_tokens": 454,
+   "completion_tokens": 580,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 10.610356500001217,
+   "duration_s": 24.253370300000824,
+   "prompt_tokens": 2837,
+   "completion_tokens": 421,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 6.531852600000093,
+   "prompt_tokens": 2741,
+   "completion_tokens": 497,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 31.344659800000045,
+   "prompt_tokens": 2771,
+   "completion_tokens": 456,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 5.578526799999963,
    "prompt_tokens": 2670,
-   "completion_tokens": 450,
+   "completion_tokens": 447,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 17.629924299999402,
+   "duration_s": 16.019033200000194,
+   "prompt_tokens": 2822,
+   "completion_tokens": 370,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 49.463639100000364,
+   "prompt_tokens": 2768,
+   "completion_tokens": 467,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 59.31549410000025,
+   "prompt_tokens": 2755,
+   "completion_tokens": 482,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 5.1227373000001535,
+   "prompt_tokens": 2739,
+   "completion_tokens": 451,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 7.276920899999823,
+   "prompt_tokens": 2746,
+   "completion_tokens": 426,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 9.66898190000029,
+   "prompt_tokens": 2745,
+   "completion_tokens": 446,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 9.290994299999511,
+   "prompt_tokens": 2771,
+   "completion_tokens": 446,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 9.122529700000086,
+   "prompt_tokens": 2745,
+   "completion_tokens": 528,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 7.413849100000334,
+   "prompt_tokens": 2768,
+   "completion_tokens": 488,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 25.50796850000006,
+   "prompt_tokens": 2722,
+   "completion_tokens": 533,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 6.909620700000232,
+   "prompt_tokens": 2725,
+   "completion_tokens": 467,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 6.343648799999755,
+   "prompt_tokens": 2716,
+   "completion_tokens": 449,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 6.983994100000018,
+   "prompt_tokens": 2670,
+   "completion_tokens": 460,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 18.368194100000437,
+   "prompt_tokens": 2733,
+   "completion_tokens": 484,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 26.389362599999913,
    "prompt_tokens": 2730,
-   "completion_tokens": 461,
+   "completion_tokens": 456,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 45.307378399999834,
+   "prompt_tokens": 2727,
+   "completion_tokens": 496,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 8.499505799999497,
+   "prompt_tokens": 2766,
+   "completion_tokens": 441,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 9.154149099999813,
+   "prompt_tokens": 2780,
+   "completion_tokens": 455,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 9.461602500000481,
+   "prompt_tokens": 2734,
+   "completion_tokens": 451,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 7.112469000000601,
+   "prompt_tokens": 2755,
+   "completion_tokens": 507,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 18.128475600000456,
+   "prompt_tokens": 2764,
+   "completion_tokens": 428,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 6.508376199999475,
+   "prompt_tokens": 2725,
+   "completion_tokens": 474,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 7.571531300000061,
+   "prompt_tokens": 2726,
+   "completion_tokens": 440,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 18.010605299999952,
+   "prompt_tokens": 2774,
+   "completion_tokens": 434,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 8.531965600000149,
+   "prompt_tokens": 2713,
+   "completion_tokens": 426,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 25.11379560000023,
+   "prompt_tokens": 2745,
+   "completion_tokens": 521,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 8.445220200000222,
+   "prompt_tokens": 2670,
+   "completion_tokens": 425,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 16.628129899999294,
+   "prompt_tokens": 2774,
+   "completion_tokens": 376,
    "ok": true,
    "error": null
   }
@@ -483,72 +412,72 @@
   {
    "idx": 1,
    "archetype": "cards",
-   "exemplar_id": "slide28",
+   "exemplar_id": "slide4",
    "exemplar_archetype": "cards",
-   "score": 3.9
+   "score": 2.95
   },
   {
    "idx": 2,
    "archetype": "kpi",
    "exemplar_id": "slide17",
-   "exemplar_archetype": "cards",
-   "score": -8.6
+   "exemplar_archetype": "kpi",
+   "score": 3.0
   },
   {
    "idx": 3,
    "archetype": "process",
-   "exemplar_id": "slide25",
+   "exemplar_id": "slide15",
    "exemplar_archetype": "process",
-   "score": 2.95
+   "score": 2.9
   },
   {
    "idx": 4,
    "archetype": "cards",
-   "exemplar_id": "slide29",
-   "exemplar_archetype": "cards",
-   "score": 1.3499999999999996
+   "exemplar_id": "slide13",
+   "exemplar_archetype": "bullets",
+   "score": -0.10000000000000009
   },
   {
    "idx": 5,
    "archetype": "chart",
    "exemplar_id": "slide21",
    "exemplar_archetype": "chart",
-   "score": 2.95
+   "score": -0.04999999999999982
   },
   {
    "idx": 6,
    "archetype": "chart",
    "exemplar_id": "slide23",
    "exemplar_archetype": "chart",
-   "score": 2.95
+   "score": -0.04999999999999982
   },
   {
    "idx": 7,
    "archetype": "quote",
-   "exemplar_id": "slide26",
+   "exemplar_id": "slide8",
    "exemplar_archetype": "image_text",
-   "score": -2.05
+   "score": -2.0999999999999996
   },
   {
    "idx": 8,
    "archetype": "kpi",
-   "exemplar_id": "slide4",
-   "exemplar_archetype": "cards",
-   "score": -9.05
+   "exemplar_id": "slide17",
+   "exemplar_archetype": "kpi",
+   "score": 1.0
   },
   {
    "idx": 9,
    "archetype": "cards",
    "exemplar_id": "slide24",
    "exemplar_archetype": "cards",
-   "score": 2.9
+   "score": -0.10000000000000009
   },
   {
    "idx": 10,
    "archetype": "process",
    "exemplar_id": "slide10",
    "exemplar_archetype": "process",
-   "score": 2.95
+   "score": -0.04999999999999982
   },
   {
    "idx": 11,
@@ -564,33 +493,33 @@
   "archetypes": [
    "title",
    "cards",
-   "cards",
+   "kpi",
    "process",
-   "cards",
+   "bullets",
    "chart",
    "chart",
    "image_text",
-   "cards",
+   "kpi",
    "cards",
    "process",
    "title"
   ],
   "exemplars": [
    "slide7",
-   "slide28",
+   "slide4",
    "slide17",
-   "slide25",
-   "slide29",
+   "slide15",
+   "slide13",
    "slide21",
    "slide23",
-   "slide26",
-   "slide4",
+   "slide8",
+   "slide17",
    "slide24",
    "slide10",
    "slide7"
   ],
-  "text_items_per_slide": 5.1,
-  "words_per_item": 5.2,
+  "text_items_per_slide": 4.0,
+  "words_per_item": 6.6,
   "chart": 2,
   "table": 0,
   "kpi": 3,
@@ -598,66 +527,89 @@
   "skipped": 0
  },
  "audit": {
-  "errors": 10,
-  "warnings": 21,
-  "info": 2,
-  "contextual": 7,
+  "errors": 5,
+  "warnings": 23,
+  "info": 1,
+  "contextual": 11,
   "by_check": {
-   "C01_title_insight": 1,
-   "C03_one_message": 1,
-   "C05_has_content": 1,
-   "C06_images_relevant": 2,
-   "C07_no_garbage": 1,
+   "C01_title_insight": 5,
+   "C02_content_matches_title": 1,
+   "C07_no_garbage": 4,
    "C08_no_typos": 1,
-   "D01_bullets": 2,
    "D02_bullet_words": 1,
-   "D05_fill": 3,
-   "L02_overlap": 9,
-   "L03_text_overflow": 3,
-   "L07_picture_stretched": 5,
-   "T02_font_size": 2,
-   "T06_contrast": 1
+   "D05_fill": 5,
+   "L02_overlap": 3,
+   "L03_text_overflow": 1,
+   "T02_font_size": 1,
+   "T06_contrast": 7
   },
   "slides_with_issues": [
    1,
+   2,
    3,
    4,
    5,
+   6,
    7,
    8,
+   9,
    10
   ],
   "checks_run": 35,
-  "duration_s": 40.081,
-  "path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\lct2026_holdout\\visual.audit.json",
+  "duration_s": 40.296,
+  "path": "visual.audit.json",
   "kind": "deterministic+contextual",
   "autofix": {
-   "applied": 12,
-   "skipped": 1,
+   "applied": 15,
+   "skipped": 2,
    "before": {
-    "errors": 13,
-    "warnings": 18
+    "errors": 9,
+    "warnings": 22
    },
    "after": {
-    "errors": 8,
-    "warnings": 16
+    "errors": 0,
+    "warnings": 17
    },
    "items": [
     {
-     "slide_idx": 0,
-     "element_id": "3",
+     "slide_idx": 1,
+     "element_id": "63",
      "check_id": "L03_text_overflow",
      "fix": "shrink_font_by_scale",
-     "before": "45.1 pt",
-     "after": "37.9 pt"
+     "before": "16 pt",
+     "after": "13.1 pt"
     },
     {
      "slide_idx": 1,
-     "element_id": "2",
-     "check_id": "I02_placeholder_text",
-     "fix": "drop_shape",
-     "before": "2",
-     "after": "удалён"
+     "element_id": "64",
+     "check_id": "L03_text_overflow",
+     "fix": "shrink_font_by_scale",
+     "before": "16 pt",
+     "after": "11.4 pt"
+    },
+    {
+     "slide_idx": 1,
+     "element_id": "66",
+     "check_id": "L03_text_overflow",
+     "fix": "shrink_font_by_scale",
+     "before": "16 pt",
+     "after": "13 pt"
+    },
+    {
+     "slide_idx": 1,
+     "element_id": "67",
+     "check_id": "L03_text_overflow",
+     "fix": "shrink_font_by_scale",
+     "before": "16 pt",
+     "after": "13 pt"
+    },
+    {
+     "slide_idx": 2,
+     "element_id": "6",
+     "check_id": "L03_text_overflow",
+     "fix": "shrink_font_by_scale",
+     "before": "16.2 pt",
+     "after": "12.6 pt, текст укорочен"
     },
     {
      "slide_idx": 2,
@@ -686,18 +638,10 @@
     {
      "slide_idx": 4,
      "element_id": "2",
-     "check_id": "I02_placeholder_text",
-     "fix": "drop_shape",
-     "before": "2",
-     "after": "удалён"
-    },
-    {
-     "slide_idx": 5,
-     "element_id": "13",
      "check_id": "L03_text_overflow",
      "fix": "shrink_font_by_scale",
-     "before": "17.8 pt",
-     "after": "14 pt"
+     "before": "36 pt",
+     "after": "27.9 pt"
     },
     {
      "slide_idx": 6,
@@ -717,31 +661,46 @@
     },
     {
      "slide_idx": 8,
-     "element_id": "69",
+     "element_id": "4",
      "check_id": "L03_text_overflow",
      "fix": "shrink_font_by_scale",
-     "before": "29.4 pt",
-     "after": "22.7 pt"
+     "before": "18 pt",
+     "after": "12.9 pt"
     },
     {
      "slide_idx": 8,
-     "element_id": "70",
+     "element_id": "15",
      "check_id": "L03_text_overflow",
      "fix": "shrink_font_by_scale",
-     "before": "29.4 pt",
-     "after": "22.7 pt"
+     "before": "44 pt",
+     "after": "36.4 pt"
     },
     {
      "slide_idx": 8,
-     "element_id": "71",
+     "element_id": "16",
      "check_id": "L03_text_overflow",
      "fix": "shrink_font_by_scale",
-     "before": "29.4 pt",
-     "after": "20.5 pt"
+     "before": "44 pt",
+     "after": "35.4 pt"
+    },
+    {
+     "slide_idx": 8,
+     "element_id": "17",
+     "check_id": "L03_text_overflow",
+     "fix": "shrink_font_by_scale",
+     "before": "44 pt",
+     "after": "35.4 pt"
+    },
+    {
+     "slide_idx": 1,
+     "element_id": "68",
+     "check_id": "L03_text_overflow",
+     "fix": "shrink_font_by_scale",
+     "reason": "нечего менять"
     },
     {
      "slide_idx": 7,
-     "element_id": "4",
+     "element_id": "5",
      "check_id": "D02_bullet_words",
      "fix": "refill_slot",
      "reason": "нечего менять"
@@ -751,59 +710,61 @@
  },
  "images": {
   "mode": "always",
-  "generated": 4,
-  "cache": 0,
+  "generated": 0,
+  "cache": 4,
   "content": 0,
   "failed": 0,
   "items": [
    {
     "slide_idx": 1,
     "title": "Руководитель не видит перегрузку из-за шести системных причин",
-    "source": "generated",
-    "path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\lct2026_holdout\\images\\e5346d5f8a8d74ae.jpg",
+    "source": "cache",
+    "path": "images/e5346d5f8a8d74ae.jpg",
     "prompt": "Minimalist corporate illustration on a light background. Abstract geometric shapes and soft gradients in vibrant pink (#FF0053) and deep purple (#520977). Symbolizing fragmented data and hidden complexity. Clean composition with ample negative space on the left for text. 3D render style, smooth surfaces, professional aesthetic. No people, no text, no letters, no watermark.",
     "error": null
    },
    {
     "slide_idx": 4,
     "title": "Команда получает ранние риски и честное ретро",
-    "source": "generated",
-    "path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\lct2026_holdout\\images\\6b9b708108bd11c0.jpg",
+    "source": "cache",
+    "path": "images/6b9b708108bd11c0.jpg",
     "prompt": "Minimalist corporate illustration on a light background with soft gradients. Abstract geometric shapes in vibrant magenta FF0053 and deep purple 520977 symbolizing early risk detection and transparent data flow. Clean composition with ample negative space on the left for text overlay. No people, no logos, no text, no letters, no watermark. Professional, clean, modern aesthetic.",
     "error": null
    },
    {
     "slide_idx": 7,
     "title": "Команды перестали спорить о потере времени на ретро",
-    "source": "generated",
-    "path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\lct2026_holdout\\images\\ac23b213eb953b7e.jpg",
+    "source": "cache",
+    "path": "images/ac23b213eb953b7e.jpg",
     "prompt": "Minimal corporate illustration, light background with soft gradients. Abstract geometric shapes representing time flow and data clarity. Palette: vibrant pink FF0053, deep purple 520977, white. Clean composition, wide empty space on the left for text overlay. No people, no logos, no text, no letters, no watermark.",
     "error": null
    },
    {
     "slide_idx": 9,
     "title": "Три ключевых риска запуска и их закрытие",
-    "source": "generated",
-    "path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\lct2026_holdout\\images\\5cb8620a89adf9ac.jpg",
+    "source": "cache",
+    "path": "images/5cb8620a89adf9ac.jpg",
     "prompt": "Minimalist corporate illustration representing risk mitigation. Abstract geometric shapes in soft magenta #FF0053 and deep purple #520977 on a clean white background. Use soft gradients and flat vector style. Composition features a wide negative space on the left for text overlay. No people, no logos, no text, no letters, no watermark.",
     "error": null
    }
   ]
  },
  "exports": {
-  "pptx": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\lct2026_holdout\\visual.pptx",
-  "pdf": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\lct2026_holdout\\visual.pdf"
+  "pptx": "visual.pptx",
+  "pdf": "visual.pdf",
+  "html": "visual.html"
  },
  "timings_s": {
-  "parse": 0.843,
+  "parse": 8.42,
   "outline": 0.0,
-  "images": 11.175,
-  "layout": 0.003,
-  "render": 0.688,
-  "audit": 0.486,
-  "autofix": 1.016,
-  "png": 25.396,
-  "audit_contextual": 39.718,
-  "export_pdf": 0.003
+  "images": 0.011,
+  "layout": 0.014,
+  "render": 1.652,
+  "audit": 0.648,
+  "autofix": 2.446,
+  "png": 48.076,
+  "audit_contextual": 39.721,
+  "export_pdf": 0.003,
+  "export_html": 5.113
  }
 }

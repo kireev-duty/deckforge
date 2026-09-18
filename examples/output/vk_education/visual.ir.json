@@ -40,7 +40,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 54.0
+      "size_pt": 48.0
      }
     },
     {
@@ -76,7 +76,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 18.5
+      "size_pt": 16.0
      }
     }
    ],
@@ -633,7 +633,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 12.6
+      "size_pt": 12.8
      }
     },
     {
@@ -669,7 +669,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 13.7
+      "size_pt": 11.2
      }
     },
     {
@@ -705,7 +705,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 12.5
+      "size_pt": 12.8
      }
     },
     {
@@ -741,7 +741,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 12.5
+      "size_pt": 12.8
      }
     },
     {
@@ -1224,7 +1224,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 23.8
+      "size_pt": 21.6
      }
     }
    ],

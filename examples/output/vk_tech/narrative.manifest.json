@@ -1,18 +1,18 @@
 {
- "created": "2026-09-16T13:59:00+00:00",
+ "created": "2026-09-18T07:51:44+00:00",
  "template": {
   "id": "33d997b25b4c",
-  "path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\data\\templates\\VK Tech шаблон.pptx",
+  "path": "data/templates/VK Tech шаблон.pptx",
   "sha1": "33d997b25b4c"
  },
- "content_pack": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\content_pack",
- "outline": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\outline.json",
+ "content_pack": "examples/content_pack",
+ "outline": "outline.json",
+ "outline_title": "Пульс команды: итоги пилота и план запуска",
  "strategy": {
   "name": "narrative",
   "version": "v1"
  },
  "skills": {
-  "outline_writer": "v1",
   "audit_judge": "v1"
  },
  "models": {
@@ -25,71 +25,89 @@
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 5.400704400002724,
-   "prompt_tokens": 2575,
-   "completion_tokens": 201,
+   "duration_s": 8.543314499999724,
+   "prompt_tokens": 2565,
+   "completion_tokens": 470,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 5.6199617000020226,
-   "prompt_tokens": 2544,
-   "completion_tokens": 431,
+   "duration_s": 14.956222300000263,
+   "prompt_tokens": 2493,
+   "completion_tokens": 536,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 6.609394200000679,
-   "prompt_tokens": 2498,
-   "completion_tokens": 534,
+   "duration_s": 18.680867499999295,
+   "prompt_tokens": 2595,
+   "completion_tokens": 410,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 6.618929199998092,
-   "prompt_tokens": 2510,
-   "completion_tokens": 354,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 4.625784799998655,
+   "duration_s": 5.824615999999878,
    "prompt_tokens": 2533,
-   "completion_tokens": 411,
+   "completion_tokens": 405,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 4.727255300000252,
-   "prompt_tokens": 2562,
-   "completion_tokens": 203,
+   "duration_s": 6.040244900000289,
+   "prompt_tokens": 2560,
+   "completion_tokens": 474,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 5.609483299998828,
+   "duration_s": 17.49136660000022,
+   "prompt_tokens": 2574,
+   "completion_tokens": 443,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 27.96521119999943,
+   "prompt_tokens": 2502,
+   "completion_tokens": 461,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 2.998416200000065,
+   "prompt_tokens": 2447,
+   "completion_tokens": 264,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 6.170057600000291,
    "prompt_tokens": 2547,
-   "completion_tokens": 479,
+   "completion_tokens": 383,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 15.501600799998414,
-   "prompt_tokens": 2602,
+   "duration_s": 13.298234799999591,
+   "prompt_tokens": 2595,
    "completion_tokens": 297,
    "ok": true,
    "error": null
@@ -97,7 +115,7 @@
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 15.501713000001473,
+   "duration_s": 13.298296599999958,
    "prompt_tokens": 0,
    "completion_tokens": 0,
    "ok": false,
@@ -106,143 +124,26 @@
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 19.006718500000716,
-   "prompt_tokens": 2447,
-   "completion_tokens": 382,
+   "duration_s": 8.821508899999571,
+   "prompt_tokens": 2535,
+   "completion_tokens": 515,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 25.510040799999842,
-   "prompt_tokens": 2574,
-   "completion_tokens": 444,
+   "duration_s": 6.422645499999817,
+   "prompt_tokens": 2490,
+   "completion_tokens": 457,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 13.12252019999869,
-   "prompt_tokens": 2542,
-   "completion_tokens": 520,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 4.695614899999782,
-   "prompt_tokens": 2455,
-   "completion_tokens": 352,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 5.944244700000127,
-   "prompt_tokens": 2524,
-   "completion_tokens": 481,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 8.083410600000207,
-   "prompt_tokens": 2498,
-   "completion_tokens": 461,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 5.876900200000819,
+   "duration_s": 6.8851824000003035,
    "prompt_tokens": 2514,
-   "completion_tokens": 494,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 9.862766800000827,
-   "prompt_tokens": 2503,
-   "completion_tokens": 487,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 10.833331899997575,
-   "prompt_tokens": 2544,
-   "completion_tokens": 488,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 4.425283900000068,
-   "prompt_tokens": 2537,
-   "completion_tokens": 419,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 19.13506050000069,
-   "prompt_tokens": 2574,
-   "completion_tokens": 308,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 8.31629360000079,
-   "prompt_tokens": 2572,
-   "completion_tokens": 462,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 9.831235199999355,
-   "prompt_tokens": 2476,
-   "completion_tokens": 449,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 12.085959500000172,
-   "prompt_tokens": 2492,
-   "completion_tokens": 493,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 11.670622600002389,
-   "prompt_tokens": 2514,
-   "completion_tokens": 483,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 12.115946000001713,
-   "prompt_tokens": 2483,
    "completion_tokens": 470,
    "ok": true,
    "error": null
@@ -250,18 +151,117 @@
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 7.945390900000348,
-   "prompt_tokens": 2447,
-   "completion_tokens": 370,
+   "duration_s": 7.8089566000007835,
+   "prompt_tokens": 2524,
+   "completion_tokens": 478,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 20.841525400002865,
-   "prompt_tokens": 2531,
+   "duration_s": 9.114905700000236,
+   "prompt_tokens": 2447,
+   "completion_tokens": 364,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 11.349274900000637,
+   "prompt_tokens": 2498,
+   "completion_tokens": 490,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 18.627195699999902,
+   "prompt_tokens": 2574,
+   "completion_tokens": 475,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 19.17142370000056,
+   "prompt_tokens": 2597,
+   "completion_tokens": 507,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 26.669725599999765,
+   "prompt_tokens": 2535,
+   "completion_tokens": 492,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 6.884904800000186,
+   "prompt_tokens": 2480,
+   "completion_tokens": 473,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 14.472558400000707,
+   "prompt_tokens": 2519,
    "completion_tokens": 361,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 19.847025699999904,
+   "prompt_tokens": 2524,
+   "completion_tokens": 503,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 8.07890959999986,
+   "prompt_tokens": 2514,
+   "completion_tokens": 493,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 33.36468010000044,
+   "prompt_tokens": 2620,
+   "completion_tokens": 479,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 11.579963199999838,
+   "prompt_tokens": 2472,
+   "completion_tokens": 422,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 16.26818850000018,
+   "prompt_tokens": 2507,
+   "completion_tokens": 368,
    "ok": true,
    "error": null
   }
@@ -349,7 +349,7 @@
    "archetype": "title",
    "exemplar_id": "slide2",
    "exemplar_archetype": "title",
-   "score": 0.95
+   "score": -2.05
   },
   {
    "idx": 1,
@@ -410,16 +410,16 @@
   {
    "idx": 9,
    "archetype": "quote",
-   "exemplar_id": "slide3",
-   "exemplar_archetype": "section",
-   "score": -5.05
+   "exemplar_id": "slide39",
+   "exemplar_archetype": "image_text",
+   "score": -10.05
   },
   {
    "idx": 10,
    "archetype": "section",
    "exemplar_id": "slide3",
    "exemplar_archetype": "section",
-   "score": -3.05
+   "score": -1.05
   },
   {
    "idx": 11,
@@ -450,11 +450,7 @@
    "score": 0.95
   }
  ],
- "warnings": [
-  "outline: слайд 1 «Руководитель не видит перегрузку из-за ш»: поле «cards» → bullets",
-  "outline: слайд 4 «Команда получает ранние риски и честное »: поле «cards» → bullets",
-  "outline: слайд 9 «Три ключевых риска запуска и их закрытие»: поле «cards» → bullets"
- ],
+ "warnings": [],
  "stats": {
   "slides": 15,
   "archetypes": [
@@ -467,7 +463,7 @@
    "cards",
    "chart",
    "table",
-   "section",
+   "image_text",
    "section",
    "kpi",
    "cards",
@@ -484,15 +480,15 @@
    "slide14",
    "slide52",
    "slide34",
-   "slide3",
+   "slide39",
    "slide3",
    "slide45",
    "slide19",
    "slide48",
    "slide6"
   ],
-  "text_items_per_slide": 5.2,
-  "words_per_item": 4.5,
+  "text_items_per_slide": 4.9,
+  "words_per_item": 4.0,
   "chart": 1,
   "table": 1,
   "kpi": 2,
@@ -501,18 +497,18 @@
  },
  "audit": {
   "errors": 3,
-  "warnings": 27,
-  "info": 6,
-  "contextual": 5,
+  "warnings": 30,
+  "info": 7,
+  "contextual": 7,
   "by_check": {
    "C01_title_insight": 1,
    "C02_content_matches_title": 1,
+   "C06_images_relevant": 2,
    "C07_no_garbage": 2,
    "C10_table_legend_relevant": 1,
-   "D02_bullet_words": 1,
-   "D05_fill": 5,
-   "T02_font_size": 6,
-   "T06_contrast": 19
+   "D05_fill": 6,
+   "T02_font_size": 7,
+   "T06_contrast": 20
   },
   "slides_with_issues": [
    0,
@@ -526,57 +522,26 @@
    13
   ],
   "checks_run": 35,
-  "duration_s": 39.582,
-  "path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\narrative.audit.json",
+  "duration_s": 63.225,
+  "path": "narrative.audit.json",
   "kind": "deterministic+contextual",
   "autofix": {
-   "applied": 3,
-   "skipped": 2,
+   "applied": 0,
+   "skipped": 1,
    "before": {
-    "errors": 3,
-    "warnings": 26
+    "errors": 0,
+    "warnings": 27
    },
    "after": {
     "errors": 0,
-    "warnings": 26
+    "warnings": 27
    },
    "items": [
-    {
-     "slide_idx": 5,
-     "element_id": "2410",
-     "check_id": "L03_text_overflow",
-     "fix": "shrink_font_by_scale",
-     "before": "7.2 pt",
-     "after": "6.3 pt, текст укорочен"
-    },
-    {
-     "slide_idx": 5,
-     "element_id": "2411",
-     "check_id": "L03_text_overflow",
-     "fix": "shrink_font_by_scale",
-     "before": "12.2 pt",
-     "after": "10 pt"
-    },
-    {
-     "slide_idx": 5,
-     "element_id": "2416",
-     "check_id": "L03_text_overflow",
-     "fix": "shrink_font_by_scale",
-     "before": "7.5 pt",
-     "after": "6.3 pt, текст укорочен"
-    },
     {
      "slide_idx": 0,
      "element_id": "407",
      "check_id": "T02_font_size",
      "fix": "snap_font_size",
-     "reason": "нечего менять"
-    },
-    {
-     "slide_idx": 9,
-     "element_id": "417",
-     "check_id": "D02_bullet_words",
-     "fix": "refill_slot",
      "reason": "нечего менять"
     }
    ]
@@ -591,18 +556,20 @@
   "items": []
  },
  "exports": {
-  "pptx": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\narrative.pptx",
-  "pdf": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\narrative.pdf"
+  "pptx": "narrative.pptx",
+  "pdf": "narrative.pdf",
+  "html": "narrative.html"
  },
  "timings_s": {
-  "parse": 0.877,
-  "outline": 57.66,
-  "layout": 0.005,
-  "render": 0.721,
-  "audit": 0.347,
-  "autofix": 1.023,
-  "png": 5.751,
-  "audit_contextual": 39.236,
-  "export_pdf": 0.002
+  "parse": 1.418,
+  "outline": 0.0,
+  "layout": 0.014,
+  "render": 1.167,
+  "audit": 0.663,
+  "autofix": 0.002,
+  "png": 9.635,
+  "audit_contextual": 62.575,
+  "export_pdf": 0.004,
+  "export_html": 4.654
  }
 }

@@ -13,26 +13,32 @@
     "w": 4288279,
     "h": 800046
    },
-   "message": "Кегль 33 pt не из шкалы шаблона (ближайший 24 pt)",
+   "message": "Кегль 30.6 pt не из шкалы шаблона (ближайший 24 pt)",
    "autofix": "snap_font_size",
    "evidence": {
-    "size_pt": 33.0,
+    "size_pt": 30.6,
     "nearest_pt": 24.0,
     "base_pt": 48.6
    }
   },
   {
-   "check_id": "C03_one_message",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 1,
-   "element_id": null,
-   "box": null,
-   "message": "Слайд содержит шесть отдельных причин, которые нельзя логично объединить в одно предложение без потери смысла.",
-   "autofix": null,
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 0,
+   "element_id": "408",
+   "box": {
+    "x": 581272,
+    "y": 2362284,
+    "w": 4288279,
+    "h": 285750
+   },
+   "message": "Кегль 14.4 pt не из шкалы шаблона (ближайший 16.2 pt) (подгонка: 90% от кегля образца 16 pt)",
+   "autofix": "snap_font_size",
    "evidence": {
-    "question": "Слайд пересказывается одним предложением",
-    "sources": "doc:product:почему-перегрузка-не-видна-руководителю-"
+    "size_pt": 14.4,
+    "nearest_pt": 16.2,
+    "base_pt": 16.0
    }
   },
   {
@@ -168,6 +174,20 @@
    }
   },
   {
+   "check_id": "C07_no_garbage",
+   "kind": "contextual",
+   "severity": "error",
+   "slide_idx": 2,
+   "element_id": null,
+   "box": null,
+   "message": "В подписи третьего графика текст обрезан многоточием («месяца (май–август…»), что выглядит как служебный мусор или ошибка верстки.",
+   "autofix": null,
+   "evidence": {
+    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
+    "sources": "m:pilot"
+   }
+  },
+  {
    "check_id": "D05_fill",
    "kind": "deterministic",
    "severity": "warning",
@@ -244,20 +264,6 @@
     "background": "FAFCFF",
     "need": 4.5,
     "template_color": 1
-   }
-  },
-  {
-   "check_id": "C08_no_typos",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 3,
-   "element_id": null,
-   "box": null,
-   "message": "В описании шага «Модель нагрузки» текст обрывается многоточием («...на человека и...»).",
-   "autofix": null,
-   "evidence": {
-    "question": "Текст без опечаток",
-    "sources": "doc:product:как-работает-сервис-пять-шагов"
    }
   },
   {
@@ -388,6 +394,46 @@
    "kind": "deterministic",
    "severity": "info",
    "slide_idx": 3,
+   "element_id": "2404",
+   "box": {
+    "x": 285749,
+    "y": 2198570,
+    "w": 1614880,
+    "h": 202471
+   },
+   "message": "Кегль 6.3 pt не из шкалы шаблона (ближайший 6.9 pt) (подгонка: 70% от кегля образца 9 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 6.3,
+    "nearest_pt": 6.9,
+    "base_pt": 9.0
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 3,
+   "element_id": "2407",
+   "box": {
+    "x": 2600311,
+    "y": 2198570,
+    "w": 1614880,
+    "h": 202471
+   },
+   "message": "Кегль 6.3 pt не из шкалы шаблона (ближайший 6.9 pt) (подгонка: 70% от кегля образца 9 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 6.3,
+    "nearest_pt": 6.9,
+    "base_pt": 9.0
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 3,
    "element_id": "2410",
    "box": {
     "x": 4853011,
@@ -415,10 +461,10 @@
     "w": 1614880,
     "h": 202471
    },
-   "message": "Кегль 7.8 pt не из шкалы шаблона (ближайший 6.9 pt) (подгонка: 87% от кегля образца 9 pt)",
+   "message": "Кегль 6.3 pt не из шкалы шаблона (ближайший 6.9 pt) (подгонка: 70% от кегля образца 9 pt)",
    "autofix": "snap_font_size",
    "evidence": {
-    "size_pt": 7.8,
+    "size_pt": 6.3,
     "nearest_pt": 6.9,
     "base_pt": 9.0
    }
@@ -529,47 +575,6 @@
     "background": "FEFFFF",
     "need": 4.5,
     "template_color": 1
-   }
-  },
-  {
-   "check_id": "C06_images_relevant",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 6,
-   "element_id": null,
-   "box": null,
-   "message": "Логотип 'tech' в углу не относится к теме слайда.",
-   "autofix": null,
-   "evidence": {
-    "question": "Картинки и иконки относятся к теме слайда",
-    "sources": "m:time_structure"
-   }
-  },
-  {
-   "check_id": "C09_one_language",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 6,
-   "element_id": null,
-   "box": null,
-   "message": "В логотипе присутствует английский текст 'tech'.",
-   "autofix": null,
-   "evidence": {
-    "question": "Текст слайда на языке колоды",
-    "sources": "m:time_structure"
-   }
-  },
-  {
-   "check_id": "D05_fill",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 6,
-   "element_id": null,
-   "box": null,
-   "message": "Слайд перегружен: контент занимает 90% рабочей области (норма 25%–75%)",
-   "autofix": "change_exemplar",
-   "evidence": {
-    "fill": 0.901
    }
   },
   {
@@ -791,6 +796,20 @@
     "need": 4.5,
     "template_color": 1
    }
+  },
+  {
+   "check_id": "C06_images_relevant",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 9,
+   "element_id": null,
+   "box": null,
+   "message": "Изображение является пустой заглушкой, не относящейся к теме.",
+   "autofix": null,
+   "evidence": {
+    "question": "Картинки и иконки относятся к теме слайда",
+    "sources": "doc:product:риски-запуска-и-как-они-закрываются"
+   }
   }
  ],
  "checks_run": [
@@ -830,5 +849,5 @@
   "C10_table_legend_relevant",
   "C11_flow"
  ],
- "duration_s": 37.159
+ "duration_s": 45.947
 }

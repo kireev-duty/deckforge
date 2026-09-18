@@ -40,7 +40,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 54.0
+      "size_pt": 48.0
      }
     },
     {
@@ -76,7 +76,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 18.5
+      "size_pt": 16.0
      }
     }
    ],
@@ -921,17 +921,17 @@
   },
   {
    "idx": 4,
-   "exemplar_id": "slide17",
+   "exemplar_id": "slide26",
    "archetype": "cards",
    "elements": [
     {
-     "slot_id": "430",
+     "slot_id": "763",
      "kind": "title",
      "box": {
-      "x": 4308816,
-      "y": 2622416,
-      "w": 3574368,
-      "h": 1613168
+      "x": 677334,
+      "y": 692150,
+      "w": 10855854,
+      "h": 644241
      },
      "paragraphs": [
       {
@@ -956,18 +956,17 @@
       "accent": "0077FF",
       "palette": "0077FF",
       "font": "Play",
-      "text_color": "000000",
-      "size_pt": 28.4
+      "text_color": "000000"
      }
     },
     {
-     "slot_id": "437",
+     "slot_id": "765",
      "kind": "body",
      "box": {
-      "x": 1622916,
-      "y": 1670771,
-      "w": 2495059,
-      "h": 1059689
+      "x": 658811,
+      "y": 3780646,
+      "w": 2880000,
+      "h": 1233637
      },
      "paragraphs": [
       {
@@ -992,18 +991,17 @@
       "accent": "0077FF",
       "palette": "0077FF",
       "font": "Play",
-      "text_color": "000000",
-      "size_pt": 17.3
+      "text_color": "000000"
      }
     },
     {
-     "slot_id": "435",
+     "slot_id": "766",
      "kind": "body",
      "box": {
-      "x": 8112125,
-      "y": 1670771,
-      "w": 2495059,
-      "h": 1059689
+      "x": 4385469,
+      "y": 3774296,
+      "w": 2880000,
+      "h": 1233637
      },
      "paragraphs": [
       {
@@ -1032,13 +1030,13 @@
      }
     },
     {
-     "slot_id": "438",
+     "slot_id": "767",
      "kind": "body",
      "box": {
-      "x": 1622916,
-      "y": 4325071,
-      "w": 2495059,
-      "h": 1059689
+      "x": 8112126,
+      "y": 3774296,
+      "w": 2880000,
+      "h": 1464969
      },
      "paragraphs": [
       {
@@ -1067,13 +1065,13 @@
      }
     },
     {
-     "slot_id": "436",
+     "slot_id": "773",
      "kind": "body",
      "box": {
-      "x": 8112125,
-      "y": 4325071,
-      "w": 2495059,
-      "h": 1059689
+      "x": 658811,
+      "y": 6003053,
+      "w": 6421611,
+      "h": 325593
      },
      "paragraphs": [
       {
@@ -1298,11 +1296,11 @@
   },
   {
    "idx": 7,
-   "exemplar_id": "slide26",
+   "exemplar_id": "slide27",
    "archetype": "cards",
    "elements": [
     {
-     "slot_id": "763",
+     "slot_id": "781",
      "kind": "title",
      "box": {
       "x": 677334,
@@ -1337,7 +1335,7 @@
      }
     },
     {
-     "slot_id": "765",
+     "slot_id": "786",
      "kind": "body",
      "box": {
       "x": 658811,
@@ -1369,11 +1367,11 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 14.8
+      "size_pt": 12.8
      }
     },
     {
-     "slot_id": "766",
+     "slot_id": "787",
      "kind": "body",
      "box": {
       "x": 4385469,
@@ -1408,7 +1406,7 @@
      }
     },
     {
-     "slot_id": "767",
+     "slot_id": "788",
      "kind": "body",
      "box": {
       "x": 8112126,
@@ -1443,7 +1441,7 @@
      }
     },
     {
-     "slot_id": "773",
+     "slot_id": "789",
      "kind": "body",
      "box": {
       "x": 658811,

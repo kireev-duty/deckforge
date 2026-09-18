@@ -13,12 +13,46 @@
     "w": 4288279,
     "h": 800046
    },
-   "message": "Кегль 33 pt не из шкалы шаблона (ближайший 24 pt)",
+   "message": "Кегль 30.6 pt не из шкалы шаблона (ближайший 24 pt)",
    "autofix": "snap_font_size",
    "evidence": {
-    "size_pt": 33.0,
+    "size_pt": 30.6,
     "nearest_pt": 24.0,
     "base_pt": 48.6
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 0,
+   "element_id": "408",
+   "box": {
+    "x": 581272,
+    "y": 2362284,
+    "w": 4288279,
+    "h": 285750
+   },
+   "message": "Кегль 14.4 pt не из шкалы шаблона (ближайший 16.2 pt) (подгонка: 90% от кегля образца 16 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 14.4,
+    "nearest_pt": 16.2,
+    "base_pt": 16.0
+   }
+  },
+  {
+   "check_id": "C07_no_garbage",
+   "kind": "contextual",
+   "severity": "error",
+   "slide_idx": 4,
+   "element_id": null,
+   "box": null,
+   "message": "В подписи третьей диаграммы текст обрезан многоточием («май–август…»), что выглядит как служебный мусор или ошибка верстки.",
+   "autofix": null,
+   "evidence": {
+    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
+    "sources": "doc:product:что-получает-команда-и-руководитель"
    }
   },
   {
@@ -98,20 +132,6 @@
     "background": "FAFCFF",
     "need": 4.5,
     "template_color": 1
-   }
-  },
-  {
-   "check_id": "C07_no_garbage",
-   "kind": "contextual",
-   "severity": "error",
-   "slide_idx": 5,
-   "element_id": null,
-   "box": null,
-   "message": "В описании шага «Модель нагрузки» есть многоточие («...»), что выглядит как незавершенный текст или артефакт.",
-   "autofix": null,
-   "evidence": {
-    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
-    "sources": "m:coordination_hours"
    }
   },
   {
@@ -242,6 +262,46 @@
    "kind": "deterministic",
    "severity": "info",
    "slide_idx": 5,
+   "element_id": "2404",
+   "box": {
+    "x": 285749,
+    "y": 2198570,
+    "w": 1614880,
+    "h": 202471
+   },
+   "message": "Кегль 6.3 pt не из шкалы шаблона (ближайший 6.9 pt) (подгонка: 70% от кегля образца 9 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 6.3,
+    "nearest_pt": 6.9,
+    "base_pt": 9.0
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 5,
+   "element_id": "2407",
+   "box": {
+    "x": 2600311,
+    "y": 2198570,
+    "w": 1614880,
+    "h": 202471
+   },
+   "message": "Кегль 6.3 pt не из шкалы шаблона (ближайший 6.9 pt) (подгонка: 70% от кегля образца 9 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 6.3,
+    "nearest_pt": 6.9,
+    "base_pt": 9.0
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 5,
    "element_id": "2410",
    "box": {
     "x": 4853011,
@@ -269,10 +329,10 @@
     "w": 1614880,
     "h": 202471
    },
-   "message": "Кегль 7.8 pt не из шкалы шаблона (ближайший 6.9 pt) (подгонка: 87% от кегля образца 9 pt)",
+   "message": "Кегль 6.3 pt не из шкалы шаблона (ближайший 6.9 pt) (подгонка: 70% от кегля образца 9 pt)",
    "autofix": "snap_font_size",
    "evidence": {
-    "size_pt": 7.8,
+    "size_pt": 6.3,
     "nearest_pt": 6.9,
     "base_pt": 9.0
    }
@@ -399,41 +459,38 @@
    }
   },
   {
-   "check_id": "D02_bullet_words",
+   "check_id": "D05_fill",
    "kind": "deterministic",
    "severity": "warning",
    "slide_idx": 9,
-   "element_id": "417",
-   "box": {
-    "x": 210243,
-    "y": 878488,
-    "w": 4288279,
-    "h": 1496698
-   },
-   "message": "Пункт из 17 слов (норма ≤ 15): ««За месяц мы впервые увидели, где реально теряется время, — …»",
-   "autofix": "refill_slot",
+   "element_id": null,
+   "box": null,
+   "message": "Слайд пустоват: контент занимает 12% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
    "evidence": {
-    "words": 17
+    "fill": 0.12
    }
   },
   {
-   "check_id": "T02_font_size",
+   "check_id": "T06_contrast",
    "kind": "deterministic",
-   "severity": "info",
+   "severity": "warning",
    "slide_idx": 9,
-   "element_id": "418",
+   "element_id": "2155",
    "box": {
-    "x": 210685,
-    "y": 2940812,
-    "w": 4287837,
-    "h": 285750
+    "x": 285749,
+    "y": 1543838,
+    "w": 1614880,
+    "h": 202471
    },
-   "message": "Кегль 13.6 pt не из шкалы шаблона (ближайший 12 pt) (подгонка: 91% от кегля образца 15 pt)",
-   "autofix": "snap_font_size",
+   "message": "Контраст текста #8F8F8F к фону #FAFCFF = 3.1:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
    "evidence": {
-    "size_pt": 13.6,
-    "nearest_pt": 12.0,
-    "base_pt": 15.0
+    "contrast": 3.15,
+    "text_color": "8F8F8F",
+    "background": "FAFCFF",
+    "need": 4.5,
+    "template_color": 1
    }
   },
   {
@@ -443,7 +500,7 @@
    "slide_idx": 11,
    "element_id": null,
    "box": null,
-   "message": "Слайд содержит метрику 'срок ответа', которая не отражена в заголовке и не относится к оценке пилота.",
+   "message": "Слайд содержит метрику '0,6 дня', которая не относится к оценке пилота, указанной в заголовке.",
    "autofix": null,
    "evidence": {
     "question": "Содержимое слайда соответствует заголовку",
@@ -457,10 +514,24 @@
    "slide_idx": 11,
    "element_id": null,
    "box": null,
-   "message": "В подписи третьей диаграммы текст обрезан ('на...'), что выглядит как служебный мусор или ошибка верстки.",
+   "message": "В подписи третьей диаграммы есть обрезанный текст 'дня: средний срок…'.",
    "autofix": null,
    "evidence": {
     "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
+    "sources": "doc:product:контакты"
+   }
+  },
+  {
+   "check_id": "C06_images_relevant",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 11,
+   "element_id": null,
+   "box": null,
+   "message": "Третья диаграмма (0,6 дня) не относится к теме оценки пилота.",
+   "autofix": null,
+   "evidence": {
+    "question": "Картинки и иконки относятся к теме слайда",
     "sources": "doc:product:контакты"
    }
   },
@@ -550,31 +621,11 @@
    "slide_idx": 11,
    "element_id": null,
    "box": null,
-   "message": "Третья диаграмма (срок ответа) не работает на мысль заголовка (оценка пилота), создавая визуальный шум.",
+   "message": "Элемент '0,6 дня' не работает на мысль слайда об оценке пилота.",
    "autofix": null,
    "evidence": {
     "question": "Все строки таблицы и элементы легенды работают на мысль слайда",
     "sources": "doc:product:контакты"
-   }
-  },
-  {
-   "check_id": "T02_font_size",
-   "kind": "deterministic",
-   "severity": "info",
-   "slide_idx": 11,
-   "element_id": "2342",
-   "box": {
-    "x": 285749,
-    "y": 1307494,
-    "w": 1614880,
-    "h": 149630
-   },
-   "message": "Кегль 11 pt не из шкалы шаблона (ближайший 10.1 pt) (подгонка: 79% от кегля образца 14 pt)",
-   "autofix": "snap_font_size",
-   "evidence": {
-    "size_pt": 11.0,
-    "nearest_pt": 10.1,
-    "base_pt": 14.0
    }
   },
   {
@@ -584,10 +635,24 @@
    "slide_idx": 12,
    "element_id": null,
    "box": null,
-   "message": "Заголовок называет тему (риски и закрытие), а не содержит вывод о результате или значимости.",
+   "message": "Заголовок называет тему (риски и закрытие), а не содержит вывод (например, «Риски запуска минимизированы планом»).",
    "autofix": null,
    "evidence": {
     "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": ""
+   }
+  },
+  {
+   "check_id": "C06_images_relevant",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 12,
+   "element_id": null,
+   "box": null,
+   "message": "На слайде 4 номера (01-04), но только 3 блока контента, что создает визуальный диссонанс.",
+   "autofix": null,
+   "evidence": {
+    "question": "Картинки и иконки относятся к теме слайда",
     "sources": ""
    }
   },
@@ -730,5 +795,5 @@
   "C10_table_legend_relevant",
   "C11_flow"
  ],
- "duration_s": 39.582
+ "duration_s": 63.225
 }

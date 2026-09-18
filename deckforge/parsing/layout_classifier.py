@@ -80,6 +80,7 @@ BIG_TITLE_RATIO = 1.6  # заголовок «крупный», если кег�
 BIG_TITLE_H = 0.12  # …или высота бокса ≥ 12 % слайда
 BODY_BLOCK_AREA = 0.2  # текстовый блок такой доли слайда — тело, а не подзаголовок титула
 KPI_SIZE_RATIO = 2.0  # число «крупное», если кегль ≥ 2× медианного
+EMPTY_NUMBER_MAX_FH = 0.25  # пустой крупный плейсхолдер выше четверти слайда — заголовок обложки, не KPI-цифра
 KPI_MIN_SIZE_RATIO = 1.3  # число-кандидат в KPI хотя бы на 30 % крупнее медианного текста (иначе это номер шага)
 LIBRARY_PICS = 30  # ≥ 30 картинок — библиотека иконок, не образец
 AMBIGUOUS_BELOW = 0.70  # уверенность ниже — в VLM
@@ -542,10 +543,13 @@ def build_features(shapes: list[ShapeInfo], index: int, n_slides: int) -> SlideF
     text_med = median(words) if words else med
     numbers = [
         s for s in content
-        if s.chars > 0 and (
+        if (s.chars > 0 and (
             (NUMBER_RE.match(s.text) and s.size_pt >= KPI_MIN_SIZE_RATIO * text_med)
             or (s.size_pt >= KPI_SIZE_RATIO * med and s.chars <= 6 and any(ch.isdigit() for ch in s.text))
-        )
+        ))
+        # пустой плейсхолдер с кеглем вдвое крупнее текста (HSE: три пустых бокса 96 pt над подписями) —
+        # место под KPI-цифру; как body он вместил бы 4 знака, и подпись метрики туда не ляжет
+        or (s.chars == 0 and s.is_placeholder and s.size_pt >= KPI_SIZE_RATIO * med and s.fh < EMPTY_NUMBER_MAX_FH)
     ]
     pics = [s for s in live if s.kind in ("pic", "pic_ph")]
     big_pics = [s for s in pics if s.area >= BIG_PIC_AREA]
@@ -763,8 +767,8 @@ def rule_kpi(f: SlideFeatures) -> Candidate | None:
     labels = [s for s in f.content if s not in f.numbers and s.chars <= 60]
     if any(abs(l.cx - num.cx) < 0.15 or abs(l.cy - num.cy) < 0.1 for num in f.numbers for l in labels):
         parts.append((0.1, "подписи рядом с числами"))
-    if f.n_cards >= 4:
-        parts.append((-0.3, "но это номера карточек"))
+    if f.n_cards >= 4 and not all(s.size_pt >= KPI_SIZE_RATIO * f.median_size for s in f.numbers):
+        parts.append((-0.3, "но это номера карточек"))  # цифры вдвое крупнее текста нумерацией не бывают (HSE 96 pt)
     if f.sequence_row >= 3 or f.sequence_col >= 3:
         parts.append((-0.3, "числа — нумерация, не показатели"))
     if f.big_pics or _bar_series(f):
@@ -1111,7 +1115,9 @@ def build_slots(f: SlideFeatures, archetype: Archetype) -> list[Slot]:
         elif s.kind == "footer":
             slots.append(_slot(s, SlotKind.FOOTER))
         elif s.kind == "date":
-            slots.append(_slot(s, SlotKind.DATE))
+            # плейсхолдер даты в контентной зоне — год над событием таймлайна (VK Education slide42, экспорт
+            # Google Slides), а не поле колонтитула: это подпись, иначе «2010…2016» остаются на слайде про шаги
+            slots.append(_slot(s, SlotKind.DATE if _in_edge_zone(s) else SlotKind.LABEL, f.shapes))
     # таблица/диаграмма из фигур: десятки ячеек или столбцов → один слот, куда встанет нативный объект
     if archetype == Archetype.TABLE and not f.tables and (cells := _drawn_table(f)):
         slots = _collapse(slots, cells, SlotKind.TABLE)
@@ -1208,12 +1214,19 @@ def apply_vlm(p: SlideProfile, res: dict) -> SlideProfile:
         p.slots = build_slots(p.features, p.archetype)
     kept: list[Slot] = []
     protected = {Archetype.CHART: SlotKind.CHART, Archetype.TABLE: SlotKind.TABLE}.get(p.archetype)
+    shapes_by_id = {s.id: s for s in p.features.shapes}
     for slot in p.slots:
         if slot.id in decor and slot.kind != protected:
             continue  # схлопнутый слот таблицы/диаграммы модель иногда считает декором — его не отдаём
         role = roles.get(slot.id)
         if role in {k.value for k in SlotKind} and slot.kind != protected:
-            slot.kind = SlotKind(role)
+            kind = SlotKind(role)
+            shape = shapes_by_id.get(slot.id)
+            if kind == SlotKind.DATE and slot.placeholder_type != "dt" and shape is not None and not _in_edge_zone(shape):
+                # «2010» над событием таймлайна модель зовёт date; как DATE слот не заполняется и не чистится
+                # (поле колонтитула) — годы образца остались бы на слайде про шаги. Это подпись события.
+                kind = SlotKind.LABEL
+            slot.kind = kind
         kept.append(slot)
     p.slots = _normalize_vlm_slots(kept, p, decor)
     p.fixed_ids = sorted(set(p.fixed_ids) | (decor & {s.id for s in p.features.shapes}))

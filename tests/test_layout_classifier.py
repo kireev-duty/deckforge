@@ -100,6 +100,22 @@ def test_every_template_has_core_archetypes(profiles: list[SlideProfile]) -> Non
     assert len(found - {Archetype.FREEFORM}) >= 6
 
 
+@pytest.mark.parametrize("profiles", [pytest.param("VK Education", id="VK Education")], indirect=True)
+def test_timeline_years_are_labels_not_footer_dates(profiles: list[SlideProfile]) -> None:
+    """slide42 «Таймлайн»: годы над событиями VLM зовёт `date`. Как DATE слот не заполняется и не чистится
+    (поле колонтитула) — «2010…2016» оставались на слайде про шаги (стресс all_process); как LABEL — пара к событию."""
+    import copy
+
+    from deckforge.parsing.layout_classifier import apply_vlm
+
+    p = copy.deepcopy({p.index + 1: p for p in profiles}[42])
+    years = [s.id for s in p.slots if (s.sample_text or "").strip().isdigit() and len(s.sample_text.strip()) == 4]
+    assert len(years) == 7
+    apply_vlm(p, {"archetype": "process", "confidence": 0.98, "slot_roles": {i: "date" for i in years}})
+    kinds = {s.id: s.kind for s in p.slots}
+    assert all(kinds[i] == SlotKind.LABEL for i in years), {i: kinds[i] for i in years}
+
+
 # ── чужие шаблоны (data/wild, не в LFS датасета — пропускаются, если файла нет) ──
 
 WILD_EXPECTED: dict[str, dict[int, Archetype]] = {
@@ -124,6 +140,18 @@ def test_wild_archetypes(name: str) -> None:
                 assert s.placeholder_type is None and s.sample_text == str(p.index + 1)
         low = [s for s in p.features.numbers if s.text == str(p.index + 1) and s.fy > 0.8]
         assert not low, f"слайд {p.index + 1}: номер страницы в подвале как KPI"
+
+
+def test_wild_empty_big_placeholders_are_numbers() -> None:
+    """HSE slide9: три пустых плейсхолдера 96 pt над подписями — KPI-цифры, а не body на 4 знака
+    (стресс all_kpi: подпись «метрика 4» в такой body → L03)."""
+    path = REPO / "data" / "wild" / "02_HSE_Presentation_Shablon_en.pptx"
+    if not path.exists() or path.stat().st_size < 10_000:
+        pytest.skip(f"нет {path.name}")
+    p = {p.index + 1: p for p in classify_template(path)}[9]
+    big = [s for s in p.slots if (s.size_pt or 0) >= 90]
+    assert len(big) == 3 and all(s.kind == SlotKind.NUMBER for s in big), [(s.id, s.kind, s.size_pt) for s in big]
+    assert p.archetype == A.KPI
 
 
 # ── синтетические фигуры ──

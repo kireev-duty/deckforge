@@ -2,51 +2,96 @@
  "deck_path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\lct2026_holdout\\narrative.pptx",
  "findings": [
   {
-   "check_id": "L03_text_overflow",
-   "kind": "deterministic",
-   "severity": "error",
-   "slide_idx": 1,
-   "element_id": "2",
-   "box": {
-    "x": 533104,
-    "y": 414049,
-    "w": 5994696,
-    "h": 552061
-   },
-   "message": "Текст «Руководитель не видит перегруз…» не влезает по высоте: нужно 91 pt, есть 60 pt",
-   "autofix": "shrink_font_by_scale",
-   "evidence": {
-    "need_pt": 90.7,
-    "have_pt": 60.5,
-    "mode": "height",
-    "autofit": ""
-   }
-  },
-  {
-   "check_id": "C03_one_message",
+   "check_id": "C07_no_garbage",
    "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 1,
+   "severity": "error",
+   "slide_idx": 3,
    "element_id": null,
    "box": null,
-   "message": "Слайд содержит три отдельных тезиса с пояснениями, что не укладывается в одно предложение.",
+   "message": "В третьей карточке текст обрезан многоточием («май–август…»), что выглядит как служебный мусор или ошибка верстки.",
    "autofix": null,
    "evidence": {
-    "question": "Слайд пересказывается одним предложением",
-    "sources": "doc:product:почему-перегрузка-не-видна-руководителю-"
+    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
+    "sources": "doc:product:как-работает-сервис-пять-шагов"
    }
   },
   {
    "check_id": "D05_fill",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 1,
+   "slide_idx": 3,
    "element_id": null,
    "box": null,
-   "message": "Слайд перегружен: контент занимает 88% рабочей области (норма 25%–75%)",
+   "message": "Слайд пустоват: контент занимает 13% рабочей области (норма 25%–75%)",
    "autofix": "change_exemplar",
    "evidence": {
-    "fill": 0.877
+    "fill": 0.128
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 3,
+   "element_id": "2",
+   "box": {
+    "x": 780565,
+    "y": 2493074,
+    "w": 2965634,
+    "h": 423628
+   },
+   "message": "Контраст текста #F92571 к фону #FFFFFF = 3.8:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 3.8,
+    "text_color": "F92571",
+    "background": "FFFFFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 3,
+   "element_id": "4",
+   "box": {
+    "x": 4623178,
+    "y": 2493074,
+    "w": 3034896,
+    "h": 403756
+   },
+   "message": "Контраст текста #F92571 к фону #FFFFFF = 3.8:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 3.8,
+    "text_color": "F92571",
+    "background": "FFFFFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 3,
+   "element_id": "6",
+   "box": {
+    "x": 8547959,
+    "y": 2493074,
+    "w": 2945464,
+    "h": 403913
+   },
+   "message": "Контраст текста #F92571 к фону #FFFFFF = 3.8:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 3.8,
+    "text_color": "F92571",
+    "background": "FFFFFF",
+    "need": 4.5,
+    "template_color": 1
    }
   },
   {
@@ -56,7 +101,7 @@
    "slide_idx": 4,
    "element_id": null,
    "box": null,
-   "message": "Заголовок является констатацией факта (называет тему), а не выводом, как требуется в брифе.",
+   "message": "Заголовок является тематическим описанием процесса, а не выводом или тезисом.",
    "autofix": null,
    "evidence": {
     "question": "Заголовок содержит вывод, а не просто называет тему",
@@ -64,205 +109,50 @@
    }
   },
   {
-   "check_id": "D01_bullets",
+   "check_id": "D05_fill",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 4,
-   "element_id": "2",
-   "box": {
-    "x": 346075,
-    "y": 1458075,
-    "w": 2526079,
-    "h": 1476687
-   },
-   "message": "На слайде 10 пунктов (норма ≤ 6)",
-   "autofix": "split_slide",
+   "slide_idx": 5,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд перегружен: контент занимает 88% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
    "evidence": {
-    "bullets": 10
-   }
-  },
-  {
-   "check_id": "L02_overlap",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 4,
-   "element_id": "2",
-   "box": {
-    "x": 346075,
-    "y": 1814077,
-    "w": 2526079,
-    "h": 1120685
-   },
-   "message": "Блоки «Подключение» и «Трекер и календарь через OAuth…» наложились (100% площади меньшего)",
-   "autofix": "reflow_vertical",
-   "evidence": {
-    "other_id": "3",
-    "ratio": 1.0,
-    "in_exemplar": 1
-   }
-  },
-  {
-   "check_id": "L02_overlap",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 4,
-   "element_id": "4",
-   "box": {
-    "x": 4832960,
-    "y": 1814077,
-    "w": 2526079,
-    "h": 1120685
-   },
-   "message": "Блоки «Сбор сигналов» и «Сроки, статусы, участники, дли…» наложились (100% площади меньшего)",
-   "autofix": "reflow_vertical",
-   "evidence": {
-    "other_id": "5",
-    "ratio": 1.0,
-    "in_exemplar": 1
-   }
-  },
-  {
-   "check_id": "L02_overlap",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 4,
-   "element_id": "6",
-   "box": {
-    "x": 9330862,
-    "y": 1814077,
-    "w": 2526079,
-    "h": 1120685
-   },
-   "message": "Блоки «Модель нагрузки» и «Оценка перегрузки на человека …» наложились (100% площади меньшего)",
-   "autofix": "reflow_vertical",
-   "evidence": {
-    "other_id": "7",
-    "ratio": 1.0,
-    "in_exemplar": 1
-   }
-  },
-  {
-   "check_id": "L02_overlap",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 4,
-   "element_id": "8",
-   "box": {
-    "x": 2593517,
-    "y": 5181340,
-    "w": 2526079,
-    "h": 1120685
-   },
-   "message": "Блоки «Еженедельный дайджест» и «Три риска и три рекомендации л…» наложились (100% площади меньшего)",
-   "autofix": "reflow_vertical",
-   "evidence": {
-    "other_id": "9",
-    "ratio": 1.0,
-    "in_exemplar": 1
-   }
-  },
-  {
-   "check_id": "L02_overlap",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 4,
-   "element_id": "10",
-   "box": {
-    "x": 7080402,
-    "y": 5181340,
-    "w": 2526079,
-    "h": 1120685
-   },
-   "message": "Блоки «Ретро с данными» и «Обсуждение по фактам, а не ощу…» наложились (100% площади меньшего)",
-   "autofix": "reflow_vertical",
-   "evidence": {
-    "other_id": "11",
-    "ratio": 1.0,
-    "in_exemplar": 1
+    "fill": 0.877
    }
   },
   {
    "check_id": "T02_font_size",
    "kind": "deterministic",
    "severity": "info",
-   "slide_idx": 4,
-   "element_id": "15",
+   "slide_idx": 5,
+   "element_id": "2",
    "box": {
-    "x": 525817,
-    "y": 421226,
-    "w": 9862734,
-    "h": 376138
+    "x": 533104,
+    "y": 414049,
+    "w": 5994696,
+    "h": 552061
    },
-   "message": "Кегль 17.4 pt не из шкалы шаблона (ближайший 15.8 pt) (подгонка: 87% от кегля образца 20 pt)",
+   "message": "Кегль 27.9 pt не из шкалы шаблона (ближайший 24 pt) (подгонка: 77% от кегля образца 36 pt)",
    "autofix": "snap_font_size",
    "evidence": {
-    "size_pt": 17.4,
-    "nearest_pt": 15.8,
-    "base_pt": 20.0
+    "size_pt": 27.9,
+    "nearest_pt": 24.0,
+    "base_pt": 36.0
    }
   },
   {
-   "check_id": "L03_text_overflow",
-   "kind": "deterministic",
-   "severity": "error",
-   "slide_idx": 5,
-   "element_id": "2",
-   "box": {
-    "x": 1260867,
-    "y": 451168,
-    "w": 2016723,
-    "h": 454025
-   },
-   "message": "Текст «Команда получает ранние риски …» не влезает по высоте: нужно 50 pt, есть 34 pt",
-   "autofix": "shrink_font_by_scale",
-   "evidence": {
-    "need_pt": 50.4,
-    "have_pt": 33.6,
-    "mode": "height",
-    "autofit": ""
-   }
-  },
-  {
-   "check_id": "T06_contrast",
-   "kind": "deterministic",
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
    "severity": "warning",
-   "slide_idx": 5,
-   "element_id": "2",
-   "box": {
-    "x": 1260867,
-    "y": 451168,
-    "w": 2016723,
-    "h": 454025
-   },
-   "message": "Контраст текста #FFFFFF к фону #FF0053 = 3.9:1 (нужно 4.5:1)",
-   "autofix": "snap_color",
-   "evidence": {
-    "contrast": 3.91,
-    "text_color": "FFFFFF",
-    "background": "FF0053",
-    "need": 4.5,
-    "template_color": 1
-   }
-  },
-  {
-   "check_id": "L03_text_overflow",
-   "kind": "deterministic",
-   "severity": "error",
    "slide_idx": 6,
-   "element_id": "13",
-   "box": {
-    "x": 525817,
-    "y": 421226,
-    "w": 2763648,
-    "h": 376138
-   },
-   "message": "Текст «Время на согласования в пилоте…» не влезает по высоте: нужно 50 pt, есть 34 pt",
-   "autofix": "shrink_font_by_scale",
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок называет тему («Время на согласования»), а не содержит вывод (например, «Время на согласования сократилось вдвое»).",
+   "autofix": null,
    "evidence": {
-    "need_pt": 50.4,
-    "have_pt": 33.6,
-    "mode": "height",
-    "autofit": ""
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "m:time_structure"
    }
   },
   {
@@ -288,16 +178,81 @@
    }
   },
   {
-   "check_id": "C06_images_relevant",
+   "check_id": "C01_title_insight",
    "kind": "contextual",
    "severity": "warning",
+   "slide_idx": 7,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок называет тему («Доля времени...»), а не содержит вывод (например, «Доля времени на разработку выросла на 16 п.п.»).",
+   "autofix": null,
+   "evidence": {
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "m:quote"
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 7,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд пустоват: контент занимает 23% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.226
+   }
+  },
+  {
+   "check_id": "L05_off_grid",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 7,
+   "element_id": "15",
+   "box": {
+    "x": 625096,
+    "y": 1360288,
+    "w": 5125748,
+    "h": 2209800
+   },
+   "message": "Блок «Тип работы До пилота После пил…» не на направляющей: кромка 0.68\", ближайшая 0.55\"",
+   "autofix": "snap_to_grid",
+   "evidence": {
+    "nearest_x": 502920,
+    "delta": 122176
+   }
+  },
+  {
+   "check_id": "L06_in_margins",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 7,
+   "element_id": "15",
+   "box": {
+    "x": 625096,
+    "y": 1360288,
+    "w": 5125748,
+    "h": 2209800
+   },
+   "message": "Блок «Тип работы До пилота После пил…» заходит в поля (left на 0.67\", top на 0.18\")",
+   "autofix": "snap_to_grid",
+   "evidence": {
+    "depth_left": 611621,
+    "depth_top": 168040
+   }
+  },
+  {
+   "check_id": "C07_no_garbage",
+   "kind": "contextual",
+   "severity": "error",
    "slide_idx": 8,
    "element_id": null,
    "box": null,
-   "message": "На слайде изображен пустой планшет, который не несет смысловой нагрузки и не относится к теме.",
+   "message": "На изображении виден визуальный дефект: текст автора цитаты перекрывается и накладывается на первую строку самой цитаты.",
    "autofix": null,
    "evidence": {
-    "question": "Картинки и иконки относятся к теме слайда",
+    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
     "sources": "m:score,m:response_days"
    }
   },
@@ -306,12 +261,12 @@
    "kind": "deterministic",
    "severity": "warning",
    "slide_idx": 8,
-   "element_id": "4",
+   "element_id": "5",
    "box": {
-    "x": 346075,
-    "y": 4656083,
-    "w": 3626835,
-    "h": 1544692
+    "x": 6808027,
+    "y": 2619903,
+    "w": 4945565,
+    "h": 890039
    },
    "message": "Пункт из 17 слов (норма ≤ 15): ««За месяц мы впервые увидели, где реально теряется время, — …»",
    "autofix": "refill_slot",
@@ -326,30 +281,44 @@
    "slide_idx": 8,
    "element_id": null,
    "box": null,
-   "message": "Слайд пустоват: контент занимает 8% рабочей области (норма 25%–75%)",
+   "message": "Слайд пустоват: контент занимает 20% рабочей области (норма 25%–75%)",
    "autofix": "change_exemplar",
    "evidence": {
-    "fill": 0.077
+    "fill": 0.199
    }
   },
   {
-   "check_id": "T02_font_size",
+   "check_id": "L02_overlap",
    "kind": "deterministic",
-   "severity": "info",
+   "severity": "warning",
    "slide_idx": 8,
-   "element_id": "9",
+   "element_id": "6",
    "box": {
-    "x": 525817,
-    "y": 421226,
-    "w": 9862734,
-    "h": 376138
+    "x": 6819904,
+    "y": 2619903,
+    "w": 4933688,
+    "h": 351882
    },
-   "message": "Кегль 17.7 pt не из шкалы шаблона (ближайший 15.8 pt) (подгонка: 88% от кегля образца 20 pt)",
-   "autofix": "snap_font_size",
+   "message": "Блоки «Руководитель разработки, коман…» и ««За месяц мы впервые увидели, …» наложились (52% площади меньшего)",
+   "autofix": "reflow_vertical",
    "evidence": {
-    "size_pt": 17.7,
-    "nearest_pt": 15.8,
-    "base_pt": 20.0
+    "other_id": "5",
+    "ratio": 0.525,
+    "in_exemplar": 1
+   }
+  },
+  {
+   "check_id": "C02_content_matches_title",
+   "kind": "contextual",
+   "severity": "error",
+   "slide_idx": 9,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд содержит метрику о сроках ответа (0,6 дня), которая не относится к теме оценки пилота.",
+   "autofix": null,
+   "evidence": {
+    "question": "Содержимое слайда соответствует заголовку",
+    "sources": "doc:product:риски-запуска-и-как-они-закрываются"
    }
   },
   {
@@ -359,53 +328,11 @@
    "slide_idx": 9,
    "element_id": null,
    "box": null,
-   "message": "Нижний ряд из трех пустых рамок является визуальным мусором.",
+   "message": "Текст в третьей карточке обрезан («...»), что выглядит как служебный мусор или ошибка верстки.",
    "autofix": null,
    "evidence": {
     "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
     "sources": "doc:product:риски-запуска-и-как-они-закрываются"
-   }
-  },
-  {
-   "check_id": "L03_text_overflow",
-   "kind": "deterministic",
-   "severity": "error",
-   "slide_idx": 9,
-   "element_id": "69",
-   "box": {
-    "x": 1542416,
-    "y": 1945277,
-    "w": 1718251,
-    "h": 640725
-   },
-   "message": "Текст «4,7 оценка после пилота (из 5)» не влезает по высоте: нужно 51 pt, есть 43 pt (noAutofit)",
-   "autofix": "shrink_font_by_scale",
-   "evidence": {
-    "need_pt": 50.5,
-    "have_pt": 43.3,
-    "mode": "height",
-    "autofit": "noAutofit"
-   }
-  },
-  {
-   "check_id": "L03_text_overflow",
-   "kind": "deterministic",
-   "severity": "error",
-   "slide_idx": 9,
-   "element_id": "70",
-   "box": {
-    "x": 4110879,
-    "y": 1945277,
-    "w": 1718251,
-    "h": 640725
-   },
-   "message": "Текст «3,4 оценка до пилота (из 5)» не влезает по высоте: нужно 51 pt, есть 43 pt (noAutofit)",
-   "autofix": "shrink_font_by_scale",
-   "evidence": {
-    "need_pt": 50.5,
-    "have_pt": 43.3,
-    "mode": "height",
-    "autofit": "noAutofit"
    }
   },
   {
@@ -415,10 +342,76 @@
    "slide_idx": 9,
    "element_id": null,
    "box": null,
-   "message": "Слайд пустоват: контент занимает 8% рабочей области (норма 25%–75%)",
+   "message": "Слайд пустоват: контент занимает 13% рабочей области (норма 25%–75%)",
    "autofix": "change_exemplar",
    "evidence": {
-    "fill": 0.081
+    "fill": 0.128
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 9,
+   "element_id": "2",
+   "box": {
+    "x": 780565,
+    "y": 2493074,
+    "w": 2965634,
+    "h": 423628
+   },
+   "message": "Контраст текста #F92571 к фону #FFFFFF = 3.8:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 3.8,
+    "text_color": "F92571",
+    "background": "FFFFFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 9,
+   "element_id": "4",
+   "box": {
+    "x": 4623178,
+    "y": 2493074,
+    "w": 3034896,
+    "h": 403756
+   },
+   "message": "Контраст текста #F92571 к фону #FFFFFF = 3.8:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 3.8,
+    "text_color": "F92571",
+    "background": "FFFFFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 9,
+   "element_id": "6",
+   "box": {
+    "x": 8547959,
+    "y": 2493074,
+    "w": 2945464,
+    "h": 403913
+   },
+   "message": "Контраст текста #F92571 к фону #FFFFFF = 3.8:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 3.8,
+    "text_color": "F92571",
+    "background": "FFFFFF",
+    "need": 4.5,
+    "template_color": 1
    }
   },
   {
@@ -428,11 +421,38 @@
    "slide_idx": 10,
    "element_id": null,
    "box": null,
-   "message": "Заголовок называет тему (риски и закрытие), а не содержит вывод о результате.",
+   "message": "Заголовок называет тему (риски и их закрытие), а не содержит вывод о результате или значимости.",
    "autofix": null,
    "evidence": {
     "question": "Заголовок содержит вывод, а не просто называет тему",
     "sources": "doc:product:план-на-квартал"
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 10,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд перегружен: контент занимает 88% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.877
+   }
+  },
+  {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 11,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок является незавершенным предложением и не содержит итогового вывода, а лишь называет тему.",
+   "autofix": null,
+   "evidence": {
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "doc:product:контакты"
    }
   },
   {
@@ -513,5 +533,5 @@
   "C10_table_legend_relevant",
   "C11_flow"
  ],
- "duration_s": 50.52
+ "duration_s": 53.052
 }

@@ -115,6 +115,31 @@ def test_numbers_extremes_build_and_render(vk_tech, tmp_path: Path, strategy: st
     render_pptx(res.ir, vk_tech.template, vk_tech.exemplars, tmp_path / f"{strategy}.pptx")
 
 
+def test_step_badges_get_ordinals_not_leads() -> None:
+    """Кружки «1 2 3» у шагов процесса (presentation_eng_dark slide19, Пифагор slide20): в label на 3–4 знака
+    ложился лид «Шаг 12» → L03 по высоте. Теперь — только порядковый номер, пункт целиком в тело."""
+    from deckforge.layout.builder import is_badge
+    from deckforge.pipeline import parse_template
+
+    p = REPO / "data" / "wild" / "presentation_eng_dark.pptx"
+    if not p.exists() or p.stat().st_size < 10_000:
+        pytest.skip("нет presentation_eng_dark.pptx")
+    parsed = parse_template(p)
+    badges = {(e.id, s.id): s for e in parsed.exemplars for s in e.slots if is_badge(s)}
+    assert badges, "в шаблоне ожидались label-слоты с номером-образцом"
+    full = so.all_process()
+    short = full.model_copy(update={"slides": full.slides[:4] + full.slides[-1:]})  # в объёме: без сворачивания форм
+    res = _build(parsed, short, "narrative")
+    filled = 0
+    for sl in res.ir.slides:
+        for el in sl.elements:
+            if (sl.exemplar_id, el.slot_id) in badges:
+                text = "".join(r.text for par in el.paragraphs for r in par.runs)
+                assert text.isdigit() and len(text) <= 2, (sl.exemplar_id, el.slot_id, text)
+                filled += 1
+    assert filled > 0
+
+
 def test_numbers_extremes_on_vk_education() -> None:
     """Пустое значение KPI на образце с оценённым кеглем цифры: fit_number делил на нулевую ширину."""
     from deckforge.pipeline import parse_template
@@ -185,6 +210,37 @@ def test_every_stress_outline_builds_without_skips(vk_tech, case: str) -> None:
         assert _per_ref_max(res.ir) <= 4, (case, strategy)
         if case != "empty":
             assert res.ir.slides
+
+
+_BLOATED = [  # матрица стресс-теста дня 13: 20 × 8 KPI / 12 шагов на шаблонах, где ни один образец столько не вмещает
+    ("02_HSE", "all_kpi"), ("presentation_eng_dark", "all_kpi"), ("presentation_eng_dark", "all_process"),
+    ("Теорема Пифагора", "all_process"), ("VK Education", "all_process"), ("VK Tech", "all_process"),
+]
+
+
+@pytest.mark.parametrize("name,case", _BLOATED)
+def test_over_budget_kpi_process_do_not_bloat_on_real_templates(name: str, case: str) -> None:
+    """Критерии те же, что в `tools/stress_test.py` (`bloat_problems`): не больше 2× слайдов и не больше
+    MAX_PER_REF слайдов колоды на один слайд outline — контент сворачивается в карточки/список, а не в каскад."""
+    from deckforge.pipeline import parse_template
+    from tests.conftest import find_template
+    from tools.stress_test import bloat_problems
+
+    p = find_template(name)
+    if p is None:
+        pytest.skip(f"{name} не найден (LFS?)")
+    parsed = parse_template(p)
+    outline = so.CASES[case]()
+    for strategy in STRATEGIES:
+        res = _build(parsed, outline, strategy)
+        assert bloat_problems(res.ir.slides, len(outline.slides), load_strategy(strategy), case) == [], (name, case, strategy)
+        assert not [c for c in res.choices if c.exemplar_id is None]
+        texts = " ".join(r.text for s in res.ir.slides for el in s.elements for p_ in el.paragraphs for r in p_.runs)
+        for s in outline.slides:  # ни одного пункта не потеряно
+            for k in s.kpis:
+                assert k.label in texts, (name, case, strategy, k.label)
+            for step in s.steps:
+                assert step.split(":")[0] in texts, (name, case, strategy, step)
 
 
 # ──────────────────────────── фазз repair_outline ────────────────────────────

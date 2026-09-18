@@ -2,26 +2,6 @@
  "deck_path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_education\\narrative.pptx",
  "findings": [
   {
-   "check_id": "T02_font_size",
-   "kind": "deterministic",
-   "severity": "info",
-   "slide_idx": 0,
-   "element_id": "262",
-   "box": {
-    "x": 622261,
-    "y": 2598003,
-    "w": 7597065,
-    "h": 1661993
-   },
-   "message": "Кегль 54 pt не из шкалы шаблона (ближайший 48 pt) (подгонка: 90% от кегля образца 60 pt)",
-   "autofix": "snap_font_size",
-   "evidence": {
-    "size_pt": 54.0,
-    "nearest_pt": 48.0,
-    "base_pt": 60.0
-   }
-  },
-  {
    "check_id": "L04_text_clipped",
    "kind": "deterministic",
    "severity": "warning",
@@ -120,23 +100,17 @@
    }
   },
   {
-   "check_id": "T02_font_size",
-   "kind": "deterministic",
-   "severity": "info",
-   "slide_idx": 6,
-   "element_id": "430",
-   "box": {
-    "x": 4308816,
-    "y": 2622416,
-    "w": 3574368,
-    "h": 1613168
-   },
-   "message": "Кегль 28.4 pt не из шкалы шаблона (ближайший 24 pt) (подгонка: 79% от кегля образца 36 pt)",
-   "autofix": "snap_font_size",
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 5,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок называет тему процесса, а не содержит вывод о его ценности или результате.",
+   "autofix": null,
    "evidence": {
-    "size_pt": 28.4,
-    "nearest_pt": 24.0,
-    "base_pt": 36.0
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "m:coordination_hours"
    }
   },
   {
@@ -153,6 +127,39 @@
    }
   },
   {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 7,
+   "element_id": "1054",
+   "box": {
+    "x": 677334,
+    "y": 692150,
+    "w": 4008966,
+    "h": 1746250
+   },
+   "message": "Кегль 32.4 pt не из шкалы шаблона (ближайший 36 pt) (подгонка: 90% от кегля образца 36 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 32.4,
+    "nearest_pt": 36.0,
+    "base_pt": 36.0
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд пустоват: контент занимает 23% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.227
+   }
+  },
+  {
    "check_id": "T06_contrast",
    "kind": "deterministic",
    "severity": "warning",
@@ -162,7 +169,7 @@
     "x": 658812,
     "y": 1531802,
     "w": 3000000,
-    "h": 3000000
+    "h": 2209800
    },
    "message": "Контраст текста #FFFFFF к фону #FFFFFF = 1.0:1 (нужно 4.5:1)",
    "autofix": "snap_color",
@@ -181,7 +188,7 @@
    "slide_idx": 9,
    "element_id": null,
    "box": null,
-   "message": "Слайд содержит отзыв о пользе сервиса, а не информацию о рисках запуска и их закрытии, как заявлено в заголовке.",
+   "message": "Слайд содержит отзыв, а не описание рисков и их закрытия, заявленных в заголовке.",
    "autofix": null,
    "evidence": {
     "question": "Содержимое слайда соответствует заголовку",
@@ -195,7 +202,7 @@
    "slide_idx": 9,
    "element_id": null,
    "box": null,
-   "message": "Слайд с отзывом логически не связан с заголовком о рисках запуска, нарушая последовательность повествования.",
+   "message": "Слайд с отзывом логически не связан с заголовком о рисках запуска, он скорее относится к предыдущему слайду о результатах.",
    "autofix": null,
    "evidence": {
     "question": "Слайд логически связан с соседними",
@@ -243,6 +250,40 @@
    }
   },
   {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 9,
+   "element_id": "457",
+   "box": {
+    "x": 3359150,
+    "y": 5738829,
+    "w": 8200516,
+    "h": 461946
+   },
+   "message": "Кегль 21.6 pt не из шкалы шаблона (ближайший 20 pt) (подгонка: 90% от кегля образца 24 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 21.6,
+    "nearest_pt": 20.0,
+    "base_pt": 24.0
+   }
+  },
+  {
+   "check_id": "C06_images_relevant",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 10,
+   "element_id": null,
+   "box": null,
+   "message": "Абстрактные фигуры не относятся к теме слайда.",
+   "autofix": null,
+   "evidence": {
+    "question": "Картинки и иконки относятся к теме слайда",
+    "sources": "doc:product:план-на-квартал"
+   }
+  },
+  {
    "check_id": "L04_text_clipped",
    "kind": "deterministic",
    "severity": "warning",
@@ -341,17 +382,30 @@
    }
   },
   {
-   "check_id": "C03_one_message",
+   "check_id": "C01_title_insight",
    "kind": "contextual",
    "severity": "warning",
    "slide_idx": 12,
    "element_id": null,
    "box": null,
-   "message": "Слайд содержит три отдельных риска и три разных решения, что не укладывается в одно предложение.",
+   "message": "Заголовок называет тему (риски и закрытие), а не содержит вывод (например, «Риски запуска минимизированы планом»).",
    "autofix": null,
    "evidence": {
-    "question": "Слайд пересказывается одним предложением",
+    "question": "Заголовок содержит вывод, а не просто называет тему",
     "sources": ""
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 12,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд пустоват: контент занимает 23% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.229
    }
   },
   {
@@ -428,5 +482,5 @@
   "C10_table_legend_relevant",
   "C11_flow"
  ],
- "duration_s": 56.491
+ "duration_s": 48.979
 }

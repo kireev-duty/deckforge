@@ -177,7 +177,12 @@ def test_build_deck_matches_run(template_path, tmp_path: Path) -> None:
     whole = run(cfg.model_copy(update={"output_dir": tmp_path / "whole"}), outline=_outline()).decks[0]
     assert deck.pptx.exists() and deck.audit_summary["errors"] == whole.audit_summary["errors"]
     assert set(deck.load_manifest()) == set(whole.load_manifest())
-    assert deck.load_manifest()["exports"] == {"pptx": str(deck.pptx)} and deck.pdf is None
+    m = deck.load_manifest()
+    assert m["exports"] == {"pptx": "executive.pptx"} and deck.pdf is None
+    # пути в manifest — относительно папки прогона (примеры в репо без C:\Users\… машины сборки)
+    assert m["outline"] == "outline.json" and m["audit"]["path"] == "executive.audit.json"
+    if Path.cwd().resolve() == REPO.resolve():  # шаблон и контент-пакет — относительно репо (cwd)
+        assert m["template"]["path"] == "data/templates/VK Tech шаблон.pptx" and m["content_pack"] == "examples/content_pack"
     assert deck.load_report() is not None and len(deck.load_ir().slides) == deck.stats["slides"]
 
 
@@ -219,10 +224,11 @@ def test_pdf_export(template_path, tmp_path: Path) -> None:
     assert not (tmp_path / "_pdf").exists()
     assert d.html is not None and d.html.exists() and d.html.name == "executive.html"
     m = d.load_manifest()
-    assert m["exports"] == {"pptx": str(d.pptx), "pdf": str(d.pdf), "html": str(d.html)}
+    assert m["exports"] == {"pptx": "executive.pptx", "pdf": "executive.pdf", "html": "executive.html"}
     assert "export_pdf" in m["timings_s"] and "export_html" in m["timings_s"]
     run_json = json.loads(res.run_json.read_text("utf-8"))
-    assert run_json["not_implemented"] == [] and run_json["decks"][0]["exports"]["html"] == str(d.html)
+    assert run_json["not_implemented"] == [] and run_json["decks"][0]["exports"]["html"] == "executive.html"
+    assert run_json["decks"][0]["manifest"] == "executive.manifest.json" and run_json["outline"] == "outline.json"
 
 
 @pytest.mark.skipif(not _soffice(), reason="нужен LibreOffice для PNG")

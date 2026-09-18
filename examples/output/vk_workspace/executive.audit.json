@@ -2,157 +2,84 @@
  "deck_path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_workspace\\executive.pptx",
  "findings": [
   {
-   "check_id": "C05_has_content",
-   "kind": "contextual",
-   "severity": "error",
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
    "slide_idx": 2,
    "element_id": null,
    "box": null,
-   "message": "Слайд содержит только заголовок и дублирующие его цифры без дополнительного контекста или вывода.",
-   "autofix": null,
+   "message": "Слайд пустоват: контент занимает 19% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
    "evidence": {
-    "question": "На слайде есть содержание, а не только заголовок",
-    "sources": "m:pilot"
+    "fill": 0.193
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 2,
+   "element_id": "729",
+   "box": {
+    "x": 6938670,
+    "y": 2804349,
+    "w": 2850777,
+    "h": 483181
+   },
+   "message": "Кегль 47.8 pt не из шкалы шаблона (ближайший 54 pt) (подгонка: 80% от кегля образца 60 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 47.8,
+    "nearest_pt": 54.0,
+    "base_pt": 60.0
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 2,
+   "element_id": "734",
+   "box": {
+    "x": 439193,
+    "y": 2517730,
+    "w": 2850777,
+    "h": 483181
+   },
+   "message": "Кегль 45.4 pt не из шкалы шаблона (ближайший 54 pt) (подгонка: 84% от кегля образца 54 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 45.4,
+    "nearest_pt": 54.0,
+    "base_pt": 54.0
    }
   },
   {
    "check_id": "C07_no_garbage",
    "kind": "contextual",
    "severity": "error",
-   "slide_idx": 2,
+   "slide_idx": 3,
    "element_id": null,
    "box": null,
-   "message": "На слайде присутствуют служебные элементы: кнопки «Дата» и пустые иконки-заглушки в виде галочек.",
+   "message": "В заголовке присутствует многоточие, что выглядит как обрезанный текст или служебный артефакт.",
    "autofix": null,
    "evidence": {
     "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
-    "sources": "m:pilot"
+    "sources": "doc:product:как-работает-сервис-пять-шагов"
    }
   },
   {
-   "check_id": "L02_overlap",
-   "kind": "deterministic",
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
    "severity": "warning",
-   "slide_idx": 2,
-   "element_id": "568",
-   "box": {
-    "x": 2840761,
-    "y": 1650577,
-    "w": 659183,
-    "h": 340508
-   },
-   "message": "Блоки «12» и «Дата» наложились (60% площади меньшего)",
-   "autofix": "reflow_vertical",
+   "slide_idx": 3,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок называет тему процесса, а не содержит вывод о его ценности или результате.",
+   "autofix": null,
    "evidence": {
-    "other_id": "579",
-    "ratio": 0.601,
-    "in_exemplar": 1
-   }
-  },
-  {
-   "check_id": "L02_overlap",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 2,
-   "element_id": "582",
-   "box": {
-    "x": 6775947,
-    "y": 1650577,
-    "w": 659183,
-    "h": 340508
-   },
-   "message": "Блоки «118» и «Дата» наложились (60% площади меньшего)",
-   "autofix": "reflow_vertical",
-   "evidence": {
-    "other_id": "593",
-    "ratio": 0.601,
-    "in_exemplar": 1
-   }
-  },
-  {
-   "check_id": "L02_overlap",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 2,
-   "element_id": "596",
-   "box": {
-    "x": 10711133,
-    "y": 1650577,
-    "w": 659183,
-    "h": 340508
-   },
-   "message": "Блоки «4» и «Дата» наложились (60% площади меньшего)",
-   "autofix": "reflow_vertical",
-   "evidence": {
-    "other_id": "607",
-    "ratio": 0.601,
-    "in_exemplar": 1
-   }
-  },
-  {
-   "check_id": "T06_contrast",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 2,
-   "element_id": "566",
-   "box": {
-    "x": 427866,
-    "y": 2216240,
-    "w": 3375704,
-    "h": 684000
-   },
-   "message": "Контраст текста #FFFFFF к фону #0077FF = 4.1:1 (нужно 4.5:1)",
-   "autofix": "snap_color",
-   "evidence": {
-    "contrast": 4.13,
-    "text_color": "FFFFFF",
-    "background": "0077FF",
-    "need": 4.5,
-    "template_color": 1
-   }
-  },
-  {
-   "check_id": "T06_contrast",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 2,
-   "element_id": "580",
-   "box": {
-    "x": 4363052,
-    "y": 2216240,
-    "w": 3375704,
-    "h": 684000
-   },
-   "message": "Контраст текста #FFFFFF к фону #0077FF = 4.1:1 (нужно 4.5:1)",
-   "autofix": "snap_color",
-   "evidence": {
-    "contrast": 4.13,
-    "text_color": "FFFFFF",
-    "background": "0077FF",
-    "need": 4.5,
-    "template_color": 1
-   }
-  },
-  {
-   "check_id": "T06_contrast",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 2,
-   "element_id": "594",
-   "box": {
-    "x": 8298238,
-    "y": 2216240,
-    "w": 3375704,
-    "h": 684000
-   },
-   "message": "Контраст текста #FFFFFF к фону #0077FF = 4.1:1 (нужно 4.5:1)",
-   "autofix": "snap_color",
-   "evidence": {
-    "contrast": 4.13,
-    "text_color": "FFFFFF",
-    "background": "0077FF",
-    "need": 4.5,
-    "template_color": 1
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "doc:product:как-работает-сервис-пять-шагов"
    }
   },
   {
@@ -167,12 +94,25 @@
     "w": 4499229,
     "h": 1167572
    },
-   "message": "Кегль 29.3 pt не из шкалы шаблона (ближайший 36 pt) (подгонка: 81% от кегля образца 36 pt)",
+   "message": "Кегль 25.2 pt не из шкалы шаблона (ближайший 20 pt) (подгонка: 70% от кегля образца 36 pt)",
    "autofix": "snap_font_size",
    "evidence": {
-    "size_pt": 29.3,
-    "nearest_pt": 36.0,
+    "size_pt": 25.2,
+    "nearest_pt": 20.0,
     "base_pt": 36.0
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 5,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд пустоват: контент занимает 24% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.237
    }
   },
   {
@@ -187,12 +127,62 @@
     "w": 2572136,
     "h": 187738
    },
-   "message": "Блоки «Время на согласования в пилоте…» и «Пилотные команды, ч/нед Контро…» наложились (5% площади меньшего)",
+   "message": "Блоки «Время на согласования в пилоте…» и «Пилотные команды, ч/нед Контро…» наложились (7% площади меньшего)",
    "autofix": "reflow_vertical",
    "evidence": {
     "other_id": "673",
-    "ratio": 0.054,
+    "ratio": 0.073,
     "in_exemplar": 1
+   }
+  },
+  {
+   "check_id": "L05_off_grid",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 5,
+   "element_id": "673",
+   "box": {
+    "x": 0,
+    "y": 1404525,
+    "w": 3000000,
+    "h": 2209800
+   },
+   "message": "Блок «Пилотные команды, ч/нед Контро…» не на направляющей: кромка 0.00\", ближайшая 0.45\"",
+   "autofix": "snap_to_grid",
+   "evidence": {
+    "nearest_x": 411480,
+    "delta": 411480
+   }
+  },
+  {
+   "check_id": "L06_in_margins",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 5,
+   "element_id": "673",
+   "box": {
+    "x": 0,
+    "y": 1404525,
+    "w": 3000000,
+    "h": 2209800
+   },
+   "message": "Блок «Пилотные команды, ч/нед Контро…» заходит в поля (left на 0.47\")",
+   "autofix": "snap_to_grid",
+   "evidence": {
+    "depth_left": 427865
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 6,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд пустоват: контент занимает 24% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.237
    }
   },
   {
@@ -207,26 +197,69 @@
     "w": 2572136,
     "h": 187738
    },
-   "message": "Блоки «Доля времени на разработку выр…» и «Тип работы До пилота После пил…» наложились (5% площади меньшего)",
+   "message": "Блоки «Доля времени на разработку выр…» и «Тип работы До пилота После пил…» наложились (7% площади меньшего)",
    "autofix": "reflow_vertical",
    "evidence": {
     "other_id": "673",
-    "ratio": 0.054,
+    "ratio": 0.073,
     "in_exemplar": 1
    }
   },
   {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
+   "check_id": "L05_off_grid",
+   "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 8,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок называет тему (риски и их закрытие), а не содержит вывод.",
-   "autofix": null,
+   "slide_idx": 6,
+   "element_id": "673",
+   "box": {
+    "x": 0,
+    "y": 1404525,
+    "w": 3000000,
+    "h": 2209800
+   },
+   "message": "Блок «Тип работы До пилота После пил…» не на направляющей: кромка 0.00\", ближайшая 0.45\"",
+   "autofix": "snap_to_grid",
    "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "m:score,m:response_days"
+    "nearest_x": 411480,
+    "delta": 411480
+   }
+  },
+  {
+   "check_id": "L06_in_margins",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 6,
+   "element_id": "673",
+   "box": {
+    "x": 0,
+    "y": 1404525,
+    "w": 3000000,
+    "h": 2209800
+   },
+   "message": "Блок «Тип работы До пилота После пил…» заходит в поля (left на 0.47\")",
+   "autofix": "snap_to_grid",
+   "evidence": {
+    "depth_left": 427865
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 7,
+   "element_id": "654",
+   "box": {
+    "x": 429253,
+    "y": 3444059,
+    "w": 3841965,
+    "h": 418061
+   },
+   "message": "Кегль 12.6 pt не из шкалы шаблона (ближайший 13.8 pt) (подгонка: 70% от кегля образца 18 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 12.6,
+    "nearest_pt": 13.8,
+    "base_pt": 18.0
    }
   },
   {
@@ -356,7 +389,7 @@
    "slide_idx": 9,
    "element_id": null,
    "box": null,
-   "message": "Слово «команды» некорректно разбито на строки, что выглядит как опечатка или сбой верстки.",
+   "message": "Слово «команды» некорректно разбито на две строки с переносом буквы «ы».",
    "autofix": null,
    "evidence": {
     "question": "Текст без опечаток",
@@ -401,5 +434,5 @@
   "C10_table_legend_relevant",
   "C11_flow"
  ],
- "duration_s": 36.333
+ "duration_s": 28.438
 }

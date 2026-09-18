@@ -20,7 +20,7 @@
       {
        "runs": [
         {
-         "text": "Пульс команды: итоги пилота и план запуска",
+         "text": "Пульс команды",
          "bold": false,
          "italic": false,
          "color": null,
@@ -40,7 +40,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 36.7
+      "size_pt": 34.0
      }
     },
     {
@@ -76,7 +76,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 15.2
+      "size_pt": 14.4
      }
     }
    ],
@@ -775,7 +775,7 @@
       {
        "runs": [
         {
-         "text": "месяца (май–август 2026)",
+         "text": "месяца (май–август…",
          "bold": false,
          "italic": false,
          "color": null,
@@ -795,7 +795,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 11.4
+      "size_pt": 9.8
      }
     }
    ],
@@ -890,7 +890,7 @@
       {
        "runs": [
         {
-         "text": "Трекер и календарь через OAuth за 15 минут",
+         "text": "Трекер и календарь через OAuth за…",
          "bold": false,
          "italic": false,
          "color": null,
@@ -910,7 +910,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 6.9
+      "size_pt": 6.3
      }
     },
     {
@@ -961,7 +961,7 @@
       {
        "runs": [
         {
-         "text": "Сроки, статусы, участники, длительность встреч",
+         "text": "Сроки, статусы",
          "bold": false,
          "italic": false,
          "color": null,
@@ -981,7 +981,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 6.6
+      "size_pt": 6.3
      }
     },
     {
@@ -1088,7 +1088,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 10.0
+      "size_pt": 9.8
      }
     },
     {
@@ -1124,7 +1124,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 7.8
+      "size_pt": 6.3
      }
     },
     {
@@ -1770,7 +1770,7 @@
       {
        "runs": [
         {
-         "text": "«За месяц мы впервые увидели, где реально теряется время,",
+         "text": "«За месяц мы впервые увидели",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1790,7 +1790,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 9.4
+      "size_pt": 8.4
      }
     },
     {

@@ -190,7 +190,8 @@ def test_concurrent_jobs_and_fixes(template_path, tmp_path: Path, no_fitting) ->
         for i, jid in enumerate(ids):
             run_json = json.loads((tmp_path / "api" / "jobs" / jid / "run.json").read_text("utf-8"))
             assert run_json["config"]["audience"] == f"аудитория {i}"
-            assert Path(run_json["decks"][0]["pptx"]).parent.name == jid
+            assert run_json["decks"][0]["pptx"] == "executive.pptx"  # пути в run.json — относительно папки job'а
+            assert (tmp_path / "api" / "jobs" / jid / "executive.pptx").exists()
 
         jid = ids[0]
         a = api.get(f"/jobs/{jid}/decks/executive/audit").json()

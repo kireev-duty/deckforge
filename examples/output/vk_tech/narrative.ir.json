@@ -20,7 +20,7 @@
       {
        "runs": [
         {
-         "text": "Пульс команды: итоги пилота и план запуска",
+         "text": "Пульс команды",
          "bold": false,
          "italic": false,
          "color": null,
@@ -40,7 +40,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 36.7
+      "size_pt": 34.0
      }
     },
     {
@@ -76,7 +76,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 15.2
+      "size_pt": 14.4
      }
     }
    ],
@@ -653,7 +653,7 @@
       {
        "runs": [
         {
-         "text": "месяца (май–август 2026)",
+         "text": "месяца (май–август…",
          "bold": false,
          "italic": false,
          "color": null,
@@ -673,7 +673,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 11.4
+      "size_pt": 9.8
      }
     }
    ],
@@ -768,7 +768,7 @@
       {
        "runs": [
         {
-         "text": "Трекер и календарь через OAuth за 15 минут",
+         "text": "Трекер и календарь через OAuth за…",
          "bold": false,
          "italic": false,
          "color": null,
@@ -788,7 +788,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 6.9
+      "size_pt": 6.3
      }
     },
     {
@@ -839,7 +839,7 @@
       {
        "runs": [
         {
-         "text": "Сроки, статусы, участники, длительность встреч",
+         "text": "Сроки, статусы",
          "bold": false,
          "italic": false,
          "color": null,
@@ -859,7 +859,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 6.6
+      "size_pt": 6.3
      }
     },
     {
@@ -966,7 +966,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 10.0
+      "size_pt": 9.8
      }
     },
     {
@@ -1002,7 +1002,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 7.8
+      "size_pt": 6.3
      }
     },
     {
@@ -1595,23 +1595,23 @@
   },
   {
    "idx": 9,
-   "exemplar_id": "slide3",
-   "archetype": "section",
+   "exemplar_id": "slide39",
+   "archetype": "image_text",
    "elements": [
     {
-     "slot_id": "417",
+     "slot_id": "2153",
      "kind": "title",
      "box": {
-      "x": 210243,
-      "y": 878488,
-      "w": 4288279,
-      "h": 1496698
+      "x": 177970,
+      "y": 282949,
+      "w": 6792985,
+      "h": 724203
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "«За месяц мы впервые увидели, где реально теряется время, — и перестали спорить об этом на ретро»",
+         "text": "Команды перестали спорить о потере времени на ретро",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1630,24 +1630,23 @@
       "accent": "0077FF",
       "palette": "0077FF",
       "font": "Play",
-      "text_color": "000000",
-      "size_pt": 23.2
+      "text_color": "000000"
      }
     },
     {
-     "slot_id": "418",
-     "kind": "subtitle",
+     "slot_id": "2155",
+     "kind": "body",
      "box": {
-      "x": 210685,
-      "y": 2940812,
-      "w": 4287837,
-      "h": 285750
+      "x": 285749,
+      "y": 1543838,
+      "w": 1614880,
+      "h": 202471
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "Руководитель разработки, команда платёжного шлюза",
+         "text": "«За месяц мы впервые увидели",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1667,7 +1666,43 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 13.6
+      "size_pt": 7.3
+     }
+    },
+    {
+     "slot_id": "2154",
+     "kind": "label",
+     "box": {
+      "x": 285749,
+      "y": 1307494,
+      "w": 1614880,
+      "h": 149630
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Руководитель…",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "size_pt": 9.8
      }
     }
    ],
@@ -1876,7 +1911,7 @@
       {
        "runs": [
         {
-         "text": "оценка после пилота (из 5)",
+         "text": "оценка после пилота",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1896,7 +1931,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 11.0
+      "size_pt": 9.8
      }
     },
     {
@@ -1912,7 +1947,7 @@
       {
        "runs": [
         {
-         "text": "оценка до пилота (из 5)",
+         "text": "оценка до пилота",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1932,7 +1967,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 11.7
+      "size_pt": 9.8
      }
     },
     {
@@ -1948,7 +1983,7 @@
       {
        "runs": [
         {
-         "text": "дня: средний срок ответа на…",
+         "text": "дня: средний срок…",
          "bold": false,
          "italic": false,
          "color": null,
@@ -2388,7 +2423,7 @@
       {
        "runs": [
         {
-         "text": "Ещё 40 команд, интеграция с целями",
+         "text": "Ещё 40 команд",
          "bold": false,
          "italic": false,
          "color": null,
@@ -2408,7 +2443,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 9.0
+      "size_pt": 8.4
      }
     },
     {
@@ -2459,7 +2494,7 @@
       {
        "runs": [
         {
-         "text": "Все команды, отчёт для руководителей",
+         "text": "Все команды",
          "bold": false,
          "italic": false,
          "color": null,
@@ -2479,7 +2514,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 8.7
+      "size_pt": 8.4
      }
     }
    ],

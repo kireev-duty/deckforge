@@ -1,5 +1,5 @@
 {
- "created": "2026-09-16T14:02:47+00:00",
+ "created": "2026-09-18T07:56:23+00:00",
  "config": {
   "template": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\data\\templates\\Шаблон презентации VK Education.pptx",
   "content_pack": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\content_pack",
@@ -20,7 +20,8 @@
   },
   "export": [
    "pptx",
-   "pdf"
+   "pdf",
+   "html"
   ],
   "output_dir": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_education",
   "seed": 42,
@@ -29,15 +30,15 @@
  },
  "template": {
   "id": "6576a887482e",
-  "path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\data\\templates\\Шаблон презентации VK Education.pptx",
+  "path": "data/templates/Шаблон презентации VK Education.pptx",
   "sha1": "6576a887482e"
  },
- "outline": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_education\\outline.json",
+ "outline": "outline.json",
  "decks": [
   {
    "strategy": "executive",
-   "pptx": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_education\\executive.pptx",
-   "manifest": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_education\\executive.manifest.json",
+   "pptx": "executive.pptx",
+   "manifest": "executive.manifest.json",
    "stats": {
     "slides": 10,
     "archetypes": [
@@ -57,10 +58,10 @@
      "slide8",
      "slide18",
      "slide22",
-     "slide17",
+     "slide26",
      "slide40",
      "slide38",
-     "slide26",
+     "slide27",
      "slide8",
      "slide53"
     ],
@@ -73,25 +74,22 @@
     "skipped": 0
    },
    "audit": {
-    "errors": 1,
-    "warnings": 14,
-    "info": 2,
-    "contextual": 3,
+    "errors": 0,
+    "warnings": 15,
+    "info": 1,
+    "contextual": 0,
     "by_check": {
-     "C01_title_insight": 1,
-     "C02_content_matches_title": 1,
-     "C03_one_message": 1,
      "D02_bullet_words": 1,
-     "D05_fill": 2,
+     "D05_fill": 4,
      "I02_placeholder_text": 2,
      "L04_text_clipped": 2,
-     "T02_font_size": 5,
+     "L05_off_grid": 1,
+     "T02_font_size": 4,
      "T06_contrast": 2
     },
     "slides_with_issues": [
      1,
      2,
-     3,
      5,
      6,
      7,
@@ -99,19 +97,19 @@
      9
     ],
     "checks_run": 35,
-    "duration_s": 47.622,
-    "path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_education\\executive.audit.json",
+    "duration_s": 38.331,
+    "path": "executive.audit.json",
     "kind": "deterministic+contextual",
     "autofix": {
      "applied": 0,
      "skipped": 6,
      "before": {
       "errors": 0,
-      "warnings": 12
+      "warnings": 15
      },
      "after": {
       "errors": 0,
-      "warnings": 12
+      "warnings": 15
      },
      "items": [
       {
@@ -137,7 +135,7 @@
       },
       {
        "slide_idx": 7,
-       "element_id": "765",
+       "element_id": "786",
        "check_id": "D02_bullet_words",
        "fix": "refill_slot",
        "reason": "нечего менять"
@@ -160,23 +158,25 @@
     }
    },
    "exports": {
-    "pptx": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_education\\executive.pptx",
-    "pdf": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_education\\executive.pdf"
+    "pptx": "executive.pptx",
+    "pdf": "executive.pdf",
+    "html": "executive.html"
    },
    "timings_s": {
-    "layout": 0.003,
-    "render": 0.65,
-    "audit": 0.353,
-    "autofix": 0.001,
-    "png": 4.449,
-    "audit_contextual": 47.273,
-    "export_pdf": 0.002
+    "layout": 0.022,
+    "render": 3.494,
+    "audit": 1.672,
+    "autofix": 0.005,
+    "png": 11.776,
+    "audit_contextual": 36.677,
+    "export_pdf": 0.005,
+    "export_html": 2.745
    }
   },
   {
    "strategy": "narrative",
-   "pptx": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_education\\narrative.pptx",
-   "manifest": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_education\\narrative.manifest.json",
+   "pptx": "narrative.pptx",
+   "manifest": "narrative.manifest.json",
    "stats": {
     "slides": 15,
     "archetypes": [
@@ -203,13 +203,13 @@
      "slide27",
      "slide18",
      "slide22",
-     "slide17",
+     "slide28",
      "slide50",
      "slide40",
      "slide19",
      "slide10",
      "slide18",
-     "slide28",
+     "slide17",
      "slide21",
      "slide53"
     ],
@@ -223,15 +223,16 @@
    },
    "audit": {
     "errors": 1,
-    "warnings": 18,
+    "warnings": 22,
     "info": 2,
-    "contextual": 3,
+    "contextual": 5,
     "by_check": {
+     "C01_title_insight": 2,
      "C02_content_matches_title": 1,
-     "C03_one_message": 1,
+     "C06_images_relevant": 1,
      "C11_flow": 1,
      "D02_bullet_words": 1,
-     "D05_fill": 1,
+     "D05_fill": 3,
      "I02_placeholder_text": 2,
      "L04_text_clipped": 4,
      "T02_font_size": 8,
@@ -239,27 +240,29 @@
     },
     "slides_with_issues": [
      4,
+     5,
      7,
      8,
      9,
+     10,
      11,
      12,
      14
     ],
     "checks_run": 35,
-    "duration_s": 56.491,
-    "path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_education\\narrative.audit.json",
+    "duration_s": 48.979,
+    "path": "narrative.audit.json",
     "kind": "deterministic+contextual",
     "autofix": {
      "applied": 0,
      "skipped": 9,
      "before": {
       "errors": 0,
-      "warnings": 16
+      "warnings": 18
      },
      "after": {
       "errors": 0,
-      "warnings": 16
+      "warnings": 18
      },
      "items": [
       {
@@ -329,23 +332,25 @@
     }
    },
    "exports": {
-    "pptx": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_education\\narrative.pptx",
-    "pdf": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_education\\narrative.pdf"
+    "pptx": "narrative.pptx",
+    "pdf": "narrative.pdf",
+    "html": "narrative.html"
    },
    "timings_s": {
-    "layout": 0.006,
-    "render": 0.62,
-    "audit": 0.336,
-    "autofix": 0.002,
-    "png": 5.195,
-    "audit_contextual": 56.16,
-    "export_pdf": 0.001
+    "layout": 0.017,
+    "render": 1.714,
+    "audit": 0.93,
+    "autofix": 0.004,
+    "png": 13.771,
+    "audit_contextual": 48.056,
+    "export_pdf": 0.003,
+    "export_html": 3.065
    }
   },
   {
    "strategy": "visual",
-   "pptx": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_education\\visual.pptx",
-   "manifest": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_education\\visual.manifest.json",
+   "pptx": "visual.pptx",
+   "manifest": "visual.manifest.json",
    "stats": {
     "slides": 12,
     "archetypes": [
@@ -385,18 +390,19 @@
     "skipped": 0
    },
    "audit": {
-    "errors": 2,
-    "warnings": 19,
-    "info": 4,
-    "contextual": 2,
+    "errors": 1,
+    "warnings": 21,
+    "info": 5,
+    "contextual": 3,
     "by_check": {
-     "C02_content_matches_title": 1,
+     "C01_title_insight": 1,
      "C07_no_garbage": 1,
+     "C08_no_typos": 1,
      "D02_bullet_words": 1,
      "D05_fill": 3,
      "I02_placeholder_text": 2,
      "L04_text_clipped": 4,
-     "T02_font_size": 10,
+     "T02_font_size": 11,
      "T06_contrast": 3
     },
     "slides_with_issues": [
@@ -410,14 +416,14 @@
      11
     ],
     "checks_run": 35,
-    "duration_s": 34.379,
-    "path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_education\\visual.audit.json",
+    "duration_s": 60.578,
+    "path": "visual.audit.json",
     "kind": "deterministic+contextual",
     "autofix": {
-     "applied": 5,
+     "applied": 2,
      "skipped": 9,
      "before": {
-      "errors": 4,
+      "errors": 1,
       "warnings": 20
      },
      "after": {
@@ -432,30 +438,6 @@
        "fix": "shrink_font_by_scale",
        "before": "16 pt",
        "after": "13.2 pt"
-      },
-      {
-       "slide_idx": 3,
-       "element_id": "344",
-       "check_id": "L03_text_overflow",
-       "fix": "shrink_font_by_scale",
-       "before": "14.4 pt",
-       "after": "12.6 pt"
-      },
-      {
-       "slide_idx": 3,
-       "element_id": "345",
-       "check_id": "L03_text_overflow",
-       "fix": "shrink_font_by_scale",
-       "before": "14.3 pt",
-       "after": "12.5 pt"
-      },
-      {
-       "slide_idx": 3,
-       "element_id": "349",
-       "check_id": "L03_text_overflow",
-       "fix": "shrink_font_by_scale",
-       "before": "14.3 pt",
-       "after": "12.5 pt"
       },
       {
        "slide_idx": 6,
@@ -532,25 +514,27 @@
     }
    },
    "exports": {
-    "pptx": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_education\\visual.pptx",
-    "pdf": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_education\\visual.pdf"
+    "pptx": "visual.pptx",
+    "pdf": "visual.pdf",
+    "html": "visual.html"
    },
    "timings_s": {
-    "images": 8.686,
-    "layout": 0.003,
-    "render": 0.625,
-    "audit": 0.321,
-    "autofix": 0.934,
-    "png": 4.821,
-    "audit_contextual": 34.053,
-    "export_pdf": 0.003
+    "images": 0.011,
+    "layout": 0.01,
+    "render": 1.299,
+    "audit": 0.773,
+    "autofix": 2.165,
+    "png": 11.223,
+    "audit_contextual": 59.856,
+    "export_pdf": 0.002,
+    "export_html": 2.741
    }
   }
  ],
  "timings_s": {
-  "parse": 0.364,
+  "parse": 2.223,
   "outline": 0.0,
-  "total": 164.996
+  "total": 205.164
  },
  "warnings": [],
  "not_implemented": []

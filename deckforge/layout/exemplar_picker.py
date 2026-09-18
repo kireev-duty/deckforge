@@ -114,7 +114,9 @@ def pick_exemplar(
     # структурные образцы (title/section/closing) для контентного слайда — строго последний резерв: их берём
     # только когда контентных кандидатов нет вовсе, иначе на длинной колоде накопленный штраф за повторы
     # карточек сделал бы титул «выгоднее» (текст ушёл бы в подзаголовок)
-    passes = [False, True] if slide.archetype not in STRUCTURAL else [True]
+    # цитата — исключение: section/title в её FALLBACKS стоят первыми намеренно (цитата крупно в заголовок),
+    # иначе на VK Tech без quote-образца она уходила в image_text-мокап с телом на 21 символ (скор −10)
+    passes = [True] if slide.archetype in STRUCTURAL or slide.archetype == Archetype.QUOTE else [False, True]
     for allow_structural in passes:
         best: tuple[float, int, Exemplar] | None = None
         for rank, arch in enumerate(chain):

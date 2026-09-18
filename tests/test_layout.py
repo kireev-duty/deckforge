@@ -194,6 +194,33 @@ def test_quote_needs_body_or_big_title() -> None:
     assert e is not None and e.archetype == Archetype.TITLE
 
 
+def test_quote_prefers_section_over_tiny_image_text() -> None:
+    """Section в FALLBACKS цитаты стоит первым намеренно (цитата крупно в заголовок) — структурный образец
+    для неё не «последний резерв»: без этого VK Tech клал цитату в image_text-мокап с телом на 21 символ.
+    Quote-образец, если есть, по-прежнему первый."""
+    quote = OutlineSlide(idx=1, archetype=Archetype.QUOTE, title="Т", quote_author="Лид",
+                         quote="За месяц мы впервые увидели, где реально теряется время, — и перестали спорить об этом на ретро")
+    title = _slot("t", SlotKind.TITLE, 0.05, 0.05, 0.9, 0.12, max_chars=60, size=24)
+    mockup = Exemplar(id="mock", source_index=38, layout_name="a", archetype=Archetype.IMAGE_TEXT,
+                      slots=[title, _slot("lab", SlotKind.LABEL, 0.05, 0.25, 0.3, 0.03, max_chars=16)]
+                      + [_slot(f"b{i}", SlotKind.BODY, 0.05, 0.3 + 0.05 * i, 0.3, 0.04, max_chars=21) for i in range(10)])
+    section = Exemplar(id="sec", source_index=2, layout_name="a", archetype=Archetype.SECTION,
+                       slots=[_slot("t", SlotKind.TITLE, 0.1, 0.35, 0.8, 0.2, max_chars=80, size=36),
+                              _slot("s", SlotKind.SUBTITLE, 0.1, 0.6, 0.8, 0.08, max_chars=60)])
+    used = {"sec": 2}  # разделители уже дважды брали section
+    e, _ = pick_exemplar(quote, [mockup, section], strategy(), SLIDE_W * SLIDE_H, used=used)
+    assert e is not None and e.id == "sec"
+    from deckforge.layout.builder import build_slide
+
+    ir, _ = build_slide(0, quote, section, SLIDE_H, {})  # цитата в заголовок, автор — в подзаголовок (не в «тело»)
+    texts = {el.slot_id: "".join(r.text for p in el.paragraphs for r in p.runs) for el in ir.elements}
+    assert texts["t"].startswith("«За месяц") and texts["s"] == "Лид", texts
+    q = Exemplar(id="q", source_index=5, layout_name="a", archetype=Archetype.QUOTE,
+                 slots=[_slot("b", SlotKind.BODY, 0.1, 0.3, 0.8, 0.3, max_chars=300), _slot("c", SlotKind.CAPTION, 0.1, 0.65, 0.8, 0.05)])
+    e, _ = pick_exemplar(quote, [mockup, section, q], strategy(), SLIDE_W * SLIDE_H, used=used)
+    assert e is not None and e.id == "q"
+
+
 def test_kpis_fall_back_to_bullets_when_no_numbers_or_cards() -> None:
     kpi = OutlineSlide(idx=1, archetype=Archetype.KPI, title="Т",
                        kpis=[{"value": "42%", "label": "перегружены"}, {"value": "12", "label": "команд"}])
@@ -254,6 +281,27 @@ def test_number_element_label_inside_shape() -> None:
     assert len(el.paragraphs) == 1
 
 
+def test_kpi_labels_pair_with_numbers_by_geometry() -> None:
+    """Подпись KPI — label под своей цифрой, а не по порядку чтения (РУДН: под первой цифрой две строки-подписи,
+    под третьей — ни одной; подписи по порядку уезжали к соседним цифрам)."""
+    from deckforge.layout.builder import build_slide
+
+    title = _slot("t", SlotKind.TITLE, 0.05, 0.05, 0.9, 0.12, max_chars=60, size=24)
+    nums = [_slot(f"n{i}", SlotKind.NUMBER, 0.05 + 0.32 * i, 0.5, 0.28, 0.15, max_chars=8, size=48) for i in range(3)]
+    labels = [_slot("l0a", SlotKind.LABEL, 0.05, 0.66, 0.28, 0.06, max_chars=40),
+              _slot("l0b", SlotKind.LABEL, 0.05, 0.74, 0.28, 0.06, max_chars=40),
+              _slot("l1", SlotKind.LABEL, 0.37, 0.66, 0.28, 0.06, max_chars=40)]
+    kpi_ex = Exemplar(id="k", source_index=0, layout_name="a", archetype=Archetype.KPI, slots=[title] + nums + labels)
+    kpis = [{"value": "42%", "label": "команд перегружены"}, {"value": "9,5 ч/нед", "label": "на статусы и встречи"},
+            {"value": "1,8 дня", "label": "средний срок ответа"}]
+    ir, left = build_slide(0, OutlineSlide(idx=1, archetype=Archetype.KPI, title="Т", kpis=kpis), kpi_ex, SLIDE_H, {})
+    assert left is None
+    texts = {el.slot_id: ["".join(r.text for r in p.runs) for p in el.paragraphs] for el in ir.elements if el.paragraphs}
+    assert texts["l0a"] == ["команд перегружены"] and texts["l1"] == ["на статусы и встречи"], texts
+    assert "l0b" not in texts  # вторая строка под первой цифрой пустая, а не подпись соседа
+    assert texts["n2"] == ["1,8 дня", "средний срок ответа"]  # цифре без подписи — подпись внутри фигуры
+
+
 def test_kpis_in_cards_stay_in_their_card() -> None:
     """Карточки под KPI: значение → label карточки, подпись → body той же карточки (пара по геометрии),
     даже если в порядке чтения label второй карточки идёт раньше body первой (Пифагор: подписи со сдвигом)."""
@@ -273,6 +321,59 @@ def test_kpis_in_cards_stay_in_their_card() -> None:
     by_slot = {el.slot_id: el.paragraphs[0].runs[0].text for el in ir.elements}
     for i, k in enumerate(kpis):
         assert by_slot[f"l{i}"] == k["value"] and by_slot[f"b{i}"] == k["label"], (i, by_slot)
+
+
+def _mixed_cards_exemplar() -> Exemplar:
+    """МФТИ slide25: два буллета сверху без label + «лестница» из 4 ступенек, у первой — label без body."""
+    title = _slot("t", SlotKind.TITLE, 0.05, 0.05, 0.9, 0.12, max_chars=60, size=24)
+    slots = [title, _slot("top0", SlotKind.BODY, 0.1, 0.25, 0.8, 0.08), _slot("top1", SlotKind.BODY, 0.1, 0.35, 0.8, 0.08),
+             _slot("l0", SlotKind.LABEL, 0.05, 0.90, 0.2, 0.06, max_chars=12)]
+    for i in range(1, 4):
+        x, y = 0.05 + 0.23 * i, 0.75 - 0.08 * i
+        slots.append(_slot(f"l{i}", SlotKind.LABEL, x, y, 0.2, 0.06, max_chars=12))
+        slots.append(_slot(f"b{i}", SlotKind.BODY, x, y + 0.06, 0.2, 0.15, max_chars=80))
+    return Exemplar(id="mixed", source_index=0, layout_name="a", archetype=Archetype.CARDS, slots=slots)
+
+
+def test_pair_labels_keeps_foreign_labels_for_unpaired_bodies() -> None:
+    """Часть карточек спарилась по геометрии — label безтелой ступеньки не уезжает к верхнему буллету:
+    «1.8 — дня (до пилота)» остаётся целиком в одном body, одинокий label не заполняется."""
+    from deckforge.layout.builder import build_slide, pair_labels
+
+    ex = _mixed_cards_exemplar()
+    bodies = [s for s in ex.slots if s.kind == SlotKind.BODY]
+    labels = [s for s in ex.slots if s.kind == SlotKind.LABEL]
+    paired = pair_labels(bodies, labels)
+    assert {b: l.id for b, l in paired.items()} == {"b1": "l1", "b2": "l2", "b3": "l3"}
+
+    items = ["1.8 — дня (до пилота)", "0.6 — дня (после пилота)", "3.4 — оценка до", "4.7 — оценка после", "«ц» — Автор"]
+    ir, left = build_slide(0, OutlineSlide(idx=1, archetype=Archetype.CARDS, title="Т", bullets=items), ex, SLIDE_H, {})
+    assert left is None
+    by_slot = {el.slot_id: el.paragraphs[0].runs[0].text for el in ir.elements if el.paragraphs}
+    assert by_slot["top0"] == "1.8 — дня (до пилота)" and by_slot["top1"] == "0.6 — дня (после пилота)"
+    assert "l0" not in by_slot
+    assert by_slot["l3"] == "3.4" and by_slot["b3"] == "оценка до"  # порядок чтения: верхняя ступенька — первая
+
+
+def test_pair_labels_order_fallback_without_geometry() -> None:
+    """Без единой геометрической пары label раздаются по порядку, как раньше."""
+    from deckforge.layout.builder import pair_labels
+
+    bodies = [_slot(f"b{i}", SlotKind.BODY, 0.05 + 0.3 * i, 0.3, 0.25, 0.3) for i in range(2)]
+    labels = [_slot(f"l{i}", SlotKind.LABEL, 0.05 + 0.3 * i, 0.8, 0.25, 0.06) for i in range(2)]  # label под body
+    assert {b: l.id for b, l in pair_labels(bodies, labels).items()} == {"b0": "l0", "b1": "l1"}
+
+
+def test_long_lead_without_rest_goes_to_body_not_label() -> None:
+    """Цитата длиннее плашки карточки — пункт целиком в тело (с автором или без), плашка пустая, без «…»."""
+    from deckforge.layout.builder import build_slide
+
+    ex = _mixed_cards_exemplar()
+    quote = "«За месяц мы впервые увидели, где реально теряется время, — и перестали спорить об этом на ретро»"
+    for item in (quote, f"{quote} — Руководитель разработки"):
+        ir, _ = build_slide(0, OutlineSlide(idx=1, archetype=Archetype.CARDS, title="Т", bullets=["1 — а", "2 — б", item]), ex, SLIDE_H, {})
+        texts = {el.slot_id: "".join(r.text for p in el.paragraphs for r in p.runs) for el in ir.elements if el.paragraphs}
+        assert texts["b3"] == item and "l3" not in texts, texts
 
 
 def test_lone_leftover_goes_to_continuation_not_dropped() -> None:
@@ -341,6 +442,8 @@ def test_continuation_title_suffix_not_stacked() -> None:
 def test_split_label_body_and_numbers() -> None:
     assert split_label_body("Лид — пояснение текста") == ("Лид", "пояснение текста")
     assert split_label_body("Просто пункт") == ("Просто пункт", "")
+    assert split_label_body("«А — б» — Автор") == ("«А — б»", "Автор")  # внутри кавычек не режем
+    assert split_label_body("«А — б»") == ("«А — б»", "")
     slot = Slot(id="n", kind=SlotKind.NUMBER, box=Box(x=0, y=0, w=1, h=1), max_chars=2, max_lines=1, size_pt=160)
     num, unit, size = fit_number("1,8 дня", slot)
     assert (num, unit) == ("1,8", "дня") and size is not None and size < 160

@@ -146,11 +146,19 @@ def fit_number(text: str, slot: Slot) -> tuple[str, str, float | None]:
 
 
 def split_label_body(bullet: str) -> tuple[str, str]:
-    """«Лид — пояснение» / «Лид: пояснение» → (лид, пояснение); иначе (буллет, '')."""
+    """«Лид — пояснение» / «Лид: пояснение» → (лид, пояснение); иначе (буллет, '').
+    Пункт-цитата в кавычках «…» не режется внутри кавычек: разделитель ищется после закрывающей »
+    («…, — и перестали…» — Автор → цитата, автор)."""
     bullet = normalize(bullet)
+    start = 0
+    if bullet.startswith("«"):
+        close = bullet.find("»")
+        if close < 0:
+            return bullet, ""
+        start = close + 1
     for sep in LEAD_SEPARATORS:
-        idx = bullet.find(sep)
-        if 0 < idx <= 60:
+        idx = bullet.find(sep, start)
+        if 0 < idx <= start + 60:
             return bullet[:idx].strip(), bullet[idx + len(sep):].strip()
     return bullet, ""
 

@@ -197,9 +197,11 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
     elements: list[Element] = []
     left_kpis: list = []
     left_items: list[str] = []
-    if e.archetype in STRUCTURAL and s.archetype not in STRUCTURAL and not by_kind[SlotKind.BODY]:
+    quote_as_title = bool(s.quote) and e.archetype in (Archetype.SECTION, Archetype.TITLE)  # цитата крупно
+    if e.archetype in STRUCTURAL and s.archetype not in STRUCTURAL and not by_kind[SlotKind.BODY] and not quote_as_title:
         # контентный слайд на титульном/разделительном образце (последний фолбэк picker'а на шаблоне
         # без текстовых образцов): подзаголовок работает телом, иначе контент некуда класть
+        # (цитата на section — штатный путь: она в заголовок, автор — в подзаголовок, тело не нужно)
         by_kind[SlotKind.BODY], by_kind[SlotKind.SUBTITLE] = by_kind[SlotKind.SUBTITLE][:1], by_kind[SlotKind.SUBTITLE][1:]
     if (s.chart or s.table) and not (by_kind[SlotKind.CHART] or by_kind[SlotKind.TABLE]) and by_kind[SlotKind.BODY]:
         # в шаблоне нет ни одного data-слота — нативный объект встаёт на место самого крупного текстового блока
@@ -215,7 +217,6 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
         if el := list_element(slot, items, style, bullet=bullet):
             elements.append(el)
 
-    quote_as_title = bool(s.quote) and e.archetype in (Archetype.SECTION, Archetype.TITLE)  # цитата крупно
     subtitles = list(by_kind[SlotKind.SUBTITLE])
     if by_kind[SlotKind.TITLE]:
         put(by_kind[SlotKind.TITLE][0], f"«{s.quote}»" if quote_as_title else s.title)
@@ -243,12 +244,21 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
     bodies = by_kind[SlotKind.BODY]
     labels_used = bodies_used = 0
     if s.kpis and numbers:
-        for i, (k, num) in enumerate(zip(s.kpis, numbers)):
+        # подпись — label под своей цифрой (та же колонка), а не по порядку чтения: у РУДН под первой цифрой
+        # две строки-подписи, под третьей — ни одной, и подписи по порядку уезжали к соседним цифрам
+        label_of: dict[str, Slot] = {}
+        for lab_id, num in pair_labels(labels, numbers).items():
+            label_of.setdefault(num.id, next(l for l in labels if l.id == lab_id))
+        taken_labels = []
+        for k, num in zip(s.kpis, numbers):
+            lab = label_of.get(num.id)
             # цифре без своего label-слота подпись даём внутри той же фигуры вторым абзацем
-            elements.append(number_element(num, k.value, style, label=k.label if i >= len(labels) else None))
-        for k, lab in zip(s.kpis, labels):
-            put(lab, k.label)
-            labels_used += 1
+            elements.append(number_element(num, k.value, style, label=None if lab else k.label))
+            if lab is not None:
+                put(lab, k.label)
+                taken_labels.append(lab)
+        labels = taken_labels + [l for l in labels if l not in taken_labels]  # занятые — в начало, ниже срез [used:]
+        labels_used = len(taken_labels)
         left_kpis = s.kpis[len(numbers):]
     elif s.kpis and labels and (e.archetype == Archetype.CARDS or len(labels) >= len(s.kpis)):
         # образец без крупных цифр (карточки): значение — в подпись, описание — в тело
@@ -308,6 +318,12 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
                     # кружок «1 2 3» рядом с текстом шага: лид «Шаг 12» туда не влезет (L03) — только номер,
                     # в формате образца («1» → «12», «01» → «12»), сам пункт целиком в тело
                     put(lab, f"{i + 1:02d}" if len((lab.sample_text or "").strip()) >= 2 else str(i + 1))
+                    put(body, item)
+                elif (cap := chars_at_scale(lab)) and len(lead) > cap:
+                    # лид длиннее плашки-заголовка даже при минимальном кегле (цитата в кавычках) — пункт целиком
+                    # в тело, а не «За месяц мы впервые уви…» в плашке; шагу в плашку — только номер
+                    if numbered:
+                        put(lab, f"{i + 1:02d}")
                     put(body, item)
                 else:
                     put(lab, f"{i + 1:02d}" if numbered and not rest else lead)
@@ -463,7 +479,10 @@ def is_badge(slot: Slot) -> bool:
 
 def pair_labels(bodies: list[Slot], labels: list[Slot]) -> dict[str, Slot]:
     """Каждому body — ближайший label над ним в той же колонке (карточка) или вплотную слева в том же ряду
-    (кружок шага перед текстом на таймлайне), иначе — по порядку."""
+    (кружок шага перед текстом на таймлайне). По порядку — только если геометрических пар нет вовсе:
+    когда часть карточек спарилась, оставшиеся label принадлежат другим группам образца (МФТИ: два буллета
+    сверху и «лестница» снизу — label безтелой ступеньки уезжал к верхнему буллету), и body без label
+    получает пункт целиком."""
     out: dict[str, Slot] = {}
     free = list(labels)
     for body in bodies:
@@ -484,8 +503,10 @@ def pair_labels(bodies: list[Slot], labels: list[Slot]) -> dict[str, Slot]:
         if best is not None:
             out[body.id] = best[1]
             free.remove(best[1])
-    for body in bodies:  # без геометрической пары — остаток по порядку
-        if body.id not in out and free:
+    if out:
+        return out
+    for body in bodies:  # структуры нет — по порядку
+        if free:
             out[body.id] = free.pop(0)
     return out
 

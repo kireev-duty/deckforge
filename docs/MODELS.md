@@ -16,6 +16,23 @@
 
 Запасные варианты: Qwen3-32B + Qwen2.5-VL-32B-Instruct (Apache 2.0) для текста/зрения; FLUX.1-schnell (12B, Apache 2.0, Together AI `/v1/images/generations`) или Qwen-Image (20B, Apache 2.0) для картинок. Без T2I-провайдера сервис работает полностью — слайды собираются с иконками и нативной графикой, без иллюстраций.
 
+## Сервис и параметры вызовов
+
+Все колоды в `examples/` сделаны через **OpenRouter** (`LLM_BASE_URL=https://openrouter.ai/api/v1`) — текст, зрение и картинки одним ключом; `.env.example` в репозитории — рабочая конфигурация без ключа. Клиент — `deckforge/llm/client.py` (`LLMClient`, OpenAI SDK): таймаут 120 с, 2 ретрая, `DECK_MAX_PARALLEL_LLM=4` параллельных вызова, `DECK_TIME_BUDGET_S=300` на колоду. Промпты и параметры — только в `skills/<name>/v<N>/skill.yaml`, в коде их нет; версия каждого скилла попадает в `manifest.json` колоды вместе с `models` и журналом `llm_calls`.
+
+| Скилл | Роль модели | temperature | max_tokens | Ответ | Вход |
+|---|---|---|---|---|---|
+| `outline_writer` v1 | text | 0.4 | 6000 | JSON по `schema.json` (`response_format=json_object`, валидация своя) | бриф + контент-пакет + архетипы шаблона |
+| `image_prompter` v1 | text | 0.6 | 400 | JSON | заголовок, текст слайда, палитра |
+| `template_tagger` v1 | vision | 0.1 | 1500 | JSON | PNG слайда-образца |
+| `audit_judge` v1 | vision | 0.0 | 1200 | JSON (11 вопросов) | PNG готового слайда + его текст |
+| `slide_filler` v1 | text | 0.3 | 2000 | JSON | (в пайплайн не подключён) |
+| text-to-image | image | — | — | JPEG/PNG b64 | промпт от `image_prompter`, размер 1024×576 |
+
+Qwen3.x по умолчанию «думает» — это съедает `max_tokens` и втрое замедляет ответ, поэтому в каждом вызове без `reasoning: true` в `skill.yaml` клиент передаёт `extra_body = {"reasoning": {"enabled": false}, "chat_template_kwargs": {"enable_thinking": false}}` (первое понимает OpenRouter, второе — vLLM и инференс VK). Для другого провайдера набор переопределяется переменной `LLM_NO_THINK_JSON`.
+
+Переход на инференс VK (топ-10): в `.env` поменять `LLM_BASE_URL` и `LLM_API_KEY`; модель та же. T2I-провайдер задаётся отдельно (`T2I_BASE_URL`/`T2I_API_KEY`, OpenAI-совместимый `/images/generations`), пустые значения = тот же провайдер и ключ, что у текста.
+
 ## Системные требования
 
 - Через API: любой ПК; стоимость колоды — центы.

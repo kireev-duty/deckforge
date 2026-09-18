@@ -26,9 +26,23 @@ cp .env.example .env                                 # заполнить LLM_AP
 .venv\Scripts\python.exe -m pytest -q
 ```
 
-Переменные окружения — см. [.env.example](.env.example): `LLM_BASE_URL` / `LLM_API_KEY` / `LLM_MODEL` / `VLM_MODEL` — текст и зрение (одна модель), `T2I_MODEL` (+ `T2I_BASE_URL` / `T2I_API_KEY`, если провайдер другой) — text-to-image; пустой `T2I_MODEL` отключает картинки, сервис работает без них. `.env` в репо не хранится — переносить между машинами вручную.
+Переменные окружения — см. [.env.example](.env.example): `LLM_BASE_URL` / `LLM_API_KEY` / `LLM_MODEL` / `VLM_MODEL` — текст и зрение (одна модель), `T2I_MODEL` (+ `T2I_BASE_URL` / `T2I_API_KEY`, если провайдер другой) — text-to-image; пустой `T2I_MODEL` отключает картинки, сервис работает без них. `.env` (с ключом) в репо не хранится; какой сервис, модели и параметры использованы — раздел «Инференс и модели» ниже.
 
 Шаблоны датасета (`data/templates/*.pptx`), holdout-шаблон (`data/holdout/`) и ТЗ (`docs/tz/`) лежат в Git LFS. Если после clone файлы весят ~130 байт — это LFS-указатели: поставьте git-lfs и выполните `git lfs pull`.
+
+## Инференс и модели
+
+Все колоды в репозитории (`examples/output/`, `examples/pitch/`) сгенерированы **через OpenRouter** (`https://openrouter.ai/api/v1`, OpenAI-совместимый API) этими моделями и с этими параметрами. [.env.example](.env.example) — это рабочая конфигурация проекта без ключа: `cp .env.example .env`, вписать `LLM_API_KEY` — и прогон воспроизводится. Ключ в репозитории не хранится.
+
+| Роль | Сервис | Модель (id в API) | Веса / лицензия | Параметры вызова | Где задано |
+|---|---|---|---|---|---|
+| текст (`LLM_MODEL`) — outline, промпты картинок | OpenRouter | `qwen/qwen3.8-27b-20260814` (Qwen3.8-27B) | 27B dense, Apache 2.0 | `outline_writer`: temperature 0.4, max_tokens 6000; `image_prompter`: 0.6 / 400; `response_format=json_object`, thinking выключен | `skills/<name>/v1/skill.yaml`, `deckforge/llm/client.py` |
+| зрение (`VLM_MODEL`) — разметка образцов шаблона, VLM-судья | OpenRouter | та же `qwen/qwen3.8-27b-20260814` | — | `template_tagger`: 0.1 / 1500; `audit_judge`: 0.0 / 1200; PNG слайдов как `image_url` (data-URL), thinking выключен | то же |
+| text-to-image (`T2I_MODEL`) — иллюстрации | OpenRouter, тот же ключ (`POST /images`) | `black-forest-labs/flux.2-klein-4b` (FLUX.2 [klein] 4B) | 4B, Apache 2.0 | размер 1024×576, ≤ 4 картинки на колоду, кэш по sha1 промпта | `deckforge/content/images.py` |
+
+Общие настройки (`.env`): `DECK_TIME_BUDGET_S=300` — бюджет времени на колоду, `DECK_MAX_PARALLEL_LLM=4` — параллельных вызовов (судья по слайдам, картинки). Таймаут вызова 120 с, 2 ретрая (`LLMClient`). «Размышления» Qwen3.x выключаются в каждом вызове (`reasoning.enabled=false` для OpenRouter, `chat_template_kwargs.enable_thinking=false` для vLLM / инференса VK; переопределяется `LLM_NO_THINK_JSON`) — иначе они съедают `max_tokens` и втрое замедляют ответ. Переход на инференс VK — только `LLM_BASE_URL` и `LLM_API_KEY`, модель та же.
+
+Провенанс каждой колоды — её `manifest.json`: `models` (`text`, `vision`, `image`, `base_url`), `skills` (версии промптов), `strategy`, `llm_calls` (модель, длительность, токены каждого вызова). Лицензии, HF-ссылки и системные требования — [MODELS.md](docs/MODELS.md).
 
 ## Запуск
 

@@ -54,7 +54,8 @@ def plan(
     """
     available = available or set(Archetype)
     warnings: list[str] = []
-    slides = [visualize(s, strategy) for s in outline.slides]
+    slides = [visualize(sanitize_data(s, warnings), strategy) for s in outline.slides]
+    slides = split_mixed_data(slides)
     slides = apply_density(slides, strategy)
     slides = split_kpis(slides, strategy, kpi_capacity)
     slides = apply_sections(slides, strategy, available)
@@ -62,6 +63,46 @@ def plan(
     for i, s in enumerate(slides):
         s.idx = i
     return PlanResult(slides, warnings)
+
+
+# ──────────────────────────── 0. санация данных ────────────────────────────
+
+
+def sanitize_data(src: OutlineSlide, warnings: list[str]) -> OutlineSlide:
+    """Данные готового outline (мимо `repair_outline`: `--outline`, build_variants) — к форме, которую переживут
+    planner и нативные объекты: серии одной длины с категориями, только конечные числа, таблица с колонками и
+    ровными строками. Что не собрать — убирается с предупреждением, числа при этом не выдумываются.
+    Возвращает копию (или исходный слайд, если править нечего)."""
+    s = src
+    label = f"слайд {src.idx} «{src.title[:40]}»"
+    if s.chart is not None:
+        c = s.chart
+        series = {name: vals for name, vals in c.series.items() if vals and all(math.isfinite(v) for v in vals)}
+        n = min([len(c.categories), *map(len, series.values())]) if series else 0
+        if n == 0:
+            warnings.append(f"{label}: диаграмма без данных (пустые/нечисловые серии или категории) — убрана")
+            s = s.model_copy(deep=True)
+            s.chart = None
+            if s.archetype == Archetype.CHART:
+                s.archetype = Archetype.BULLETS
+        elif len(series) != len(c.series) or n != len(c.categories) or any(len(v) != n for v in series.values()):
+            warnings.append(f"{label}: серии диаграммы выровнены по {n} категориям")
+            s = s.model_copy(deep=True)
+            s.chart = c.model_copy(update={"categories": c.categories[:n], "series": {k: v[:n] for k, v in series.items()}})
+    if s.table is not None:
+        t = s.table
+        cols = len(t.header)
+        if cols == 0:
+            warnings.append(f"{label}: таблица без колонок — убрана")
+            s = s.model_copy(deep=True)
+            s.table = None
+            if s.archetype == Archetype.TABLE:
+                s.archetype = Archetype.BULLETS
+        elif any(len(r) != cols for r in t.rows):
+            warnings.append(f"{label}: строки таблицы выровнены по {cols} колонкам")
+            s = s.model_copy(deep=True)
+            s.table = TableSpec(header=list(t.header), rows=[(list(r) + [""] * cols)[:cols] for r in t.rows])
+    return s
 
 
 # ──────────────────────────── 1. визуализация данных ────────────────────────────
@@ -99,6 +140,22 @@ def visualize(src: OutlineSlide, strategy: Strategy) -> OutlineSlide:
         else:
             s.archetype = Archetype.KPI
     return s
+
+
+def split_mixed_data(slides: list[OutlineSlide]) -> list[OutlineSlide]:
+    """KPI рядом с диаграммой/таблицей — отдельным KPI-слайдом следом: у образцов с chart/table-слотом
+    подписи лежат внутри области данных, и крупные цифры легли бы поверх нативного объекта (L02)."""
+    out: list[OutlineSlide] = []
+    for s in slides:
+        if s.kpis and (s.chart or s.table):
+            rest = s.model_copy(deep=True)
+            rest.kpis = []
+            out.append(rest)
+            out.append(OutlineSlide(idx=s.idx, archetype=Archetype.KPI, title=s.title, section=s.section,
+                                    kpis=list(s.kpis), sources=list(s.sources)))
+        else:
+            out.append(s)
+    return out
 
 
 def chart_to_table(chart: ChartSpec) -> TableSpec:
@@ -352,4 +409,4 @@ def _items(s: OutlineSlide) -> list[str]:
     return []
 
 
-__all__ = ["STEP_NUMBERING", "PlanResult", "chart_to_kpis", "chart_to_table", "parse_num", "plan", "split_kpis", "split_slide", "table_to_chart", "visualize"]
+__all__ = ["STEP_NUMBERING", "PlanResult", "chart_to_kpis", "chart_to_table", "parse_num", "plan", "sanitize_data", "split_kpis", "split_mixed_data", "split_slide", "table_to_chart", "visualize"]

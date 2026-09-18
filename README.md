@@ -9,7 +9,8 @@
 - [ARCHITECTURE.md](docs/ARCHITECTURE.md) — пайплайн и границы слоёв
 - [AUDIT.md](docs/AUDIT.md) — проверки и их покрытие
 - [MODELS.md](docs/MODELS.md) — модели, лицензии, требования
-- [PLAN.md](docs/PLAN.md) — план разработки, [BACKLOG.md](docs/BACKLOG.md) — известные дефекты и что дальше
+- [DEMO.md](docs/DEMO.md) — сценарий живого прогона / видео-демо (≤ 7 минут) на неизвестном шаблоне
+- [PLAN.md](docs/PLAN.md) — план разработки и статус по дням, [BACKLOG.md](docs/BACKLOG.md) — известные дефекты и что дальше
 
 ## Сетап
 

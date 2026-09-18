@@ -59,6 +59,11 @@ R_ATTRS = (R + "embed", R + "id", R + "link", R + "pict")
 FILL_TAGS = ("noFill", "solidFill", "gradFill", "blipFill", "pattFill", "grpFill")
 BULLET_TAGS = ("buNone", "buChar", "buAutoNum", "buBlip")
 DEFAULT_BULLET_MARL = 285750  # 0.3125" — как в Office по умолчанию
+DARK_BG_LUMINANCE = 0.45  # ниже — фон считаем тёмным, нативные таблицы/диаграммы получают светлый текст
+LIGHT_TEXT = "FFFFFF"
+# схемные цвета фона без резолва темы: светлые/тёмные по роли (tx1/dk1 — тёмный текст → тёмный фон и наоборот)
+SCHEME_LIGHT = {"bg1", "lt1", "bg2", "lt2"}
+SCHEME_DARK = {"tx1", "dk1", "tx2", "dk2"}
 
 
 # ──────────────────────────── публичный API ────────────────────────────
@@ -303,7 +308,13 @@ class DeckWriter:
                 self._replace_with_native(slide, sp, el, shapes, slot_ids, set(exemplar.fixed))
                 filled.add(el.slot_id)
             elif el.kind in (SlotKind.PICTURE, SlotKind.ICON) and el.image_path:
-                self._fill_picture(slide, sp, el, shapes, slot_ids)
+                # файла нет или PIL его не читает (обрыв T2I, битый кэш) — слот остаётся незаполненным
+                # и чистится ниже, как без картинки; колода собирается
+                try:
+                    self._fill_picture(slide, sp, el, shapes, slot_ids)
+                except (OSError, ValueError) as e:
+                    log.warning("слайд %s: картинка %s не вставлена (%s) — слот очищен", slide_ir.idx, el.image_path, e)
+                    continue
                 filled.add(el.slot_id)
             elif el.paragraphs:
                 fill_text(sp, el.paragraphs, el.style_overrides)
@@ -391,10 +402,16 @@ class DeckWriter:
                 continue
             if _center_inside(other, el.box):
                 _remove(other)
+        overrides = dict(el.style_overrides)
+        lum = background_luminance(slide)
+        if lum is not None and lum < DARK_BG_LUMINANCE:
+            # тёмный образец (фон-картинка ЛЦТ2026, чёрный WorkSpace): текст палитры «text» на нём не виден —
+            # подписи таблицы/осей белые, как текст самого образца
+            overrides["text_color"] = LIGHT_TEXT
         if el.chart:
-            add_chart(slide, el.chart, el.box, el.style_overrides)
+            add_chart(slide, el.chart, el.box, overrides)
         elif el.table:
-            add_table(slide, el.table, el.box, el.style_overrides)
+            add_table(slide, el.table, el.box, overrides)
 
     def _fill_picture(
         self, slide: Slide, sp: etree._Element, el: Element, shapes: dict[str, etree._Element], slot_ids: set[str]
@@ -660,6 +677,57 @@ def _set_blip(blip_fill: etree._Element, rId: str, src_rect: tuple[int, int, int
     if blip_fill.find("a:stretch", NS) is None and blip_fill.find("a:tile", NS) is None:
         st = etree.SubElement(blip_fill, A + "stretch")
         etree.SubElement(st, A + "fillRect")
+
+
+# ──────────────────────────── фон слайда ────────────────────────────
+
+
+def background_luminance(slide: Slide) -> float | None:
+    """Яркость фона слайда 0..1 (0 — чёрный): свой `p:bg`, иначе лейаута, иначе мастера.
+
+    Картинка-фон — средняя яркость уменьшенной копии (Pillow); сплошная заливка — по srgbClr или по роли
+    схемного цвета (bg1 светлый, tx1 тёмный); градиент — по первой точке. None — определить нельзя
+    (схемный цвет вне известных ролей, нет фона совсем): вызывающий оставляет цвет палитры.
+    """
+    for part in (slide.part, slide.slide_layout.part, slide.slide_layout.slide_master.part):
+        bg = part._element.find(".//p:cSld/p:bg", NS)
+        if bg is None:
+            continue
+        return _fill_luminance(bg, part)
+    return None
+
+
+def _fill_luminance(bg: etree._Element, part: Part) -> float | None:
+    if (blip := bg.find(".//a:blipFill/a:blip", NS)) is not None and blip.get(R + "embed"):
+        try:
+            from io import BytesIO
+
+            from PIL import Image, ImageStat
+
+            image_part = part.related_part(blip.get(R + "embed"))
+            with Image.open(BytesIO(image_part.blob)) as im:
+                small = im.convert("L").resize((32, 18))
+                return ImageStat.Stat(small).mean[0] / 255.0
+        except Exception as e:  # noqa: BLE001 — фон не главное: не падать из-за экзотической картинки
+            log.debug("фон-картинка не прочитана: %s", e)
+            return None
+    clr = bg.find(".//a:solidFill/*", NS)
+    if clr is None:
+        clr = bg.find(".//a:gradFill/a:gsLst/a:gs/*", NS)
+    if clr is None:
+        clr = bg.find("p:bgRef/*", NS)  # ссылка на стиль фона мастера с цветом
+    if clr is None:
+        return None
+    if localname(clr) == "srgbClr":
+        v = clr.get("val", "")
+        if len(v) == 6:
+            r, g, b = (int(v[i:i + 2], 16) / 255.0 for i in (0, 2, 4))
+            return 0.2126 * r + 0.7152 * g + 0.0722 * b
+        return None
+    if localname(clr) == "schemeClr":
+        role = clr.get("val", "")
+        return 1.0 if role in SCHEME_LIGHT else 0.0 if role in SCHEME_DARK else None
+    return None
 
 
 # ──────────────────────────── геометрия и служебное ────────────────────────────

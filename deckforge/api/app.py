@@ -140,24 +140,24 @@ def create_app(root: Path | str = Path("out/api"), client_factory: Callable[[], 
     ) -> JobCreated:
         """Запустить прогон: бриф + файлы → outline (LLM) → колоды по стратегиям → аудит → PDF. Ответ — id job'а."""
         entry = _template(s, template_id)
-        job = s.jobs.new(entry)
-        try:
-            pack_dir = write_content_pack(job.dir / "content_pack", brief,
-                                          [(f.filename or "file", await f.read()) for f in files])
-        except BadUpload as e:
-            raise HTTPException(400, str(e)) from e
         names = [x.strip() for x in strategies.split(",") if x.strip()]
         unknown = [n for n in names if n not in list_strategies()]
         if unknown:
             raise HTTPException(400, f"неизвестные стратегии: {', '.join(unknown)}")
+        # job появляется в реестре только после того, как весь вход проверен: иначе 400 оставлял бы
+        # «зомби» со статусом queued в GET /jobs и пустую папку на диске
+        job = s.jobs.new(entry)
         try:
+            pack_dir = write_content_pack(job.dir / "content_pack", brief,
+                                          [(f.filename or "file", await f.read()) for f in files])
             cfg = RunConfig(
                 template=entry.path, content_pack=pack_dir, purpose=purpose, audience=audience, language=language,
                 target_slides=target_slides, strategies=names, images="off", output_dir=job.dir,
                 render_png=render_png, export=[e.strip() for e in export.split(",") if e.strip()],  # type: ignore[arg-type]
                 audit={"deterministic": True, "contextual": judge, "autofix": autofix},
             )
-        except ValueError as e:
+        except (BadUpload, ValueError) as e:
+            s.jobs.discard(job)
             raise HTTPException(400, str(e)) from e
         factory = s.client_factory
         s.jobs.submit(job, lambda j: run(cfg, client=factory(), progress=j.say))
@@ -196,11 +196,15 @@ def create_app(root: Path | str = Path("out/api"), client_factory: Callable[[], 
         d = _deck(j, strategy)
         if j.status != "done" or j.parsed is None:
             raise HTTPException(409, f"job в состоянии {j.status}")
-        try:
-            new = refine_deck(d, j.parsed, body.findings, render_png=body.render_png, progress=j.say)
-        except ValueError as e:
-            raise HTTPException(400, str(e)) from e
-        j.decks[strategy] = new
+        # два параллельных /fix на одну колоду писали бы один .pptx/manifest: второй ждёт первого
+        # и применяет свои фиксы уже к обновлённой колоде
+        with j.fix_lock:
+            d = _deck(j, strategy)
+            try:
+                new = refine_deck(d, j.parsed, body.findings, render_png=body.render_png, progress=j.say)
+            except ValueError as e:
+                raise HTTPException(400, str(e)) from e
+            j.decks[strategy] = new
         fi = new.audit_summary.get("autofix", {})
         return FixResponse(strategy=strategy, applied=fi.get("applied", 0), skipped=fi.get("skipped", 0),
                            before=fi.get("before", {}), after=fi.get("after", {}), items=fi.get("items", []),
@@ -243,10 +247,11 @@ def create_app(root: Path | str = Path("out/api"), client_factory: Callable[[], 
         path.write_bytes(await deck.read())
         try:
             check_pptx(path)
+            report = audit_deck(path, parsed.dna)
         except BadUpload as e:
-            path.unlink(missing_ok=True)
             raise HTTPException(400, str(e)) from e
-        report = audit_deck(path, parsed.dna)
+        finally:
+            path.unlink(missing_ok=True)  # чужая колода после отчёта не нужна — иначе out/api/audits растёт бесконечно
         return AuditResponse(summary=summary(report), report=report, fix_plan=fix_plan_rows(report))
 
     # ──────────────── помощники ────────────────

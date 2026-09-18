@@ -36,8 +36,8 @@ def test_overlay_draws_boxes(tmp_path: Path) -> None:
     assert draw_findings(png, [], 0, 0).size == (200, 100)
 
 
-def test_apply_selected_fixes_in_ui(template_path, tmp_path: Path) -> None:
-    """Колода без автофиксов (фикстурный outline, без LLM) → в таблице есть L03 → выбрать все → «Применить»."""
+def test_apply_selected_fixes_in_ui(template_path, tmp_path: Path, no_fitting) -> None:
+    """Колода без подгонки текста и автофиксов (фикстурный outline, без LLM) → в таблице есть L03 → выбрать все → «Применить»."""
     from streamlit.testing.v1 import AppTest
 
     from deckforge.core.ir import DeckOutline

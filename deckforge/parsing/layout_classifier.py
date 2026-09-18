@@ -72,11 +72,13 @@ BACKGROUND_PIC_AREA = 0.9  # картинка ≥ 90 % слайда — фон, 
 LOGO_PIC_AREA = 0.05  # картинка ≤ 5 % слайда у верхнего/нижнего края — логотип, не слот
 TITLE_MAX_CHARS = 80
 PLATE_MAX_SHARE = 0.8  # плашка под заголовком уже 80 % его бокса — вместимость считаем по плашке
+CHIP_MAX_HEIGHT = 2.0  # плашка вокруг заголовка ниже двух его боксов — «чип», а не карточка: строк сверх плашки нет
 CARD_MAX_AREA = 0.40  # подложка карточки — не больше 40 % слайда (иначе это фон)
 CARD_MARGIN = 0.08  # отступ от нижнего края карточки при расчёте вместимости
 DATA_SLOT_MIN_AREA = 0.08  # chart/table-слот меньше 8 % слайда — это подпись внутри нарисованной диаграммы, растягиваем на декор
 BIG_TITLE_RATIO = 1.6  # заголовок «крупный», если кегль ≥ 1.6× медианного на слайде
 BIG_TITLE_H = 0.12  # …или высота бокса ≥ 12 % слайда
+BODY_BLOCK_AREA = 0.2  # текстовый блок такой доли слайда — тело, а не подзаголовок титула
 KPI_SIZE_RATIO = 2.0  # число «крупное», если кегль ≥ 2× медианного
 KPI_MIN_SIZE_RATIO = 1.3  # число-кандидат в KPI хотя бы на 30 % крупнее медианного текста (иначе это номер шага)
 LIBRARY_PICS = 30  # ≥ 30 картинок — библиотека иконок, не образец
@@ -135,6 +137,7 @@ class ShapeInfo:
     in_group: bool = False
     prst: str | None = None
     fixed: bool = False
+    visible: bool = True  # есть заливка/обводка (своя или по p:style); невидимая рамка — не плашка
 
     @property
     def area(self) -> float:
@@ -403,6 +406,7 @@ def collect_shapes(ctx: PartCtx, fixed_sigs: set[tuple], index: int | None = Non
             italic=italic,
             is_placeholder=is_ph,
             ph_type=ph_type,
+            visible=_is_visible(sp) if tag == "sp" else True,
             in_group=any(a.tag == P + "grpSp" for a in sp.iterancestors()),
             prst=prst,
             fixed=(not is_ph) and _signature(tag, text if tag == "sp" else "", bb) in fixed_sigs,
@@ -693,6 +697,10 @@ def rule_title(f: SlideFeatures) -> Candidate | None:
         parts.append((-0.3, "несколько текстовых блоков при обычном заголовке"))
     if "agenda" in f.keywords:
         parts.append((-0.3, "«содержание»"))
+    # у титула подзаголовок — строка-две, а не блок в треть слайда: «заголовок + абзац текста» в простом
+    # шаблоне (heading + body на каждом слайде) — это bullets, иначе весь контент уйдёт в подзаголовки
+    if any(c.area >= BODY_BLOCK_AREA for c in f.content):
+        parts.append((-0.3, "крупный текстовый блок"))
     return _cand(Archetype.TITLE, parts)
 
 
@@ -931,6 +939,25 @@ def _capacity(s: ShapeInfo, box: Box | None = None) -> tuple[int, int]:
     return int(0.9 * cpl * lines), lines
 
 
+def _is_visible(sp: etree._Element) -> bool:
+    """Фигура рисуется: своя заливка (solid/grad/blip/patt), обводка без noFill или ссылка на стиль темы
+    (`p:style` с fillRef/lnRef idx > 0). Google-Slides-рамки без заливки и обводки — невидимы."""
+    sp_pr = sp.find("p:spPr", NS)
+    if sp_pr is not None:
+        if any(sp_pr.find(f"a:{t}", NS) is not None for t in ("solidFill", "gradFill", "blipFill", "pattFill")):
+            return True
+        ln = sp_pr.find("a:ln", NS)
+        if ln is not None and ln.find("a:noFill", NS) is None and len(ln):
+            return True
+    style = sp.find("p:style", NS)
+    if style is not None:
+        for ref in ("fillRef", "lnRef"):
+            el = style.find(f"a:{ref}", NS)
+            if el is not None and el.get("idx", "0") not in ("0", "1000"):
+                return sp_pr is None or sp_pr.find("a:noFill", NS) is None
+    return False
+
+
 def _backing_plate(s: ShapeInfo, shapes: list[ShapeInfo]) -> Box | None:
     """Плашка под текстом: фигура без текста, накрывающая начало текстового бокса, но уже его.
 
@@ -949,6 +976,12 @@ def _backing_plate(s: ShapeInfo, shapes: list[ShapeInfo]) -> Box | None:
         narrower = (x2 - x1) < s.box.w * PLATE_MAX_SHARE
         if covers_start and narrower:
             return Box(x=x1, y=y1, w=x2 - x1, h=y2 - y1)
+        # «чип»: плашка чуть больше бокса со всех сторон (ЛЦТ2026 slide2: скруглённый прямоугольник вокруг
+        # заголовка) — вторая строка вышла бы за низ плашки; вместимость по высоте плашки от верха бокса
+        surrounds = (p.box.x2 >= s.box.x2 - s.box.w * 0.1 and p.box.y <= s.box.y + s.box.h * 0.3
+                     and p.box.y2 >= s.box.y2 - s.box.h * 0.2 and p.box.h < s.box.h * CHIP_MAX_HEIGHT)
+        if covers_start and surrounds and p.visible:
+            return Box(x=s.box.x, y=s.box.y, w=s.box.w, h=max(s.box.h // 2, p.box.y2 - s.box.y))
     return None
 
 
@@ -1014,6 +1047,9 @@ def _slot(s: ShapeInfo, kind: SlotKind, shapes: list[ShapeInfo] | None = None) -
         room = None
         if shapes and kind == SlotKind.TITLE:
             room = _backing_plate(s, shapes)
+            # плашка уже бокса: текст переносится по краю бокса, а не плашки, и второй строки в плашке
+            # не будет — лишняя строка запрещена, заголовок ужимается/режется под одну строку плашки
+            hard_lines = room is not None
             if (under := _underline_room(s, shapes)) is not None:
                 room, hard_lines = (under if room is None else Box(x=room.x, y=room.y, w=room.w, h=min(room.h, under.h))), True
         elif shapes and kind == SlotKind.BODY:

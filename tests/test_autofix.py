@@ -187,7 +187,8 @@ def test_safe_fixes_clear_our_errors_on_vk_tech(template_path, tmp_path: Path) -
     out = render_pptx(res.ir, pptx, dna.exemplars, tmp_path / "visual.pptx")
     before = audit_deck(out, dna, res.ir)
     chosen = plan_fixes(before, "safe")
-    assert chosen and any(f.check_id == "L03_text_overflow" for f in chosen)
+    # L03 у наших элементов после дискретной модели строк в fitting не остаётся — чинятся D01/T02
+    assert chosen
     fr = apply_fixes(res.ir, chosen, dna)
     assert fr.changed and all({"before", "after"} <= set(it) for it in fr.applied)
     out2 = render_pptx(fr.ir, pptx, dna.exemplars, tmp_path / "visual_fixed.pptx")

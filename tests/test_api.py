@@ -68,7 +68,7 @@ def test_templates_registry_and_upload(api: TestClient, template_path, tmp_path:
     assert api.get("/templates/nope").status_code == 404
 
 
-def test_generate_audit_fix_download(api: TestClient) -> None:
+def test_generate_audit_fix_download(api: TestClient, no_fitting) -> None:
     vk = _vk_tech(api)
     data = {"template_id": vk["id"], "brief": BRIEF, "purpose": "product", "audience": "руководители",
             "target_slides": 12, "strategies": "executive", "judge": False, "autofix": False, "render_png": False,
@@ -98,7 +98,7 @@ def test_generate_audit_fix_download(api: TestClient) -> None:
     assert a["summary"]["checks_run"] == 24 and a["report"]["findings"] and a["fix_plan"]
     l03 = [i for i, f in enumerate(a["report"]["findings"])
            if f["check_id"] == "L03_text_overflow" and f["severity"] == "error"]
-    assert l03, "на VK Tech без автофиксов ожидаются L03-ошибки"
+    assert l03, "на VK Tech без подгонки текста и автофиксов ожидаются L03-ошибки"
 
     r = api.post(f"/jobs/{jid}/decks/executive/fix", json={"findings": []})
     assert r.status_code == 200 and r.json()["applied"] == 0
@@ -150,3 +150,101 @@ def test_safe_name_and_pack(tmp_path: Path) -> None:
     d = write_content_pack(tmp_path / "pack", "бриф", [("brief.md", b"x"), ("notes.txt", b"y"), ("m.csv", b"a,b")])
     assert (d / "brief.md").read_text("utf-8") == "бриф\n" and (d / "brief_extra.md").exists()
     assert (d / "notes.txt").exists() and (d / "data" / "m.csv").exists()
+
+
+# ──────────────────────────── стресс: зомби-job'ы, конкуренция, загрузки ────────────────────────────
+
+
+def test_rejected_generate_leaves_no_zombie_job(api: TestClient) -> None:
+    """400 на входе не должен оставлять job со статусом queued в реестре и пустую папку на диске."""
+    vk = _vk_tech(api)
+    base = {"template_id": vk["id"], "brief": BRIEF, "strategies": "executive", "judge": False, "render_png": False}
+    before = len(api.get("/jobs").json())
+    assert api.post("/generate", data={**base, "strategies": "executive,fancy"}).status_code == 400
+    assert api.post("/generate", data=base, files=[("files", ("evil.exe", b"MZ", "application/octet-stream"))]).status_code == 400
+    assert api.post("/generate", data={**base, "export": "docx"}).status_code == 400
+    assert len(api.get("/jobs").json()) == before
+    jobs_dir = Path(api.app.state.df.jobs.root)
+    assert not [p for p in jobs_dir.iterdir() if p.is_dir() and not any(p.iterdir())], "пустые папки job'ов"
+
+
+def test_concurrent_jobs_and_fixes(template_path, tmp_path: Path, no_fitting) -> None:
+    """Настоящий executor: пять /generate подряд доходят до done и не путают файлы; два /fix на одну колоду
+    из двух потоков — оба 200, файлы колоды целы, manifest валиден."""
+    import json
+    import threading
+    from concurrent.futures import ThreadPoolExecutor
+
+    template_path("VK Tech")
+    app = create_app(root=tmp_path / "api", client_factory=lambda: FakeClient(cassette("outline_writer_pulse")),
+                     executor=ThreadPoolExecutor(max_workers=1))
+    with TestClient(app) as api:
+        vk = _vk_tech(api)
+        data = {"template_id": vk["id"], "brief": BRIEF, "strategies": "executive", "judge": False, "autofix": False,
+                "render_png": False, "export": "pptx"}
+        ids = [api.post("/generate", data={**data, "audience": f"аудитория {i}"}).json()["id"] for i in range(5)]
+        for jid in ids:
+            api.app.state.df.jobs.get(jid).wait(timeout=300)
+            j = api.get(f"/jobs/{jid}").json()
+            assert j["status"] == "done", j
+        for i, jid in enumerate(ids):
+            run_json = json.loads((tmp_path / "api" / "jobs" / jid / "run.json").read_text("utf-8"))
+            assert run_json["config"]["audience"] == f"аудитория {i}"
+            assert Path(run_json["decks"][0]["pptx"]).parent.name == jid
+
+        jid = ids[0]
+        a = api.get(f"/jobs/{jid}/decks/executive/audit").json()
+        l03 = [i for i, f in enumerate(a["report"]["findings"]) if f["check_id"] == "L03_text_overflow" and f["severity"] == "error"]
+        assert len(l03) >= 2
+        results: list[int] = []
+
+        def fix(sel: list[int]) -> None:
+            results.append(api.post(f"/jobs/{jid}/decks/executive/fix", json={"findings": sel}).status_code)
+
+        threads = [threading.Thread(target=fix, args=(l03[: len(l03) // 2],)), threading.Thread(target=fix, args=(l03[len(l03) // 2:],))]
+        for t in threads:
+            t.start()
+        for t in threads:
+            t.join(timeout=300)
+        assert results == [200, 200], results
+        r = api.get(f"/jobs/{jid}/decks/executive/files/executive.pptx")
+        assert r.status_code == 200 and r.content[:2] == b"PK"
+        m = json.loads((tmp_path / "api" / "jobs" / jid / "executive.manifest.json").read_text("utf-8"))
+        assert m["audit"]["autofix"]["user_applied"] >= 1 and m["audit"]["errors"] <= a["summary"]["errors"]
+        a2 = api.get(f"/jobs/{jid}/decks/executive/audit").json()
+        assert a2["summary"]["errors"] == m["audit"]["errors"]
+
+
+def test_upload_edge_cases(api: TestClient, template_path, tmp_path: Path) -> None:
+    from deckforge.pipeline.workspace import MAX_TEMPLATE_BYTES, check_pptx
+
+    # 0 байт, docx-подобный zip без presentation.xml, «слишком большой»
+    assert api.post("/templates", files={"file": ("empty.pptx", b"", "application/octet-stream")}).status_code == 400
+    import io
+    import zipfile
+
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, "w") as z:
+        z.writestr("word/document.xml", "<w/>")
+    assert api.post("/templates", files={"file": ("doc.pptx", buf.getvalue(), "application/octet-stream")}).status_code == 400
+    big = tmp_path / "big.pptx"
+    with big.open("wb") as fh:
+        fh.truncate(MAX_TEMPLATE_BYTES + 1)
+    with pytest.raises(Exception):
+        check_pptx(big)
+    # тот же файл под другим именем — один id (дедуп по sha1), и имя из спецсимволов не ломает путь
+    holdout = template_path("ЛЦТ2026")
+    ids = set()
+    for name in ("🚀🚀.pptx", "../../x.pptx", "   .pptx"):
+        with holdout.open("rb") as fh:
+            r = api.post("/templates", files={"file": (name, fh, "application/octet-stream")})
+        assert r.status_code == 200, r.text
+        ids.add(r.json()["id"])
+    assert len(ids) == 1
+    # /audit с не-pptx → 400, а загруженный файл после аудита не остаётся на диске
+    vk = _vk_tech(api)
+    with holdout.open("rb") as fh:
+        r = api.post("/audit", data={"template_id": vk["id"]}, files={"deck": ("d.pptx", fh, "application/octet-stream")})
+    assert r.status_code == 200
+    audits = Path(api.app.state.df.root) / "audits"
+    assert not list(audits.glob("*.pptx"))

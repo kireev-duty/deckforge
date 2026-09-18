@@ -17,6 +17,8 @@ from deckforge.core.ir import Box, TableSpec
 from deckforge.core.ooxml import A, NS
 
 NO_STYLE_NO_GRID = "{2D5ABB26-0587-4C30-8999-92F81FD0307C}"
+ROW_LINES = 2  # запас высоты строки в строках текста
+LINE_SPACING = 1.2
 
 
 def _rgb(value: object, default: str) -> RGBColor:
@@ -42,7 +44,9 @@ def add_table(slide: Slide, spec: TableSpec, box: Box, overrides: dict | None = 
     header_fill = _rgb(overrides.get("header_fill") or overrides.get("accent"), "0077FF")
     header_text = _rgb(overrides.get("header_text_color"), "FFFFFF")
     body_text = _rgb(overrides.get("text_color"), "212121")
-    row_h = box.h // rows
+    # строки не растягиваем на весь бокс (слот диаграммы выше таблицы в разы): высота строки — по кеглю,
+    # с запасом на перенос в две строки; PowerPoint и LibreOffice сами увеличат строку, если текст длиннее
+    row_h = min(box.h // rows, int(size * ROW_LINES * LINE_SPACING) + Pt(6))
 
     def fill_cell(cell, text: str, bold: bool, color: RGBColor) -> None:
         cell.text = text

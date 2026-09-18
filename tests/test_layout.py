@@ -145,22 +145,36 @@ def test_section_falls_back_to_title_exemplar() -> None:
     assert candidate_archetypes(Archetype.SECTION, strategy())[0] == Archetype.SECTION
 
 
-def test_minimal_images_avoid_picture_exemplar_without_image() -> None:
+def test_minimal_images_avoid_picture_exemplar_without_image(tmp_path) -> None:
     slide = OutlineSlide(idx=1, archetype=Archetype.IMAGE_TEXT, title="Т", bullets=["один", "два"])
     e, _ = pick_exemplar(slide, _exemplars(), strategy(images="minimal", archetype_priority=[Archetype.IMAGE_TEXT, Archetype.BULLETS]),
                          SLIDE_W * SLIDE_H)
     assert e.archetype != Archetype.IMAGE_TEXT
-    slide.image = ImageSpec(path="x.png")
+    slide.image = ImageSpec(path=str(tmp_path / "missing.png"))  # путь есть, файла нет — как без картинки
+    e_missing, _ = pick_exemplar(slide, _exemplars(), strategy(images="minimal", archetype_priority=[Archetype.IMAGE_TEXT, Archetype.BULLETS]),
+                                 SLIDE_W * SLIDE_H)
+    assert e_missing.archetype != Archetype.IMAGE_TEXT
+    (tmp_path / "x.png").write_bytes(b"png")
+    slide.image = ImageSpec(path=str(tmp_path / "x.png"))
     e2, _ = pick_exemplar(slide, _exemplars(), strategy(images="minimal", archetype_priority=[Archetype.IMAGE_TEXT, Archetype.BULLETS]),
                           SLIDE_W * SLIDE_H)
     assert e2.archetype == Archetype.IMAGE_TEXT
 
 
-def test_chart_without_data_slot_is_impossible() -> None:
+def test_chart_without_data_slot_goes_to_body_or_nowhere() -> None:
+    """Без data-слота в шаблоне диаграмма встаёт на место самого крупного текстового блока (со штрафом),
+    а на образцы без body и на структурные (title/section) — никогда."""
     slide = OutlineSlide(idx=1, archetype=Archetype.CHART, title="Т",
                          chart=ChartSpec(kind="bar", title="c", categories=["a"], series={"s": [1]}))
     e, score = pick_exemplar(slide, _exemplars(), strategy(), SLIDE_W * SLIDE_H)
-    assert e is None
+    assert e is not None and e.archetype == Archetype.BULLETS and score < 0
+    title_only = [x for x in _exemplars() if x.archetype == Archetype.TITLE]
+    assert pick_exemplar(slide, title_only, strategy(), SLIDE_W * SLIDE_H)[0] is None
+    from deckforge.layout.builder import build_slide
+
+    ir, leftover = build_slide(0, slide, e, SLIDE_H, {})
+    assert leftover is None and [el.kind for el in ir.elements if el.chart] == [SlotKind.CHART]
+    assert ir.elements[-1].slot_id == "b"  # хост — body-слот образца bullets
 
 
 def test_quote_needs_body_or_big_title() -> None:

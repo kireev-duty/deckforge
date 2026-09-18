@@ -82,7 +82,7 @@ def write_outline(
         try:
             outline, fix_warnings = repair_outline(raw, available_archetypes, pack.ids(), purpose=purpose,
                                                    audience=audience, language=language)
-        except ValidationError as e:
+        except (ValidationError, TypeError, ValueError) as e:  # repair не собрал контракт — ретрай, не падение
             last_err = e
             log.warning("outline_writer: ответ не прошёл валидацию (попытка %d): %s", attempt + 1, str(e)[:300])
             continue
@@ -108,7 +108,7 @@ def repair_outline(
     data.setdefault("language", language)
     data["title"] = str(data.get("title") or "").strip() or _first_title(data)
 
-    slides_raw = [s for s in data.get("slides") or [] if isinstance(s, dict)]
+    slides_raw = [s for s in _as_list(data.get("slides")) if isinstance(s, dict)]
     slides: list[dict[str, Any]] = []
     for s in slides_raw:
         s = _repair_slide(dict(s), available, warnings)
@@ -138,8 +138,19 @@ def repair_outline(
     return DeckOutline.model_validate(data), warnings
 
 
+def _as_list(v: Any) -> list:
+    """Поле-список из ответа модели: None → [], скаляр/словарь → [значение] (dict «слайдов» по ключам — не список)."""
+    if v is None:
+        return []
+    if isinstance(v, list):
+        return v
+    if isinstance(v, (tuple, set)):
+        return list(v)
+    return [v]
+
+
 def _first_title(data: dict[str, Any]) -> str:
-    for s in data.get("slides") or []:
+    for s in _as_list(data.get("slides")):
         if isinstance(s, dict) and s.get("title"):
             return str(s["title"]).strip()
     return "Презентация"
@@ -272,7 +283,7 @@ def _num(v: Any) -> float | None:
 def _repair_chart(chart: Any, slide_title: str) -> dict[str, Any] | None:
     if not isinstance(chart, dict):
         return None
-    cats = [str(c) for c in chart.get("categories") or []]
+    cats = [str(c) for c in _as_list(chart.get("categories"))]
     series_raw = chart.get("series") or {}
     if isinstance(series_raw, list):  # [{name, values|data|points}] → {name: values}
         series_raw = {
@@ -283,7 +294,7 @@ def _repair_chart(chart: Any, slide_title: str) -> dict[str, Any] | None:
         return None
     series: dict[str, list[float]] = {}
     for name, vals in series_raw.items():
-        nums = [_num(v) for v in (vals or [])]
+        nums = [_num(v) for v in _as_list(vals)]
         if len(nums) != len(cats) or any(n is None for n in nums):
             continue
         series[str(name)] = [float(n) for n in nums]  # type: ignore[arg-type]
@@ -302,10 +313,10 @@ def _chart_as_bullets(chart: Any) -> list[str]:
     """Диаграмму не собрать — хотя бы не потерять числа."""
     if not isinstance(chart, dict) or not isinstance(chart.get("series"), dict):
         return []
-    cats = [str(c) for c in chart.get("categories") or []]
+    cats = [str(c) for c in _as_list(chart.get("categories"))]
     out = []
     for name, vals in chart["series"].items():
-        pairs = [f"{c} — {v}" for c, v in zip(cats, vals or [])]
+        pairs = [f"{c} — {v}" for c, v in zip(cats, _as_list(vals))]
         if pairs:
             out.append(f"{name}: {', '.join(pairs)}")
     return out[:MAX_BULLETS]
@@ -314,8 +325,8 @@ def _chart_as_bullets(chart: Any) -> list[str]:
 def _repair_table(table: Any) -> dict[str, Any] | None:
     if not isinstance(table, dict):
         return None
-    header = [str(h) for h in table.get("header") or []][:TABLE_MAX_COLS]
-    rows_raw = table.get("rows") or []
+    header = [str(h) for h in _as_list(table.get("header"))][:TABLE_MAX_COLS]
+    rows_raw = _as_list(table.get("rows"))
     if not header or not rows_raw:
         return None
     n = len(header)
@@ -323,6 +334,8 @@ def _repair_table(table: Any) -> dict[str, Any] | None:
     for r in rows_raw[:TABLE_MAX_ROWS]:
         if isinstance(r, dict):
             r = [r.get(h, "") for h in header]
+        elif not isinstance(r, (list, tuple)):
+            r = [r]  # строка-скаляр — одна ячейка, остальное пусто
         cells = [str(c) if c is not None else "" for c in list(r)[:n]]
         rows.append(cells + [""] * (n - len(cells)))
     return {"header": header, "rows": rows}

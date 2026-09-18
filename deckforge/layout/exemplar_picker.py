@@ -13,6 +13,7 @@ kpi/table/closing). Для «гибких» текстовых архетипо�
 from __future__ import annotations
 
 from dataclasses import dataclass
+from pathlib import Path
 from statistics import median
 
 from deckforge.core.ir import Archetype, Exemplar, OutlineSlide, Slot, SlotKind
@@ -20,23 +21,29 @@ from deckforge.core.strategy import Strategy
 from deckforge.core.units import EMU_PER_INCH
 from deckforge.layout.fitting import MIN_SIZE_SCALE, chars_at_scale
 
+# хвост цепочки для любого контентного слайда: текстовые образцы, затем структурные (section/title — текст ляжет
+# в подзаголовок; см. LAST_RESORT в builder) — чтобы на шаблоне из одних «заголовок + абзац» слайды не пропадали
+_TEXT_TAIL = [Archetype.BULLETS, Archetype.CARDS, Archetype.TWO_COLUMN, Archetype.IMAGE_TEXT, Archetype.AGENDA]
+_LAST = [Archetype.SECTION, Archetype.TITLE, Archetype.CLOSING]
 FALLBACKS: dict[Archetype, list[Archetype]] = {
-    Archetype.TITLE: [Archetype.SECTION],
-    Archetype.SECTION: [Archetype.TITLE],
-    Archetype.AGENDA: [Archetype.CARDS, Archetype.BULLETS],
-    Archetype.BULLETS: [Archetype.CARDS, Archetype.TWO_COLUMN, Archetype.IMAGE_TEXT, Archetype.AGENDA],
-    Archetype.TWO_COLUMN: [Archetype.CARDS, Archetype.BULLETS, Archetype.IMAGE_TEXT],
-    Archetype.CARDS: [Archetype.BULLETS, Archetype.TWO_COLUMN, Archetype.AGENDA],
-    Archetype.KPI: [Archetype.CARDS, Archetype.BULLETS],  # bullets: строки «значение — подпись», когда цифр/карточек нет
-    Archetype.CHART: [Archetype.TABLE],
-    Archetype.TABLE: [Archetype.CHART, Archetype.CARDS],
-    Archetype.PROCESS: [Archetype.CARDS, Archetype.AGENDA, Archetype.BULLETS],
+    Archetype.TITLE: [Archetype.SECTION, Archetype.CLOSING, *_TEXT_TAIL],  # шаблон из одних bullets: титул на них
+    Archetype.SECTION: [Archetype.TITLE, Archetype.CLOSING, *_TEXT_TAIL],
+    Archetype.AGENDA: [Archetype.CARDS, Archetype.BULLETS, *_LAST],
+    Archetype.BULLETS: [Archetype.CARDS, Archetype.TWO_COLUMN, Archetype.IMAGE_TEXT, Archetype.AGENDA, *_LAST],
+    Archetype.TWO_COLUMN: [Archetype.CARDS, Archetype.BULLETS, Archetype.IMAGE_TEXT, *_LAST],
+    Archetype.CARDS: [Archetype.BULLETS, Archetype.TWO_COLUMN, Archetype.AGENDA, *_LAST],
+    Archetype.KPI: [Archetype.CARDS, Archetype.BULLETS, *_LAST],  # bullets: строки «значение — подпись», когда цифр/карточек нет
+    Archetype.CHART: [Archetype.TABLE, *_TEXT_TAIL],  # без data-слота нативный объект встаёт на место body
+    Archetype.TABLE: [Archetype.CHART, Archetype.CARDS, *_TEXT_TAIL],
+    Archetype.PROCESS: [Archetype.CARDS, Archetype.AGENDA, Archetype.BULLETS, *_LAST],
     Archetype.QUOTE: [Archetype.SECTION, Archetype.IMAGE_TEXT, Archetype.BULLETS, Archetype.TITLE],  # section/title: цитата в крупный заголовок
-    Archetype.IMAGE_TEXT: [Archetype.BULLETS, Archetype.CARDS],
-    Archetype.IMAGE_FULL: [Archetype.IMAGE_TEXT],
-    Archetype.TEAM: [Archetype.CARDS],
-    Archetype.CLOSING: [Archetype.TITLE, Archetype.SECTION],
+    Archetype.IMAGE_TEXT: [Archetype.BULLETS, Archetype.CARDS, *_LAST],
+    Archetype.IMAGE_FULL: [Archetype.IMAGE_TEXT, *_TEXT_TAIL, *_LAST],
+    Archetype.TEAM: [Archetype.CARDS, *_TEXT_TAIL, *_LAST],
+    Archetype.CLOSING: [Archetype.TITLE, Archetype.SECTION, *_TEXT_TAIL],
+    Archetype.FREEFORM: [Archetype.BULLETS, Archetype.CARDS, Archetype.TWO_COLUMN, *_LAST],  # «не образец» в готовом outline — как текст
 }
+STRUCTURAL = (Archetype.TITLE, Archetype.SECTION, Archetype.CLOSING)
 # архетипы, между которыми стратегия вправе выбирать сама (текст без данных)
 FLEXIBLE = {Archetype.BULLETS, Archetype.CARDS, Archetype.TWO_COLUMN, Archetype.IMAGE_TEXT}
 ARCH_RANK_PENALTY = 4.0  # шаг по цепочке фолбэков (структурные/data-архетипы)
@@ -48,6 +55,7 @@ MIN_TABLE_COL_W = int(1.0 * EMU_PER_INCH)  # уже — таблица нечи�
 OVERLAP_PENALTY = 5.0  # заголовок образца заходит под контентный блок — текст наложится
 OVERLAP_SHARE = 0.2
 EXTRA_PICTURE_PENALTY = 2.5  # каждая лишняя рамка под картинку сверх одной: контент даёт одну иллюстрацию
+DATA_IN_BODY_PENALTY = 6.0  # chart/table на место текстового блока — только когда data-слота нет во всём шаблоне
 TIGHT_SHARE = 0.5  # слот под пункт «тесный», если при минимальном кегле вмещает меньше половины среднего пункта
 BIG_NUMBER_SHARE = 0.65  # number-слот считается за KPI-цифру, если его кегль ≥ 65 % от медианного кегля цифр образца
 IMPOSSIBLE = -1000.0
@@ -72,9 +80,15 @@ class Needs:
     def of(cls, s: OutlineSlide) -> "Needs":
         lst = s.bullets or s.steps or s.paragraphs
         return cls(items=len(lst), kpis=len(s.kpis), chart=s.chart is not None, table=s.table is not None,
-                   image=bool(s.image and s.image.path), quote=bool(s.quote), title_chars=len(s.title),
+                   image=has_image(s), quote=bool(s.quote), title_chars=len(s.title),
                    text_chars=sum(len(t) for t in lst) + 2 * len(lst), table_cols=len(s.table.header) if s.table else 0,
                    quote_chars=len(s.quote or "") + 2)
+
+
+def has_image(s: OutlineSlide) -> bool:
+    """Картинка слайда готова к вставке: путь задан и файл существует (иначе picture-образец оставит заглушку,
+    а рендер — не должен падать из-за оборванной генерации или битого кэша)."""
+    return bool(s.image and s.image.path and Path(s.image.path).is_file())
 
 
 def candidate_archetypes(target: Archetype, strategy: Strategy) -> list[Archetype]:
@@ -89,27 +103,35 @@ def candidate_archetypes(target: Archetype, strategy: Strategy) -> list[Archetyp
 
 def pick_exemplar(
     slide: OutlineSlide, exemplars: list[Exemplar], strategy: Strategy, slide_area: int,
-    used: dict[str, int] | None = None,
+    used: dict[str, int] | None = None, exclude: set[str] | None = None,
 ) -> tuple[Exemplar | None, float]:
-    """Лучший образец и его скор; (None, IMPOSSIBLE), если ни один не годится."""
+    """Лучший образец и его скор; (None, IMPOSSIBLE), если ни один не годится. `exclude` — id образцов,
+    которые builder уже пробовал и в которые контент не лёг."""
     used = used or {}
     needs = Needs.of(slide)
     chain = candidate_archetypes(slide.archetype, strategy)
     rank_penalty = FLEX_RANK_PENALTY if slide.archetype in FLEXIBLE else ARCH_RANK_PENALTY
-    best: tuple[float, int, Exemplar] | None = None
-    for rank, arch in enumerate(chain):
-        for e in exemplars:
-            if e.archetype != arch or e.archetype == Archetype.FREEFORM:
+    # структурные образцы (title/section/closing) для контентного слайда — строго последний резерв: их берём
+    # только когда контентных кандидатов нет вовсе, иначе на длинной колоде накопленный штраф за повторы
+    # карточек сделал бы титул «выгоднее» (текст ушёл бы в подзаголовок)
+    passes = [False, True] if slide.archetype not in STRUCTURAL else [True]
+    for allow_structural in passes:
+        best: tuple[float, int, Exemplar] | None = None
+        for rank, arch in enumerate(chain):
+            if not allow_structural and arch in STRUCTURAL:
                 continue
-            score = score_exemplar(e, needs, strategy, slide_area) - rank_penalty * rank - REUSE_PENALTY * used.get(e.id, 0)
-            if score <= IMPOSSIBLE:
-                continue
-            key = (score, -e.source_index, e)
-            if best is None or key[:2] > best[:2]:
-                best = key
-    if best is None:
-        return None, IMPOSSIBLE
-    return best[2], best[0]
+            for e in exemplars:
+                if e.archetype != arch or e.archetype == Archetype.FREEFORM or (exclude and e.id in exclude):
+                    continue
+                score = score_exemplar(e, needs, strategy, slide_area) - rank_penalty * rank - REUSE_PENALTY * used.get(e.id, 0)
+                if score <= IMPOSSIBLE:
+                    continue
+                key = (score, -e.source_index, e)
+                if best is None or key[:2] > best[:2]:
+                    best = key
+        if best is not None:
+            return best[2], best[0]
+    return None, IMPOSSIBLE
 
 
 def score_exemplar(e: Exemplar, n: Needs, strategy: Strategy, slide_area: int) -> float:
@@ -125,14 +147,22 @@ def score_exemplar(e: Exemplar, n: Needs, strategy: Strategy, slide_area: int) -
     if titles and _overlaps_content(titles[0], e.slots):
         score -= OVERLAP_PENALTY
     # данные: без слота под chart/table образец не годится
+    real_bodies = [s for s in e.slots if s.kind == SlotKind.BODY]
+    bodies = real_bodies
+    if not bodies and e.archetype in STRUCTURAL and (n.items or n.kpis):
+        bodies = [s for s in e.slots if s.kind == SlotKind.SUBTITLE]  # подзаголовок титула как тело (builder делает то же)
     if n.chart or n.table:
         data_slots = [s for s in e.slots if s.kind in (SlotKind.CHART, SlotKind.TABLE)]
         if not data_slots:
-            return IMPOSSIBLE
-        score += 2.0 if (n.chart and kinds[SlotKind.CHART]) or (n.table and kinds[SlotKind.TABLE]) else 0.0
+            if not real_bodies:
+                return IMPOSSIBLE
+            data_slots = [max(real_bodies, key=lambda s: s.box.w * s.box.h)]  # нативный объект на место текстового блока
+            bodies = [s for s in bodies if s is not data_slots[0]]
+            score -= DATA_IN_BODY_PENALTY
+        else:
+            score += 2.0 if (n.chart and kinds[SlotKind.CHART]) or (n.table and kinds[SlotKind.TABLE]) else 0.0
         if n.table_cols and data_slots[0].box.w / n.table_cols < MIN_TABLE_COL_W:
             score -= TRUNCATION_PENALTY
-    bodies = [s for s in e.slots if s.kind == SlotKind.BODY]
     # цитата: нужен body под её текст либо крупный заголовок (section/title — цитата в него), иначе слайд выйдет пустым
     if n.quote:
         if e.archetype in (Archetype.SECTION, Archetype.TITLE):
@@ -238,4 +268,4 @@ def _count_kinds(slots: list[Slot]) -> dict[SlotKind, int]:
     return counts
 
 
-__all__ = ["FALLBACKS", "FLEXIBLE", "Needs", "candidate_archetypes", "pick_exemplar", "score_exemplar"]
+__all__ = ["FALLBACKS", "FLEXIBLE", "STRUCTURAL", "Needs", "candidate_archetypes", "has_image", "pick_exemplar", "score_exemplar"]

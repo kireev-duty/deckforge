@@ -267,10 +267,12 @@ def check_L07(ctx: AuditContext) -> list[Finding]:
             diff = abs(img_ar - frame_ar) / frame_ar
             if diff <= ASPECT_TOL:
                 continue
-            out.append(finding("L07_picture_stretched", slide, Severity.ERROR,
+            # картинка образца, которую мы не подменяли (с DeckIR известно), растянута самим шаблоном — предупреждение
+            inherited = slide.exemplar is not None and not sh.is_ours
+            out.append(finding("L07_picture_stretched", slide, Severity.WARNING if inherited else Severity.ERROR,
                                f"Картинка растянута: пропорции {img_ar:.2f} vs рамка {frame_ar:.2f} ({diff:.0%})",
                                sh, autofix="crop_to_aspect", image_aspect=round(img_ar, 3), frame_aspect=round(frame_ar, 3),
-                               diff=round(diff, 3)))
+                               diff=round(diff, 3), in_exemplar=int(inherited)))
     return out
 
 

@@ -15,6 +15,8 @@ from deckforge.core.ir import Slot, SlotKind
 TAIL_SEPARATORS = (" — ", " – ", ": ", "; ", ", ", " (")
 LEAD_SEPARATORS = (" — ", " – ", ": ")
 MIN_SIZE_SCALE = 0.7
+SIZE_STEPS = (0.9, 0.8, 0.7)  # сетка уменьшения кегля: кегли «между» ничего не дают, строк от них не прибавляется
+MIN_HEAD_SHARE = 0.3  # голова до разделителя короче этой доли лимита — не «мысль», режем по словам
 NUMBER_MIN_SCALE = 0.4  # крупная цифра KPI: можно ужать сильнее, она всё равно остаётся крупной
 UNIT_SCALE = 0.35  # единица измерения рядом с крупной цифрой («1,8 дня») — мелким кеглем
 # ширина знаков крупной цифры в долях «средней буквы», на которую рассчитан max_chars (жирные display-гарнитуры)
@@ -25,10 +27,18 @@ ELLIPSIS = "…"
 WORD_TOLERANCE = 3  # превышение лимита слов, при котором пункт не режем (обрезка «…» хуже лишних слов)
 MIN_WORDS_TO_CUT = 2  # тексты не длиннее стольких слов по словам не режем (нечего терять — только калечить)
 _WS = re.compile(r"\s+")
+# символы, недопустимые в XML 1.0 (NUL, управляющие кроме \t\n\r, суррогаты, U+FFFE/FFFF): lxml на них бросает
+# ValueError при записи, а модель и CSV их иногда приносят — вычищаем один раз здесь, через normalize идёт весь текст IR
+_XML_BAD = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f\ud800-\udfff\ufffe\uffff]")
 
 
 def normalize(text: str) -> str:
-    return _WS.sub(" ", text).strip()
+    return _WS.sub(" ", _XML_BAD.sub("", text)).strip()
+
+
+def xml_safe(text: str) -> str:
+    """Только чистка недопустимых для XML символов, без схлопывания пробелов (заметки, ячейки таблиц)."""
+    return _XML_BAD.sub("", text)
 
 
 def shorten(text: str, max_chars: int | None) -> str:
@@ -41,12 +51,12 @@ def shorten(text: str, max_chars: int | None) -> str:
 
 def cut_tail(text: str, max_chars: int) -> str | None:
     """Срезать хвост по смысловому разделителю (тире, двоеточие, запятая…) так, чтобы уложиться в max_chars.
-    None — ни один разделитель не подходит (голова короче 40 % лимита или всё равно не влезает)."""
+    None — ни один разделитель не подходит (голова короче MIN_HEAD_SHARE лимита или всё равно не влезает)."""
     for sep in TAIL_SEPARATORS:
         idx = text.find(sep)
         while idx > 0:
             head = text[:idx].rstrip(" ,;:—–(")
-            if len(head) <= max_chars and len(head) >= max_chars * 0.4:
+            if len(head) <= max_chars and len(head) >= max_chars * MIN_HEAD_SHARE:
                 return head
             idx = text.find(sep, idx + 1)
     return None
@@ -73,22 +83,31 @@ def shorten_words(text: str, max_words: int | None) -> str:
 def fit_size(text: str, slot: Slot, min_scale: float = MIN_SIZE_SCALE) -> float | None:
     """Кегль, при котором text влезает в слот, если базового не хватает; None — менять не нужно.
 
-    Вместимость слота (max_chars) линейна по 1/size² (ширина строки × число строк), поэтому
-    масштаб = sqrt(max_chars / len). Ниже MIN_SIZE_SCALE не опускаемся — дальше текст надо резать.
+    Ширина строки линейна по 1/size, а число строк — целое: у однострочного бокса при кегле 70 %
+    остаётся одна строка (1,4 строки не бывает), поэтому подбираем масштаб по сетке SIZE_STEPS,
+    а не по формуле sqrt(cap / len). Ниже MIN_SIZE_SCALE не опускаемся — дальше текст надо резать.
     """
     cap = slot_capacity(slot)
     if not cap or not slot.size_pt or len(text) <= cap:
         return None
-    scale = max(min_scale, (cap / len(text)) ** 0.5)
-    return round(slot.size_pt * scale, 1)
+    for scale in SIZE_STEPS:
+        if scale < min_scale:
+            break
+        if len(text) <= chars_at_scale(slot, scale):
+            return round(slot.size_pt * scale, 1)
+    return round(slot.size_pt * min_scale, 1)
 
 
 def chars_at_scale(slot: Slot, scale: float = MIN_SIZE_SCALE) -> int | None:
-    """Сколько символов вместит слот при уменьшении кегля до scale."""
+    """Сколько символов вместит слот при уменьшении кегля до scale: символов в строке — больше в 1/scale раз,
+    строк — целое число (высота бокса / высота строки), заголовку — плюс разрешённые сверх бокса строки."""
     cap = slot_capacity(slot)
     if not cap:
         return None
-    return int(cap / (scale * scale))
+    lines = max(1, slot.max_lines or 1)
+    extra = (cap - (slot.max_chars or cap)) / max(1, slot.max_chars or 1)  # строки сверх бокса (TITLE_LINES)
+    cpl = (slot.max_chars or cap) / lines
+    return int(cpl / scale * (int(lines / scale) + extra * lines))
 
 
 def slot_capacity(slot: Slot) -> int | None:
@@ -150,4 +169,4 @@ def _cut_words(text: str, max_chars: int) -> str:
     return cut.rstrip(" ,;:—–(") + ELLIPSIS
 
 
-__all__ = ["chars_at_scale", "cut_tail", "fit_number", "fit_size", "normalize", "shorten", "shorten_words", "slot_capacity", "split_label_body", "split_number_unit"]
+__all__ = ["chars_at_scale", "cut_tail", "fit_number", "fit_size", "normalize", "shorten", "shorten_words", "slot_capacity", "split_label_body", "split_number_unit", "xml_safe"]

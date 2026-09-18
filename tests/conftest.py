@@ -78,3 +78,15 @@ def template_path():
         return p
 
     return _get
+
+
+@pytest.fixture
+def no_fitting(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Выключить детерминированную подгонку текста в layout: текст кладётся в слоты как есть.
+
+    Нужна тестам механики фиксов (pipeline → refine_deck → UI/API): им требуется колода с гарантированными
+    L03-ошибками, а с подгонкой на шаблонах датасета ошибок вёрстки у наших элементов больше нет."""
+    import deckforge.layout.builder as builder
+
+    monkeypatch.setattr(builder, "slot_capacity", lambda slot: None)
+    monkeypatch.setattr(builder, "fit_size", lambda text, slot, min_scale=0.7: None)

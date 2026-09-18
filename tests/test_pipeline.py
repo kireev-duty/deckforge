@@ -73,8 +73,8 @@ def test_run_with_fake_llm(template_path, tmp_path: Path) -> None:
     assert any(m.startswith("outline:") for m in messages)
 
 
-def test_autofix_removes_our_overflow_errors(template_path, tmp_path: Path) -> None:
-    """На VK Tech без фиксов есть L03-ошибки; с фиксами их нет, а «после» ≤ «до»."""
+def test_autofix_removes_our_overflow_errors(template_path, tmp_path: Path, no_fitting) -> None:
+    """Без подгонки текста на VK Tech есть L03-ошибки; с фиксами их нет, а «после» ≤ «до»."""
     from deckforge.core.ir import DeckOutline
 
     outline = DeckOutline.model_validate_json((REPO / "examples" / "content_pack" / "outline.json").read_text("utf-8"))
@@ -181,8 +181,8 @@ def test_build_deck_matches_run(template_path, tmp_path: Path) -> None:
     assert deck.load_report() is not None and len(deck.load_ir().slides) == deck.stats["slides"]
 
 
-def test_refine_deck_applies_user_fixes(template_path, tmp_path: Path) -> None:
-    """Фиксы по выбору пользователя: без автофиксов есть L03-ошибки → выбираем их индексы → после refine их нет."""
+def test_refine_deck_applies_user_fixes(template_path, tmp_path: Path, no_fitting) -> None:
+    """Фиксы по выбору пользователя: без подгонки и автофиксов есть L03-ошибки → выбираем их индексы → после refine их нет."""
     from deckforge.pipeline import refine_deck
 
     cfg = RunConfig(template=template_path("VK Tech"), content_pack=REPO / "examples" / "content_pack",

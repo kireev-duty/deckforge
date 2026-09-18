@@ -6,6 +6,7 @@
 
 from __future__ import annotations
 
+import shutil
 import threading
 import time
 import uuid
@@ -40,6 +41,7 @@ class Job:
     started_s: float = 0.0
     future: Future | None = None
     _lock: threading.Lock = field(default_factory=threading.Lock, repr=False)
+    fix_lock: threading.Lock = field(default_factory=threading.Lock, repr=False)  # refine_deck по одному на job
 
     def say(self, msg: str) -> None:
         with self._lock:
@@ -72,6 +74,11 @@ class JobStore:
 
     def get(self, job_id: str) -> Job | None:
         return self._jobs.get(job_id)
+
+    def discard(self, job: Job) -> None:
+        """Убрать job, который не дошёл до запуска (вход не прошёл проверку): из реестра и с диска."""
+        self._jobs.pop(job.id, None)
+        shutil.rmtree(job.dir, ignore_errors=True)
 
     def list(self) -> list[Job]:
         return sorted(self._jobs.values(), key=lambda j: j.created, reverse=True)

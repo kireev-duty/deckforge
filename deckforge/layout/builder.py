@@ -14,6 +14,7 @@ from dataclasses import dataclass, field
 
 from deckforge.core.ir import (
     Archetype,
+    ChartSpec,
     DeckIR,
     DeckOutline,
     Element,
@@ -23,21 +24,23 @@ from deckforge.core.ir import (
     SlideIR,
     Slot,
     SlotKind,
+    TableSpec,
     TemplateDNA,
     TextRun,
 )
 from deckforge.core.strategy import Strategy
-from deckforge.layout.exemplar_picker import pick_exemplar
+from deckforge.layout.exemplar_picker import STRUCTURAL, has_image, pick_exemplar
 from deckforge.core.units import EMU_PER_PT
 from deckforge.layout.fitting import (
     DIGIT_WIDTH, GLYPH_WIDTH, MIN_SIZE_SCALE, NUMBER_MIN_SCALE, UNIT_SCALE, chars_at_scale, fit_number, fit_size,
-    normalize, shorten, slot_capacity, split_label_body, split_number_unit,
+    normalize, shorten, slot_capacity, split_label_body, split_number_unit, xml_safe,
 )
 from deckforge.layout.planner import STEP_NUMBERING, PlanResult, plan
 
 log = logging.getLogger(__name__)
 
 MIN_CONTINUATION = 2  # меньше пунктов на слайд-продолжение не выносим
+MAX_RETRIES = 3  # сколько образцов перебрать, если в выбранный не лёг ни один пункт
 LABEL_MIN_PT, LABEL_MAX_PT = 10.0, 14.0  # подпись KPI внутри фигуры с цифрой — в этих пределах
 KPI_IN_LABEL_SCALE = 1.8  # значение KPI в label-слоте карточки крупнее подписи максимум во столько раз
 LINE_SPACING = 1.2  # высота строки в кеглях — как в оценке вместимости слотов (parsing) и L03
@@ -81,7 +84,22 @@ def build_deck_ir(
     queue = list(planned.slides)
     while queue:
         s = queue.pop(0)
-        e, score = pick_exemplar(s, exemplars, strategy, slide_w * slide_h, used)
+        # образец, в который не легло ни одного пункта (у VK Tech «cards»-слайд портфеля — один title-слот),
+        # не берём: пробуем следующих по скору, иначе контент пропал бы молча, а продолжение с тем же
+        # образцом крутилось бы до IMPOSSIBLE — сотни пустых слайдов
+        tried: set[str] = set()
+        first: tuple | None = None  # лучший по скору образец — к нему возвращаемся, если и остальные не вместили
+        while True:
+            e, score = pick_exemplar(s, exemplars, strategy, slide_w * slide_h, used, exclude=tried)
+            if e is None:
+                if first is not None:
+                    e, score, slide_ir, leftover = first
+                break
+            slide_ir, leftover = build_slide(len(result.ir.slides), s, e, slide_h, style or {})
+            if leftover is None or not _nothing_placed(s, leftover) or len(tried) >= MAX_RETRIES:
+                break
+            first = first or (e, score, slide_ir, leftover)
+            tried.add(e.id)
         result.choices.append(Choice(s.idx, s.archetype.value, e.id if e else None, e.archetype.value if e else None, score))
         if e is None:
             msg = f"слайд {s.idx} ({s.archetype.value} «{s.title[:40]}»): нет подходящего образца — пропущен"
@@ -89,17 +107,31 @@ def build_deck_ir(
             log.warning(msg)
             continue
         used[e.id] = used.get(e.id, 0) + 1
-        slide_ir, leftover = build_slide(len(result.ir.slides), s, e, slide_h, style or {})
         result.ir.slides.append(slide_ir)
+        if leftover is not None and _nothing_placed(s, leftover) and leftover.archetype == s.archetype:
+            msg = (f"слайд {s.idx} «{s.title[:40]}»: в шаблоне нет образца со слотами под этот контент "
+                   f"({_n_items(leftover)} пунктов не размещены, образец {e.id})")
+            result.warnings.append(msg)
+            log.warning(msg)
+            continue  # в очередь не ставим: тот же остаток с тем же архетипом пошёл бы по кругу
         if leftover is not None:
             # в образец не влезло — продолжение на следующем слайде; даже одинокий пункт: лишний слайд
             # заметен и правится пользователем, потерянный факт — нет
-            n_left = len(leftover.kpis) + len(leftover.bullets) + len(leftover.steps)
+            n_left = _n_items(leftover)
             queue.insert(0, leftover)
             result.warnings.append(f"слайд {s.idx} «{s.title[:40]}»: {n_left} пунктов перенесены на продолжение"
                                    + (f" (одинокий пункт: образец {e.id} тесен)" if n_left < MIN_CONTINUATION else ""))
             log.warning(result.warnings[-1])
     return result
+
+
+def _n_items(s: OutlineSlide) -> int:
+    return len(s.kpis) + len(s.bullets) + len(s.steps)
+
+
+def _nothing_placed(s: OutlineSlide, leftover: OutlineSlide) -> bool:
+    """Остаток равен исходному контенту — образец не вместил ни пункта."""
+    return _n_items(leftover) >= _n_items(s) > 0
 
 
 # ──────────────────────────── один слайд ────────────────────────────
@@ -111,6 +143,15 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
     elements: list[Element] = []
     left_kpis: list = []
     left_items: list[str] = []
+    if e.archetype in STRUCTURAL and s.archetype not in STRUCTURAL and not by_kind[SlotKind.BODY]:
+        # контентный слайд на титульном/разделительном образце (последний фолбэк picker'а на шаблоне
+        # без текстовых образцов): подзаголовок работает телом, иначе контент некуда класть
+        by_kind[SlotKind.BODY], by_kind[SlotKind.SUBTITLE] = by_kind[SlotKind.SUBTITLE][:1], by_kind[SlotKind.SUBTITLE][1:]
+    if (s.chart or s.table) and not (by_kind[SlotKind.CHART] or by_kind[SlotKind.TABLE]) and by_kind[SlotKind.BODY]:
+        # в шаблоне нет ни одного data-слота — нативный объект встаёт на место самого крупного текстового блока
+        host = max(by_kind[SlotKind.BODY], key=lambda x: x.box.w * x.box.h)
+        by_kind[SlotKind.BODY] = [b for b in by_kind[SlotKind.BODY] if b is not host]
+        by_kind[SlotKind.CHART if s.chart else SlotKind.TABLE].append(host)
 
     def put(slot: Slot, text: str, bullet: bool = False) -> None:
         if el := text_element(slot, text, style, bullet=bullet):
@@ -130,6 +171,9 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
         sub = (s.quote_author or s.title) if quote_as_title else s.subtitle
         if sub:
             put(subtitles[0], sub)
+    elif s.subtitle and s.archetype in STRUCTURAL and e.archetype not in STRUCTURAL and by_kind[SlotKind.BODY]             and not (s.bullets or s.steps or s.kpis or s.paragraphs):
+        # титул/финал на текстовом образце (в шаблоне нет титульного): подзаголовок — в тело, иначе пропадёт
+        put(by_kind[SlotKind.BODY][0], s.subtitle)
 
     # данные
     for slot in by_kind[SlotKind.CHART] + by_kind[SlotKind.TABLE]:
@@ -137,8 +181,9 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
             chart = s.chart
             if chart is not None and normalize(chart.title).lower() == normalize(s.title).lower():
                 chart = chart.model_copy(update={"title": ""})  # заголовок слайда не дублируем над графиком
-            elements.append(Element(slot_id=slot.id, kind=slot.kind, box=slot.box, chart=chart, table=s.table,
-                                    style_overrides=dict(style)))
+            kind = SlotKind.CHART if chart is not None else SlotKind.TABLE  # хост может быть body-слотом (фолбэк)
+            elements.append(Element(slot_id=slot.id, kind=kind, box=slot.box, chart=_clean_chart(chart),
+                                    table=_clean_table(s.table), style_overrides=dict(style)))
             break
     numbers, labels, captions = by_kind[SlotKind.NUMBER], by_kind[SlotKind.LABEL], by_kind[SlotKind.CAPTION]
     bodies = by_kind[SlotKind.BODY]
@@ -214,6 +259,8 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
         for item, lab in zip(items, free_labels):
             put(lab, item)
         left_items = (s.steps if numbered else items)[len(free_labels):]
+    elif items:  # ни body, ни label — пункты некуда класть: весь список в остаток, а не в никуда
+        left_items = list(s.steps if numbered else items)
     elif s.paragraphs and bodies:
         put_list(bodies[0], s.paragraphs, bullet=False)
 
@@ -223,16 +270,19 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
             elements.append(Element(slot_id=num_slot.id, kind=num_slot.kind, box=num_slot.box,
                                     paragraphs=[Paragraph(runs=[TextRun(text=str(idx + 1))])]))
 
-    # картинка — только первый picture-слот
-    if s.image and s.image.path and by_kind[SlotKind.PICTURE]:
+    # картинка — только первый picture-слот; файла нет — слот остаётся пустым, рендер его очистит
+    if has_image(s) and by_kind[SlotKind.PICTURE]:
         pic = by_kind[SlotKind.PICTURE][0]
         elements.append(Element(slot_id=pic.id, kind=pic.kind, box=pic.box, image_path=s.image.path))
 
     slide_ir = SlideIR(idx=idx, exemplar_id=e.id, archetype=e.archetype, elements=elements, outline_ref=s.idx,
-                       notes=s.speaker_notes)
+                       notes=xml_safe(s.speaker_notes))
     if not (left_kpis or left_items):
         return slide_ir, None
-    leftover = OutlineSlide(idx=s.idx, archetype=s.archetype, title=f"{s.title} (продолжение)", section=s.section,
+    # остаток со структурного слайда (title/section/closing: буллеты в подписи титула) — обычным текстовым
+    # слайдом, иначе пункты капали бы по одному в подпись каждого следующего титульного образца
+    arch = s.archetype if s.archetype not in STRUCTURAL else (Archetype.KPI if left_kpis else Archetype.BULLETS)
+    leftover = OutlineSlide(idx=s.idx, archetype=arch, title=f"{s.title} (продолжение)", section=s.section,
                             kpis=left_kpis, sources=list(s.sources))
     if numbered:
         leftover.steps = left_items
@@ -323,6 +373,25 @@ def list_element(slot: Slot, items: list[str], style: dict, bullet: bool) -> Ele
         overrides["size_pt"] = round(slot.size_pt * scale, 1)
     paras = [Paragraph(runs=[TextRun(text=shorten(t, per_item))], bullet=bullet) for t in items]
     return Element(slot_id=slot.id, kind=slot.kind, box=slot.box, style_overrides=overrides, paragraphs=paras)
+
+
+def _clean_chart(chart: ChartSpec | None) -> ChartSpec | None:
+    """Тексты диаграммы — через ту же чистку, что и слоты (XML-недопустимые символы, пробелы)."""
+    if chart is None:
+        return None
+    return chart.model_copy(update={
+        "title": normalize(chart.title), "categories": [normalize(c) for c in chart.categories],
+        "series": {normalize(k) or f"ряд {i + 1}": v for i, (k, v) in enumerate(chart.series.items())},
+        "unit": normalize(chart.unit) if chart.unit else None,
+        "x_label": normalize(chart.x_label) if chart.x_label else None,
+        "y_label": normalize(chart.y_label) if chart.y_label else None,
+    })
+
+
+def _clean_table(table: TableSpec | None) -> TableSpec | None:
+    if table is None:
+        return None
+    return TableSpec(header=[normalize(h) for h in table.header], rows=[[normalize(c) for c in r] for r in table.rows])
 
 
 def pair_labels(bodies: list[Slot], labels: list[Slot]) -> dict[str, Slot]:

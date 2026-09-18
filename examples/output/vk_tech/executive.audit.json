@@ -1,5 +1,5 @@
 {
- "deck_path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\executive.pptx",
+ "deck_path": "executive.pptx",
  "findings": [
   {
    "check_id": "T02_font_size",

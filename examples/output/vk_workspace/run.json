@@ -1,8 +1,8 @@
 {
  "created": "2026-09-18T08:00:19+00:00",
  "config": {
-  "template": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\data\\templates\\VK_WorkSpace_Клиентская_конференция_Шаблон_03.pptx",
-  "content_pack": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\content_pack",
+  "template": "data/templates/VK_WorkSpace_Клиентская_конференция_Шаблон_03.pptx",
+  "content_pack": "examples/content_pack",
   "purpose": "product",
   "audience": "руководители продуктовых направлений",
   "language": "ru",
@@ -23,7 +23,7 @@
    "pdf",
    "html"
   ],
-  "output_dir": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_workspace",
+  "output_dir": "examples/output/vk_workspace",
   "seed": 42,
   "render_png": true,
   "render_dpi": 72

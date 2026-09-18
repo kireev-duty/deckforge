@@ -64,6 +64,16 @@ uvicorn deckforge.api.app:app --reload
 
 Результат прогона (`out/run/<name>/` или `out/ui/runs/<время>/`): `outline.json`, `dna.json`, на каждую стратегию — `<strategy>.pptx`, `.pdf`, `.html`, `.ir.json`, `.audit.json`, `.manifest.json` (провенанс: версии скиллов/моделей/стратегии, план, образцы, автофиксы, картинки, тайминги) и PNG в `<strategy>/`; сгенерированные иллюстрации — в `images/` (кэш по sha1 входов, повторный прогон их не платит); сводка — `compare.md`, `run.json`.
 
+### UI
+
+Один экран, пять шагов: шаблон (датасет или свой .pptx) → бриф и файлы контент-пакета → три варианта с превью → аудит с выбором фиксов и подсветкой находок на слайде → скачивание .pptx / .pdf / .html / json.
+
+![Шаблон и параметры: палитра по использованию, шрифты, шкала, образцы по архетипам, контактный лист](docs/img/ui_1_setup.png)
+
+![Варианты: сводка по стратегиям и PNG-превью каждой колоды](docs/img/ui_2_variants.png)
+
+![Аудит: метрики, фиксы по выбору (безопасные и «по выбору»), подсветка находок на слайде](docs/img/ui_3_audit.png)
+
 HTML-экспорт — собственный рендер по XML готовой колоды (`deckforge/export/html.py`), а не растр: один самодостаточный файл, текст остаётся текстом, диаграммы — SVG, таблицы — `<table>`, картинки вшиты (WebP), фон/декор мастера и лейаута на месте. Открывается с `file://` в Chrome, Firefox, Яндекс; ←/→ — листать, F — режим показа, печать — слайд на страницу. Встроенные шрифты датасета (Play) хранятся в .pptx в сжатом EOT и в HTML не вшиваются — при наличии сети подключаются с Google Fonts (OFL), офлайн — Arial. Примеры: `examples/output/<template>/<strategy>.html`.
 
 ## Docker
@@ -78,7 +88,7 @@ docker compose run --rm cli parse "data/templates/VK Tech шаблон.pptx"
 
 `./data` (шаблоны из Git LFS), `./examples`, `./out` (в т.ч. кэш VLM-разметки `out/archetypes`) и `./configs` монтируются с хоста. Шрифтов Play/Montserrat в образе нет — LibreOffice подставляет DejaVu/Liberation, поэтому PDF/PNG из контейнера чуть отличаются от локальных; .pptx и .html от этого не зависят.
 
-Инструменты разработчика: `tools/pptx_xray.py` (структура шаблона), `tools/render_deck.py` (PNG-превью и PDF), `tools/build_variants.py` (три стратегии на одном контенте: `examples/content_pack/` × шаблон → `out/variants/`). Примеры: `examples/output/<template>/` — 4 шаблона × 3 стратегии (день 11: .pptx/.pdf с судьёй и картинками; .html добавлен командой `export` поверх тех же колод), `examples/pitch/` — бриф питча для защиты (`configs/pitch.yaml`).
+Инструменты разработчика: `tools/pptx_xray.py` (структура шаблона), `tools/render_deck.py` (PNG-превью и PDF), `tools/build_variants.py` (три стратегии на одном контенте: `examples/content_pack/` × шаблон → `out/variants/`). Примеры: `examples/output/<template>/` — 4 шаблона × 3 стратегии (.pptx/.pdf/.html с судьёй и картинками, один outline на все шаблоны — `configs/final/*.yaml`; перегенерированы финальным кодом, пути в manifest относительные), `examples/pitch/` — бриф питча для защиты (`configs/pitch.yaml`).
 
 ## Стратегии вёрстки
 

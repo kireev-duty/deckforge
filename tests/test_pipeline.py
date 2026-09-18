@@ -181,6 +181,9 @@ def test_build_deck_matches_run(template_path, tmp_path: Path) -> None:
     assert m["exports"] == {"pptx": "executive.pptx"} and deck.pdf is None
     # пути в manifest — относительно папки прогона (примеры в репо без C:\Users\… машины сборки)
     assert m["outline"] == "outline.json" and m["audit"]["path"] == "executive.audit.json"
+    assert json.loads(deck.audit.read_text("utf-8"))["deck_path"] == "executive.pptx"
+    assert ":" not in json.loads((cfg.output_dir / "dna.json").read_text("utf-8"))["source_path"]
+    assert deck.load_report().deck_path == "executive.pptx" and parsed.dna.source_path == str(parsed.template)
     if Path.cwd().resolve() == REPO.resolve():  # шаблон и контент-пакет — относительно репо (cwd)
         assert m["template"]["path"] == "data/templates/VK Tech шаблон.pptx" and m["content_pack"] == "examples/content_pack"
     assert deck.load_report() is not None and len(deck.load_ir().slides) == deck.stats["slides"]

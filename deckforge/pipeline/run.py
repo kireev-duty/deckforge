@@ -230,7 +230,9 @@ def parse_template(template: Path, out_dir: Path | None = None) -> ParsedTemplat
     dna = build_dna(template, exemplars, tokens)
     if out_dir is not None:
         out_dir.mkdir(parents=True, exist_ok=True)
-        (out_dir / "dna.json").write_text(dna.model_dump_json(indent=1), "utf-8")
+        # в файле — путь шаблона относительно репо/папки прогона (см. rel_path); в памяти остаётся абсолютный
+        (out_dir / "dna.json").write_text(
+            dna.model_copy(update={"source_path": rel_path(template, out_dir)}).model_dump_json(indent=1), "utf-8")
     meta = {"id": tokens.template_id, "path": str(template), "sha1": sha1_of(template)}
     return ParsedTemplate(template, exemplars, tokens, dna, _style(tokens), meta, round(time.perf_counter() - t0, 3))
 
@@ -320,7 +322,7 @@ def build_deck(ctx: RunContext, strategy_name: str, progress: Progress | None = 
         skills_used["audit_judge"] = _skill_version(ctx.client, "audit_judge")
     if report is not None:
         audit_path = out_dir / f"{strategy.name}.audit.json"
-        audit_path.write_text(report.model_dump_json(indent=1), "utf-8")
+        audit_path.write_text(_portable_report(report, out_dir), "utf-8")
         audit_info = {**audit_summary(report), "path": rel_path(audit_path, out_dir),
                       "kind": "deterministic+contextual" if "audit_contextual" in deck_timings else "deterministic",
                       **audit_info}
@@ -429,7 +431,7 @@ def refine_deck(deck: DeckResult, parsed: ParsedTemplate, selected: Iterable[int
             if err:
                 deck.warnings.append(err)
             timings["export_html"] = round(time.perf_counter() - t0, 3)
-    deck.audit.write_text(new_report.model_dump_json(indent=1), "utf-8")  # type: ignore[union-attr]
+    deck.audit.write_text(_portable_report(new_report, deck.pptx.parent), "utf-8")  # type: ignore[union-attr]
 
     prev = manifest.get("audit", {}).get("autofix") or {"applied": 0, "skipped": 0, "items": [],
                                                         "before": info["before"], "after": info["before"]}
@@ -504,9 +506,13 @@ def run(
 def run_summary(cfg: RunConfig, result: RunResult) -> dict:
     """Содержимое run.json — сводка прогона (читают UI и API); пути — относительно папки прогона."""
     out = result.output_dir
+    config = json.loads(cfg.model_dump_json())
+    for key in ("template", "content_pack", "output_dir"):  # RunConfig резолвит пути в абсолютные — в run.json относительно cwd
+        if config.get(key):
+            config[key] = rel_path(config[key], Path.cwd())
     return {
         "created": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-        "config": json.loads(cfg.model_dump_json()),
+        "config": config,
         "template": {**result.parsed.meta, "path": rel_path(result.parsed.template, out)} if result.parsed else {},
         "outline": rel_path(result.outline_path, out),
         "decks": [{"strategy": d.strategy, "pptx": rel_path(d.pptx, out), "manifest": rel_path(d.manifest, out),
@@ -519,6 +525,11 @@ def run_summary(cfg: RunConfig, result: RunResult) -> dict:
 
 
 # ──────────────────────────── вспомогательное ────────────────────────────
+
+
+def _portable_report(report: AuditReport, base: Path) -> str:
+    """`<strategy>.audit.json` — с путём колоды относительно папки прогона (сам отчёт в памяти не меняется)."""
+    return report.model_copy(update={"deck_path": rel_path(report.deck_path, base)}).model_dump_json(indent=1)
 
 
 def _autofix(ir: DeckIR, report: AuditReport, parsed: ParsedTemplate, pptx_out: Path,

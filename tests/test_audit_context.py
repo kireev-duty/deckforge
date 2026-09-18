@@ -9,7 +9,7 @@ from deckforge.audit import audit_deck, report_markdown, summary
 from deckforge.audit.context import AuditContext
 from deckforge.audit.deterministic import CHECKS
 from deckforge.audit.text_metrics import TextMeasurer, fonts_available
-from deckforge.core.ir import DeckOutline
+from deckforge.core.ir import DeckIR, DeckOutline
 from deckforge.core.strategy import load_strategy
 from deckforge.core.units import EMU_PER_INCH
 from deckforge.layout import build_deck_ir
@@ -83,3 +83,23 @@ def test_audit_generated_deck_runs_all_checks(template_path, tmp_path: Path) -> 
         assert 0 <= f.slide_idx < len(ir.slides) and f.message
     print(report_markdown(report))
     print(summary(report))
+
+
+def test_t05_ignores_empty_placeholders_of_exemplar(template_path, tmp_path: Path) -> None:
+    """VK Education closing (slide53): пустой QR-плейсхолдер образца попал в fixed; писатель его убирает
+    (в редакторе была бы подсказка), а T05 не считает это удалением фиксированного элемента."""
+    from deckforge.core.ir import Element, Paragraph, SlideIR, SlotKind, TextRun
+
+    pptx = template_path("VK Education")
+    dna = build_dna(pptx)
+    ctx_src = AuditContext(pptx, dna)  # только ради разбора образцов шаблона
+    e = next((e for e in dna.exemplars if ctx_src.exemplar_empty_placeholders(e) & set(e.fixed)
+              and any(s.kind == SlotKind.TITLE for s in e.slots)), None)
+    assert e is not None, "ожидался образец с пустым плейсхолдером среди fixed"
+    title = next(s for s in e.slots if s.kind == SlotKind.TITLE)
+    el = Element(slot_id=title.id, kind=SlotKind.TITLE, box=title.box, paragraphs=[Paragraph(runs=[TextRun(text="Т")])])
+    ir = DeckIR(template_id=dna.template_id, strategy="test", slide_w=dna.slide_w, slide_h=dna.slide_h,
+                slides=[SlideIR(idx=0, exemplar_id=e.id, archetype=e.archetype, elements=[el], outline_ref=0)])
+    out = render_pptx(ir, pptx, dna.exemplars, tmp_path / "closing.pptx")
+    report = audit_deck(out, dna, ir, checks=["T05"])
+    assert not report.findings, [f.message for f in report.findings]

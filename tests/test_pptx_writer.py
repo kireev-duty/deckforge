@@ -197,6 +197,30 @@ def test_unfilled_text_placeholder_is_removed(template_path, tmp_path: Path):
                if sh.has_text_frame and "SLIDE_NUMBER" in str(sh.placeholder_format.type))
 
 
+def test_empty_placeholders_of_exemplar_are_dropped(template_path, tmp_path: Path):
+    """VK Education slide53 (closing): автор шаблона оставил пустые плейсхолдеры QR-картинки и подписи —
+    не слоты (fixed / footer). В показе их не видно, в редакторе PowerPoint — подсказки лейаута;
+    писатель их убирает, заголовок и номер слайда остаются."""
+    tpl = template_path("VK Education")
+    exemplars = [p.to_exemplar() for p in classify_template(tpl)]
+    src = Presentation(str(tpl))
+    def empty_picture_ph(slide) -> bool:
+        return any(sh.is_placeholder and "PICTURE" in str(sh.placeholder_format.type)
+                   and sh.element.find(".//a:blip", NS) is None for sh in slide.shapes)
+
+    idx, e = next((i, e) for i, e in enumerate(exemplars)
+                  if empty_picture_ph(src.slides[i]) and any(s.kind == SlotKind.TITLE for s in e.slots))
+    title = next(s for s in e.slots if s.kind == SlotKind.TITLE)
+    el = Element(slot_id=title.id, kind=SlotKind.TITLE, box=title.box, paragraphs=[Paragraph(runs=[TextRun(text="Т")])])
+    slides = [SlideIR(idx=0, exemplar_id=e.id, archetype=e.archetype, elements=[el], outline_ref=0)]
+    prs = Presentation(str(render_pptx(_deck(exemplars, slides), tpl, exemplars, tmp_path / "empty_ph.pptx")))
+    for sh in prs.slides[0].shapes:
+        if not sh.is_placeholder or "SLIDE_NUMBER" in str(sh.placeholder_format.type):
+            continue
+        assert sh.has_text_frame and sh.text_frame.text.strip(), f"пустой плейсхолдер остался: {sh.name}"
+    assert any(sh.has_text_frame and sh.text_frame.text == "Т" for sh in prs.slides[0].shapes)
+
+
 def test_picture_fill_and_crop(template_path, tmp_path: Path):
     tpl = template_path("VK Tech")
     exemplars = [p.to_exemplar() for p in classify_template(tpl)]

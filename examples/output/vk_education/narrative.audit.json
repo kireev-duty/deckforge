@@ -106,7 +106,7 @@
    "slide_idx": 5,
    "element_id": null,
    "box": null,
-   "message": "Заголовок называет тему процесса, а не содержит вывод о его ценности или результате.",
+   "message": "Заголовок называет тему процесса, а не содержит вывод о его эффективности или значимости.",
    "autofix": null,
    "evidence": {
     "question": "Заголовок содержит вывод, а не просто называет тему",
@@ -188,7 +188,7 @@
    "slide_idx": 9,
    "element_id": null,
    "box": null,
-   "message": "Слайд содержит отзыв, а не описание рисков и их закрытия, заявленных в заголовке.",
+   "message": "Слайд содержит отзыв о пользе сервиса, а не информацию о рисках запуска и их закрытии, как заявлено в заголовке.",
    "autofix": null,
    "evidence": {
     "question": "Содержимое слайда соответствует заголовку",
@@ -202,7 +202,7 @@
    "slide_idx": 9,
    "element_id": null,
    "box": null,
-   "message": "Слайд с отзывом логически не связан с заголовком о рисках запуска, он скорее относится к предыдущему слайду о результатах.",
+   "message": "Слайд с отзывом логически не связан с заголовком о рисках запуска, нарушая последовательность повествования.",
    "autofix": null,
    "evidence": {
     "question": "Слайд логически связан с соседними",
@@ -382,20 +382,6 @@
    }
   },
   {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 12,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок называет тему (риски и закрытие), а не содержит вывод (например, «Риски запуска минимизированы планом»).",
-   "autofix": null,
-   "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": ""
-   }
-  },
-  {
    "check_id": "D05_fill",
    "kind": "deterministic",
    "severity": "warning",
@@ -406,42 +392,6 @@
    "autofix": "change_exemplar",
    "evidence": {
     "fill": 0.229
-   }
-  },
-  {
-   "check_id": "I02_placeholder_text",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 14,
-   "element_id": "1083",
-   "box": {
-    "x": 658813,
-    "y": 692150,
-    "w": 1081088,
-    "h": 1081088
-   },
-   "message": "Пустой плейсхолдер «pic» — в редакторе покажется подсказка лейаута",
-   "autofix": "drop_shape",
-   "evidence": {
-    "pattern": "empty_placeholder"
-   }
-  },
-  {
-   "check_id": "I02_placeholder_text",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 14,
-   "element_id": "1084",
-   "box": {
-    "x": 658813,
-    "y": 4161565,
-    "w": 5437187,
-    "h": 355600
-   },
-   "message": "Пустой плейсхолдер «body» — в редакторе покажется подсказка лейаута",
-   "autofix": "drop_shape",
-   "evidence": {
-    "pattern": "empty_placeholder"
    }
   }
  ],
@@ -482,5 +432,5 @@
   "C10_table_legend_relevant",
   "C11_flow"
  ],
- "duration_s": 48.979
+ "duration_s": 87.43
 }

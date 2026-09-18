@@ -167,9 +167,14 @@ def check_T05(ctx: AuditContext) -> list[Finding]:
     for slide in ctx.slides:
         if slide.exemplar is not None:
             ref = ctx.exemplar_shapes(slide.exemplar)
+            empty_ph = ctx.exemplar_empty_placeholders(slide.exemplar)
             for fid in slide.exemplar.fixed:
                 bb = ref.get(fid)
                 if bb is None or _is_zone_caption(ctx, slide, fid, bb):
+                    continue
+                if fid in empty_ph:
+                    # пустой плейсхолдер образца (QR-код без картинки у VK Education): в показе его нет,
+                    # рендер убирает подсказку редактора — сдвига/удаления фиксированного элемента тут нет
                     continue
                 sh = slide.by_id(fid)
                 if sh is None:

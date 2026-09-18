@@ -1,5 +1,5 @@
 {
- "created": "2026-09-18T07:53:57+00:00",
+ "created": "2026-09-18T13:11:33+00:00",
  "template": {
   "id": "6576a887482e",
   "path": "data/templates/Шаблон презентации VK Education.pptx",
@@ -25,90 +25,90 @@
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 7.265292899999622,
-   "prompt_tokens": 2781,
-   "completion_tokens": 418,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 14.076291100000162,
-   "prompt_tokens": 2796,
-   "completion_tokens": 452,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 14.242615600000136,
+   "duration_s": 7.424087800001871,
    "prompt_tokens": 2715,
-   "completion_tokens": 526,
+   "completion_tokens": 482,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 14.617944200000238,
+   "duration_s": 7.78636109999934,
    "prompt_tokens": 2734,
-   "completion_tokens": 453,
+   "completion_tokens": 430,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 9.650593500000468,
+   "duration_s": 7.266591600000538,
    "prompt_tokens": 2738,
-   "completion_tokens": 497,
+   "completion_tokens": 515,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 7.361699900000531,
+   "duration_s": 7.550318400000833,
    "prompt_tokens": 2757,
-   "completion_tokens": 431,
+   "completion_tokens": 445,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 9.112606400000004,
+   "duration_s": 18.017145099998743,
+   "prompt_tokens": 2828,
+   "completion_tokens": 433,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 7.6159900999991805,
    "prompt_tokens": 2784,
-   "completion_tokens": 481,
+   "completion_tokens": 465,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 6.855505900000026,
-   "prompt_tokens": 2767,
-   "completion_tokens": 454,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 9.37462620000042,
+   "duration_s": 8.043990400001348,
    "prompt_tokens": 2764,
-   "completion_tokens": 491,
+   "completion_tokens": 508,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 15.219773999999234,
+   "duration_s": 14.82041549999849,
    "prompt_tokens": 2718,
    "completion_tokens": 370,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 44.69297700000243,
+   "prompt_tokens": 2796,
+   "completion_tokens": 449,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 42.58697910000046,
+   "prompt_tokens": 2767,
+   "completion_tokens": 436,
    "ok": true,
    "error": null
   }
@@ -274,13 +274,12 @@
  },
  "audit": {
   "errors": 0,
-  "warnings": 15,
+  "warnings": 13,
   "info": 1,
   "contextual": 0,
   "by_check": {
    "D02_bullet_words": 1,
    "D05_fill": 4,
-   "I02_placeholder_text": 2,
    "L04_text_clipped": 2,
    "L05_off_grid": 1,
    "T02_font_size": 4,
@@ -292,23 +291,22 @@
    5,
    6,
    7,
-   8,
-   9
+   8
   ],
   "checks_run": 35,
-  "duration_s": 38.331,
+  "duration_s": 60.975,
   "path": "executive.audit.json",
   "kind": "deterministic+contextual",
   "autofix": {
    "applied": 0,
-   "skipped": 6,
+   "skipped": 4,
    "before": {
     "errors": 0,
-    "warnings": 15
+    "warnings": 13
    },
    "after": {
     "errors": 0,
-    "warnings": 15
+    "warnings": 13
    },
    "items": [
     {
@@ -338,20 +336,6 @@
      "check_id": "D02_bullet_words",
      "fix": "refill_slot",
      "reason": "нечего менять"
-    },
-    {
-     "slide_idx": 9,
-     "element_id": "1083",
-     "check_id": "I02_placeholder_text",
-     "fix": "drop_shape",
-     "reason": "элемент не наш (не в IR)"
-    },
-    {
-     "slide_idx": 9,
-     "element_id": "1084",
-     "check_id": "I02_placeholder_text",
-     "fix": "drop_shape",
-     "reason": "элемент не наш (не в IR)"
     }
    ]
   }
@@ -370,15 +354,15 @@
   "html": "executive.html"
  },
  "timings_s": {
-  "parse": 2.223,
+  "parse": 0.398,
   "outline": 0.0,
-  "layout": 0.022,
-  "render": 3.494,
-  "audit": 1.672,
-  "autofix": 0.005,
-  "png": 11.776,
-  "audit_contextual": 36.677,
-  "export_pdf": 0.005,
-  "export_html": 2.745
+  "layout": 0.005,
+  "render": 0.733,
+  "audit": 0.361,
+  "autofix": 0.001,
+  "png": 4.746,
+  "audit_contextual": 60.617,
+  "export_pdf": 0.003,
+  "export_html": 0.698
  }
 }

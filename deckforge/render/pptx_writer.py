@@ -138,6 +138,26 @@ class DeckWriter:
                     no_fill.addnext(ln)
 
     @staticmethod
+    def _drop_empty_placeholders(slide: Slide) -> None:
+        """Убрать плейсхолдеры слайда, в которых после заполнения ничего нет: ни текста, ни поля, ни картинки.
+
+        Такие остаются от образца, где автор шаблона сам оставил пустые плейсхолдеры (VK Education,
+        closing: QR-код и подпись под ним; слот-«поле» не заполняется по KEEP_IF_UNFILLED). В показе и в
+        PDF их не видно, но в редакторе PowerPoint они показывают подсказку лейаута («Текст слайда»,
+        иконка вставки картинки) — колода выглядит недоделанной. Поля (номер, дата) не трогаем.
+        Лейаутные пары стёрты `_strip_layout_prompts`, так что LibreOffice на месте удалённого ничего не нарисует.
+        """
+        for sp in list(slide.shapes._spTree.iter(P + "sp")):
+            ph = sp.find("p:nvSpPr/p:nvPr/p:ph", NS)
+            if ph is None or ph.get("type") in LAYOUT_FIELD_PH:
+                continue
+            has_text = any((t.text or "").strip() for t in sp.iter(A + "t")) or sp.find(".//a:fld", NS) is not None
+            has_image = sp.find(".//a:blip", NS) is not None
+            # своя заливка/обводка на слайде — это уже элемент дизайна, а не пустая подсказка
+            if not has_text and not has_image and not _has_visible_frame(sp):
+                _remove(sp)
+
+    @staticmethod
     def _materialize_placeholders(slide: Slide) -> None:
         """Перенести в плейсхолдеры слайда то, что они наследуют от плейсхолдеров лейаута: xfrm,
         заливку, обводку. После этого лейаут можно «погасить» (см. `_strip_layout_prompts`), а вид
@@ -204,6 +224,7 @@ class DeckWriter:
         # связи переносим до заполнения: иначе rId новых картинок/чартов коллидируют с rId образца
         self._copy_rels(src, slide.part, slide.part._element)
         self._fill(slide, slide_ir, exemplar)
+        self._drop_empty_placeholders(slide)
         self._materialize_placeholders(slide)
         self._prune_rels(slide.part)
         if slide_ir.notes:

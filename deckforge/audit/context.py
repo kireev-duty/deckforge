@@ -121,25 +121,34 @@ class AuditContext:
 
     def exemplar_shapes(self, exemplar: Exemplar) -> dict[str, tuple[int, int, int, int]]:
         """id → bbox фигур слайда-образца в шаблоне."""
-        return {sid: bb for sid, (bb, _) in self._exemplar_shapes(exemplar.id).items()}
+        return {sid: bb for sid, (bb, _, _) in self._exemplar_shapes(exemplar.id).items()}
 
     def exemplar_texts(self, exemplar: Exemplar) -> dict[str, str]:
         """id → текст фигур слайда-образца в шаблоне."""
-        return {sid: text for sid, (_, text) in self._exemplar_shapes(exemplar.id).items()}
+        return {sid: text for sid, (_, text, _) in self._exemplar_shapes(exemplar.id).items()}
 
-    def _exemplar_shapes(self, exemplar_id: str) -> dict[str, tuple[tuple[int, int, int, int], str]]:
+    def exemplar_empty_placeholders(self, exemplar: Exemplar) -> set[str]:
+        """id плейсхолдеров образца, в которых в самом шаблоне ничего нет (ни текста, ни картинки):
+        в показе их не видно, рендер их убирает — это не удаление фиксированного элемента."""
+        return {sid for sid, (_, _, empty_ph) in self._exemplar_shapes(exemplar.id).items() if empty_ph}
+
+    def _exemplar_shapes(self, exemplar_id: str) -> dict[str, tuple[tuple[int, int, int, int], str, bool]]:
         cache = self.__dict__.setdefault("_exemplar_cache", {})
         if exemplar_id in cache:
             return cache[exemplar_id]
         exemplar = self.exemplars[exemplar_id]
-        out: dict[str, tuple[tuple[int, int, int, int], str]] = {}
+        out: dict[str, tuple[tuple[int, int, int, int], str, bool]] = {}
         tp = self.template_pkg
         if tp is not None and exemplar.source_index < len(tp.slides):
             root = tp.xml(tp.slides[exemplar.source_index])
             for sp in iter_shapes(root.find("p:cSld/p:spTree", NS)):
                 bb = absolute_bbox(sp)
-                if bb is not None:
-                    out[shape_id(sp)] = (bb, shape_text(sp).strip())
+                if bb is None:
+                    continue
+                text = shape_text(sp).strip()
+                empty_ph = (sp.find("p:nvSpPr/p:nvPr/p:ph", NS) is not None and not text
+                            and sp.find(".//a:blip", NS) is None and sp.find(".//a:fld", NS) is None)
+                out[shape_id(sp)] = (bb, text, empty_ph)
         cache[exemplar_id] = out
         return out
 

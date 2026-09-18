@@ -19,7 +19,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8", "pytest-asyncio", "ruff"]
+dev = ["pytest>=8", "pytest-asyncio", "ruff", "pywin32; sys_platform == 'win32'"]  # pywin32 — tools/powerpoint_check.py
 
 [project.scripts]
 deckforge = "deckforge.cli:app"

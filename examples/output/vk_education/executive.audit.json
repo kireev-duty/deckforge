@@ -251,42 +251,6 @@
    "evidence": {
     "fill": 0.882
    }
-  },
-  {
-   "check_id": "I02_placeholder_text",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 9,
-   "element_id": "1083",
-   "box": {
-    "x": 658813,
-    "y": 692150,
-    "w": 1081088,
-    "h": 1081088
-   },
-   "message": "Пустой плейсхолдер «pic» — в редакторе покажется подсказка лейаута",
-   "autofix": "drop_shape",
-   "evidence": {
-    "pattern": "empty_placeholder"
-   }
-  },
-  {
-   "check_id": "I02_placeholder_text",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 9,
-   "element_id": "1084",
-   "box": {
-    "x": 658813,
-    "y": 4161565,
-    "w": 5437187,
-    "h": 355600
-   },
-   "message": "Пустой плейсхолдер «body» — в редакторе покажется подсказка лейаута",
-   "autofix": "drop_shape",
-   "evidence": {
-    "pattern": "empty_placeholder"
-   }
   }
  ],
  "checks_run": [
@@ -326,5 +290,5 @@
   "C10_table_legend_relevant",
   "C11_flow"
  ],
- "duration_s": 38.331
+ "duration_s": 60.975
 }

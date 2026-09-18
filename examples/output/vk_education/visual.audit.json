@@ -8,24 +8,10 @@
    "slide_idx": 1,
    "element_id": null,
    "box": null,
-   "message": "В первой карточке текст обрывается на «в...», что является служебным мусором или ошибкой верстки.",
+   "message": "В первой карточке текст обрывается на многоточии («До 9,5 часов в...»).",
    "autofix": null,
    "evidence": {
     "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
-    "sources": "doc:product:почему-перегрузка-не-видна-руководителю-"
-   }
-  },
-  {
-   "check_id": "C08_no_typos",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 1,
-   "element_id": null,
-   "box": null,
-   "message": "В первой карточке текст обрывается на «в...», что является опечаткой или ошибкой.",
-   "autofix": null,
-   "evidence": {
-    "question": "Текст без опечаток",
     "sources": "doc:product:почему-перегрузка-не-видна-руководителю-"
    }
   },
@@ -147,7 +133,7 @@
    "slide_idx": 3,
    "element_id": null,
    "box": null,
-   "message": "Заголовок называет тему процесса, а не содержит вывод о его ценности или результате.",
+   "message": "Заголовок называет тему процесса, а не содержит вывод о его эффективности или результате.",
    "autofix": null,
    "evidence": {
     "question": "Заголовок содержит вывод, а не просто называет тему",
@@ -461,42 +447,6 @@
     "nearest_pt": 48.0,
     "base_pt": 239.0
    }
-  },
-  {
-   "check_id": "I02_placeholder_text",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 11,
-   "element_id": "1083",
-   "box": {
-    "x": 658813,
-    "y": 692150,
-    "w": 1081088,
-    "h": 1081088
-   },
-   "message": "Пустой плейсхолдер «pic» — в редакторе покажется подсказка лейаута",
-   "autofix": "drop_shape",
-   "evidence": {
-    "pattern": "empty_placeholder"
-   }
-  },
-  {
-   "check_id": "I02_placeholder_text",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 11,
-   "element_id": "1084",
-   "box": {
-    "x": 658813,
-    "y": 4161565,
-    "w": 5437187,
-    "h": 355600
-   },
-   "message": "Пустой плейсхолдер «body» — в редакторе покажется подсказка лейаута",
-   "autofix": "drop_shape",
-   "evidence": {
-    "pattern": "empty_placeholder"
-   }
   }
  ],
  "checks_run": [
@@ -536,5 +486,5 @@
   "C10_table_legend_relevant",
   "C11_flow"
  ],
- "duration_s": 60.578
+ "duration_s": 38.679
 }

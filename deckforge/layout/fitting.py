@@ -135,7 +135,7 @@ def fit_number(text: str, slot: Slot) -> tuple[str, str, float | None]:
     если и так не влезает — единица отбрасывается. Ширина линейна по кеглю (строка одна)."""
     num, unit = split_number_unit(text)
     cpl = (slot.max_chars or 0) / max(1, slot.max_lines or 1)
-    if not cpl or not slot.size_pt:
+    if not cpl or not slot.size_pt or not num:  # пустое значение KPI («», «   ») — масштабировать нечего
         return num, unit, None
     for u in (unit, ""):
         width = sum(GLYPH_WIDTH.get(ch, DIGIT_WIDTH) for ch in num) + (UNIT_SCALE * (len(u) + 1) if u else 0)

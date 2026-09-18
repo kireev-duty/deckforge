@@ -37,7 +37,7 @@
 | L04 | Текст обрезан краем слайда | текст с текстом | как L01 | error | `clamp_to_slide` | done |
 | L05 | Блок не выровнен по направляющим макета | ours, не из образца | левая кромка дальше 0,1" от `grid.columns_x ∪ margin_left`; центрированные не считаются | warning | `snap_to_grid` | done |
 | L06 | Контент заходит в поля | content, не full-bleed, не из образца | глубже 0,1" за `grid.margin_*` | warning | `snap_to_grid` | done |
-| L07 | Картинка растянута | все `p:pic` и `blipFill`, кроме декора | аспект (с учётом srcRect) vs рамка > 3 %; картинки-линии (< 4 px) пропускаются | error | `crop_to_aspect` | done |
+| L07 | Картинка растянута | все `p:pic` и `blipFill`, кроме декора | аспект (с учётом srcRect) vs рамка > 3 %; картинки-линии (< 4 px) пропускаются; фото образца, которое мы не подменяли (с DeckIR), — warning `in_exemplar` | error | `crop_to_aspect` | done |
 | **Шаблон** (`template.py`) | | | | | | |
 | T01 | Шрифт не из шаблона / гарнитур больше двух | все run'ы | допустимы `dna.fonts ∪ embedded ∪ тема`; символьные шрифты не считаются | error | `reset_font` | done |
 | T02 | Кегль не из типографической шкалы | ours | ±8 % от токенов `dna.typography` или от кегля слота образца; 70–100 % от слота (подгонка fitting) → info | warning | `snap_font_size` | done |

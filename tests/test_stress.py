@@ -115,6 +115,20 @@ def test_numbers_extremes_build_and_render(vk_tech, tmp_path: Path, strategy: st
     render_pptx(res.ir, vk_tech.template, vk_tech.exemplars, tmp_path / f"{strategy}.pptx")
 
 
+def test_numbers_extremes_on_vk_education() -> None:
+    """Пустое значение KPI на образце с оценённым кеглем цифры: fit_number делил на нулевую ширину."""
+    from deckforge.pipeline import parse_template
+    from tests.conftest import find_template
+
+    p = find_template("VK Education")
+    if p is None:
+        pytest.skip("VK Education не найден (LFS?)")
+    parsed = parse_template(p)
+    for strategy in STRATEGIES:
+        res = _build(parsed, so.numbers_extremes(), strategy)
+        assert not [c for c in res.choices if c.exemplar_id is None]
+
+
 # ──────────────────────────── картинки ────────────────────────────
 
 

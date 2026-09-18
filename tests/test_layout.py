@@ -298,6 +298,10 @@ def test_split_label_body_and_numbers() -> None:
     num, unit, size = fit_number("1,8 дня", slot)
     assert (num, unit) == ("1,8", "дня") and size is not None and size < 160
     assert fit_number("42 %", slot)[:2] == ("42%", "")
+    # пустое / нечисловое значение KPI (стресс: VK Education × numbers_extremes → ZeroDivisionError)
+    assert fit_number("", slot) == ("", "", None)
+    assert fit_number("   ", slot) == ("", "", None)
+    assert fit_number("—", slot)[0] == "—" and fit_number("N/A", slot)[0] == "N/A"
 
 
 # ──────────────────────────── builder e2e ────────────────────────────

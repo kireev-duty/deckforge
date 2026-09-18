@@ -143,6 +143,22 @@
 - [ ] HTML в Firefox и Яндекс.Браузере глазами (один файл).
 - [ ] Репетиция по `script.md` с таймером и по `DEMO.md`, запись видео одним дублем.
 
+### Стресс-тест без LLM (17–18.09.2026)
+
+Обещания PLAN/ARCHITECTURE («ни один слайд не пропускается», «планировщик не выдумывает текст», «аудит работает на любой чужой колоде», API отдаёт 400, а не 500) проверены на крайних входах: `tools/stress_test.py` — 18 кейсов (`tests/fixtures/stress_outlines.py`: 0/1/3/40 слайдов, 20 × KPI/chart/table/quote/process/image, тексты-экстремумы, управляющие символы, числа-экстремумы, 30 разделов, битые картинки) × 5 шаблонов датасета + 14 `data/wild` × 3 стратегии, каждая пара в подпроцессе с таймаутом; `tests/test_stress.py` — фазз `repair_outline` (300 мутаций кассеты), 9 синтетических шаблонов (`stress_templates.py`: 0 слайдов, 4:3, A4, только картинки, 100 фигур, группы, нативные chart/table), загрузки и API. Отчёт — `out/stress/report.md`.
+
+- [x] Управляющие символы (`\x00`, `\x0b`, суррогаты) в тексте роняли lxml → `fitting.normalize` / `xml_safe` (заметки, ячейки), `builder._clean_chart/_clean_table`.
+- [x] `chart_to_table` IndexError на серии короче категорий, NaN/inf, пустые chart/table, рваные таблицы → `planner.sanitize_data` (шаг 0 планировщика).
+- [x] KPI рядом с диаграммой/таблицей → L02 наложение → `planner.split_mixed_data`.
+- [x] Картинка без файла / битый файл → `exemplar_picker.has_image` в picker и builder, `_fill` ловит `OSError/ValueError`.
+- [x] `freeform` в готовом outline → `skipped=1` → `FALLBACKS[FREEFORM]`.
+- [x] Тихая потеря контента на образце без текстовых слотов и каскад «(продолжение)» → builder перебирает до `MAX_RETRIES` образцов (`pick_exemplar(exclude=)`), остаток со структурного слайда → bullets/KPI-слайд.
+- [x] Шаблон из одних обложек (`data/wild`) — 0 контентных образцов → структурные образцы как последний резерв (двухпроходный `pick_exemplar`, подзаголовок работает телом); chart/table в body-слот, когда data-слота нет во всём шаблоне (`DATA_IN_BODY_PENALTY`).
+- [x] `repair_outline`: скаляр вместо списка (`_as_list`), ретрай на `TypeError/ValueError`.
+- [x] Классификатор: титул с крупным текстовым блоком (`BODY_BLOCK_AREA`) — штраф; L07 на фото образца → warning `in_exemplar`.
+- [x] API: валидация до `jobs.new` (нет «зомби» `queued`), `JobStore.discard`, `Job.fix_lock` на параллельные `POST …/fix`, `/audit` удаляет загруженный файл.
+- [x] `fit_number` делил на ноль при пустом значении KPI (VK Education × `numbers_extremes`) — 18.09.
+
 ## День 14 — буфер, релиз (следующий)
 
 - [ ] Видео-демо и репетиция — пункт выше; PowerPoint и Firefox/Яндекс — два пункта выше.

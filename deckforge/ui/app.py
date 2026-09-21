@@ -1,10 +1,6 @@
-"""Streamlit UI: шаблон → бриф → варианты → аудит с выбором фиксов → экспорт.
+"""Streamlit UI: шаблон → бриф → варианты → аудит с выбором фиксов → экспорт (`streamlit run deckforge/ui/app.py`).
 
-    streamlit run deckforge/ui/app.py
-
-Пайплайн вызывается в этом же процессе (`deckforge.pipeline`): один прогон ≈ 1–2 мин с LLM и судьёй,
-прогресс — в `st.status`. Файлы прогона — `out/ui/runs/<время>/`, загруженные шаблоны — `out/ui/templates/`.
-Бизнес-логики здесь нет: только форма, вызовы `parse_template` / `run` / `refine_deck` и показ файлов.
+Пайплайн вызывается in-process; файлы прогона — `out/ui/runs/<время>/`, загруженные шаблоны — `out/ui/templates/`.
 """
 
 from __future__ import annotations
@@ -174,7 +170,7 @@ def generate(entry: TemplateEntry, opts: dict, brief: str, files: list, use_exam
     with st.status("Генерация…", expanded=True) as status:
         try:
             result = run(cfg, progress=status.write)
-        except Exception as e:  # noqa: BLE001 — показать пользователю, не ронять приложение
+        except Exception as e:  # noqa: BLE001
             status.update(label=f"Ошибка: {type(e).__name__}", state="error")
             st.exception(e)
             return
@@ -279,14 +275,14 @@ def audit_block(name: str, deck: DeckResult, report: AuditReport, ir, parsed: Pa
             "как": HOW_LABEL.get(r["how"], r["how"]) if r else "",
             "_how": r["how"] if r else "",
         })
-    # safe-фиксы, оставшиеся в отчёте, либо не применялись (автофикс выключен), либо не помогли — тоже предлагаем
+    # оставшиеся safe-фиксы тоже предлагаем: автофикс был выключен или не помог
     choosable = [t for t in table if t["_how"] in ("safe", "ir")]
 
     st.markdown(f"**Фиксы по выбору** ({len(choosable)}): безопасные — без потери смысла; «по выбору» — теряют "
                 "часть контента, поэтому не применяются сами. Пересбор и дизайн шаблона автофиксом не чинятся.")
     selected: list[int] = []
     if choosable:
-        gen = fi.get("applied", 0)  # после применения ключи чекбоксов меняются — выбор сбрасывается
+        gen = fi.get("applied", 0)  # после применения ключи чекбоксов меняются
         keys = [f"fix_{name}_{gen}_{t['#']}" for t in choosable]
 
         def _toggle_all(all_key: str = f"all_{name}_{gen}", keys: list[str] = keys) -> None:

@@ -1,4 +1,4 @@
-"""Схемы запросов/ответов HTTP API. Бизнес-логики нет — только форма данных для OpenAPI-документации."""
+"""Схемы запросов/ответов HTTP API."""
 
 from __future__ import annotations
 
@@ -32,7 +32,7 @@ class StrategyInfo(BaseModel):
 
 
 class TemplateInfo(BaseModel):
-    """Шаблон в реестре: датасет (`builtin`) или загруженный. Полная сводка — после `parse`."""
+    """Шаблон в реестре: датасет (`builtin`) или загруженный."""
 
     id: str = Field(description="sha1 файла (12 символов) — ключ для /generate")
     name: str

@@ -1,4 +1,4 @@
-"""export: .pptx → .pdf / PNG (LibreOffice, `render.py`) и .html (свой рендер по XML колоды, `html.py`)."""
+"""export: .pptx → .pdf / PNG (LibreOffice) и .html (свой рендер)."""
 
 from deckforge.export.html import export_html
 from deckforge.export.render import contact_sheet, find_soffice, pdf_to_pngs, pptx_to_pdf, render

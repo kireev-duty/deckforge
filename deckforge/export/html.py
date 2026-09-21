@@ -1,12 +1,8 @@
-"""HTML-экспорт: .pptx → один самодостаточный .html (без внешних скриптов и CDN, открывается с file://).
+"""HTML-экспорт: .pptx → один самодостаточный .html.
 
-Источник — готовая колода, а не DeckIR: в IR только заполненные слоты, а фон, декор образца и логотипы
-мастера живут в XML. Фигуры читаются тем же `core/deck_reader`, что и аудит, поэтому шрифты, кегли и цвета
-резолвятся одинаково. Слайд — абсолютно позиционированные блоки в px при 96 dpi (`core/units`), порядок
-отрисовки: фон → фигуры мастера → фигуры лейаута → фигуры слайда. Диаграммы — inline SVG по данным из XML
-(цвета серий — те, что уже выбрал `render/charts.py`), таблицы — <table>, картинки — data-URI (общая часть
-zip вставляется один раз через <symbol>), встроенные шрифты — @font-face из ppt/fonts (EOT → TTF, если без
-сжатия). Ничего не растеризуется; текст остаётся текстом (выделяется, ищется, печатается).
+Источник — готовая колода, а не DeckIR (в IR нет декора образца и мастера). Фигуры читаются через
+`core/deck_reader`; слайд — абсолютно позиционированные блоки в px при 96 dpi, диаграммы — inline SVG,
+таблицы — <table>, картинки — data-URI, встроенные шрифты — @font-face. Текст остаётся текстом.
 """
 
 from __future__ import annotations
@@ -40,7 +36,7 @@ log = logging.getLogger(__name__)
 PX_PER_PT = 96 / 72
 MIME = {".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".gif": "image/gif", ".svg": "image/svg+xml",
         ".webp": "image/webp", ".bmp": "image/bmp", ".tif": "image/tiff", ".tiff": "image/tiff"}
-SKIP_MEDIA = (".emf", ".wmf")  # браузер не покажет
+SKIP_MEDIA = (".emf", ".wmf")
 FONT_FALLBACK = "Arial, Helvetica, sans-serif"
 SAFE_NAME = re.compile(r"^[\w .\-]{1,64}$")
 HEX = re.compile(r"^[0-9A-Fa-f]{6}$")
@@ -48,12 +44,12 @@ EOT_MAGIC = 0x504C
 EOT_COMPRESSED = 0x00000004
 EOT_XOR = 0x10000000
 TTF_MAGICS = (b"\x00\x01\x00\x00", b"OTTO", b"true")
-MAX_IMAGE_PX = 1920  # длинная сторона картинки в HTML; 4K-подложки шаблонов иначе дают 5–18 МБ на файл
+MAX_IMAGE_PX = 1920  # длинная сторона картинки; 4K-подложки иначе раздувают файл
 WEBP_QUALITY = 82
-# гарнитуры с открытой лицензией (OFL) на Google Fonts: если шрифт не встроен, подключаем по сети (офлайн — fallback)
+# OFL-гарнитуры на Google Fonts: если шрифт не встроен, подключаем по сети
 GOOGLE_FONTS = {"Play", "Montserrat", "Roboto", "Open Sans", "Inter", "Manrope", "Golos Text", "PT Sans", "PT Serif",
                 "Nunito", "Rubik", "Raleway", "Lato", "Source Sans 3", "Noto Sans", "Oswald", "Exo 2", "Ubuntu", "Jost"}
-# для диаграмм: маркеры и линии как в правилах dataviz (тонкие бары, линии 2 px, точки r=4, hairline-сетка)
+# параметры диаграмм
 BAR_MAX_PX = 24
 CHART_FONT_PX = 12
 
@@ -61,10 +57,10 @@ CHART_FONT_PX = 12
 @dataclass
 class _Assets:
     images: dict[str, tuple[int, int]] = field(default_factory=dict)  # part → (px_w, px_h) для <symbol>
-    raw_images: dict[str, str] = field(default_factory=dict)  # part → data-URI для <img> (svg и т. п.)
+    raw_images: dict[str, str] = field(default_factory=dict)  # part → data-URI для <img>
     fonts: dict[str, str] = field(default_factory=dict)  # css @font-face
-    used_fonts: set[str] = field(default_factory=set)  # гарнитуры из run'ов — для Google Fonts
-    media: dict[str, tuple[bytes, str]] = field(default_factory=dict)  # part → (байты после пережатия, mime)
+    used_fonts: set[str] = field(default_factory=set)  # гарнитуры для Google Fonts
+    media: dict[str, tuple[bytes, str]] = field(default_factory=dict)  # part → (байты, mime)
 
 
 class HtmlExporter:
@@ -114,7 +110,7 @@ class HtmlExporter:
         show_master = _flag_on(ctx.root, "showMasterSp") and (ctx.layout is None or _flag_on(ctx.layout, "showMasterSp"))
         if show_master and master_part:
             body.append(self._inherited_shapes(PartCtx.for_master(self.pkg, master_part)))
-        if layout_part:  # собственные фигуры лейаута (декор) видны всегда; showMasterSp лейаута относится к мастеру
+        if layout_part:  # фигуры лейаута видны всегда; showMasterSp лейаута относится к мастеру
             lctx = PartCtx.for_layout(self.pkg, layout_part)
             if lctx is not None:
                 body.append(self._inherited_shapes(lctx, cache=False))
@@ -131,7 +127,7 @@ class HtmlExporter:
                 + "".join(body) + notes + "</section>")
 
     def _inherited_shapes(self, ctx: PartCtx | None, cache: bool = True) -> str:
-        """Фигуры мастера/лейаута под слайдом: всё, кроме плейсхолдеров (их PowerPoint не рисует)."""
+        """Фигуры мастера/лейаута под слайдом, кроме плейсхолдеров."""
         if ctx is None:
             return ""
         if cache and ctx.part in self._master_cache:
@@ -190,10 +186,10 @@ class HtmlExporter:
             return ""
         w, h = max(emu_to_px(s.box.w), 1), max(emu_to_px(s.box.h), 1)
         sw = max(emu_to_px(s.line_w_emu or 9525), 1)
-        css[2:4] = [f"width:{max(w, sw):.1f}px", f"height:{max(h, sw):.1f}px"]  # линия нулевой высоты иначе невидима
+        css[2:4] = [f"width:{max(w, sw):.1f}px", f"height:{max(h, sw):.1f}px"]  # линия нулевой высоты невидима
         if s.rot:
             css.append(f"transform:rotate({s.rot:.1f}deg)")
-        # без флипов линия идёт из левого верхнего угла в правый нижний; flipH/flipV зеркалят свою ось
+        # без флипов линия идёт из левого верхнего угла в правый нижний
         x1, x2 = (w, 0) if s.flip_h else (0, w)
         y1, y2 = (h, 0) if s.flip_v else (0, h)
         if s.box.h < s.box.w * 0.02:  # горизонтальная
@@ -210,7 +206,7 @@ class HtmlExporter:
         style = f"padding:{t:.1f}px {r:.1f}px {b:.1f}px {l:.1f}px;justify-content:{justify}"
         if not s.wrap:
             style += ";white-space:nowrap"
-        cls = "tx fit" if s.autofit == "normAutofit" else "tx"  # fit: JS ужимает кегль, как PowerPoint
+        cls = "tx fit" if s.autofit == "normAutofit" else "tx"  # fit: JS ужимает кегль
         return f'<div class="{cls}" style="{style}">' + "".join(self._para_html(p) for p in s.paragraphs) + "</div>"
 
     def _para_html(self, p: ParaRec) -> str:
@@ -255,7 +251,7 @@ class HtmlExporter:
         if ext in SKIP_MEDIA or part not in self.pkg.names:
             return "<!-- медиа не поддерживается браузером -->"
         size = self._image_size(part)
-        if size is None:  # svg и прочее без пиксельных размеров — как есть, без кропа
+        if size is None:  # svg — как есть, без кропа
             return f'<img src="{self._data_uri(part)}" alt="">'
         pw, ph = size
         self.assets.images.setdefault(part, (pw, ph))
@@ -284,7 +280,7 @@ class HtmlExporter:
         return self.assets.raw_images[part]
 
     def _media(self, part: str) -> tuple[bytes, str]:
-        """Байты картинки для data-URI: растр крупнее MAX_IMAGE_PX или тяжелее 200 КБ → WebP (альфа сохраняется)."""
+        """Байты картинки для data-URI: крупный или тяжёлый растр → WebP."""
         if part in self.assets.media:
             return self.assets.media[part]
         import io
@@ -302,7 +298,7 @@ class HtmlExporter:
                     im.save(buf, "WEBP", quality=WEBP_QUALITY, method=4)
                     if buf.tell() < len(raw):
                         out = (buf.getvalue(), "image/webp")
-        except Exception:  # noqa: BLE001 — svg/emf и битые файлы — как есть
+        except Exception:  # noqa: BLE001 — svg/emf как есть
             pass
         self.assets.media[part] = out
         return out
@@ -337,7 +333,7 @@ class HtmlExporter:
     # ── шрифты ──
 
     def _embed_fonts(self) -> None:
-        """@font-face по p:embeddedFontLst: typeface → части regular/bold/italic/boldItalic через rels презентации."""
+        """@font-face по p:embeddedFontLst."""
         pres_part = next(iter(self.pkg.parts(r"ppt/presentation\.xml")), None)
         if pres_part is None:
             return
@@ -366,7 +362,7 @@ class HtmlExporter:
 
 
 def eot_to_ttf(data: bytes) -> bytes | None:
-    """EOT (ppt/fonts/*.fntdata) → TTF: шрифт лежит в хвосте файла; MTX-сжатие не разбираем (None)."""
+    """EOT (ppt/fonts/*.fntdata) → TTF; MTX-сжатие не разбираем (None)."""
     if len(data) < 36:
         return None
     eot_size, font_size, _version, flags = struct.unpack_from("<IIII", data, 0)
@@ -386,8 +382,7 @@ def eot_to_ttf(data: bytes) -> bytes | None:
 
 def svg_chart(spec: ChartSpec, colors: list[str], w: float, h: float, *, text_color: str = "#212121",
               font: str = FONT_FALLBACK, surface: str = "#FFFFFF") -> str:
-    """Диаграмма по ChartSpec: bar / column / line / area / pie / doughnut. Одна ось, тонкие марки,
-    легенда при ≥ 2 сериях, подписи значений — только на концах/вершинах, оси и сетка приглушены."""
+    """Диаграмма по ChartSpec: bar / column / line / area / pie / doughnut."""
     names = list(spec.series)
     palette = [f"#{_hex(c)}" for c in colors] or ["#0077FF", "#00AEE8", "#8F8F8F", "#FFB800", "#2FCC71"]
     col = {n: palette[i % len(palette)] for i, n in enumerate(names)}
@@ -520,7 +515,7 @@ def _svg_lines(spec: ChartSpec, col: dict[str, str], box: tuple[float, float, fl
         out.append(f'<line x1="{x0:.1f}" y1="{y:.1f}" x2="{x0 + pw:.1f}" y2="{y:.1f}" stroke="{muted}" stroke-width="1"/>'
                    f'<text x="{x0 - 4:.1f}" y="{y + 4:.1f}" text-anchor="end" fill="{muted}">{_fmt(t)}</text>')
     step = pw / max(n_cat - 1, 1)
-    every = max(1, math.ceil(n_cat * CHART_FONT_PX * 0.58 * 6 / max(pw, 1)))  # не чаще, чем влезают подписи
+    every = max(1, math.ceil(n_cat * CHART_FONT_PX * 0.58 * 6 / max(pw, 1)))  # сколько подписей влезает
     for ci, cat in enumerate(spec.categories):
         if ci % every == 0 or ci == n_cat - 1:
             out.append(f'<text x="{x0 + ci * step:.1f}" y="{y0 + ph + 14:.1f}" text-anchor="middle">{html.escape(cat)}</text>')
@@ -608,7 +603,7 @@ def _color(c: str | None) -> str:
 
 
 def _muted(text_color: str) -> str:
-    """Приглушённый цвет осей: 55 % прозрачности от цвета текста (одинаково на светлом и тёмном фоне)."""
+    """Приглушённый цвет осей: 55 % прозрачности от цвета текста."""
     return text_color + "8C" if text_color.startswith("#") and len(text_color) == 7 else "#8F8F8F"
 
 
@@ -624,7 +619,7 @@ def _css_fill(colors: list[str], alpha: float = 1.0) -> str:
 
 def _font_stack(font: str | None) -> str:
     if font and SAFE_NAME.match(font):
-        return f"'{font}', {FONT_FALLBACK}"  # одинарные кавычки: имя стоит внутри style="…"
+        return f"'{font}', {FONT_FALLBACK}"  # имя стоит внутри style="…"
     return FONT_FALLBACK
 
 
@@ -732,7 +727,7 @@ body.present .frame.cur{{display:block}}
 
 
 def export_html(pptx: Path, out: Path, *, ir: DeckIR | None = None, title: str | None = None) -> Path:
-    """Колода .pptx → самодостаточный .html рядом (или по `out`). `ir` — только для заметок к слайдам."""
+    """Колода .pptx → самодостаточный .html; `ir` — только для заметок к слайдам."""
     out = Path(out)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(HtmlExporter(Path(pptx), ir, title).build(), "utf-8")

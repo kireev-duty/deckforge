@@ -1,9 +1,4 @@
-"""Единый клиент к OpenAI-совместимому inference API (OpenRouter / Together / Nebius / vLLM / инференс VK).
-
-Роли моделей задаются переменными окружения, чтобы переключение на инференс VK в топ-10
-было сменой `.env`, а не кода:
-    LLM_BASE_URL, LLM_API_KEY, LLM_MODEL (text), VLM_MODEL (vision), T2I_MODEL (image)
-"""
+"""Клиент к OpenAI-совместимому inference API; модели по ролям — из `.env`: LLM_MODEL, VLM_MODEL, T2I_MODEL."""
 
 from __future__ import annotations
 
@@ -39,8 +34,7 @@ class LLMClient:
     api_key: str = field(default_factory=lambda: os.environ.get("LLM_API_KEY", ""))
     text_model: str = field(default_factory=lambda: os.environ.get("LLM_MODEL", "qwen/qwen3.8-27b-20260814"))
     vision_model: str = field(default_factory=lambda: os.environ.get("VLM_MODEL", "qwen/qwen3.8-27b-20260814"))
-    # text-to-image: по умолчанию тот же OpenRouter и тот же ключ (FLUX.2 [klein] 4B, Apache 2.0).
-    # Можно указать другого провайдера с OpenAI-совместимым /images/generations (Together, vLLM-omni и т.п.).
+    # text-to-image: по умолчанию тот же провайдер и ключ; можно указать другой с /images/generations
     image_base_url: str = field(default_factory=lambda: os.environ.get("T2I_BASE_URL", ""))
     image_api_key: str = field(default_factory=lambda: os.environ.get("T2I_API_KEY", ""))
     image_model: str = field(default_factory=lambda: os.environ.get("T2I_MODEL", "black-forest-labs/flux.2-klein-4b"))
@@ -65,8 +59,7 @@ class LLMClient:
 
     @staticmethod
     def no_think_extra() -> dict[str, Any]:
-        """Параметры, выключающие «размышления» Qwen3.x: у OpenRouter — `reasoning`, у vLLM/инференса VK —
-        `chat_template_kwargs.enable_thinking`. Переопределяется через LLM_NO_THINK_JSON."""
+        """Параметры, выключающие «размышления» модели; переопределяются через LLM_NO_THINK_JSON."""
         raw = os.environ.get("LLM_NO_THINK_JSON")
         if raw:
             return json.loads(raw)
@@ -88,7 +81,7 @@ class LLMClient:
         if not skill.reasoning:
             kwargs["extra_body"] = self.no_think_extra()
         if skill.schema:
-            # json_object поддерживают почти все провайдеры; json_schema — не все, поэтому валидируем сами
+            # json_schema поддерживают не все провайдеры — валидируем сами
             kwargs["response_format"] = {"type": "json_object"}
 
         last_err: Exception | None = None
@@ -104,7 +97,7 @@ class LLMClient:
                 if skill.schema:
                     return _parse_json(text)
                 return text
-            except Exception as e:  # noqa: BLE001 — ретраим любой сбой провайдера/парсинга
+            except Exception as e:  # noqa: BLE001
                 last_err = e
                 self.calls.append(LLMCall(skill.id, model, time.perf_counter() - t0, ok=False, error=str(e)[:200]))
                 if attempt < self.retries:
@@ -112,8 +105,7 @@ class LLMClient:
         raise RuntimeError(f"skill {skill.id} failed after {self.retries + 1} attempts: {last_err}")
 
     def generate_image(self, prompt: str, out_path: Path, size: str = "1024x576") -> Path:
-        """Text-to-image. OpenRouter — свой endpoint POST /images; остальные — OpenAI /images/generations.
-        Расширение out_path подгоняется под media_type ответа (klein отдаёт JPEG)."""
+        """Text-to-image; расширение out_path подгоняется под media_type ответа."""
         if not self.images_enabled:
             raise RuntimeError("генерация изображений отключена (нет ключа или T2I_MODEL пуст)")
         t0 = time.perf_counter()
@@ -136,7 +128,7 @@ class LLMClient:
             item = resp.data[0]
             if item.b64_json:
                 raw = base64.b64decode(item.b64_json)
-            else:  # провайдер вернул url
+            else:
                 import httpx
 
                 raw = httpx.get(item.url, timeout=60).content
@@ -165,7 +157,7 @@ def _data_url(p: Path) -> str:
 
 
 def _parse_json(text: str) -> dict:
-    """Модели иногда оборачивают JSON в ```json ...``` или добавляют текст — вырезаем первый объект."""
+    """Вырезать первый JSON-объект из ответа с обёрткой или лишним текстом."""
     text = text.strip()
     if text.startswith("```"):
         text = text.split("\n", 1)[1].rsplit("```", 1)[0]

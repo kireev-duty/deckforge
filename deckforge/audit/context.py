@@ -1,14 +1,6 @@
-"""Единый разбор сгенерированной колоды для детерминированных проверок.
+"""Единый разбор колоды для детерминированных проверок: колода читается один раз через `core/deck_reader`.
 
-Колода читается один раз через `core/deck_reader.py` (тот же читатель фигур, что у HTML-экспорта,
-и тот же резолв наследования шрифтов/цветов `core/package.py`, что в парсинге). Каждая фигура — ShapeRec
-с абсолютной геометрией, текстом по абзацам/run'ам, заливками, деталями картинки/диаграммы/таблицы.
-Проверки работают только с этими записями и не трогают XML.
-
-Два режима:
-- с DeckIR — известно, какой слайд из какого образца, какие слоты заполнены нами (`is_ours`),
-  какие фигуры фиксированные (`is_fixed`); проверки «шаблонности» (T02, T03, T05) точнее;
-- без DeckIR (чужая колода) — «наши» = все не фиксированные контентные фигуры.
+С DeckIR известно, что заполнено нами и что фиксировано; без него «наши» — все нефиксированные фигуры.
 """
 
 from __future__ import annotations
@@ -18,7 +10,7 @@ from dataclasses import dataclass
 from functools import cached_property
 from pathlib import Path
 
-from deckforge.core.deck_reader import (  # noqa: F401 — реэкспорт для проверок и тестов
+from deckforge.core.deck_reader import (  # noqa: F401 — реэкспорт
     DEFAULT_INSETS,
     SYMBOL_FONTS,
     CellRec,
@@ -36,7 +28,7 @@ from deckforge.core.package import Package, PartCtx
 
 log = logging.getLogger(__name__)
 
-STEP = 914400 // 20  # 1/20" — допуск совпадения позиций
+STEP = 914400 // 20  # 1/20", допуск совпадения позиций
 # архетипы, для которых пустой/разреженный слайд — норма
 SPARSE_ARCHETYPES = {Archetype.TITLE, Archetype.SECTION, Archetype.CLOSING, Archetype.QUOTE, Archetype.IMAGE_FULL}
 
@@ -128,8 +120,7 @@ class AuditContext:
         return {sid: text for sid, (_, text, _) in self._exemplar_shapes(exemplar.id).items()}
 
     def exemplar_empty_placeholders(self, exemplar: Exemplar) -> set[str]:
-        """id плейсхолдеров образца, в которых в самом шаблоне ничего нет (ни текста, ни картинки):
-        в показе их не видно, рендер их убирает — это не удаление фиксированного элемента."""
+        """id пустых плейсхолдеров образца: рендер их убирает, это не удаление фиксированного элемента."""
         return {sid for sid, (_, _, empty_ph) in self._exemplar_shapes(exemplar.id).items() if empty_ph}
 
     def _exemplar_shapes(self, exemplar_id: str) -> dict[str, tuple[tuple[int, int, int, int], str, bool]]:

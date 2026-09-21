@@ -1,8 +1,6 @@
-"""Контекстуальный аудит: VLM-судья (скилл `audit_judge`) отвечает на 11 да/нет вопросов по PNG каждого слайда.
+"""Контекстуальный аудит: VLM-судья (скилл `audit_judge`) отвечает на да/нет вопросы по PNG каждого слайда.
 
-Вход на слайд: PNG, заголовок, текст, заголовки соседей, факты из контент-пакета (фрагменты по `OutlineSlide.sources`).
-«Нет» → `Finding(kind="contextual")` с severity из таблицы docs/AUDIT.md. Вызовы идут параллельно; сбой одного
-слайда даёт `C00_judge_error` (info), а не падение аудита. Промпт — только в `skills/audit_judge/v<N>/`.
+«Нет» → `Finding(kind="contextual")`; вызовы параллельны, сбой одного слайда даёт `C00_judge_error`.
 """
 
 from __future__ import annotations
@@ -19,10 +17,10 @@ log = logging.getLogger(__name__)
 
 SKILL_NAME = "audit_judge"
 WORKERS = 4
-MAX_FACT_CHARS = 6000  # фактов в промпт на слайд (~1,5k токенов): весь синтетический пакет без дублей ≈ 5k
+MAX_FACT_CHARS = 6000  # фактов в промпт на слайд
 MAX_TEXT_CHARS = 2000
 
-# id проверки → (slug, severity, вопрос). Формулировки дублируют промпт для отчёта и UI.
+# id проверки → (slug, severity, вопрос); формулировки дублируют промпт для отчёта и UI
 QUESTIONS: dict[str, tuple[str, Severity, str]] = {
     "C01": ("title_insight", Severity.WARNING, "Заголовок содержит вывод, а не просто называет тему"),
     "C02": ("content_matches_title", Severity.ERROR, "Содержимое слайда соответствует заголовку"),
@@ -38,8 +36,7 @@ QUESTIONS: dict[str, tuple[str, Severity, str]] = {
 }
 CHECK_IDS = [f"{k}_{v[0]}" for k, v in QUESTIONS.items()]
 ERROR_CHECK_ID = "C00_judge_error"
-# у титульных/разделителей/финала вывод в заголовке, «одна мысль», «есть содержание», соответствие заголовку
-# и связь с соседями заведомо неприменимы (на кассете судья звал разделитель «Контекст» пустым слайдом)
+# вопросы, неприменимые к титульным, разделителям и финалу
 STRUCTURAL_ARCHETYPES = {Archetype.TITLE, Archetype.SECTION, Archetype.CLOSING}
 SKIP_FOR_STRUCTURAL = {"C01", "C02", "C03", "C05", "C11"}
 SEVERITY_FALLBACK = Severity.WARNING
@@ -47,7 +44,7 @@ SEVERITY_FALLBACK = Severity.WARNING
 
 @dataclass
 class SlideText:
-    """Текстовый контекст одного слайда для судьи (строится из IR + outline или из AuditContext)."""
+    """Текстовый контекст одного слайда для судьи."""
 
     idx: int
     title: str = ""
@@ -86,7 +83,7 @@ def slides_from_ir(ir: DeckIR, outline: DeckOutline | None = None, pack: Any = N
 
 
 def slides_from_context(ctx: Any) -> list[SlideText]:
-    """Для чужой колоды (без IR): текст из `AuditContext`, заголовок — плейсхолдер title или самый крупный кегль."""
+    """Для чужой колоды: текст из `AuditContext`, заголовок — плейсхолдер title или самый крупный кегль."""
     out: list[SlideText] = []
     for slide in ctx.slides:
         texts = [sh for sh in slide.shapes if sh.has_text and not sh.is_fixed]
@@ -100,13 +97,12 @@ def slides_from_context(ctx: Any) -> list[SlideText]:
 
 
 def _facts(pack: Any, sources: list[str]) -> str:
-    """Сначала фрагменты из `sources`, затем — пока есть место — остальные (кроме целого брифа: он дублирует
-    свои секции). `sources` у outline часто неполные, и судья без этого зовёт реальные цифры выдуманными (C04)."""
+    """Сначала фрагменты из `sources`, затем остальные, пока есть место: без них судья зовёт реальные цифры выдуманными."""
     if pack is None:
         return ""
     ids = {f.id for f in pack.fragments}
     order = [pack.get(sid) for sid in sources]
-    # целые документы, у которых есть секции (brief, doc:product), не добавляем — они дублируют свои секции
+    # целые документы с секциями не добавляем — они дублируют свои секции
     order += [f for f in pack.fragments if f.id not in sources
               and not any(other.startswith(f.id + ":") for other in ids)]
     parts: list[str] = []
@@ -116,7 +112,7 @@ def _facts(pack: Any, sources: list[str]) -> str:
             continue
         chunk = frag.to_prompt()
         if total + len(chunk) > MAX_FACT_CHARS:
-            if not parts:  # хотя бы первый фрагмент, обрезанный
+            if not parts:
                 parts.append(chunk[:MAX_FACT_CHARS] + "…")
             break
         parts.append(chunk)
@@ -129,7 +125,7 @@ def _facts(pack: Any, sources: list[str]) -> str:
 
 def judge_deck(pngs: list[Path], slides: list[SlideText], client: Any, language: str = "ru",
                workers: int = WORKERS) -> list[Finding]:
-    """Один вызов VLM на слайд, параллельно. PNG и slides сопоставляются по порядку (idx слайда)."""
+    """Один вызов VLM на слайд, параллельно; PNG и slides сопоставляются по порядку."""
     from deckforge.llm.skills import load_skill
 
     skill = load_skill(SKILL_NAME)
@@ -151,7 +147,7 @@ def judge_deck(pngs: list[Path], slides: list[SlideText], client: Any, language:
         }
         try:
             res = client.run_skill(skill, images=[png], **inputs)
-        except Exception as e:  # noqa: BLE001 — сбой одного слайда не роняет аудит
+        except Exception as e:  # noqa: BLE001
             log.warning("contextual: слайд %d — %s", s.idx + 1, e)
             return [Finding(check_id=ERROR_CHECK_ID, kind="contextual", severity=Severity.INFO, slide_idx=s.idx,
                             message=f"VLM-судья не ответил: {str(e)[:120]}", evidence={"error": str(e)[:200]})]

@@ -1,13 +1,10 @@
-"""HTTP API поверх `pipeline/` — точка входа без бизнес-логики.
+"""HTTP API поверх `pipeline/`: `uvicorn deckforge.api.app:app --reload`, Swagger на /docs.
 
-    uvicorn deckforge.api.app:app --reload          # http://127.0.0.1:8000/docs
-
-Цикл клиента: `GET /templates` (или `POST /templates` с .pptx) → `POST /generate` (бриф + файлы контент-пакета)
-→ `GET /jobs/{id}` до `done` → `GET .../decks/{strategy}/audit` → `POST .../fix` с выбранными находками
-→ `GET .../files/{name}` (.pptx / .pdf / manifest / PNG). Job'ы в памяти, файлы — в `out/api/`.
+Цикл: `POST /templates` → `POST /generate` → `GET /jobs/{id}` → `.../decks/{strategy}/audit` → `POST .../fix`
+→ `GET .../files/{name}`. Job'ы в памяти, файлы в `out/api/`.
 """
 
-# без `from __future__ import annotations`: FastAPI резолвит аннотации, а `S` — локальный alias внутри фабрики
+# без `from __future__ import annotations`: FastAPI резолвит аннотации
 import json
 import re
 import uuid
@@ -62,7 +59,7 @@ class State:
 
 def create_app(root: Path | str = Path("out/api"), client_factory: Callable[[], object] | None = None,
                executor: ThreadPoolExecutor | None | bool = True) -> FastAPI:
-    """`client_factory` — как создавать LLM-клиент (в тестах FakeClient); `executor=None` — job'ы синхронно."""
+    """`client_factory` — фабрика LLM-клиента; `executor=None` — job'ы синхронно."""
     load_dotenv()
     root = Path(root).resolve()
     if executor is True:
@@ -105,7 +102,7 @@ def create_app(root: Path | str = Path("out/api"), client_factory: Callable[[], 
 
     @app.post("/templates", response_model=TemplateInfo)
     async def upload_template(s: S, file: UploadFile = File(...)) -> TemplateInfo:
-        """Загрузить .pptx и разобрать его в TemplateDNA; ответ — сводка (палитра, шрифты, архетипы)."""
+        """Загрузить .pptx и разобрать в TemplateDNA; ответ — сводка."""
         data = await file.read()
         try:
             entry = s.templates.add_upload(file.filename or "template.pptx", data)
@@ -138,14 +135,13 @@ def create_app(root: Path | str = Path("out/api"), client_factory: Callable[[], 
         export: str = Form("pptx,pdf,html", description="через запятую: pptx, pdf, html"),
         files: list[UploadFile] = File(default=[], description="контент-пакет: *.md, *.txt, data/*.json, data/*.csv"),
     ) -> JobCreated:
-        """Запустить прогон: бриф + файлы → outline (LLM) → колоды по стратегиям → аудит → PDF. Ответ — id job'а."""
+        """Запустить прогон; ответ — id job'а."""
         entry = _template(s, template_id)
         names = [x.strip() for x in strategies.split(",") if x.strip()]
         unknown = [n for n in names if n not in list_strategies()]
         if unknown:
             raise HTTPException(400, f"неизвестные стратегии: {', '.join(unknown)}")
-        # job появляется в реестре только после того, как весь вход проверен: иначе 400 оставлял бы
-        # «зомби» со статусом queued в GET /jobs и пустую папку на диске
+        # job попадает в реестр только после проверки входа, иначе 400 оставлял бы «зомби»
         job = s.jobs.new(entry)
         try:
             pack_dir = write_content_pack(job.dir / "content_pack", brief,
@@ -182,7 +178,7 @@ def create_app(root: Path | str = Path("out/api"), client_factory: Callable[[], 
 
     @app.get("/jobs/{job_id}/decks/{strategy}/audit", response_model=AuditResponse)
     def deck_audit(s: S, job_id: str, strategy: str) -> AuditResponse:
-        """Отчёт аудита + план фиксов: `how` = safe (уже применён в run) / ir (по выбору) / replan / template / n/a."""
+        """Отчёт аудита + план фиксов."""
         d = _deck(_job(s, job_id), strategy)
         report = d.load_report()
         if report is None:
@@ -191,13 +187,12 @@ def create_app(root: Path | str = Path("out/api"), client_factory: Callable[[], 
 
     @app.post("/jobs/{job_id}/decks/{strategy}/fix", response_model=FixResponse)
     def deck_fix(s: S, job_id: str, strategy: str, body: FixRequest) -> FixResponse:
-        """Применить выбранные пользователем фиксы (индексы находок) → правка IR → рендер → повторный аудит."""
+        """Применить выбранные фиксы: правка IR → рендер → повторный аудит."""
         j = _job(s, job_id)
         d = _deck(j, strategy)
         if j.status != "done" or j.parsed is None:
             raise HTTPException(409, f"job в состоянии {j.status}")
-        # два параллельных /fix на одну колоду писали бы один .pptx/manifest: второй ждёт первого
-        # и применяет свои фиксы уже к обновлённой колоде
+        # параллельные /fix на одну колоду — по очереди
         with j.fix_lock:
             d = _deck(j, strategy)
             try:
@@ -213,9 +208,9 @@ def create_app(root: Path | str = Path("out/api"), client_factory: Callable[[], 
 
     @app.get("/jobs/{job_id}/decks/{strategy}/files/{name}")
     def deck_file(s: S, job_id: str, strategy: str, name: str) -> FileResponse:
-        """Только белый список имён: <strategy>.pptx/.pdf/.html/.ir.json/.audit.json/.manifest.json, slide_NN.png, contact.png."""
+        """Только белый список имён файлов колоды."""
         j = _job(s, job_id)
-        _deck(j, strategy)  # 404, если стратегии нет в job'е
+        _deck(j, strategy)  # 404, если стратегии нет
         if name in {f"{strategy}.{ext}" for ext in DECK_FILES}:
             return _file(j.dir / name)
         if _PNG.match(name):
@@ -231,7 +226,7 @@ def create_app(root: Path | str = Path("out/api"), client_factory: Callable[[], 
         template_id: str | None = Form(None),
         template: UploadFile | None = File(None),
     ) -> AuditResponse:
-        """Детерминированный аудит любой .pptx по шаблону (id из реестра или файл). Колода не меняется."""
+        """Детерминированный аудит любой .pptx по шаблону; колода не меняется."""
         from deckforge.audit import audit_deck, summary
 
         if template is not None:
@@ -251,7 +246,7 @@ def create_app(root: Path | str = Path("out/api"), client_factory: Callable[[], 
         except BadUpload as e:
             raise HTTPException(400, str(e)) from e
         finally:
-            path.unlink(missing_ok=True)  # чужая колода после отчёта не нужна — иначе out/api/audits растёт бесконечно
+            path.unlink(missing_ok=True)
         return AuditResponse(summary=summary(report), report=report, fix_plan=fix_plan_rows(report))
 
     # ──────────────── помощники ────────────────

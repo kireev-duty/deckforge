@@ -1,8 +1,6 @@
 """Соответствие шаблону: шрифты, кегли, цвета, лейауты, фиксированные элементы, контраст (T01–T06).
 
-Проверки «наших» фигур (T02, T03) работают только на слотах, заполненных из DeckIR, и на добавленных
-нативных объектах: декор образца по определению в палитре шаблона, а токены усечены (16 цветов,
-7 кеглей), поэтому проверять его — ловить собственную неполноту.
+T02/T03 смотрят только на заполненные нами слоты и добавленные объекты: декор образца по определению в палитре.
 """
 
 from __future__ import annotations
@@ -13,14 +11,14 @@ from deckforge.core.colors import contrast_ratio, delta_e, rgb_to_hsl, hex_to_rg
 from deckforge.core.ir import Finding, Severity
 
 MAX_FONT_FAMILIES = 2
-SIZE_TOL = 0.08  # кегль «из шкалы», если отличается < 8 %
-FIT_MIN_SCALE = 0.7  # подгонка layout/fitting уменьшает кегль не ниже 70 % — это info, не warning
-COLOR_TOL_DE = 8.0  # ΔE76 — как COLOR_MERGE_DE в extract_tokens
-TINT_HUE_TOL = 10 / 360  # оттенок цвета палитры: та же цветовая тональность
+SIZE_TOL = 0.08  # кегль «из шкалы», если отличается меньше
+FIT_MIN_SCALE = 0.7  # подгонка кегля до этого предела — info, не warning
+COLOR_TOL_DE = 8.0  # ΔE76, как COLOR_MERGE_DE в extract_tokens
+TINT_HUE_TOL = 10 / 360
 CONTRAST_MIN = 4.5
-CONTRAST_MIN_LARGE = 3.0  # WCAG: крупный текст ≥ 24 pt или ≥ 18.7 pt bold
+CONTRAST_MIN_LARGE = 3.0  # WCAG для крупного текста
 LARGE_PT, LARGE_BOLD_PT = 24.0, 18.7
-EDGE_ZONE = 0.12  # верхние/нижние 12 % — зона колонтитулов (как FIXED_TEXT_ZONE в классификаторе)
+EDGE_ZONE = 0.12  # зона колонтитулов, как FIXED_TEXT_ZONE в классификаторе
 
 
 # ──────────────────────────── T01 ────────────────────────────
@@ -123,10 +121,10 @@ def check_T03(ctx: AuditContext) -> list[Finding]:
 
 
 def _is_tint_of(color: str, palette: list[str]) -> bool:
-    """Оттенок цвета палитры: та же тональность (hue), отличается светлотой — как tint/shade в OOXML."""
+    """Оттенок цвета палитры: тот же hue, другая светлота."""
     h, s, _ = rgb_to_hsl(hex_to_rgb(color))
     if s < 0.15:
-        return False  # нейтральные к оттенкам не относим — иначе любой серый пройдёт
+        return False  # иначе любой серый пройдёт
     for p in palette:
         ph, ps, _ = rgb_to_hsl(hex_to_rgb(p))
         if ps < 0.15:
@@ -173,8 +171,7 @@ def check_T05(ctx: AuditContext) -> list[Finding]:
                 if bb is None or _is_zone_caption(ctx, slide, fid, bb):
                     continue
                 if fid in empty_ph:
-                    # пустой плейсхолдер образца (QR-код без картинки у VK Education): в показе его нет,
-                    # рендер убирает подсказку редактора — сдвига/удаления фиксированного элемента тут нет
+                    # пустой плейсхолдер образца рендер убирает намеренно
                     continue
                 sh = slide.by_id(fid)
                 if sh is None:
@@ -206,8 +203,7 @@ def check_T05(ctx: AuditContext) -> list[Finding]:
 
 
 def _is_zone_caption(ctx: AuditContext, slide: SlideCtx, fid: str, bb: tuple[int, int, int, int]) -> bool:
-    """Короткий текст образца вне зон колонтитулов («Вставить фото») — подпись зоны, а не логотип:
-    рендер убирает её намеренно, это не сдвиг фиксированного элемента."""
+    """Короткий текст образца вне зон колонтитулов — подпись зоны, а не логотип; рендер убирает её намеренно."""
     text = ctx.exemplar_texts(slide.exemplar).get(fid, "") if slide.exemplar else ""
     if not text:
         return False
@@ -247,7 +243,7 @@ def check_T06(ctx: AuditContext) -> list[Finding]:
             need = CONTRAST_MIN_LARGE if large else CONTRAST_MIN
             if cr >= need:
                 continue
-            # цвет из палитры шаблона (muted-подписи) — так задумано дизайнером: предупреждение, не ошибка
+            # цвет из палитры шаблона — так задумано дизайнером
             from_template = any(delta_e(color, p) < COLOR_TOL_DE for p in ctx.palette)
             sev = Severity.WARNING if from_template else Severity.ERROR
             out.append(finding("T06_contrast", slide, sev,
@@ -258,7 +254,7 @@ def check_T06(ctx: AuditContext) -> list[Finding]:
 
 
 def _background_under(slide: SlideCtx, sh: ShapeRec) -> str | None:
-    """Цвет под текстом: собственная заливка → ближайшая сверху заливка под блоком → фон слайда. None — картинка."""
+    """Цвет под текстом: своя заливка → заливка под блоком → фон слайда; None — картинка."""
     if sh.fill:
         return sh.fill[0]
     cx, cy = sh.box.x + sh.box.w / 2, sh.box.y + sh.box.h / 2

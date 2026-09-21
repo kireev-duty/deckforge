@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 def load_dotenv(path: str | Path | None = None) -> bool:
-    """Подхватывает `.env` из корня репо (ключи и модели). Уже заданные переменные не перетирает."""
+    """Подхватывает `.env` из корня репо; заданные переменные не перетирает."""
     p = Path(path) if path else ROOT / ".env"
     if not p.exists():
         return False

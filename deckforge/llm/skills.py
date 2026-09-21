@@ -24,7 +24,7 @@ class Skill:
     model_role: str  # text | vision | image
     temperature: float
     max_tokens: int
-    reasoning: bool  # включить «размышления» модели (дороже и медленнее; по умолчанию выкл.)
+    reasoning: bool  # «размышления» модели, по умолчанию выкл.
     inputs: tuple[str, ...]
     system_prompt: str
     user_template: str

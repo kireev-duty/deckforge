@@ -1,4 +1,4 @@
-"""CLI: `deckforge run --config configs/run.example.yaml`. Точка входа без бизнес-логики — всё в pipeline/."""
+"""CLI: parse / run / audit / export."""
 
 from __future__ import annotations
 
@@ -60,7 +60,7 @@ def run_cmd(
     no_images: bool = typer.Option(False, "--no-images", help="без иллюстраций (images: off)"),
     verbose: bool = typer.Option(False, "--verbose", "-v"),
 ) -> None:
-    """Прогон по конфигу: шаблон + контент-пакет → outline → колоды по стратегиям + аудит/автофикс + manifest.json."""
+    """Прогон по конфигу: outline → колоды по стратегиям → аудит и автофиксы → экспорт."""
     logging.basicConfig(level=logging.INFO if verbose else logging.WARNING, format="%(levelname)s %(name)s: %(message)s")
     load_dotenv()
     cfg = load_config(config)
@@ -95,7 +95,7 @@ def audit_cmd(
     json_out: Optional[Path] = typer.Option(None, "--json", help="сохранить AuditReport в JSON"),
     limit: int = typer.Option(80, "--limit", help="сколько строк показать"),
 ) -> None:
-    """Аудит колоды: детерминированные проверки (+ VLM-судья) → таблица находок; аудит колоду не меняет."""
+    """Аудит колоды: детерминированные проверки (+ VLM-судья); колода не меняется."""
     from deckforge.audit import audit_deck, report_markdown
     from deckforge.core.autofix import fix_plan_rows
     from deckforge.core.ir import DeckIR
@@ -128,7 +128,7 @@ def export_cmd(
     ir: Optional[Path] = typer.Option(None, "--ir", help="<strategy>.ir.json — заметки к слайдам в HTML"),
     title: Optional[str] = typer.Option(None, "--title", help="заголовок HTML-страницы"),
 ) -> None:
-    """Экспорт готовой колоды: .html (свой рендер, один файл, без LibreOffice), опционально .pdf и PNG."""
+    """Экспорт готовой колоды: .html, опционально .pdf и PNG."""
     import shutil
 
     from deckforge.core.ir import DeckIR

@@ -12,7 +12,7 @@ MAX_TABLE_ROWS = 7  # без шапки
 MAX_TABLE_COLS = 5
 MAX_SERIES = 5
 FILL_MIN, FILL_MAX = 0.25, 0.75
-SPARSE_MAX_CONTENT = 2  # без IR: слайд из ≤ 2 блоков (заголовок + подпись) считаем титульным/разделителем
+SPARSE_MAX_CONTENT = 2  # без IR слайд из стольких блоков считаем структурным
 
 
 def _is_title(sh: ShapeRec, slide: SlideCtx) -> bool:
@@ -90,7 +90,7 @@ def check_D04(ctx: AuditContext) -> list[Finding]:
 
 
 def fill_ratio(ctx: AuditContext, slide: SlideCtx) -> float:
-    """Доля рабочей области (внутри полей), занятая контентными блоками (сумма, обрезанная по области)."""
+    """Доля рабочей области, занятая контентными блоками."""
     g = ctx.dna.grid
     work = Box(x=g.margin_left, y=g.margin_top, w=max(1, ctx.slide_w - g.margin_left - g.margin_right),
                h=max(1, ctx.slide_h - g.margin_top - g.margin_bottom))

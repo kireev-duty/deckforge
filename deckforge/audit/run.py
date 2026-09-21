@@ -17,10 +17,7 @@ SEVERITY_ORDER = {Severity.ERROR: 0, Severity.WARNING: 1, Severity.INFO: 2}
 
 def audit_deck(pptx: str | Path, dna: TemplateDNA, ir: DeckIR | None = None,
                checks: Iterable[str] | None = None) -> AuditReport:
-    """Детерминированные проверки. `checks` — id или префиксы («L03»); по умолчанию все.
-
-    Если файл не открывается (I01), остальные проверки не выполняются — отчёт содержит только I01.
-    """
+    """Детерминированные проверки; `checks` — id или префиксы, по умолчанию все. Файл не открылся — только I01."""
     t0 = time.perf_counter()
     pptx = Path(pptx)
     selected = _select(checks)
@@ -48,7 +45,7 @@ def _select(checks: Iterable[str] | None) -> dict:
 
 
 def with_contextual(report: AuditReport, findings: list[Finding], checks: Iterable[str], duration_s: float = 0.0) -> AuditReport:
-    """Добавить находки VLM-судьи к детерминированному отчёту (один AuditReport на колоду)."""
+    """Добавить находки VLM-судьи к детерминированному отчёту."""
     merged = [*report.findings, *findings]
     merged.sort(key=lambda f: (f.slide_idx, SEVERITY_ORDER[f.severity], f.check_id))
     return report.model_copy(update={"findings": merged, "checks_run": [*report.checks_run, *checks],
@@ -56,7 +53,7 @@ def with_contextual(report: AuditReport, findings: list[Finding], checks: Iterab
 
 
 def summary(report: AuditReport) -> dict:
-    """Компактная сводка для manifest.json: по severity, по проверкам, по слайдам, сколько контекстуальных."""
+    """Компактная сводка для manifest.json."""
     by_sev = Counter(f.severity.value for f in report.findings)
     by_check = Counter(f.check_id for f in report.findings)
     by_slide = Counter(f.slide_idx for f in report.findings if f.severity != Severity.INFO)

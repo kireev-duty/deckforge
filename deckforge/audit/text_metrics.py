@@ -1,9 +1,7 @@
-"""Оценка ширины/высоты текста без PowerPoint: метрики TTF через Pillow.
+"""Оценка ширины/высоты текста метриками TTF через Pillow.
 
-Шрифты шаблонов (Play, Montserrat) в системе обычно отсутствуют, а `ppt/fonts/*.fntdata` — обфусцированный
-EOT, который Pillow не читает. Поэтому гарнитура резолвится по алиасам в ближайший доступный TTF (Arial),
-а если TTF нет вовсе (минимальный Docker) — средняя ширина символа 0.5·кегль. Оценка «в пределах ~10 %»
-достаточна для детерминированной проверки «текст не влез», точную подгонку делает PowerPoint (autofit).
+Встроенные шрифты шаблона Pillow не читает, поэтому гарнитура резолвится в ближайший доступный TTF,
+а без TTF — средняя ширина символа. Точности ~10 % хватает для проверки «текст не влез».
 """
 
 from __future__ import annotations
@@ -23,7 +21,7 @@ FONT_DIRS = [
     os.path.expanduser("~/.fonts"),
     "/Library/Fonts",
 ]
-# гарнитура → (regular, bold) файлы-кандидаты; первый найденный выигрывает
+# гарнитура → (regular, bold) файлы-кандидаты
 ALIASES: dict[str, tuple[tuple[str, ...], tuple[str, ...]]] = {
     "arial": (("arial.ttf", "Arial.ttf", "LiberationSans-Regular.ttf", "DejaVuSans.ttf"),
               ("arialbd.ttf", "Arial Bold.ttf", "LiberationSans-Bold.ttf", "DejaVuSans-Bold.ttf")),
@@ -33,12 +31,11 @@ ALIASES: dict[str, tuple[tuple[str, ...], tuple[str, ...]]] = {
                    ("Montserrat-Bold.ttf", "arialbd.ttf", "LiberationSans-Bold.ttf", "DejaVuSans-Bold.ttf")),
 }
 DEFAULT_ALIAS = "arial"
-# ширина гарнитуры относительно Arial — применяется, когда её собственный TTF не найден и меряем по прокси
-# (Play ≈ 0.9 по замеру рендера VK Tech; Montserrat заметно шире Arial)
+# ширина гарнитуры относительно Arial, когда меряем по прокси
 WIDTH_FACTOR = {"play": 0.9, "montserrat": 1.1}
-AVG_CHAR_WIDTH = 0.5  # фолбэк: ширина символа в долях кегля
-LINE_HEIGHT = 1.2  # межстрочный интервал по умолчанию (single) в долях кегля
-MEASURE_PT = 100  # размер, при котором меряем; ширина линейна по кеглю
+AVG_CHAR_WIDTH = 0.5  # фолбэк без TTF, в долях кегля
+LINE_HEIGHT = 1.2  # single, в долях кегля
+MEASURE_PT = 100  # ширина линейна по кеглю
 
 
 @lru_cache(maxsize=None)
@@ -65,7 +62,7 @@ def _alias(font: str) -> str:
 
 @lru_cache(maxsize=None)
 def _font(font: str, bold: bool) -> tuple[ImageFont.FreeTypeFont | None, float]:
-    """(шрифт Pillow, поправка ширины). Поправка ≠ 1, если гарнитуру заменил прокси."""
+    """(шрифт Pillow, поправка ширины); поправка ≠ 1, если гарнитуру заменил прокси."""
     alias = _alias(font)
     files = ALIASES[alias]
     path = _find_font_file(files[1] if bold else files[0])
@@ -111,7 +108,7 @@ class TextMeasurer:
                 if self.width(w, size_pt) <= width_pt:
                     cur = w
                     continue
-                for ch in w:  # длинное слово / URL
+                for ch in w:
                     if self.width(cur + ch, size_pt) <= width_pt or not cur:
                         cur += ch
                     else:

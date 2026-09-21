@@ -1,13 +1,9 @@
-"""Контент-пакет: папка с брифом и данными → фрагменты с идентификаторами.
+"""Контент-пакет: папка с брифом и данными → фрагменты с идентификаторами для `OutlineSlide.sources`.
 
-Идентификаторы нужны outline_writer'у, чтобы ссылаться на источники (`OutlineSlide.sources`), а нам —
-чтобы проверять, что модель ничего не выдумала. Состав папки (см. examples/content_pack):
-
-    brief.md          → фрагмент `brief` + по секциям `brief:<slug>` (заголовки `## …` или `**…**` в начале абзаца)
-    *.md              → `doc:<stem>` + `doc:<stem>#<slug>` по секциям
-    data/*.json       → каждый top-level ключ — фрагмент со своим id (ключи, начинающиеся с `_`, пропускаются);
-                        вид определяется по форме объекта: series / table / quote / metric / record
-    data/*.csv        → `csv:<stem>` — таблица (header + rows)
+    brief.md          → `brief` + секции `brief:<slug>`
+    *.md              → `doc:<stem>` + `doc:<stem>#<slug>`
+    data/*.json       → каждый top-level ключ — фрагмент (series / table / quote / metric / record по форме)
+    data/*.csv        → `csv:<stem>`
 """
 
 from __future__ import annotations
@@ -22,10 +18,10 @@ from pydantic import BaseModel, Field
 
 FragmentKind = Literal["text", "metric", "series", "table", "quote", "record"]
 
-PROMPT_CHAR_LIMIT = 12_000  # больше в промпт не отдаём — модель начинает терять факты
+PROMPT_CHAR_LIMIT = 12_000  # больше модель начинает терять факты
 CSV_MAX_ROWS = 30
 
-# `## Заголовок` — целая строка; `**Жирный.** текст…` — жирное начало абзаца (как в brief.md)
+# `## Заголовок` — целая строка; `**Жирный.** текст…` — жирное начало абзаца
 _HEADING_RE = re.compile(r"^(?:#{1,6}\s+(?P<h>.+?)\s*#*\s*$|\*\*(?P<b>[^*\n]+?)\*\*)", re.M)
 _SLUG_RE = re.compile(r"[^0-9a-zа-яё]+", re.I)
 
@@ -35,7 +31,7 @@ class Fragment(BaseModel):
     kind: FragmentKind
     title: str = ""
     text: str = ""  # для text/quote — сам текст; для данных — краткая подпись
-    data: dict[str, Any] | list[Any] | None = None  # series/table/metric/record — как в источнике
+    data: dict[str, Any] | list[Any] | None = None  # как в источнике
     source: str = ""  # относительный путь к файлу
 
     def to_prompt(self) -> str:
@@ -62,7 +58,7 @@ class ContentPack(BaseModel):
         return b.text if b else ""
 
     def to_prompt_text(self, limit: int = PROMPT_CHAR_LIMIT) -> tuple[str, list[str]]:
-        """Текст для {{content_pack}} и предупреждения (обрезка). Бриф не дублируем — он идёт отдельным входом."""
+        """Текст для {{content_pack}} и предупреждения об обрезке; бриф идёт отдельным входом."""
         warnings: list[str] = []
         parts: list[str] = []
         total = 0
@@ -94,7 +90,7 @@ def load_content_pack(root: str | Path) -> ContentPack:
             frags.extend(_json_fragments(js, root))
         for cs in sorted(data_dir.glob("*.csv")):
             frags.append(_csv_fragment(cs, root))
-    # outline.json рядом — это фикстура/результат, не источник
+    # outline.json рядом — результат, не источник
     return ContentPack(root=str(root), fragments=_dedupe(frags))
 
 
@@ -124,7 +120,7 @@ def _md_fragments(path: Path, root: Path) -> list[Fragment]:
     if m:
         title = m.group(1).strip()
     frags = [Fragment(id=base, kind="text", title=title, text=text, source=rel)]
-    # секции: по markdown-заголовкам (кроме H1 всего файла) и по абзацам, начинающимся с **Жирного.**
+    # секции по markdown-заголовкам (кроме H1) и абзацам с жирным началом
     body = text[m.end():] if m else text
     sections = _split_sections(body)
     if len(sections) >= 2:
@@ -141,7 +137,7 @@ def _split_sections(body: str) -> list[tuple[str, str]]:
         if head is not None:
             out.append((head, body[pos:m.start()]))
         head = (m.group("h") or m.group("b")).strip().rstrip(".")
-        pos = m.start() if m.group("b") else m.end()  # у **жирного** заголовок — часть абзаца, оставляем в тексте
+        pos = m.start() if m.group("b") else m.end()  # жирный заголовок остаётся частью абзаца
     if head is not None:
         out.append((head, body[pos:]))
     return [(h, c) for h, c in out if c.strip()]
@@ -168,7 +164,7 @@ def _json_fragments(path: Path, root: Path) -> list[Fragment]:
 
 
 def _classify_record(val: dict) -> tuple[FragmentKind, str, str]:
-    """Вид фрагмента по форме объекта — чтобы модель видела «это ряд», «это таблица», «это цитата»."""
+    """Вид фрагмента по форме объекта."""
     title = str(val.get("title") or val.get("label") or "")
     if "categories" in val and "series" in val:
         return "series", title, ""

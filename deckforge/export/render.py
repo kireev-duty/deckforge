@@ -1,8 +1,4 @@
-"""Рендер .pptx → .pdf → PNG через LibreOffice (headless) и PyMuPDF.
-
-Один и тот же путь используется везде, где нужно «увидеть» слайд: VLM-разметка образцов в парсинге,
-контекстуальный аудит, превью в UI, PDF-экспорт и визуальная проверка вёрстки (`tools/render_deck.py`).
-"""
+"""Рендер .pptx → .pdf → PNG через LibreOffice (headless) и PyMuPDF — один путь для VLM, аудита, превью и PDF."""
 
 from __future__ import annotations
 
@@ -36,7 +32,7 @@ def find_soffice() -> str:
 
 
 def pptx_to_pdf(pptx: Path, out_dir: Path, timeout: int = 180) -> Path:
-    """Конвертирует .pptx → .pdf. Отдельный профиль LibreOffice, чтобы не конфликтовать с открытым GUI."""
+    """.pptx → .pdf в отдельном профиле LibreOffice, чтобы не конфликтовать с открытым GUI."""
     out_dir.mkdir(parents=True, exist_ok=True)
     profile = Path(tempfile.gettempdir()) / "deckforge_lo_profile"
     cmd = [

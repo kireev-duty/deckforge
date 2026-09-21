@@ -1,10 +1,4 @@
-"""outline_writer: бриф + контент-пакет → DeckOutline через скилл `outline_writer`.
-
-Outline один на прогон и не зависит от стратегии вёрстки — стратегия применяется в layout/.
-Ответ модели проходит `repair_outline`: мягкие поправки вместо отказа (перенумерация, недоступный архетип → bullets,
-битая диаграмма → буллеты, обязательные title/closing), потому что один лишний ретрай LLM дороже пяти строк кода.
-Промптов в коде нет — только сборка входов скилла.
-"""
+"""Бриф + контент-пакет → DeckOutline через скилл `outline_writer`; ответ модели проходит `repair_outline`."""
 
 from __future__ import annotations
 
@@ -25,9 +19,9 @@ DEFAULT_TARGET_SLIDES = 12
 MAX_BULLETS = 6
 MAX_KPIS = 4
 TABLE_MAX_ROWS, TABLE_MAX_COLS = 7, 5
-# Архетипы, которые модели предлагать нет смысла: их ставит planner (section) или это не образцы (freeform)
+# архетипы, которые модели не предлагаем: section ставит planner, freeform — не образец
 NOT_OFFERED = {Archetype.SECTION, Archetype.FREEFORM, Archetype.TEAM, Archetype.AGENDA}
-TEXT_FALLBACK = Archetype.BULLETS  # дальше сработают цепочки FALLBACKS в layout/exemplar_picker
+TEXT_FALLBACK = Archetype.BULLETS
 PURPOSES: tuple[str, ...] = get_args(DeckOutline.model_fields["purpose"].annotation)
 ALIAS_LIST_FIELDS = ("cards", "items", "points", "columns", "benefits", "risks", "list")
 TEXT_ARCHETYPES = {a.value for a in (Archetype.BULLETS, Archetype.CARDS, Archetype.TWO_COLUMN, Archetype.IMAGE_TEXT,
@@ -45,7 +39,7 @@ class OutlineResult:
 def archetypes_prompt(available: set[Archetype]) -> str:
     """Список доступных архетипов с определениями — вход {{available_archetypes}}."""
     offered = [a for a in Archetype if a in available and a not in NOT_OFFERED]
-    if not offered:  # шаблон без размеченных образцов — предлагаем текстовый минимум
+    if not offered:  # шаблон без размеченных образцов
         offered = [Archetype.TITLE, Archetype.BULLETS, Archetype.CLOSING]
     return "\n".join(f"- {a.value}: {ARCHETYPE_HINTS[a]}" for a in offered)
 
@@ -61,7 +55,7 @@ def write_outline(
     available_archetypes: set[Archetype],
     retries: int = 1,
 ) -> OutlineResult:
-    """Один вызов скилла (+ повтор, если ответ не собирается в DeckOutline даже после repair)."""
+    """Один вызов скилла; повтор, если ответ не собирается в DeckOutline даже после repair."""
     skill = load_skill("outline_writer")
     content_text, warnings = pack.to_prompt_text()
     inputs = {
@@ -82,7 +76,7 @@ def write_outline(
         try:
             outline, fix_warnings = repair_outline(raw, available_archetypes, pack.ids(), purpose=purpose,
                                                    audience=audience, language=language)
-        except (ValidationError, TypeError, ValueError) as e:  # repair не собрал контракт — ретрай, не падение
+        except (ValidationError, TypeError, ValueError) as e:
             last_err = e
             log.warning("outline_writer: ответ не прошёл валидацию (попытка %d): %s", attempt + 1, str(e)[:300])
             continue
@@ -124,7 +118,7 @@ def repair_outline(
         if Archetype.TITLE in available:
             slides.insert(0, {"archetype": Archetype.TITLE.value, "title": data["title"], "sources": ["brief"]})
             warnings.append("первый слайд не title — добавлен титульный")
-    if slides[-1]["archetype"] != Archetype.CLOSING.value:  # closing есть в FALLBACKS picker'а — ставим всегда
+    if slides[-1]["archetype"] != Archetype.CLOSING.value:
         slides.append({"archetype": Archetype.CLOSING.value, "title": data["title"], "sources": ["brief"]})
         warnings.append("последний слайд не closing — добавлен финальный")
 
@@ -139,7 +133,7 @@ def repair_outline(
 
 
 def _as_list(v: Any) -> list:
-    """Поле-список из ответа модели: None → [], скаляр/словарь → [значение] (dict «слайдов» по ключам — не список)."""
+    """Поле-список из ответа модели: None → [], скаляр/словарь → [значение]."""
     if v is None:
         return []
     if isinstance(v, list):
@@ -171,7 +165,7 @@ def _repair_slide(s: dict[str, Any], available: set[Archetype], warnings: list[s
         warnings.append(f"{label}: неизвестный архетип «{s.get('archetype')}» → {TEXT_FALLBACK.value}")
         arch = TEXT_FALLBACK
     if arch not in available and arch not in (Archetype.TITLE, Archetype.CLOSING, Archetype.SECTION):
-        # data-архетипы оставляем: planner превратит chart↔table↔kpi по стратегии, picker найдёт фолбэк
+        # data-архетипы оставляем: planner и picker разберутся
         if arch not in (Archetype.CHART, Archetype.TABLE, Archetype.KPI, Archetype.QUOTE, Archetype.PROCESS):
             warnings.append(f"{label}: архетипа {arch.value} нет в шаблоне → {TEXT_FALLBACK.value}")
             arch = TEXT_FALLBACK
@@ -189,7 +183,7 @@ def _repair_slide(s: dict[str, Any], available: set[Archetype], warnings: list[s
     if s.get("speaker_notes") is None:
         s.pop("speaker_notes", None)
     s["bullets"] = [_item_text(b) for b in s.get("bullets", []) if _item_text(b)]
-    # модель иногда кладёт контент в поле по имени архетипа (cards, items, columns…) — сворачиваем в буллеты
+    # контент в поле по имени архетипа (cards, items, columns…) — сворачиваем в буллеты
     for alias in ALIAS_LIST_FIELDS:
         extra = s.pop(alias, None)
         if isinstance(extra, list) and extra and not s["bullets"]:
@@ -258,7 +252,7 @@ def _repair_slide(s: dict[str, Any], available: set[Archetype], warnings: list[s
 
 
 def _item_text(item: Any) -> str:
-    """Пункт списка: строка или объект {title|label|name, text|description|body} → «Заголовок — текст»."""
+    """Пункт списка: строка или объект {title, text} → «Заголовок — текст»."""
     if isinstance(item, dict):
         head = str(item.get("title") or item.get("label") or item.get("name") or "").strip()
         body = str(item.get("text") or item.get("description") or item.get("body") or item.get("value") or "").strip()
@@ -335,7 +329,7 @@ def _repair_table(table: Any) -> dict[str, Any] | None:
         if isinstance(r, dict):
             r = [r.get(h, "") for h in header]
         elif not isinstance(r, (list, tuple)):
-            r = [r]  # строка-скаляр — одна ячейка, остальное пусто
+            r = [r]
         cells = [str(c) if c is not None else "" for c in list(r)[:n]]
         rows.append(cells + [""] * (n - len(cells)))
     return {"header": header, "rows": rows}

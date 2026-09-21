@@ -11,7 +11,7 @@ from pptx import Presentation
 from deckforge.audit.context import SPARSE_ARCHETYPES, AuditContext
 from deckforge.audit.deterministic.base import finding
 from deckforge.core.ir import Finding, Severity, SlotKind
-from deckforge.core.placeholders import PLACEHOLDER_PATTERNS, PLACEHOLDER_WHOLE  # noqa: F401 — словарь общий с рендером
+from deckforge.core.placeholders import PLACEHOLDER_PATTERNS, PLACEHOLDER_WHOLE  # noqa: F401
 
 EMPTY_PH_TYPES = {"body", "obj", "subTitle", "title", "ctrTitle", "pic", "chart", "tbl"}
 RASTER_MIN_AREA = 0.9
@@ -24,7 +24,7 @@ _WORD = re.compile(r"[\w%]{2,}", re.U)
 
 
 def probe_file(pptx: str | Path) -> Finding | None:
-    """Файл не открывается: битый zip, дубли имён частей (LibreOffice такое не читает), python-pptx падает."""
+    """Файл не открывается: битый zip, дубли имён частей, python-pptx падает."""
     pptx = Path(pptx)
     try:
         with zipfile.ZipFile(pptx) as z:
@@ -36,7 +36,7 @@ def probe_file(pptx: str | Path) -> Finding | None:
             dup = sorted({n for n in names if names.count(n) > 1})[:3]
             return _i01(f"В архиве дублируются имена частей: {', '.join(dup)}")
         Presentation(str(pptx))
-    except Exception as e:  # noqa: BLE001 — любая ошибка = «не открывается», это и есть проверка
+    except Exception as e:  # noqa: BLE001 — любая ошибка и есть находка
         return _i01(f"Файл не открывается: {type(e).__name__}: {str(e)[:120]}")
     return None
 
@@ -60,7 +60,7 @@ def check_I02(ctx: AuditContext) -> list[Finding]:
         for sh in slide.shapes:
             if not sh.has_text:
                 if sh.is_placeholder and sh.ph_type in EMPTY_PH_TYPES and sh.tag == "sp":
-                    # пустой плейсхолдер: в режиме правки PowerPoint и в некоторых вьюерах — подсказка лейаута
+                    # пустой плейсхолдер в редакторе показывает подсказку лейаута
                     out.append(finding("I02_placeholder_text", slide, Severity.WARNING,
                                        f"Пустой плейсхолдер «{sh.ph_type}» — в редакторе покажется подсказка лейаута",
                                        sh, autofix="drop_shape", pattern="empty_placeholder"))

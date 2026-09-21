@@ -1,8 +1,4 @@
-"""Job'ы генерации для HTTP API (in-memory + файлы в `root/jobs/<id>/`).
-
-Один рабочий поток — колоды собираются по очереди (LLM и LibreOffice всё равно не параллелятся на одной машине).
-Реестр шаблонов и сборка контент-пакета — общие с UI, в `pipeline/workspace.py`.
-"""
+"""Job'ы генерации для HTTP API: in-memory реестр, файлы в `root/jobs/<id>/`, один рабочий поток."""
 
 from __future__ import annotations
 
@@ -17,7 +13,7 @@ from pathlib import Path
 from typing import Callable
 
 from deckforge.pipeline import DeckResult, ParsedTemplate, RunResult
-from deckforge.pipeline.workspace import (  # noqa: F401 — реэкспорт для api/app.py и тестов
+from deckforge.pipeline.workspace import (  # noqa: F401 — реэкспорт
     BadUpload,
     TemplateEntry,
     TemplateStore,
@@ -41,7 +37,7 @@ class Job:
     started_s: float = 0.0
     future: Future | None = None
     _lock: threading.Lock = field(default_factory=threading.Lock, repr=False)
-    fix_lock: threading.Lock = field(default_factory=threading.Lock, repr=False)  # refine_deck по одному на job
+    fix_lock: threading.Lock = field(default_factory=threading.Lock, repr=False)
 
     def say(self, msg: str) -> None:
         with self._lock:
@@ -57,7 +53,7 @@ class Job:
 
 
 class JobStore:
-    """Job'ы в памяти; `executor=None` — выполнять синхронно (тесты)."""
+    """Job'ы в памяти; `executor=None` — выполнять синхронно."""
 
     def __init__(self, root: Path, executor: ThreadPoolExecutor | None) -> None:
         self.root = root / "jobs"
@@ -76,7 +72,7 @@ class JobStore:
         return self._jobs.get(job_id)
 
     def discard(self, job: Job) -> None:
-        """Убрать job, который не дошёл до запуска (вход не прошёл проверку): из реестра и с диска."""
+        """Убрать job, который не дошёл до запуска."""
         self._jobs.pop(job.id, None)
         shutil.rmtree(job.dir, ignore_errors=True)
 
@@ -90,7 +86,7 @@ class JobStore:
                 job.result = fn(job)
                 job.decks = {d.strategy: d for d in job.result.decks}
                 job.status = "done"
-            except Exception as e:  # noqa: BLE001 — ошибка прогона отдаётся клиенту, сервер живёт
+            except Exception as e:  # noqa: BLE001 — ошибка отдаётся клиенту
                 job.error = f"{type(e).__name__}: {str(e)[:300]}"
                 job.status = "error"
                 job.say(f"ошибка: {job.error}")

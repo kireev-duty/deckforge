@@ -1,8 +1,6 @@
 """Вёрстка: границы слайда, наложения, переполнение текста, сетка, поля, пропорции картинок (L01–L07).
 
-Геометрия, унаследованная от образца (бокс слота не изменился), — дизайн шаблона: такие находки
-получают severity warning и evidence.in_exemplar=1, а не error, чтобы отличать «шаблон так устроен»
-от «мы сломали».
+Геометрия, унаследованная от образца, — дизайн шаблона: warning с `in_exemplar`, а не error.
 """
 
 from __future__ import annotations
@@ -13,13 +11,13 @@ from deckforge.audit.text_metrics import LINE_HEIGHT, TextMeasurer
 from deckforge.core.ir import Box, Finding, Severity, SlotKind
 from deckforge.core.units import EMU_PER_PT
 
-TITLE_LINES = 2  # = layout/fitting.TITLE_LINES (импорт соседнего слоя запрещён)
+TITLE_LINES = 2  # = layout/fitting.TITLE_LINES
 OUT_OF_BOUNDS_TOL = 0.01  # доля стороны слайда
-OVERLAP_MIN = 0.05  # пересечение > 5 % площади меньшего блока
-NESTED_MIN = 0.90  # ≥ 90 % — вложенность (текст поверх картинки), не наложение
-OVERFLOW_TOL = 0.10  # запас: метрики прокси-шрифта и межстрочный интервал оцениваются с точностью ~10 %
+OVERLAP_MIN = 0.05  # доля площади меньшего блока
+NESTED_MIN = 0.90  # выше — вложенность, не наложение
+OVERFLOW_TOL = 0.10  # точность метрик прокси-шрифта
 OVERFLOW_MIN_PT = 2.0
-MIN_PICTURE_PX = 4  # картинки-линии (1250×1 px) пропорций не имеют
+MIN_PICTURE_PX = 4  # картинки-линии пропорций не имеют
 GRID_TOL = 91440  # 0.1"
 FULL_BLEED = 0.6
 ASPECT_TOL = 0.03
@@ -29,10 +27,7 @@ ASPECT_TOL = 0.03
 
 
 def _in_exemplar(slide: SlideCtx, shape: ShapeRec) -> bool:
-    """Бокс фигуры совпадает с боксом слота образца — геометрия унаследована, не наша.
-
-    Сравнение по боксу, а не по id: нативная диаграмма/таблица получает новый id, но встаёт в бокс слота.
-    """
+    """Бокс фигуры совпадает с боксом слота образца — геометрия унаследована (по боксу, т.к. id меняется)."""
     if slide.exemplar is None:
         return False
     return any(_same_box(slot.box, shape.box) for slot in slide.exemplar.slots)
@@ -108,7 +103,7 @@ def check_L02(ctx: AuditContext) -> list[Finding]:
                 if ratio <= OVERLAP_MIN:
                     continue
                 if ratio >= NESTED_MIN and not (a.has_text and b.has_text):
-                    continue  # подпись поверх картинки, иконка в карточке — вложенность, а не наложение
+                    continue  # вложенность, а не наложение
                 in_ex = _pair_in_exemplar(slide, a, b)
                 sev = Severity.WARNING if in_ex else Severity.ERROR
                 box = Box(x=max(a.box.x, b.box.x), y=max(a.box.y, b.box.y),
@@ -157,13 +152,13 @@ def check_L03(ctx: AuditContext) -> list[Finding]:
                 continue
             slot = slide.slot_of(sh.id)
             if mode == "height" and slot is not None and slot.kind == SlotKind.TITLE and sh.main_run:
-                # заголовку разрешены TITLE_LINES строк, даже если бокс образца рассчитан на одну (как в layout/fitting)
+                # заголовку разрешены TITLE_LINES строк, как в layout/fitting
                 have = max(have, TITLE_LINES * sh.main_run.size_pt * LINE_HEIGHT)
             limit = have * (1 + OVERFLOW_TOL) + OVERFLOW_MIN_PT
             if need <= limit:
                 continue
             what = "ширине" if mode == "width" else "высоте"
-            # normAutofit/spAutoFit: PowerPoint ужмёт кегль или растянет рамку сам, но другие вьюеры — не всегда
+            # autofit: PowerPoint ужмёт кегль сам, другие вьюеры — не всегда
             sev = Severity.WARNING if sh.autofit in ("normAutofit", "spAutoFit") else Severity.ERROR
             out.append(finding("L03_text_overflow", slide, sev,
                                f"Текст {_label(sh)} не влезает по {what}: нужно {need:.0f} pt, есть {have:.0f} pt"
@@ -251,7 +246,7 @@ def check_L06(ctx: AuditContext) -> list[Finding]:
 
 
 def check_L07(ctx: AuditContext) -> list[Finding]:
-    """Картинка растянута: пропорции рамки не совпадают с пропорциями изображения (с учётом crop)."""
+    """Картинка растянута: пропорции рамки не совпадают с изображением (с учётом crop)."""
     out: list[Finding] = []
     for slide in ctx.slides:
         for sh in slide.shapes:
@@ -267,7 +262,7 @@ def check_L07(ctx: AuditContext) -> list[Finding]:
             diff = abs(img_ar - frame_ar) / frame_ar
             if diff <= ASPECT_TOL:
                 continue
-            # картинка образца, которую мы не подменяли (с DeckIR известно), растянута самим шаблоном — предупреждение
+            # картинку образца, которую мы не подменяли, растянул сам шаблон
             inherited = slide.exemplar is not None and not sh.is_ours
             out.append(finding("L07_picture_stretched", slide, Severity.WARNING if inherited else Severity.ERROR,
                                f"Картинка растянута: пропорции {img_ar:.2f} vs рамка {frame_ar:.2f} ({diff:.0%})",

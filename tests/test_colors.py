@@ -11,14 +11,14 @@ def test_contrast_extremes() -> None:
 
 
 def test_delta_e_orders_similarity() -> None:
-    # accent ЛЦТ размазан по FF0053/FE095F — должны слиться; синий и голубой — нет
+    # близкие оттенки accent должны слиться; синий и голубой — нет
     assert delta_e("FF0053", "FE095F") < COLOR_MERGE_DE < delta_e("0077FF", "00AEE8")
-    assert delta_e("8F8F8F", "798492") > COLOR_MERGE_DE  # серый и серо-синий — разные muted
+    assert delta_e("8F8F8F", "798492") > COLOR_MERGE_DE  # серый и серо-синий — разные
 
 
 def test_chroma_separates_neutral_from_chromatic() -> None:
     assert chroma("8F8F8F") < 1
-    assert chroma("EBF3F9") < 12  # почти белый — нейтральный, хотя HSL-насыщенность у него > 0.5
+    assert chroma("EBF3F9") < 12  # почти белый — нейтральный, хотя HSL-насыщенность > 0.5
     assert chroma("0077FF") > 20
 
 

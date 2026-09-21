@@ -1,7 +1,6 @@
-"""Стресс-инварианты: крайние outline, мусор от модели, синтетические шаблоны — без исключений, без потери слайдов.
+"""Стресс-инварианты: крайние outline, мусор от модели, синтетические шаблоны — без исключений и потерь.
 
-Матрица по всем шаблонам и стратегиям — `tools/stress_test.py` (те же генераторы из `tests/fixtures/stress_outlines`);
-здесь — быстрые проверки на образцах VK Tech и синтетике, чтобы найденное однажды не вернулось.
+Полная матрица — `tools/stress_test.py`; здесь быстрые регрессии на VK Tech и синтетике.
 """
 
 from __future__ import annotations
@@ -58,8 +57,8 @@ def _per_ref_max(ir) -> int:
 
 def test_normalize_strips_xml_invalid_chars() -> None:
     assert normalize("до\x00после \x0bвер\x1fт \x08bs \ud800 \ufffe ок\tтаб\nстрока") == "допосле верт bs ок таб строка"
-    assert xml_safe("a\x00b\nc\td") == "ab\nc\td"  # переносы и табуляция — допустимы, остаются
-    assert normalize(so.EMOJI) == so.EMOJI and normalize(so.RTL) == so.RTL  # не-ASCII не трогаем
+    assert xml_safe("a\x00b\nc\td") == "ab\nc\td"
+    assert normalize(so.EMOJI) == so.EMOJI and normalize(so.RTL) == so.RTL
 
 
 def test_control_chars_survive_layout_and_render(vk_tech, tmp_path: Path) -> None:
@@ -116,8 +115,7 @@ def test_numbers_extremes_build_and_render(vk_tech, tmp_path: Path, strategy: st
 
 
 def test_step_badges_get_ordinals_not_leads() -> None:
-    """Кружки «1 2 3» у шагов процесса (presentation_eng_dark slide19, Пифагор slide20): в label на 3–4 знака
-    ложился лид «Шаг 12» → L03 по высоте. Теперь — только порядковый номер, пункт целиком в тело."""
+    """Кружки «1 2 3» у шагов процесса: в label только порядковый номер, пункт целиком в тело."""
     from deckforge.layout.builder import is_badge
     from deckforge.pipeline import parse_template
 
@@ -128,7 +126,7 @@ def test_step_badges_get_ordinals_not_leads() -> None:
     badges = {(e.id, s.id): s for e in parsed.exemplars for s in e.slots if is_badge(s)}
     assert badges, "в шаблоне ожидались label-слоты с номером-образцом"
     full = so.all_process()
-    short = full.model_copy(update={"slides": full.slides[:4] + full.slides[-1:]})  # в объёме: без сворачивания форм
+    short = full.model_copy(update={"slides": full.slides[:4] + full.slides[-1:]})  # в объёме
     res = _build(parsed, short, "narrative")
     filled = 0
     for sl in res.ir.slides:
@@ -141,7 +139,7 @@ def test_step_badges_get_ordinals_not_leads() -> None:
 
 
 def test_numbers_extremes_on_vk_education() -> None:
-    """Пустое значение KPI на образце с оценённым кеглем цифры: fit_number делил на нулевую ширину."""
+    """Пустое значение KPI не делит на ноль в fit_number."""
     from deckforge.pipeline import parse_template
     from tests.conftest import find_template
 
@@ -170,7 +168,7 @@ def test_missing_or_broken_image_does_not_break_render(vk_tech, tmp_path: Path) 
     outline = DeckOutline(title="т", purpose="other", slides=slides)
     res = _build(vk_tech, outline, "visual")
     assert not any(el.image_path and el.image_path.endswith("missing.png") for s in res.ir.slides for el in s.elements)
-    out = render_pptx(res.ir, vk_tech.template, vk_tech.exemplars, tmp_path / "img.pptx")  # битый файл — не исключение
+    out = render_pptx(res.ir, vk_tech.template, vk_tech.exemplars, tmp_path / "img.pptx")
     assert out.exists()
 
 
@@ -183,8 +181,7 @@ def test_freeform_in_ready_outline_is_not_skipped(vk_tech) -> None:
 
 
 def test_nothing_placed_retries_other_exemplar(vk_tech) -> None:
-    """Образец без единого текстового слота (у VK Tech такой есть — cards-слайд портфеля с одним title)
-    не должен получить слайд с тезисом: builder перебирает образцы, пока контент не ляжет."""
+    """Образец без текстовых слотов не получает слайд с тезисом: builder перебирает образцы, пока контент не ляжет."""
     res = _build(vk_tech, so.all_image_text_no_path(), "executive")
     for s in res.ir.slides[1:-1]:
         assert any(el.paragraphs for el in s.elements if el.kind.value in ("body", "label", "caption")), s.exemplar_id
@@ -192,7 +189,7 @@ def test_nothing_placed_retries_other_exemplar(vk_tech) -> None:
 
 
 def test_structural_leftover_becomes_text_or_kpi_slide(vk_tech) -> None:
-    """Буллеты/KPI на титульном слайде (модель так делает) не капают по одному в подписи титулов."""
+    """Буллеты/KPI на титульном слайде не капают по одному в подписи титулов."""
     slides = [OutlineSlide(idx=0, archetype=Archetype.TITLE, title="т", bullets=[f"п{i}" for i in range(6)],
                            kpis=so._kpis(4)),
               OutlineSlide(idx=1, archetype=Archetype.CLOSING, title="к")]
@@ -212,7 +209,7 @@ def test_every_stress_outline_builds_without_skips(vk_tech, case: str) -> None:
             assert res.ir.slides
 
 
-_BLOATED = [  # матрица стресс-теста дня 13: 20 × 8 KPI / 12 шагов на шаблонах, где ни один образец столько не вмещает
+_BLOATED = [  # 20 × 8 KPI / 12 шагов на шаблонах, где ни один образец столько не вмещает
     ("02_HSE", "all_kpi"), ("presentation_eng_dark", "all_kpi"), ("presentation_eng_dark", "all_process"),
     ("Теорема Пифагора", "all_process"), ("VK Education", "all_process"), ("VK Tech", "all_process"),
 ]
@@ -220,8 +217,7 @@ _BLOATED = [  # матрица стресс-теста дня 13: 20 × 8 KPI / 
 
 @pytest.mark.parametrize("name,case", _BLOATED)
 def test_over_budget_kpi_process_do_not_bloat_on_real_templates(name: str, case: str) -> None:
-    """Критерии те же, что в `tools/stress_test.py` (`bloat_problems`): не больше 2× слайдов и не больше
-    MAX_PER_REF слайдов колоды на один слайд outline — контент сворачивается в карточки/список, а не в каскад."""
+    """Критерии те же, что в `tools/stress_test.py`: контент сворачивается в карточки/список, а не в каскад."""
     from deckforge.pipeline import parse_template
     from tests.conftest import find_template
     from tools.stress_test import bloat_problems
@@ -236,7 +232,7 @@ def test_over_budget_kpi_process_do_not_bloat_on_real_templates(name: str, case:
         assert bloat_problems(res.ir.slides, len(outline.slides), load_strategy(strategy), case) == [], (name, case, strategy)
         assert not [c for c in res.choices if c.exemplar_id is None]
         texts = " ".join(r.text for s in res.ir.slides for el in s.elements for p_ in el.paragraphs for r in p_.runs)
-        for s in outline.slides:  # ни одного пункта не потеряно
+        for s in outline.slides:
             for k in s.kpis:
                 assert k.label in texts, (name, case, strategy, k.label)
             for step in s.steps:
@@ -286,8 +282,7 @@ def _mutate(rng: random.Random, raw: dict) -> dict:
 
 
 def test_repair_outline_fuzz_returns_outline_or_validation_error(vk_tech) -> None:
-    """Любая мутация ответа модели → DeckOutline или ValidationError (ретрай), никаких TypeError;
-    собранный outline проходит planner и builder на VK Tech без исключений и без пропущенных слайдов."""
+    """Любая мутация ответа модели → DeckOutline или ValidationError, никаких TypeError; outline собирается."""
     raw0 = cassette("outline_writer_pulse")
     rng = random.Random(42)
     ok = 0
@@ -314,7 +309,7 @@ def test_repair_outline_scalars_instead_of_lists() -> None:
         {"idx": 1, "archetype": "chart", "title": "график", "chart": {"categories": "а", "series": {"x": 5}}},
         {"idx": 2, "archetype": "table", "title": "строки", "table": {"header": ["а", "б"], "rows": [None, "x", ["1", "2"]]}},
     ]}
-    outline, warnings = repair_outline(raw, _AVAIL, set())  # скаляры — одна ячейка/категория, не TypeError
+    outline, warnings = repair_outline(raw, _AVAIL, set())
     kinds = [s.archetype for s in outline.slides]
     assert kinds == [Archetype.TITLE, Archetype.TABLE, Archetype.CHART, Archetype.TABLE, Archetype.CLOSING]
     assert outline.slides[1].table.rows == [["3.5"]] and outline.slides[2].chart.series == {"x": [5.0]}
@@ -340,10 +335,10 @@ def test_synthetic_templates_survive_pipeline(tmp_path: Path, name: str) -> None
         export_html(out, out.with_suffix(".html"), ir=res.ir)
         skipped = [c for c in res.choices if c.exemplar_id is None]
         if name in ("four_by_three", "a4_portrait", "placeholders_only"):
-            # «заголовок + текст» и стандартные плейсхолдеры — колода собирается целиком
+            # колода собирается целиком
             assert not skipped and len(res.ir.slides) >= 8, (name, strategy)
             assert report.errors == 0 or name == "placeholders_only"
-        if name == "nested_groups":  # растянутые картинки самого шаблона — предупреждение, не наша ошибка
+        if name == "nested_groups":  # растянутые картинки самого шаблона — предупреждение
             assert not [f for f in report.findings if f.check_id == "L07_picture_stretched" and f.severity == "error"]
 
 

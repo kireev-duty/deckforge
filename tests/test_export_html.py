@@ -1,4 +1,4 @@
-"""export/html: самодостаточный HTML из готовой колоды — весь текст IR на месте, диаграммы SVG, таблицы, без внешних скриптов."""
+"""export/html: самодостаточный HTML из готовой колоды — текст IR на месте, диаграммы SVG, таблицы."""
 
 from __future__ import annotations
 
@@ -73,4 +73,4 @@ def test_svg_chart_kinds() -> None:
 
 def test_eot_guard() -> None:
     assert eot_to_ttf(b"\x00" * 10) is None
-    assert eot_to_ttf(b"\x00" * 40) is None  # размер не совпадает, magic не тот
+    assert eot_to_ttf(b"\x00" * 40) is None

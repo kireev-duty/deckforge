@@ -1,4 +1,4 @@
-"""VLM-судья (audit_judge): разбор ответов с кассеты реального прогона, контекст слайдов, устойчивость к сбоям. LLM не вызывается."""
+"""VLM-судья: разбор ответов с кассеты, контекст слайдов, устойчивость к сбоям. LLM не вызывается."""
 
 from __future__ import annotations
 
@@ -40,7 +40,7 @@ def test_question_table_matches_audit_md() -> None:
 def test_findings_from_cassette() -> None:
     answers = cassette("audit_judge_pulse")
     assert len(answers) == 15
-    # слайд 3 (cards 1/2): судья не нашёл «9,5 часов» в источниках и принял многоточия за заглушку
+    # слайд 3: судья не нашёл цифру в источниках и принял многоточия за заглушку
     s = SlideText(idx=2, title="t", archetype=Archetype.CARDS, sources=["brief:продукт"])
     found = findings_from_answers(answers[2], s)
     ids = {f.check_id: f for f in found}
@@ -55,7 +55,7 @@ def test_findings_from_cassette() -> None:
 def test_structural_slides_skip_inapplicable_questions() -> None:
     answers = cassette("audit_judge_pulse")
     section = SlideText(idx=1, title="Контекст", archetype=Archetype.SECTION)
-    assert findings_from_answers(answers[1], section) == []  # C01/C02/C03/C05/C11 — «нет», но для разделителя не считаются
+    assert findings_from_answers(answers[1], section) == []  # для разделителя эти вопросы не считаются
     as_cards = findings_from_answers(answers[1], SlideText(idx=1, archetype=Archetype.CARDS))
     assert {f.check_id.split("_")[0] for f in as_cards} == {"C01", "C02", "C03", "C05", "C11"}
 
@@ -72,7 +72,7 @@ def test_judge_deck_calls_per_slide_and_survives_errors(tmp_path: Path) -> None:
     answers = cassette("audit_judge_pulse")
     slides = [SlideText(idx=i, title=f"T{i}", text=f"текст {i}", archetype=Archetype.CARDS) for i in range(3)]
     client = FakeClient(by_skill={"audit_judge": [answers[2], RuntimeError("timeout"), answers[0]]})
-    # workers=1: очередь ответов FakeClient разбирается по порядку слайдов; параллельность — ниже отдельно
+    # workers=1: очередь ответов разбирается по порядку слайдов
     found = judge_deck(_png(tmp_path, 3), slides, client, language="ru", workers=1)
     assert len(client.calls) == 3 and all(c.skill == "audit_judge@v1" for c in client.calls)
     by_slide = {i: [f.check_id for f in found if f.slide_idx == i] for i in range(3)}
@@ -115,12 +115,12 @@ def test_slides_from_ir_collects_text_and_facts(template_path) -> None:
     pack = load_content_pack(PACK)
     slides = slides_from_ir(res.ir, outline, pack)
     assert len(slides) == len(res.ir.slides) and slides[0].archetype == Archetype.TITLE
-    assert outline.slides[0].title.startswith(slides[0].title)  # судья видит текст после fitting, не outline
+    assert outline.slides[0].title.startswith(slides[0].title)  # судья видит текст после fitting
     kpi = next(s for s in slides if s.archetype == Archetype.KPI)
     assert any(ch.isdigit() for ch in kpi.text)
     chart = next(s for s in slides if s.archetype == Archetype.CHART)
     assert "[диаграмма:" in chart.text and "категории:" in chart.text
-    # факты: сначала свои sources, затем остальное — но не целый бриф/документ, дублирующий секции
+    # факты: сначала свои sources, затем остальное, но не целый бриф
     with_src = next(s for s in slides if s.sources and "brief" not in s.sources and "doc:product" not in s.sources)
     assert with_src.facts.startswith(f"[{with_src.sources[0]}]")
     assert "[brief]" not in with_src.facts and "[doc:product]" not in with_src.facts and "[m:pilot]" in with_src.facts

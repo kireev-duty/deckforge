@@ -75,7 +75,7 @@ def test_dna_kwargs_shape(tokens: TemplateTokens, font: str, accent: str) -> Non
     assert {"colors", "typography", "fonts", "embedded_fonts", "theme_colors", "stats", "slide_w", "slide_h"} <= set(kw)
 
 
-# ── точечные факты, известные из разведки датасета ──
+# ── точечные факты по датасету ──
 
 
 @pytest.mark.parametrize("tokens", ["VK_WorkSpace"], indirect=True)
@@ -83,7 +83,7 @@ def test_workspace_is_dark(tokens: TemplateTokens) -> None:
     assert tokens.palette("background") == ["000000"]
     assert tokens.palette("text") == ["FFFFFF"]
     assert tokens.embedded_fonts == ["Play"]
-    assert tokens.theme_fonts == {"major": "Arial", "minor": "Arial"}  # тема врёт — и это нормально
+    assert tokens.theme_fonts == {"major": "Arial", "minor": "Arial"}  # тема не совпадает с использованием
 
 
 @pytest.mark.parametrize("tokens", ["VK Tech"], indirect=True)

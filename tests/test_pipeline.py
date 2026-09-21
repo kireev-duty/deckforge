@@ -1,7 +1,4 @@
-"""pipeline.run: конфиг → outline (фейковый LLM) → колоды + аудит/автофикс + manifest.json с провенансом.
-
-Контекстуальный аудит в тестах — только на FakeClient с кассетой и только если есть LibreOffice (PNG).
-"""
+"""pipeline.run на фейковом LLM: outline → колоды + аудит/автофикс + manifest.json."""
 
 import json
 from pathlib import Path
@@ -58,7 +55,7 @@ def test_run_with_fake_llm(template_path, tmp_path: Path) -> None:
         fix = m["audit"]["autofix"]
         assert {"applied", "skipped", "before", "after", "items"} <= set(fix)
         assert fix["after"]["errors"] <= fix["before"]["errors"]
-        if fix["applied"]:  # IR на диске — уже исправленный
+        if fix["applied"]:
             ir = json.loads(d.ir_json.read_text("utf-8"))
             assert any("size_pt" in el["style_overrides"] or any(r["size_pt"] for p in el["paragraphs"] for r in p["runs"])
                        for s in ir["slides"] for el in s["elements"])
@@ -74,7 +71,7 @@ def test_run_with_fake_llm(template_path, tmp_path: Path) -> None:
 
 
 def test_autofix_removes_our_overflow_errors(template_path, tmp_path: Path, no_fitting) -> None:
-    """Без подгонки текста на VK Tech есть L03-ошибки; с фиксами их нет, а «после» ≤ «до»."""
+    """Без подгонки текста есть L03; с фиксами их нет."""
     from deckforge.core.ir import DeckOutline
 
     outline = DeckOutline.model_validate_json((REPO / "examples" / "content_pack" / "outline.json").read_text("utf-8"))
@@ -126,8 +123,7 @@ class ImageFakeClient(FakeClient):
 
 
 def test_images_generated_cached_and_rendered(template_path, tmp_path: Path) -> None:
-    """visual (images: always): иллюстрации генерируются до вёрстки, попадают в picture-слот и в .pptx,
-    повторный прогон берёт их из кэша; images: off — ни одного вызова."""
+    """Иллюстрации генерируются до вёрстки и попадают в .pptx; повтор — из кэша; images: off — ни одного вызова."""
     from deckforge.content.images import MAX_IMAGES
 
     cfg = RunConfig(template=template_path("VK Tech"), content_pack=REPO / "examples" / "content_pack",
@@ -146,7 +142,7 @@ def test_images_generated_cached_and_rendered(template_path, tmp_path: Path) -> 
     prs = Presentation(str(deck.pptx))
     assert sum(1 for sl in prs.slides for sh in sl.shapes if sh.shape_type is not None and "PICTURE" in str(sh.shape_type)
                or sh._element.find(".//{http://schemas.openxmlformats.org/drawingml/2006/main}blip") is not None) >= 1
-    # повтор — из кэша, новых генераций нет
+    # повтор — из кэша
     again = run(cfg, client=client, outline=_outline()).decks[0]
     m2 = json.loads(again.manifest.read_text("utf-8"))
     assert m2["images"]["cache"] == len(gen) and m2["images"]["generated"] == 0
@@ -179,18 +175,18 @@ def test_build_deck_matches_run(template_path, tmp_path: Path) -> None:
     assert set(deck.load_manifest()) == set(whole.load_manifest())
     m = deck.load_manifest()
     assert m["exports"] == {"pptx": "executive.pptx"} and deck.pdf is None
-    # пути в manifest — относительно папки прогона (примеры в репо без C:\Users\… машины сборки)
+    # пути в manifest — относительные
     assert m["outline"] == "outline.json" and m["audit"]["path"] == "executive.audit.json"
     assert json.loads(deck.audit.read_text("utf-8"))["deck_path"] == "executive.pptx"
     assert ":" not in json.loads((cfg.output_dir / "dna.json").read_text("utf-8"))["source_path"]
     assert deck.load_report().deck_path == "executive.pptx" and parsed.dna.source_path == str(parsed.template)
-    if Path.cwd().resolve() == REPO.resolve():  # шаблон и контент-пакет — относительно репо (cwd)
+    if Path.cwd().resolve() == REPO.resolve():
         assert m["template"]["path"] == "data/templates/VK Tech шаблон.pptx" and m["content_pack"] == "examples/content_pack"
     assert deck.load_report() is not None and len(deck.load_ir().slides) == deck.stats["slides"]
 
 
 def test_refine_deck_applies_user_fixes(template_path, tmp_path: Path, no_fitting) -> None:
-    """Фиксы по выбору пользователя: без подгонки и автофиксов есть L03-ошибки → выбираем их индексы → после refine их нет."""
+    """Фиксы по выбору пользователя: выбранные L03 после refine исчезают."""
     from deckforge.pipeline import refine_deck
 
     cfg = RunConfig(template=template_path("VK Tech"), content_pack=REPO / "examples" / "content_pack",
@@ -210,7 +206,7 @@ def test_refine_deck_applies_user_fixes(template_path, tmp_path: Path, no_fittin
     fix = m["audit"]["autofix"]
     assert fix["user_applied"] >= 1 and fix["applied"] == fix["user_applied"] and fix["after"]["errors"] < before_errors
     assert "refine" in m["timings_s"] and "contextual_stale" not in m["audit"] and m["audit"]["contextual"] == 0
-    # выбор без фиксируемых находок — ничего не меняется
+    # выбор без фиксируемых находок ничего не меняет
     same = refine_deck(fixed, res.parsed, [])
     assert same.audit_summary["errors"] == fixed.audit_summary["errors"]
     assert same.load_manifest()["audit"]["autofix"]["applied"] == fix["applied"]
@@ -236,7 +232,7 @@ def test_pdf_export(template_path, tmp_path: Path) -> None:
 
 @pytest.mark.skipif(not _soffice(), reason="нужен LibreOffice для PNG")
 def test_run_with_contextual_judge(template_path, tmp_path: Path) -> None:
-    """Судья вызывается по слайду с PNG, находки C.. попадают в тот же audit.json, версия скилла — в manifest."""
+    """Судья вызывается по слайду, находки C.. попадают в audit.json, версия скилла — в manifest."""
     from deckforge.core.ir import DeckOutline
 
     outline = DeckOutline.model_validate_json((REPO / "examples" / "content_pack" / "outline.json").read_text("utf-8"))

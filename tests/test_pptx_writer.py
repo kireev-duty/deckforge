@@ -67,8 +67,8 @@ def test_fill_text_overrides_and_no_bullet():
 
 
 def test_crop_rect():
-    assert crop_rect(400, 300, 1600, 900) == (0, 12500, 0, 12500)  # 4:3 в 16:9 — режем верх/низ
-    assert crop_rect(1600, 900, 400, 400) == (21875, 0, 21875, 0)  # широкая в квадрат — бока
+    assert crop_rect(400, 300, 1600, 900) == (0, 12500, 0, 12500)  # 4:3 в 16:9
+    assert crop_rect(1600, 900, 400, 400) == (21875, 0, 21875, 0)  # широкая в квадрат
     assert crop_rect(160, 90, 1600, 900) is None
 
 
@@ -80,7 +80,7 @@ def _deck(exemplars, slides):
 
 
 def _no_duplicate_entries(path: Path) -> bool:
-    """Новая картинка не должна получить имя части образца — иначе в zip две записи с одним именем."""
+    """Новая картинка не получает имя части образца."""
     import zipfile
 
     names = zipfile.ZipFile(path).namelist()
@@ -152,7 +152,7 @@ def test_chart_slide_cloned_twice(template_path, tmp_path: Path):
     assert len(xlsx) == 2
     assert _dangling(prs) == 0
 
-    # 2) с ChartSpec → образцовой диаграммы нет, есть новая нативная; data_labels (autofix I05) → c:dLbls, y_label → ось
+    # 2) с ChartSpec → образцовой диаграммы нет, есть новая нативная; data_labels → c:dLbls, y_label → ось
     spec = ChartSpec(kind="column", title="Тест", categories=["a", "b"], series={"s1": [1, 2]}, y_label="часы")
     el = Element(slot_id=chart_slot.id, kind=SlotKind.CHART, box=chart_slot.box, chart=spec,
                  style_overrides={"data_labels": True})
@@ -167,8 +167,7 @@ def test_chart_slide_cloned_twice(template_path, tmp_path: Path):
 
 
 def test_unfilled_text_placeholder_is_removed(template_path, tmp_path: Path):
-    """ЛЦТ2026: образцы на плейсхолдерах. Незаполненный body-ph удаляется, а не остаётся пустым
-    (в редакторе — подсказка лейаута, у LibreOffice в PDF — «Образец текста»)."""
+    """Образцы на плейсхолдерах: незаполненный body-ph удаляется, а не остаётся пустым."""
     tpl = template_path("ЛЦТ2026")
     exemplars = [p.to_exemplar() for p in classify_template(tpl)]
     src = Presentation(str(tpl))
@@ -186,8 +185,7 @@ def test_unfilled_text_placeholder_is_removed(template_path, tmp_path: Path):
                 and str(sh.placeholder_format.type).startswith("BODY")]
     assert not empty_ph
     assert any(sh.has_text_frame and sh.text_frame.text == "Т" for sh in prs.slides[0].shapes)
-    # подсказки плейсхолдеров лейаутов («Образец текста») тоже сняты — LibreOffice рисует их за слайдом;
-    # поля лейаута (номер слайда ‹#›, дата) остаются
+    # подсказки плейсхолдеров лейаутов сняты, поля (номер слайда, дата) остаются
     for layout in prs.slide_layouts:
         for sh in layout.placeholders:
             ph_type = str(sh.placeholder_format.type)
@@ -198,9 +196,7 @@ def test_unfilled_text_placeholder_is_removed(template_path, tmp_path: Path):
 
 
 def test_empty_placeholders_of_exemplar_are_dropped(template_path, tmp_path: Path):
-    """VK Education slide53 (closing): автор шаблона оставил пустые плейсхолдеры QR-картинки и подписи —
-    не слоты (fixed / footer). В показе их не видно, в редакторе PowerPoint — подсказки лейаута;
-    писатель их убирает, заголовок и номер слайда остаются."""
+    """Пустые плейсхолдеры образца (не слоты) писатель убирает; заголовок и номер слайда остаются."""
     tpl = template_path("VK Education")
     exemplars = [p.to_exemplar() for p in classify_template(tpl)]
     src = Presentation(str(tpl))

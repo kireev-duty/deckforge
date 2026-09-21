@@ -1,10 +1,7 @@
-"""Синтетические колоды-нарушения для каждой детерминированной проверки (docs/AUDIT.md) + «чистая» колода.
+"""Синтетические колоды-нарушения для каждой детерминированной проверки + «чистая» колода.
 
-Генерируются python-pptx на лету (в tmp_path) — бинарники в git не храним. Режим без DeckIR: «чужая»
-колода, шаблон для T04/T05 — сама чистая колода (те же лейауты). `tools/make_fixtures.py` выгружает
-их в папку, чтобы посмотреть глазами через render-deck.
+Генерируются python-pptx на лету; шаблон для T04/T05 — сама чистая колода.
 
-Использование:
     case = FIXTURES["L03"](tmp_path)   # Case(pptx, dna, ir, check, slide_idx)
 """
 
@@ -81,7 +78,7 @@ class DeckBuilder:
         tb = slide.shapes.add_textbox(x, y, w, h)
         tf = tb.text_frame
         tf.word_wrap = wrap
-        tf.auto_size = MSO_AUTO_SIZE.NONE  # python-pptx по умолчанию ставит spAutoFit — фикстуры должны быть «жёсткими»
+        tf.auto_size = MSO_AUTO_SIZE.NONE  # python-pptx по умолчанию ставит spAutoFit
         if isinstance(paragraphs, str):
             paragraphs = [paragraphs]
         for i, text in enumerate(paragraphs):
@@ -173,9 +170,9 @@ def make_clean(tmp: Path) -> Case:
     if path.exists():
         return Case(path, fixture_dna(path), None, "", -1)
     b = _builder(tmp)
-    s1 = b.slide()  # титул: два блока → «разреженный» без IR
+    s1 = b.slide()  # титул: два блока
     b.text(s1, MARGIN, Inches(2.5), Inches(9), Inches(1.3), "Пульс команды: перегрузка видна за неделю", size=32, bold=True)
-    # 24 pt — «крупный» текст по WCAG: muted #8F8F8F на белом (3.2:1) допустим при пороге 3.0
+    # 24 pt — «крупный» текст по WCAG: muted на белом (3.2:1) допустим при пороге 3.0
     b.text(s1, MARGIN, Inches(3.9), Inches(9), Inches(0.6), "Итоги пилота и план запуска", size=24, color=MUTED)
     b.logo(s1)
     s2 = b.slide()
@@ -283,7 +280,7 @@ def _rename_layouts(pptx: Path, new_name: str) -> None:
 
 
 def make_T05(tmp: Path) -> Case:
-    p, dna = _one_slide_deck(tmp, "T05", lambda b, s: b.logo(s, x=Inches(1)))  # логотип не на своём месте
+    p, dna = _one_slide_deck(tmp, "T05", lambda b, s: b.logo(s, x=Inches(1)))  # логотип сдвинут
     return Case(p, dna, None, "T05", 0)
 
 
@@ -320,7 +317,7 @@ def make_D04(tmp: Path) -> Case:
 
 
 def make_D05(tmp: Path) -> Case:
-    def fill(b, s):  # три блока (не «разреженный»), но контент занимает < 25 %
+    def fill(b, s):  # три блока, но контент занимает < 25 %
         b.text(s, MARGIN, Inches(2), Inches(2), Inches(0.4), "мало", size=12)
         b.text(s, COL2, Inches(2), Inches(2), Inches(0.4), "текста", size=12)
     p, dna = _one_slide_deck(tmp, "D05", fill)

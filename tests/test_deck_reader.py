@@ -1,4 +1,4 @@
-"""core/deck_reader на финальной колоде дня 11: данные диаграмм и таблиц совпадают с IR, свойства абзацев читаются."""
+"""core/deck_reader на готовой колоде: данные диаграмм и таблиц совпадают с IR, свойства абзацев читаются."""
 
 from __future__ import annotations
 
@@ -67,7 +67,7 @@ def test_paragraph_and_shape_props(deck) -> None:
     assert texts
     assert {p.align for s in texts for p in s.paragraphs} <= {"l", "ctr", "r", "just", "dist"}
     assert {s.anchor for s in texts} <= {"t", "ctr", "b", "just", "dist"}
-    bullets = [p for s in texts for p in s.paragraphs if p.bullet]  # у VK Tech списков может не быть — карточки
+    bullets = [p for s in texts for p in s.paragraphs if p.bullet]  # списков может не быть
     assert all(p.bullet_char or p.bullet_auto for p in bullets)
     assert all(r.size_pt > 0 and r.font for s in texts for r in s.runs)
     assert all(s.line_w_emu > 0 for _, shapes in slides for s in shapes if s.line)

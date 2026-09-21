@@ -38,7 +38,7 @@ def test_text_measurer_wraps_and_scales() -> None:
     assert len(lines) >= 2 and lines[0].startswith("одно")
     assert m.block_height(["a", "b"], 18, 1000) > m.block_height(["a"], 18, 1000)
     if fonts_available():
-        assert TextMeasurer("Play").width("текст", 18) < m.width("текст", 18)  # поправка прокси для Play
+        assert TextMeasurer("Play").width("текст", 18) < m.width("текст", 18)  # поправка прокси
 
 
 def _generated_deck(template_path, tmp_path: Path, strategy: str = "narrative"):
@@ -77,7 +77,7 @@ def test_audit_generated_deck_runs_all_checks(template_path, tmp_path: Path) -> 
     report = audit_deck(out, dna, ir)
     assert report.checks_run == list(CHECKS) and report.duration_s < 10
     ids = {f.check_id for f in report.findings}
-    # структурные гарантии клонирования: файл открывается, лейауты и фиксированные элементы шаблона на месте
+    # файл открывается, лейауты и фиксированные элементы на месте
     assert not ids & {"I01_file", "I04_raster_slide", "T04_layout", "T05_fixed_moved", "T01_font"}
     for f in report.findings:
         assert 0 <= f.slide_idx < len(ir.slides) and f.message
@@ -86,13 +86,12 @@ def test_audit_generated_deck_runs_all_checks(template_path, tmp_path: Path) -> 
 
 
 def test_t05_ignores_empty_placeholders_of_exemplar(template_path, tmp_path: Path) -> None:
-    """VK Education closing (slide53): пустой QR-плейсхолдер образца попал в fixed; писатель его убирает
-    (в редакторе была бы подсказка), а T05 не считает это удалением фиксированного элемента."""
+    """Пустой плейсхолдер образца из fixed писатель убирает, и T05 не считает это удалением."""
     from deckforge.core.ir import Element, Paragraph, SlideIR, SlotKind, TextRun
 
     pptx = template_path("VK Education")
     dna = build_dna(pptx)
-    ctx_src = AuditContext(pptx, dna)  # только ради разбора образцов шаблона
+    ctx_src = AuditContext(pptx, dna)
     e = next((e for e in dna.exemplars if ctx_src.exemplar_empty_placeholders(e) & set(e.fixed)
               and any(s.kind == SlotKind.TITLE for s in e.slots)), None)
     assert e is not None, "ожидался образец с пустым плейсхолдером среди fixed"

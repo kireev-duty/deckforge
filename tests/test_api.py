@@ -1,4 +1,4 @@
-"""HTTP API: реестр шаблонов, генерация job'ом (синхронно, FakeClient), аудит, фиксы, скачивание по белому списку."""
+"""HTTP API: реестр шаблонов, генерация job'ом на FakeClient, аудит, фиксы, скачивание."""
 
 from __future__ import annotations
 
@@ -51,7 +51,7 @@ def test_templates_registry_and_upload(api: TestClient, template_path, tmp_path:
         r = api.post("/templates", files={"file": ("copy.pptx", fh, "application/octet-stream")})
     assert r.status_code == 200 and r.json()["builtin"] and r.json()["summary"]["fonts"][0] == "Montserrat"
 
-    from tests.fixtures.bad_slides import make_clean  # неизвестный шаблон: синтетический .pptx
+    from tests.fixtures.bad_slides import make_clean
 
     foreign = make_clean(tmp_path).pptx
     with foreign.open("rb") as fh:
@@ -133,7 +133,7 @@ def test_generate_rejects_bad_input(api: TestClient) -> None:
 
 def test_audit_foreign_deck(api: TestClient) -> None:
     vk = _vk_tech(api)
-    deck = Path(vk["path"])  # сам шаблон как «чужая колода» — аудит должен пройти без DeckIR
+    deck = Path(vk["path"])  # шаблон как «чужая колода», без DeckIR
     with deck.open("rb") as fh:
         r = api.post("/audit", data={"template_id": vk["id"]}, files={"deck": ("deck.pptx", fh, "application/octet-stream")})
     assert r.status_code == 200, r.text
@@ -156,7 +156,7 @@ def test_safe_name_and_pack(tmp_path: Path) -> None:
 
 
 def test_rejected_generate_leaves_no_zombie_job(api: TestClient) -> None:
-    """400 на входе не должен оставлять job со статусом queued в реестре и пустую папку на диске."""
+    """400 на входе не оставляет job в реестре и папку на диске."""
     vk = _vk_tech(api)
     base = {"template_id": vk["id"], "brief": BRIEF, "strategies": "executive", "judge": False, "render_png": False}
     before = len(api.get("/jobs").json())
@@ -169,8 +169,7 @@ def test_rejected_generate_leaves_no_zombie_job(api: TestClient) -> None:
 
 
 def test_concurrent_jobs_and_fixes(template_path, tmp_path: Path, no_fitting) -> None:
-    """Настоящий executor: пять /generate подряд доходят до done и не путают файлы; два /fix на одну колоду
-    из двух потоков — оба 200, файлы колоды целы, manifest валиден."""
+    """Настоящий executor: пять /generate подряд не путают файлы; два /fix на одну колоду из двух потоков — оба 200."""
     import json
     import threading
     from concurrent.futures import ThreadPoolExecutor
@@ -190,7 +189,7 @@ def test_concurrent_jobs_and_fixes(template_path, tmp_path: Path, no_fitting) ->
         for i, jid in enumerate(ids):
             run_json = json.loads((tmp_path / "api" / "jobs" / jid / "run.json").read_text("utf-8"))
             assert run_json["config"]["audience"] == f"аудитория {i}"
-            assert run_json["decks"][0]["pptx"] == "executive.pptx"  # пути в run.json — относительно папки job'а
+            assert run_json["decks"][0]["pptx"] == "executive.pptx"  # пути относительные
             assert (tmp_path / "api" / "jobs" / jid / "executive.pptx").exists()
 
         jid = ids[0]
@@ -233,7 +232,7 @@ def test_upload_edge_cases(api: TestClient, template_path, tmp_path: Path) -> No
         fh.truncate(MAX_TEMPLATE_BYTES + 1)
     with pytest.raises(Exception):
         check_pptx(big)
-    # тот же файл под другим именем — один id (дедуп по sha1), и имя из спецсимволов не ломает путь
+    # тот же файл под другим именем — один id; спецсимволы в имени не ломают путь
     holdout = template_path("ЛЦТ2026")
     ids = set()
     for name in ("🚀🚀.pptx", "../../x.pptx", "   .pptx"):

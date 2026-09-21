@@ -1,9 +1,4 @@
-"""Общие фикстуры: поиск шаблонов датасета, подмена LLM.
-
-Шаблоны лежат в репо через Git LFS (`data/templates/*.pptx`, holdout — `data/holdout/`). Если файла нет
-(LFS не подтянут) — тест пропускается, а не падает. LLM в тестах не вызывается: `FakeClient` отдаёт
-записанные ответы (`tests/cassettes/*.json`) и ведёт журнал вызовов как настоящий клиент.
-"""
+"""Общие фикстуры: шаблоны датасета (LFS; нет файла — skip) и `FakeClient` с ответами из `tests/cassettes/`."""
 
 from __future__ import annotations
 
@@ -24,8 +19,7 @@ def cassette(name: str) -> dict | list:
 
 
 class FakeClient:
-    """Подменяет LLMClient. Позиционные ответы — по очереди для любого скилла (последний повторяется);
-    `by_skill={"audit_judge": [...]}` — очередь ответов на конкретный скилл. Исключение в очереди — бросается."""
+    """Подменяет LLMClient: позиционные ответы по очереди (последний повторяется), `by_skill` — на конкретный скилл."""
 
     text_model = "fake-text"
     vision_model = "fake-vision"
@@ -82,10 +76,7 @@ def template_path():
 
 @pytest.fixture
 def no_fitting(monkeypatch: pytest.MonkeyPatch) -> None:
-    """Выключить детерминированную подгонку текста в layout: текст кладётся в слоты как есть.
-
-    Нужна тестам механики фиксов (pipeline → refine_deck → UI/API): им требуется колода с гарантированными
-    L03-ошибками, а с подгонкой на шаблонах датасета ошибок вёрстки у наших элементов больше нет."""
+    """Выключить подгонку текста в layout — тестам фиксов нужна колода с гарантированными L03."""
     import deckforge.layout.builder as builder
 
     monkeypatch.setattr(builder, "slot_capacity", lambda slot: None)

@@ -11,11 +11,11 @@ REPO = Path(__file__).resolve().parents[1]
 def test_app_renders(template_path) -> None:
     from streamlit.testing.v1 import AppTest
 
-    template_path("VK Tech")  # без шаблонов в data/ страница пустая — пропустить
+    template_path("VK Tech")  # без шаблонов страница пустая — skip
     at = AppTest.from_file(str(REPO / "deckforge" / "ui" / "app.py"), default_timeout=60).run()
     assert not at.exception, at.exception
     assert at.title[0].value.startswith("Цифровой дизайнер")
-    assert at.sidebar.selectbox[0].value  # шаблон выбран → показана сводка
+    assert at.sidebar.selectbox[0].value
     assert any("Шаблон:" in h.value for h in at.subheader)
     assert at.button[0].label.startswith("Сгенерировать")
     assert "result" not in at.session_state
@@ -37,7 +37,7 @@ def test_overlay_draws_boxes(tmp_path: Path) -> None:
 
 
 def test_apply_selected_fixes_in_ui(template_path, tmp_path: Path, no_fitting) -> None:
-    """Колода без подгонки текста и автофиксов (фикстурный outline, без LLM) → в таблице есть L03 → выбрать все → «Применить»."""
+    """Колода без подгонки и автофиксов → в таблице есть L03 → выбрать все → «Применить»."""
     from streamlit.testing.v1 import AppTest
 
     from deckforge.core.ir import DeckOutline

@@ -1,9 +1,7 @@
-"""Крайние DeckOutline для стресс-теста layout/render/audit (без LLM).
+"""Крайние DeckOutline для стресс-теста layout/render/audit.
 
-Каждый генератор — `name → DeckOutline`; общий реестр `CASES` читают `tools/stress_test.py` (матрица по шаблонам
-и стратегиям) и `tests/test_stress.py` (быстрые инварианты на образцах одного шаблона). Outline здесь минуют
-`repair_outline` намеренно: так же приходят `--outline готовый.json` и `build_variants`, поэтому layout обязан
-переживать их сам. Тексты синтетические, но осмысленные — по ним видно, откуда взялся дефект на PNG.
+Реестр `CASES` читают `tools/stress_test.py` и `tests/test_stress.py`. Outline минуют `repair_outline`
+намеренно — так же приходят готовые файлы через `--outline`.
 """
 
 from __future__ import annotations
@@ -18,7 +16,7 @@ from deckforge.core.ir import Archetype, ChartSpec, DeckOutline, ImageSpec, KpiS
 REPO = Path(__file__).resolve().parents[2]
 BASE_OUTLINE = REPO / "examples" / "content_pack" / "outline.json"
 
-LONG_WORD = "https://example.com/" + "a" * 280  # «слово» без пробелов — URL
+LONG_WORD = "https://example.com/" + "a" * 280
 LONG_TITLE = ("Очень длинный заголовок, который модель написала одним предложением без точки и который не влезет ни в один слот " * 5).strip()
 LONG_BULLET = ("Пункт с очень длинным текстом, описывающим одну мысль многословно, с уточнениями, примерами и оговорками, " * 4).strip()
 EMOJI = "🚀 Запуск 👨‍👩‍👧‍👦 семьи 🇷🇺 флаг ✅"
@@ -139,7 +137,7 @@ def image_missing_path() -> DeckOutline:
 
 
 def image_files(tmp: Path) -> DeckOutline:
-    """Реальные файлы: 1×1 PNG, 20000×1 PNG (экстремальные пропорции), CMYK JPEG, «картинка» из текста."""
+    """Реальные файлы: 1×1 PNG, 20000×1 PNG, CMYK JPEG, «картинка» из текста."""
     from PIL import Image
 
     tmp.mkdir(parents=True, exist_ok=True)
@@ -230,7 +228,7 @@ def many_sections() -> DeckOutline:
 
 
 def no_title_no_closing() -> DeckOutline:
-    """Outline без титульного и финального (repair их ставит, готовый файл — не обязан)."""
+    """Outline без титульного и финального."""
     return _outline([OutlineSlide(idx=0, archetype=Archetype.BULLETS, title="Сразу тезисы", bullets=["а", "б"]),
                      OutlineSlide(idx=0, archetype=Archetype.KPI, title="И цифры", kpis=_kpis(2))])
 

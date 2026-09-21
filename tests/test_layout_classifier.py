@@ -1,8 +1,4 @@
-"""Классификатор архетипов на 4 шаблонах (только правила, без VLM) + геометрия групп.
-
-Номера слайдов — 1-based, как в PowerPoint и в contact.png. ЛЦТ2026 — holdout: проверяем, но пороги
-под него не подгоняем.
-"""
+"""Классификатор архетипов на шаблонах датасета (только правила) + геометрия групп. Номера слайдов 1-based."""
 
 from __future__ import annotations
 
@@ -31,7 +27,7 @@ EXPECTED: dict[str, dict[int, Archetype]] = {
                 25: A.PROCESS, 32: A.FREEFORM, 36: A.FREEFORM},
 }
 
-# слайды, которые правила обязаны пометить как неоднозначные (картинка-график vs фото решает VLM)
+# слайды, которые правила обязаны пометить как неоднозначные
 MUST_BE_AMBIGUOUS: dict[str, list[int]] = {
     "VK_WorkSpace": [20, 21],
     "VK Education": [31, 47, 49],
@@ -95,7 +91,7 @@ def test_profiles_invariants(profiles: list[SlideProfile]) -> None:
 
 @pytest.mark.parametrize("profiles", _names(), indirect=True)
 def test_every_template_has_core_archetypes(profiles: list[SlideProfile]) -> None:
-    """Любой шаблон датасета даёт хотя бы титульный и карточки (у ЛЦТ2026 нет ни финального, ни разделителя)."""
+    """Любой шаблон датасета даёт хотя бы титульный и карточки."""
     found = {p.archetype for p in profiles}
     assert Archetype.TITLE in found
     assert Archetype.CARDS in found
@@ -104,8 +100,7 @@ def test_every_template_has_core_archetypes(profiles: list[SlideProfile]) -> Non
 
 @pytest.mark.parametrize("profiles", [pytest.param("VK Education", id="VK Education")], indirect=True)
 def test_timeline_years_are_labels_not_footer_dates(profiles: list[SlideProfile]) -> None:
-    """slide42 «Таймлайн»: годы над событиями VLM зовёт `date`. Как DATE слот не заполняется и не чистится
-    (поле колонтитула) — «2010…2016» оставались на слайде про шаги (стресс all_process); как LABEL — пара к событию."""
+    """Годы над событиями таймлайна, которые VLM зовёт `date`, становятся LABEL, а не полем колонтитула."""
     import copy
 
     from deckforge.parsing.layout_classifier import apply_vlm
@@ -118,10 +113,10 @@ def test_timeline_years_are_labels_not_footer_dates(profiles: list[SlideProfile]
     assert all(kinds[i] == SlotKind.LABEL for i in years), {i: kinds[i] for i in years}
 
 
-# ── чужие шаблоны (data/wild, не в LFS датасета — пропускаются, если файла нет) ──
+# ── чужие шаблоны из data/wild (пропускаются, если файла нет) ──
 
 WILD_EXPECTED: dict[str, dict[int, Archetype]] = {
-    # goslide: обложка — титул, «Содержание» на 48 пунктов — agenda, а не title; «лестница» без body — не bullets
+    # обложка — титул, «Содержание» на 48 пунктов — agenda, «лестница» без body — не bullets
     "Презентация в оформлении РУДН": {1: A.TITLE, 2: A.AGENDA, 63: A.CLOSING},
 }
 
@@ -134,7 +129,7 @@ def test_wild_archetypes(name: str) -> None:
     by_no = {p.index + 1: p for p in classify_template(path)}
     wrong = {no: (by_no[no].archetype.value, arch.value) for no, arch in WILD_EXPECTED[name].items() if by_no[no].archetype != arch}
     assert not wrong, wrong
-    # «➜» перед пунктами и номер страницы — не слоты под текст
+    # глифы перед пунктами и номер страницы — не слоты
     for p in by_no.values():
         for s in p.slots:
             assert s.sample_text != "➜", f"слайд {p.index + 1}: глиф стал слотом"
@@ -145,8 +140,7 @@ def test_wild_archetypes(name: str) -> None:
 
 
 def test_wild_empty_big_placeholders_are_numbers() -> None:
-    """HSE slide9: три пустых плейсхолдера 96 pt над подписями — KPI-цифры, а не body на 4 знака
-    (стресс all_kpi: подпись «метрика 4» в такой body → L03)."""
+    """Три пустых плейсхолдера 96 pt над подписями — KPI-цифры, а не body."""
     path = REPO / "data" / "wild" / "02_HSE_Presentation_Shablon_en.pptx"
     if not path.exists() or path.stat().st_size < 10_000:
         pytest.skip(f"нет {path.name}")
@@ -168,7 +162,7 @@ def _shape(id_: str, text: str, x: float, y: float, w: float, h: float, size: fl
 def test_glyph_boxes_and_edge_caption_are_not_body_slots() -> None:
     shapes = [
         _shape("t", "Заголовок слайда", 0.05, 0.12, 0.6, 0.08, size=24),
-        _shape("hdr", "Раздел 2", 0.3, 0.02, 0.6, 0.06, size=12),  # подпись раздела в шапке (РГУП)
+        _shape("hdr", "Раздел 2", 0.3, 0.02, 0.6, 0.06, size=12),  # подпись раздела в шапке
         _shape("g1", "➜", 0.05, 0.3, 0.03, 0.09, size=19), _shape("b1", "Первый тезис", 0.1, 0.3, 0.8, 0.09),
         _shape("g2", "➜", 0.05, 0.42, 0.03, 0.09, size=19), _shape("b2", "Второй тезис", 0.1, 0.42, 0.8, 0.09),
     ]
@@ -180,7 +174,7 @@ def test_glyph_boxes_and_edge_caption_are_not_body_slots() -> None:
 
 
 def test_cover_title_found_below_top_zone() -> None:
-    def shapes():  # build_features помечает найденный заголовок в самих фигурах — каждый вызов на свежих
+    def shapes():  # build_features мутирует фигуры — каждый вызов на свежих
         return [_shape("name", "Все макеты оформления", 0.1, 0.73, 0.82, 0.1, size=39),
                 _shape("sub", "Фирменный стиль · GoSlide", 0.11, 0.86, 0.81, 0.04, size=15)]
 
@@ -217,7 +211,7 @@ def test_absolute_bbox_applies_group_transform() -> None:
     assert absolute_bbox(grp) == (1000, 2000, 2000, 1000)
 
 
-# ── кэш ответов VLM: out/archetypes → data/archetypes (в репо), привязка к sha1 ──
+# ── кэш ответов VLM: out/archetypes → data/archetypes, привязка к sha1 ──
 
 
 def test_bundled_vlm_cache_covers_dataset_and_holdout(template_path) -> None:
@@ -244,7 +238,7 @@ def test_vlm_cache_prefers_work_dir_and_checks_sha1(template_path, tmp_path, mon
     good = {"template_sha1": ex.template_sha1(pptx), "slides": []}
     (bundled / f"{pptx.stem}.json").write_text(json.dumps(good), "utf-8")
     assert ex.find_vlm_cache(pptx) == bundled / f"{pptx.stem}.json"
-    # рабочий кэш от другого файла с тем же именем пропускается, берётся бандл
+    # кэш от другого файла с тем же именем пропускается
     (work / f"{pptx.stem}.json").write_text(json.dumps({"template_sha1": "0" * 40, "slides": []}), "utf-8")
     assert ex.find_vlm_cache(pptx) == bundled / f"{pptx.stem}.json"
     (work / f"{pptx.stem}.json").write_text(json.dumps(good), "utf-8")

@@ -1,4 +1,4 @@
-"""Автофиксы: каталог полный, безопасные фиксы применяются к IR и после повторного рендера аудит по ним чист."""
+"""Автофиксы: каталог полный, безопасные фиксы применяются к IR, после повторного рендера аудит чист."""
 
 from __future__ import annotations
 
@@ -55,8 +55,8 @@ def test_plan_fixes_modes() -> None:
     findings = [
         _finding("L03_text_overflow", "shrink_font_by_scale", sev=Severity.ERROR, need_pt=20, have_pt=10),
         _finding("L03_text_overflow", "shrink_font_by_scale", need_pt=20, have_pt=10, in_exemplar=1),  # шаблон
-        _finding("T02_font_size", "snap_font_size", sev=Severity.INFO, size_pt=10, nearest_pt=12),  # info — подгонка
-        _finding("T06_contrast", "snap_color", contrast=3.2),  # нет nearest — нечем чинить
+        _finding("T02_font_size", "snap_font_size", sev=Severity.INFO, size_pt=10, nearest_pt=12),  # info
+        _finding("T06_contrast", "snap_color", contrast=3.2),  # нет nearest
         _finding("I06_duplicate_slides", "drop_slide", element_id=None),  # ir, но не safe
         _finding("D01_bullets", "split_slide"),  # replan
     ]
@@ -77,7 +77,7 @@ def test_shrink_font_scales_runs_and_cuts_at_floor() -> None:
     ir = _deck(_slide(el))
     res = apply_fixes(ir, [_finding("L03_text_overflow", "shrink_font_by_scale", need_pt=30, have_pt=20)])
     fixed = res.ir.slides[0].elements[0]
-    assert res.applied and 14.0 <= float(fixed.style_overrides["size_pt"]) <= 16.0  # √(20/30)·0,95 ≈ 0,78
+    assert res.applied and 14.0 <= float(fixed.style_overrides["size_pt"]) <= 16.0
     assert ir.slides[0].elements[0].style_overrides["size_pt"] == 20.0  # исходный IR не тронут
     # нужно втрое больше места: кегль упирается в 70 % и текст режется
     res2 = apply_fixes(ir, [_finding("L03_text_overflow", "shrink_font_by_scale", need_pt=90, have_pt=20)])
@@ -87,7 +87,7 @@ def test_shrink_font_scales_runs_and_cuts_at_floor() -> None:
 
 
 def test_shrink_font_title_cuts_clause_not_words() -> None:
-    """Заголовок: только по разделителю (последнее придаточное), «(1/2)» сохраняется; без разделителя — не режем."""
+    """Заголовок режется только по разделителю, «(1/2)» сохраняется."""
     title = "Команды теряют до трети времени на согласования, и руководитель этого не видит (1/2)"
     el = _text("1", title, kind=SlotKind.TITLE, size_pt=26.6)
     res = apply_fixes(_deck(_slide(el)), [_finding("L03_text_overflow", "shrink_font_by_scale", need_pt=121, have_pt=60)])
@@ -97,7 +97,7 @@ def test_shrink_font_title_cuts_clause_not_words() -> None:
                   size_pt=28.8)
     res2 = apply_fixes(_deck(_slide(plain)), [_finding("L03_text_overflow", "shrink_font_by_scale", need_pt=91, have_pt=60)])
     fixed = res2.ir.slides[0].elements[0]
-    assert fixed.paragraphs[0].runs[0].text == plain.paragraphs[0].runs[0].text  # текст цел, кегль уменьшен до порога
+    assert fixed.paragraphs[0].runs[0].text == plain.paragraphs[0].runs[0].text  # текст цел
     assert float(fixed.style_overrides["size_pt"]) < 28.8 and "укорочен" not in res2.applied[0]["after"]
 
 
@@ -178,7 +178,7 @@ def test_replan_and_template_findings_are_skipped_with_reason() -> None:
 
 
 def test_safe_fixes_clear_our_errors_on_vk_tech(template_path, tmp_path: Path) -> None:
-    """После безопасных фиксов и повторного рендера ошибок L03 у наших элементов нет, а фиксы не создают новых ошибок."""
+    """После безопасных фиксов и повторного рендера L03 у наших элементов нет, новых ошибок тоже."""
     pptx = template_path("VK Tech")
     dna = build_dna(pptx)
     outline = DeckOutline.model_validate_json(OUTLINE.read_text("utf-8"))
@@ -187,7 +187,7 @@ def test_safe_fixes_clear_our_errors_on_vk_tech(template_path, tmp_path: Path) -
     out = render_pptx(res.ir, pptx, dna.exemplars, tmp_path / "visual.pptx")
     before = audit_deck(out, dna, res.ir)
     chosen = plan_fixes(before, "safe")
-    # L03 у наших элементов после дискретной модели строк в fitting не остаётся — чинятся D01/T02
+    # L03 у наших элементов не остаётся — чинятся D01/T02
     assert chosen
     fr = apply_fixes(res.ir, chosen, dna)
     assert fr.changed and all({"before", "after"} <= set(it) for it in fr.applied)

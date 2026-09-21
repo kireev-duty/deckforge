@@ -1,6 +1,6 @@
 """render_deck — рендер .pptx в PNG-превью через LibreOffice (headless) + PyMuPDF.
 
-Тонкая CLI-обёртка над `deckforge.export.render` — для визуальной проверки вёрстки Claude'ом и вручную.
+Тонкая CLI-обёртка над `deckforge.export.render` для визуальной проверки вёрстки.
 
 Использование:
     python tools/render_deck.py <file.pptx> [--out out/render/<name>] [--dpi 72] [--slides 1,3-5] [--contact]

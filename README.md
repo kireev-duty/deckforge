@@ -10,7 +10,8 @@
 - [AUDIT.md](docs/AUDIT.md) — проверки и их покрытие
 - [MODELS.md](docs/MODELS.md) — модели, лицензии, требования
 - [DEMO.md](docs/DEMO.md) — сценарий живого прогона / видео-демо (≤ 7 минут) на неизвестном шаблоне
-- [PLAN.md](docs/PLAN.md) — план разработки и статус по дням, [BACKLOG.md](docs/BACKLOG.md) — известные дефекты и что дальше
+- [DEVELOPMENT.md](docs/DEVELOPMENT.md) — окружение, служебные скрипты, правила для кода
+- [PLAN.md](docs/PLAN.md) — план разработки и чек-лист сдачи, [BACKLOG.md](docs/BACKLOG.md) — известные дефекты и что дальше
 
 ## Сетап
 

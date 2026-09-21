@@ -9,7 +9,7 @@
 `box` подсвечивается в UI, `autofix` — имя из каталога `core/autofix.FIXES` (см. «Автофиксы»), `evidence` — числа для объяснения.
 
 Запуск: `deckforge audit <deck.pptx> -t <template.pptx> [--ir deck.ir.json] [--checks L03,T06] [--contextual [--png-dir dir]
-[--outline outline.json] [--content-pack dir]] [--fix-plan] [--json out.json]` (скилл Claude Code `audit-deck`).
+[--outline outline.json] [--content-pack dir]] [--fix-plan] [--json out.json]`.
 В `deckforge run` аудит выполняется автоматически по `audit:` в конфиге (`deterministic`, `autofix`, `contextual`;
 `--no-fix` / `--no-judge` выключают из командной строки): `<strategy>.audit.json` — итоговый отчёт (детерминированные
 после фиксов + контекстуальные), сводка в `manifest.json["audit"]` (в т.ч. `autofix.before/after/items`) и колонка

@@ -9,5 +9,3 @@ docs/tz
 .pytest_cache
 .ruff_cache
 .env
-.claude
-agents

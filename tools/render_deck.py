@@ -5,7 +5,7 @@
 Использование:
     python tools/render_deck.py <file.pptx> [--out out/render/<name>] [--dpi 72] [--slides 1,3-5] [--contact]
 
---contact  дополнительно собирает контактный лист (сетка миниатюр) в один PNG — удобно смотреть всю колоду сразу.
+--contact  дополнительно собирает контактный лист в один PNG.
 """
 
 from __future__ import annotations
@@ -17,7 +17,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from deckforge.export.render import (  # noqa: E402, F401 — реэкспорт для старых импортов из tools
+from deckforge.export.render import (  # noqa: E402, F401
     contact_sheet,
     find_soffice,
     pdf_to_pngs,

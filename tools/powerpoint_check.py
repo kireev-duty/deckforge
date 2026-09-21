@@ -1,12 +1,8 @@
-"""powerpoint_check — открыть колоды в настоящем PowerPoint (COM) и проверить, что ТЗ п. 2.7 выполнено.
+"""powerpoint_check — открыть колоды в настоящем PowerPoint (COM, только Windows) и проверить нативность.
 
-Только Windows с установленным PowerPoint (pywin32). Для каждого .pptx:
-- открытие без «восстановления» (DisplayAlerts выключен → диалог восстановления = исключение) и SaveCopyAs;
-- объекты по слайдам: текст / chart (серии) / table (строки×колонки) / picture / пустые плейсхолдеры;
-  «слайд-картинка» = есть картинки, но ни одного редактируемого текста/chart/table;
-- шрифты по run'ам против `fonts` + `embedded_fonts` из dna.json рядом с колодой (если есть);
-- PNG каждого слайда средствами PowerPoint + contact.png, и доля пикселей, отличающихся от LibreOffice-рендера
-  (slide_NN.png рядом с колодой или рендер через deckforge.export.render) — где расхождение велико, смотреть глазами.
+Для каждого .pptx: открытие без «восстановления» и SaveCopyAs; объекты по слайдам (текст / chart / table /
+picture / пустые плейсхолдеры); шрифты против dna.json; PNG средствами PowerPoint и доля пикселей,
+отличающихся от LibreOffice-рендера.
 
     .venv\\Scripts\\python.exe tools\\powerpoint_check.py "examples\\output\\*\\*.pptx" examples\\pitch\\deckforge_pitch.pptx
         [--out out\\ppt] [--no-render] [--diff-threshold 0.15]
@@ -35,8 +31,8 @@ MSO_GROUP, MSO_PICTURE, MSO_LINKED_PICTURE, MSO_PLACEHOLDER = 6, 13, 11, 14
 MSO_FILL_PICTURE = 6
 PP_ALERTS_NONE = 1
 EXPORT_W, EXPORT_H = 1280, 720
-PIXEL_DELTA = 40  # разница по любому каналу, с которой пиксель считается «другим»
-# шрифты, которые PowerPoint подставляет сам (тема, символы буллетов) — не «чужие»
+PIXEL_DELTA = 40  # разница по каналу, с которой пиксель считается «другим»
+# шрифты, которые PowerPoint подставляет сам
 FONT_IGNORE = {"", "Wingdings", "Symbol", "Arial", "Calibri", "+mj-lt", "+mn-lt", "+mj-ea", "+mn-ea"}
 
 
@@ -65,7 +61,7 @@ class DeckReport:
     roundtrip: bool = False
     slides: list[SlideStat] = field(default_factory=list)
     foreign_fonts: list[str] = field(default_factory=list)
-    suspicious: list[int] = field(default_factory=list)  # 1-based слайды с большим расхождением
+    suspicious: list[int] = field(default_factory=list)  # 1-based
     seconds: float = 0.0
 
     def totals(self) -> dict[str, int]:
@@ -95,17 +91,17 @@ def inspect_slide(slide, index: int) -> SlideStat:
             if sh.HasTable:
                 st.table += 1
                 continue
-        except Exception:  # noqa: BLE001 — не у всех типов фигур есть эти свойства
+        except Exception:  # noqa: BLE001
             pass
         contained, fill_type, fill_visible = sh.Type, None, False
-        if sh.Type == MSO_PLACEHOLDER:  # заполненный picture-плейсхолдер остаётся msoPlaceholder — смотрим содержимое
+        if sh.Type == MSO_PLACEHOLDER:  # заполненный плейсхолдер остаётся msoPlaceholder
             try:
                 contained = sh.PlaceholderFormat.ContainedType
                 fill_type, fill_visible = sh.Fill.Type, bool(sh.Fill.Visible)
             except Exception:  # noqa: BLE001
                 pass
         if contained in (MSO_PICTURE, MSO_LINKED_PICTURE) or fill_type == MSO_FILL_PICTURE:
-            st.picture += 1  # blipFill на плейсхолдере (фото образца) — тоже картинка
+            st.picture += 1  # blipFill на плейсхолдере
             continue
         has_text = False
         try:
@@ -120,7 +116,7 @@ def inspect_slide(slide, index: int) -> SlideStat:
             except Exception:  # noqa: BLE001
                 pass
         elif sh.Type == MSO_PLACEHOLDER and not fill_visible:
-            st.empty_placeholders += 1  # ни текста, ни картинки, ни своей заливки — в редакторе будет подсказка
+            st.empty_placeholders += 1  # в редакторе будет подсказка
     st.fonts = sorted(fonts)
     return st
 
@@ -136,7 +132,7 @@ def template_fonts(deck: Path) -> set[str] | None:
 
 
 def libreoffice_pngs(deck: Path, do_render: bool) -> list[Path]:
-    """PNG LibreOffice: папка колоды в examples/output/<t>/<strategy>/slide_NN.png, иначе рендер в out/render."""
+    """PNG LibreOffice рядом с колодой, иначе рендер в out/render."""
     sub = deck.parent / deck.stem
     pngs = sorted(sub.glob("slide_*.png"))
     if pngs:
@@ -147,7 +143,7 @@ def libreoffice_pngs(deck: Path, do_render: bool) -> list[Path]:
 
 
 def pixel_diff(a: Path, b: Path) -> float:
-    """Доля пикселей, отличающихся более чем на PIXEL_DELTA по любому каналу (изображения приводятся к размеру a)."""
+    """Доля пикселей, отличающихся более чем на PIXEL_DELTA."""
     ia = Image.open(a).convert("RGB")
     ib = Image.open(b).convert("RGB").resize(ia.size)
     diff = ImageChops.difference(ia, ib).convert("L").point(lambda v: 255 if v > PIXEL_DELTA else 0)
@@ -233,10 +229,10 @@ def main() -> None:
     a = ap.parse_args()
 
     files = [Path(p).resolve() for pat in a.patterns for p in (glob.glob(pat) or [pat])]
-    a.out = a.out.resolve()  # COM (Slide.Export, SaveCopyAs) относительных путей не понимает
-    import win32com.client  # noqa: PLC0415 — только Windows
+    a.out = a.out.resolve()  # COM относительных путей не понимает
+    import win32com.client  # noqa: PLC0415
 
-    app = win32com.client.DispatchEx("PowerPoint.Application")  # свой экземпляр: чужой PowerPoint не трогаем
+    app = win32com.client.DispatchEx("PowerPoint.Application")  # свой экземпляр
     app.DisplayAlerts = PP_ALERTS_NONE
     reports: list[DeckReport] = []
     try:

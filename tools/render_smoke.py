@@ -1,13 +1,11 @@
 """render_smoke — прогон render/pptx_writer без layout/ и content/: синтетический DeckIR по образцам шаблона.
 
-Для каждого выбранного образца создаётся слайд, каждый слот заполняется заглушкой по его kind
-(заголовок, буллеты, цифры KPI, картинка-градиент, нативная диаграмма/таблица). Результат —
-out/smoke/<stem>.pptx, затем рендер в out/render/<stem>_smoke/ (contact.png + slide_NN.png).
+Для каждого образца создаётся слайд, каждый слот заполняется заглушкой по его kind.
+Результат — out/smoke/<stem>.pptx и рендер в out/render/<stem>_smoke/.
 
     .venv\\Scripts\\python.exe tools\\render_smoke.py "data\\templates\\VK Tech шаблон.pptx" [--all] [--archetypes cards,kpi] [--no-render]
 
-Образцы берутся из out/archetypes/<stem>.json (с VLM-уточнёнными слотами), если он есть; иначе —
-классификация правилами. По умолчанию — один лучший образец на архетип, --all — все по разу.
+По умолчанию — один лучший образец на архетип, --all — все по разу.
 """
 
 from __future__ import annotations
@@ -133,7 +131,7 @@ def build_slide(idx: int, e: Exemplar, image: Path, overrides: dict) -> SlideIR:
         elif s.kind == SlotKind.TABLE:
             el = Element(**kw, table=TABLE)
         else:
-            continue  # slide_number / footer / date / other — оставляем как в образце
+            continue  # поля оставляем как в образце
         elements.append(el)
     return SlideIR(idx=idx, exemplar_id=e.id, archetype=e.archetype, elements=elements, outline_ref=idx,
                    notes=f"smoke: образец {e.id}, архетип {e.archetype.value}")

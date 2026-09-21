@@ -2,7 +2,7 @@
 
     python tools/make_fixtures.py [--out out/fixtures] [--only L03,T06] [--audit]
 
---audit — прогнать аудит по каждой и напечатать таблицу (проверка, что фикстура ловится только своей проверкой).
+--audit — прогнать аудит по каждой и напечатать таблицу.
 """
 
 from __future__ import annotations

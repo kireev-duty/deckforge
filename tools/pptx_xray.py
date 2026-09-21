@@ -1,8 +1,5 @@
-"""pptx_xray — рентген любого .pptx: что в нём реально используется.
-
-Печатает компактную сводку, по которой можно судить о дизайн-системе шаблона,
-не читая сырой XML: размер слайда, тема vs фактические цвета/шрифты/кегли,
-лейауты с плейсхолдерами, повторяющиеся фигуры (лого/колонтитулы), состав каждого слайда.
+"""pptx_xray — сводка по любому .pptx: размер слайда, тема vs фактические цвета/шрифты/кегли,
+лейауты с плейсхолдерами, повторяющиеся фигуры, состав каждого слайда.
 
 Использование:
     python tools/pptx_xray.py <file.pptx> [--slides] [--json out.json]
@@ -138,7 +135,7 @@ def analyze(path: Path) -> dict:
     sizes: Counter[float] = Counter()
     size_by_font: dict[str, Counter] = defaultdict(Counter)
     kinds: Counter[str] = Counter()
-    position_sig: Counter[tuple] = Counter()  # для поиска повторяющихся фигур
+    position_sig: Counter[tuple] = Counter()
     slide_rows = []
 
     for sn in slides:
@@ -168,7 +165,7 @@ def analyze(path: Path) -> dict:
             kinds[k] += 1
             bb = _bbox(sp)
             if bb:
-                # сигнатура позиции с округлением до ~0.05 дюйма — для поиска фиксированных элементов
+                # сигнатура позиции с округлением до ~0.05" — для поиска фиксированных элементов
                 sig = (k.split(":")[0], *(round(v / (EMU // 20)) for v in bb))
                 position_sig[sig] += 1
             shapes.append((k, bb, _text(sp)))

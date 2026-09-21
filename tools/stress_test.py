@@ -4,13 +4,10 @@
         [--strategies executive,narrative,visual] [--timeout 120] [--png-sample 3]
     .venv\\Scripts\\python.exe tools\\stress_test.py --audit-all      # кросс-аудит и HTML всех колод, что есть
 
-Кейсы — `tests/fixtures/stress_outlines.py` (те же читает `tests/test_stress.py`). Каждая пара «кейс × шаблон» идёт
-отдельным подпроцессом с таймаутом: зависший layout не блокирует матрицу, а падение видно целиком (traceback).
-Результат: `out/stress/<template>/<case>/<strategy>.*` (как у `pipeline.run`), сводка `out/stress/report.md` + `report.json`.
+Кейсы — `tests/fixtures/stress_outlines.py`. Каждая пара «кейс × шаблон» идёт отдельным подпроцессом с таймаутом.
+Результат: `out/stress/<template>/<case>/<strategy>.*`, сводка `out/stress/report.md` + `report.json`.
 
-Кейс «упал», если: исключение; таймаут; `skipped > 0` (слайд без образца — обещание «ни один слайд не пропускается»);
-колода пустая (кроме кейса `empty`) или раздулась больше чем вдвое против outline и `target_slides.max`; один слайд
-outline дал больше MAX_PER_REF слайдов колоды (каскад «(продолжение)» — зацикливание builder'а).
+Кейс «упал», если: исключение, таймаут, пропущенный слайд, пустая колода или раздувание (см. `bloat_problems`).
 """
 
 from __future__ import annotations
@@ -29,12 +26,12 @@ sys.path.insert(0, str(ROOT))
 OUT = ROOT / "out" / "stress"
 TEMPLATE_DIRS = [ROOT / "data" / "templates", ROOT / "data" / "holdout"]
 WILD_DIR = ROOT / "data" / "wild"
-MAX_PER_REF = 4  # слайдов колоды на один слайд outline (12 шагов при 4 на образец — 3, дальше подозрительно)
+MAX_PER_REF = 4  # слайдов колоды на один слайд outline
 BLOAT = 2.0  # слайдов колоды к max(len(outline), target_slides.max)
 
 
 def per_ref_max(slides: list) -> int:
-    """Сколько слайдов колоды породил самый «плодовитый» слайд outline (каскад продолжений)."""
+    """Сколько слайдов колоды породил самый «плодовитый» слайд outline."""
     per_ref: dict[int, int] = {}
     for sl in slides:
         per_ref[sl.outline_ref] = per_ref.get(sl.outline_ref, 0) + 1
@@ -42,8 +39,7 @@ def per_ref_max(slides: list) -> int:
 
 
 def bloat_problems(slides: list, n_outline: int, strategy, case: str = "") -> list[str]:
-    """Критерии раздувания/пустоты колоды (те же в `tests/test_stress.py`): пустая колода, больше BLOAT× от
-    max(outline, target_slides.max), больше MAX_PER_REF слайдов на один слайд outline."""
+    """Критерии раздувания/пустоты колоды (те же в `tests/test_stress.py`)."""
     limit = int(BLOAT * max(n_outline, strategy.target_slides.max))
     problems: list[str] = []
     if case != "empty" and len(slides) < 1:
@@ -102,7 +98,7 @@ def run_worker_cli(a: argparse.Namespace) -> None:
     out_dir = Path(a.worker_out)
     try:
         result = worker(a.worker[0], Path(a.worker[1]), a.strategies.split(","), out_dir, html=not a.no_html)
-    except BaseException as e:  # noqa: BLE001 — любое падение — результат кейса, не скрипта
+    except BaseException as e:  # noqa: BLE001 — падение — результат кейса
         result = {"status": "exception", "error": f"{type(e).__name__}: {str(e)[:300]}",
                   "traceback": traceback.format_exc()[-3000:], "decks": []}
     (out_dir / "_result.json").write_text(json.dumps(result, ensure_ascii=False, indent=1), "utf-8")
@@ -214,7 +210,7 @@ def report_md(results: list[dict]) -> str:
 
 
 def _png_sample(results: list[dict], n: int) -> None:
-    """PNG для первых n проблемных (или просто первых) колод — посмотреть глазами (`render-deck`)."""
+    """PNG для первых n проблемных (или просто первых) колод."""
     from deckforge.export.render import render
 
     decks = [d for r in results for d in r["decks"] if d["status"] != "ok"] or [d for r in results for d in r["decks"]]
@@ -231,7 +227,7 @@ def _png_sample(results: list[dict], n: int) -> None:
 
 
 def audit_all(a: argparse.Namespace) -> int:
-    """Аудит, deck_reader и HTML-экспорт всех колод, что есть, против DNA чужого шаблона: не падать, укладываться в секунды."""
+    """Аудит, deck_reader и HTML-экспорт всех колод против DNA чужого шаблона: не падать."""
     from deckforge.audit import audit_deck
     from deckforge.core.deck_reader import read_shapes
     from deckforge.core.package import Package, PartCtx
@@ -253,7 +249,7 @@ def audit_all(a: argparse.Namespace) -> int:
     html_dir = OUT / "_audit_all"
     html_dir.mkdir(parents=True, exist_ok=True)
     for i, deck in enumerate(decks):
-        tpl = list(dnas)[i % len(dnas)]  # чужой шаблон по кругу: аудит не должен зависеть от совпадения
+        tpl = list(dnas)[i % len(dnas)]  # чужой шаблон по кругу
         row = {"deck": str(deck.relative_to(ROOT)), "template": _stem(tpl), "audit": "", "reader": "", "html": ""}
         t0 = time.perf_counter()
         try:

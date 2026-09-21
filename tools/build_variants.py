@@ -3,10 +3,7 @@
     .venv\\Scripts\\python.exe tools\\build_variants.py "data\\templates\\VK Tech шаблон.pptx" [--outline examples/content_pack/outline.json]
         [--strategies executive,narrative,visual] [--no-render] [--dpi 72]
 
-Тонкая обёртка над `deckforge.pipeline.run` с готовым outline (LLM не вызывается). Результат:
-out/variants/<stem>/<strategy>.pptx, <strategy>.ir.json, <strategy>.manifest.json, рендер в out/variants/<stem>/<strategy>/
-(contact.png + slide_NN.png), таблица сравнения в stdout и в out/variants/<stem>/compare.md.
-Образцы — из out/archetypes/<stem>.json (см. tools/classify_layouts.py), без кэша — классификация правилами.
+Обёртка над `deckforge.pipeline.run` с готовым outline, без LLM. Результат — out/variants/<stem>/.
 """
 
 from __future__ import annotations

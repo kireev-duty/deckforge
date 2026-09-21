@@ -18,11 +18,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from tools.check_env import load_dotenv  # noqa: E402
-from tools.render_deck import render  # noqa: E402
-
-from deckforge.parsing.exemplars import ARCHETYPES_BUNDLED, cache_payload, vlm_payload  # noqa: E402
-from deckforge.parsing.layout_classifier import classify_template, markdown_table  # noqa: E402
+from deckforge.parsing.exemplars import ARCHETYPES_BUNDLED, cache_payload, vlm_payload
+from deckforge.parsing.layout_classifier import classify_template, markdown_table
+from tools.check_env import load_dotenv
+from tools.render_deck import render
 
 
 def thumbnails_for(pptx: Path, do_render: bool) -> dict[int, Path]:

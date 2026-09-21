@@ -213,5 +213,17 @@ def _layout_name(pkg: Package, layout_part: str) -> str:
     return (csld.get("name") if csld is not None else "") or layout_part.rsplit("/", 1)[-1]
 
 
-__all__ = ["AuditContext", "CellRec", "ChartRec", "ParaRec", "PictureRec", "RunRec", "ShapeRec", "SlideCtx",
-           "SPARSE_ARCHETYPES", "STEP", "SYMBOL_FONTS", "TableRec"]
+__all__ = [
+    "SPARSE_ARCHETYPES",
+    "STEP",
+    "SYMBOL_FONTS",
+    "AuditContext",
+    "CellRec",
+    "ChartRec",
+    "ParaRec",
+    "PictureRec",
+    "RunRec",
+    "ShapeRec",
+    "SlideCtx",
+    "TableRec",
+]

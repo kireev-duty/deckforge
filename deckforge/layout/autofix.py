@@ -7,7 +7,14 @@ from dataclasses import dataclass, field
 
 from deckforge.core.autofix import FIXES, is_fixable
 from deckforge.core.ir import Box, DeckIR, Element, Finding, SlideIR, Slot, SlotKind, TemplateDNA
-from deckforge.layout.fitting import MIN_SIZE_SCALE, NUMBER_MIN_SCALE, cut_tail, normalize, shorten, shorten_words
+from deckforge.layout.fitting import (
+    MIN_SIZE_SCALE,
+    NUMBER_MIN_SCALE,
+    cut_tail,
+    normalize,
+    shorten,
+    shorten_words,
+)
 
 MAX_BULLET_WORDS = 15  # норма D02
 MAX_CHART_SERIES = 5  # норма D04

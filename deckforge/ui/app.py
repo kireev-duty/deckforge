@@ -15,13 +15,25 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:  # `streamlit run` запускает файл как скрипт
     sys.path.insert(0, str(ROOT))
 
-from deckforge.core.autofix import FIXES, fix_plan_rows  # noqa: E402
-from deckforge.core.ir import AuditReport, Finding  # noqa: E402
-from deckforge.core.strategy import list_strategies  # noqa: E402
-from deckforge.llm import load_dotenv  # noqa: E402
-from deckforge.pipeline import DeckResult, ParsedTemplate, RunConfig, refine_deck, run, soffice_available  # noqa: E402
-from deckforge.pipeline.workspace import BadUpload, TemplateEntry, TemplateStore, write_content_pack  # noqa: E402
-from deckforge.ui.overlay import draw_findings  # noqa: E402
+from deckforge.core.autofix import FIXES, fix_plan_rows
+from deckforge.core.ir import AuditReport, Finding
+from deckforge.core.strategy import list_strategies
+from deckforge.llm import load_dotenv
+from deckforge.pipeline import (
+    DeckResult,
+    ParsedTemplate,
+    RunConfig,
+    refine_deck,
+    run,
+    soffice_available,
+)
+from deckforge.pipeline.workspace import (
+    BadUpload,
+    TemplateEntry,
+    TemplateStore,
+    write_content_pack,
+)
+from deckforge.ui.overlay import draw_findings
 
 UI_ROOT = ROOT / "out" / "ui"
 EXAMPLE_PACK = ROOT / "examples" / "content_pack"

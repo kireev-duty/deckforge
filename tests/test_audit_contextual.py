@@ -5,7 +5,13 @@ from __future__ import annotations
 from pathlib import Path
 
 from deckforge.audit.contextual import (
-    CHECK_IDS, ERROR_CHECK_ID, QUESTIONS, SlideText, findings_from_answers, judge_deck, slides_from_ir,
+    CHECK_IDS,
+    ERROR_CHECK_ID,
+    QUESTIONS,
+    SlideText,
+    findings_from_answers,
+    judge_deck,
+    slides_from_ir,
 )
 from deckforge.content import load_content_pack
 from deckforge.core.ir import Archetype, DeckOutline, Severity

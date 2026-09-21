@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import os
 from dataclasses import dataclass
-from functools import lru_cache
+from functools import cache
 from pathlib import Path
 
 from PIL import ImageFont
@@ -38,7 +38,7 @@ LINE_HEIGHT = 1.2  # single, в долях кегля
 MEASURE_PT = 100  # ширина линейна по кеглю
 
 
-@lru_cache(maxsize=None)
+@cache
 def _find_font_file(candidates: tuple[str, ...]) -> Path | None:
     for d in FONT_DIRS:
         if not d or not Path(d).is_dir():
@@ -60,7 +60,7 @@ def _alias(font: str) -> str:
     return next((a for a in ALIASES if key.startswith(a)), DEFAULT_ALIAS)
 
 
-@lru_cache(maxsize=None)
+@cache
 def _font(font: str, bold: bool) -> tuple[ImageFont.FreeTypeFont | None, float]:
     """(шрифт Pillow, поправка ширины); поправка ≠ 1, если гарнитуру заменил прокси."""
     alias = _alias(font)

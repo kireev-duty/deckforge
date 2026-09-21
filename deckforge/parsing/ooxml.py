@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 from deckforge.core.ooxml import (  # noqa: F401
-    A,
     NS,
+    A,
     P,
     R,
     absolute_bbox,

@@ -34,7 +34,7 @@ class Box(BaseModel):
     def y2(self) -> int:
         return self.y + self.h
 
-    def intersects(self, other: "Box", tolerance: int = 0) -> bool:
+    def intersects(self, other: Box, tolerance: int = 0) -> bool:
         return not (
             self.x2 - tolerance <= other.x
             or other.x2 - tolerance <= self.x

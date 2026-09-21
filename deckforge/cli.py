@@ -5,7 +5,6 @@ from __future__ import annotations
 import logging
 import sys
 from pathlib import Path
-from typing import Optional
 
 import typer
 
@@ -24,7 +23,7 @@ def _root() -> None:
 @app.command("parse")
 def parse_cmd(
     template: Path = typer.Argument(..., help="шаблон .pptx"),
-    json_out: Optional[Path] = typer.Option(None, "--json", help="сохранить полную TemplateDNA в JSON"),
+    json_out: Path | None = typer.Option(None, "--json", help="сохранить полную TemplateDNA в JSON"),
 ) -> None:
     """Разбор шаблона: палитра с ролями, шрифты, типографическая шкала, сетка, образцы по архетипам."""
     from deckforge.pipeline import parse_template
@@ -52,8 +51,8 @@ def parse_cmd(
 @app.command("run")
 def run_cmd(
     config: Path = typer.Option(..., "--config", "-c", help="YAML-конфиг прогона (см. configs/run.example.yaml)"),
-    outline: Optional[Path] = typer.Option(None, "--outline", help="готовый outline.json — шаг content и LLM пропускаются"),
-    output_dir: Optional[Path] = typer.Option(None, "--output-dir", "-o", help="переопределить output_dir из конфига"),
+    outline: Path | None = typer.Option(None, "--outline", help="готовый outline.json — шаг content и LLM пропускаются"),
+    output_dir: Path | None = typer.Option(None, "--output-dir", "-o", help="переопределить output_dir из конфига"),
     render_png: bool = typer.Option(False, "--png", help="PNG-превью и contact.png для каждой колоды"),
     no_fix: bool = typer.Option(False, "--no-fix", help="не применять автофиксы (audit.autofix: false)"),
     no_judge: bool = typer.Option(False, "--no-judge", help="без VLM-судьи (audit.contextual: false) — быстрее и без API"),
@@ -85,14 +84,14 @@ def run_cmd(
 def audit_cmd(
     deck: Path = typer.Argument(..., help="колода .pptx"),
     template: Path = typer.Option(..., "--template", "-t", help="шаблон .pptx, по которому собрана колода"),
-    ir: Optional[Path] = typer.Option(None, "--ir", help="<strategy>.ir.json — точнее проверки шаблонности (T02/T03/T05)"),
-    checks: Optional[str] = typer.Option(None, "--checks", help="какие проверки: L03,T06 (по умолчанию все)"),
+    ir: Path | None = typer.Option(None, "--ir", help="<strategy>.ir.json — точнее проверки шаблонности (T02/T03/T05)"),
+    checks: str | None = typer.Option(None, "--checks", help="какие проверки: L03,T06 (по умолчанию все)"),
     contextual: bool = typer.Option(False, "--contextual", help="плюс VLM-судья по PNG (нужны LibreOffice и API)"),
-    png_dir: Optional[Path] = typer.Option(None, "--png-dir", help="готовые PNG слайдов (иначе рендерятся в out/render)"),
-    outline: Optional[Path] = typer.Option(None, "--outline", help="outline.json — факты для судьи по sources"),
-    content_pack: Optional[Path] = typer.Option(None, "--content-pack", help="папка контент-пакета (факты для C04)"),
+    png_dir: Path | None = typer.Option(None, "--png-dir", help="готовые PNG слайдов (иначе рендерятся в out/render)"),
+    outline: Path | None = typer.Option(None, "--outline", help="outline.json — факты для судьи по sources"),
+    content_pack: Path | None = typer.Option(None, "--content-pack", help="папка контент-пакета (факты для C04)"),
     fix_plan: bool = typer.Option(False, "--fix-plan", help="показать, какие находки чинятся автофиксом и как"),
-    json_out: Optional[Path] = typer.Option(None, "--json", help="сохранить AuditReport в JSON"),
+    json_out: Path | None = typer.Option(None, "--json", help="сохранить AuditReport в JSON"),
     limit: int = typer.Option(80, "--limit", help="сколько строк показать"),
 ) -> None:
     """Аудит колоды: детерминированные проверки (+ VLM-судья); колода не меняется."""
@@ -122,11 +121,11 @@ def audit_cmd(
 @app.command("export")
 def export_cmd(
     deck: Path = typer.Argument(..., help="колода .pptx (своя или чужая)"),
-    html: Optional[Path] = typer.Option(None, "--html", help="куда писать .html (по умолчанию рядом с .pptx)"),
+    html: Path | None = typer.Option(None, "--html", help="куда писать .html (по умолчанию рядом с .pptx)"),
     pdf: bool = typer.Option(False, "--pdf", help="плюс .pdf через LibreOffice"),
     png: bool = typer.Option(False, "--png", help="плюс PNG по слайдам и contact.png (LibreOffice) в out/render/<stem>"),
-    ir: Optional[Path] = typer.Option(None, "--ir", help="<strategy>.ir.json — заметки к слайдам в HTML"),
-    title: Optional[str] = typer.Option(None, "--title", help="заголовок HTML-страницы"),
+    ir: Path | None = typer.Option(None, "--ir", help="<strategy>.ir.json — заметки к слайдам в HTML"),
+    title: str | None = typer.Option(None, "--title", help="заголовок HTML-страницы"),
 ) -> None:
     """Экспорт готовой колоды: .html, опционально .pdf и PNG."""
     import shutil
@@ -147,7 +146,7 @@ def export_cmd(
         typer.echo(f"pdf → {deck.with_suffix('.pdf')}")
 
 
-def _judge(report, deck: Path, dna, deck_ir, png_dir: Optional[Path], outline: Optional[Path], content_pack: Optional[Path]):
+def _judge(report, deck: Path, dna, deck_ir, png_dir: Path | None, outline: Path | None, content_pack: Path | None):
     """VLM-судья для CLI: PNG (готовые или рендер), текст из IR или из самого pptx."""
     import time
 

@@ -14,7 +14,7 @@ import pytest
 from pydantic import ValidationError
 
 from deckforge.content import repair_outline
-from deckforge.core.ir import Archetype, ChartSpec, DeckOutline, ImageSpec, KpiSpec, OutlineSlide, TableSpec
+from deckforge.core.ir import Archetype, ChartSpec, DeckOutline, ImageSpec, OutlineSlide, TableSpec
 from deckforge.core.strategy import load_strategy
 from deckforge.layout import build_deck_ir
 from deckforge.layout.builder import MAX_RETRIES

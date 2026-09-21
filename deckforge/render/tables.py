@@ -11,7 +11,7 @@ from pptx.slide import Slide
 from pptx.util import Pt
 
 from deckforge.core.ir import Box, TableSpec
-from deckforge.core.ooxml import A, NS
+from deckforge.core.ooxml import NS, A
 
 NO_STYLE_NO_GRID = "{2D5ABB26-0587-4C30-8999-92F81FD0307C}"
 ROW_LINES = 2  # запас высоты строки в строках текста

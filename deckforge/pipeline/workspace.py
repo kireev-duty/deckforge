@@ -127,5 +127,12 @@ def write_content_pack(dest: Path, brief: str, files: list[tuple[str, bytes]]) -
     return dest
 
 
-__all__ = ["BadUpload", "DATASET_DIRS", "TemplateEntry", "TemplateStore", "check_pptx", "safe_name",
-           "write_content_pack"]
+__all__ = [
+    "DATASET_DIRS",
+    "BadUpload",
+    "TemplateEntry",
+    "TemplateStore",
+    "check_pptx",
+    "safe_name",
+    "write_content_pack",
+]

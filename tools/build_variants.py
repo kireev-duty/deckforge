@@ -15,9 +15,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from deckforge.core.ir import DeckOutline  # noqa: E402
-from deckforge.core.strategy import list_strategies  # noqa: E402
-from deckforge.pipeline import RunConfig, run  # noqa: E402
+from deckforge.core.ir import DeckOutline
+from deckforge.core.strategy import list_strategies
+from deckforge.pipeline import RunConfig, run
 
 DEFAULT_OUTLINE = ROOT / "examples" / "content_pack" / "outline.json"
 

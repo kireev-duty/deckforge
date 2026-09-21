@@ -11,11 +11,11 @@ import json
 import logging
 import shutil
 import time
-from collections.abc import Iterable
+from collections.abc import Callable, Iterable
 from dataclasses import asdict, dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any
 
 from deckforge.audit import audit_deck, with_contextual
 from deckforge.audit import summary as audit_summary
@@ -331,7 +331,7 @@ def build_deck(ctx: RunContext, strategy_name: str, progress: Progress | None = 
     deck = DeckResult(strategy.name, pptx_out, ir_path, out_dir / f"{strategy.name}.manifest.json", st, deck_warnings,
                       choices, pngs, deck_timings, audit_path, audit_info, pdf_path, html_path)
     manifest = {
-        "created": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "created": datetime.now(UTC).isoformat(timespec="seconds"),
         "template": {**parsed.meta, "path": rel_path(parsed.template, out_dir)},
         "content_pack": rel_path(cfg.content_pack, out_dir),
         "outline": rel_path(ctx.outline.path, out_dir),
@@ -492,7 +492,7 @@ def run_summary(cfg: RunConfig, result: RunResult) -> dict:
         if config.get(key):
             config[key] = rel_path(config[key], Path.cwd())
     return {
-        "created": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "created": datetime.now(UTC).isoformat(timespec="seconds"),
         "config": config,
         "template": {**result.parsed.meta, "path": rel_path(result.parsed.template, out)} if result.parsed else {},
         "outline": rel_path(result.outline_path, out),

@@ -12,8 +12,8 @@ from PIL import Image
 
 from deckforge.core.ir import Box, ChartSpec
 from deckforge.core.ooxml import (
-    A,
     NS,
+    A,
     R,
     absolute_bbox,
     graphic_kind,
@@ -620,6 +620,25 @@ def inherited_bbox(ctx: PartCtx, sp: etree._Element) -> tuple[int, int, int, int
     return None
 
 
-__all__ = ["C", "C_NS", "CellRec", "ChartRec", "DEFAULT_INSETS", "ParaRec", "PictureRec", "RunRec", "SYMBOL_FONTS",
-           "ShapeRec", "TableRec", "background_picture_part", "inherited_bbox", "para_props_chain", "read_chart",
-           "read_paragraphs", "read_picture", "read_shape", "read_shapes", "read_table"]
+__all__ = [
+    "C_NS",
+    "DEFAULT_INSETS",
+    "SYMBOL_FONTS",
+    "C",
+    "CellRec",
+    "ChartRec",
+    "ParaRec",
+    "PictureRec",
+    "RunRec",
+    "ShapeRec",
+    "TableRec",
+    "background_picture_part",
+    "inherited_bbox",
+    "para_props_chain",
+    "read_chart",
+    "read_paragraphs",
+    "read_picture",
+    "read_shape",
+    "read_shapes",
+    "read_table",
+]

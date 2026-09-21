@@ -6,14 +6,14 @@ import shutil
 import threading
 import time
 import uuid
+from collections.abc import Callable
 from concurrent.futures import Future, ThreadPoolExecutor
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Callable
 
 from deckforge.pipeline import DeckResult, ParsedTemplate, RunResult
-from deckforge.pipeline.workspace import (  # noqa: F401 — реэкспорт
+from deckforge.pipeline.workspace import (
     BadUpload,
     TemplateEntry,
     TemplateStore,
@@ -28,7 +28,7 @@ class Job:
     id: str
     dir: Path
     status: str = "queued"
-    created: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat(timespec="seconds"))
+    created: str = field(default_factory=lambda: datetime.now(UTC).isoformat(timespec="seconds"))
     progress: list[str] = field(default_factory=list)
     error: str | None = None
     result: RunResult | None = None

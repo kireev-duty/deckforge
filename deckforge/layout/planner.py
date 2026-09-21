@@ -17,7 +17,7 @@ from deckforge.layout.fitting import shorten_words
 log = logging.getLogger(__name__)
 
 # колонки-«дельты» в диаграмму не идут: у них другая единица
-_DELTA_HEADER = re.compile(r"измен|разниц|дельт|Δ|прирост|%", re.I)
+_DELTA_HEADER = re.compile(r"измен|разниц|дельт|Δ|прирост|%", re.IGNORECASE)
 _NUM = re.compile(r"^[+\-−–]?\d+(?:[.,]\d+)?$")
 # что можно слить в карточки при переборе объёма
 _MERGEABLE = (Archetype.BULLETS, Archetype.TWO_COLUMN, Archetype.CARDS, Archetype.PROCESS, Archetype.KPI, Archetype.QUOTE)

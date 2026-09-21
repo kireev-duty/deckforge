@@ -10,7 +10,7 @@ from deckforge.core.ooxml import NS, absolute_bbox, iter_shapes, localname, plac
 from deckforge.core.package import Package
 from deckforge.parsing.exemplars import load_exemplars
 from deckforge.parsing.extract_tokens import TemplateTokens, extract_tokens
-from deckforge.parsing.layout_classifier import find_fixed_signatures, _norm_text, _signature
+from deckforge.parsing.layout_classifier import _norm_text, _signature, find_fixed_signatures
 
 STEP = 914400 // 20  # 1/20", шаг округления кромок
 FULL_BLEED = 0.6  # фигура крупнее — фон, в сетке не участвует

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import re
 
-PLACEHOLDER_PATTERNS = [re.compile(p, re.I) for p in (
+PLACEHOLDER_PATTERNS = [re.compile(p, re.IGNORECASE) for p in (
     r"lorem\s+ipsum", r"\bxxx+\b", r"\btodo\b", r"\btbd\b", r"\{\{", r"\[\s*(текст|text|\.\.\.)\s*\]",
     r"вставьте\s+(текст|заголовок|фото)", r"вставить\s+(текст|заголовок|фото)", r"insert\s+(text|photo|title)",
     r"click\s+to\s+add", r"нажмите,?\s+чтобы", r"текст\s+слайда", r"заголовок\s+слайда", r"образец\s+текста",

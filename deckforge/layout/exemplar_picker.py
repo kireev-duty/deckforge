@@ -66,7 +66,7 @@ class Needs:
     quote_chars: int = 0
 
     @classmethod
-    def of(cls, s: OutlineSlide) -> "Needs":
+    def of(cls, s: OutlineSlide) -> Needs:
         lst = s.bullets or s.steps or s.paragraphs
         return cls(items=len(lst), kpis=len(s.kpis), chart=s.chart is not None, table=s.table is not None,
                    image=has_image(s), quote=bool(s.quote), title_chars=len(s.title),

@@ -21,7 +21,7 @@ from pptx.parts.slide import SlidePart
 from pptx.slide import Slide
 
 from deckforge.core.ir import Box, DeckIR, Element, Exemplar, Paragraph, SlideIR, SlotKind, TemplateDNA
-from deckforge.core.ooxml import A, NS, P, R, absolute_bbox, iter_shapes, localname, shape_id, shape_text
+from deckforge.core.ooxml import NS, A, P, R, absolute_bbox, iter_shapes, localname, shape_id, shape_text
 from deckforge.core.placeholders import is_placeholder_text
 from deckforge.render.charts import add_chart
 from deckforge.render.tables import add_table
@@ -334,9 +334,7 @@ class DeckWriter:
                 continue
             text = shape_text(sp)
             # заглушка в нескольких абзацах — тоже заглушка, даже у «фиксированного» элемента
-            if is_placeholder_text(" ".join(t.text or "" for t in sp.iter(A + "t"))):
-                clear_text(sp)
-            elif sid not in fixed and _is_sample_text(text):
+            if is_placeholder_text(" ".join(t.text or "" for t in sp.iter(A + "t"))) or sid not in fixed and _is_sample_text(text):
                 clear_text(sp)
 
     def _remove_empty_containers(
@@ -356,7 +354,7 @@ class DeckWriter:
             if bb is None or bb[2] * bb[3] > max_area:
                 continue
             box = Box(x=bb[0], y=bb[1], w=bb[2], h=bb[3])
-            inside = lambda c: box.x <= c[0] <= box.x2 and box.y <= c[1] <= box.y2  # noqa: E731
+            inside = lambda c: box.x <= c[0] <= box.x2 and box.y <= c[1] <= box.y2
             if not any(inside(c) for c in centers) or any(inside(c) for c in kept):
                 continue
             for oid, other in shapes.items():

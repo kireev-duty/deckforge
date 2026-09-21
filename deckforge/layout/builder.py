@@ -22,11 +22,23 @@ from deckforge.core.ir import (
     TextRun,
 )
 from deckforge.core.strategy import Strategy
-from deckforge.layout.exemplar_picker import STRUCTURAL, Needs, has_image, pick_exemplar, score_exemplar
 from deckforge.core.units import EMU_PER_PT
+from deckforge.layout.exemplar_picker import STRUCTURAL, Needs, has_image, pick_exemplar, score_exemplar
 from deckforge.layout.fitting import (
-    DIGIT_WIDTH, GLYPH_WIDTH, MIN_SIZE_SCALE, NUMBER_MIN_SCALE, UNIT_SCALE, chars_at_scale, fit_number, fit_size,
-    normalize, shorten, slot_capacity, split_label_body, split_number_unit, xml_safe,
+    DIGIT_WIDTH,
+    GLYPH_WIDTH,
+    MIN_SIZE_SCALE,
+    NUMBER_MIN_SCALE,
+    UNIT_SCALE,
+    chars_at_scale,
+    fit_number,
+    fit_size,
+    normalize,
+    shorten,
+    slot_capacity,
+    split_label_body,
+    split_number_unit,
+    xml_safe,
 )
 from deckforge.layout.planner import STEP_NUMBERING, PlanResult, plan
 

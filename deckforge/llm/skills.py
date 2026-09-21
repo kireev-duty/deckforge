@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import re
 from dataclasses import dataclass
-from functools import lru_cache
+from functools import cache
 from pathlib import Path
 
 import yaml
@@ -46,19 +46,19 @@ class Skill:
 
 def _split_prompt(md: str) -> tuple[str, str]:
     """prompt.md имеет секции `# system` и `# user`."""
-    parts = re.split(r"^#\s*(system|user)\s*$", md, flags=re.M)
+    parts = re.split(r"^#\s*(system|user)\s*$", md, flags=re.MULTILINE)
     sections = {parts[i].strip(): parts[i + 1].strip() for i in range(1, len(parts) - 1, 2)}
     if "system" not in sections:
         raise ValueError("prompt.md: нет секции '# system'")
     return sections["system"], sections.get("user", "")
 
 
-@lru_cache(maxsize=None)
+@cache
 def registry() -> dict:
     return yaml.safe_load((SKILLS_DIR / "registry.yaml").read_text("utf-8"))
 
 
-@lru_cache(maxsize=None)
+@cache
 def load_skill(name: str, version: str | None = None) -> Skill:
     entry = registry()["skills"].get(name)
     if entry is None:
@@ -83,7 +83,7 @@ def load_skill(name: str, version: str | None = None) -> Skill:
     )
 
 
-@lru_cache(maxsize=None)
+@cache
 def load_strategy(name: str) -> dict:
     return yaml.safe_load((STRATEGIES_DIR / f"{name}.yaml").read_text("utf-8"))
 

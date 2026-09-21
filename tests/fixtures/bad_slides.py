@@ -23,7 +23,7 @@ from pptx.enum.text import MSO_AUTO_SIZE
 from pptx.util import Inches, Pt
 
 from deckforge.core.ir import Box, ColorToken, DeckIR, FixedElement, GridSpec, TemplateDNA, TypeToken
-from deckforge.core.ooxml import A, NS
+from deckforge.core.ooxml import NS, A
 
 SW, SH = Inches(13.333), Inches(7.5)
 MARGIN = Inches(0.5)
@@ -377,4 +377,4 @@ FIXTURES: dict[str, Callable[[Path], Case]] = {
     name[5:]: fn for name, fn in globals().items() if name.startswith("make_") and name != "make_clean"
 }
 
-__all__ = ["Case", "FIXTURES", "DeckBuilder", "fixture_dna", "make_clean"]
+__all__ = ["FIXTURES", "Case", "DeckBuilder", "fixture_dna", "make_clean"]

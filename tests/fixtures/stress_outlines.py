@@ -24,7 +24,7 @@ RTL = "الفريق أطلق المنتج في الربع الأول"
 CJK = "团队在第一季度推出了产品，用户增长显著"
 XML_SPECIAL = "<b>жирный</b> & \"кавычки\" 'апостроф' </a:t>"
 CONTROL = "до\x00после \x0bвертикальная \x1fтабуляция \x08backspace"
-ZERO_WIDTH = "нулевая​ширина‍﻿BOM"
+ZERO_WIDTH = "нулевая\u200bширина‍﻿BOM"
 
 
 def base() -> DeckOutline:

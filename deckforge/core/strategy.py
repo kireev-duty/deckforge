@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from functools import lru_cache
+from functools import cache
 from pathlib import Path
 from typing import Literal
 
@@ -19,7 +19,7 @@ class SlideRange(BaseModel):
     max: int = Field(le=25)
 
     @model_validator(mode="after")
-    def _ordered(self) -> "SlideRange":
+    def _ordered(self) -> SlideRange:
         if self.min > self.max:
             raise ValueError(f"target_slides: min {self.min} > max {self.max}")
         return self
@@ -63,7 +63,7 @@ class Strategy(BaseModel):
             return len(self.archetype_priority)
 
 
-@lru_cache(maxsize=None)
+@cache
 def load_strategy(name: str, strategies_dir: Path | None = None) -> Strategy:
     path = (strategies_dir or STRATEGIES_DIR) / f"{name}.yaml"
     if not path.exists():

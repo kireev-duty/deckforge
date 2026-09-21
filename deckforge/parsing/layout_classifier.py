@@ -15,11 +15,12 @@ import json
 import re
 import sys
 from collections import Counter, defaultdict
+from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
 from pathlib import Path
 from statistics import median
-from typing import TYPE_CHECKING, Callable
+from typing import TYPE_CHECKING
 
 from lxml import etree
 
@@ -81,7 +82,7 @@ FIXED_TEXT_ZONE = 0.12  # тексты считаем колонтитулами
 EMU_PER_PT = 12700
 MAX_SUMMARY_ROWS = 40  # больше фигур VLM не показываем
 
-NUMBER_RE = re.compile(r"^[\dхx]{1,4}([.,]\d+)?\s*[%+]?\s*$|^[\dхx]{1,4}\s*%|^\d+([.,]\d+)?\s*(млн|тыс|млрд|k|m|b|x|×)\b", re.I)
+NUMBER_RE = re.compile(r"^[\dхx]{1,4}([.,]\d+)?\s*[%+]?\s*$|^[\dхx]{1,4}\s*%|^\d+([.,]\d+)?\s*(млн|тыс|млрд|k|m|b|x|×)\b", re.IGNORECASE)
 SEQ_RE = re.compile(r"^0?(\d{1,2})\s*$")
 GLYPH_RE = re.compile(r"^[^\w\s]{1,2}$")  # маркер или стрелка в боксе, а не текст
 PAGE_NUMBER_RE = re.compile(r"^\d{1,3}$")
@@ -1087,7 +1088,7 @@ def _collapse(slots: list[Slot], group: list[ShapeInfo], kind: SlotKind) -> list
     """Слоты внутри объединённого бокса группы заменяются одним слотом kind (заголовок не трогаем)."""
     x1, y1 = min(s.box.x for s in group), min(s.box.y for s in group)
     x2, y2 = max(s.box.x2 for s in group), max(s.box.y2 for s in group)
-    inside = lambda b: x1 <= b.x + b.w / 2 <= x2 and y1 <= b.y + b.h / 2 <= y2  # noqa: E731
+    inside = lambda b: x1 <= b.x + b.w / 2 <= x2 and y1 <= b.y + b.h / 2 <= y2
     kept = [s for s in slots if s.kind == SlotKind.TITLE or not inside(s.box)]
     kept.append(Slot(id=group[0].id, kind=kind, box=Box(x=x1, y=y1, w=x2 - x1, h=y2 - y1)))
     return kept

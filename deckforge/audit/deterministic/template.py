@@ -7,7 +7,7 @@ from __future__ import annotations
 
 from deckforge.audit.context import STEP, SYMBOL_FONTS, AuditContext, ShapeRec, SlideCtx
 from deckforge.audit.deterministic.base import finding
-from deckforge.core.colors import contrast_ratio, delta_e, rgb_to_hsl, hex_to_rgb
+from deckforge.core.colors import contrast_ratio, delta_e, hex_to_rgb, rgb_to_hsl
 from deckforge.core.ir import Finding, Severity
 
 MAX_FONT_FAMILIES = 2

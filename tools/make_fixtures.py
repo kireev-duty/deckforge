@@ -14,7 +14,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from tests.fixtures.bad_slides import FIXTURES, make_clean  # noqa: E402
+from tests.fixtures.bad_slides import FIXTURES, make_clean
 
 
 def main() -> None:

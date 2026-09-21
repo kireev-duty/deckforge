@@ -11,7 +11,7 @@ Check = Callable[[AuditContext], list[Finding]]
 
 
 def finding(check_id: str, slide: SlideCtx | int, severity: Severity, message: str, shape: ShapeRec | None = None,
-            autofix: str | None = None, box: Box | None = None, **evidence: str | float | int) -> Finding:
+            autofix: str | None = None, box: Box | None = None, **evidence: str | float) -> Finding:
     return Finding(
         check_id=check_id, kind="deterministic", severity=severity,
         slide_idx=slide if isinstance(slide, int) else slide.idx,

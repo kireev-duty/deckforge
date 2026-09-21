@@ -19,9 +19,7 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from tools.render_deck import render  # noqa: E402
-
-from deckforge.core.ir import (  # noqa: E402
+from deckforge.core.ir import (
     Archetype,
     ChartSpec,
     DeckIR,
@@ -33,9 +31,10 @@ from deckforge.core.ir import (  # noqa: E402
     TableSpec,
     TextRun,
 )
-from deckforge.parsing.exemplars import load_exemplars  # noqa: E402
-from deckforge.parsing.extract_tokens import extract_tokens  # noqa: E402
-from deckforge.render import render_pptx  # noqa: E402
+from deckforge.parsing.exemplars import load_exemplars
+from deckforge.parsing.extract_tokens import extract_tokens
+from deckforge.render import render_pptx
+from tools.render_deck import render
 
 FILLER = [
     "Единая точка входа для команд и данных",

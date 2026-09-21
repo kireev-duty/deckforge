@@ -15,7 +15,7 @@ from pathlib import Path
 from lxml import etree
 
 from deckforge.core.colors import apply_color_mods, normalize_hex
-from deckforge.core.ooxml import A, NS, P, localname, placeholder
+from deckforge.core.ooxml import NS, A, P, localname, placeholder
 
 SLIDE_RE = r"ppt/slides/slide\d+\.xml"
 LAYOUT_RE = r"ppt/slideLayouts/slideLayout\d+\.xml"

@@ -7,7 +7,18 @@ from pathlib import Path
 from deckforge.audit import audit_deck
 from deckforge.core.autofix import FIXES, fix_plan_rows, is_fixable, plan_fixes
 from deckforge.core.ir import (
-    AuditReport, Box, ChartSpec, DeckIR, DeckOutline, Element, Finding, Paragraph, Severity, SlideIR, SlotKind, TextRun,
+    AuditReport,
+    Box,
+    ChartSpec,
+    DeckIR,
+    DeckOutline,
+    Element,
+    Finding,
+    Paragraph,
+    Severity,
+    SlideIR,
+    SlotKind,
+    TextRun,
 )
 from deckforge.core.strategy import load_strategy
 from deckforge.layout import apply_fixes, build_deck_ir

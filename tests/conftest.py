@@ -77,7 +77,7 @@ def template_path():
 @pytest.fixture
 def no_fitting(monkeypatch: pytest.MonkeyPatch) -> None:
     """Выключить подгонку текста в layout — тестам фиксов нужна колода с гарантированными L03."""
-    import deckforge.layout.builder as builder
+    from deckforge.layout import builder
 
     monkeypatch.setattr(builder, "slot_capacity", lambda slot: None)
     monkeypatch.setattr(builder, "fit_size", lambda text, slot, min_scale=0.7: None)

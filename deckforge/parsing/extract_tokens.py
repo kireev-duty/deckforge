@@ -272,7 +272,7 @@ def assign_roles(clusters: dict[str, ColorStat]) -> dict[str, str]:
     if not clusters:
         return {}
     roles: dict[str, str] = {}
-    free = lambda: [h for h in clusters if h not in roles]  # noqa: E731
+    free = lambda: [h for h in clusters if h not in roles]
 
     # background — чем залиты слайды; если фоны — картинки, то самая большая заливка
     scored = {h: st.background_score for h, st in clusters.items()}

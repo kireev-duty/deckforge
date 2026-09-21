@@ -22,8 +22,8 @@ PROMPT_CHAR_LIMIT = 12_000  # больше модель начинает тер�
 CSV_MAX_ROWS = 30
 
 # `## Заголовок` — целая строка; `**Жирный.** текст…` — жирное начало абзаца
-_HEADING_RE = re.compile(r"^(?:#{1,6}\s+(?P<h>.+?)\s*#*\s*$|\*\*(?P<b>[^*\n]+?)\*\*)", re.M)
-_SLUG_RE = re.compile(r"[^0-9a-zа-яё]+", re.I)
+_HEADING_RE = re.compile(r"^(?:#{1,6}\s+(?P<h>.+?)\s*#*\s*$|\*\*(?P<b>[^*\n]+?)\*\*)", re.MULTILINE)
+_SLUG_RE = re.compile(r"[^0-9a-zа-яё]+", re.IGNORECASE)
 
 
 class Fragment(BaseModel):
@@ -116,7 +116,7 @@ def _md_fragments(path: Path, root: Path) -> list[Fragment]:
     rel = str(path.relative_to(root)).replace("\\", "/")
     base = "brief" if path.stem.lower() == "brief" else f"doc:{path.stem}"
     title = ""
-    m = re.match(r"^#\s+(.+)$", text, re.M)
+    m = re.match(r"^#\s+(.+)$", text, re.MULTILINE)
     if m:
         title = m.group(1).strip()
     frags = [Fragment(id=base, kind="text", title=title, text=text, source=rel)]

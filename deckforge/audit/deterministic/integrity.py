@@ -11,13 +11,13 @@ from pptx import Presentation
 from deckforge.audit.context import SPARSE_ARCHETYPES, AuditContext
 from deckforge.audit.deterministic.base import finding
 from deckforge.core.ir import Finding, Severity, SlotKind
-from deckforge.core.placeholders import PLACEHOLDER_PATTERNS, PLACEHOLDER_WHOLE  # noqa: F401
+from deckforge.core.placeholders import PLACEHOLDER_PATTERNS, PLACEHOLDER_WHOLE
 
 EMPTY_PH_TYPES = {"body", "obj", "subTitle", "title", "ctrTitle", "pic", "chart", "tbl"}
 RASTER_MIN_AREA = 0.9
 DUPLICATE_JACCARD = 0.8
 DUPLICATE_MIN_WORDS = 5
-_WORD = re.compile(r"[\w%]{2,}", re.U)
+_WORD = re.compile(r"[\w%]{2,}", re.UNICODE)
 
 
 # ──────────────────────────── I01 ────────────────────────────

@@ -23,9 +23,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from PIL import Image, ImageChops  # noqa: E402
+from PIL import Image, ImageChops
 
-from deckforge.export.render import contact_sheet, render  # noqa: E402
+from deckforge.export.render import contact_sheet, render
 
 MSO_GROUP, MSO_PICTURE, MSO_LINKED_PICTURE, MSO_PLACEHOLDER = 6, 13, 11, 14
 MSO_FILL_PICTURE = 6
@@ -230,7 +230,7 @@ def main() -> None:
 
     files = [Path(p).resolve() for pat in a.patterns for p in (glob.glob(pat) or [pat])]
     a.out = a.out.resolve()  # COM относительных путей не понимает
-    import win32com.client  # noqa: PLC0415
+    import win32com.client
 
     app = win32com.client.DispatchEx("PowerPoint.Application")  # свой экземпляр
     app.DisplayAlerts = PP_ALERTS_NONE

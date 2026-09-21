@@ -8,7 +8,13 @@ import pytest
 from lxml import etree
 
 from deckforge.core.ir import Archetype, Box, SlotKind
-from deckforge.parsing.layout_classifier import ShapeInfo, SlideProfile, build_features, build_slots, classify_template
+from deckforge.parsing.layout_classifier import (
+    ShapeInfo,
+    SlideProfile,
+    build_features,
+    build_slots,
+    classify_template,
+)
 from deckforge.parsing.ooxml import NS, absolute_bbox
 from tests.conftest import REPO
 

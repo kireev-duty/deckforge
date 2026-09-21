@@ -8,7 +8,18 @@ from pathlib import Path
 import pytest
 from pptx import Presentation
 
-from deckforge.core.ir import Archetype, Box, ChartSpec, DeckOutline, Exemplar, ImageSpec, OutlineSlide, Slot, SlotKind, TableSpec
+from deckforge.core.ir import (
+    Archetype,
+    Box,
+    ChartSpec,
+    DeckOutline,
+    Exemplar,
+    ImageSpec,
+    OutlineSlide,
+    Slot,
+    SlotKind,
+    TableSpec,
+)
 from deckforge.core.strategy import Strategy, load_strategy
 from deckforge.layout import build_deck_ir, plan
 from deckforge.layout.exemplar_picker import candidate_archetypes, pick_exemplar

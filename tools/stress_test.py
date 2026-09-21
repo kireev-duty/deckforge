@@ -288,7 +288,7 @@ def _stem(p: Path) -> str:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--wild", action="store_true", help="плюс 14 чужих шаблонов data/wild")
+    ap.add_argument("--wild", action="store_true", help="плюс 13 чужих шаблонов data/wild")
     ap.add_argument("--cases", default="", help="через запятую; по умолчанию все из tests/fixtures/stress_outlines.CASES")
     ap.add_argument("--templates", default="", help="подстроки имён через запятую")
     ap.add_argument("--strategies", default="executive,narrative,visual")

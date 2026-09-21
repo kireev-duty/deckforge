@@ -344,6 +344,8 @@ def read_paragraphs(ctx: PartCtx, paras: list[etree._Element], sp: etree._Elemen
         if bu is not None:
             n = localname(bu)
             rec.bullet_char = bu.get("char") if n == "buChar" else ("•" if n == "buBlip" else None)
+            if rec.bullet_char and _bullet_font(chain) in SYMBOL_FONTS:
+                rec.bullet_char = "•"  # символ Wingdings («§» — квадрат) в браузере показался бы буквой
             rec.bullet_auto = n == "buAutoNum"
         if ppr is not None:
             rec.space_before_pt = _spacing_pt(ppr.find("a:spcBef", NS), runs)
@@ -402,6 +404,17 @@ def _bullet_el(chain: list[etree._Element]) -> etree._Element | None:
             n = localname(c)
             if n in ("buNone", "buChar", "buAutoNum", "buBlip"):
                 return c
+    return None
+
+
+def _bullet_font(chain: list[etree._Element]) -> str | None:
+    """Гарнитура маркера (a:buFont) по цепочке наследования; None — шрифт текста."""
+    for ppr in chain:
+        for c in ppr:
+            if localname(c) == "buFontTx":
+                return None
+            if localname(c) == "buFont":
+                return c.get("typeface")
     return None
 
 

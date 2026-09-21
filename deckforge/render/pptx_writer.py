@@ -398,6 +398,12 @@ class DeckWriter:
             if blip_fill is None:
                 return
             _set_blip(blip_fill, rId, src_rect)
+        elif sp.find("p:nvSpPr/p:nvPr/p:ph[@type='pic']", NS) is not None:
+            # плейсхолдер картинки: как PowerPoint при вставке — p:sp становится p:pic, иначе LibreOffice
+            # и аудит видят пустой плейсхолдер, а blipFill на нём не рисуется
+            pic = _placeholder_to_pic(sp, rId, src_rect)
+            self._clear_picture_captions(pic, el.box, shapes, slot_ids)
+            shapes[shape_id(pic)] = pic
         else:
             sp_pr = sp.find("p:spPr", NS)
             if sp_pr is None:
@@ -625,6 +631,27 @@ def crop_rect(img_w: int, img_h: int, frame_w: int, frame_h: int) -> tuple[int, 
     keep = img_ar / frame_ar
     cut = int(round((1 - keep) / 2 * 100000))
     return 0, cut, 0, cut
+
+
+def _placeholder_to_pic(sp: etree._Element, rId: str, src_rect: tuple[int, int, int, int] | None) -> etree._Element:
+    """Заменить p:sp-плейсхолдер картинки на p:pic с тем же id, ph и геометрией (txBody и style у картинки нет)."""
+    pic = etree.Element(P + "pic")
+    nv = etree.SubElement(pic, P + "nvPicPr")
+    nv.append(copy.deepcopy(sp.find("p:nvSpPr/p:cNvPr", NS)))
+    locks = etree.SubElement(etree.SubElement(nv, P + "cNvPicPr"), A + "picLocks")
+    locks.set("noGrp", "1")
+    locks.set("noChangeAspect", "1")
+    nv.append(copy.deepcopy(sp.find("p:nvSpPr/p:nvPr", NS)))
+    blip_fill = etree.SubElement(pic, P + "blipFill")
+    _set_blip(blip_fill, rId, src_rect)
+    sp_pr = copy.deepcopy(sp.find("p:spPr", NS)) if sp.find("p:spPr", NS) is not None else etree.Element(P + "spPr")
+    for child in list(sp_pr):
+        if localname(child) in FILL_TAGS:
+            sp_pr.remove(child)
+    pic.append(sp_pr)
+    sp.addnext(pic)
+    sp.getparent().remove(sp)
+    return pic
 
 
 def _set_blip(blip_fill: etree._Element, rId: str, src_rect: tuple[int, int, int, int] | None) -> None:

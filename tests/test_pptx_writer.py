@@ -217,6 +217,37 @@ def test_empty_placeholders_of_exemplar_are_dropped(template_path, tmp_path: Pat
     assert any(sh.has_text_frame and sh.text_frame.text == "Т" for sh in prs.slides[0].shapes)
 
 
+def test_picture_placeholder_becomes_pic(template_path, tmp_path: Path):
+    """Плейсхолдер картинки (p:sp с ph type=pic) после заполнения — p:pic с тем же id, как делает PowerPoint."""
+    tpl = template_path("ЛЦТ2026")
+    exemplars = [p.to_exemplar() for p in classify_template(tpl)]
+    src = Presentation(str(tpl))
+    found = None
+    for i, e in enumerate(exemplars):
+        tree = src.slides[i].part._element.find("p:cSld/p:spTree", NS)
+        for s in e.slots:
+            if s.kind != SlotKind.PICTURE:
+                continue
+            sp = next((x for x in iter_shapes(tree) if shape_id(x) == s.id), None)
+            if sp is not None and sp.find("p:nvSpPr/p:nvPr/p:ph[@type='pic']", NS) is not None:
+                found = (e, s)
+                break
+        if found:
+            break
+    assert found, "в шаблоне нет sp-плейсхолдера картинки"
+    e, slot = found
+    img = tmp_path / "pic.png"
+    Image.new("RGB", (300, 300), "#FF0053").save(img)
+    el = Element(slot_id=slot.id, kind=SlotKind.PICTURE, box=slot.box, image_path=str(img))
+    slides = [SlideIR(idx=0, exemplar_id=e.id, archetype=e.archetype, elements=[el], outline_ref=0)]
+    prs = Presentation(str(render_pptx(_deck(exemplars, slides), tpl, exemplars, tmp_path / "ph_pic.pptx")))
+    tree = prs.slides[0].part._element.find("p:cSld/p:spTree", NS)
+    pic = next(x for x in iter_shapes(tree) if shape_id(x) == slot.id)
+    assert pic.tag.endswith("}pic") and pic.find("p:nvPicPr/p:nvPr/p:ph", NS) is not None
+    assert pic.find("p:blipFill/a:blip", NS).get(R + "embed") in prs.slides[0].part.rels
+    assert pic.find("p:spPr/a:xfrm", NS) is not None and pic.find("p:txBody", NS) is None
+
+
 def test_picture_fill_and_crop(template_path, tmp_path: Path):
     tpl = template_path("VK Tech")
     exemplars = [p.to_exemplar() for p in classify_template(tpl)]

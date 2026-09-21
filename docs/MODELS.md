@@ -12,7 +12,7 @@
 
 Почему FLUX.2 [klein] 4B: открытые веса Apache 2.0 (9B-версия — non-commercial, не подходит), укладывается в лимит ≤20B, доступна на том же OpenRouter тем же ключом (endpoint `POST /api/v1/images`, ≈$0.014 за картинку 1024×576), локально — ~13 GB VRAM.
 
-Проверено в день 1: `qwen/qwen3.8-27b-20260814` и `black-forest-labs/flux.2-klein-4b` в каталоге OpenRouter, оба отвечают.
+Проверено: `qwen/qwen3.8-27b-20260814` и `black-forest-labs/flux.2-klein-4b` в каталоге OpenRouter, оба отвечают.
 
 Запасные варианты: Qwen3-32B + Qwen2.5-VL-32B-Instruct (Apache 2.0) для текста/зрения; FLUX.1-schnell (12B, Apache 2.0, Together AI `/v1/images/generations`) или Qwen-Image (20B, Apache 2.0) для картинок. Без T2I-провайдера сервис работает полностью — слайды собираются с иконками и нативной графикой, без иллюстраций.
 

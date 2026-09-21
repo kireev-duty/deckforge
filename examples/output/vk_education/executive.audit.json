@@ -113,6 +113,20 @@
    }
   },
   {
+   "check_id": "C03_one_message",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 4,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд содержит четыре отдельных тезиса, которые нельзя логично объединить в одно предложение без потери смысла.",
+   "autofix": null,
+   "evidence": {
+    "question": "Слайд пересказывается одним предложением",
+    "sources": "doc:product:что-получает-команда-и-руководитель"
+   }
+  },
+  {
    "check_id": "D05_fill",
    "kind": "deterministic",
    "severity": "warning",
@@ -290,5 +304,5 @@
   "C10_table_legend_relevant",
   "C11_flow"
  ],
- "duration_s": 60.975
+ "duration_s": 40.314
 }

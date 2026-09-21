@@ -1,5 +1,5 @@
 {
- "created": "2026-09-18T08:03:46+00:00",
+ "created": "2026-09-18T16:10:22+00:00",
  "template": {
   "id": "974401af1ab9",
   "path": "data/holdout/ЛЦТ2026 Шаблон презентации.pptx",
@@ -25,26 +25,35 @@
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 11.904244299999846,
+   "duration_s": 9.757578700002341,
    "prompt_tokens": 2734,
-   "completion_tokens": 441,
+   "completion_tokens": 341,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 6.70920389999992,
+   "duration_s": 12.106643500002974,
+   "prompt_tokens": 2790,
+   "completion_tokens": 439,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 2.830043099995237,
    "prompt_tokens": 2727,
-   "completion_tokens": 486,
+   "completion_tokens": 443,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 22.825952600000164,
-   "prompt_tokens": 2719,
+   "duration_s": 12.910556499999075,
+   "prompt_tokens": 2717,
    "completion_tokens": 580,
    "ok": true,
    "error": null
@@ -52,63 +61,54 @@
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 24.253370300000824,
-   "prompt_tokens": 2837,
-   "completion_tokens": 421,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 6.531852600000093,
+   "duration_s": 4.6176634000003105,
    "prompt_tokens": 2741,
-   "completion_tokens": 497,
+   "completion_tokens": 504,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 31.344659800000045,
-   "prompt_tokens": 2771,
-   "completion_tokens": 456,
+   "duration_s": 20.130283300000883,
+   "prompt_tokens": 2818,
+   "completion_tokens": 402,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 5.578526799999963,
-   "prompt_tokens": 2670,
-   "completion_tokens": 447,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 16.019033200000194,
-   "prompt_tokens": 2822,
-   "completion_tokens": 370,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 49.463639100000364,
-   "prompt_tokens": 2768,
-   "completion_tokens": 467,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 59.31549410000025,
+   "duration_s": 14.48636550000083,
    "prompt_tokens": 2755,
-   "completion_tokens": 482,
+   "completion_tokens": 477,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 18.846064400000614,
+   "prompt_tokens": 2775,
+   "completion_tokens": 473,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 15.765669699998398,
+   "prompt_tokens": 2717,
+   "completion_tokens": 377,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 24.65725360000215,
+   "prompt_tokens": 2768,
+   "completion_tokens": 488,
    "ok": true,
    "error": null
   }
@@ -274,14 +274,12 @@
  },
  "audit": {
   "errors": 1,
-  "warnings": 21,
+  "warnings": 18,
   "info": 1,
-  "contextual": 7,
+  "contextual": 4,
   "by_check": {
-   "C01_title_insight": 4,
-   "C06_images_relevant": 1,
+   "C01_title_insight": 3,
    "C07_no_garbage": 1,
-   "C08_no_typos": 1,
    "D02_bullet_words": 1,
    "D05_fill": 4,
    "L03_text_overflow": 2,
@@ -293,7 +291,6 @@
   "slides_with_issues": [
    1,
    2,
-   3,
    4,
    5,
    6,
@@ -301,7 +298,7 @@
    8
   ],
   "checks_run": 35,
-  "duration_s": 85.439,
+  "duration_s": 37.958,
   "path": "executive.audit.json",
   "kind": "deterministic+contextual",
   "autofix": {
@@ -442,15 +439,15 @@
   "html": "executive.html"
  },
  "timings_s": {
-  "parse": 8.42,
+  "parse": 0.989,
   "outline": 0.0,
-  "layout": 0.038,
-  "render": 6.807,
-  "audit": 1.954,
-  "autofix": 7.832,
-  "png": 89.069,
-  "audit_contextual": 83.863,
-  "export_pdf": 0.012,
-  "export_html": 3.018
+  "layout": 0.025,
+  "render": 1.627,
+  "audit": 0.716,
+  "autofix": 2.818,
+  "png": 76.82,
+  "audit_contextual": 37.286,
+  "export_pdf": 0.006,
+  "export_html": 7.259
  }
 }

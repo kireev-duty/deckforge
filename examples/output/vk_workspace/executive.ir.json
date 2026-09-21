@@ -970,41 +970,6 @@
      }
     },
     {
-     "slot_id": "650",
-     "kind": "label",
-     "box": {
-      "x": 429253,
-      "y": 1615786,
-      "w": 3841965,
-      "h": 418061
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Приватность",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF,00AEE8",
-      "font": "Play",
-      "text_color": "FFFFFF"
-     }
-    },
-    {
      "slot_id": "657",
      "kind": "body",
      "box": {
@@ -1017,7 +982,7 @@
       {
        "runs": [
         {
-         "text": "Сервис видит только метаданные",
+         "text": "Приватность — Сервис видит только метаданные",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1275,42 +1240,6 @@
      }
     },
     {
-     "slot_id": "654",
-     "kind": "label",
-     "box": {
-      "x": 429253,
-      "y": 3444059,
-      "w": 3841965,
-      "h": 418061
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "«За месяц мы впервые увидели",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF,00AEE8",
-      "font": "Play",
-      "text_color": "FFFFFF",
-      "size_pt": 12.6
-     }
-    },
-    {
      "slot_id": "648",
      "kind": "body",
      "box": {
@@ -1323,7 +1252,7 @@
       {
        "runs": [
         {
-         "text": "и перестали спорить об этом на ретро» — Руководитель разработки, команда платёжного шлюза",
+         "text": "«За месяц мы впервые увидели, где реально теряется время, — и перестали спорить об этом на ретро» — Руководитель разработки, команда платёжного шлюза",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1486,41 +1415,6 @@
      }
     },
     {
-     "slot_id": "650",
-     "kind": "label",
-     "box": {
-      "x": 429253,
-      "y": 1615786,
-      "w": 3841965,
-      "h": 418061
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "0,6",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF,00AEE8",
-      "font": "Play",
-      "text_color": "FFFFFF"
-     }
-    },
-    {
      "slot_id": "657",
      "kind": "body",
      "box": {
@@ -1533,7 +1427,7 @@
       {
        "runs": [
         {
-         "text": "дня: средний срок ответа на запрос",
+         "text": "0,6 — дня: средний срок ответа на запрос",
          "bold": false,
          "italic": false,
          "color": null,

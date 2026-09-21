@@ -42,13 +42,27 @@
    }
   },
   {
+   "check_id": "C03_one_message",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 2,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд содержит три отдельных тезиса с пояснениями, которые не сводятся к одному предложению.",
+   "autofix": null,
+   "evidence": {
+    "question": "Слайд пересказывается одним предложением",
+    "sources": "m:pilot"
+   }
+  },
+  {
    "check_id": "C07_no_garbage",
    "kind": "contextual",
    "severity": "error",
    "slide_idx": 4,
    "element_id": null,
    "box": null,
-   "message": "В подписи третьей диаграммы текст обрезан многоточием («май–август…»), что выглядит как служебный мусор или ошибка верстки.",
+   "message": "В подписи третьего графика текст обрезан многоточием («май–август…»), что выглядит как служебный мусор или ошибка верстки.",
    "autofix": null,
    "evidence": {
     "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
@@ -459,79 +473,54 @@
    }
   },
   {
-   "check_id": "D05_fill",
+   "check_id": "D02_bullet_words",
    "kind": "deterministic",
    "severity": "warning",
    "slide_idx": 9,
-   "element_id": null,
-   "box": null,
-   "message": "Слайд пустоват: контент занимает 12% рабочей области (норма 25%–75%)",
-   "autofix": "change_exemplar",
-   "evidence": {
-    "fill": 0.12
-   }
-  },
-  {
-   "check_id": "T06_contrast",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 9,
-   "element_id": "2155",
+   "element_id": "417",
    "box": {
-    "x": 285749,
-    "y": 1543838,
-    "w": 1614880,
-    "h": 202471
+    "x": 210243,
+    "y": 878488,
+    "w": 4288279,
+    "h": 1496698
    },
-   "message": "Контраст текста #8F8F8F к фону #FAFCFF = 3.1:1 (нужно 4.5:1)",
-   "autofix": "snap_color",
+   "message": "Пункт из 17 слов (норма ≤ 15): ««За месяц мы впервые увидели, где реально теряется время, — …»",
+   "autofix": "refill_slot",
    "evidence": {
-    "contrast": 3.15,
-    "text_color": "8F8F8F",
-    "background": "FAFCFF",
-    "need": 4.5,
-    "template_color": 1
+    "words": 17
    }
   },
   {
-   "check_id": "C02_content_matches_title",
-   "kind": "contextual",
-   "severity": "error",
-   "slide_idx": 11,
-   "element_id": null,
-   "box": null,
-   "message": "Слайд содержит метрику '0,6 дня', которая не относится к оценке пилота, указанной в заголовке.",
-   "autofix": null,
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 9,
+   "element_id": "417",
+   "box": {
+    "x": 210243,
+    "y": 878488,
+    "w": 4288279,
+    "h": 1496698
+   },
+   "message": "Кегль 20.3 pt не из шкалы шаблона (ближайший 24 pt) (подгонка: 70% от кегля образца 29 pt)",
+   "autofix": "snap_font_size",
    "evidence": {
-    "question": "Содержимое слайда соответствует заголовку",
-    "sources": "doc:product:контакты"
+    "size_pt": 20.3,
+    "nearest_pt": 24.0,
+    "base_pt": 29.0
    }
   },
   {
-   "check_id": "C07_no_garbage",
-   "kind": "contextual",
-   "severity": "error",
-   "slide_idx": 11,
-   "element_id": null,
-   "box": null,
-   "message": "В подписи третьей диаграммы есть обрезанный текст 'дня: средний срок…'.",
-   "autofix": null,
-   "evidence": {
-    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
-    "sources": "doc:product:контакты"
-   }
-  },
-  {
-   "check_id": "C06_images_relevant",
+   "check_id": "C08_no_typos",
    "kind": "contextual",
    "severity": "warning",
    "slide_idx": 11,
    "element_id": null,
    "box": null,
-   "message": "Третья диаграмма (0,6 дня) не относится к теме оценки пилота.",
+   "message": "В подписи третьей диаграммы текст обрывается многоточием («дня: средний срок...»).",
    "autofix": null,
    "evidence": {
-    "question": "Картинки и иконки относятся к теме слайда",
+    "question": "Текст без опечаток",
     "sources": "doc:product:контакты"
    }
   },
@@ -615,17 +604,17 @@
    }
   },
   {
-   "check_id": "C10_table_legend_relevant",
+   "check_id": "C07_no_garbage",
    "kind": "contextual",
-   "severity": "info",
-   "slide_idx": 11,
+   "severity": "error",
+   "slide_idx": 12,
    "element_id": null,
    "box": null,
-   "message": "Элемент '0,6 дня' не работает на мысль слайда об оценке пилота.",
+   "message": "На слайде присутствуют лишние водяные знаки с цифрами 01-04, хотя рисков только три.",
    "autofix": null,
    "evidence": {
-    "question": "Все строки таблицы и элементы легенды работают на мысль слайда",
-    "sources": "doc:product:контакты"
+    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
+    "sources": ""
    }
   },
   {
@@ -635,24 +624,10 @@
    "slide_idx": 12,
    "element_id": null,
    "box": null,
-   "message": "Заголовок называет тему (риски и закрытие), а не содержит вывод (например, «Риски запуска минимизированы планом»).",
+   "message": "Заголовок называет тему (риски и закрытие), а не содержит вывод о результате или значимости.",
    "autofix": null,
    "evidence": {
     "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": ""
-   }
-  },
-  {
-   "check_id": "C06_images_relevant",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 12,
-   "element_id": null,
-   "box": null,
-   "message": "На слайде 4 номера (01-04), но только 3 блока контента, что создает визуальный диссонанс.",
-   "autofix": null,
-   "evidence": {
-    "question": "Картинки и иконки относятся к теме слайда",
     "sources": ""
    }
   },
@@ -795,5 +770,5 @@
   "C10_table_legend_relevant",
   "C11_flow"
  ],
- "duration_s": 63.225
+ "duration_s": 54.761
 }

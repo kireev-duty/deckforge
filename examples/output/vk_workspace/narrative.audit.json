@@ -108,6 +108,20 @@
    }
   },
   {
+   "check_id": "C03_one_message",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 2,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд содержит три отдельных тезиса, которые нельзя логично объединить в одно предложение без потери смысла.",
+   "autofix": null,
+   "evidence": {
+    "question": "Слайд пересказывается одним предложением",
+    "sources": "m:pilot"
+   }
+  },
+  {
    "check_id": "L02_overlap",
    "kind": "deterministic",
    "severity": "warning",
@@ -390,7 +404,7 @@
    "slide_idx": 8,
    "element_id": null,
    "box": null,
-   "message": "Слайд содержит только заголовок и обрезанную цитату, без раскрытия сути или контекста.",
+   "message": "Слайд содержит только заголовок и обрывок цитаты, что является недостаточным содержанием.",
    "autofix": null,
    "evidence": {
     "question": "На слайде есть содержание, а не только заголовок",
@@ -404,24 +418,10 @@
    "slide_idx": 8,
    "element_id": null,
    "box": null,
-   "message": "Текст «За месяц мы впервые…» является незавершенной строкой (заглушкой), а не полноценным содержанием.",
+   "message": "Текст цитаты обрывается на многоточии, что выглядит как служебный мусор или незаполненная заглушка.",
    "autofix": null,
    "evidence": {
     "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
-    "sources": "m:score,m:response_days"
-   }
-  },
-  {
-   "check_id": "C06_images_relevant",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 8,
-   "element_id": null,
-   "box": null,
-   "message": "Абстрактная 3D-графика (кольца и сферы) не имеет отношения к теме ретро или потери времени.",
-   "autofix": null,
-   "evidence": {
-    "question": "Картинки и иконки относятся к теме слайда",
     "sources": "m:score,m:response_days"
    }
   },
@@ -674,24 +674,10 @@
    "check_id": "C08_no_typos",
    "kind": "contextual",
    "severity": "warning",
-   "slide_idx": 11,
-   "element_id": null,
-   "box": null,
-   "message": "В тексте первого этапа используется многоточие («20…»), что является опечаткой или некорректным форматированием.",
-   "autofix": null,
-   "evidence": {
-    "question": "Текст без опечаток",
-    "sources": "doc:product:контакты"
-   }
-  },
-  {
-   "check_id": "C08_no_typos",
-   "kind": "contextual",
-   "severity": "warning",
    "slide_idx": 12,
    "element_id": null,
    "box": null,
-   "message": "В заголовке слово «команды» некорректно разбито на строки, что выглядит как опечатка или сбой верстки.",
+   "message": "Слово «команды» некорректно разбито на две строки с переносом буквы «ы».",
    "autofix": null,
    "evidence": {
     "question": "Текст без опечаток",
@@ -736,5 +722,5 @@
   "C10_table_legend_relevant",
   "C11_flow"
  ],
- "duration_s": 54.934
+ "duration_s": 44.106
 }

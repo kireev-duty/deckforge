@@ -1,5 +1,5 @@
 {
- "created": "2026-09-18T07:57:25+00:00",
+ "created": "2026-09-18T13:47:43+00:00",
  "template": {
   "id": "69e4a68c4372",
   "path": "data/templates/VK_WorkSpace_Клиентская_конференция_Шаблон_03.pptx",
@@ -25,90 +25,90 @@
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 8.642427799999496,
-   "prompt_tokens": 2734,
-   "completion_tokens": 452,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 8.770551399999931,
-   "prompt_tokens": 2770,
-   "completion_tokens": 454,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 10.978177699999833,
-   "prompt_tokens": 2796,
-   "completion_tokens": 435,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 12.087797999999566,
+   "duration_s": 9.560268900000665,
    "prompt_tokens": 2708,
-   "completion_tokens": 536,
+   "completion_tokens": 550,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 11.148951999999554,
+   "duration_s": 9.69737879999957,
+   "prompt_tokens": 2796,
+   "completion_tokens": 437,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 9.839183500000217,
+   "prompt_tokens": 2734,
+   "completion_tokens": 447,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 9.22330940000029,
    "prompt_tokens": 2757,
-   "completion_tokens": 446,
+   "completion_tokens": 431,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 8.987875600000734,
+   "duration_s": 9.550239100000908,
+   "prompt_tokens": 2737,
+   "completion_tokens": 469,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 23.327267600001505,
+   "prompt_tokens": 2770,
+   "completion_tokens": 465,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 23.673743399998784,
    "prompt_tokens": 2784,
-   "completion_tokens": 479,
+   "completion_tokens": 490,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 12.84107589999985,
-   "prompt_tokens": 2759,
-   "completion_tokens": 473,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 6.586025900000095,
+   "duration_s": 13.254595700000209,
    "prompt_tokens": 2671,
-   "completion_tokens": 392,
+   "completion_tokens": 386,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 6.738543000000391,
-   "prompt_tokens": 2771,
-   "completion_tokens": 411,
+   "duration_s": 18.1507724999974,
+   "prompt_tokens": 2768,
+   "completion_tokens": 204,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 19.240909699999975,
-   "prompt_tokens": 2784,
-   "completion_tokens": 481,
+   "duration_s": 20.643585499998153,
+   "prompt_tokens": 2818,
+   "completion_tokens": 370,
    "ok": true,
    "error": null
   }
@@ -264,8 +264,8 @@
    "slide8",
    "slide28"
   ],
-  "text_items_per_slide": 7.8,
-  "words_per_item": 5.6,
+  "text_items_per_slide": 7.2,
+  "words_per_item": 6.2,
   "chart": 0,
   "table": 2,
   "kpi": 1,
@@ -274,41 +274,44 @@
  },
  "audit": {
   "errors": 1,
-  "warnings": 17,
-  "info": 4,
-  "contextual": 3,
+  "warnings": 20,
+  "info": 3,
+  "contextual": 5,
   "by_check": {
-   "C01_title_insight": 1,
+   "C01_title_insight": 2,
+   "C03_one_message": 1,
    "C07_no_garbage": 1,
    "C08_no_typos": 1,
+   "D02_bullet_words": 1,
    "D05_fill": 3,
    "L02_overlap": 8,
    "L05_off_grid": 2,
    "L06_in_margins": 2,
-   "T02_font_size": 4
+   "T02_font_size": 3
   },
   "slides_with_issues": [
    2,
    3,
    5,
    6,
+   7,
    8,
    9
   ],
   "checks_run": 35,
-  "duration_s": 28.438,
+  "duration_s": 40.04,
   "path": "executive.audit.json",
   "kind": "deterministic+contextual",
   "autofix": {
    "applied": 2,
-   "skipped": 0,
+   "skipped": 1,
    "before": {
     "errors": 2,
-    "warnings": 15
+    "warnings": 16
    },
    "after": {
     "errors": 0,
-    "warnings": 15
+    "warnings": 16
    },
    "items": [
     {
@@ -326,6 +329,13 @@
      "fix": "shrink_font_by_scale",
      "before": "54 pt",
      "after": "45.4 pt"
+    },
+    {
+     "slide_idx": 7,
+     "element_id": "648",
+     "check_id": "D02_bullet_words",
+     "fix": "refill_slot",
+     "reason": "нечего менять"
     }
    ]
   }
@@ -344,15 +354,15 @@
   "html": "executive.html"
  },
  "timings_s": {
-  "parse": 0.48,
+  "parse": 0.214,
   "outline": 0.0,
-  "layout": 0.015,
-  "render": 0.9,
-  "audit": 0.641,
-  "autofix": 1.396,
-  "png": 14.365,
-  "audit_contextual": 27.901,
-  "export_pdf": 0.005,
-  "export_html": 10.004
+  "layout": 0.004,
+  "render": 0.42,
+  "audit": 0.273,
+  "autofix": 0.702,
+  "png": 7.91,
+  "audit_contextual": 39.769,
+  "export_pdf": 0.007,
+  "export_html": 4.168
  }
 }

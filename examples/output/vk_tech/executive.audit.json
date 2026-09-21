@@ -180,7 +180,7 @@
    "slide_idx": 2,
    "element_id": null,
    "box": null,
-   "message": "В подписи третьего графика текст обрезан многоточием («месяца (май–август…»), что выглядит как служебный мусор или ошибка верстки.",
+   "message": "В подписи третьего графика текст обрезан многоточием («май–август...»), что выглядит как служебный мусор или ошибка верстки.",
    "autofix": null,
    "evidence": {
     "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
@@ -578,6 +578,24 @@
    }
   },
   {
+   "check_id": "D02_bullet_words",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 7,
+   "element_id": "858",
+   "box": {
+    "x": 438148,
+    "y": 1819373,
+    "w": 3009884,
+    "h": 854757
+   },
+   "message": "Пункт из 23 слов (норма ≤ 15): ««За месяц мы впервые увидели, где реально теряется время, — …»",
+   "autofix": "refill_slot",
+   "evidence": {
+    "words": 23
+   }
+  },
+  {
    "check_id": "T06_contrast",
    "kind": "deterministic",
    "severity": "warning",
@@ -796,20 +814,6 @@
     "need": 4.5,
     "template_color": 1
    }
-  },
-  {
-   "check_id": "C06_images_relevant",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 9,
-   "element_id": null,
-   "box": null,
-   "message": "Изображение является пустой заглушкой, не относящейся к теме.",
-   "autofix": null,
-   "evidence": {
-    "question": "Картинки и иконки относятся к теме слайда",
-    "sources": "doc:product:риски-запуска-и-как-они-закрываются"
-   }
   }
  ],
  "checks_run": [
@@ -849,5 +853,5 @@
   "C10_table_legend_relevant",
   "C11_flow"
  ],
- "duration_s": 45.947
+ "duration_s": 34.62
 }

@@ -1,5 +1,5 @@
 {
- "created": "2026-09-18T13:13:54+00:00",
+ "created": "2026-09-18T16:19:58+00:00",
  "config": {
   "template": "data/templates/Шаблон презентации VK Education.pptx",
   "content_pack": "examples/content_pack",
@@ -75,10 +75,11 @@
    },
    "audit": {
     "errors": 0,
-    "warnings": 13,
+    "warnings": 14,
     "info": 1,
-    "contextual": 0,
+    "contextual": 1,
     "by_check": {
+     "C03_one_message": 1,
      "D02_bullet_words": 1,
      "D05_fill": 4,
      "L04_text_clipped": 2,
@@ -89,13 +90,14 @@
     "slides_with_issues": [
      1,
      2,
+     4,
      5,
      6,
      7,
      8
     ],
     "checks_run": 35,
-    "duration_s": 60.975,
+    "duration_s": 40.314,
     "path": "executive.audit.json",
     "kind": "deterministic+contextual",
     "autofix": {
@@ -147,14 +149,14 @@
     "html": "executive.html"
    },
    "timings_s": {
-    "layout": 0.005,
-    "render": 0.733,
-    "audit": 0.361,
-    "autofix": 0.001,
-    "png": 4.746,
-    "audit_contextual": 60.617,
-    "export_pdf": 0.003,
-    "export_html": 0.698
+    "layout": 0.057,
+    "render": 6.807,
+    "audit": 2.551,
+    "autofix": 0.008,
+    "png": 23.144,
+    "audit_contextual": 37.805,
+    "export_pdf": 0.011,
+    "export_html": 2.742
    }
   },
   {
@@ -232,7 +234,7 @@
      12
     ],
     "checks_run": 35,
-    "duration_s": 87.43,
+    "duration_s": 79.758,
     "path": "narrative.audit.json",
     "kind": "deterministic+contextual",
     "autofix": {
@@ -305,14 +307,14 @@
     "html": "narrative.html"
    },
    "timings_s": {
-    "layout": 0.005,
-    "render": 0.671,
-    "audit": 0.349,
-    "autofix": 0.001,
-    "png": 5.501,
-    "audit_contextual": 87.084,
-    "export_pdf": 0.011,
-    "export_html": 1.409
+    "layout": 0.021,
+    "render": 3.053,
+    "audit": 1.287,
+    "autofix": 0.003,
+    "png": 14.225,
+    "audit_contextual": 78.48,
+    "export_pdf": 0.006,
+    "export_html": 5.402
    }
   },
   {
@@ -359,11 +361,10 @@
    },
    "audit": {
     "errors": 1,
-    "warnings": 18,
+    "warnings": 17,
     "info": 5,
-    "contextual": 2,
+    "contextual": 1,
     "by_check": {
-     "C01_title_insight": 1,
      "C07_no_garbage": 1,
      "D02_bullet_words": 1,
      "D05_fill": 3,
@@ -381,7 +382,7 @@
      8
     ],
     "checks_run": 35,
-    "duration_s": 38.679,
+    "duration_s": 51.428,
     "path": "visual.audit.json",
     "kind": "deterministic+contextual",
     "autofix": {
@@ -470,22 +471,22 @@
     "html": "visual.html"
    },
    "timings_s": {
-    "images": 0.019,
-    "layout": 0.005,
-    "render": 0.689,
-    "audit": 0.343,
-    "autofix": 1.038,
-    "png": 4.982,
-    "audit_contextual": 38.327,
-    "export_pdf": 0.001,
-    "export_html": 0.664
+    "images": 0.015,
+    "layout": 0.03,
+    "render": 3.084,
+    "audit": 1.221,
+    "autofix": 4.226,
+    "png": 8.171,
+    "audit_contextual": 50.286,
+    "export_pdf": 0.006,
+    "export_html": 2.136
    }
   }
  ],
  "timings_s": {
-  "parse": 0.398,
+  "parse": 4.388,
   "outline": 0.0,
-  "total": 208.852
+  "total": 250.806
  },
  "warnings": [],
  "not_implemented": []

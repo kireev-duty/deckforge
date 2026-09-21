@@ -50,34 +50,6 @@
    }
   },
   {
-   "check_id": "C06_images_relevant",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 2,
-   "element_id": null,
-   "box": null,
-   "message": "Логотипы в шапке (включая «Городскую цифровую трансформацию») не относятся к теме конкретного слайда о статистике пилота.",
-   "autofix": null,
-   "evidence": {
-    "question": "Картинки и иконки относятся к теме слайда",
-    "sources": "m:pilot"
-   }
-  },
-  {
-   "check_id": "C08_no_typos",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 2,
-   "element_id": null,
-   "box": null,
-   "message": "Текст в третьей карточке обрывается на полуслове/многоточии, что является дефектом оформления.",
-   "autofix": null,
-   "evidence": {
-    "question": "Текст без опечаток",
-    "sources": "m:pilot"
-   }
-  },
-  {
    "check_id": "D05_fill",
    "kind": "deterministic",
    "severity": "warning",
@@ -157,20 +129,6 @@
    }
   },
   {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 3,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок является констатацией факта (называет тему), а не содержит вывода или выгоды для аудитории.",
-   "autofix": null,
-   "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "doc:product:как-работает-сервис-пять-шагов"
-   }
-  },
-  {
    "check_id": "D05_fill",
    "kind": "deterministic",
    "severity": "warning",
@@ -210,7 +168,7 @@
    "slide_idx": 5,
    "element_id": null,
    "box": null,
-   "message": "Заголовок называет тему («Время на согласования»), а не содержит вывод (например, «Время на согласования упало вдвое»).",
+   "message": "Заголовок «Время на согласования в…» является тематическим, а не выводным (не содержит глагола или оценки изменения).",
    "autofix": null,
    "evidence": {
     "question": "Заголовок содержит вывод, а не просто называет тему",
@@ -354,7 +312,7 @@
    "slide_idx": 8,
    "element_id": null,
    "box": null,
-   "message": "Заголовок называет тему, а не содержит вывод.",
+   "message": "Заголовок называет тему (риски и закрытие), а не содержит вывод (например, «Риски закрыты планом волнового запуска»).",
    "autofix": null,
    "evidence": {
     "question": "Заголовок содержит вывод, а не просто называет тему",
@@ -433,5 +391,5 @@
   "C10_table_legend_relevant",
   "C11_flow"
  ],
- "duration_s": 85.439
+ "duration_s": 37.958
 }

@@ -623,76 +623,6 @@
      }
     },
     {
-     "slot_id": "2349",
-     "kind": "number",
-     "box": {
-      "x": 3776371,
-      "y": 2991622,
-      "w": 1423651,
-      "h": 417135
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "118",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "2350",
-     "kind": "number",
-     "box": {
-      "x": 6795780,
-      "y": 2980839,
-      "w": 1423651,
-      "h": 417135
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "4",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
      "slot_id": "2342",
      "kind": "label",
      "box": {
@@ -728,6 +658,41 @@
      }
     },
     {
+     "slot_id": "2349",
+     "kind": "number",
+     "box": {
+      "x": 3776371,
+      "y": 2991622,
+      "w": 1423651,
+      "h": 417135
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "118",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000"
+     }
+    },
+    {
      "slot_id": "2344",
      "kind": "label",
      "box": {
@@ -741,6 +706,41 @@
        "runs": [
         {
          "text": "участников",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "2350",
+     "kind": "number",
+     "box": {
+      "x": 6795780,
+      "y": 2980839,
+      "w": 1423651,
+      "h": 417135
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "4",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1758,42 +1758,6 @@
      }
     },
     {
-     "slot_id": "857",
-     "kind": "label",
-     "box": {
-      "x": 438148,
-      "y": 1590803,
-      "w": 3022584,
-      "h": 165079
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "«За месяц мы впервые увидели",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000",
-      "size_pt": 8.4
-     }
-    },
-    {
      "slot_id": "858",
      "kind": "body",
      "box": {
@@ -1806,7 +1770,7 @@
       {
        "runs": [
         {
-         "text": "и перестали спорить об этом на ретро» — Руководитель разработки, команда платёжного шлюза",
+         "text": "«За месяц мы впервые увидели, где реально теряется время, — и перестали спорить об этом на ретро» — Руководитель разработки, команда платёжного шлюза",
          "bold": false,
          "italic": false,
          "color": null,

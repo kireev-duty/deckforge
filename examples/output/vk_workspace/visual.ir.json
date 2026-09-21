@@ -970,41 +970,6 @@
      }
     },
     {
-     "slot_id": "650",
-     "kind": "label",
-     "box": {
-      "x": 429253,
-      "y": 1615786,
-      "w": 3841965,
-      "h": 418061
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Приватность",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF,00AEE8",
-      "font": "Play",
-      "text_color": "FFFFFF"
-     }
-    },
-    {
      "slot_id": "657",
      "kind": "body",
      "box": {
@@ -1017,7 +982,7 @@
       {
        "runs": [
         {
-         "text": "Сервис видит только метаданные",
+         "text": "Приватность — Сервис видит только метаданные",
          "bold": false,
          "italic": false,
          "color": null,

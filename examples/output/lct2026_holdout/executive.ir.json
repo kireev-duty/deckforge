@@ -419,6 +419,41 @@
      }
     },
     {
+     "slot_id": "2",
+     "kind": "label",
+     "box": {
+      "x": 780565,
+      "y": 2493074,
+      "w": 2965634,
+      "h": 423628
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "команд в пилоте",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
      "slot_id": "16",
      "kind": "number",
      "box": {
@@ -455,6 +490,41 @@
      }
     },
     {
+     "slot_id": "4",
+     "kind": "label",
+     "box": {
+      "x": 4623178,
+      "y": 2493074,
+      "w": 3034896,
+      "h": 403756
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "участников",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "FF0053",
+      "palette": "FF0053,520977",
+      "font": "Montserrat",
+      "text_color": "000000"
+     }
+    },
+    {
      "slot_id": "17",
      "kind": "number",
      "box": {
@@ -488,76 +558,6 @@
       "font": "Montserrat",
       "text_color": "000000",
       "size_pt": 35.4
-     }
-    },
-    {
-     "slot_id": "2",
-     "kind": "label",
-     "box": {
-      "x": 780565,
-      "y": 2493074,
-      "w": 2965634,
-      "h": 423628
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "команд в пилоте",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "FF0053",
-      "palette": "FF0053,520977",
-      "font": "Montserrat",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "4",
-     "kind": "label",
-     "box": {
-      "x": 4623178,
-      "y": 2493074,
-      "w": 3034896,
-      "h": 403756
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "участников",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "FF0053",
-      "palette": "FF0053,520977",
-      "font": "Montserrat",
-      "text_color": "000000"
      }
     },
     {

@@ -48,7 +48,7 @@
    "slide_idx": 1,
    "element_id": null,
    "box": null,
-   "message": "В первом пункте текст обрывается на «До 9,5 часов в…», что выглядит как служебный мусор или ошибка рендеринга.",
+   "message": "В первом блоке текст обрывается на «До 9,5 часов в…», что выглядит как служебный мусор или ошибка рендеринга.",
    "autofix": null,
    "evidence": {
     "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
@@ -62,7 +62,7 @@
    "slide_idx": 1,
    "element_id": null,
    "box": null,
-   "message": "Текст в первом пункте обрывается на «До 9,5 часов в…», что является ошибкой оформления.",
+   "message": "Текст в первом блоке обрывается на многоточии, что является ошибкой оформления.",
    "autofix": null,
    "evidence": {
     "question": "Текст без опечаток",
@@ -208,7 +208,7 @@
    "slide_idx": 2,
    "element_id": null,
    "box": null,
-   "message": "В подписи третьего графика присутствует многоточие, что выглядит как обрезанный текст или служебный мусор.",
+   "message": "В подписи третьего графика текст обрезан многоточием («май–август…»), что выглядит как служебный мусор или ошибка верстки.",
    "autofix": null,
    "evidence": {
     "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
@@ -292,20 +292,6 @@
     "background": "FAFCFF",
     "need": 4.5,
     "template_color": 1
-   }
-  },
-  {
-   "check_id": "C08_no_typos",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 3,
-   "element_id": null,
-   "box": null,
-   "message": "В описаниях шагов 1 и 3 текст обрывается многоточием, что выглядит как опечатка или незавершенность.",
-   "autofix": null,
-   "evidence": {
-    "question": "Текст без опечаток",
-    "sources": "doc:product:как-работает-сервис-пять-шагов"
    }
   },
   {
@@ -512,6 +498,20 @@
    }
   },
   {
+   "check_id": "C03_one_message",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 4,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд содержит четыре отдельных тезиса, которые нельзя логично объединить в одно предложение без потери смысла.",
+   "autofix": null,
+   "evidence": {
+    "question": "Слайд пересказывается одним предложением",
+    "sources": "doc:product:что-получает-команда-и-руководитель"
+   }
+  },
+  {
    "check_id": "T06_contrast",
    "kind": "deterministic",
    "severity": "warning",
@@ -699,13 +699,27 @@
    }
   },
   {
+   "check_id": "C02_content_matches_title",
+   "kind": "contextual",
+   "severity": "error",
+   "slide_idx": 8,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд содержит метрику о сроках ответа (0,6 дня), которая не отражена в заголовке.",
+   "autofix": null,
+   "evidence": {
+    "question": "Содержимое слайда соответствует заголовку",
+    "sources": "m:score,m:response_days"
+   }
+  },
+  {
    "check_id": "C07_no_garbage",
    "kind": "contextual",
    "severity": "error",
    "slide_idx": 8,
    "element_id": null,
    "box": null,
-   "message": "В подписи третьей диаграммы присутствует многоточие («дня: средний срок…»), что выглядит как служебный мусор или незавершенный текст.",
+   "message": "В подписи третьей диаграммы есть многоточие, что выглядит как обрезанный текст или заглушка.",
    "autofix": null,
    "evidence": {
     "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
@@ -827,27 +841,13 @@
    }
   },
   {
-   "check_id": "C07_no_garbage",
-   "kind": "contextual",
-   "severity": "error",
-   "slide_idx": 11,
-   "element_id": null,
-   "box": null,
-   "message": "На слайде присутствует визуальный элемент-заглушка (пустой квадрат).",
-   "autofix": null,
-   "evidence": {
-    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
-    "sources": "doc:product:контакты"
-   }
-  },
-  {
    "check_id": "C06_images_relevant",
    "kind": "contextual",
    "severity": "warning",
    "slide_idx": 11,
    "element_id": null,
    "box": null,
-   "message": "Изображение представляет собой пустую заглушку, не относящуюся к теме.",
+   "message": "Иконка курсора и пустой блок не относятся к теме слайда.",
    "autofix": null,
    "evidence": {
     "question": "Картинки и иконки относятся к теме слайда",
@@ -892,5 +892,5 @@
   "C10_table_legend_relevant",
   "C11_flow"
  ],
- "duration_s": 46.224
+ "duration_s": 35.075
 }

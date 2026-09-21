@@ -1,5 +1,5 @@
 {
- "created": "2026-09-18T13:11:33+00:00",
+ "created": "2026-09-18T16:17:06+00:00",
  "template": {
   "id": "6576a887482e",
   "path": "data/templates/Шаблон презентации VK Education.pptx",
@@ -25,44 +25,35 @@
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 7.424087800001871,
-   "prompt_tokens": 2715,
-   "completion_tokens": 482,
+   "duration_s": 11.789231299997482,
+   "prompt_tokens": 2796,
+   "completion_tokens": 420,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 7.78636109999934,
-   "prompt_tokens": 2734,
-   "completion_tokens": 430,
+   "duration_s": 5.153234099998372,
+   "prompt_tokens": 2740,
+   "completion_tokens": 227,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 7.266591600000538,
-   "prompt_tokens": 2738,
-   "completion_tokens": 515,
+   "duration_s": 23.181895200003055,
+   "prompt_tokens": 2762,
+   "completion_tokens": 443,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 7.550318400000833,
+   "duration_s": 6.363573499998893,
    "prompt_tokens": 2757,
-   "completion_tokens": 445,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 18.017145099998743,
-   "prompt_tokens": 2828,
    "completion_tokens": 433,
    "ok": true,
    "error": null
@@ -70,45 +61,54 @@
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 7.6159900999991805,
+   "duration_s": 29.787575000002107,
+   "prompt_tokens": 2781,
+   "completion_tokens": 406,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 7.809402999999293,
    "prompt_tokens": 2784,
-   "completion_tokens": 465,
+   "completion_tokens": 454,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 8.043990400001348,
+   "duration_s": 8.088046800003212,
    "prompt_tokens": 2764,
-   "completion_tokens": 508,
+   "completion_tokens": 505,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 14.82041549999849,
-   "prompt_tokens": 2718,
-   "completion_tokens": 370,
+   "duration_s": 34.32174859999941,
+   "prompt_tokens": 2734,
+   "completion_tokens": 357,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 44.69297700000243,
-   "prompt_tokens": 2796,
-   "completion_tokens": 449,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 42.58697910000046,
+   "duration_s": 5.795003999999608,
    "prompt_tokens": 2767,
-   "completion_tokens": 436,
+   "completion_tokens": 384,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 6.561316599996644,
+   "prompt_tokens": 2671,
+   "completion_tokens": 379,
    "ok": true,
    "error": null
   }
@@ -274,10 +274,11 @@
  },
  "audit": {
   "errors": 0,
-  "warnings": 13,
+  "warnings": 14,
   "info": 1,
-  "contextual": 0,
+  "contextual": 1,
   "by_check": {
+   "C03_one_message": 1,
    "D02_bullet_words": 1,
    "D05_fill": 4,
    "L04_text_clipped": 2,
@@ -288,13 +289,14 @@
   "slides_with_issues": [
    1,
    2,
+   4,
    5,
    6,
    7,
    8
   ],
   "checks_run": 35,
-  "duration_s": 60.975,
+  "duration_s": 40.314,
   "path": "executive.audit.json",
   "kind": "deterministic+contextual",
   "autofix": {
@@ -354,15 +356,15 @@
   "html": "executive.html"
  },
  "timings_s": {
-  "parse": 0.398,
+  "parse": 4.388,
   "outline": 0.0,
-  "layout": 0.005,
-  "render": 0.733,
-  "audit": 0.361,
-  "autofix": 0.001,
-  "png": 4.746,
-  "audit_contextual": 60.617,
-  "export_pdf": 0.003,
-  "export_html": 0.698
+  "layout": 0.057,
+  "render": 6.807,
+  "audit": 2.551,
+  "autofix": 0.008,
+  "png": 23.144,
+  "audit_contextual": 37.805,
+  "export_pdf": 0.011,
+  "export_html": 2.742
  }
 }

@@ -501,76 +501,6 @@
      }
     },
     {
-     "slot_id": "2349",
-     "kind": "number",
-     "box": {
-      "x": 3776371,
-      "y": 2991622,
-      "w": 1423651,
-      "h": 417135
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "118",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "2350",
-     "kind": "number",
-     "box": {
-      "x": 6795780,
-      "y": 2980839,
-      "w": 1423651,
-      "h": 417135
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "4",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
      "slot_id": "2342",
      "kind": "label",
      "box": {
@@ -606,6 +536,41 @@
      }
     },
     {
+     "slot_id": "2349",
+     "kind": "number",
+     "box": {
+      "x": 3776371,
+      "y": 2991622,
+      "w": 1423651,
+      "h": 417135
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "118",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000"
+     }
+    },
+    {
      "slot_id": "2344",
      "kind": "label",
      "box": {
@@ -619,6 +584,41 @@
        "runs": [
         {
          "text": "участников",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "2350",
+     "kind": "number",
+     "box": {
+      "x": 6795780,
+      "y": 2980839,
+      "w": 1423651,
+      "h": 417135
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "4",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1595,58 +1595,23 @@
   },
   {
    "idx": 9,
-   "exemplar_id": "slide39",
-   "archetype": "image_text",
+   "exemplar_id": "slide3",
+   "archetype": "section",
    "elements": [
     {
-     "slot_id": "2153",
+     "slot_id": "417",
      "kind": "title",
      "box": {
-      "x": 177970,
-      "y": 282949,
-      "w": 6792985,
-      "h": 724203
+      "x": 210243,
+      "y": 878488,
+      "w": 4288279,
+      "h": 1496698
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "Команды перестали спорить о потере времени на ретро",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "2155",
-     "kind": "body",
-     "box": {
-      "x": 285749,
-      "y": 1543838,
-      "w": 1614880,
-      "h": 202471
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "«За месяц мы впервые увидели",
+         "text": "«За месяц мы впервые увидели, где реально теряется время, — и перестали спорить об этом на ретро»",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1666,23 +1631,23 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 7.3
+      "size_pt": 20.3
      }
     },
     {
-     "slot_id": "2154",
-     "kind": "label",
+     "slot_id": "418",
+     "kind": "subtitle",
      "box": {
-      "x": 285749,
-      "y": 1307494,
-      "w": 1614880,
-      "h": 149630
+      "x": 210685,
+      "y": 2940812,
+      "w": 4287837,
+      "h": 285750
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "Руководитель…",
+         "text": "Руководитель разработки, команда платёжного шлюза",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1702,7 +1667,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 9.8
+      "size_pt": 12.0
      }
     }
    ],
@@ -1829,76 +1794,6 @@
      }
     },
     {
-     "slot_id": "2349",
-     "kind": "number",
-     "box": {
-      "x": 3776371,
-      "y": 2991622,
-      "w": 1423651,
-      "h": 417135
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "3,4",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "2350",
-     "kind": "number",
-     "box": {
-      "x": 6795780,
-      "y": 2980839,
-      "w": 1423651,
-      "h": 417135
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "0,6",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
      "slot_id": "2342",
      "kind": "label",
      "box": {
@@ -1935,6 +1830,41 @@
      }
     },
     {
+     "slot_id": "2349",
+     "kind": "number",
+     "box": {
+      "x": 3776371,
+      "y": 2991622,
+      "w": 1423651,
+      "h": 417135
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "3,4",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000"
+     }
+    },
+    {
      "slot_id": "2344",
      "kind": "label",
      "box": {
@@ -1968,6 +1898,41 @@
       "font": "Play",
       "text_color": "000000",
       "size_pt": 9.8
+     }
+    },
+    {
+     "slot_id": "2350",
+     "kind": "number",
+     "box": {
+      "x": 6795780,
+      "y": 2980839,
+      "w": 1423651,
+      "h": 417135
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "0,6",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000"
      }
     },
     {

@@ -1,5 +1,5 @@
 {
- "created": "2026-09-18T08:07:35+00:00",
+ "created": "2026-09-18T16:15:41+00:00",
  "config": {
   "template": "data/holdout/ЛЦТ2026 Шаблон презентации.pptx",
   "content_pack": "examples/content_pack",
@@ -75,14 +75,12 @@
    },
    "audit": {
     "errors": 1,
-    "warnings": 21,
+    "warnings": 18,
     "info": 1,
-    "contextual": 7,
+    "contextual": 4,
     "by_check": {
-     "C01_title_insight": 4,
-     "C06_images_relevant": 1,
+     "C01_title_insight": 3,
      "C07_no_garbage": 1,
-     "C08_no_typos": 1,
      "D02_bullet_words": 1,
      "D05_fill": 4,
      "L03_text_overflow": 2,
@@ -94,7 +92,6 @@
     "slides_with_issues": [
      1,
      2,
-     3,
      4,
      5,
      6,
@@ -102,7 +99,7 @@
      8
     ],
     "checks_run": 35,
-    "duration_s": 85.439,
+    "duration_s": 37.958,
     "path": "executive.audit.json",
     "kind": "deterministic+contextual",
     "autofix": {
@@ -235,14 +232,14 @@
     "html": "executive.html"
    },
    "timings_s": {
-    "layout": 0.038,
-    "render": 6.807,
-    "audit": 1.954,
-    "autofix": 7.832,
-    "png": 89.069,
-    "audit_contextual": 83.863,
-    "export_pdf": 0.012,
-    "export_html": 3.018
+    "layout": 0.025,
+    "render": 1.627,
+    "audit": 0.716,
+    "autofix": 2.818,
+    "png": 76.82,
+    "audit_contextual": 37.286,
+    "export_pdf": 0.006,
+    "export_html": 7.259
    }
   },
   {
@@ -290,14 +287,16 @@
     "skipped": 0
    },
    "audit": {
-    "errors": 4,
-    "warnings": 24,
+    "errors": 3,
+    "warnings": 27,
     "info": 1,
-    "contextual": 9,
+    "contextual": 11,
     "by_check": {
      "C01_title_insight": 5,
-     "C02_content_matches_title": 1,
+     "C03_one_message": 1,
+     "C06_images_relevant": 1,
      "C07_no_garbage": 3,
+     "C08_no_typos": 1,
      "D02_bullet_words": 1,
      "D05_fill": 6,
      "L02_overlap": 3,
@@ -307,6 +306,7 @@
      "T06_contrast": 7
     },
     "slides_with_issues": [
+     2,
      3,
      4,
      5,
@@ -318,7 +318,7 @@
      11
     ],
     "checks_run": 35,
-    "duration_s": 53.052,
+    "duration_s": 45.003,
     "path": "narrative.audit.json",
     "kind": "deterministic+contextual",
     "autofix": {
@@ -421,14 +421,14 @@
     "html": "narrative.html"
    },
    "timings_s": {
-    "layout": 0.009,
-    "render": 0.963,
-    "audit": 0.467,
-    "autofix": 1.469,
-    "png": 72.145,
-    "audit_contextual": 52.609,
-    "export_pdf": 0.005,
-    "export_html": 3.956
+    "layout": 0.026,
+    "render": 2.792,
+    "audit": 0.941,
+    "autofix": 3.804,
+    "png": 93.709,
+    "audit_contextual": 44.025,
+    "export_pdf": 0.007,
+    "export_html": 6.82
    }
   },
   {
@@ -503,7 +503,7 @@
      10
     ],
     "checks_run": 35,
-    "duration_s": 40.296,
+    "duration_s": 67.455,
     "path": "visual.audit.json",
     "kind": "deterministic+contextual",
     "autofix": {
@@ -661,22 +661,22 @@
     "html": "visual.html"
    },
    "timings_s": {
-    "images": 0.011,
-    "layout": 0.014,
-    "render": 1.652,
-    "audit": 0.648,
-    "autofix": 2.446,
-    "png": 48.076,
-    "audit_contextual": 39.721,
-    "export_pdf": 0.003,
-    "export_html": 5.113
+    "images": 0.012,
+    "layout": 0.03,
+    "render": 3.123,
+    "audit": 1.185,
+    "autofix": 4.143,
+    "png": 83.428,
+    "audit_contextual": 66.695,
+    "export_pdf": 0.006,
+    "export_html": 8.733
    }
   }
  ],
  "timings_s": {
-  "parse": 8.42,
+  "parse": 0.989,
   "outline": 0.0,
-  "total": 431.879
+  "total": 447.333
  },
  "warnings": [],
  "not_implemented": []

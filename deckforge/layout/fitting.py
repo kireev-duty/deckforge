@@ -1,9 +1,4 @@
-"""Детерминированная подгонка текста под лимиты слотов образца (без LLM).
-
-Порядок: сначала отбрасываем «хвост» по смысловым разделителям (тире, двоеточие, точка с запятой,
-запятая) — так теряется уточнение, а не мысль; затем обрезаем по границе слова с многоточием;
-если и после этого не влезает — уменьшаем кегль в пределах 70 % от кегля образца.
-"""
+"""Детерминированная подгонка текста под лимиты слотов: хвост по разделителям → по словам → кегль."""
 
 from __future__ import annotations
 
@@ -11,24 +6,23 @@ import re
 
 from deckforge.core.ir import Slot, SlotKind
 
-# разделители в порядке «сначала самые безопасные для смысла»
+# от самых безопасных для смысла к менее
 TAIL_SEPARATORS = (" — ", " – ", ": ", "; ", ", ", " (")
 LEAD_SEPARATORS = (" — ", " – ", ": ")
 MIN_SIZE_SCALE = 0.7
-SIZE_STEPS = (0.9, 0.8, 0.7)  # сетка уменьшения кегля: кегли «между» ничего не дают, строк от них не прибавляется
-MIN_HEAD_SHARE = 0.3  # голова до разделителя короче этой доли лимита — не «мысль», режем по словам
-NUMBER_MIN_SCALE = 0.4  # крупная цифра KPI: можно ужать сильнее, она всё равно остаётся крупной
-UNIT_SCALE = 0.35  # единица измерения рядом с крупной цифрой («1,8 дня») — мелким кеглем
-# ширина знаков крупной цифры в долях «средней буквы», на которую рассчитан max_chars (жирные display-гарнитуры)
+SIZE_STEPS = (0.9, 0.8, 0.7)
+MIN_HEAD_SHARE = 0.3  # голова до разделителя короче — режем по словам
+NUMBER_MIN_SCALE = 0.4  # крупную цифру KPI можно ужать сильнее
+UNIT_SCALE = 0.35  # единица измерения рядом с крупной цифрой
+# ширина знаков крупной цифры в долях «средней буквы», на которую рассчитан max_chars
 GLYPH_WIDTH = {"%": 1.9, "‰": 2.2, "×": 1.4, ",": 0.6, ".": 0.6, " ": 0.5}
 DIGIT_WIDTH = 1.3
-TITLE_LINES = 2  # заголовок может занять две строки, даже если бокс образца рассчитан на одну
+TITLE_LINES = 2  # заголовку можно две строки, даже если бокс образца на одну
 ELLIPSIS = "…"
-WORD_TOLERANCE = 3  # превышение лимита слов, при котором пункт не режем (обрезка «…» хуже лишних слов)
-MIN_WORDS_TO_CUT = 2  # тексты не длиннее стольких слов по словам не режем (нечего терять — только калечить)
+WORD_TOLERANCE = 3  # на столько слов сверх лимита пункт не режем
+MIN_WORDS_TO_CUT = 2  # короче — по словам не режем
 _WS = re.compile(r"\s+")
-# символы, недопустимые в XML 1.0 (NUL, управляющие кроме \t\n\r, суррогаты, U+FFFE/FFFF): lxml на них бросает
-# ValueError при записи, а модель и CSV их иногда приносят — вычищаем один раз здесь, через normalize идёт весь текст IR
+# символы, недопустимые в XML 1.0 — lxml бросает на них ValueError при записи
 _XML_BAD = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f\ud800-\udfff\ufffe\uffff]")
 
 
@@ -37,7 +31,7 @@ def normalize(text: str) -> str:
 
 
 def xml_safe(text: str) -> str:
-    """Только чистка недопустимых для XML символов, без схлопывания пробелов (заметки, ячейки таблиц)."""
+    """Чистка недопустимых для XML символов без схлопывания пробелов."""
     return _XML_BAD.sub("", text)
 
 
@@ -50,8 +44,7 @@ def shorten(text: str, max_chars: int | None) -> str:
 
 
 def cut_tail(text: str, max_chars: int) -> str | None:
-    """Срезать хвост по смысловому разделителю (тире, двоеточие, запятая…) так, чтобы уложиться в max_chars.
-    None — ни один разделитель не подходит (голова короче MIN_HEAD_SHARE лимита или всё равно не влезает)."""
+    """Срезать хвост по смысловому разделителю, чтобы уложиться в max_chars; None — не получается."""
     for sep in TAIL_SEPARATORS:
         idx = text.find(sep)
         while idx > 0:
@@ -75,18 +68,15 @@ def shorten_words(text: str, max_words: int | None) -> str:
                 return head
             idx = text.find(sep, idx + 1)
     words = text.split(" ")
-    if len(words) <= max_words + WORD_TOLERANCE:  # чуть длиннее лимита — лучше целиком, чем «…» посреди мысли
+    if len(words) <= max_words + WORD_TOLERANCE:
         return text
     return " ".join(words[:max_words]).rstrip(" ,;:—–(") + ELLIPSIS
 
 
 def fit_size(text: str, slot: Slot, min_scale: float = MIN_SIZE_SCALE) -> float | None:
-    """Кегль, при котором text влезает в слот, если базового не хватает; None — менять не нужно.
+    """Кегль, при котором text влезает в слот; None — базового хватает.
 
-    Ширина строки линейна по 1/size, а число строк — целое: у однострочного бокса при кегле 70 %
-    остаётся одна строка (1,4 строки не бывает), поэтому подбираем масштаб по сетке SIZE_STEPS,
-    а не по формуле sqrt(cap / len). Ниже MIN_SIZE_SCALE не опускаемся — дальше текст надо резать.
-    """
+    Число строк целое, поэтому масштаб подбирается по сетке SIZE_STEPS, а не по формуле."""
     cap = slot_capacity(slot)
     if not cap or not slot.size_pt or len(text) <= cap:
         return None
@@ -99,19 +89,18 @@ def fit_size(text: str, slot: Slot, min_scale: float = MIN_SIZE_SCALE) -> float 
 
 
 def chars_at_scale(slot: Slot, scale: float = MIN_SIZE_SCALE) -> int | None:
-    """Сколько символов вместит слот при уменьшении кегля до scale: символов в строке — больше в 1/scale раз,
-    строк — целое число (высота бокса / высота строки), заголовку — плюс разрешённые сверх бокса строки."""
+    """Сколько символов вместит слот при уменьшении кегля до scale (строк — целое число)."""
     cap = slot_capacity(slot)
     if not cap:
         return None
     lines = max(1, slot.max_lines or 1)
-    extra = (cap - (slot.max_chars or cap)) / max(1, slot.max_chars or 1)  # строки сверх бокса (TITLE_LINES)
+    extra = (cap - (slot.max_chars or cap)) / max(1, slot.max_chars or 1)
     cpl = (slot.max_chars or cap) / lines
     return int(cpl / scale * (int(lines / scale) + extra * lines))
 
 
 def slot_capacity(slot: Slot) -> int | None:
-    """Вместимость при базовом кегле; заголовку разрешаем TITLE_LINES строк, если под ним нет декора (hard_lines)."""
+    """Вместимость при базовом кегле; заголовку — TITLE_LINES строк, если под ним нет декора."""
     if not slot.max_chars:
         return None
     if slot.kind == SlotKind.TITLE and not slot.hard_lines and (slot.max_lines or 1) < TITLE_LINES:
@@ -131,11 +120,10 @@ def split_number_unit(text: str) -> tuple[str, str]:
 
 
 def fit_number(text: str, slot: Slot) -> tuple[str, str, float | None]:
-    """Крупная цифра — одна строка: (число, единица, кегль|None). Единица идёт мелким кеглем;
-    если и так не влезает — единица отбрасывается. Ширина линейна по кеглю (строка одна)."""
+    """Крупная цифра одной строкой: (число, единица, кегль|None); единица мелко, не влезает — отбрасывается."""
     num, unit = split_number_unit(text)
     cpl = (slot.max_chars or 0) / max(1, slot.max_lines or 1)
-    if not cpl or not slot.size_pt or not num:  # пустое значение KPI («», «   ») — масштабировать нечего
+    if not cpl or not slot.size_pt or not num:
         return num, unit, None
     for u in (unit, ""):
         width = sum(GLYPH_WIDTH.get(ch, DIGIT_WIDTH) for ch in num) + (UNIT_SCALE * (len(u) + 1) if u else 0)
@@ -146,9 +134,7 @@ def fit_number(text: str, slot: Slot) -> tuple[str, str, float | None]:
 
 
 def split_label_body(bullet: str) -> tuple[str, str]:
-    """«Лид — пояснение» / «Лид: пояснение» → (лид, пояснение); иначе (буллет, '').
-    Пункт-цитата в кавычках «…» не режется внутри кавычек: разделитель ищется после закрывающей »
-    («…, — и перестали…» — Автор → цитата, автор)."""
+    """«Лид — пояснение» → (лид, пояснение); иначе (буллет, ''). Внутри кавычек «…» не режем."""
     bullet = normalize(bullet)
     start = 0
     if bullet.startswith("«"):
@@ -168,11 +154,11 @@ def _n_words(text: str) -> int:
 
 
 def _cut_words(text: str, max_chars: int) -> str:
-    # одно-два слова («Октябрь», «0,6 дня») не режем: «Октяб…» хуже переноса или лёгкого выхода за слот
+    # одно-два слова не режем: обрубок хуже лёгкого выхода за слот
     if _n_words(text) <= MIN_WORDS_TO_CUT:
         return text
     cut = text[: max_chars - len(ELLIPSIS) + 1]
-    # лимит короче первого слова — оставляем хотя бы его целиком, а не «Подключе…»
+    # лимит короче первого слова — оставляем его целиком
     cut = cut.rsplit(" ", 1)[0] if " " in cut else text.split(" ", 1)[0]
     return cut.rstrip(" ,;:—–(") + ELLIPSIS
 

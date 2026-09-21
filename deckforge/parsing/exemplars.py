@@ -1,12 +1,8 @@
-"""Индекс слайдов-образцов шаблона: правила классификатора + (если есть) кэш ответов VLM.
+"""Индекс слайдов-образцов шаблона: правила классификатора + кэш ответов VLM.
 
-Слоты и архетипы правил считаются всегда заново — так правки `layout_classifier` действуют сразу.
-Из кэша берутся только ответы `template_tagger` по неоднозначным слайдам и накладываются на свежий
-профиль (`apply_vlm`). Два источника, первый подходящий выигрывает:
-- `out/archetypes/<stem>.json` — рабочий кэш (пишет tools/classify_layouts.py, полный снимок профилей);
-- `data/archetypes/<stem>.json` — в репо, только ответы VLM по шаблонам датасета и holdout
-  (`--publish` того же инструмента), чтобы чистый clone воспроизводил колоды из `examples/output`.
-Кэш привязан к sha1 файла шаблона: другой файл с тем же именем кэшем не пользуется.
+Слоты и архетипы правил считаются заново при каждой загрузке; из кэша берутся только ответы
+`template_tagger`. Источники: `out/archetypes/<stem>.json`, затем `data/archetypes/<stem>.json` (в репо).
+Кэш привязан к sha1 файла шаблона.
 """
 
 from __future__ import annotations
@@ -24,7 +20,7 @@ ARCHETYPES_BUNDLED = ROOT / "data" / "archetypes"
 
 
 def exemplars_from_json(data: list[dict]) -> list[Exemplar]:
-    """Обратное к layout_classifier.profiles_json (полный снимок, без пересчёта правил)."""
+    """Обратное к layout_classifier.profiles_json."""
     return [
         Exemplar(
             id=f"slide{d['index'] + 1}", source_index=d["index"], layout_name=d["layout"],
@@ -44,7 +40,7 @@ def template_sha1(pptx: Path) -> str:
 
 
 def find_vlm_cache(pptx: Path, cache_dir: Path | None = None) -> Path | None:
-    """Первый файл разметки, относящийся к этому шаблону: `cache_dir`, иначе out/archetypes → data/archetypes."""
+    """Первый файл разметки для этого шаблона: `cache_dir`, иначе out/archetypes → data/archetypes."""
     dirs = [cache_dir] if cache_dir is not None else [ARCHETYPES_CACHE, ARCHETYPES_BUNDLED]
     sha = None
     for d in dirs:
@@ -61,7 +57,7 @@ def find_vlm_cache(pptx: Path, cache_dir: Path | None = None) -> Path | None:
 
 
 def load_profiles(pptx: str | Path, cache_dir: Path | None = None) -> list[SlideProfile]:
-    """Профили правил с наложенными ответами VLM из кэша (если кэш есть и относится к этому файлу)."""
+    """Профили правил с наложенными ответами VLM из кэша, если он есть."""
     pptx = Path(pptx)
     profiles = classify_template(pptx)
     cache = find_vlm_cache(pptx, cache_dir)
@@ -86,8 +82,7 @@ def cache_payload(pptx: Path, profiles: list[SlideProfile]) -> dict:
 
 
 def vlm_payload(pptx: Path, profiles: list[SlideProfile]) -> dict:
-    """Что кладётся в data/archetypes (репо): только ответы VLM по слайдам + sha1 шаблона — без снимка
-    правил, который при загрузке всё равно не используется."""
+    """Что кладётся в data/archetypes: только ответы VLM по слайдам + sha1 шаблона."""
     return {
         "template_sha1": template_sha1(pptx),
         "slides": [{"index": p.index, "vlm": p.vlm_raw} for p in profiles if p.vlm_raw],

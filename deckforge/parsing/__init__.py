@@ -6,7 +6,7 @@ __all__ = ["SlideProfile", "TemplateTokens", "classify_template", "extract_token
 
 
 def __getattr__(name: str):
-    # ленивый импорт: иначе `python -m deckforge.parsing.layout_classifier` ругается на двойной импорт модуля
+    # ленивый импорт: иначе `python -m deckforge.parsing.layout_classifier` импортирует модуль дважды
     if name in ("SlideProfile", "classify_template"):
         from deckforge.parsing import layout_classifier
 

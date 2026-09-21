@@ -1,7 +1,4 @@
-"""pipeline: оркестрация parse → content → layout → render → audit → export, тайминги и manifest.json.
-
-Этапы (`parse_template`, `make_outline`, `build_deck`, `refine_deck`) — общие кирпичи для CLI, UI и API.
-"""
+"""pipeline: оркестрация parse → content → layout → render → audit → export."""
 
 from deckforge.pipeline.config import RunConfig, load_config
 from deckforge.pipeline.run import (

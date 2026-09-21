@@ -1,7 +1,6 @@
 """Цветовая математика без зависимостей: конвертации, контраст WCAG, ΔE, модификаторы OOXML.
 
-Все hex — 6 символов верхнего регистра без «#». Используется парсингом (роли цветов)
-и аудитом (контраст текста и фона), поэтому живёт в core.
+Все hex — 6 символов верхнего регистра без «#».
 """
 
 from __future__ import annotations
@@ -86,16 +85,13 @@ def rgb_to_lab(rgb: RGB) -> tuple[float, float, float]:
 
 
 def chroma(value: str) -> float:
-    """Хрома в Lab: sqrt(a² + b²). Серые ≈ 0, светлые оттенки (EBF3F9) ≈ 5, #0077FF ≈ 90.
-
-    В отличие от HSL-насыщенности не «взрывается» у почти белых и почти чёрных цветов.
-    """
+    """Хрома в Lab: sqrt(a² + b²); в отличие от HSL-насыщенности стабильна у почти белых и чёрных."""
     _, a, b = rgb_to_lab(hex_to_rgb(value))
     return (a * a + b * b) ** 0.5
 
 
 def delta_e(a: str, b: str) -> float:
-    """ΔE CIE76 — евклидово расстояние в Lab. < ~2 неразличимо, < ~6 «тот же цвет»."""
+    """ΔE CIE76 — евклидово расстояние в Lab."""
     la, lb = rgb_to_lab(hex_to_rgb(a)), rgb_to_lab(hex_to_rgb(b))
     return sum((p - q) ** 2 for p, q in zip(la, lb)) ** 0.5
 
@@ -104,11 +100,7 @@ def delta_e(a: str, b: str) -> float:
 
 
 def apply_color_mods(value: str, mods: dict[str, int]) -> str:
-    """Применить дочерние элементы a:srgbClr/a:schemeClr: lumMod, lumOff, tint, shade.
-
-    Значения — как в OOXML, в тысячных долях процента (100000 = 100 %).
-    alpha намеренно игнорируется (цвет остаётся тем же, меняется только прозрачность).
-    """
+    """Применить модификаторы a:srgbClr/a:schemeClr (lumMod, lumOff, tint, shade); alpha игнорируется."""
     rgb = hex_to_rgb(value)
     if "tint" in mods:  # к белому: c' = 255 - (255 - c) * tint
         k = mods["tint"] / 100000

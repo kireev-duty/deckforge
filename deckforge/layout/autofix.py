@@ -1,9 +1,4 @@
-"""Применение автофиксов к DeckIR (каталог — `core/autofix.FIXES`).
-
-Чистая функция над копией IR: находка аудита (slide_idx, element_id = slot_id, evidence) → правка элемента,
-затем колода рендерится заново и аудит повторяется. Фиксы уровня «replan» (разбить слайд, сменить образец)
-здесь не применяются — они попадают в `skipped` с причиной и остаются предложением для пользователя.
-"""
+"""Применение автофиксов из каталога `core/autofix.FIXES` к копии DeckIR; replan-фиксы только в `skipped`."""
 
 from __future__ import annotations
 
@@ -14,12 +9,12 @@ from deckforge.core.autofix import FIXES, is_fixable
 from deckforge.core.ir import Box, DeckIR, Element, Finding, SlideIR, Slot, SlotKind, TemplateDNA
 from deckforge.layout.fitting import MIN_SIZE_SCALE, NUMBER_MIN_SCALE, cut_tail, normalize, shorten, shorten_words
 
-MAX_BULLET_WORDS = 15  # норма D02 (docs/AUDIT.md)
+MAX_BULLET_WORDS = 15  # норма D02
 MAX_CHART_SERIES = 5  # норма D04
-SHRINK_SAFETY = 0.95  # запас к расчётному масштабу: метрики по прокси-шрифту, а не по Play/Montserrat
-SNAP_MAX_RATIO = 0.25  # snap_font_size: дальше ±25 % от текущего кегля — это уже не «привести к шкале», а сломать вёрстку
-CUT_TOL = 0.1  # обрезка по разделителю может оставить на 10 % больше расчётного — столько же допускает L03
-_CONTINUATION = re.compile(r"\s*\(\d+/\d+\)$")  # маркер продолжения от планировщика/builder
+SHRINK_SAFETY = 0.95  # запас: метрики считаются по прокси-шрифту
+SNAP_MAX_RATIO = 0.25  # дальше ±25 % от кегля — уже не «привести к шкале»
+CUT_TOL = 0.1  # допуск обрезки по разделителю, как у L03
+_CONTINUATION = re.compile(r"\s*\(\d+/\d+\)$")
 
 
 @dataclass
@@ -34,7 +29,7 @@ class FixResult:
 
 
 def apply_fixes(ir: DeckIR, findings: list[Finding], dna: TemplateDNA | None = None) -> FixResult:
-    """Применить фиксы к копии IR. Возвращает новый IR и журнал (в manifest и UI)."""
+    """Применить фиксы к копии IR. Возвращает новый IR и журнал."""
     out = FixResult(ir.model_copy(deep=True))
     slots = _slot_index(dna) if dna else {}
     drop_slides: set[int] = set()
@@ -75,11 +70,11 @@ def apply_fixes(ir: DeckIR, findings: list[Finding], dna: TemplateDNA | None = N
 
 # ──────────────────────────── фиксы ────────────────────────────
 
-Change = tuple[str, str] | None  # (было, стало) или None — нечего менять
+Change = tuple[str, str] | None  # (было, стало)
 
 
 def fix_shrink_font(slide: SlideIR, el: Element, slot: Slot | None, f: Finding) -> Change:
-    """L03: кегль × масштаб (по высоте — √(есть/нужно), по ширине — линейно); ниже порога — ещё и режем текст."""
+    """L03: уменьшить кегль; если упёрлись в порог — ещё и подрезать текст."""
     need, have = float(f.evidence.get("need_pt") or 0), float(f.evidence.get("have_pt") or 0)
     if need <= 0 or have <= 0 or need <= have:
         return None
@@ -93,24 +88,23 @@ def fix_shrink_font(slide: SlideIR, el: Element, slot: Slot | None, f: Finding) 
     min_size = (base or current) * floor
     new_size = max(round(current * scale, 1), round(min_size, 1))
     if new_size >= current:
-        return None  # кегль уже на пороге — дальше только replan (change_exemplar)
+        return None  # кегль уже на пороге — дальше только replan
     factor = new_size / current
     cut = ""
     if el.kind != SlotKind.NUMBER and current * scale < min_size:
-        # кегль упёрся в порог — остаток убираем текстом: влезает доля (нужный масштаб / достигнутый)², т.к. вместимость ~ 1/size²
+        # влезает доля (нужный масштаб / достигнутый)², т.к. вместимость ~ 1/size²
         keep = (scale / factor) ** 2 if f.evidence.get("mode") != "width" else scale / factor
         for p in el.paragraphs:
             for r in p.runs:
                 cap = max(3, int(len(r.text) * keep))
                 if len(r.text) <= cap:
                     continue
-                m = _CONTINUATION.search(r.text)  # «(1/2)» у продолжений сохраняем
+                m = _CONTINUATION.search(r.text)  # «(1/2)» сохраняем
                 core, suffix = (r.text[: m.start()], m.group(0)) if m else (r.text, "")
-                # сначала хвост по смысловому разделителю (с допуском L03 — 10 %)
+                # сначала хвост по смысловому разделителю
                 short = cut_tail(core, int(cap * (1 + CUT_TOL)))
                 if short is None and el.kind == SlotKind.TITLE:
-                    # заголовок по словам не режем («Команды теряют до трети времени на…» хуже переполнения);
-                    # снимаем последнее придаточное — метрики по прокси-шрифту, и часто этого хватает
+                    # заголовок по словам не режем — только последнее придаточное
                     short = cut_tail(core, len(core) - 1)
                 elif short is None:
                     short = shorten(core, cap)
@@ -122,7 +116,7 @@ def fix_shrink_font(slide: SlideIR, el: Element, slot: Slot | None, f: Finding) 
 
 
 def fix_snap_font_size(slide: SlideIR, el: Element, slot: Slot | None, f: Finding) -> Change:
-    """T02: кегль → ближайший из шкалы шаблона (в пределах ±25 %; крупные цифры KPI не трогаем)."""
+    """T02: кегль → ближайший из шкалы шаблона; крупные цифры KPI не трогаем."""
     nearest = float(f.evidence.get("nearest_pt") or 0)
     size = float(f.evidence.get("size_pt") or 0)
     if not nearest or not size or el.kind == SlotKind.NUMBER or abs(nearest - size) / size > SNAP_MAX_RATIO:
@@ -135,12 +129,12 @@ def fix_snap_font_size(slide: SlideIR, el: Element, slot: Slot | None, f: Findin
     if not hit and el.style_overrides.get("size_pt") and abs(float(el.style_overrides["size_pt"]) - size) < 0.6:
         el.style_overrides["size_pt"], hit = nearest, True
     if not hit and not el.style_overrides.get("size_pt") and not any(r.size_pt for p in el.paragraphs for r in p.runs):
-        el.style_overrides["size_pt"], hit = nearest, True  # кегль пришёл из образца — переопределяем целиком
+        el.style_overrides["size_pt"], hit = nearest, True
     return (f"{size:g} pt", f"{nearest:g} pt") if hit else None
 
 
 def fix_snap_color(slide: SlideIR, el: Element, slot: Slot | None, f: Finding) -> Change:
-    """T03: наш цвет → ближайший из палитры. T06 (контраст) сюда не попадает: у него нет `nearest`."""
+    """T03: наш цвет → ближайший из палитры."""
     color, nearest, where = (str(f.evidence.get(k) or "") for k in ("color", "nearest", "where"))
     if not color or not nearest:
         return None
@@ -164,7 +158,7 @@ def fix_snap_color(slide: SlideIR, el: Element, slot: Slot | None, f: Finding) -
 
 
 def fix_refill_slot(slide: SlideIR, el: Element, slot: Slot | None, f: Finding) -> Change:
-    """D02: пункт длиннее нормы → хвост по разделителям / по словам. I02: абзац-заглушка удаляется."""
+    """D02: длинный пункт режется по разделителям / словам. I02: абзац-заглушка удаляется."""
     if f.check_id.startswith("I02"):
         n = len(el.paragraphs)
         el.paragraphs = []
@@ -173,7 +167,7 @@ def fix_refill_slot(slide: SlideIR, el: Element, slot: Slot | None, f: Finding) 
     for p in el.paragraphs:
         text = normalize(" ".join(r.text for r in p.runs))
         if len(text.split()) <= MAX_BULLET_WORDS or text.startswith(("«", "\"", "“")):
-            continue  # цитата — чужие слова дословно, её не режем (длинная цитата остаётся warning)
+            continue  # цитату не режем
         short = shorten_words(text, MAX_BULLET_WORDS)
         p.runs = [p.runs[0].model_copy(update={"text": short})] if p.runs else []
         changed.append((len(text.split()), len(short.split())))
@@ -183,7 +177,7 @@ def fix_refill_slot(slide: SlideIR, el: Element, slot: Slot | None, f: Finding) 
 
 
 def fix_add_chart_labels(slide: SlideIR, el: Element, slot: Slot | None, f: Finding) -> Change:
-    """I05: подписи данных; подпись оси — из unit/y_label (рендер сам покажет, если есть)."""
+    """I05: подписи данных; подпись оси — из unit/y_label."""
     if el.chart is None:
         return None
     if el.style_overrides.get("data_labels"):
@@ -200,7 +194,7 @@ def fix_drop_shape(slide: SlideIR, el: Element, slot: Slot | None, f: Finding) -
 
 
 def fix_drop_minor_series(slide: SlideIR, el: Element, slot: Slot | None, f: Finding) -> Change:
-    """D04: оставить MAX_CHART_SERIES серий с наибольшей суммой значений (порядок сохраняется)."""
+    """D04: оставить MAX_CHART_SERIES серий с наибольшей суммой значений."""
     if el.chart is None or len(el.chart.series) <= MAX_CHART_SERIES:
         return None
     keep = sorted(el.chart.series, key=lambda k: -sum(abs(v) for v in el.chart.series[k]))[:MAX_CHART_SERIES]
@@ -232,7 +226,7 @@ def _slide(ir: DeckIR, idx: int) -> SlideIR | None:
 
 
 def _element(slide: SlideIR, element_id: str | None, box: Box | None = None) -> Element | None:
-    """По id слота; нативные chart/table получают в файле новый id — их ищем по совпадению бокса."""
+    """По id слота; нативные chart/table получают новый id в файле — ищем по боксу."""
     if element_id is not None:
         el = next((e for e in slide.elements if e.slot_id == element_id), None)
         if el is not None:
@@ -247,7 +241,7 @@ def _element(slide: SlideIR, element_id: str | None, box: Box | None = None) -> 
 
 
 def _current_size(el: Element, base: float | None) -> float | None:
-    """Действующий кегль элемента: override → кегль первого run'а → кегль слота образца."""
+    """Действующий кегль: override → первый run → слот образца."""
     if el.style_overrides.get("size_pt"):
         return float(el.style_overrides["size_pt"])
     for p in el.paragraphs:

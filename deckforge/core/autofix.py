@@ -1,8 +1,6 @@
-"""Каталог автофиксов: что означает имя в `Finding.autofix`, безопасно ли применять без вопросов, на каком уровне.
+"""Каталог автофиксов: имя из `Finding.autofix` → уровень, безопасность, описание.
 
-Живёт в core как часть контракта аудита: `audit/` выдаёт имена, `layout/autofix.apply_fixes` их применяет
-(правки DeckIR → повторный рендер), и ни один слой не импортирует соседа. UI (день 10) показывает пользователю
-`FIXES[name].description` и чекбокс по каждой находке; выбранные идут в `plan_fixes(report, selected)`.
+Живёт в core как контракт между `audit/` (выдаёт имена) и `layout/autofix` (применяет).
 """
 
 from __future__ import annotations
@@ -19,14 +17,14 @@ FixScope = Literal["ir", "replan", "none"]
 @dataclass(frozen=True)
 class FixSpec:
     name: str
-    scope: FixScope  # ir — правится DeckIR; replan — нужен пересбор состава/образца (в v1 только предлагается); none — нет
-    safe: bool  # применять автоматически при audit.autofix: true
-    description: str  # для UI и manifest
-    requires: tuple[str, ...] = ()  # поля evidence, без которых фикс неприменим (T06 тоже зовёт snap_color, но без nearest)
+    scope: FixScope  # ir — правится DeckIR; replan — только предлагается; none — нет
+    safe: bool  # применять автоматически
+    description: str
+    requires: tuple[str, ...] = ()  # поля evidence, без которых фикс неприменим
 
 
 FIXES: dict[str, FixSpec] = {
-    # ── правки DeckIR, безопасные (не меняют смысл и структуру) ──
+    # безопасные правки DeckIR
     "shrink_font_by_scale": FixSpec("shrink_font_by_scale", "ir", True,
                                     "Уменьшить кегль, чтобы текст влез в рамку (не ниже 70 % от образца; крупная цифра — 40 %)",
                                     requires=("need_pt", "have_pt")),
@@ -37,10 +35,10 @@ FIXES: dict[str, FixSpec] = {
     "refill_slot": FixSpec("refill_slot", "ir", True, "Укоротить пункт до нормы (хвост по разделителям), убрать текст-заглушку"),
     "add_chart_labels": FixSpec("add_chart_labels", "ir", True, "Включить подписи данных и подпись оси значений у диаграммы"),
     "drop_shape": FixSpec("drop_shape", "ir", True, "Удалить пустой плейсхолдер / фигуру"),
-    # ── правки DeckIR, по выбору пользователя (теряют контент) ──
+    # по выбору пользователя (теряют контент)
     "drop_slide": FixSpec("drop_slide", "ir", False, "Удалить слайд (пустой или дублирующий)"),
     "drop_minor_series": FixSpec("drop_minor_series", "ir", False, "Оставить на диаграмме пять самых крупных серий"),
-    # ── нужен пересбор outline/плана или геометрии образца — v1 только предлагает ──
+    # нужен пересбор — только предлагается
     "split_slide": FixSpec("split_slide", "replan", False, "Разбить слайд на два по пунктам"),
     "split_table": FixSpec("split_table", "replan", False, "Разбить таблицу на два слайда"),
     "change_exemplar": FixSpec("change_exemplar", "replan", False, "Подобрать другой образец под объём контента"),
@@ -60,8 +58,7 @@ def fix_spec(finding: Finding) -> FixSpec | None:
 
 
 def is_fixable(finding: Finding) -> bool:
-    """Есть фикс уровня IR, дефект наш (не унаследован от образца — дизайн шаблона не чиним), не info
-    (например, T02 «подгонка 70–100 %» — это осознанный fitting) и в evidence есть всё нужное фиксу."""
+    """Есть фикс уровня IR, дефект наш (не унаследован от образца), не info, и в evidence есть всё нужное."""
     spec = fix_spec(finding)
     if spec is None or spec.scope != "ir" or finding.evidence.get("in_exemplar"):
         return False
@@ -71,11 +68,7 @@ def is_fixable(finding: Finding) -> bool:
 
 
 def plan_fixes(report: AuditReport, mode: FixMode | Iterable[int] = "safe") -> list[Finding]:
-    """Какие находки идут в `apply_fixes`.
-
-    `mode="safe"` — только безопасные (режим `audit.autofix: true`); `"all"` — все уровня IR;
-    коллекция индексов находок в `report.findings` — выбор пользователя из UI.
-    """
+    """Какие находки идут в `apply_fixes`: "safe", "all" или индексы находок по выбору пользователя."""
     if mode == "safe":
         return [f for f in report.findings if is_fixable(f) and FIXES[f.autofix].safe]  # type: ignore[index]
     if mode == "all":
@@ -96,7 +89,7 @@ def fix_plan_rows(report: AuditReport) -> list[dict]:
         elif spec.scope != "ir":
             how = spec.scope
         elif not is_fixable(f):
-            how = "n/a"  # info-находка или нет данных для фикса
+            how = "n/a"
         else:
             how = "safe" if spec.safe else "ir"
         rows.append({"n": i, "slide_idx": f.slide_idx, "check_id": f.check_id, "severity": f.severity.value,

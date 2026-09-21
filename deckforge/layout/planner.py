@@ -1,14 +1,6 @@
-"""Применение стратегии к DeckOutline: outline → outline' (ещё без образцов и координат).
+"""Применение стратегии к DeckOutline: визуализация данных, плотность, разделы, объём.
 
-Стратегия меняет только четыре вещи, и в этом порядке:
-1. визуализация данных — во что превратить chart / table / kpis (data_visualization);
-2. плотность — разбить слайды, где буллетов больше лимита, укоротить буллеты (density);
-   сюда же — KPI-слайды, где цифр больше, чем крупных слотов в лучшем KPI-образце шаблона
-   (делятся, пока есть запас до target_slides.max; иначе их подхватят карточки);
-3. разделы — ставить ли слайды-разделители (sections);
-4. объём — довести число слайдов до target_slides: лишние разделители снимаются (самые короткие
-   разделы первыми), соседние текстовые слайды сливаются в карточки; при недоборе — разбиение.
-Контент при этом не выдумывается: все тексты и числа — из исходного outline.
+Контент не выдумывается — все тексты и числа из исходного outline.
 """
 
 from __future__ import annotations
@@ -24,14 +16,13 @@ from deckforge.layout.fitting import shorten_words
 
 log = logging.getLogger(__name__)
 
-# колонки-«дельты» не тянем в диаграмму: у них другая единица, чем у остальных
+# колонки-«дельты» в диаграмму не идут: у них другая единица
 _DELTA_HEADER = re.compile(r"измен|разниц|дельт|Δ|прирост|%", re.I)
 _NUM = re.compile(r"^[+\-−–]?\d+(?:[.,]\d+)?$")
-# слайды, которые при переборе объёма можно слить в карточки (карточки — чтобы слияние продолжалось
-# цепочкой; шаги, KPI и цитата становятся пунктами: форма теряется, слова и числа — нет)
+# что можно слить в карточки при переборе объёма
 _MERGEABLE = (Archetype.BULLETS, Archetype.TWO_COLUMN, Archetype.CARDS, Archetype.PROCESS, Archetype.KPI, Archetype.QUOTE)
-_MERGE_LAST = (Archetype.KPI, Archetype.QUOTE)  # сливаются, только когда текстовых пар не осталось
-STEP_NUMBERING = "{n}. {text}"  # шаг процесса как пункт списка (builder использует тот же формат)
+_MERGE_LAST = (Archetype.KPI, Archetype.QUOTE)  # только когда текстовых пар не осталось
+STEP_NUMBERING = "{n}. {text}"
 
 
 @dataclass
@@ -69,10 +60,10 @@ def plan(
 
 
 def sanitize_data(src: OutlineSlide, warnings: list[str]) -> OutlineSlide:
-    """Данные готового outline (мимо `repair_outline`: `--outline`, build_variants) — к форме, которую переживут
-    planner и нативные объекты: серии одной длины с категориями, только конечные числа, таблица с колонками и
-    ровными строками. Что не собрать — убирается с предупреждением, числа при этом не выдумываются.
-    Возвращает копию (или исходный слайд, если править нечего)."""
+    """Привести данные слайда к форме, которую переживут planner и нативные объекты.
+
+    Серии одной длины с категориями, только конечные числа, ровные строки таблицы; что не собрать —
+    убирается с предупреждением. Возвращает копию или исходный слайд, если править нечего."""
     s = src
     label = f"слайд {src.idx} «{src.title[:40]}»"
     if s.chart is not None:
@@ -143,8 +134,7 @@ def visualize(src: OutlineSlide, strategy: Strategy) -> OutlineSlide:
 
 
 def split_mixed_data(slides: list[OutlineSlide]) -> list[OutlineSlide]:
-    """KPI рядом с диаграммой/таблицей — отдельным KPI-слайдом следом: у образцов с chart/table-слотом
-    подписи лежат внутри области данных, и крупные цифры легли бы поверх нативного объекта (L02)."""
+    """KPI рядом с диаграммой/таблицей — отдельным KPI-слайдом следом, иначе цифры лягут поверх объекта."""
     out: list[OutlineSlide] = []
     for s in slides:
         if s.kpis and (s.chart or s.table):
@@ -185,7 +175,7 @@ def table_to_chart(table: TableSpec, title: str) -> ChartSpec | None:
             series[name] = [float(v) for v in vals]  # type: ignore[arg-type]
     if not series:
         return None
-    # title у диаграммы пустой: заголовок слайда уже есть, дубль над графиком — лишний текст
+    # заголовок слайда уже есть, над графиком не дублируем
     return ChartSpec(kind="column", title="", categories=[r[0] for r in table.rows], series=series)
 
 
@@ -234,7 +224,7 @@ def split_kpis(slides: list[OutlineSlide], strategy: Strategy, capacity: int) ->
                 idx=s.idx, archetype=Archetype.KPI, title=s.title, section=s.section, sources=list(s.sources),
             )
             part.kpis = s.kpis[i * size : (i + 1) * size]
-            part.title = f"{s.title} ({i + 1}/{n_parts})"  # иначе судья видит два слайда с одним заголовком (C11)
+            part.title = f"{s.title} ({i + 1}/{n_parts})"
             out.append(part)
     return out
 
@@ -273,15 +263,12 @@ def apply_density(slides: list[OutlineSlide], strategy: Strategy) -> list[Outlin
 
 
 def split_slide(s: OutlineSlide, max_items: int, items_attr: str = "bullets") -> list[OutlineSlide]:
-    """Разбить слайд с длинным списком на части; данные (kpi/chart/table/картинка) остаются в первой.
-
-    Шаги процесса (steps) по плотности не режем — это схема, её вместимость задаёт образец (см. builder).
-    """
+    """Разбить слайд с длинным списком на части; данные остаются в первой. Шаги процесса не режем."""
     if len(getattr(s, items_attr)) <= max_items or s.archetype == Archetype.AGENDA:
         return [s]
     items = getattr(s, items_attr)
     n_parts = math.ceil(len(items) / max_items)
-    size = math.ceil(len(items) / n_parts)  # ровные части: 7 → 4+3, а не 6+1
+    size = math.ceil(len(items) / n_parts)  # ровные части
     parts: list[OutlineSlide] = []
     for i in range(n_parts):
         part = s.model_copy(deep=True) if i == 0 else OutlineSlide(
@@ -299,7 +286,7 @@ def split_slide(s: OutlineSlide, max_items: int, items_attr: str = "bullets") ->
 def fit_count(slides: list[OutlineSlide], strategy: Strategy, warnings: list[str]) -> list[OutlineSlide]:
     lo, hi = strategy.target_slides.min, strategy.target_slides.max
     if len(slides) > hi:
-        # разделители — первые кандидаты на вылет: сначала у самых коротких разделов
+        # разделители — первые на вылет, начиная с самых коротких разделов
         while len(slides) > hi and any(s.archetype == Archetype.SECTION for s in slides):
             i = _shortest_section(slides)
             slides = slides[:i] + slides[i + 1 :]
@@ -322,7 +309,7 @@ def fit_count(slides: list[OutlineSlide], strategy: Strategy, warnings: list[str
 
 
 def _shortest_section(slides: list[OutlineSlide]) -> int:
-    """Индекс разделителя, за которым меньше всего слайдов до следующего разделителя (при равенстве — последний)."""
+    """Индекс разделителя самого короткого раздела (при равенстве — последний)."""
     idxs = [i for i, s in enumerate(slides) if s.archetype == Archetype.SECTION]
     bounds = idxs + [len(slides)]
     lengths = [(bounds[k + 1] - bounds[k], -bounds[k]) for k in range(len(idxs))]
@@ -330,11 +317,9 @@ def _shortest_section(slides: list[OutlineSlide]) -> int:
 
 
 def merge_pair(slides: list[OutlineSlide], max_bullets: int) -> list[OutlineSlide] | None:
-    """Слить первую подходящую пару соседних слайдов в один CARDS. None — сливать нечего.
+    """Слить первую подходящую пару соседних слайдов в один CARDS; None — сливать нечего.
 
-    Сначала пары чисто текстовых слайдов (буллеты/шаги), и только если таких нет — с KPI и цитатой:
-    крупная цифра и цитата в карточках теряют больше, чем список.
-    """
+    Сначала текстовые пары, KPI и цитата — в последнюю очередь: в карточках они теряют больше."""
     for lossy in (False, True):
         for i in range(len(slides) - 1):
             a, b = slides[i], slides[i + 1]
@@ -388,16 +373,15 @@ def _text_only(s: OutlineSlide) -> bool:
 
 
 def _mergeable(s: OutlineSlide) -> bool:
-    """Слайд с одним видом контента, который можно превратить в пункты карточек: буллеты, шаги,
-    KPI («значение — подпись») или цитата («„…“ — автор»). Диаграммы, таблицы, картинки — нет."""
+    """Слайд с одним видом текстового контента, который можно превратить в пункты карточек."""
     if s.archetype not in _MERGEABLE or s.chart or s.table:
-        return False  # картинка слиянию не мешает: она остаётся у объединённого слайда
+        return False  # картинка слиянию не мешает
     kinds = sum(1 for x in (s.bullets, s.steps, s.kpis, s.quote) if x)
     return kinds == 1
 
 
 def _items(s: OutlineSlide) -> list[str]:
-    """Пункты слайда для слияния (см. _mergeable)."""
+    """Пункты слайда для слияния."""
     if s.bullets:
         return list(s.bullets)
     if s.steps:

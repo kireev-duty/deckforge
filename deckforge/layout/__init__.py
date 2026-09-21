@@ -1,7 +1,4 @@
-"""layout: DeckOutline + TemplateDNA + Strategy → DeckIR. Подбор образца, раскладка по слотам, подгонка текста.
-
-Не пишет файлов и не вызывает LLM (детерминированная подгонка; slide_filler подключается отдельно).
-"""
+"""layout: DeckOutline + TemplateDNA + Strategy → DeckIR."""
 
 from deckforge.core.strategy import Strategy, list_strategies, load_strategy
 from deckforge.layout.autofix import FixResult, apply_fixes

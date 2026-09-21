@@ -1,7 +1,6 @@
-"""Рабочее пространство сервиса: реестр шаблонов (датасет + загруженные) и сборка контент-пакета из запроса.
+"""Реестр шаблонов (датасет + загруженные) и сборка контент-пакета из запроса — общее для UI и API.
 
-Общее для UI и API: файлы от пользователя никогда не используются как пути — только очищенный basename
-внутри своей папки; .pptx проверяется как zip с `ppt/presentation.xml`.
+Имена файлов от пользователя — только очищенный basename; .pptx проверяется как zip.
 """
 
 from __future__ import annotations
@@ -24,7 +23,7 @@ _SAFE = re.compile(r"[^\w\-. ]+", re.UNICODE)
 
 
 class BadUpload(ValueError):
-    """Загруженный файл не подходит (не .pptx, слишком большой, не тот тип) — в HTTP это 400."""
+    """Загруженный файл не подходит — в HTTP это 400."""
 
 
 def safe_name(name: str, default: str = "file") -> str:
@@ -55,11 +54,9 @@ class TemplateEntry:
 
 
 class TemplateStore:
-    """Шаблоны датасета (по путям) + загруженные (`root/templates/<sha1>/<name>__<sha1>.pptx`).
+    """Шаблоны датасета + загруженные (`root/templates/<sha1>/<name>__<sha1>.pptx`).
 
-    Имя загруженного файла дополняется sha1, чтобы кэш разметки образцов (`out/archetypes/<stem>.json`,
-    ключ — stem) не подхватил чужой шаблон с тем же именем.
-    """
+    sha1 в имени — чтобы кэш разметки по stem не подхватил чужой шаблон с тем же именем."""
 
     def __init__(self, root: Path) -> None:
         self.root = root / "templates"
@@ -69,7 +66,7 @@ class TemplateStore:
         for d in DATASET_DIRS:
             if d.is_dir():
                 for p in sorted(d.glob("*.pptx")):
-                    if p.stat().st_size > 1000:  # LFS-указатель, а не файл — пропускаем
+                    if p.stat().st_size > 1000:  # LFS-указатель пропускаем
                         sid = sha1_of(p)
                         self._items[sid] = TemplateEntry(sid, p.stem, p, True)
         for p in sorted(self.root.glob("*/*.pptx")):
@@ -112,7 +109,7 @@ class TemplateStore:
 
 
 def write_content_pack(dest: Path, brief: str, files: list[tuple[str, bytes]]) -> Path:
-    """Контент-пакет из запроса: `brief.md` + дополнительные файлы (`*.md|txt` → корень, `*.json|csv` → `data/`)."""
+    """Контент-пакет из запроса: `brief.md` + файлы (`*.md|txt` → корень, `*.json|csv` → `data/`)."""
     dest.mkdir(parents=True, exist_ok=True)
     (dest / "brief.md").write_text(brief.strip() + "\n", "utf-8")
     for name, data in files:

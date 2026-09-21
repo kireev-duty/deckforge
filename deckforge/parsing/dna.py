@@ -1,11 +1,4 @@
-"""Сборка полной TemplateDNA: токены + сетка + фиксированные элементы + образцы.
-
-Сетка и поля восстанавливаются по расположению контентных фигур на слайдах шаблона:
-поля — 5-й / 95-й перцентили кромок (чтобы единичный full-bleed блок их не обнулил),
-направляющие — кромки, повторяющиеся на заметной доле слайдов (округление до 1/20").
-Фиксированные элементы — фигуры, стоящие в одной позиции на многих слайдах
-(та же сигнатура, что и в классификаторе: тег, текст колонтитула, bbox с шагом 1/20").
-"""
+"""Сборка полной TemplateDNA: токены + сетка (перцентили кромок контентных фигур) + фиксированные элементы + образцы."""
 
 from __future__ import annotations
 
@@ -19,11 +12,11 @@ from deckforge.parsing.exemplars import load_exemplars
 from deckforge.parsing.extract_tokens import TemplateTokens, extract_tokens
 from deckforge.parsing.layout_classifier import find_fixed_signatures, _norm_text, _signature
 
-STEP = 914400 // 20  # 1/20" — шаг округления кромок
-FULL_BLEED = 0.6  # фигура ≥ 60 % площади слайда — фон/подложка, в сетке не участвует
-GUIDE_MIN_SHARE = 0.2  # кромка встречается на ≥ 20 % слайдов — направляющая
+STEP = 914400 // 20  # 1/20", шаг округления кромок
+FULL_BLEED = 0.6  # фигура крупнее — фон, в сетке не участвует
+GUIDE_MIN_SHARE = 0.2  # кромка на такой доле слайдов — направляющая
 MARGIN_PERCENTILE = 0.05
-FOOTER_ZONE = 0.12  # нижние/верхние 12 % — зона колонтитулов
+FOOTER_ZONE = 0.12  # зона колонтитулов у краёв
 LOGO_MAX_AREA = 0.03
 
 
@@ -81,7 +74,7 @@ def build_grid(pkg: Package, fixed_sigs: set[tuple] | None = None) -> GridSpec:
     mt = max(0, _percentile(tops, MARGIN_PERCENTILE))
     mr = max(0, sw - _percentile(rights, 1 - MARGIN_PERCENTILE))
     mb = max(0, sh - _percentile(bottoms, 1 - MARGIN_PERCENTILE))
-    # кромки считаем по одному разу на слайд, иначе сетка карточек «перевесит» остальные слайды
+    # кромки считаем по одному разу на слайд, иначе сетка карточек перевесит
     uniq_lefts = [e for boxes in per_slide for e in {round(b[0] / STEP) * STEP for b in boxes}]
     uniq_tops = [e for boxes in per_slide for e in {round(b[1] / STEP) * STEP for b in boxes}]
     return GridSpec(
@@ -128,7 +121,7 @@ def build_fixed_elements(pkg: Package, fixed_sigs: set[tuple] | None = None) -> 
 
 
 def build_dna(template: str | Path, exemplars=None, tokens: TemplateTokens | None = None) -> TemplateDNA:
-    """TemplateDNA целиком: токены (extract_tokens) + сетка + фиксированные элементы + образцы (load_exemplars)."""
+    """TemplateDNA целиком: токены + сетка + фиксированные элементы + образцы."""
     template = Path(template)
     pkg = Package(template)
     tokens = tokens or extract_tokens(template)

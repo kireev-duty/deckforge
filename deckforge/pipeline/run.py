@@ -1,17 +1,7 @@
-"""Оркестрация прогона: шаблон + контент-пакет → outline (LLM, один на прогон) → N колод по стратегиям.
+"""Оркестрация прогона: шаблон + контент-пакет → outline → колоды по стратегиям.
 
-Этапы — отдельные функции, чтобы CLI, UI и API собирали цикл из одних и тех же кирпичей:
-
-- `parse_template`  — .pptx → `ParsedTemplate` (образцы, токены, `TemplateDNA`, `dna.json`);
-- `make_outline`    — бриф + контент-пакет → `OutlineStep` (один вызов LLM или готовый outline);
-- `build_deck`      — одна стратегия: layout → render → аудит → safe-автофиксы (правка IR, повторный рендер и аудит)
-                      → PNG → VLM-судья → PDF → `manifest.json`;
-- `refine_deck`     — фиксы по выбору пользователя к уже собранной колоде (UI/API): правка IR → рендер → аудит;
-- `run`             — всё вместе по `RunConfig`: outline.json, <strategy>.pptx / .pdf / .ir.json / .audit.json /
-                      .manifest.json, compare.md, run.json.
-
-manifest.json — провенанс колоды: версии скиллов и моделей, стратегия, план, выбранные образцы, что чинил autofix,
-экспорты, тайминги.
+Этапы (`parse_template`, `make_outline`, `build_deck`, `refine_deck`, `run`) — отдельные функции,
+из которых CLI, UI и API собирают цикл; каждая колода получает `manifest.json` с провенансом.
 """
 
 from __future__ import annotations
@@ -53,9 +43,7 @@ Progress = Callable[[str], None]
 
 
 def rel_path(p: Path | str | None, base: Path) -> str:
-    """Путь для manifest.json / run.json: относительно папки прогона (файлы колоды), иначе относительно
-    текущей папки (шаблон датасета, контент-пакет — `data/…`, `examples/…`), иначе как есть. POSIX-слэши,
-    чтобы примеры в репо не несли `C:\\Users\\…` машины сборки. Объекты `Path` в памяти (UI/API) не трогаются."""
+    """Путь для manifest.json / run.json: относительно папки прогона, иначе cwd, иначе как есть; POSIX-слэши."""
     if p is None:
         return ""
     p = Path(p)
@@ -72,14 +60,14 @@ def rel_path(p: Path | str | None, base: Path) -> str:
 
 @dataclass
 class ParsedTemplate:
-    """Шаблон после парсинга — всё, что нужно layout/render/audit. Один на прогон, переиспользуется UI."""
+    """Шаблон после парсинга — всё, что нужно layout/render/audit."""
 
     template: Path
     exemplars: list[Exemplar]
     tokens: TemplateTokens
     dna: TemplateDNA
     style: dict[str, str]
-    meta: dict[str, str]  # id, path, sha1 — в manifest
+    meta: dict[str, str]  # id, path, sha1
     seconds: float = 0.0
 
     @property
@@ -87,7 +75,7 @@ class ParsedTemplate:
         return available_archetypes(self.exemplars)
 
     def summary(self) -> dict:
-        """Компактная сводка для `cli parse`, API `/templates` и шага «Шаблон» в UI (только JSON-типы)."""
+        """Компактная сводка для CLI, API и UI (только JSON-типы)."""
         from collections import Counter
 
         t, g = self.tokens, self.dna.grid
@@ -137,7 +125,7 @@ class DeckResult:
 
     @property
     def exports(self) -> dict[str, str]:
-        """Экспорты для manifest/run.json — пути относительно папки колоды (см. `rel_path`)."""
+        """Экспорты для manifest/run.json, пути относительно папки колоды."""
         base = self.pptx.parent
         out = {"pptx": rel_path(self.pptx, base)}
         if self.pdf is not None:
@@ -166,31 +154,30 @@ class RunContext:
     parsed: ParsedTemplate
     outline: OutlineStep
     client: LLMClient | None = None
-    pack: Any = None  # контент-пакет — факты для судьи (C04)
+    pack: Any = None  # контент-пакет — факты для судьи
     contextual_on: bool = False
     warnings: list[str] = field(default_factory=list)
 
     def client_for_images(self) -> LLMClient | None:
-        """Клиент для иллюстраций: общий клиент прогона, иначе — новый (outline мог быть передан готовым).
-        Без ключа T2I `illustrate` сам напишет предупреждение и ничего не сгенерирует."""
+        """Клиент для иллюстраций: общий клиент прогона, иначе новый."""
         if self.client is None and self.cfg.images != "off":
             try:
                 self.client = LLMClient()
-            except Exception as e:  # noqa: BLE001 — нет .env: колода собирается без картинок
+            except Exception as e:  # noqa: BLE001 — без .env колода собирается без картинок
                 self.warnings.append(f"images: клиент LLM недоступен ({str(e)[:80]}) — без иллюстраций")
         return self.client
 
     @classmethod
     def prepare(cls, cfg: RunConfig, parsed: ParsedTemplate, outline: OutlineStep,
                 client: LLMClient | None = None) -> RunContext:
-        """Решает, будет ли VLM-судья (нужны LibreOffice и клиент), и подгружает факты из контент-пакета."""
+        """Будет ли VLM-судья (нужны LibreOffice и клиент); факты из контент-пакета."""
         ctx = cls(cfg, parsed, outline, client)
         ctx.contextual_on = cfg.audit.contextual and cfg.audit.deterministic
         if ctx.contextual_on and not soffice_available():
             ctx.warnings.append("audit.contextual: LibreOffice не найден — контекстуальный аудит пропущен")
             ctx.contextual_on = False
         if ctx.contextual_on and ctx.client is None:
-            ctx.client = LLMClient()  # outline передан готовым, но судье нужна VLM
+            ctx.client = LLMClient()  # outline готовый, но судье нужна VLM
         if ctx.contextual_on:
             try:
                 ctx.pack = load_content_pack(cfg.content_pack)
@@ -219,10 +206,7 @@ class RunResult:
 
 
 def parse_template(template: Path, out_dir: Path | None = None) -> ParsedTemplate:
-    """Токены + образцы (кэш разметки в out/archetypes, если есть) + сетка/фиксированные → TemplateDNA.
-
-    `out_dir` задан → рядом с колодами пишется `dna.json` (полная TemplateDNA прогона).
-    """
+    """Токены + образцы + сетка → TemplateDNA; с `out_dir` рядом пишется `dna.json`."""
     t0 = time.perf_counter()
     template = Path(template)
     exemplars = load_exemplars(template)
@@ -230,7 +214,7 @@ def parse_template(template: Path, out_dir: Path | None = None) -> ParsedTemplat
     dna = build_dna(template, exemplars, tokens)
     if out_dir is not None:
         out_dir.mkdir(parents=True, exist_ok=True)
-        # в файле — путь шаблона относительно репо/папки прогона (см. rel_path); в памяти остаётся абсолютный
+        # в файле путь относительный, в памяти — абсолютный
         (out_dir / "dna.json").write_text(
             dna.model_copy(update={"source_path": rel_path(template, out_dir)}).model_dump_json(indent=1), "utf-8")
     meta = {"id": tokens.template_id, "path": str(template), "sha1": sha1_of(template)}
@@ -239,7 +223,7 @@ def parse_template(template: Path, out_dir: Path | None = None) -> ParsedTemplat
 
 def make_outline(cfg: RunConfig, parsed: ParsedTemplate, out_dir: Path, client: LLMClient | None = None,
                  outline: DeckOutline | None = None) -> OutlineStep:
-    """Один outline на прогон. `outline` передан → LLM не вызывается (режим build_variants, тестов и UI-повтора)."""
+    """Один outline на прогон; с готовым `outline` LLM не вызывается."""
     out_dir.mkdir(parents=True, exist_ok=True)
     path = out_dir / "outline.json"
     if outline is not None:
@@ -269,7 +253,7 @@ def build_deck(ctx: RunContext, strategy_name: str, progress: Progress | None = 
     skills_used = dict(ctx.outline.skills_used)
     images_info: dict = {}
     if cfg.images != "off":
-        # иллюстрации до вёрстки: picker учитывает наличие картинки при выборе образца
+        # иллюстрации до вёрстки: picker учитывает наличие картинки
         ill = illustrate(outline, strategy, parsed.style, ctx.client_for_images(), out_dir, cfg_mode=cfg.images)
         outline, images_info = ill.outline, ill.summary()
         for item in images_info.get("items", []):
@@ -384,12 +368,9 @@ def build_deck(ctx: RunContext, strategy_name: str, progress: Progress | None = 
 
 def refine_deck(deck: DeckResult, parsed: ParsedTemplate, selected: Iterable[int], render_png: bool | None = None,
                 dpi: int = 72, progress: Progress | None = None) -> DeckResult:
-    """Фиксы по выбору пользователя (индексы находок в `deck.audit`) к уже собранной колоде.
+    """Фиксы по выбору пользователя к уже собранной колоде: правка IR → рендер → детерминированный аудит.
 
-    Правка IR → повторный рендер поверх файла → повторный детерминированный аудит. Контекстуальные находки
-    прошлого отчёта переносятся как есть (судья не перезапускается; в manifest — `audit.contextual_stale`).
-    PNG перерисовываются, если были или `render_png`; PDF — если был. Возвращает обновлённый `DeckResult`.
-    """
+    Судья не перезапускается — его находки переносятся с пометкой `contextual_stale`."""
     say = progress or (lambda msg: log.info(msg))
     report = deck.load_report()
     if report is None:
@@ -463,7 +444,7 @@ def run(
     outline: DeckOutline | None = None,
     progress: Progress | None = None,
 ) -> RunResult:
-    """Полный прогон по конфигу. `outline` передан → шаг content пропускается (режим build_variants и тестов)."""
+    """Полный прогон по конфигу; с готовым `outline` шаг content пропускается."""
     say = progress or (lambda msg: log.info(msg))
     t_start = time.perf_counter()
     out_dir = cfg.output_dir
@@ -504,10 +485,10 @@ def run(
 
 
 def run_summary(cfg: RunConfig, result: RunResult) -> dict:
-    """Содержимое run.json — сводка прогона (читают UI и API); пути — относительно папки прогона."""
+    """Содержимое run.json — сводка прогона; пути относительно папки прогона."""
     out = result.output_dir
     config = json.loads(cfg.model_dump_json())
-    for key in ("template", "content_pack", "output_dir"):  # RunConfig резолвит пути в абсолютные — в run.json относительно cwd
+    for key in ("template", "content_pack", "output_dir"):
         if config.get(key):
             config[key] = rel_path(config[key], Path.cwd())
     return {
@@ -520,7 +501,7 @@ def run_summary(cfg: RunConfig, result: RunResult) -> dict:
                   for d in result.decks],
         "timings_s": result.timings_s,
         "warnings": result.warnings,
-        "not_implemented": [],  # все шаги конфига выполняются; ключ оставлен для читателей run.json
+        "not_implemented": [],
     }
 
 
@@ -528,13 +509,13 @@ def run_summary(cfg: RunConfig, result: RunResult) -> dict:
 
 
 def _portable_report(report: AuditReport, base: Path) -> str:
-    """`<strategy>.audit.json` — с путём колоды относительно папки прогона (сам отчёт в памяти не меняется)."""
+    """`<strategy>.audit.json` с путём колоды относительно папки прогона."""
     return report.model_copy(update={"deck_path": rel_path(report.deck_path, base)}).model_dump_json(indent=1)
 
 
 def _autofix(ir: DeckIR, report: AuditReport, parsed: ParsedTemplate, pptx_out: Path,
              findings: list[Finding]) -> tuple[DeckIR, AuditReport, dict]:
-    """Фиксы → правка IR → повторный рендер поверх файла → повторный детерминированный аудит. Один проход."""
+    """Фиксы → правка IR → рендер → детерминированный аудит, один проход."""
     before = audit_summary(report)
     info = {"applied": 0, "skipped": 0, "before": {"errors": before["errors"], "warnings": before["warnings"]},
             "after": {"errors": before["errors"], "warnings": before["warnings"]}, "items": []}
@@ -557,12 +538,12 @@ def _render_pngs(pptx: Path, out_dir: Path, dpi: int, contact: bool) -> tuple[li
 
     try:
         return render_png(pptx, out_dir, dpi=dpi, contact=contact), None
-    except Exception as e:  # noqa: BLE001 — LibreOffice капризен
+    except Exception as e:  # noqa: BLE001
         return [], f"png: {str(e)[:120]}"
 
 
 def _export_pdf(pptx: Path, rendered_dir: Path | None) -> tuple[Path | None, str | None]:
-    """<strategy>.pdf рядом с .pptx. Если PNG уже рендерились, PDF из той папки копируется, а не конвертируется заново."""
+    """<strategy>.pdf рядом с .pptx; если PNG уже рендерились, PDF берётся оттуда."""
     target = pptx.with_suffix(".pdf")
     ready = rendered_dir / pptx.with_suffix(".pdf").name if rendered_dir else None
     if ready is not None and ready.exists():
@@ -580,7 +561,7 @@ def _export_pdf(pptx: Path, rendered_dir: Path | None) -> tuple[Path | None, str
 
 
 def _export_html(pptx: Path, ir: DeckIR | None, title: str | None) -> tuple[Path | None, str | None]:
-    """<strategy>.html рядом с .pptx — свой рендер без LibreOffice (export/html.py)."""
+    """<strategy>.html рядом с .pptx."""
     try:
         return export_html(pptx, pptx.with_suffix(".html"), ir=ir, title=title), None
     except Exception as e:  # noqa: BLE001
@@ -596,8 +577,7 @@ def soffice_available() -> bool:
 
 
 def _style(tokens: TemplateTokens) -> dict:
-    # text_color — роль text из палитры: на тёмном шаблоне (WorkSpace) текст таблиц и осей диаграмм
-    # иначе получил бы дефолтный тёмный цвет и пропал на фоне
+    # text_color нужен нативным таблицам и диаграммам: иначе на тёмном шаблоне текст пропадёт
     return {
         "accent": (tokens.palette("accent") or ["0077FF"])[0],
         "palette": ",".join(tokens.palette("accent") + tokens.palette("secondary")),

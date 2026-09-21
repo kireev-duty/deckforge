@@ -1,14 +1,7 @@
 """Токены дизайн-системы шаблона из фактического использования, а не из theme.xml.
 
-Почему не тема: в датасете у VK WorkSpace в theme.xml дефолтный Office (Arial, #4472C4),
-а на слайдах — встроенный Play и #0077FF. Поэтому строим гистограммы по слайдам
-(вес 1.0), лейаутам и мастеру (вес 0.25), резолвим schemeClr/+mn-lt через clrMap и тему,
-и только затем назначаем роли.
-
-Роли цветов — по площади и контрасту: background = чем залиты слайды; text = самый
-частый по символам цвет с контрастом к фону; accent = самый используемый хроматический;
-surface/muted — нейтральные по площади / по тексту. Типографика — бины кеглей
-относительно «body» (самый массовый кегль 9–24 pt).
+Гистограммы цветов и кеглей по слайдам (вес 1.0), лейаутам и мастеру (0.25); роли цветов —
+по площади и контрасту; типографика — бины кеглей относительно body.
 
 Использование:
     python -m deckforge.parsing.extract_tokens <file.pptx> [--json out.json]
@@ -44,18 +37,18 @@ from deckforge.parsing.ooxml import (
 # ──────────────────────────── настраиваемые пороги ────────────────────────────
 
 SOURCE_WEIGHT = {"slides": 1.0, "layouts": 0.25, "master": 0.25}
-COLOR_MERGE_DE = 8.0  # ΔE76, ниже которого два hex — один цвет (FE095F↔FF0053 = 7.0; 8F8F8F↔798492 = 10.1)
-CHROMATIC_MIN_CHROMA = 20.0  # Lab-хрома: выше — «цветной» (кандидат в accent/secondary)
-NEUTRAL_MAX_CHROMA = 12.0  # ниже — «нейтральный» (кандидат в surface/muted)
-TEXT_MIN_CONTRAST = 3.0  # минимальный контраст текста к фону
-BG_COVER_RATIO = 0.6  # фигура, покрывающая ≥ 60 % слайда, считается фоном
-SURFACE_MIN_AREA = 0.15  # суммарная площадь (в слайдах) нейтральной заливки для роли surface
-SECONDARY_MIN_RATIO = 0.15  # secondary — если его score ≥ 15 % от accent
+COLOR_MERGE_DE = 8.0  # ΔE76, ниже которого два hex — один цвет
+CHROMATIC_MIN_CHROMA = 20.0  # Lab-хрома: выше — «цветной»
+NEUTRAL_MAX_CHROMA = 12.0  # ниже — «нейтральный»
+TEXT_MIN_CONTRAST = 3.0
+BG_COVER_RATIO = 0.6  # фигура крупнее — фон
+SURFACE_MIN_AREA = 0.15  # площадь нейтральной заливки (в слайдах) для роли surface
+SECONDARY_MIN_RATIO = 0.15  # secondary — если score ≥ 15 % от accent
 MAX_COLORS = 16
-MIN_COLOR_WEIGHT_RATIO = 0.01  # цвета слабее 1 % от лидера отбрасываются
-TEXT_CHARS_PER_UNIT = 20  # 20 символов текста ≈ одна заливка по значимости
+MIN_COLOR_WEIGHT_RATIO = 0.01  # цвета слабее отбрасываются
+TEXT_CHARS_PER_UNIT = 20  # столько символов текста ≈ одна заливка
 
-SIZE_MERGE_RATIO = 0.08  # кегли, отличающиеся < 8 %, — один бин (8.12 ≈ 8.48)
+SIZE_MERGE_RATIO = 0.08  # кегли ближе — один бин
 BODY_RANGE_PT = (9.0, 24.0)
 # роль → [нижняя, верхняя) граница как доля от body
 SCALE_BANDS: list[tuple[str, float, float]] = [
@@ -75,7 +68,7 @@ ROLE_ORDER = ("background", "text", "accent", "secondary", "surface", "muted", "
 
 
 class TemplateTokens(BaseModel):
-    """Токены шаблона. Имена полей совпадают с TemplateDNA, чтобы собрать её через dna_kwargs()."""
+    """Токены шаблона; имена полей совпадают с TemplateDNA."""
 
     template_id: str
     source_path: str
@@ -105,14 +98,14 @@ class TemplateTokens(BaseModel):
 
 @dataclass
 class ColorStat:
-    bg_slides: float = 0.0  # сколько слайдов имеют этот фон (взвешенно)
-    cover_area: float = 0.0  # площадь фигур-«подложек» (≥ BG_COVER_RATIO слайда)
-    fill_area: float = 0.0  # суммарная площадь заливок в долях слайда
+    bg_slides: float = 0.0  # слайдов с этим фоном (взвешенно)
+    cover_area: float = 0.0  # площадь фигур-подложек
+    fill_area: float = 0.0  # площадь заливок в долях слайда
     fill_count: float = 0.0
     line_count: float = 0.0
     text_chars: float = 0.0
     by_source: Counter = field(default_factory=Counter)
-    members: list[str] = field(default_factory=list)  # hex'ы, слитые в кластер
+    members: list[str] = field(default_factory=list)  # hex, слитые в кластер
 
     def add(self, other: ColorStat) -> None:
         self.bg_slides += other.bg_slides
@@ -201,7 +194,7 @@ def _collect_part(ctx: PartCtx, usage: Usage, slide_area: int) -> None:
 
 
 def _collect_paragraphs(ctx: PartCtx, usage: Usage, paragraphs, sp: etree._Element | None, w: float) -> None:
-    """Run'ы абзацев → цвет текста по символам + сэмплы для типографики."""
+    """Run абзацев → цвет текста по символам + сэмплы для типографики."""
     scale = font_scale(sp)
     ph = placeholder(sp) if sp is not None else None
     is_title = bool(ph and ph[0] in ("title", "ctrTitle"))
@@ -255,8 +248,8 @@ def collect_usage(pkg: Package) -> Usage:
 
 
 def cluster_colors(colors: dict[str, ColorStat], theme_values: set[str]) -> dict[str, ColorStat]:
-    """Жадно сливает близкие (ΔE < COLOR_MERGE_DE) цвета. Представитель — цвет темы, если он в кластере."""
-    clusters: list[tuple[str, ColorStat]] = []  # (представитель, накопленная статистика)
+    """Жадно сливает близкие цвета; представитель — цвет темы, если он в кластере."""
+    clusters: list[tuple[str, ColorStat]] = []
     for hex_, st in sorted(colors.items(), key=lambda kv: -kv[1].weight):
         st.members = [hex_]
         for i, (rep, acc) in enumerate(clusters):
@@ -281,29 +274,29 @@ def assign_roles(clusters: dict[str, ColorStat]) -> dict[str, str]:
     roles: dict[str, str] = {}
     free = lambda: [h for h in clusters if h not in roles]  # noqa: E731
 
-    # 1. background — чем залиты слайды; если фоны — картинки, то самая большая заливка
+    # background — чем залиты слайды; если фоны — картинки, то самая большая заливка
     scored = {h: st.background_score for h, st in clusters.items()}
     bg = max(scored, key=scored.get) if max(scored.values()) > 0 else max(clusters, key=lambda h: clusters[h].fill_area)
     roles[bg] = "background"
 
-    # 2. text — больше всего символов при достаточном контрасте к фону
+    # text — больше всего символов при достаточном контрасте к фону
     readable = [h for h in free() if contrast_ratio(h, bg) >= TEXT_MIN_CONTRAST and clusters[h].text_chars > 0]
     if readable:
         roles[max(readable, key=lambda h: clusters[h].text_chars)] = "text"
 
-    # 3–4. accent / secondary — хроматические по score заливок+линий+текста
+    # accent / secondary — хроматические по score
     chrom = sorted((h for h in free() if chroma(h) >= CHROMATIC_MIN_CHROMA), key=lambda h: -clusters[h].accent_score)
     if chrom:
         roles[chrom[0]] = "accent"
         if len(chrom) > 1 and clusters[chrom[1]].accent_score >= SECONDARY_MIN_RATIO * clusters[chrom[0]].accent_score:
             roles[chrom[1]] = "secondary"
 
-    # 5. surface — нейтральные подложки заметной площади (карточки, плашки)
+    # surface — нейтральные подложки заметной площади
     for h in free():
         if chroma(h) < NEUTRAL_MAX_CHROMA and clusters[h].fill_area >= SURFACE_MIN_AREA:
             roles[h] = "surface"
 
-    # 6. muted — нейтральный цвет вторичного текста / разделителей
+    # muted — нейтральный цвет вторичного текста
     neutral = [h for h in free() if chroma(h) < NEUTRAL_MAX_CHROMA]
     if neutral:
         roles[max(neutral, key=lambda h: clusters[h].text_chars + clusters[h].fill_count)] = "muted"
@@ -325,7 +318,7 @@ def build_color_tokens(usage: Usage, theme_colors: dict[str, str]) -> list[Color
             continue
         src = st.by_source.most_common(1)[0][0] if st.by_source else "slides"
         tokens.append(ColorToken(hex=hex_, role=role, usage=round(st.weight), source=src))
-    # тема — только fallback: accent берём из неё, лишь если на слайдах хроматических цветов нет вовсе
+    # тема — только fallback, когда на слайдах хроматических цветов нет
     if not any(t.role == "accent" for t in tokens) and theme_colors.get("accent1"):
         tokens.append(ColorToken(hex=theme_colors["accent1"], role="accent", usage=0, source="theme"))
     tokens.sort(key=lambda t: (ROLE_ORDER.index(t.role), -t.usage))
@@ -361,7 +354,7 @@ class SizeBin:
 
 
 def _size_bins(runs: list[RunSample]) -> list[SizeBin]:
-    """Бины по кеглю с шагом 0.5 pt, соседние бины ближе SIZE_MERGE_RATIO сливаются."""
+    """Бины по кеглю с шагом 0.5 pt; соседние ближе SIZE_MERGE_RATIO сливаются."""
     raw: dict[float, list[RunSample]] = defaultdict(list)
     for r in runs:
         raw[round(r.size_pt * 2) / 2].append(r)
@@ -395,7 +388,7 @@ def build_typography(runs: list[RunSample]) -> list[TypeToken]:
         band = [i for i, b in enumerate(bins) if lo <= b.size_pt / body.size_pt < hi]
         if band:
             role_of[max(band, key=lambda i: bins[i].chars)] = role
-    # h1 отсутствует, но есть заголовочные плейсхолдеры крупнее body — их кегль и есть h1
+    # h1 нет, но есть заголовочные плейсхолдеры крупнее body — их кегль и есть h1
     if "h1" not in role_of.values():
         titled = [i for i, b in enumerate(bins) if b.size_pt > body.size_pt and b.title_chars > 0]
         if titled:

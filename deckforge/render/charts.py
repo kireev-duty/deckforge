@@ -1,9 +1,6 @@
 """Нативные диаграммы python-pptx из ChartSpec.
 
-Минимальная версия (день 5): тип, данные, заголовок, шрифт/цвета из style_overrides.
-Полная стилизация под палитру DNA (сетка, подписи данных, толщина линий) — отдельный шаг.
-
-style_overrides: font, size_pt, text_color, accent, palette ("0077FF,00AEE8,…"), data_labels (подписи значений).
+style_overrides: font, size_pt, text_color, accent, palette ("0077FF,00AEE8,…"), data_labels.
 """
 
 from __future__ import annotations
@@ -29,7 +26,7 @@ DEFAULT_PALETTE = ["0077FF", "00AEE8", "212121", "8F8F8F", "FF0053", "FFB800"]
 
 
 def palette_from(overrides: dict, n: int = 2) -> list[str]:
-    """Цвета серий: palette → accent → дефолт; если цветов меньше n, добавляем оттенки (tint) первого."""
+    """Цвета серий: palette → accent → дефолт; не хватает — оттенки первого."""
     raw = str(overrides.get("palette") or "")
     colors = [c.strip().lstrip("#").upper() for c in raw.split(",") if c.strip()]
     if not colors and overrides.get("accent"):
@@ -97,7 +94,7 @@ def add_chart(slide: Slide, spec: ChartSpec, box: Box, overrides: dict | None = 
             chart.value_axis.has_title = True
             chart.value_axis.axis_title.text_frame.text = axis_title
     if overrides.get("data_labels"):
-        # подписи значений на точках (autofix add_chart_labels для I05); целые — без дробной части
+        # подписи значений; целые — без дробной части
         plot.has_data_labels = True
         integral = all(float(v).is_integer() for vs in spec.series.values() for v in vs)
         plot.data_labels.number_format = "0" if integral else "0.0"

@@ -1,7 +1,4 @@
-"""Конфиг прогона (`configs/run.example.yaml`) — «запуск конфиг-файлом» из ТЗ.
-
-Относительные пути считаются от корня репозитория, чтобы конфиг работал из любой рабочей директории.
-"""
+"""Конфиг прогона (`configs/run.example.yaml`); относительные пути — от корня репозитория."""
 
 from __future__ import annotations
 
@@ -35,7 +32,7 @@ class RunConfig(BaseModel):
     export: list[Literal["pptx", "pdf", "html"]] = Field(default_factory=lambda: ["pptx"])
     output_dir: Path = Path("out/run")
     seed: int | None = None
-    render_png: bool = False  # PNG-превью + contact.png для каждой колоды (LibreOffice, медленно)
+    render_png: bool = False  # PNG-превью + contact.png (LibreOffice)
     render_dpi: int = 72
 
     @field_validator("template", "content_pack", "output_dir", mode="after")

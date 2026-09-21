@@ -156,7 +156,7 @@ class Slot(BaseModel):
     size_pt: float | None = None
     placeholder_type: str | None = None  # ph type из OOXML, если это плейсхолдер
     sample_text: str | None = None  # исходный текст (для отладки и few-shot)
-    hard_lines: bool = False  # под слотом декор (линия) — строк больше max_lines не разрешать (title обычно может две)
+    hard_lines: bool = False  # под слотом декор — строк больше max_lines не разрешать
 
 
 class Exemplar(BaseModel):
@@ -234,7 +234,7 @@ class OutlineSlide(BaseModel):
     archetype: Archetype
     title: str
     subtitle: str | None = None
-    section: str | None = None  # раздел; стратегия решает, ставить ли перед ним слайд-разделитель
+    section: str | None = None  # раздел; разделитель перед ним ставит стратегия
     bullets: list[str] = Field(default_factory=list)
     paragraphs: list[str] = Field(default_factory=list)
     kpis: list[KpiSpec] = Field(default_factory=list)
@@ -321,7 +321,7 @@ class Finding(BaseModel):
     element_id: str | None = None
     box: Box | None = None  # для подсветки в UI
     message: str
-    autofix: str | None = None  # имя фикса из audit/autofix.py, если есть
+    autofix: str | None = None  # имя фикса из core/autofix.FIXES
     evidence: dict[str, str | float | int] = Field(default_factory=dict)
 
 

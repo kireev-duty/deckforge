@@ -1,17 +1,8 @@
-"""Архетипы слайдов-образцов по геометрии фигур, а не по именам лейаутов.
+"""Архетипы слайдов-образцов по геометрии фигур: признаки → скоринговые правила → слоты.
 
-Почему по геометрии: в датасете лейауты почти пустые (`[title]`), имена дублируются
-(«13_Титульный слайд» — это сетка карточек), а весь контент лежит свободными фигурами
-и группами прямо на слайдах. Поэтому для каждого слайда собираем фигуры (с пересчётом
-координат внутри групп), считаем признаки (текстовые блоки, крупные числа, картинки,
-коннекторы, кластеры одинаковых блоков) и прогоняем набор скоринговых правил.
-
-Ключевые слова из текста-заглушки («Спасибо за внимание», «Имя Фамилия», «Таймлайн»)
-используются только как вторичный сигнал — буст к геометрии.
-
-Неоднозначные слайды (низкий score или два близких кандидата) уточняет VLM через скилл
-`template_tagger` — по PNG-рендеру и списку фигур. Модуль сам не рендерит: PNG передаёт
-вызывающая сторона (см. tools/classify_layouts.py).
+Имена лейаутов ненадёжны, поэтому классификация идёт по фигурам; ключевые слова из текста-заглушки —
+только вторичный сигнал. Неоднозначные слайды уточняет VLM (`template_tagger`) по PNG, который передаёт
+вызывающая сторона.
 
 Использование:
     python -m deckforge.parsing.layout_classifier <file.pptx> [--thumbs DIR] [--vlm] [--md out.md] [--json out.json]
@@ -55,48 +46,48 @@ if TYPE_CHECKING:
 
 # ──────────────────────────── настраиваемые пороги ────────────────────────────
 
-BIG_PIC_AREA = 0.12  # картинка ≥ 12 % слайда — «большая» (фото, мокап, график-картинка)
+BIG_PIC_AREA = 0.12  # картинка ≥ 12 % слайда — «большая»
 ICON_MAX_AREA = 0.01  # ≤ 1 % и почти квадратная — иконка
-PICTURE_MIN_AREA = 0.02  # картинки меньше — декор, слотом не становятся
-CARD_MIN = 3  # минимум одинаковых блоков для «сетки карточек»
-SIZE_TOL = 0.02  # блоки считаются одинаковыми, если w и h совпадают с точностью 2 % слайда
-HEIGHT_TOL = 0.06  # …а по высоте — с точностью 6 % (автоподбор высоты текстовых боксов)
-CARD_STACK_MIN_H = 0.10  # блок в одной колонке — карточка, а не пункт списка, если он выше 10 % слайда
-TABLE_MIN_CELLS = 12  # ≥ 12 строго одинаковых блоков в ≥2 колонках и ≥4 рядах — таблица из фигур
-ALIGN_TOL = 0.03  # допуск выравнивания по одной оси (доля слайда)
-TITLE_ZONE = 0.30  # заголовок без плейсхолдера ищем в верхних 30 % слайда
-COVER_TITLE_ZONE = 1.0  # …а на первом слайде (обложка) название может стоять и по центру, и внизу
-AGENDA_MANY_BLOCKS = 6  # столько и больше текстовых блоков — не титул (оглавление, сетка)
-UNDERLINE_BELOW = 0.4  # линия-декор не дальше 40 % высоты бокса под заголовком — вторая строка легла бы на неё
-BACKGROUND_PIC_AREA = 0.9  # картинка ≥ 90 % слайда — фон, слотом становится только на image_full/image_text
-LOGO_PIC_AREA = 0.05  # картинка ≤ 5 % слайда у верхнего/нижнего края — логотип, не слот
+PICTURE_MIN_AREA = 0.02  # меньше — декор, не слот
+CARD_MIN = 3  # минимум одинаковых блоков для сетки карточек
+SIZE_TOL = 0.02  # допуск «одинаковости» блоков по ширине (доля слайда)
+HEIGHT_TOL = 0.06  # …и по высоте (автоподбор высоты плавает)
+CARD_STACK_MIN_H = 0.10  # блок в одной колонке выше — карточка, а не пункт списка
+TABLE_MIN_CELLS = 12  # одинаковых блоков сеткой — таблица из фигур
+ALIGN_TOL = 0.03  # допуск выравнивания по оси (доля слайда)
+TITLE_ZONE = 0.30  # заголовок без плейсхолдера ищем в верхней части
+COVER_TITLE_ZONE = 1.0  # …на обложке — где угодно
+AGENDA_MANY_BLOCKS = 6  # столько текстовых блоков — не титул
+UNDERLINE_BELOW = 0.4  # линия-декор под заголовком не дальше этой доли высоты бокса
+BACKGROUND_PIC_AREA = 0.9  # картинка на весь слайд — фон
+LOGO_PIC_AREA = 0.05  # мелкая картинка у края — логотип
 TITLE_MAX_CHARS = 80
-PLATE_MAX_SHARE = 0.8  # плашка под заголовком уже 80 % его бокса — вместимость считаем по плашке
-CHIP_MAX_HEIGHT = 2.0  # плашка вокруг заголовка ниже двух его боксов — «чип», а не карточка: строк сверх плашки нет
-CARD_MAX_AREA = 0.40  # подложка карточки — не больше 40 % слайда (иначе это фон)
+PLATE_MAX_SHARE = 0.8  # плашка под заголовком уже его бокса — вместимость по плашке
+CHIP_MAX_HEIGHT = 2.0  # плашка ниже двух боксов заголовка — «чип», строк сверх неё нет
+CARD_MAX_AREA = 0.40  # подложка крупнее — фон, а не карточка
 CARD_MARGIN = 0.08  # отступ от нижнего края карточки при расчёте вместимости
-DATA_SLOT_MIN_AREA = 0.08  # chart/table-слот меньше 8 % слайда — это подпись внутри нарисованной диаграммы, растягиваем на декор
-BIG_TITLE_RATIO = 1.6  # заголовок «крупный», если кегль ≥ 1.6× медианного на слайде
-BIG_TITLE_H = 0.12  # …или высота бокса ≥ 12 % слайда
-BODY_BLOCK_AREA = 0.2  # текстовый блок такой доли слайда — тело, а не подзаголовок титула
+DATA_SLOT_MIN_AREA = 0.08  # chart/table-слот мельче — подпись внутри нарисованной диаграммы
+BIG_TITLE_RATIO = 1.6  # заголовок «крупный», если кегль ≥ 1.6× медианного
+BIG_TITLE_H = 0.12  # …или бокс выше 12 % слайда
+BODY_BLOCK_AREA = 0.2  # текстовый блок крупнее — тело, а не подзаголовок
 KPI_SIZE_RATIO = 2.0  # число «крупное», если кегль ≥ 2× медианного
-EMPTY_NUMBER_MAX_FH = 0.25  # пустой крупный плейсхолдер выше четверти слайда — заголовок обложки, не KPI-цифра
-KPI_MIN_SIZE_RATIO = 1.3  # число-кандидат в KPI хотя бы на 30 % крупнее медианного текста (иначе это номер шага)
-LIBRARY_PICS = 30  # ≥ 30 картинок — библиотека иконок, не образец
+EMPTY_NUMBER_MAX_FH = 0.25  # пустой крупный плейсхолдер выше — заголовок обложки, не KPI
+KPI_MIN_SIZE_RATIO = 1.3  # число мельче — номер шага, не KPI
+LIBRARY_PICS = 30  # столько картинок — библиотека иконок, не образец
 AMBIGUOUS_BELOW = 0.70  # уверенность ниже — в VLM
-AMBIGUOUS_MARGIN = 0.15  # разрыв между двумя лучшими кандидатами меньше — в VLM
-FIXED_MIN_SLIDES = 3  # фигура на ≥ max(3, n/4) слайдах в одной позиции — фиксированный элемент
-FIXED_TEXT_ZONE = 0.12  # тексты считаем колонтитулами только в верхних/нижних 12 %
+AMBIGUOUS_MARGIN = 0.15  # разрыв между кандидатами меньше — в VLM
+FIXED_MIN_SLIDES = 3  # фигура на стольких слайдах в одной позиции — фиксированный элемент
+FIXED_TEXT_ZONE = 0.12  # тексты считаем колонтитулами только у краёв
 EMU_PER_PT = 12700
-MAX_SUMMARY_ROWS = 40  # больше фигур VLM не показываем (таблицы из 80 ячеек, библиотеки иконок)
+MAX_SUMMARY_ROWS = 40  # больше фигур VLM не показываем
 
 NUMBER_RE = re.compile(r"^[\dхx]{1,4}([.,]\d+)?\s*[%+]?\s*$|^[\dхx]{1,4}\s*%|^\d+([.,]\d+)?\s*(млн|тыс|млрд|k|m|b|x|×)\b", re.I)
 SEQ_RE = re.compile(r"^0?(\d{1,2})\s*$")
-GLYPH_RE = re.compile(r"^[^\w\s]{1,2}$")  # «➜», «•», «→», «✓» — маркер/стрелка в боксе, а не текст
+GLYPH_RE = re.compile(r"^[^\w\s]{1,2}$")  # маркер или стрелка в боксе, а не текст
 PAGE_NUMBER_RE = re.compile(r"^\d{1,3}$")
 ARROW_PRSTS = {"rightArrow", "leftArrow", "chevron", "homePlate", "notchedRightArrow", "curvedRightArrow", "bentArrow"}
 ROUND_PRSTS = {"ellipse", "roundRect", "round2SameRect"}
-THIN_LINE = 0.005  # прямоугольник тоньше 0.5 % слайда и длиннее 10 % — линия, а не фигура
+THIN_LINE = 0.005  # тоньше — линия, а не фигура
 LINE_PRSTS = {"line", "straightConnector1", "bentConnector3", "curvedConnector3"}
 
 KEYWORDS: dict[str, tuple[str, ...]] = {
@@ -138,7 +129,7 @@ class ShapeInfo:
     in_group: bool = False
     prst: str | None = None
     fixed: bool = False
-    visible: bool = True  # есть заливка/обводка (своя или по p:style); невидимая рамка — не плашка
+    visible: bool = True  # есть заливка/обводка
 
     @property
     def area(self) -> float:
@@ -177,12 +168,12 @@ class SlideFeatures:
     diagrams: list[ShapeInfo]
     connectors: int
     arrows: int
-    round_marks: list[ShapeInfo]  # мелкие круги/скругления — маркеры списка, точки таймлайна, «аватары»
-    card_groups: list[list[ShapeInfo]]  # кластеры ≥ CARD_MIN одинаковых блоков, расположенных сеткой
-    list_groups: list[list[ShapeInfo]]  # …расположенных одной колонкой (список)
-    cell_groups: list[list[ShapeInfo]]  # строгие кластеры (и по высоте) — для «таблицы из фигур»
-    sequence_row: int  # длина ряда последовательных номеров (1,2,3… в одну строку)
-    sequence_col: int  # …в одну колонку
+    round_marks: list[ShapeInfo]  # мелкие круги — маркеры, точки таймлайна
+    card_groups: list[list[ShapeInfo]]  # кластеры одинаковых блоков сеткой
+    list_groups: list[list[ShapeInfo]]  # …одной колонкой
+    cell_groups: list[list[ShapeInfo]]  # строгие кластеры — «таблица из фигур»
+    sequence_row: int  # длина ряда последовательных номеров в строку
+    sequence_col: int  # …в колонку
     keywords: set[str]
     median_size: float
     text_area: float
@@ -267,7 +258,7 @@ def _norm_text(sp: etree._Element) -> str:
 
 
 def _text_props(ctx: PartCtx, sp: etree._Element) -> tuple[float, bool, bool, int]:
-    """(кегль, bold, italic, абзацев с текстом) по первому run'у; для пустого плейсхолдера — по endParaRPr."""
+    """(кегль, bold, italic, абзацев с текстом) по первому run; для пустого плейсхолдера — по endParaRPr."""
     paras = sp.findall("p:txBody/a:p", NS)
     n_paras = sum(1 for p in paras if "".join(t.text or "" for t in p.iter(A + "t")).strip())
     scale = font_scale(sp)
@@ -345,9 +336,7 @@ def _signature(kind: str, text: str, bb: tuple[int, int, int, int]) -> tuple:
 def find_fixed_signatures(pkg: Package) -> set[tuple]:
     """Сигнатуры фигур, повторяющихся в одной позиции на многих слайдах: лого, декор, колонтитулы.
 
-    Плейсхолдеры не учитываются (title VK Tech повторяется 31 раз — это слот, а не декор).
-    Тексты считаются только в зоне колонтитулов, чтобы не поймать одинаковые карточки.
-    """
+    Плейсхолдеры не учитываются, тексты — только в зоне колонтитулов."""
     counts: Counter[tuple] = Counter()
     sw, sh = pkg.slide_size
     for slide in pkg.slides:
@@ -370,8 +359,7 @@ def find_fixed_signatures(pkg: Package) -> set[tuple]:
 
 
 def collect_shapes(ctx: PartCtx, fixed_sigs: set[tuple], index: int | None = None) -> list[ShapeInfo]:
-    """Фигуры слайда; `index` (0-based) нужен, чтобы узнать «ручной» номер страницы — текст «19» в колонтитуле
-    19-го слайда без плейсхолдера sldNum (goslide): это sldnum, а не слот под подпись."""
+    """Фигуры слайда; `index` (0-based) нужен, чтобы распознать «ручной» номер страницы текстом."""
     sw, sh = ctx.pkg.slide_size
     out: list[ShapeInfo] = []
     for sp in iter_shapes(ctx.sp_tree):
@@ -384,9 +372,9 @@ def collect_shapes(ctx: PartCtx, fixed_sigs: set[tuple], index: int | None = Non
         prst = geom.get("prst") if geom is not None else None
         thin = min(bb[2] / sw, bb[3] / sh) <= THIN_LINE and max(bb[2] / sw, bb[3] / sh) >= 0.1
         if kind == "shape" and (prst in LINE_PRSTS or bb[2] <= 0 or bb[3] <= 0 or (thin and not _norm_text(sp))):
-            kind = "connector"  # линия, нарисованная фигурой, — тот же коннектор
+            kind = "connector"  # линия, нарисованная фигурой
         if kind == "pic" and min(bb[2] / sw, bb[3] / sh) <= 0.02 and max(bb[2] / sw, bb[3] / sh) >= 0.3:
-            kind = "connector"  # линия-картинка (таймлайн VK Tech)
+            kind = "connector"  # линия-картинка
         if kind != "connector" and (bb[2] <= 0 or bb[3] <= 0):
             continue
         text = _norm_text(sp) if tag in ("sp", "graphicFrame") else ""
@@ -425,17 +413,12 @@ def _is_page_number(text: str, index: int, bb: tuple[int, int, int, int], sh: in
 
 
 def _in_edge_band(fy: float, fh: float) -> bool:
-    """Бокс начинается в верхней полосе колонтитула или кончается в нижней (сам бокс может быть выше полосы:
-    название вуза в шапке РГУП — 9 % высоты слайда при полосе 12 %, но начинается на 4.6 %)."""
+    """Бокс начинается в верхней полосе колонтитула или кончается в нижней."""
     return fy <= FIXED_TEXT_ZONE or fy + fh >= 1 - FIXED_TEXT_ZONE
 
 
 def _mark_photo_zones(shapes: list[ShapeInfo]) -> None:
-    """«Вставить фото» / «Иллюстрация» / «QR-code» — подпись зоны под картинку.
-
-    Содержащая её фигура (рамка) становится слотом picture, сама подпись — декором.
-    Если рамки нет, слотом picture становится сам текстовый блок.
-    """
+    """Подпись зоны под картинку («Вставить фото»): рамка вокруг неё — слот picture, сама подпись — декор."""
     for s in shapes:
         if s.kind not in ("text", "body") or s.chars == 0 or s.chars > 25 or not _has_words(s.text, PHOTO_WORDS):
             continue
@@ -457,7 +440,7 @@ def _mark_photo_zones(shapes: list[ShapeInfo]) -> None:
 
 
 def _cluster_same_size(blocks: list[ShapeInfo], h_tol: float = HEIGHT_TOL) -> list[list[ShapeInfo]]:
-    """Жадная кластеризация по ширине (строго) и высоте (мягко — автоподбор высоты текста плавает)."""
+    """Жадная кластеризация по ширине (строго) и высоте (мягко)."""
     clusters: list[list[ShapeInfo]] = []
     for b in sorted(blocks, key=lambda s: (s.fw, s.fh)):
         for g in clusters:
@@ -480,17 +463,14 @@ def _axis_count(group: list[ShapeInfo], key: Callable[[ShapeInfo], float]) -> in
 
 
 def _is_grid(group: list[ShapeInfo]) -> bool:
-    """Карточки = блоки в ≥ 2 колонках, либо одна колонка «толстых» блоков (заголовок + текст).
-
-    Одна колонка тонких однострочных блоков — это список (содержание, буллеты с иконками).
-    """
+    """Карточки — блоки в ≥ 2 колонках или одна колонка «толстых» блоков; колонка тонких — список."""
     if _axis_count(group, lambda b: b.fx) >= 2:
         return True
     return all(b.fh >= CARD_STACK_MIN_H or b.paragraphs >= 2 for b in group)
 
 
 def _frames_for(group: list[ShapeInfo], shapes: list[ShapeInfo]) -> int:
-    """Сколько блоков группы лежат внутри собственной рамки (roundRect/rect той же кратности)."""
+    """Сколько блоков группы лежат внутри собственной рамки."""
     frames = [s for s in shapes if s.kind == "shape" and not s.fixed and s.area >= 0.01]
     n = 0
     for b in group:
@@ -517,13 +497,12 @@ def _sequence(blocks: list[ShapeInfo], axis: str) -> int:
 
 def build_features(shapes: list[ShapeInfo], index: int, n_slides: int) -> SlideFeatures:
     live = [s for s in shapes if not s.fixed]
-    # бокс с одним глифом («➜» перед пунктом, «•») — маркер, а не текст: слотом не становится
+    # бокс с одним глифом — маркер, а не текст
     texts = [s for s in live if s.is_text and (s.chars > 0 or s.is_placeholder) and not GLYPH_RE.match(s.text)]
 
     title = next((s for s in texts if s.kind == "title"), None)
     if title is None:
-        # заголовок без плейсхолдера: самый крупный короткий текст в верхней зоне;
-        # у обложки (первый слайд) название часто по центру — зона шире
+        # заголовок без плейсхолдера: самый крупный короткий текст в верхней зоне (на обложке — везде)
         zone = COVER_TITLE_ZONE if index == 0 else TITLE_ZONE
         cands = [s for s in texts if s.fy < zone and 0 < s.chars <= TITLE_MAX_CHARS]
         if cands:
@@ -537,9 +516,8 @@ def build_features(shapes: list[ShapeInfo], index: int, n_slides: int) -> SlideF
     sizes = [s.size_pt for s in content if s.size_pt > 0] or ([title.size_pt] if title and title.size_pt else [18.0])
     med = median(sizes)
 
-    # KPI-цифра не мельче основного текста: номера шагов «1 2 3» в кружках 14 pt — не показатели;
-    # крупный короткий текст без цифр («АС» в аватаре) — тоже
-    words = [s.size_pt for s in content if s.size_pt > 0 and not NUMBER_RE.match(s.text)]  # медиана без самих цифр
+    # KPI-цифра заметно крупнее основного текста, иначе это номер шага
+    words = [s.size_pt for s in content if s.size_pt > 0 and not NUMBER_RE.match(s.text)]
     text_med = median(words) if words else med
     numbers = [
         s for s in content
@@ -547,8 +525,7 @@ def build_features(shapes: list[ShapeInfo], index: int, n_slides: int) -> SlideF
             (NUMBER_RE.match(s.text) and s.size_pt >= KPI_MIN_SIZE_RATIO * text_med)
             or (s.size_pt >= KPI_SIZE_RATIO * med and s.chars <= 6 and any(ch.isdigit() for ch in s.text))
         ))
-        # пустой плейсхолдер с кеглем вдвое крупнее текста (HSE: три пустых бокса 96 pt над подписями) —
-        # место под KPI-цифру; как body он вместил бы 4 знака, и подпись метрики туда не ляжет
+        # пустой плейсхолдер с кеглем вдвое крупнее текста — место под KPI-цифру
         or (s.chars == 0 and s.is_placeholder and s.size_pt >= KPI_SIZE_RATIO * med and s.fh < EMPTY_NUMBER_MAX_FH)
     ]
     pics = [s for s in live if s.kind in ("pic", "pic_ph")]
@@ -601,7 +578,7 @@ def _sparse(f: SlideFeatures, max_content: int) -> bool:
 
 
 def _drawn_table(f: SlideFeatures) -> list[ShapeInfo] | None:
-    """Крупнейший кластер одинаковых блоков, похожий на таблицу: ≥3 колонок × ≥3 рядов."""
+    """Крупнейший кластер одинаковых блоков сеткой ≥3 × ≥3."""
     for g in sorted(f.cell_groups, key=len, reverse=True):
         if len(g) >= TABLE_MIN_CELLS and _axis_count(g, lambda b: b.fx) >= 2 and _axis_count(g, lambda b: b.fy) >= 4:
             return g
@@ -609,7 +586,7 @@ def _drawn_table(f: SlideFeatures) -> list[ShapeInfo] | None:
 
 
 def _staircase(group: list[ShapeInfo]) -> bool:
-    """«Лесенка»: блоки идут по диагонали (y монотонно растёт/убывает с x) с заметным перепадом."""
+    """«Лесенка»: блоки идут по диагонали с заметным перепадом."""
     if len(group) < 3:
         return False
     ys = [b.fy for b in sorted(group, key=lambda b: b.fx)]
@@ -684,7 +661,7 @@ def rule_title(f: SlideFeatures) -> Candidate | None:
     elif f.index == 0:
         parts.append((0.5, "первый слайд"))
     elif f.index <= 5:
-        parts.append((0.3, "один из первых слайдов"))  # в деках-примерах титульных вариантов несколько
+        parts.append((0.3, "один из первых слайдов"))
     if f.title_is_big():
         parts.append((0.2, "крупный заголовок"))
     if _sparse(f, 3):
@@ -693,16 +670,14 @@ def rule_title(f: SlideFeatures) -> Candidate | None:
         parts.append((0.1, "имя/должность"))
     if "title" in f.keywords:
         parts.append((0.2, "«название/тема презентации»"))
-    # оглавление и сетки текста в начале колоды не титул: у goslide «Содержание» с 48 пунктами шло вторым слайдом,
-    # «Введение» с тремя абзацами — третьим
+    # оглавление и сетки текста в начале колоды — не титул
     if len(f.content) >= AGENDA_MANY_BLOCKS:
         parts.append((-0.5, f"{len(f.content)} текстовых блоков"))
     elif len(f.content) >= 3 and not f.title_is_big():
         parts.append((-0.3, "несколько текстовых блоков при обычном заголовке"))
     if "agenda" in f.keywords:
         parts.append((-0.3, "«содержание»"))
-    # у титула подзаголовок — строка-две, а не блок в треть слайда: «заголовок + абзац текста» в простом
-    # шаблоне (heading + body на каждом слайде) — это bullets, иначе весь контент уйдёт в подзаголовки
+    # у титула подзаголовок — строка-две; «заголовок + абзац» — это bullets
     if any(c.area >= BODY_BLOCK_AREA for c in f.content):
         parts.append((-0.3, "крупный текстовый блок"))
     return _cand(Archetype.TITLE, parts)
@@ -746,7 +721,7 @@ def rule_agenda(f: SlideFeatures) -> Candidate | None:
     parts: list[tuple[float, str]] = []
     if "agenda" in f.keywords:
         parts.append((0.5, "«содержание/оглавление»"))
-    # список в одну колонку — или в несколько (оглавление в три колонки), если блоки тонкие и короткие
+    # список в одну колонку или в несколько, если блоки тонкие и короткие
     thin = [g for g in f.card_groups if all(b.fh < CARD_STACK_MIN_H and b.chars <= 60 for b in g)]
     lists = [g for g in f.list_groups + thin if len(g) >= 4]
     if lists:
@@ -768,7 +743,7 @@ def rule_kpi(f: SlideFeatures) -> Candidate | None:
     if any(abs(l.cx - num.cx) < 0.15 or abs(l.cy - num.cy) < 0.1 for num in f.numbers for l in labels):
         parts.append((0.1, "подписи рядом с числами"))
     if f.n_cards >= 4 and not all(s.size_pt >= KPI_SIZE_RATIO * f.median_size for s in f.numbers):
-        parts.append((-0.3, "но это номера карточек"))  # цифры вдвое крупнее текста нумерацией не бывают (HSE 96 pt)
+        parts.append((-0.3, "но это номера карточек"))
     if f.sequence_row >= 3 or f.sequence_col >= 3:
         parts.append((-0.3, "числа — нумерация, не показатели"))
     if f.big_pics or _bar_series(f):
@@ -881,7 +856,7 @@ def rule_image_text(f: SlideFeatures) -> Candidate | None:
 
 
 def rule_image_full(f: SlideFeatures) -> Candidate | None:
-    """Всегда ≤ 0.65: картинка-«график», фото или мокап — это различает только VLM."""
+    """Всегда ≤ 0.65: график-картинку от фото и мокапа отличает только VLM."""
     if not f.big_pics or len(f.content) > 2:
         return None
     pic = max(f.big_pics, key=lambda s: s.area)
@@ -927,7 +902,7 @@ def pick(cands: list[Candidate]) -> tuple[Archetype, float, bool]:
     second = cands[1].score if len(cands) > 1 else 0.0
     ambiguous = top.score < AMBIGUOUS_BELOW or round(top.score - second, 2) <= AMBIGUOUS_MARGIN
     if top.archetype == Archetype.FREEFORM and top.score >= 0.9:
-        ambiguous = False  # библиотеки иконок и пустые слайды в VLM не отправляем
+        ambiguous = False  # в VLM не отправляем
     return top.archetype, top.score, ambiguous
 
 
@@ -944,8 +919,7 @@ def _capacity(s: ShapeInfo, box: Box | None = None) -> tuple[int, int]:
 
 
 def _is_visible(sp: etree._Element) -> bool:
-    """Фигура рисуется: своя заливка (solid/grad/blip/patt), обводка без noFill или ссылка на стиль темы
-    (`p:style` с fillRef/lnRef idx > 0). Google-Slides-рамки без заливки и обводки — невидимы."""
+    """Фигура рисуется: своя заливка, обводка или ссылка на стиль темы с idx > 0."""
     sp_pr = sp.find("p:spPr", NS)
     if sp_pr is not None:
         if any(sp_pr.find(f"a:{t}", NS) is not None for t in ("solidFill", "gradFill", "blipFill", "pattFill")):
@@ -965,10 +939,7 @@ def _is_visible(sp: etree._Element) -> bool:
 def _backing_plate(s: ShapeInfo, shapes: list[ShapeInfo]) -> Box | None:
     """Плашка под текстом: фигура без текста, накрывающая начало текстового бокса, но уже его.
 
-    ЛЦТ2026: плейсхолдер заголовка тянется на всю ширину слайда, а видимая цветная плашка —
-    на треть; белый текст за краем плашки пропадает на светлом фоне. Вместимость считаем по
-    пересечению бокса с плашкой.
-    """
+    Текст за краем плашки теряется на фоне, поэтому вместимость считаем по пересечению с ней."""
     for p in shapes:
         if p is s or p.kind != "shape" or p.text or not p.overlaps(s):
             continue
@@ -980,8 +951,7 @@ def _backing_plate(s: ShapeInfo, shapes: list[ShapeInfo]) -> Box | None:
         narrower = (x2 - x1) < s.box.w * PLATE_MAX_SHARE
         if covers_start and narrower:
             return Box(x=x1, y=y1, w=x2 - x1, h=y2 - y1)
-        # «чип»: плашка чуть больше бокса со всех сторон (ЛЦТ2026 slide2: скруглённый прямоугольник вокруг
-        # заголовка) — вторая строка вышла бы за низ плашки; вместимость по высоте плашки от верха бокса
+        # «чип»: плашка чуть больше бокса — вместимость по высоте плашки от верха бокса
         surrounds = (p.box.x2 >= s.box.x2 - s.box.w * 0.1 and p.box.y <= s.box.y + s.box.h * 0.3
                      and p.box.y2 >= s.box.y2 - s.box.h * 0.2 and p.box.h < s.box.h * CHIP_MAX_HEIGHT)
         if covers_start and surrounds and p.visible:
@@ -990,11 +960,7 @@ def _backing_plate(s: ShapeInfo, shapes: list[ShapeInfo]) -> Box | None:
 
 
 def _card_room(s: ShapeInfo, shapes: list[ShapeInfo]) -> Box | None:
-    """Текст внутри карточки: фигура-подложка без текста накрывает бокс целиком и заметно ниже его края.
-
-    В образцах текстовый бокс карточки часто в одну строку (автоподбор высоты), а сама карточка
-    высокая — вместимость считаем до нижнего края карточки с отступом.
-    """
+    """Текст внутри карточки: подложка накрывает бокс целиком и заметно ниже — вместимость до её края."""
     best: ShapeInfo | None = None
     for p in shapes:
         if p is s or p.kind != "shape" or p.text or p.area > CARD_MAX_AREA:
@@ -1010,26 +976,19 @@ def _card_room(s: ShapeInfo, shapes: list[ShapeInfo]) -> Box | None:
 
 
 def _in_edge_zone(s: ShapeInfo) -> bool:
-    """Бокс целиком в полосе колонтитула (строже, чем `_in_edge_band`: подзаголовок под шапкой не трогаем)."""
+    """Бокс целиком в полосе колонтитула (строже, чем `_in_edge_band`)."""
     return s.fy + s.fh <= FIXED_TEXT_ZONE or s.fy >= 1 - FIXED_TEXT_ZONE
 
 
 def _is_background_or_logo(s: ShapeInfo, archetype: Archetype) -> bool:
-    """Картинка-фон (почти весь слайд) на структурных слайдах и мелкая картинка у края (логотип) — не слоты.
-
-    На image_full/image_text полноэкранная картинка — сам слот под иллюстрацию, её не трогаем.
-    """
+    """Картинка-фон на структурных слайдах и логотип у края — не слоты; на image_full/image_text фон — слот."""
     if s.area >= BACKGROUND_PIC_AREA:
         return archetype not in (Archetype.IMAGE_FULL, Archetype.IMAGE_TEXT)
     return s.area <= LOGO_PIC_AREA and (_in_edge_zone(s) or s.fy + s.fh <= 0.2)
 
 
 def _underline_room(s: ShapeInfo, shapes: list[ShapeInfo]) -> Box | None:
-    """Линия-декор под заголовком (goslide, МЭИ, Пифагор): вторая строка заголовка легла бы на неё.
-
-    Ищем коннектор/тонкую фигуру (в т.ч. фиксированную) шириной ≥ половины бокса, пересекающую его по x,
-    в нижней половине бокса или чуть ниже; вместимость считаем до линии, лишних строк не разрешаем.
-    """
+    """Линия-декор под заголовком: вторая строка легла бы на неё, поэтому вместимость считаем до линии."""
     best: ShapeInfo | None = None
     for p in shapes:
         if p is s or p.kind != "connector" or p.box.w < s.box.w * 0.5:
@@ -1051,8 +1010,7 @@ def _slot(s: ShapeInfo, kind: SlotKind, shapes: list[ShapeInfo] | None = None) -
         room = None
         if shapes and kind == SlotKind.TITLE:
             room = _backing_plate(s, shapes)
-            # плашка уже бокса: текст переносится по краю бокса, а не плашки, и второй строки в плашке
-            # не будет — лишняя строка запрещена, заголовок ужимается/режется под одну строку плашки
+            # текст переносится по краю бокса, а не плашки — лишних строк не разрешаем
             hard_lines = room is not None
             if (under := _underline_room(s, shapes)) is not None:
                 room, hard_lines = (under if room is None else Box(x=room.x, y=room.y, w=room.w, h=min(room.h, under.h))), True
@@ -1085,7 +1043,7 @@ def build_slots(f: SlideFeatures, archetype: Archetype) -> list[Slot]:
         elif archetype == Archetype.QUOTE:
             kind = SlotKind.BODY if s.chars >= 60 else SlotKind.CAPTION
         elif _in_edge_zone(s):
-            # одиночный текст в шапке/подвале (подпись раздела в плашке РГУП) — не место для буллета
+            # одиночный текст в шапке/подвале — не место для буллета
             kind = SlotKind.CAPTION
         elif (s.bold and s.chars <= 40) or (s.chars <= 30 and s.fh < 0.07 and (id(s) in grouped or s.size_pt <= f.median_size)):
             kind = SlotKind.LABEL
@@ -1107,7 +1065,7 @@ def build_slots(f: SlideFeatures, archetype: Archetype) -> list[Slot]:
             if s in f.icons:
                 slots.append(_slot(s, SlotKind.ICON))
             elif s.kind == "pic" and _is_background_or_logo(s, archetype):
-                continue  # фон обложки/финала и логотип в колонтитуле — декор, иллюстрацию туда не ставим
+                continue  # фон и логотип — декор
             elif s.kind == "pic_ph" or s.area >= PICTURE_MIN_AREA:
                 slots.append(_slot(s, SlotKind.PICTURE))
         elif s.kind == "sldnum":
@@ -1115,10 +1073,9 @@ def build_slots(f: SlideFeatures, archetype: Archetype) -> list[Slot]:
         elif s.kind == "footer":
             slots.append(_slot(s, SlotKind.FOOTER))
         elif s.kind == "date":
-            # плейсхолдер даты в контентной зоне — год над событием таймлайна (VK Education slide42, экспорт
-            # Google Slides), а не поле колонтитула: это подпись, иначе «2010…2016» остаются на слайде про шаги
+            # плейсхолдер даты в контентной зоне — подпись события таймлайна, а не поле колонтитула
             slots.append(_slot(s, SlotKind.DATE if _in_edge_zone(s) else SlotKind.LABEL, f.shapes))
-    # таблица/диаграмма из фигур: десятки ячеек или столбцов → один слот, куда встанет нативный объект
+    # таблица/диаграмма из фигур → один слот под нативный объект
     if archetype == Archetype.TABLE and not f.tables and (cells := _drawn_table(f)):
         slots = _collapse(slots, cells, SlotKind.TABLE)
     if archetype == Archetype.CHART and not f.charts and (bars := _bar_series(f)):
@@ -1153,10 +1110,7 @@ def classify_slide(ctx: PartCtx, index: int, n_slides: int, fixed_sigs: set[tupl
 
 
 def shapes_summary(p: SlideProfile, limit: int = 60, max_rows: int = MAX_SUMMARY_ROWS) -> str:
-    """Список фигур для VLM и отладки: id | kind | x,y w×h | кегль | текст.
-
-    Таблицы из 80 ячеек и библиотеки иконок режем до max_rows строк — иначе ответ модели не влезает в max_tokens.
-    """
+    """Список фигур для VLM и отладки: id | kind | x,y w×h | кегль | текст; не больше max_rows строк."""
     rows = []
     hidden: Counter[str] = Counter()
     for s in p.features.shapes:
@@ -1186,7 +1140,7 @@ def refine_with_vlm(p: SlideProfile, client: LLMClient, png: Path) -> SlideProfi
             archetypes="\n".join(f"- {a.value}: {ARCHETYPE_HINTS[a]}" for a in Archetype),
             shapes_summary=shapes_summary(p),
         )
-    except Exception as e:  # noqa: BLE001 — VLM не должна ронять парсинг
+    except Exception as e:  # noqa: BLE001
         p.tags = [f"vlm_error: {str(e)[:80]}"]
         return p
     if not isinstance(res, dict):
@@ -1195,11 +1149,7 @@ def refine_with_vlm(p: SlideProfile, client: LLMClient, png: Path) -> SlideProfi
 
 
 def apply_vlm(p: SlideProfile, res: dict) -> SlideProfile:
-    """Наложить ответ template_tagger на профиль правил (архетип, теги, роли слотов, декор).
-
-    Отделено от вызова, чтобы кэш разметки (`parsing/exemplars`) хранил только ответ модели,
-    а слоты всегда пересчитывались текущими правилами.
-    """
+    """Наложить ответ template_tagger на профиль правил; кэш хранит только ответ модели."""
     p.vlm_raw = res
     p.source = "vlm"
     try:
@@ -1217,14 +1167,13 @@ def apply_vlm(p: SlideProfile, res: dict) -> SlideProfile:
     shapes_by_id = {s.id: s for s in p.features.shapes}
     for slot in p.slots:
         if slot.id in decor and slot.kind != protected:
-            continue  # схлопнутый слот таблицы/диаграммы модель иногда считает декором — его не отдаём
+            continue  # схлопнутый слот таблицы/диаграммы модель иногда считает декором
         role = roles.get(slot.id)
         if role in {k.value for k in SlotKind} and slot.kind != protected:
             kind = SlotKind(role)
             shape = shapes_by_id.get(slot.id)
             if kind == SlotKind.DATE and slot.placeholder_type != "dt" and shape is not None and not _in_edge_zone(shape):
-                # «2010» над событием таймлайна модель зовёт date; как DATE слот не заполняется и не чистится
-                # (поле колонтитула) — годы образца остались бы на слайде про шаги. Это подпись события.
+                # дата в контентной зоне — подпись события таймлайна, а не поле
                 kind = SlotKind.LABEL
             slot.kind = kind
         kept.append(slot)
@@ -1235,13 +1184,8 @@ def apply_vlm(p: SlideProfile, res: dict) -> SlideProfile:
 
 
 def _normalize_vlm_slots(slots: list[Slot], p: SlideProfile, decor: set[str] | None = None) -> list[Slot]:
-    """Модель иногда ставит title на имя спикера или chart на каждый столбец нарисованной диаграммы.
-
-    Заголовок — один (плейсхолдер title, если он есть); повторные → label. Несколько chart/table-слотов
-    на обычных фигурах схлопываются в один слот с объединённым боксом — туда встанет нативный объект.
-    Chart/table на крошечной фигуре (число в центре нарисованного кольца) растягивается на декор вокруг
-    (`decor_ids` модели) — иначе нативная диаграмма встанет в бокс цифры, а нарисованное кольцо останется.
-    """
+    """Поправить типичные ошибки модели: один title, chart/table-слоты схлопнуть в один бокс, крошечный
+    data-слот растянуть на декор вокруг."""
     title_id = p.features.title.id if p.features.title is not None else None
     titles = [s for s in slots if s.kind == SlotKind.TITLE]
     if len(titles) > 1:
@@ -1335,7 +1279,7 @@ def profiles_json(profiles: list[SlideProfile]) -> list[dict]:
             "source": p.source, "ambiguous": p.ambiguous, "rules_archetype": p.rules_archetype.value if p.rules_archetype else None,
             "candidates": [str(c) for c in p.candidates[:4]], "tags": p.tags,
             "slots": [s.model_dump() for s in p.slots], "fixed": p.fixed_ids, "shapes": shapes_summary(p),
-            "vlm": p.vlm_raw,  # ответ template_tagger — единственное, что берётся из кэша при загрузке
+            "vlm": p.vlm_raw,  # единственное, что берётся из кэша при загрузке
         }
         for p in profiles
     ]

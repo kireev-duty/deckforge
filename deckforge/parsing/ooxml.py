@@ -1,5 +1,4 @@
-"""Шим обратной совместимости: OOXML-чтение живёт в core (core/ooxml.py — геометрия и идентификация фигур,
-core/package.py — пакет, тема, цепочки наследования). Модули parsing/ импортируют отсюда как раньше."""
+"""Шим обратной совместимости: OOXML-чтение живёт в core/ooxml.py и core/package.py."""
 
 from __future__ import annotations
 

@@ -1,11 +1,6 @@
 """Низкоуровневое чтение .pptx через lxml: части, связи, тема, цепочки наследования.
 
-Общий фундамент для parsing/ (токены, классификатор, образцы) и audit/ (проверка сгенерированной
-колоды теми же правилами резолва). Ничего не знает о TemplateDNA — только OOXML, поэтому живёт в core.
-
-Ключевая идея: атрибуты текста (шрифт, кегль, цвет) редко заданы на самом run'е —
-они наследуются: run → a:pPr/a:defRPr → lstStyle фигуры → плейсхолдер лейаута →
-плейсхолдер мастера → p:txStyles мастера → тема. Здесь эта цепочка собирается явно.
+Атрибуты текста наследуются: run → defRPr → lstStyle фигуры → плейсхолдер лейаута → мастера → txStyles → тема.
 """
 
 from __future__ import annotations
@@ -26,17 +21,17 @@ SLIDE_RE = r"ppt/slides/slide\d+\.xml"
 LAYOUT_RE = r"ppt/slideLayouts/slideLayout\d+\.xml"
 MASTER_RE = r"ppt/slideMasters/slideMaster\d+\.xml"
 
-# Цвета, для которых в теме есть запись; sysClr/prstClr резолвятся отдельно.
+# цвета, для которых в теме есть запись
 THEME_COLOR_KEYS = ("dk1", "lt1", "dk2", "lt2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6", "hlink", "folHlink")
 DEFAULT_CLR_MAP = {"bg1": "lt1", "tx1": "dk1", "bg2": "lt2", "tx2": "dk2"}
 
-# Ограниченный словарь prstClr — в шаблонах встречаются только базовые.
+# prstClr — только базовые
 PRESET_COLORS = {
     "black": "000000", "white": "FFFFFF", "red": "FF0000", "green": "008000", "blue": "0000FF",
     "yellow": "FFFF00", "gray": "808080", "grey": "808080", "darkGray": "A9A9A9", "lightGray": "D3D3D3",
 }
 
-FillList = list[tuple[str, float]]  # [(hex, вес)] — для градиента несколько стопов
+FillList = list[tuple[str, float]]  # [(hex, вес)]
 
 
 def _num(name: str) -> int:
@@ -330,7 +325,7 @@ class PartCtx:
             if lst is not None and (d := lst.find(f"{lvl_tag}/a:defRPr", NS)) is not None:
                 chain.append(d)
             if ph is not None:
-                # слайд наследует от лейаута и мастера, лейаут — только от мастера, мастер — ни от кого
+                # слайд наследует от лейаута и мастера, лейаут — от мастера
                 parents = {"slides": (self.layout, self.master), "layouts": (self.master,)}.get(self.source, ())
                 for root in parents:
                     target = self.find_placeholder(root, ph)
@@ -339,7 +334,7 @@ class PartCtx:
                             chain.append(d)
             style = "titleStyle" if ph and ph[0] in ("title", "ctrTitle") else ("bodyStyle" if ph else "otherStyle")
         else:
-            style = "otherStyle"  # текст таблиц и т. п.
+            style = "otherStyle"
         tx = self.master.find("p:txStyles", NS)
         if tx is not None:
             for st in (style, "otherStyle"):
@@ -406,7 +401,7 @@ def owner_shape(el: etree._Element) -> etree._Element | None:
 
 
 def font_scale(sp: etree._Element | None) -> float:
-    """a:normAutofit/@fontScale — фактическое уменьшение кегля PowerPoint'ом."""
+    """a:normAutofit/@fontScale — фактическое уменьшение кегля редактором."""
     if sp is None:
         return 1.0
     na = sp.find("p:txBody/a:bodyPr/a:normAutofit", NS)

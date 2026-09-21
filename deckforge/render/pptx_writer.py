@@ -1,21 +1,7 @@
 """DeckIR → .pptx клонированием слайдов-образцов шаблона.
 
-Почему клонирование, а не сборка по лейаутам: в датасете лейауты почти пустые, весь дизайн
-живёт в свободных фигурах слайдов. Единственный способ воспроизвести стиль буквально —
-скопировать XML слайда-образца и подменить содержимое слотов.
-
-Механика:
-1. Открываем сам шаблон через python-pptx — мастера, лейауты, тема и встроенные шрифты остаются как есть.
-2. Удаляем все исходные слайды из p:sldIdLst (их части остаются в памяти как источник образцов;
-   на диск попадают только части, достижимые из презентации).
-3. Для каждого SlideIR добавляем слайд с лейаутом образца и заменяем его p:cSld + p:clrMapOvr
-   глубокой копией исходных.
-4. Заполняем слоты по slot_id (= p:cNvPr/@id): текст — новые абзацы с rPr/pPr образца, картинки —
-   подмена blip с center-crop, chart/table — нативные объекты python-pptx вместо фигур образца.
-5. Переносим связи (rels): медиа — общие части, chart/diagram/ole — глубокая копия частей
-   (одному образцу может соответствовать несколько слайдов колоды).
-
-Ничего не растеризуется: все объекты остаются редактируемыми.
+Выходной файл — сам шаблон: исходные слайды отвязываются, для каждого SlideIR копируется p:cSld образца,
+слоты заполняются по slot_id, связи переносятся с переписыванием rId. Ничего не растеризуется.
 """
 
 from __future__ import annotations
@@ -47,21 +33,20 @@ TEXT_KINDS = {
     SlotKind.FOOTER, SlotKind.DATE, SlotKind.OTHER,
 }
 PICTURE_KINDS = {SlotKind.PICTURE, SlotKind.ICON}
-# слоты, которые при отсутствии элемента не очищаем: номер слайда/колонтитулы — поля, а не контент
+# поля (номер, колонтитулы) при отсутствии элемента не очищаем
 KEEP_IF_UNFILLED = {SlotKind.SLIDE_NUMBER, SlotKind.FOOTER, SlotKind.DATE}
-# плейсхолдеры-поля лейаута, чей текст (‹#›, дата) нужен, — подсказки чистим только у контентных
 LAYOUT_FIELD_PH = {"sldNum", "dt", "ftr"}
-# связи, которые новый слайд получает сам (лейаут) или которые не имеют смысла в копии
+# связи, которые в копии не нужны
 SKIP_RELTYPES = {RT.SLIDE_LAYOUT, RT.NOTES_SLIDE, RT.SLIDE}
-# бинарные части, которые можно разделять между слайдами, а не копировать
+# бинарные части можно разделять между слайдами, а не копировать
 SHARED_RELTYPES = {RT.IMAGE, RT.MEDIA, RT.VIDEO, RT.AUDIO, RT.FONT}
 R_ATTRS = (R + "embed", R + "id", R + "link", R + "pict")
 FILL_TAGS = ("noFill", "solidFill", "gradFill", "blipFill", "pattFill", "grpFill")
 BULLET_TAGS = ("buNone", "buChar", "buAutoNum", "buBlip")
-DEFAULT_BULLET_MARL = 285750  # 0.3125" — как в Office по умолчанию
-DARK_BG_LUMINANCE = 0.45  # ниже — фон считаем тёмным, нативные таблицы/диаграммы получают светлый текст
+DEFAULT_BULLET_MARL = 285750  # 0.3125", как в Office
+DARK_BG_LUMINANCE = 0.45  # ниже — фон тёмный, нативным объектам светлый текст
 LIGHT_TEXT = "FFFFFF"
-# схемные цвета фона без резолва темы: светлые/тёмные по роли (tx1/dk1 — тёмный текст → тёмный фон и наоборот)
+# схемные цвета фона по роли, без резолва темы
 SCHEME_LIGHT = {"bg1", "lt1", "bg2", "lt2"}
 SCHEME_DARK = {"tx1", "dk1", "tx2", "dk2"}
 
@@ -91,16 +76,13 @@ class DeckWriter:
         self.prs = Presentation(str(self.template_path))
         self.package = self.prs.part.package
         self.src_parts: list[SlidePart] = [s.part for s in self.prs.slides]
-        self._cloned: dict[Part, Part] = {}  # исходная часть → копия (chart/xlsx/…), чтобы не плодить дубли внутри слайда
+        self._cloned: dict[Part, Part] = {}  # исходная часть → копия в пределах слайда
         self._n_source = len(self.src_parts)
 
     def _detach_source_slides(self) -> None:
         """Убрать исходные слайды из показа — только перед сохранением.
 
-        Пока они в p:sldIdLst, все их части достижимы, и next_partname не выдаст новой картинке/чарту
-        имя, занятое частью образца (иначе в zip окажутся две записи с одним именем — LibreOffice
-        такой файл не открывает). После отвязки недостижимые части в файл не попадают.
-        """
+        Пока они в p:sldIdLst, их части достижимы и next_partname не выдаст занятое имя."""
         sld_id_lst = self.prs.slides._sldIdLst
         for sld_id in list(sld_id_lst)[: self._n_source]:
             self.prs.part.drop_rel(sld_id.rId)
@@ -108,14 +90,10 @@ class DeckWriter:
         self._n_source = 0
 
     def _strip_layout_prompts(self) -> None:
-        """Сделать контентные плейсхолдеры лейаутов невидимыми: без текста-подсказки и без заливки/обводки.
+        """Сделать контентные плейсхолдеры лейаутов невидимыми: без подсказки, заливки и обводки.
 
-        PowerPoint плейсхолдеры лейаута на слайдах не показывает, а LibreOffice рисует их в PDF/PNG
-        за каждым слайдом, где у лейаута есть плейсхолдер без пары на слайде: «Образец текста»
-        и белые карточки с gradFill (ЛЦТ2026: «Стадии», «Статистика»). Геометрия остаётся — слайды
-        наследуют позицию; наследуемую заливку слайды получают явно (`_materialize_placeholders`)
-        до этого шага. Поля (номер, дата, колонтитул) не трогаем.
-        """
+        PowerPoint их на слайдах не показывает, а LibreOffice рисует в PDF/PNG, если у плейсхолдера
+        нет пары на слайде. Геометрия остаётся, наследуемую заливку слайды уже получили явно."""
         for layout in self.prs.slide_layouts:
             for sp in layout.shapes._spTree.iter(P + "sp"):
                 ph = sp.find("p:nvSpPr/p:nvPr/p:ph", NS)
@@ -130,7 +108,7 @@ class DeckWriter:
                 for child in list(sp_pr):
                     if localname(child) in FILL_TAGS or localname(child) == "ln":
                         sp_pr.remove(child)
-                if sp.find("p:style", NS) is not None:  # заливка/обводка по ссылке на тему — тоже гасим
+                if sp.find("p:style", NS) is not None:  # заливка по ссылке на тему — тоже гасим
                     no_fill = etree.Element(A + "noFill")
                     _insert_after_geom(sp_pr, no_fill)
                     ln = etree.Element(A + "ln")
@@ -139,29 +117,22 @@ class DeckWriter:
 
     @staticmethod
     def _drop_empty_placeholders(slide: Slide) -> None:
-        """Убрать плейсхолдеры слайда, в которых после заполнения ничего нет: ни текста, ни поля, ни картинки.
+        """Убрать плейсхолдеры слайда, в которых после заполнения ничего нет.
 
-        Такие остаются от образца, где автор шаблона сам оставил пустые плейсхолдеры (VK Education,
-        closing: QR-код и подпись под ним; слот-«поле» не заполняется по KEEP_IF_UNFILLED). В показе и в
-        PDF их не видно, но в редакторе PowerPoint они показывают подсказку лейаута («Текст слайда»,
-        иконка вставки картинки) — колода выглядит недоделанной. Поля (номер, дата) не трогаем.
-        Лейаутные пары стёрты `_strip_layout_prompts`, так что LibreOffice на месте удалённого ничего не нарисует.
-        """
+        В показе их не видно, но в редакторе они показывают подсказку лейаута. Поля не трогаем."""
         for sp in list(slide.shapes._spTree.iter(P + "sp")):
             ph = sp.find("p:nvSpPr/p:nvPr/p:ph", NS)
             if ph is None or ph.get("type") in LAYOUT_FIELD_PH:
                 continue
             has_text = any((t.text or "").strip() for t in sp.iter(A + "t")) or sp.find(".//a:fld", NS) is not None
             has_image = sp.find(".//a:blip", NS) is not None
-            # своя заливка/обводка на слайде — это уже элемент дизайна, а не пустая подсказка
+            # своя заливка/обводка — уже элемент дизайна, а не пустая подсказка
             if not has_text and not has_image and not _has_visible_frame(sp):
                 _remove(sp)
 
     @staticmethod
     def _materialize_placeholders(slide: Slide) -> None:
-        """Перенести в плейсхолдеры слайда то, что они наследуют от плейсхолдеров лейаута: xfrm,
-        заливку, обводку. После этого лейаут можно «погасить» (см. `_strip_layout_prompts`), а вид
-        слайда в PowerPoint не меняется — наследование заменено явными значениями."""
+        """Перенести в плейсхолдеры слайда наследуемые от лейаута xfrm, заливку и обводку."""
         layout_tree = slide.slide_layout.shapes._spTree
         by_idx: dict[str, etree._Element] = {}
         by_type: dict[str, etree._Element] = {}
@@ -221,7 +192,7 @@ class DeckWriter:
         src = self.src_parts[exemplar.source_index]
         slide = self._clone_slide(src)
         self._cloned = {}
-        # связи переносим до заполнения: иначе rId новых картинок/чартов коллидируют с rId образца
+        # связи переносим до заполнения, иначе rId новых частей коллидируют с rId образца
         self._copy_rels(src, slide.part, slide.part._element)
         self._fill(slide, slide_ir, exemplar)
         self._drop_empty_placeholders(slide)
@@ -245,7 +216,7 @@ class DeckWriter:
                 root.replace(old, new)
             else:
                 root.append(new)
-        # у Slide кэшируется shapes со ссылкой на старый spTree — нужен свежий объект над новым деревом
+        # у Slide закэширован shapes над старым spTree
         return Slide(root, slide.part)
 
     # ── связи ──
@@ -253,9 +224,7 @@ class DeckWriter:
     def _copy_rels(self, src: Part, dst: Part, xml: etree._Element, only_used: bool = True) -> None:
         """Перенести связи src на dst и переписать rId в xml.
 
-        Для слайда переносим только те, на которые ещё ссылается XML (удалённая фигура не тянет
-        свою картинку/чарт); для чарта — все, т.к. chartStyle/colorStyle — неявные связи без r:id.
-        """
+        Для слайда — только те, на которые ссылается XML; для чарта — все (chartStyle без r:id)."""
         used = {el.get(attr) for el in xml.iter() for attr in R_ATTRS if el.get(attr)}
         mapping: dict[str, str | None] = {}
         for rId, rel in list(src.rels.items()):
@@ -267,7 +236,7 @@ class DeckWriter:
                 mapping[rId] = None
             elif rel.reltype in SHARED_RELTYPES:
                 mapping[rId] = dst.relate_to(rel.target_part, rel.reltype)
-            else:  # chart, diagram, oleObject, package (xlsx) — у каждой копии слайда свой экземпляр
+            else:  # chart, diagram, oleObject, xlsx — у каждой копии свой экземпляр
                 mapping[rId] = dst.relate_to(self._clone_part(rel.target_part), rel.reltype)
         for el in list(xml.iter()):
             for attr in R_ATTRS:
@@ -276,7 +245,7 @@ class DeckWriter:
                     continue
                 new = mapping[old]
                 if new is None:
-                    # ссылка на другой слайд исходника: гиперссылку убираем, остальное — оставить без связи нельзя
+                    # ссылка на другой слайд исходника: гиперссылку убираем
                     if localname(el) in ("hlinkClick", "hlinkHover", "hlinkMouseOver"):
                         el.getparent().remove(el)
                     else:
@@ -286,18 +255,14 @@ class DeckWriter:
 
     @staticmethod
     def _prune_rels(part: Part) -> None:
-        """Убрать связи, на которые после заполнения не ссылается XML (удалённая фигура образца).
-
-        Неявные связи (лейаут, notesSlide) не имеют r:id в XML — их не трогаем. Части, оставшиеся
-        без связей, становятся недостижимыми и в файл не попадают.
-        """
+        """Убрать связи, на которые после заполнения не ссылается XML; неявные (лейаут, notes) не трогаем."""
         used = {el.get(attr) for el in part._element.iter() for attr in R_ATTRS if el.get(attr)}
         for rId, rel in list(part.rels.items()):
             if rId not in used and rel.reltype not in SKIP_RELTYPES:
                 part.rels.pop(rId)
 
     def _clone_part(self, part: Part) -> Part:
-        """Глубокая копия части с новым именем; связи копируются рекурсивно (xlsx чарта, стили)."""
+        """Глубокая копия части с новым именем; связи копируются рекурсивно."""
         if part in self._cloned:
             return self._cloned[part]
         new = type(part).load(self.package.next_partname(_partname_template(part.partname)),
@@ -329,8 +294,7 @@ class DeckWriter:
                 self._replace_with_native(slide, sp, el, shapes, slot_ids, set(exemplar.fixed))
                 filled.add(el.slot_id)
             elif el.kind in (SlotKind.PICTURE, SlotKind.ICON) and el.image_path:
-                # файла нет или PIL его не читает (обрыв T2I, битый кэш) — слот остаётся незаполненным
-                # и чистится ниже, как без картинки; колода собирается
+                # битый файл — слот остаётся незаполненным и чистится ниже
                 try:
                     self._fill_picture(slide, sp, el, shapes, slot_ids)
                 except (OSError, ValueError) as e:
@@ -340,8 +304,7 @@ class DeckWriter:
             elif el.paragraphs:
                 fill_text(sp, el.paragraphs, el.style_overrides)
                 filled.add(el.slot_id)
-        # незаполненные текстовые слоты очищаем, чтобы не осталось текста-заглушки образца;
-        # у пустой рамки под картинку — подпись «Вставить фото» внутри самой рамки
+        # незаполненные слоты очищаем, чтобы не остался текст образца
         unfilled: list[Box] = []
         for slot in exemplar.slots:
             if slot.id in filled or slot.kind in KEEP_IF_UNFILLED or slot.kind not in TEXT_KINDS | PICTURE_KINDS:
@@ -350,7 +313,6 @@ class DeckWriter:
             if sp is None:
                 continue
             if slot.kind in PICTURE_KINDS:
-                # подписи зоны («Вставить фото») убираем, пустой плейсхолдер — тоже (рендерится подсказкой)
                 self._clear_picture_captions(sp, el_box=slot.box, shapes=shapes, slot_ids=slot_ids)
                 if sp.find("p:nvSpPr/p:nvPr/p:ph", NS) is not None:
                     _remove(sp)
@@ -359,22 +321,19 @@ class DeckWriter:
                 continue
             unfilled.append(slot.box)
             if sp.find("p:nvSpPr/p:nvPr/p:ph", NS) is not None or _has_visible_frame(sp):
-                # пустой текстовый плейсхолдер в редакторе показывает подсказку лейаута, а LibreOffice
-                # рисует в PDF «Образец текста» — удаляем целиком, а не очищаем (I02 empty_placeholder);
-                # слот с собственной заливкой/обводкой без текста — пустая карточка, её тоже убираем
+                # пустой плейсхолдер показывает подсказку, слот с рамкой — пустую карточку: удаляем целиком
                 _remove(sp)
             elif sp.find("p:txBody", NS) is not None:
                 clear_text(sp)
         fixed = set(exemplar.fixed)
         self._remove_empty_containers(shapes, unfilled, [e.box for e in slide_ir.elements if e.slot_id in filled],
                                       slot_ids, fixed)
-        # текст образца вне слотов и фиксированных элементов («Вставить фото», названия продуктов,
-        # сноски) в колоду не переносим; короткие декоративные подписи вроде «01» оставляем
+        # текст образца вне слотов и фиксированных элементов не переносим; короткий декор вроде «01» оставляем
         for sid, sp in shapes.items():
             if sid in slot_ids or sp.getparent() is None or localname(sp) != "sp" or sp.find("p:txBody", NS) is None:
                 continue
             text = shape_text(sp)
-            # «Вставить / фото» в двух абзацах — заглушка даже у «фиксированного» элемента; абзацы склеиваем пробелом
+            # заглушка в нескольких абзацах — тоже заглушка, даже у «фиксированного» элемента
             if is_placeholder_text(" ".join(t.text or "" for t in sp.iter(A + "t"))):
                 clear_text(sp)
             elif sid not in fixed and _is_sample_text(text):
@@ -384,12 +343,7 @@ class DeckWriter:
         self, shapes: dict[str, etree._Element], unfilled: list[Box], filled: list[Box],
         slot_ids: set[str], fixed: set[str],
     ) -> None:
-        """Убрать фон карточки/строки образца, в которой не осталось ни одного заполненного слота.
-
-        Контейнер — не-слот и не фиксированная фигура, чей бокс накрывает центр хотя бы одного
-        незаполненного слота и ни одного заполненного; вместе с ним уходит его декор (иконка, номер) —
-        всё не-слотовое с центром внутри. Фон на большую часть слайда контейнером не считаем.
-        """
+        """Убрать фон карточки образца, в которой не осталось заполненных слотов, вместе с её декором."""
         if not unfilled:
             return
         max_area = 0.5 * self.prs.slide_width * self.prs.slide_height
@@ -415,7 +369,7 @@ class DeckWriter:
         self, slide: Slide, sp: etree._Element, el: Element, shapes: dict[str, etree._Element],
         slot_ids: set[str], fixed: set[str],
     ) -> None:
-        """Убрать фигуру слота (и для «нарисованной» диаграммы — всё, что попало в её бокс), вставить нативный объект."""
+        """Убрать фигуру слота (для «нарисованной» диаграммы — всё в её боксе), вставить нативный объект."""
         keep = (slot_ids - {el.slot_id}) | fixed
         _remove(sp)
         for sid, other in shapes.items():
@@ -426,8 +380,7 @@ class DeckWriter:
         overrides = dict(el.style_overrides)
         lum = background_luminance(slide)
         if lum is not None and lum < DARK_BG_LUMINANCE:
-            # тёмный образец (фон-картинка ЛЦТ2026, чёрный WorkSpace): текст палитры «text» на нём не виден —
-            # подписи таблицы/осей белые, как текст самого образца
+            # на тёмном фоне текст палитры не виден — подписи белые
             overrides["text_color"] = LIGHT_TEXT
         if el.chart:
             add_chart(slide, el.chart, el.box, overrides)
@@ -467,9 +420,7 @@ class DeckWriter:
 
     @staticmethod
     def _clear_picture_captions(sp: etree._Element, el_box: Box, shapes: dict[str, etree._Element], slot_ids: set[str]) -> None:
-        """Подписи зоны картинки («Вставить фото», «QR-code») — отдельные короткие текстовые фигуры поверх рамки.
-        Убираем их и когда картинка вставлена, и когда рамка осталась пустой (даже если классификатор
-        счёл подпись фиксированным элементом — она повторяется на многих слайдах-образцах)."""
+        """Убрать подписи зоны картинки («Вставить фото») — короткие текстовые фигуры поверх рамки."""
         bb = absolute_bbox(sp)
         zone = Box(x=bb[0], y=bb[1], w=bb[2], h=bb[3]) if bb else el_box
         for sid, other in shapes.items():
@@ -577,7 +528,7 @@ def _template_rpr(tmpl: etree._Element | None) -> etree._Element:
                 rpr.tag = A + "rPr"
         if rpr is not None:
             rpr = copy.deepcopy(rpr)
-            # гиперссылки образца на новый текст не переносим
+            # гиперссылки образца не переносим
             for h in rpr.findall("a:hlinkClick", NS) + rpr.findall("a:hlinkMouseOver", NS):
                 rpr.remove(h)
             return rpr
@@ -684,7 +635,7 @@ def _set_blip(blip_fill: etree._Element, rId: str, src_rect: tuple[int, int, int
         blip = etree.Element(A + "blip")
         blip_fill.insert(0, blip)
     blip.set(R + "embed", rId)
-    for c in list(blip):  # эффекты образца (duotone, alpha) к новой картинке не относятся
+    for c in list(blip):  # эффекты образца к новой картинке не относятся
         blip.remove(c)
     old = blip_fill.find("a:srcRect", NS)
     if old is not None:
@@ -704,12 +655,7 @@ def _set_blip(blip_fill: etree._Element, rId: str, src_rect: tuple[int, int, int
 
 
 def background_luminance(slide: Slide) -> float | None:
-    """Яркость фона слайда 0..1 (0 — чёрный): свой `p:bg`, иначе лейаута, иначе мастера.
-
-    Картинка-фон — средняя яркость уменьшенной копии (Pillow); сплошная заливка — по srgbClr или по роли
-    схемного цвета (bg1 светлый, tx1 тёмный); градиент — по первой точке. None — определить нельзя
-    (схемный цвет вне известных ролей, нет фона совсем): вызывающий оставляет цвет палитры.
-    """
+    """Яркость фона слайда 0..1 (свой `p:bg`, иначе лейаута, иначе мастера); None — определить нельзя."""
     for part in (slide.part, slide.slide_layout.part, slide.slide_layout.slide_master.part):
         bg = part._element.find(".//p:cSld/p:bg", NS)
         if bg is None:
@@ -729,14 +675,14 @@ def _fill_luminance(bg: etree._Element, part: Part) -> float | None:
             with Image.open(BytesIO(image_part.blob)) as im:
                 small = im.convert("L").resize((32, 18))
                 return ImageStat.Stat(small).mean[0] / 255.0
-        except Exception as e:  # noqa: BLE001 — фон не главное: не падать из-за экзотической картинки
+        except Exception as e:  # noqa: BLE001
             log.debug("фон-картинка не прочитана: %s", e)
             return None
     clr = bg.find(".//a:solidFill/*", NS)
     if clr is None:
         clr = bg.find(".//a:gradFill/a:gsLst/a:gs/*", NS)
     if clr is None:
-        clr = bg.find("p:bgRef/*", NS)  # ссылка на стиль фона мастера с цветом
+        clr = bg.find("p:bgRef/*", NS)
     if clr is None:
         return None
     if localname(clr) == "srgbClr":
@@ -773,7 +719,7 @@ def _insert_after_geom(sp_pr: etree._Element, el: etree._Element) -> None:
 
 
 def _has_visible_frame(sp: etree._Element) -> bool:
-    """У фигуры своя заливка или обводка (spPr) — без текста она останется пустой рамкой/карточкой."""
+    """У фигуры своя заливка или обводка — без текста она останется пустой рамкой."""
     sp_pr = sp.find("p:spPr", NS)
     if sp_pr is None:
         return False
@@ -782,7 +728,7 @@ def _has_visible_frame(sp: etree._Element) -> bool:
     ln = sp_pr.find("a:ln", NS)
     if ln is not None:
         return ln.find("a:noFill", NS) is None and any(localname(c) in ("solidFill", "gradFill") for c in ln)
-    # заливка/обводка по ссылке на тему (p:style): idx="0" — «нет», остальное — видимая рамка
+    # p:style: idx="0" — нет заливки/обводки
     style = sp.find("p:style", NS)
     if style is not None and not any(localname(c) == "noFill" for c in sp_pr):
         for ref in ("a:lnRef", "a:fillRef"):
@@ -793,7 +739,7 @@ def _has_visible_frame(sp: etree._Element) -> bool:
 
 
 def _is_sample_text(text: str) -> bool:
-    """Текст-образец (слова), а не декор («01», «→», «%»): хотя бы два буквенных символа."""
+    """Текст-образец, а не декор: хотя бы два буквенных символа."""
     return sum(ch.isalpha() for ch in text) >= 2
 
 

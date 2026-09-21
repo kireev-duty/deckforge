@@ -1,7 +1,4 @@
-"""Нативные таблицы python-pptx из TableSpec.
-
-Минимальная версия: шапка с заливкой accent и белым жирным текстом, тело без банд и без
-Office-стиля по умолчанию (иначе LibreOffice/PowerPoint рисуют синюю «Medium Style 2»).
+"""Нативные таблицы python-pptx из TableSpec: шапка в цвете accent, тело без Office-стиля по умолчанию.
 
 style_overrides: font, size_pt, text_color, accent, header_fill, header_text_color.
 """
@@ -44,8 +41,7 @@ def add_table(slide: Slide, spec: TableSpec, box: Box, overrides: dict | None = 
     header_fill = _rgb(overrides.get("header_fill") or overrides.get("accent"), "0077FF")
     header_text = _rgb(overrides.get("header_text_color"), "FFFFFF")
     body_text = _rgb(overrides.get("text_color"), "212121")
-    # строки не растягиваем на весь бокс (слот диаграммы выше таблицы в разы): высота строки — по кеглю,
-    # с запасом на перенос в две строки; PowerPoint и LibreOffice сами увеличат строку, если текст длиннее
+    # высота строки по кеглю с запасом на перенос, а не по боксу: редактор сам увеличит строку при нужде
     row_h = min(box.h // rows, int(size * ROW_LINES * LINE_SPACING) + Pt(6))
 
     def fill_cell(cell, text: str, bold: bool, color: RGBColor) -> None:

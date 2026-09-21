@@ -1,10 +1,4 @@
-"""Чтение фигур готовой колоды (или любого .pptx) в плоские записи с резолвленными свойствами.
-
-Общий слой для audit/ (детерминированные проверки) и export/ (HTML-рендер): каждая фигура → `ShapeRec`
-с абсолютной геометрией, текстом по абзацам/run'ам (шрифт, кегль, цвет, жирность — через цепочки
-наследования `core/package.PartCtx`), заливками, деталями картинки / диаграммы / таблицы.
-Ничего не знает ни о TemplateDNA, ни о DeckIR — флаги «наше / фиксированное / декор» ставит аудит.
-"""
+"""Чтение фигур готовой колоды в плоские записи `ShapeRec` с резолвленными свойствами — общий слой audit/ и export/."""
 
 from __future__ import annotations
 
@@ -37,7 +31,7 @@ C_NS = "http://schemas.openxmlformats.org/drawingml/2006/chart"
 C = f"{{{C_NS}}}"
 DEFAULT_INSETS = (91440, 45720, 91440, 45720)  # lIns, tIns, rIns, bIns
 SYMBOL_FONTS = ("Wingdings", "Webdings", "Symbol", "MT Extra")
-DEFAULT_LINE_W = 9525  # 0,75 pt — толщина линии PowerPoint по умолчанию
+DEFAULT_LINE_W = 9525  # 0,75 pt
 CHART_KINDS = {"lineChart": "line", "pieChart": "pie", "doughnutChart": "doughnut", "areaChart": "area"}
 
 
@@ -53,7 +47,7 @@ class RunRec:
     color: str | None
     italic: bool = False
     underline: bool = False
-    field: str | None = None  # a:fld/@type (slidenum, datetime…) — потребитель подставляет актуальное значение
+    field: str | None = None  # a:fld/@type (slidenum, datetime…)
 
 
 @dataclass
@@ -66,10 +60,10 @@ class ParaRec:
     space_after_pt: float = 0.0
     line_spacing: float | None = None  # множитель, если задан явно
     align: str = "l"  # l | ctr | r | just
-    bullet_char: str | None = None  # символ маркера (a:buChar); None при нумерации или без маркера
+    bullet_char: str | None = None  # a:buChar
     bullet_auto: bool = False  # a:buAutoNum — нумерованный список
     indent_emu: int = 0  # a:pPr/@marL — отступ абзаца слева
-    first_indent_emu: int = 0  # a:pPr/@indent — сдвиг первой строки (отрицательный — висячий, под маркер)
+    first_indent_emu: int = 0  # a:pPr/@indent
 
     @property
     def words(self) -> int:
@@ -85,7 +79,7 @@ class ChartRec:
     cat_axis_title: bool
     has_data_labels: bool
     series_colors: list[str] = field(default_factory=list)
-    spec: ChartSpec | None = None  # данные диаграммы (категории, серии) — для HTML/сравнений
+    spec: ChartSpec | None = None  # категории и серии
 
 
 @dataclass
@@ -116,7 +110,7 @@ class PictureRec:
     px_w: int
     px_h: int
     src_rect: tuple[int, int, int, int] = (0, 0, 0, 0)  # l, t, r, b в 1/1000 %
-    part: str | None = None  # имя части в zip (ppt/media/…) — байты читает потребитель
+    part: str | None = None  # имя части в zip
 
     @property
     def cropped_aspect(self) -> float | None:
@@ -149,12 +143,12 @@ class ShapeRec:
     is_fixed: bool = False
     is_slot: bool = False
     is_ours: bool = False
-    is_decor: bool = False  # картинка образца вне слотов (иконка, подложка) — дизайн шаблона, не контент
+    is_decor: bool = False  # картинка образца вне слотов
     anchor: str = "t"  # a:bodyPr/@anchor: t | ctr | b
     fill_alpha: float = 1.0  # a:alpha у сплошной заливки (0..1)
     line_w_emu: int = 0  # толщина обводки; 0 — обводки нет
     geom: str = "rect"  # a:prstGeom/@prst
-    geom_adj: float | None = None  # a:avLst/a:gd[adj] в долях (радиус скругления roundRect); None — по умолчанию
+    geom_adj: float | None = None  # a:avLst/a:gd[adj] в долях
     rot: float = 0.0  # градусы по часовой
     flip_h: bool = False
     flip_v: bool = False
@@ -170,7 +164,7 @@ class ShapeRec:
 
     @property
     def is_content(self) -> bool:
-        """Содержательный блок: текст (не колонтитул), картинка, диаграмма, таблица — не декор и не фон."""
+        """Содержательный блок: текст, картинка, диаграмма, таблица — не декор и не фон."""
         if self.is_fixed or self.is_decor or self.ph_type in ("sldNum", "ftr", "dt"):
             return False
         return self.has_text or self.is_picture or self.chart is not None or self.table is not None
@@ -243,7 +237,7 @@ def background_picture_part(ctx: PartCtx) -> str | None:
             continue
         blip = bg.find("p:bgPr/a:blipFill/a:blip", NS)
         if blip is None:
-            return None  # фон задан цветом — дальше по цепочке не идём
+            return None  # фон задан цветом
         target = ctx.pkg.rel_by_id(part, blip.get(R + "embed") or "")
         return target if target and target in ctx.pkg.names else None
     return None
@@ -320,7 +314,7 @@ def _text(ctx: PartCtx, sp: etree._Element, rec: ShapeRec) -> None:
 
 
 def read_paragraphs(ctx: PartCtx, paras: list[etree._Element], sp: etree._Element | None) -> list[ParaRec]:
-    """Абзацы с непустым текстом; run'ы с резолвленными шрифтом/кеглем/цветом. `sp=None` — текст таблицы."""
+    """Абзацы с непустым текстом и резолвленными свойствами run. `sp=None` — текст таблицы."""
     scale = font_scale(sp)
     out: list[ParaRec] = []
     for para in paras:
@@ -363,8 +357,7 @@ def read_paragraphs(ctx: PartCtx, paras: list[etree._Element], sp: etree._Elemen
 
 def para_props_chain(ctx: PartCtx, ppr: etree._Element | None, sp: etree._Element | None,
                      lvl: int) -> list[etree._Element]:
-    """Носители свойств абзаца по убыванию приоритета: pPr → lstStyle фигуры → плейсхолдер лейаута/мастера
-    → bodyStyle мастера (только для плейсхолдеров-не-заголовков — заголовки маркеров не наследуют)."""
+    """Носители свойств абзаца по убыванию приоритета: pPr → lstStyle → плейсхолдер лейаута/мастера → txStyles."""
     chain: list[etree._Element] = []
     if ppr is not None:
         chain.append(ppr)
@@ -384,7 +377,7 @@ def para_props_chain(ctx: PartCtx, ppr: etree._Element | None, sp: etree._Elemen
                 chain.append(d)
     tx = ctx.master.find("p:txStyles", NS)
     if tx is not None:
-        # заголовки → titleStyle, тело/подзаголовок → bodyStyle, колонтитулы/номер/дата и прочее → otherStyle
+        # заголовки → titleStyle, тело → bodyStyle, остальное → otherStyle
         style = ("titleStyle" if ph[0] in ("title", "ctrTitle")
                  else "bodyStyle" if ph[0] in ("body", "obj", "subTitle") else "otherStyle")
         if (d := tx.find(f"p:{style}/{lvl_tag}", NS)) is not None:
@@ -395,11 +388,11 @@ def para_props_chain(ctx: PartCtx, ppr: etree._Element | None, sp: etree._Elemen
 
 
 def _without_bullets(ppr: etree._Element) -> etree._Element:
-    """Копия lvlNpPr без маркеров: subTitle/title наследуют выравнивание от titleStyle, но не буллеты."""
+    """Копия lvlNpPr без маркеров: заголовки наследуют выравнивание, но не буллеты."""
     clone = etree.Element(ppr.tag, attrib=dict(ppr.attrib))
     for c in ppr:
         if not localname(c).startswith("bu"):
-            clone.append(copy.deepcopy(c))  # deepcopy: append переносит элемент из кэшированного дерева мастера
+            clone.append(copy.deepcopy(c))  # append переносит элемент из кэшированного дерева
     return clone
 
 
@@ -463,7 +456,7 @@ def read_picture(ctx: PartCtx, blip_fill: etree._Element) -> PictureRec | None:
     try:
         with Image.open(io.BytesIO(ctx.pkg.zip.read(target))) as im:
             w, h = im.size
-    except Exception:  # noqa: BLE001 — svg/emf и т. п. Pillow не открывает; пропорции не проверяем
+    except Exception:  # noqa: BLE001 — svg/emf Pillow не открывает
         return PictureRec(px_w=0, px_h=0, src_rect=rect, part=target)  # type: ignore[arg-type]
     return PictureRec(px_w=w, px_h=h, src_rect=rect, part=target)  # type: ignore[arg-type]
 
@@ -487,7 +480,7 @@ def read_chart(ctx: PartCtx, sp: etree._Element) -> ChartRec | None:
     series = plot.findall(f".//{C}ser")
     colors: list[str] = []
     for ser in series:
-        # цвет серии — c:ser/c:spPr; у pie/doughnut цвета по точкам — c:dPt/c:spPr (так пишет render/charts.py)
+        # цвет серии — c:ser/c:spPr; у pie/doughnut по точкам — c:dPt/c:spPr
         holders = [ser.find(f"{C}spPr")] + [dpt.find(f"{C}spPr") for dpt in ser.findall(f"{C}dPt")]
         for sppr in holders:
             if sppr is None:

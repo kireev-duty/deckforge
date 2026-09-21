@@ -1,11 +1,4 @@
-"""DeckOutline + образцы + стратегия → DeckIR.
-
-Для каждого спланированного слайда (planner) выбирается образец (exemplar_picker), затем контент
-раскладывается по слотам образца по их SlotKind: заголовок → title, буллеты → один body-слот
-списком или по карточке на body/label, KPI → number/label, chart/table → нативный объект,
-картинка → первый picture-слот. Текст подгоняется под лимиты слотов (fitting). Ничего не
-выдумывается: слот без подходящего контента остаётся пустым и очищается рендером.
-"""
+"""DeckOutline + образцы + стратегия → DeckIR: выбор образца под каждый слайд и раскладка контента по слотам."""
 
 from __future__ import annotations
 
@@ -39,21 +32,19 @@ from deckforge.layout.planner import STEP_NUMBERING, PlanResult, plan
 
 log = logging.getLogger(__name__)
 
-MIN_CONTINUATION = 2  # меньше пунктов на слайд-продолжение не выносим
-BADGE_MAX_CHARS = 4  # label-слот с номером-образцом («1», «02») и такой вместимостью — кружок шага: туда только номер
+MIN_CONTINUATION = 2
+BADGE_MAX_CHARS = 4  # label с голым номером и такой вместимостью — кружок шага
 MAX_RETRIES = 3  # сколько образцов перебрать, если в выбранный не лёг ни один пункт
 CONTINUATION = " (продолжение)"
-# колода уже сверх объёма стратегии, а слайд в образец не влез: вместо каскада продолжений (8 KPI на образце
-# с двумя цифрами — 4 слайда, 20 таких слайдов — 67 в колоде) тот же контент в компактной форме — карточки
-# «значение — подпись» или список нумерованных шагов. Форма меняется, ни один пункт не теряется.
+# компактные формы для слайда, не влезшего в образец, когда колода уже сверх объёма стратегии
 COMPACT_FORMS: dict[Archetype, tuple[Archetype, ...]] = {
     Archetype.KPI: (Archetype.CARDS, Archetype.BULLETS),
     Archetype.PROCESS: (Archetype.BULLETS, Archetype.CARDS),
 }
-COMPACT_TRIES = 12  # сколько образцов на форму перебрать в поиске самого вместительного (build_slide дёшев)
-LABEL_MIN_PT, LABEL_MAX_PT = 10.0, 14.0  # подпись KPI внутри фигуры с цифрой — в этих пределах
-KPI_IN_LABEL_SCALE = 1.8  # значение KPI в label-слоте карточки крупнее подписи максимум во столько раз
-LINE_SPACING = 1.2  # высота строки в кеглях — как в оценке вместимости слотов (parsing) и L03
+COMPACT_TRIES = 12
+LABEL_MIN_PT, LABEL_MAX_PT = 10.0, 14.0  # подпись KPI внутри фигуры с цифрой
+KPI_IN_LABEL_SCALE = 1.8  # во сколько раз значение KPI в label-слоте крупнее подписи
+LINE_SPACING = 1.2
 
 
 @dataclass
@@ -94,11 +85,9 @@ def build_deck_ir(
     queue = list(planned.slides)
     while queue:
         s = queue.pop(0)
-        # образец, в который не легло ни одного пункта (у VK Tech «cards»-слайд портфеля — один title-слот),
-        # не берём: пробуем следующих по скору, иначе контент пропал бы молча, а продолжение с тем же
-        # образцом крутилось бы до IMPOSSIBLE — сотни пустых слайдов
+        # образец, в который не лёг ни один пункт, не берём — иначе контент пропадёт молча
         tried: set[str] = set()
-        first: tuple | None = None  # лучший по скору образец — к нему возвращаемся, если и остальные не вместили
+        first: tuple | None = None  # лучший по скору; к нему возвращаемся, если остальные не лучше
         while True:
             e, score = pick_exemplar(s, exemplars, strategy, slide_w * slide_h, used, exclude=tried)
             if e is None:
@@ -131,10 +120,9 @@ def build_deck_ir(
                    f"({_n_items(leftover)} пунктов не размещены, образец {e.id})")
             result.warnings.append(msg)
             log.warning(msg)
-            continue  # в очередь не ставим: тот же остаток с тем же архетипом пошёл бы по кругу
+            continue  # тот же остаток с тем же архетипом пошёл бы по кругу
         if leftover is not None:
-            # в образец не влезло — продолжение на следующем слайде; даже одинокий пункт: лишний слайд
-            # заметен и правится пользователем, потерянный факт — нет
+            # не влезло — на слайд-продолжение; лишний слайд заметен и правится, потерянный факт — нет
             n_left = _n_items(leftover)
             queue.insert(0, leftover)
             result.warnings.append(f"слайд {s.idx} «{s.title[:40]}»: {n_left} пунктов перенесены на продолжение"
@@ -147,13 +135,10 @@ def _compact_alternative(
     s: OutlineSlide, leftover: OutlineSlide, exemplars: list[Exemplar], strategy: Strategy, slide_area: int,
     used: dict[str, int], idx: int, slide_h: int, style: dict,
 ) -> tuple[Exemplar, float, SlideIR, OutlineSlide | None] | None:
-    """Тот же слайд в компактной форме (COMPACT_FORMS) — вариант с наименьшим остатком, если он меньше исходного.
-    Контент не меняется (kpis/steps остаются), меняется только архетип — builder сам кладёт KPI в карточки
-    или списком «значение — подпись», шаги — нумерованным списком. На каждую форму перебираются несколько
-    лучших по скору образцов (`exclude=`): штраф за повторы (REUSE_PENALTY) на длинной колоде уводит picker
-    к мелким образцам, а здесь важна вместимость, не вкус. Среди вместивших всё выбирается лучший по «сырому»
-    скору образца (без штрафов за ранг и повторы — иначе на 20-м слайде выигрывает тесный слот мокапа, у которого
-    штраф за тесноту меньше накопленного штрафа за повторы у нормальных), равные вращаются по числу использований."""
+    """Тот же слайд в компактной форме (COMPACT_FORMS): вариант с наименьшим остатком, если он меньше исходного.
+
+    Контент не меняется, только архетип. Образцы сравниваются по «сырому» скору, без штрафов за ранг и
+    повторы — здесь важна вместимость, а не вкус стратегии."""
     best: tuple[tuple, float, Exemplar, SlideIR, OutlineSlide | None] | None = None
     for arch in (s.archetype, *COMPACT_FORMS.get(s.archetype, ())):
         compact = s if arch == s.archetype else s.model_copy(update={"archetype": arch})
@@ -162,10 +147,10 @@ def _compact_alternative(
         while len(tried) < COMPACT_TRIES:
             e, score = pick_exemplar(compact, exemplars, strategy, slide_area, used, exclude=tried)
             if e is None or e.archetype in STRUCTURAL:
-                break  # структурные — второй проход picker'а: контентных кандидатов больше нет
+                break  # контентные кандидаты кончились
             tried.add(e.id)
             if e.archetype == Archetype.AGENDA:
-                continue  # оглавление с десятками подписей формально вместит всё — но это не список шагов
+                continue  # оглавление формально вместит всё, но это не список шагов
             slide_ir, left = build_slide(idx, compact, e, slide_h, style)
             n_left = _n_items(left) if left is not None else 0
             raw = round(score_exemplar(e, needs, strategy, slide_area), 1)
@@ -173,7 +158,7 @@ def _compact_alternative(
             if best is None or key < best[0]:
                 best = (key, score, e, slide_ir, left)
         if best is not None and best[0][0] == 0:
-            break  # эта форма вместила всё — следующие формы (менее естественные) не нужны
+            break
     if best is None or best[0][0] >= _n_items(leftover):
         return None
     return best[2], best[1], best[3], best[4]
@@ -197,14 +182,12 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
     elements: list[Element] = []
     left_kpis: list = []
     left_items: list[str] = []
-    quote_as_title = bool(s.quote) and e.archetype in (Archetype.SECTION, Archetype.TITLE)  # цитата крупно
+    quote_as_title = bool(s.quote) and e.archetype in (Archetype.SECTION, Archetype.TITLE)
     if e.archetype in STRUCTURAL and s.archetype not in STRUCTURAL and not by_kind[SlotKind.BODY] and not quote_as_title:
-        # контентный слайд на титульном/разделительном образце (последний фолбэк picker'а на шаблоне
-        # без текстовых образцов): подзаголовок работает телом, иначе контент некуда класть
-        # (цитата на section — штатный путь: она в заголовок, автор — в подзаголовок, тело не нужно)
+        # контент на титульном образце: подзаголовок работает телом, иначе класть некуда
         by_kind[SlotKind.BODY], by_kind[SlotKind.SUBTITLE] = by_kind[SlotKind.SUBTITLE][:1], by_kind[SlotKind.SUBTITLE][1:]
     if (s.chart or s.table) and not (by_kind[SlotKind.CHART] or by_kind[SlotKind.TABLE]) and by_kind[SlotKind.BODY]:
-        # в шаблоне нет ни одного data-слота — нативный объект встаёт на место самого крупного текстового блока
+        # data-слота нет — нативный объект встаёт на место самого крупного текстового блока
         host = max(by_kind[SlotKind.BODY], key=lambda x: x.box.w * x.box.h)
         by_kind[SlotKind.BODY] = [b for b in by_kind[SlotKind.BODY] if b is not host]
         by_kind[SlotKind.CHART if s.chart else SlotKind.TABLE].append(host)
@@ -220,23 +203,22 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
     subtitles = list(by_kind[SlotKind.SUBTITLE])
     if by_kind[SlotKind.TITLE]:
         put(by_kind[SlotKind.TITLE][0], f"«{s.quote}»" if quote_as_title else s.title)
-    elif subtitles:  # образец без заголовка, но с подзаголовком («Спасибо за внимание!» финала) — заголовок туда
+    elif subtitles:  # образец без заголовка, но с подзаголовком — заголовок туда
         put(subtitles.pop(0), f"«{s.quote}»" if quote_as_title else s.title)
     if subtitles:
         sub = (s.quote_author or s.title) if quote_as_title else s.subtitle
         if sub:
             put(subtitles[0], sub)
     elif s.subtitle and s.archetype in STRUCTURAL and e.archetype not in STRUCTURAL and by_kind[SlotKind.BODY]             and not (s.bullets or s.steps or s.kpis or s.paragraphs):
-        # титул/финал на текстовом образце (в шаблоне нет титульного): подзаголовок — в тело, иначе пропадёт
+        # титул на текстовом образце: подзаголовок — в тело
         put(by_kind[SlotKind.BODY][0], s.subtitle)
 
-    # данные
     for slot in by_kind[SlotKind.CHART] + by_kind[SlotKind.TABLE]:
         if s.chart or s.table:
             chart = s.chart
             if chart is not None and normalize(chart.title).lower() == normalize(s.title).lower():
-                chart = chart.model_copy(update={"title": ""})  # заголовок слайда не дублируем над графиком
-            kind = SlotKind.CHART if chart is not None else SlotKind.TABLE  # хост может быть body-слотом (фолбэк)
+                chart = chart.model_copy(update={"title": ""})  # не дублировать заголовок слайда
+            kind = SlotKind.CHART if chart is not None else SlotKind.TABLE  # хост может быть body-слотом
             elements.append(Element(slot_id=slot.id, kind=kind, box=slot.box, chart=_clean_chart(chart),
                                     table=_clean_table(s.table), style_overrides=dict(style)))
             break
@@ -244,27 +226,22 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
     bodies = by_kind[SlotKind.BODY]
     labels_used = bodies_used = 0
     if s.kpis and numbers:
-        # подпись — label под своей цифрой (та же колонка), а не по порядку чтения: у РУДН под первой цифрой
-        # две строки-подписи, под третьей — ни одной, и подписи по порядку уезжали к соседним цифрам
+        # подпись — label под своей цифрой, а не по порядку чтения
         label_of: dict[str, Slot] = {}
         for lab_id, num in pair_labels(labels, numbers).items():
             label_of.setdefault(num.id, next(l for l in labels if l.id == lab_id))
         taken_labels = []
         for k, num in zip(s.kpis, numbers):
             lab = label_of.get(num.id)
-            # цифре без своего label-слота подпись даём внутри той же фигуры вторым абзацем
             elements.append(number_element(num, k.value, style, label=None if lab else k.label))
             if lab is not None:
                 put(lab, k.label)
                 taken_labels.append(lab)
-        labels = taken_labels + [l for l in labels if l not in taken_labels]  # занятые — в начало, ниже срез [used:]
+        labels = taken_labels + [l for l in labels if l not in taken_labels]  # занятые — в начало
         labels_used = len(taken_labels)
         left_kpis = s.kpis[len(numbers):]
     elif s.kpis and labels and (e.archetype == Archetype.CARDS or len(labels) >= len(s.kpis)):
-        # образец без крупных цифр (карточки): значение — в подпись, описание — в тело
-        # (bullets-образец с одной подписью-колонтитулом (HSE) сюда не попадает — там список в body)
-        # по карточкам: label и body одной карточки — пара по геометрии (pair_labels), а не по порядку чтения,
-        # иначе подпись уезжает в соседнюю карточку (Пифагор: «42 %» в одной, его подпись — в предыдущей)
+        # карточки без крупных цифр: значение — в подпись, описание — в тело той же карточки
         paired = pair_labels(bodies, labels)
         cards = [(paired.get(b.id), b) for b in bodies if paired.get(b.id) is not None]
         cards += [(lab, None) for lab in labels if all(lab is not l for l, _ in cards)]
@@ -277,12 +254,11 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
             if body is not None:
                 put(body, k.label)
                 taken_bodies.append(body)
-        # занятые слоты — в начало списков: ниже свободные берутся срезом [used:]
         labels = taken_labels + [l for l in labels if l not in taken_labels]
         bodies = taken_bodies + [b for b in bodies if b not in taken_bodies]
         labels_used, bodies_used = len(taken_labels), len(taken_bodies)
         left_kpis = s.kpis[len(cards):]
-    elif s.kpis and len(bodies) == 1:  # ни цифр, ни карточек (HSE): список «значение — подпись» в один body
+    elif s.kpis and len(bodies) == 1:  # ни цифр, ни карточек: список «значение — подпись»
         put_list(bodies[0], [f"{k.value} — {k.label}" for k in s.kpis], bullet=False)
         bodies_used = 1
     elif s.kpis:
@@ -291,12 +267,11 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
             bodies_used += 1
         left_kpis = s.kpis[len(bodies):]
 
-    # списки: буллеты / шаги / абзацы / цитата
     items = s.bullets or ([STEP_NUMBERING.format(n=i + 1, text=t) for i, t in enumerate(s.steps)] if s.steps else [])
     numbered = bool(s.steps) and not s.bullets
     free_labels, bodies = labels[labels_used:], bodies[bodies_used:]
     if numbered and numbers and not s.kpis:
-        # крупные цифры схемы (кружки «1…5» на таймлайне) — номера шагов, иначе рендер их сотрёт
+        # крупные цифры схемы — номера шагов, иначе рендер их сотрёт
         for i, num in enumerate(numbers[: len(s.steps)]):
             put(num, str(i + 1))
     if quote_as_title:
@@ -315,13 +290,11 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
             lab = paired.get(body.id)
             if lab is not None:
                 if is_badge(lab):
-                    # кружок «1 2 3» рядом с текстом шага: лид «Шаг 12» туда не влезет (L03) — только номер,
-                    # в формате образца («1» → «12», «01» → «12»), сам пункт целиком в тело
+                    # в кружок шага — только номер в формате образца («1» или «01»), пункт целиком в тело
                     put(lab, f"{i + 1:02d}" if len((lab.sample_text or "").strip()) >= 2 else str(i + 1))
                     put(body, item)
                 elif (cap := chars_at_scale(lab)) and len(lead) > cap:
-                    # лид длиннее плашки-заголовка даже при минимальном кегле (цитата в кавычках) — пункт целиком
-                    # в тело, а не «За месяц мы впервые уви…» в плашке; шагу в плашку — только номер
+                    # лид не влезает в плашку даже минимальным кеглем — пункт целиком в тело
                     if numbered:
                         put(lab, f"{i + 1:02d}")
                     put(body, item)
@@ -335,18 +308,17 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
         for item, lab in zip(items, free_labels):
             put(lab, item)
         left_items = (s.steps if numbered else items)[len(free_labels):]
-    elif items:  # ни body, ни label — пункты некуда класть: весь список в остаток, а не в никуда
+    elif items:  # класть некуда — весь список в остаток
         left_items = list(s.steps if numbered else items)
     elif s.paragraphs and bodies:
         put_list(bodies[0], s.paragraphs, bullet=False)
 
-    # «ручной» номер страницы (текст «19» без плейсхолдера sldNum) — перенумеровать; поле sldNum рендер не трогает
+    # номер страницы текстом (без плейсхолдера sldNum) — перенумеровать
     for num_slot in by_kind[SlotKind.SLIDE_NUMBER]:
         if num_slot.placeholder_type is None:
             elements.append(Element(slot_id=num_slot.id, kind=num_slot.kind, box=num_slot.box,
                                     paragraphs=[Paragraph(runs=[TextRun(text=str(idx + 1))])]))
 
-    # картинка — только первый picture-слот; файла нет — слот остаётся пустым, рендер его очистит
     if has_image(s) and by_kind[SlotKind.PICTURE]:
         pic = by_kind[SlotKind.PICTURE][0]
         elements.append(Element(slot_id=pic.id, kind=pic.kind, box=pic.box, image_path=s.image.path))
@@ -355,10 +327,9 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
                        notes=xml_safe(s.speaker_notes))
     if not (left_kpis or left_items):
         return slide_ir, None
-    # остаток со структурного слайда (title/section/closing: буллеты в подписи титула) — обычным текстовым
-    # слайдом, иначе пункты капали бы по одному в подпись каждого следующего титульного образца
+    # остаток со структурного слайда — обычным текстовым, иначе пункты капали бы по одному в подпись титула
     arch = s.archetype if s.archetype not in STRUCTURAL else (Archetype.KPI if left_kpis else Archetype.BULLETS)
-    title = s.title if s.title.endswith(CONTINUATION) else s.title + CONTINUATION  # не «(продолжение) (продолжение)»
+    title = s.title if s.title.endswith(CONTINUATION) else s.title + CONTINUATION
     leftover = OutlineSlide(idx=s.idx, archetype=arch, title=title, section=s.section,
                             kpis=left_kpis, sources=list(s.sources))
     if numbered:
@@ -383,7 +354,7 @@ def text_element(slot: Slot, text: str, style: dict, bullet: bool = False) -> El
         size = fit_size(text, slot)
         if size and slot.size_pt:
             overrides["size_pt"] = size
-            text = shorten(text, chars_at_scale(slot))  # режем, только если не спасает и минимальный кегль
+            text = shorten(text, chars_at_scale(slot))  # режем, только если не спас минимальный кегль
         else:
             text = shorten(text, cap)
     return Element(slot_id=slot.id, kind=slot.kind, box=slot.box, style_overrides=overrides,
@@ -391,16 +362,14 @@ def text_element(slot: Slot, text: str, style: dict, bullet: bool = False) -> El
 
 
 def number_element(slot: Slot, text: str, style: dict, label: str | None = None) -> Element:
-    """Крупная цифра KPI одной строкой; единица измерения — мелким кеглем следом («1,8 дня»);
-    `label` — подпись вторым абзацем мелким кеглем, когда у образца нет отдельного label-слота.
-    Подпись добавляется, только если обе строки влезают по высоте — цифру ради неё ужимаем до NUMBER_MIN_SCALE."""
+    """Крупная цифра KPI с единицей измерения мелким кеглем; `label` — подпись вторым абзацем, если влезает."""
     num, unit, size = fit_number(normalize(text), slot)
     base = size or slot.size_pt or 40.0
     label = normalize(label or "")
     label_pt = min(LABEL_MAX_PT, max(LABEL_MIN_PT, round(base * UNIT_SCALE, 1)))
     if label and slot.size_pt:
         h_pt = slot.box.h / EMU_PER_PT
-        room = h_pt / LINE_SPACING - label_pt  # сколько остаётся кеглю цифры рядом с подписью
+        room = h_pt / LINE_SPACING - label_pt
         if room < slot.size_pt * NUMBER_MIN_SCALE:
             label = ""
         elif room < base:
@@ -415,8 +384,7 @@ def number_element(slot: Slot, text: str, style: dict, label: str | None = None)
 
 
 def kpi_in_label_element(slot: Slot, value: str, style: dict) -> Element | None:
-    """Значение KPI в label-слоте карточки: кегль подписи мелкий, цифру укрупняем, пока она влезает
-    в строку по ширине и в бокс по высоте."""
+    """Значение KPI в label-слоте карточки: укрупняем, пока влезает по ширине строки и высоте бокса."""
     el = text_element(slot, value, style)
     if el is None or not slot.size_pt or not slot.max_chars:
         return el
@@ -437,11 +405,11 @@ def list_element(slot: Slot, items: list[str], style: dict, bullet: bool) -> Ele
     overrides = dict(style)
     cap = slot.max_items or len(items)
     scale = 1.0
-    if len(items) > cap:  # лишние пункты не выбрасываем — уменьшаем кегль, но не ниже MIN_SIZE_SCALE
+    if len(items) > cap:  # лишние пункты не выбрасываем — уменьшаем кегль
         scale = max(MIN_SIZE_SCALE, cap / len(items))
     per_item = (slot.max_chars // len(items)) if slot.max_chars else None
     if per_item:
-        # длинный пункт сначала ужимаем кеглем (вместимость ~ 1/size²) и только потом режем: «…» — крайняя мера
+        # сначала ужимаем кеглем (вместимость ~ 1/size²), режем в последнюю очередь
         longest = max(len(t) for t in items)
         if longest > per_item / (scale * scale):
             scale = min(scale, max(MIN_SIZE_SCALE, (per_item / longest) ** 0.5))
@@ -453,7 +421,7 @@ def list_element(slot: Slot, items: list[str], style: dict, bullet: bool) -> Ele
 
 
 def _clean_chart(chart: ChartSpec | None) -> ChartSpec | None:
-    """Тексты диаграммы — через ту же чистку, что и слоты (XML-недопустимые символы, пробелы)."""
+    """Тексты диаграммы через ту же чистку, что и слоты."""
     if chart is None:
         return None
     return chart.model_copy(update={
@@ -472,17 +440,16 @@ def _clean_table(table: TableSpec | None) -> TableSpec | None:
 
 
 def is_badge(slot: Slot) -> bool:
-    """Кружок с номером шага: label-слот, в образце которого стоит голое число, вместимостью в пару знаков."""
+    """Кружок с номером шага: label-слот с голым числом в образце и вместимостью в пару знаков."""
     sample = (slot.sample_text or "").strip()
     return slot.kind == SlotKind.LABEL and sample.isdigit() and len(sample) <= 2 and (slot.max_chars or 0) <= BADGE_MAX_CHARS
 
 
 def pair_labels(bodies: list[Slot], labels: list[Slot]) -> dict[str, Slot]:
-    """Каждому body — ближайший label над ним в той же колонке (карточка) или вплотную слева в том же ряду
-    (кружок шага перед текстом на таймлайне). По порядку — только если геометрических пар нет вовсе:
-    когда часть карточек спарилась, оставшиеся label принадлежат другим группам образца (МФТИ: два буллета
-    сверху и «лестница» снизу — label безтелой ступеньки уезжал к верхнему буллету), и body без label
-    получает пункт целиком."""
+    """Каждому body — ближайший label над ним в той же колонке или вплотную слева в том же ряду.
+
+    По порядку чтения — только если геометрических пар нет вовсе: непарные label обычно принадлежат
+    другой группе фигур образца."""
     out: dict[str, Slot] = {}
     free = list(labels)
     for body in bodies:

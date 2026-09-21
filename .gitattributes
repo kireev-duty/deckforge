@@ -4,7 +4,4 @@ docs/tz/*.docx filter=lfs diff=lfs merge=lfs -text
 examples/output/**/*.pptx filter=lfs diff=lfs merge=lfs -text
 examples/output/**/*.pdf filter=lfs diff=lfs merge=lfs -text
 examples/output/**/*.html filter=lfs diff=lfs merge=lfs -text
-examples/pitch/*.pptx filter=lfs diff=lfs merge=lfs -text
-examples/pitch/*.pdf filter=lfs diff=lfs merge=lfs -text
-examples/pitch/*.html filter=lfs diff=lfs merge=lfs -text
-examples/pitch/*.png filter=lfs diff=lfs merge=lfs -text
+docs/*.pptx filter=lfs diff=lfs merge=lfs -text

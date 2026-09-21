@@ -84,9 +84,9 @@ def test_background_picture_lookup(deck) -> None:
 
 def test_symbol_font_bullet_becomes_dot() -> None:
     """Маркер из Wingdings («§») читается как «•»: в HTML символьных шрифтов нет."""
-    pitch = REPO / "examples" / "pitch" / "deckforge_pitch.pptx"
+    pitch = REPO / "docs" / "deckforge_pitch.pptx"
     if not pitch.exists() or pitch.stat().st_size < 10_000:
-        pytest.skip("нет examples/pitch/deckforge_pitch.pptx")
+        pytest.skip("нет docs/deckforge_pitch.pptx")
     pkg = Package(pitch)
     chars = set()
     for part in pkg.slides:

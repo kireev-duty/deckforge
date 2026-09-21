@@ -4,7 +4,7 @@
 picture / пустые плейсхолдеры); шрифты против dna.json; PNG средствами PowerPoint и доля пикселей,
 отличающихся от LibreOffice-рендера.
 
-    .venv\\Scripts\\python.exe tools\\powerpoint_check.py "examples\\output\\*\\*.pptx" examples\\pitch\\deckforge_pitch.pptx
+    .venv\\Scripts\\python.exe tools\\powerpoint_check.py "examples\\output\\*\\*.pptx" docs\\deckforge_pitch.pptx
         [--out out\\ppt] [--no-render] [--diff-threshold 0.15]
 
 Результат: out/ppt/report.md + report.json, out/ppt/<колода>/slide_NN.png + contact.png + roundtrip.pptx.

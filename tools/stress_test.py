@@ -235,8 +235,8 @@ def audit_all(a: argparse.Namespace) -> int:
     from deckforge.pipeline import parse_template
 
     templates = templates_for(a)
-    decks = sorted({*(ROOT / "examples" / "output").rglob("*.pptx"), *(ROOT / "examples" / "pitch").glob("*.pptx"),
-                    *OUT.rglob("*.pptx"), *(WILD_DIR.glob("*.pptx") if a.wild else [])})
+    decks = sorted({*(ROOT / "examples" / "output").rglob("*.pptx"), *OUT.rglob("*.pptx"),
+                    *(WILD_DIR.glob("*.pptx") if a.wild else [])})
     decks = [d for d in decks if d.stat().st_size > 1000]
     print(f"колод: {len(decks)}, шаблонов для кросс-аудита: {len(templates)}")
     dnas = {}

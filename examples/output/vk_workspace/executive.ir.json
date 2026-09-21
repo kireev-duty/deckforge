@@ -1201,17 +1201,17 @@
   },
   {
    "idx": 7,
-   "exemplar_id": "slide13",
-   "archetype": "cards",
+   "exemplar_id": "slide25",
+   "archetype": "image_text",
    "elements": [
     {
-     "slot_id": "647",
+     "slot_id": "812",
      "kind": "title",
      "box": {
       "x": 429253,
       "y": 424691,
       "w": 7827311,
-      "h": 672923
+      "h": 1167572
      },
      "paragraphs": [
       {
@@ -1240,19 +1240,64 @@
      }
     },
     {
-     "slot_id": "648",
+     "slot_id": "813",
      "kind": "body",
      "box": {
-      "x": 418676,
-      "y": 3902697,
-      "w": 2563675,
-      "h": 1277378
+      "x": 1036774,
+      "y": 1354821,
+      "w": 1941953,
+      "h": 474884
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "«За месяц мы впервые увидели, где реально теряется время, — и перестали спорить об этом на ретро» — Руководитель разработки, команда платёжного шлюза",
+         "text": "«За месяц мы впервые…",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF,00AEE8",
+      "font": "Play",
+      "text_color": "FFFFFF",
+      "size_pt": 11.2
+     }
+    }
+   ],
+   "notes": "",
+   "outline_ref": 7
+  },
+  {
+   "idx": 8,
+   "exemplar_id": "slide19",
+   "archetype": "kpi",
+   "elements": [
+    {
+     "slot_id": "726",
+     "kind": "title",
+     "box": {
+      "x": 429253,
+      "y": 424691,
+      "w": 11354760,
+      "h": 767295
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Оценка пилота командами выросла с 3,4 до 4,7",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1275,13 +1320,13 @@
      }
     },
     {
-     "slot_id": "658",
-     "kind": "label",
+     "slot_id": "734",
+     "kind": "number",
      "box": {
-      "x": 3889191,
-      "y": 2184933,
-      "w": 1822292,
-      "h": 579468
+      "x": 439193,
+      "y": 2517730,
+      "w": 2850777,
+      "h": 483181
      },
      "paragraphs": [
       {
@@ -1306,52 +1351,18 @@
       "accent": "0077FF",
       "palette": "0077FF,00AEE8",
       "font": "Play",
-      "text_color": "FFFFFF"
+      "text_color": "FFFFFF",
+      "size_pt": 45.4
      }
     },
     {
-     "slot_id": "655",
-     "kind": "body",
+     "slot_id": "729",
+     "kind": "number",
      "box": {
-      "x": 3147809,
-      "y": 3902697,
-      "w": 2563675,
-      "h": 1277378
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "оценка после пилота (из 5)",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF,00AEE8",
-      "font": "Play",
-      "text_color": "FFFFFF"
-     }
-    },
-    {
-     "slot_id": "662",
-     "kind": "label",
-     "box": {
-      "x": 6632391,
-      "y": 2184933,
-      "w": 1822292,
-      "h": 579468
+      "x": 6938670,
+      "y": 2804349,
+      "w": 2850777,
+      "h": 483181
      },
      "paragraphs": [
       {
@@ -1376,62 +1387,41 @@
       "accent": "0077FF",
       "palette": "0077FF,00AEE8",
       "font": "Play",
-      "text_color": "FFFFFF"
+      "text_color": "FFFFFF",
+      "size_pt": 47.8
      }
     },
     {
-     "slot_id": "656",
-     "kind": "body",
+     "slot_id": "730",
+     "kind": "number",
      "box": {
-      "x": 5876940,
-      "y": 3902697,
-      "w": 2563675,
-      "h": 1277378
+      "x": 5520295,
+      "y": 3175974,
+      "w": 1346144,
+      "h": 483181
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "оценка до пилота (из 5)",
+         "text": "0,6",
          "bold": false,
          "italic": false,
          "color": null,
-         "size_pt": null
+         "size_pt": 20.5
         }
        ],
        "level": 0,
        "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF,00AEE8",
-      "font": "Play",
-      "text_color": "FFFFFF"
-     }
-    },
-    {
-     "slot_id": "657",
-     "kind": "body",
-     "box": {
-      "x": 8606073,
-      "y": 3902697,
-      "w": 2563675,
-      "h": 1277378
-     },
-     "paragraphs": [
+      },
       {
        "runs": [
         {
-         "text": "0,6 — дня: средний срок ответа на запрос",
+         "text": "дня: средний срок ответа на запрос",
          "bold": false,
          "italic": false,
          "color": null,
-         "size_pt": null
+         "size_pt": 11.2
         }
        ],
        "level": 0,
@@ -1451,10 +1441,10 @@
     }
    ],
    "notes": "",
-   "outline_ref": 7
+   "outline_ref": 8
   },
   {
-   "idx": 8,
+   "idx": 9,
    "exemplar_id": "slide8",
    "archetype": "cards",
    "elements": [
@@ -1916,10 +1906,10 @@
     }
    ],
    "notes": "",
-   "outline_ref": 8
+   "outline_ref": 9
   },
   {
-   "idx": 9,
+   "idx": 10,
    "exemplar_id": "slide28",
    "archetype": "closing",
    "elements": [
@@ -1960,7 +1950,7 @@
     }
    ],
    "notes": "",
-   "outline_ref": 9
+   "outline_ref": 10
   }
  ],
  "slide_w": 12192000,

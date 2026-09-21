@@ -6,6 +6,7 @@
 from __future__ import annotations
 
 import logging
+import time
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -124,8 +125,12 @@ def _facts(pack: Any, sources: list[str]) -> str:
 
 
 def judge_deck(pngs: list[Path], slides: list[SlideText], client: Any, language: str = "ru",
-               workers: int = WORKERS) -> list[Finding]:
-    """Один вызов VLM на слайд, параллельно; PNG и slides сопоставляются по порядку."""
+               workers: int = WORKERS, deadline: float | None = None) -> list[Finding]:
+    """Один вызов VLM на слайд, параллельно; PNG и slides сопоставляются по порядку.
+
+    `deadline` (`time.monotonic()`) — бюджет времени колоды: слайды, не проверенные к нему, получают info-находку
+    `C00_judge_error` «не проверен», оставшиеся вызовы не делаются.
+    """
     from deckforge.llm.skills import load_skill
 
     skill = load_skill(SKILL_NAME)
@@ -136,8 +141,14 @@ def judge_deck(pngs: list[Path], slides: list[SlideText], client: Any, language:
         return []
     titles = [s.title for s in slides]
 
+    def skipped(s: SlideText, why: str) -> list[Finding]:
+        return [Finding(check_id=ERROR_CHECK_ID, kind="contextual", severity=Severity.INFO, slide_idx=s.idx,
+                        message=f"VLM-судья: {why}", evidence={"error": why[:200]})]
+
     def one(i: int) -> list[Finding]:
         png, s = pairs[i]
+        if deadline is not None and time.monotonic() >= deadline:
+            return skipped(s, "слайд не проверен — бюджет времени колоды исчерпан")
         inputs = {
             "slide_idx": s.idx + 1, "slide_title": s.title or "(без заголовка)",
             "slide_text": s.text or "(текста нет)",
@@ -146,11 +157,10 @@ def judge_deck(pngs: list[Path], slides: list[SlideText], client: Any, language:
             "source_facts": s.facts or "(факты не переданы)", "language": language,
         }
         try:
-            res = client.run_skill(skill, images=[png], **inputs)
+            res = client.run_skill(skill, images=[png], deadline=deadline, **inputs)
         except Exception as e:  # noqa: BLE001
             log.warning("contextual: слайд %d — %s", s.idx + 1, e)
-            return [Finding(check_id=ERROR_CHECK_ID, kind="contextual", severity=Severity.INFO, slide_idx=s.idx,
-                            message=f"VLM-судья не ответил: {str(e)[:120]}", evidence={"error": str(e)[:200]})]
+            return skipped(s, f"не ответил: {str(e)[:120]}")
         return findings_from_answers(res if isinstance(res, dict) else {}, s)
 
     with ThreadPoolExecutor(max_workers=max(1, workers)) as pool:

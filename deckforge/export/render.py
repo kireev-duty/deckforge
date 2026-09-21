@@ -6,11 +6,13 @@ import os
 import shutil
 import subprocess
 import tempfile
+import time
 from pathlib import Path
 
 import pymupdf
 from PIL import Image
 
+RETRY_PAUSE_S = 2.0
 SOFFICE_CANDIDATES = [
     os.environ.get("SOFFICE_PATH", ""),
     r"C:\Program Files\LibreOffice\program\soffice.exe",
@@ -31,8 +33,11 @@ def find_soffice() -> str:
     raise RuntimeError("LibreOffice не найден: задайте SOFFICE_PATH")
 
 
-def pptx_to_pdf(pptx: Path, out_dir: Path, timeout: int = 180) -> Path:
-    """.pptx → .pdf в отдельном профиле LibreOffice, чтобы не конфликтовать с открытым GUI."""
+def pptx_to_pdf(pptx: Path, out_dir: Path, timeout: int = 180, retries: int = 1) -> Path:
+    """.pptx → .pdf в отдельном профиле LibreOffice, чтобы не конфликтовать с открытым GUI.
+
+    Один повтор: профиль общий для всех процессов deckforge, и параллельный soffice изредка роняет запуск.
+    """
     out_dir.mkdir(parents=True, exist_ok=True)
     profile = Path(tempfile.gettempdir()) / "deckforge_lo_profile"
     cmd = [
@@ -46,7 +51,20 @@ def pptx_to_pdf(pptx: Path, out_dir: Path, timeout: int = 180) -> Path:
         str(out_dir),
         str(pptx),
     ]
-    subprocess.run(cmd, check=True, timeout=timeout, capture_output=True)
+    for attempt in range(retries + 1):
+        try:
+            subprocess.run(cmd, check=True, timeout=timeout, capture_output=True)
+            break
+        except subprocess.CalledProcessError as e:
+            if attempt < retries:
+                time.sleep(RETRY_PAUSE_S)
+                continue
+            tail = (e.stderr or b"").decode("utf-8", "replace").strip().splitlines()
+            raise RuntimeError(f"LibreOffice: код {e.returncode}" + (f", {tail[-1][:200]}" if tail else "")) from None
+        except subprocess.TimeoutExpired:
+            if attempt < retries:
+                continue
+            raise RuntimeError(f"LibreOffice: таймаут {timeout} с") from None
     pdf = out_dir / (pptx.stem + ".pdf")
     if not pdf.exists():
         raise RuntimeError(f"LibreOffice не создал {pdf}")

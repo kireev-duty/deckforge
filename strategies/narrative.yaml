@@ -12,6 +12,7 @@ archetype_priority: [section, kpi, quote, bullets, image_text, cards, chart, pro
 data_visualization: {numeric_series: chart, comparison: two_column, key_metrics: kpi}
 sections: true           # разделы обозначаются слайдами section
 images: preferred        # где уместно — иллюстрация (генерируется по image.prompt)
+audience_hint: доклад со сцены, обучение, онбординг — слайд поддерживает рассказ, а не заменяет его
 outline_rules: |
   Структура истории: контекст → проблема (с цифрой боли) → решение → как это работает (шаги) → доказательства → что дальше → призыв к действию.
   Каждый раздел открывается слайдом-разделителем. На слайде не больше 4 буллетов; ключевые цифры — отдельными KPI-слайдами.

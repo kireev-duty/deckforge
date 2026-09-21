@@ -108,20 +108,6 @@
    }
   },
   {
-   "check_id": "C03_one_message",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 2,
-   "element_id": null,
-   "box": null,
-   "message": "Слайд содержит три отдельных тезиса, которые нельзя логично объединить в одно предложение без потери смысла.",
-   "autofix": null,
-   "evidence": {
-    "question": "Слайд пересказывается одним предложением",
-    "sources": "m:pilot"
-   }
-  },
-  {
    "check_id": "L02_overlap",
    "kind": "deterministic",
    "severity": "warning",
@@ -287,7 +273,7 @@
    "slide_idx": 4,
    "element_id": null,
    "box": null,
-   "message": "Заголовок называет тему процесса, а не содержит вывод о его пользе или результате.",
+   "message": "Заголовок называет тему процесса, а не содержит вывод о его ценности или результате.",
    "autofix": null,
    "evidence": {
     "question": "Заголовок содержит вывод, а не просто называет тему",
@@ -404,7 +390,7 @@
    "slide_idx": 8,
    "element_id": null,
    "box": null,
-   "message": "Слайд содержит только заголовок и обрывок цитаты, что является недостаточным содержанием.",
+   "message": "Слайд содержит только заголовок и обрезанную цитату, без раскрытия сути или контекста.",
    "autofix": null,
    "evidence": {
     "question": "На слайде есть содержание, а не только заголовок",
@@ -418,10 +404,24 @@
    "slide_idx": 8,
    "element_id": null,
    "box": null,
-   "message": "Текст цитаты обрывается на многоточии, что выглядит как служебный мусор или незаполненная заглушка.",
+   "message": "Текст цитаты обрывается многоточием, что выглядит как служебный мусор или незавершенная заглушка.",
    "autofix": null,
    "evidence": {
     "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
+    "sources": "m:score,m:response_days"
+   }
+  },
+  {
+   "check_id": "C06_images_relevant",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": null,
+   "box": null,
+   "message": "Абстрактная 3D-графика не имеет смысловой связи с темой ретро или потери времени.",
+   "autofix": null,
+   "evidence": {
+    "question": "Картинки и иконки относятся к теме слайда",
     "sources": "m:score,m:response_days"
    }
   },
@@ -671,13 +671,27 @@
    }
   },
   {
+   "check_id": "C07_no_garbage",
+   "kind": "contextual",
+   "severity": "error",
+   "slide_idx": 11,
+   "element_id": null,
+   "box": null,
+   "message": "В первом пункте таймлайна текст обрезан многоточием («Подключение 20…»), что выглядит как служебный мусор или ошибка верстки.",
+   "autofix": null,
+   "evidence": {
+    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
+    "sources": "doc:product:контакты"
+   }
+  },
+  {
    "check_id": "C08_no_typos",
    "kind": "contextual",
    "severity": "warning",
    "slide_idx": 12,
    "element_id": null,
    "box": null,
-   "message": "Слово «команды» некорректно разбито на две строки с переносом буквы «ы».",
+   "message": "В заголовке слово «команды» некорректно перенесено на отдельную строку.",
    "autofix": null,
    "evidence": {
     "question": "Текст без опечаток",
@@ -722,5 +736,5 @@
   "C10_table_legend_relevant",
   "C11_flow"
  ],
- "duration_s": 44.106
+ "duration_s": 56.844
 }

@@ -92,7 +92,7 @@ def create_app(root: Path | str = Path("out/api"), client_factory: Callable[[], 
                 name=x.name, version=x.version, target_slides=x.target_slides.model_dump(),
                 density=x.density.model_dump(), data_visualization=x.data_visualization.model_dump(),
                 sections=x.sections, images=x.images, icons=x.icons,
-                archetype_priority=[a.value for a in x.archetype_priority]))
+                archetype_priority=[a.value for a in x.archetype_priority], audience_hint=x.audience_hint))
         return out
 
     # ──────────────── шаблоны ────────────────
@@ -134,7 +134,7 @@ def create_app(root: Path | str = Path("out/api"), client_factory: Callable[[], 
         autofix: bool = Form(True, description="безопасные автофиксы"),
         render_png: bool = Form(True),
         export: str = Form("pptx,pdf,html", description="через запятую: pptx, pdf, html"),
-        files: list[UploadFile] = File(default=[], description="контент-пакет: *.md, *.txt, data/*.json, data/*.csv"),
+        files: list[UploadFile] = File(default=[], description="контент-пакет: текст .md/.txt/.docx/.pdf, данные .json/.csv/.xlsx"),
     ) -> JobCreated:
         """Запустить прогон; ответ — id job'а."""
         entry = _template(s, template_id)

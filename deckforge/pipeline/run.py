@@ -20,7 +20,7 @@ from typing import Any
 from deckforge.audit import audit_deck, with_contextual
 from deckforge.audit import summary as audit_summary
 from deckforge.audit.contextual import CHECK_IDS as CONTEXTUAL_CHECKS
-from deckforge.audit.contextual import judge_deck, slides_from_ir
+from deckforge.audit.contextual import ERROR_CHECK_ID, judge_deck, slides_from_ir
 from deckforge.content import load_content_pack, write_outline
 from deckforge.content.images import illustrate
 from deckforge.core.autofix import plan_fixes
@@ -40,6 +40,12 @@ from deckforge.render import render_pptx
 log = logging.getLogger(__name__)
 
 Progress = Callable[[str], None]
+
+# резервы бюджета времени колоды (с): картинки не начинаются, если до дедлайна меньше IMAGES_RESERVE_S,
+# судья — если меньше JUDGE_RESERVE_S; EXPORT_RESERVE_S оставляется на PDF/HTML после судьи
+IMAGES_RESERVE_S = 90.0
+JUDGE_RESERVE_S = 30.0
+EXPORT_RESERVE_S = 15.0
 
 
 def rel_path(p: Path | str | None, base: Path) -> str:
@@ -122,6 +128,7 @@ class DeckResult:
     audit_summary: dict = field(default_factory=dict)
     pdf: Path | None = None
     html: Path | None = None
+    audience_hint: str = ""  # кому нужен этот вариант (Strategy.audience_hint)
 
     @property
     def exports(self) -> dict[str, str]:
@@ -230,8 +237,10 @@ def make_outline(cfg: RunConfig, parsed: ParsedTemplate, out_dir: Path, client: 
         path.write_text(outline.model_dump_json(indent=1), "utf-8")
         return OutlineStep(outline, path)
     t0 = time.perf_counter()
-    client = client or LLMClient()
     pack = load_content_pack(cfg.content_pack)
+    if not pack.fragments:
+        raise RuntimeError(f"контент-пакет пуст: нужен brief.md или файлы в {cfg.content_pack}")
+    client = client or LLMClient()
     res = write_outline(
         client, pack, purpose=cfg.purpose, audience=cfg.audience, language=cfg.language,
         target_slides=cfg.target_slides, available_archetypes=parsed.archetypes,
@@ -247,14 +256,21 @@ def build_deck(ctx: RunContext, strategy_name: str, progress: Progress | None = 
     say = progress or (lambda msg: log.info(msg))
     cfg, parsed, outline = ctx.cfg, ctx.parsed, ctx.outline.outline
     out_dir = cfg.output_dir
-    strategy = load_strategy(strategy_name)
+    # диапазон объёма стратегии — под заданный пользователем объём (ТЗ: 10–15 или заданный)
+    strategy = load_strategy(strategy_name).for_target(cfg.target_slides)
     deck_timings: dict[str, float] = {}
     deck_warnings: list[str] = []
     skills_used = dict(ctx.outline.skills_used)
     images_info: dict = {}
-    if cfg.images != "off":
+    # часы колоды: её доля outline (один вызов на прогон) + всё ниже; дедлайн — бюджет из конфига
+    t_deck0 = time.monotonic()
+    deadline = t_deck0 + cfg.time_budget_s - ctx.outline.seconds
+    if cfg.images != "off" and deadline - time.monotonic() < IMAGES_RESERVE_S:
+        deck_warnings.append("images: пропущено — бюджет времени колоды почти исчерпан после outline")
+    elif cfg.images != "off":
         # иллюстрации до вёрстки: picker учитывает наличие картинки
-        ill = illustrate(outline, strategy, parsed.style, ctx.client_for_images(), out_dir, cfg_mode=cfg.images)
+        ill = illustrate(outline, strategy, parsed.style, ctx.client_for_images(), out_dir, cfg_mode=cfg.images,
+                         parallel=cfg.max_parallel_llm, deadline=deadline - IMAGES_RESERVE_S)
         outline, images_info = ill.outline, ill.summary()
         for item in images_info.get("items", []):
             item["path"] = rel_path(item["path"], out_dir) if item.get("path") else item.get("path")
@@ -297,13 +313,21 @@ def build_deck(ctx: RunContext, strategy_name: str, progress: Progress | None = 
         if err:
             deck_warnings.append(err)
         deck_timings["png"] = round(time.perf_counter() - t0, 3)
-    if ctx.contextual_on and pngs and report is not None:
+    if ctx.contextual_on and not pngs:
+        deck_warnings.append("audit.contextual: VLM-судья пропущен — нет PNG")
+    if ctx.contextual_on and pngs and report is not None and deadline - time.monotonic() < JUDGE_RESERVE_S:
+        deck_warnings.append("audit.contextual: VLM-судья пропущен — бюджет времени колоды исчерпан")
+    elif ctx.contextual_on and pngs and report is not None:
         t0 = time.perf_counter()
         slides = slides_from_ir(res.ir, outline, ctx.pack)
-        found = judge_deck(pngs, slides, ctx.client, language=outline.language)
+        found = judge_deck(pngs, slides, ctx.client, language=outline.language, workers=cfg.max_parallel_llm,
+                           deadline=deadline - EXPORT_RESERVE_S)
         deck_timings["audit_contextual"] = round(time.perf_counter() - t0, 3)
         report = with_contextual(report, found, CONTEXTUAL_CHECKS, deck_timings["audit_contextual"])
         skills_used["audit_judge"] = _skill_version(ctx.client, "audit_judge")
+        n_skipped = sum(1 for f in found if f.check_id == ERROR_CHECK_ID and "бюджет" in f.message)
+        if n_skipped:
+            deck_warnings.append(f"audit.contextual: {n_skipped} слайдов не проверены судьёй — бюджет времени колоды")
     if report is not None:
         audit_path = out_dir / f"{strategy.name}.audit.json"
         audit_path.write_text(_portable_report(report, out_dir), "utf-8")
@@ -326,17 +350,23 @@ def build_deck(ctx: RunContext, strategy_name: str, progress: Progress | None = 
             deck_warnings.append(err)
         deck_timings["export_html"] = round(time.perf_counter() - t0, 3)
 
+    # время колоды целиком: доля outline + всё от картинок до HTML (parse кэшируется и не считается)
+    deck_timings["deck_total"] = round(ctx.outline.seconds + time.monotonic() - t_deck0, 3)
+    if deck_timings["deck_total"] > cfg.time_budget_s:
+        deck_warnings.append(f"бюджет времени колоды превышен: {deck_timings['deck_total']:.0f} с > {cfg.time_budget_s} с")
+
     llm_calls = [asdict(c) for c in ctx.client.calls] if ctx.client is not None else list(ctx.outline.llm_calls)
     choices = [c.__dict__ for c in res.choices]
     deck = DeckResult(strategy.name, pptx_out, ir_path, out_dir / f"{strategy.name}.manifest.json", st, deck_warnings,
-                      choices, pngs, deck_timings, audit_path, audit_info, pdf_path, html_path)
+                      choices, pngs, deck_timings, audit_path, audit_info, pdf_path, html_path, strategy.audience_hint)
     manifest = {
         "created": datetime.now(UTC).isoformat(timespec="seconds"),
         "template": {**parsed.meta, "path": rel_path(parsed.template, out_dir)},
         "content_pack": rel_path(cfg.content_pack, out_dir),
         "outline": rel_path(ctx.outline.path, out_dir),
         "outline_title": outline.title,
-        "strategy": {"name": strategy.name, "version": strategy.version},
+        "strategy": {"name": strategy.name, "version": strategy.version,
+                     "target_slides": strategy.target_slides.model_dump(), "audience_hint": strategy.audience_hint},
         "skills": skills_used,
         "models": _models(ctx.client),
         "llm_calls": llm_calls,
@@ -348,6 +378,7 @@ def build_deck(ctx: RunContext, strategy_name: str, progress: Progress | None = 
         "images": images_info,
         "exports": deck.exports,
         "timings_s": {"parse": parsed.seconds, "outline": ctx.outline.seconds, **deck_timings},
+        "time_budget_s": cfg.time_budget_s,
     }
     deck.manifest.write_text(json.dumps(manifest, ensure_ascii=False, indent=1), "utf-8")
 
@@ -362,7 +393,8 @@ def build_deck(ctx: RunContext, strategy_name: str, progress: Progress | None = 
            if "audit_contextual" in deck_timings else "")
         + (f", png {deck_timings['png']:.1f}s" if pngs else "")
         + (f", pdf {deck_timings['export_pdf']:.1f}s" if pdf_path else "")
-        + (f", html {deck_timings['export_html']:.1f}s" if html_path else "") + ")")
+        + (f", html {deck_timings['export_html']:.1f}s" if html_path else "")
+        + f"; всего {deck_timings['deck_total']:.0f}s из {cfg.time_budget_s})")
     return deck
 
 
@@ -429,7 +461,7 @@ def refine_deck(deck: DeckResult, parsed: ParsedTemplate, selected: Iterable[int
     manifest["audit"] = audit_info
     manifest["timings_s"] = {**manifest.get("timings_s", {}), **timings}
     new = DeckResult(deck.strategy, deck.pptx, deck.ir_json, deck.manifest, deck.stats, deck.warnings, deck.choices,
-                     pngs, timings, deck.audit, audit_info, pdf, html)
+                     pngs, timings, deck.audit, audit_info, pdf, html, deck.audience_hint)
     manifest["exports"] = new.exports
     manifest["warnings"] = list(dict.fromkeys([*manifest.get("warnings", []), *deck.warnings]))
     deck.manifest.write_text(json.dumps(manifest, ensure_ascii=False, indent=1), "utf-8")
@@ -472,7 +504,8 @@ def run(
         d = build_deck(ctx, name, say)
         decks.append(d)
         rows[d.strategy] = {**d.stats, "audit_errors": d.audit_summary.get("errors", "—"),
-                            "audit_warnings": d.audit_summary.get("warnings", "—")}
+                            "audit_warnings": d.audit_summary.get("warnings", "—"),
+                            "deck_total": d.timings_s.get("deck_total"), "audience_hint": d.audience_hint}
         warnings += [w if w.startswith(d.strategy) else f"{d.strategy}: {w}" for w in d.warnings]
 
     (out_dir / "compare.md").write_text(compare_table(rows) + "\n", "utf-8")

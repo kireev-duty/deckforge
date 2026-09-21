@@ -89,9 +89,13 @@ def candidates(outline: DeckOutline, mode: str, limit: int = MAX_IMAGES) -> list
 
 def illustrate(
     outline: DeckOutline, strategy: Strategy, style: dict, client: LLMClient | None, out_dir: Path,
-    cfg_mode: str = "auto", limit: int = MAX_IMAGES, parallel: int = PARALLEL,
+    cfg_mode: str = "auto", limit: int = MAX_IMAGES, parallel: int = PARALLEL, deadline: float | None = None,
 ) -> IllustrateResult:
-    """Копия outline с `image.path` у проиллюстрированных слайдов."""
+    """Копия outline с `image.path` у проиллюстрированных слайдов.
+
+    `deadline` (`time.monotonic()`) — бюджет времени колоды: промпт и генерация после него не вызываются,
+    слайд остаётся без иллюстрации с предупреждением (кэш читается всегда).
+    """
     mode = effective_mode(cfg_mode, strategy)
     res = IllustrateResult(outline.model_copy(deep=True), mode)
     res.items = [ImageItem(s.idx, s.title, "content", s.image.path) for s in outline.slides if s.image and s.image.path]
@@ -110,7 +114,7 @@ def illustrate(
     by_idx = {s.idx: s for s in res.outline.slides}
 
     def work(s: OutlineSlide) -> ImageItem:
-        return _illustrate_one(s, client, skill, style, style_tags, img_dir)
+        return _illustrate_one(s, client, skill, style, style_tags, img_dir, deadline)
 
     with ThreadPoolExecutor(max_workers=max(1, parallel)) as ex:
         items = list(ex.map(work, todo))
@@ -125,7 +129,8 @@ def illustrate(
     return res
 
 
-def _illustrate_one(s: OutlineSlide, client: LLMClient, skill: Any, style: dict, style_tags: str, img_dir: Path) -> ImageItem:
+def _illustrate_one(s: OutlineSlide, client: LLMClient, skill: Any, style: dict, style_tags: str, img_dir: Path,
+                    deadline: float | None = None) -> ImageItem:
     text = " ".join([s.subtitle or ""] + s.bullets + s.paragraphs + ([s.quote] if s.quote else [])).strip()
     hint = (s.image.prompt or s.image.alt) if s.image else ""
     key = _cache_key(s.title, text, hint, style.get("palette", ""), client.image_model)
@@ -140,15 +145,17 @@ def _illustrate_one(s: OutlineSlide, client: LLMClient, skill: Any, style: dict,
                 return ImageItem(s.idx, s.title, "cache", str(cached), d.get("prompt"))
         except (OSError, ValueError):
             pass
+    if deadline is not None and time.monotonic() >= deadline:
+        return ImageItem(s.idx, s.title, "failed", error="бюджет времени колоды исчерпан")
     try:
         ans = client.run_skill(
             skill, slide_title=s.title, slide_text=(hint + "\n" + text).strip() or s.title,
-            palette=style.get("palette", ""), style_tags=style_tags, aspect="16:9",
+            palette=style.get("palette", ""), style_tags=style_tags, aspect="16:9", deadline=deadline,
         )
         prompt = str(ans.get("prompt") if isinstance(ans, dict) else ans).strip()
         if not prompt:
             raise ValueError("image_prompter вернул пустой промпт")
-        path = client.generate_image(prompt, img_dir / f"{key}.png", size=IMAGE_SIZE)
+        path = client.generate_image(prompt, img_dir / f"{key}.png", size=IMAGE_SIZE, deadline=deadline)
     except Exception as e:  # noqa: BLE001
         log.warning("images: слайд %s: %s", s.idx, e)
         return ImageItem(s.idx, s.title, "failed", error=str(e)[:160])

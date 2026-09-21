@@ -151,11 +151,13 @@ def brief_form(entry: TemplateEntry, opts: dict) -> None:
                          help="Цель, аудитория, ключевые тезисы. Факты для слайдов — в файлах ниже.")
     c1, c2 = st.columns([3, 2])
     with c1:
-        files = st.file_uploader("Файлы контент-пакета: *.md, *.txt → корень; *.json, *.csv → data/",
-                                 type=["md", "txt", "json", "csv"], accept_multiple_files=True)
+        files = st.file_uploader("Файлы контент-пакета: текст (.md, .txt, .docx, .pdf) и данные (.json, .csv, .xlsx)",
+                                 type=["md", "txt", "docx", "pdf", "json", "csv", "xlsx"], accept_multiple_files=True)
     with c2:
         use_example = st.checkbox("Добавить пример «Пульс команды» (product.md + metrics.json)",
                                   value=not files, help=f"{EXAMPLE_PACK}")
+    if not files and not use_example:
+        st.caption("Файлов нет — колода только по брифу: цифры берутся из текста брифа, диаграмм и таблиц без данных не будет.")
     disabled = not brief.strip() or not opts["strategies"]
     if st.button("Сгенерировать варианты", type="primary", disabled=disabled, width="stretch"):
         generate(entry, opts, brief, files or [], use_example)
@@ -221,6 +223,8 @@ def show_deck(name: str, deck: DeckResult) -> None:
     manifest = deck.load_manifest()
     report = deck.load_report()
     ir = deck.load_ir()
+    if deck.audience_hint:
+        st.caption(f"Для кого: {deck.audience_hint}")
 
     # ── превью ──
     if deck.pngs:

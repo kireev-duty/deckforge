@@ -113,6 +113,23 @@ def test_judge_deck_parallel_keeps_slide_order(tmp_path: Path) -> None:
     assert [f.slide_idx for f in found] == sorted(f.slide_idx for f in found) and len(found) == 12
 
 
+def test_judge_deck_deadline_skips_remaining_slides(tmp_path: Path) -> None:
+    """Бюджет времени колоды: слайды после дедлайна не отправляются судье, а получают info «не проверен»."""
+    import time
+
+    answers = cassette("audit_judge_pulse")
+    slides = [SlideText(idx=i, title=f"T{i}", archetype=Archetype.CARDS) for i in range(4)]
+    client = FakeClient(by_skill={"audit_judge": [answers[0]]})
+    # дедлайн уже прошёл — ни одного вызова
+    found = judge_deck(_png(tmp_path, 4), slides, client, workers=2, deadline=time.monotonic() - 1)
+    assert client.calls == [] and [f.slide_idx for f in found] == [0, 1, 2, 3]
+    assert all(f.check_id == ERROR_CHECK_ID and f.severity == Severity.INFO and "бюджет" in f.message for f in found)
+    # дедлайн впереди — вызовы идут и получают его
+    deadline = time.monotonic() + 60
+    found = judge_deck(_png(tmp_path, 4), slides, client, workers=2, deadline=deadline)
+    assert len(client.calls) == 4 and found == [] and client.deadlines == [deadline] * 4
+
+
 def test_slides_from_ir_collects_text_and_facts(template_path) -> None:
     dna = build_dna(template_path("VK Tech"))
     outline = DeckOutline.model_validate_json((PACK / "outline.json").read_text("utf-8"))

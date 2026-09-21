@@ -94,14 +94,14 @@ def test_kpi_split_parts_get_distinct_titles() -> None:
 
 
 def test_executive_compacts_real_outline_without_losing_words() -> None:
-    """Outline из кассеты ужимается в 8–10 executive: шаги, KPI и цитата становятся карточками без потерь."""
+    """Outline из кассеты ужимается в 10–11 executive: шаги, KPI и цитата становятся карточками без потерь."""
     from deckforge.content.outline_writer import repair_outline
     from tests.conftest import cassette
 
     o, _ = repair_outline(cassette("outline_writer_pulse"), set(Archetype), set())
     assert len(o.slides) >= 12
     res = plan(o, load_strategy("executive"), set(Archetype), kpi_capacity=3)
-    assert 8 <= len(res.slides) <= 10 and not res.warnings
+    assert 10 <= len(res.slides) <= 11 and not res.warnings
     planned = " ".join(" ".join(s.bullets + s.steps + [k.value for k in s.kpis] + [k.label for k in s.kpis] + [s.quote or ""]) for s in res.slides)
     for s in o.slides:
         for word in " ".join(s.steps + [k.value for k in s.kpis] + [s.quote or ""]).split():

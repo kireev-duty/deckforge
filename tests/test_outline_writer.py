@@ -5,6 +5,7 @@ from pathlib import Path
 import pytest
 
 from deckforge.content import archetypes_prompt, load_content_pack, repair_outline, write_outline
+from deckforge.content.outline_writer import missing_file_refs
 from deckforge.core.ir import Archetype, DeckOutline
 from tests.conftest import FakeClient
 from tests.conftest import cassette as load_cassette
@@ -33,7 +34,7 @@ def test_cassette_becomes_valid_outline() -> None:
     assert used and used <= pack.ids()
     assert any(s.chart for s in o.slides) and any(s.table for s in o.slides) and any(s.kpis for s in o.slides)
     assert all(isinstance(st, str) for s in o.slides for st in s.steps)
-    assert res.attempts == 1 and client.calls[0].skill == "outline_writer@v1"
+    assert res.attempts == 1 and client.calls[0].skill == "outline_writer@v2"
     inputs = client.inputs[0]
     assert "strategy_rules" not in inputs and inputs["target_slides"] == 12
     assert "- kpi:" in inputs["available_archetypes"] and "- section:" not in inputs["available_archetypes"]
@@ -71,6 +72,44 @@ def test_repair_fixes_bad_answer() -> None:
     assert by_title["KPI без цифр"].archetype == Archetype.BULLETS
     assert "   " not in by_title and "без заголовка" in text
     assert by_title["Нет в шаблоне"].archetype == Archetype.BULLETS and "неизвестные sources: nope" in text
+    assert by_title["Нет в шаблоне"].sources == []
+
+
+def test_unknown_sources_are_dropped_known_kept() -> None:
+    raw = {"title": "T", "purpose": "report", "slides": [
+        {"idx": 0, "archetype": "title", "title": "T"},
+        {"idx": 1, "archetype": "bullets", "title": "Факт", "bullets": ["x"], "sources": ["product.md", "brief", "m:x"]},
+        {"idx": 2, "archetype": "closing", "title": "T"},
+    ]}
+    o, warnings = repair_outline(raw, {Archetype.TITLE, Archetype.BULLETS, Archetype.CLOSING}, {"brief"})
+    assert o.slides[1].sources == ["brief"]
+    assert any(w.startswith("неизвестные sources: m:x, product.md") for w in warnings)
+
+
+def test_nested_content_object_is_lifted() -> None:
+    raw = {"title": "T", "purpose": "report", "slides": [
+        {"idx": 0, "archetype": "title", "title": "T", "content": {"subtitle": "Подзаголовок"}},
+        {"idx": 1, "archetype": "kpi", "title": "Цифры", "content": {"kpis": [{"value": "12", "label": "команд"}]}},
+        {"idx": 2, "archetype": "bullets", "title": "Тезисы", "bullets": ["своё"], "content": {"bullets": ["чужое"]}},
+        {"idx": 3, "archetype": "closing", "title": "T"},
+    ]}
+    o, warnings = repair_outline(raw, {Archetype.TITLE, Archetype.KPI, Archetype.BULLETS, Archetype.CLOSING}, {"brief"})
+    assert o.slides[0].subtitle == "Подзаголовок"
+    assert o.slides[1].archetype == Archetype.KPI and o.slides[1].kpis[0].value == "12"
+    assert o.slides[2].bullets == ["своё"]  # своё поле важнее вложенного
+    assert sum("content" in w for w in warnings) == 3
+
+
+def test_brief_only_pack_warns_about_missing_files(tmp_path: Path) -> None:
+    """Бриф из примера ссылается на product.md и data/metrics.json — без них модель выдумывала данные."""
+    (tmp_path / "brief.md").write_text((PACK / "brief.md").read_text("utf-8"), "utf-8")
+    assert missing_file_refs(load_content_pack(tmp_path)) == ["data/metrics.json", "product.md"]
+    assert missing_file_refs(load_content_pack(PACK)) == []
+    client = FakeClient(cassette())
+    res = write_outline(client, load_content_pack(tmp_path), purpose="product", audience="руководители",
+                        available_archetypes=VK_TECH_ARCHETYPES)
+    assert any("которых нет в пакете: data/metrics.json, product.md" in w for w in res.warnings)
+    assert all(src == "brief" or src.startswith("brief:") for s in res.outline.slides for src in s.sources)
 
 
 def test_series_as_list_of_objects_is_accepted() -> None:

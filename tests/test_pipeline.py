@@ -29,6 +29,16 @@ def test_example_config_loads() -> None:
     assert cfg.audit.autofix is True and cfg.audit.contextual is True and "pdf" in cfg.export
 
 
+def test_empty_pack_fails_before_llm(template_path, tmp_path: Path) -> None:
+    (tmp_path / "pack").mkdir()
+    cfg = RunConfig(template=template_path("VK Tech"), content_pack=tmp_path / "pack", strategies=["executive"],
+                    output_dir=tmp_path / "run", audit=NO_JUDGE)
+    client = FakeClient(cassette("outline_writer_pulse"))
+    with pytest.raises(RuntimeError, match="контент-пакет пуст"):
+        run(cfg, client=client)
+    assert not client.calls
+
+
 def test_run_with_fake_llm(template_path, tmp_path: Path) -> None:
     cfg = RunConfig(
         template=template_path("VK Tech"), content_pack=REPO / "examples" / "content_pack", purpose="product",
@@ -45,9 +55,9 @@ def test_run_with_fake_llm(template_path, tmp_path: Path) -> None:
     for d in res.decks:
         assert d.pptx.exists() and d.pptx.stat().st_size > 100_000 and d.ir_json.exists()
         m = json.loads(d.manifest.read_text("utf-8"))
-        assert m["skills"] == {"outline_writer": "v1"}
+        assert m["skills"] == {"outline_writer": "v2"}
         assert m["models"]["text"] == "fake-text"
-        assert m["llm_calls"][0]["skill"] == "outline_writer@v1"
+        assert m["llm_calls"][0]["skill"] == "outline_writer@v2"
         assert {"parse", "outline", "layout", "render", "audit", "autofix"} <= set(m["timings_s"])
         assert d.audit is not None and d.audit.exists() and m["audit"]["checks_run"] == 24
         assert m["audit"]["errors"] == d.audit_summary["errors"] and "by_check" in m["audit"]
@@ -112,7 +122,7 @@ class ImageFakeClient(FakeClient):
     images_enabled = True
     image_model = "fake-t2i"
 
-    def generate_image(self, prompt: str, out_path: Path, size: str = "1024x576") -> Path:
+    def generate_image(self, prompt: str, out_path: Path, size: str = "1024x576", deadline: float | None = None) -> Path:
         from PIL import Image
 
         from deckforge.llm.client import LLMCall
@@ -254,3 +264,50 @@ def test_run_with_contextual_judge(template_path, tmp_path: Path) -> None:
     assert ctx and m["audit"]["contextual"] == len(ctx) and m["audit"]["kind"] == "deterministic+contextual"
     assert m["skills"]["audit_judge"] == "v1" and "audit_contextual" in m["timings_s"] and "png" in m["timings_s"]
     assert len(d.pngs) == n and not (tmp_path / "executive" / "contact.png").exists()
+    # бюджет времени: судья получил дедлайн, время колоды и бюджет — в manifest и compare.md
+    assert all(dl is not None for dl in client.deadlines) and m["time_budget_s"] == 300
+    assert 0 < m["timings_s"]["deck_total"] < 300 and not any("бюджет" in w for w in m["warnings"])
+    compare = (tmp_path / "compare.md").read_text("utf-8")
+    assert "| время, с |" in compare and "**executive** — руководителю" in compare
+    assert m["strategy"]["audience_hint"].startswith("руководителю") and d.audience_hint == m["strategy"]["audience_hint"]
+
+
+def test_time_budget_skips_judge_and_images(template_path, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """ТЗ: колода ≤ 5 мин независимо от инференса — при исчерпанном бюджете судья и картинки пропускаются,
+    вёрстка, аудит и экспорт делаются всегда; бюджет читается из DECK_TIME_BUDGET_S."""
+    from deckforge.core.ir import DeckOutline
+
+    monkeypatch.setenv("DECK_TIME_BUDGET_S", "10")
+    monkeypatch.setenv("DECK_MAX_PARALLEL_LLM", "2")
+    outline = DeckOutline.model_validate_json((REPO / "examples" / "content_pack" / "outline.json").read_text("utf-8"))
+    cfg = RunConfig(template=template_path("VK Tech"), content_pack=REPO / "examples" / "content_pack",
+                    strategies=["visual"], output_dir=tmp_path, images="auto", render_dpi=40,
+                    audit={"deterministic": True, "contextual": True, "autofix": True})
+    assert cfg.time_budget_s == 10 and cfg.max_parallel_llm == 2
+    client = FakeClient(by_skill={"audit_judge": cassette("audit_judge_pulse")})
+    client.images_enabled = True
+    res = run(cfg, client=client, outline=outline)
+    d = res.decks[0]
+    m = json.loads(d.manifest.read_text("utf-8"))
+    assert client.calls == []  # ни судьи, ни промптов картинок: до дедлайна меньше резерва
+    assert d.pptx.exists() and d.audit is not None and m["audit"]["kind"] == "deterministic"
+    assert any("images: пропущено" in w for w in m["warnings"])
+    assert any("VLM-судья пропущен" in w for w in m["warnings"])
+    assert m["time_budget_s"] == 10 and m["timings_s"]["deck_total"] > 0
+    assert m["strategy"]["target_slides"] == {"min": 10, "max": 12}
+
+
+def test_target_slides_shifts_strategy_ranges(template_path, tmp_path: Path) -> None:
+    """Объём, заданный пользователем, доходит до стратегий: 15 → executive 13–14, narrative 15–18."""
+    from deckforge.core.ir import DeckOutline
+
+    outline = DeckOutline.model_validate_json((REPO / "examples" / "content_pack" / "outline.json").read_text("utf-8"))
+    cfg = RunConfig(template=template_path("VK Tech"), content_pack=REPO / "examples" / "content_pack",
+                    strategies=["executive", "narrative"], output_dir=tmp_path, images="off", target_slides=15,
+                    audit=NO_JUDGE)
+    res = run(cfg, outline=outline)
+    by = {d.strategy: json.loads(d.manifest.read_text("utf-8")) for d in res.decks}
+    assert by["executive"]["strategy"]["target_slides"] == {"min": 13, "max": 14}
+    assert by["narrative"]["strategy"]["target_slides"] == {"min": 15, "max": 18}
+    assert 13 <= by["executive"]["stats"]["slides"] <= 14
+    assert 15 <= by["narrative"]["stats"]["slides"] <= 18

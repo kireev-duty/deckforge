@@ -17,8 +17,9 @@ from deckforge.pipeline.run import ParsedTemplate, parse_template, sha1_of
 
 DATASET_DIRS = [ROOT / "data" / "templates", ROOT / "data" / "holdout"]
 MAX_TEMPLATE_BYTES = 60 << 20
-MAX_PACK_FILE_BYTES = 5 << 20
-PACK_EXT = {".md": "", ".json": "data", ".csv": "data", ".txt": ""}
+MAX_PACK_FILE_BYTES = 20 << 20
+# текст — в корень, данные — в data/ (см. content/content_pack.py)
+PACK_EXT = {".md": "", ".txt": "", ".docx": "", ".pdf": "", ".json": "data", ".csv": "data", ".xlsx": "data"}
 _SAFE = re.compile(r"[^\w\-. ]+", re.UNICODE)
 
 

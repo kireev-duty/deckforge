@@ -1263,6 +1263,22 @@
      "image_path": null,
      "icon_name": null,
      "style_overrides": {}
+    },
+    {
+     "slot_id": "2",
+     "kind": "picture",
+     "box": {
+      "x": 0,
+      "y": 335267,
+      "w": 6456363,
+      "h": 2971784
+     },
+     "paragraphs": [],
+     "chart": null,
+     "table": null,
+     "image_path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\lct2026_holdout\\images\\ac23b213eb953b7e.jpg",
+     "icon_name": null,
+     "style_overrides": {}
     }
    ],
    "notes": "",

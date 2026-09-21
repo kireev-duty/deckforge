@@ -42,30 +42,16 @@
    }
   },
   {
-   "check_id": "C03_one_message",
+   "check_id": "C08_no_typos",
    "kind": "contextual",
    "severity": "warning",
-   "slide_idx": 2,
-   "element_id": null,
-   "box": null,
-   "message": "Слайд содержит три отдельных тезиса с пояснениями, которые не сводятся к одному предложению.",
-   "autofix": null,
-   "evidence": {
-    "question": "Слайд пересказывается одним предложением",
-    "sources": "m:pilot"
-   }
-  },
-  {
-   "check_id": "C07_no_garbage",
-   "kind": "contextual",
-   "severity": "error",
    "slide_idx": 4,
    "element_id": null,
    "box": null,
-   "message": "В подписи третьего графика текст обрезан многоточием («май–август…»), что выглядит как служебный мусор или ошибка верстки.",
+   "message": "В подписи третьей диаграммы текст обрывается многоточием («май–август…»), что выглядит как незавершенная строка.",
    "autofix": null,
    "evidence": {
-    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
+    "question": "Текст без опечаток",
     "sources": "doc:product:что-получает-команда-и-руководитель"
    }
   },
@@ -511,16 +497,30 @@
    }
   },
   {
-   "check_id": "C08_no_typos",
+   "check_id": "C02_content_matches_title",
    "kind": "contextual",
-   "severity": "warning",
+   "severity": "error",
    "slide_idx": 11,
    "element_id": null,
    "box": null,
-   "message": "В подписи третьей диаграммы текст обрывается многоточием («дня: средний срок...»).",
+   "message": "Слайд содержит метрику о сроках ответа (0,6 дня), которая не соответствует теме заголовка об оценке пилота.",
    "autofix": null,
    "evidence": {
-    "question": "Текст без опечаток",
+    "question": "Содержимое слайда соответствует заголовку",
+    "sources": "doc:product:контакты"
+   }
+  },
+  {
+   "check_id": "C07_no_garbage",
+   "kind": "contextual",
+   "severity": "error",
+   "slide_idx": 11,
+   "element_id": null,
+   "box": null,
+   "message": "В подписи третьей диаграммы присутствует обрезанный текст «дня: средний срок...», что выглядит как служебный мусор или ошибка верстки.",
+   "autofix": null,
+   "evidence": {
+    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
     "sources": "doc:product:контакты"
    }
   },
@@ -604,31 +604,17 @@
    }
   },
   {
-   "check_id": "C07_no_garbage",
+   "check_id": "C10_table_legend_relevant",
    "kind": "contextual",
-   "severity": "error",
-   "slide_idx": 12,
+   "severity": "info",
+   "slide_idx": 11,
    "element_id": null,
    "box": null,
-   "message": "На слайде присутствуют лишние водяные знаки с цифрами 01-04, хотя рисков только три.",
+   "message": "Третья диаграмма (о сроках ответа) не работает на мысль заголовка, который посвящен исключительно оценке пилота.",
    "autofix": null,
    "evidence": {
-    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
-    "sources": ""
-   }
-  },
-  {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 12,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок называет тему (риски и закрытие), а не содержит вывод о результате или значимости.",
-   "autofix": null,
-   "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": ""
+    "question": "Все строки таблицы и элементы легенды работают на мысль слайда",
+    "sources": "doc:product:контакты"
    }
   },
   {
@@ -731,6 +717,20 @@
     "need": 4.5,
     "template_color": 1
    }
+  },
+  {
+   "check_id": "C06_images_relevant",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 14,
+   "element_id": null,
+   "box": null,
+   "message": "Иконка курсора и пустой блок не относятся к теме слайда.",
+   "autofix": null,
+   "evidence": {
+    "question": "Картинки и иконки относятся к теме слайда",
+    "sources": ""
+   }
   }
  ],
  "checks_run": [
@@ -770,5 +770,5 @@
   "C10_table_legend_relevant",
   "C11_flow"
  ],
- "duration_s": 54.761
+ "duration_s": 54.627
 }

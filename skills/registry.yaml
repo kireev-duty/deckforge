@@ -12,9 +12,10 @@ skills:
   outline_writer:
     description: Из брифа и контент-пакета строит DeckOutline — состав, порядок и содержание слайдов до вёрстки
     model_role: text
-    current: v1
+    current: v2
     history:
       - {version: v1, note: "initial; до первого потребителя убран вход strategy_rules (outline один на прогон), добавлен section на слайдах"}
+      - {version: v2, note: "неполный пакет: данные из файлов, которых нет среди фрагментов, не восстанавливать; sources — только id из пакета"}
 
   slide_filler:
     description: Подгоняет текст слайда под слоты выбранного образца (лимиты символов/строк), не меняя смысл

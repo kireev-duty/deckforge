@@ -33,10 +33,12 @@ class FakeClient:
         self.calls: list[LLMCall] = []
         self.inputs: list[dict] = []
         self.images: list[list[Path]] = []
+        self.deadlines: list[float | None] = []
 
-    def run_skill(self, skill, images=None, **inputs):
+    def run_skill(self, skill, images=None, deadline=None, **inputs):
         self.inputs.append(inputs)
         self.images.append(list(images or []))
+        self.deadlines.append(deadline)
         queue = self.by_skill.get(skill.name)
         if queue is not None:
             resp = queue.pop(0) if len(queue) > 1 else queue[0]

@@ -147,9 +147,11 @@ def test_safe_name_and_pack(tmp_path: Path) -> None:
     assert safe_name("../../etc/passwd") == "passwd"
     assert safe_name("C:\\Users\\x\\Отчёт Q3.md") == "Отчёт Q3.md"
     assert safe_name("...") == "file" and safe_name("", "t") == "t"
-    d = write_content_pack(tmp_path / "pack", "бриф", [("brief.md", b"x"), ("notes.txt", b"y"), ("m.csv", b"a,b")])
+    d = write_content_pack(tmp_path / "pack", "бриф", [("brief.md", b"x"), ("notes.txt", b"y"), ("m.csv", b"a,b"),
+                                                       ("Отчёт.docx", b"z"), ("scan.PDF", b"p"), ("sales.xlsx", b"s")])
     assert (d / "brief.md").read_text("utf-8") == "бриф\n" and (d / "brief_extra.md").exists()
     assert (d / "notes.txt").exists() and (d / "data" / "m.csv").exists()
+    assert (d / "Отчёт.docx").exists() and (d / "scan.PDF").exists() and (d / "data" / "sales.xlsx").exists()
 
 
 # ──────────────────────────── стресс: зомби-job'ы, конкуренция, загрузки ────────────────────────────

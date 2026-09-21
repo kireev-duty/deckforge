@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+import re
 from dataclasses import dataclass, field
 from typing import Any, get_args
 
@@ -10,12 +11,12 @@ from pydantic import ValidationError
 
 from deckforge.content.content_pack import ContentPack
 from deckforge.core.ir import ARCHETYPE_HINTS, Archetype, DeckOutline
+from deckforge.core.strategy import DEFAULT_TARGET_SLIDES
 from deckforge.llm.client import LLMClient
 from deckforge.llm.skills import load_skill
 
 log = logging.getLogger(__name__)
 
-DEFAULT_TARGET_SLIDES = 12
 MAX_BULLETS = 6
 MAX_KPIS = 4
 TABLE_MAX_ROWS, TABLE_MAX_COLS = 7, 5
@@ -26,6 +27,8 @@ PURPOSES: tuple[str, ...] = get_args(DeckOutline.model_fields["purpose"].annotat
 ALIAS_LIST_FIELDS = ("cards", "items", "points", "columns", "benefits", "risks", "list")
 TEXT_ARCHETYPES = {a.value for a in (Archetype.BULLETS, Archetype.CARDS, Archetype.TWO_COLUMN, Archetype.IMAGE_TEXT,
                                      Archetype.AGENDA)}
+# имена файлов пакета в тексте брифа: `product.md`, data/metrics.json
+_FILE_REF_RE = re.compile(r"(?<![\w/.-])((?:[\w-]+/)*[\w-]+\.(?:md|txt|docx|pdf|json|csv|xlsx))\b", re.IGNORECASE)
 
 
 @dataclass
@@ -58,6 +61,10 @@ def write_outline(
     """Один вызов скилла; повтор, если ответ не собирается в DeckOutline даже после repair."""
     skill = load_skill("outline_writer")
     content_text, warnings = pack.to_prompt_text()
+    missing = missing_file_refs(pack)
+    if missing:
+        warnings.append(f"в брифе упомянуты файлы, которых нет в пакете: {', '.join(missing)} — "
+                        "модель работает только по брифу")
     inputs = {
         "brief": pack.brief,
         "purpose": purpose,
@@ -82,6 +89,14 @@ def write_outline(
             continue
         return OutlineResult(outline, warnings + fix_warnings, raw, attempts=attempt + 1)
     raise RuntimeError(f"outline_writer: не удалось собрать DeckOutline за {retries + 1} попытки: {last_err}")
+
+
+def missing_file_refs(pack: ContentPack) -> list[str]:
+    """Файлы, на которые ссылается бриф, но которых нет в пакете: по ним модель склонна выдумывать данные."""
+    have = {f.source.replace("\\", "/").lower() for f in pack.fragments}
+    have |= {p.rsplit("/", 1)[-1] for p in have}
+    refs = dict.fromkeys(m.group(1) for m in _FILE_REF_RE.finditer(pack.brief))
+    return [r for r in refs if r.lower() not in have and r.lower() != "outline.json"]
 
 
 # ──────────────────────────── repair ────────────────────────────
@@ -127,7 +142,10 @@ def repair_outline(
             s["idx"] = i
     unknown = sorted({src for s in slides for src in s.get("sources", []) if src not in pack_ids})
     if unknown:
-        warnings.append(f"неизвестные sources: {', '.join(unknown[:8])}{'…' if len(unknown) > 8 else ''}")
+        warnings.append(f"неизвестные sources: {', '.join(unknown[:8])}{'…' if len(unknown) > 8 else ''}"
+                        " — убраны; факты этих слайдов проверит судья по всему пакету")
+        for s in slides:
+            s["sources"] = [src for src in s.get("sources", []) if src in pack_ids]
     data["slides"] = slides
     return DeckOutline.model_validate(data), warnings
 
@@ -157,6 +175,13 @@ def _repair_slide(s: dict[str, Any], available: set[Archetype], warnings: list[s
         warnings.append(f"{label}: без заголовка — пропущен")
         return None
     s["title"] = title
+    # поля слайда, вложенные в объект content: {"content": {"bullets": […], "kpis": […]}}
+    nested = s.pop("content", None)
+    if isinstance(nested, dict):
+        for key, val in nested.items():
+            if s.get(key) in (None, [], "") and val not in (None, [], ""):
+                s[key] = val
+        warnings.append(f"{label}: поля из «content» подняты на уровень слайда")
 
     # архетип: из enum и из доступных в шаблоне; иначе текстовый фолбэк
     try:
@@ -335,4 +360,4 @@ def _repair_table(table: Any) -> dict[str, Any] | None:
     return {"header": header, "rows": rows}
 
 
-__all__ = ["OutlineResult", "archetypes_prompt", "repair_outline", "write_outline"]
+__all__ = ["OutlineResult", "archetypes_prompt", "missing_file_refs", "repair_outline", "write_outline"]

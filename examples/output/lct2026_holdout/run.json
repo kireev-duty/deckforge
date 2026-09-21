@@ -1,5 +1,5 @@
 {
- "created": "2026-09-18T16:15:41+00:00",
+ "created": "2026-09-21T12:34:23+00:00",
  "config": {
   "template": "data/holdout/ЛЦТ2026 Шаблон презентации.pptx",
   "content_pack": "examples/content_pack",
@@ -26,7 +26,9 @@
   "output_dir": "examples/output/lct2026_holdout",
   "seed": 42,
   "render_png": true,
-  "render_dpi": 72
+  "render_dpi": 72,
+  "time_budget_s": 300,
+  "max_parallel_llm": 4
  },
  "template": {
   "id": "974401af1ab9",
@@ -40,7 +42,7 @@
    "pptx": "executive.pptx",
    "manifest": "executive.manifest.json",
    "stats": {
-    "slides": 10,
+    "slides": 11,
     "archetypes": [
      "title",
      "cards",
@@ -49,7 +51,8 @@
      "bullets",
      "chart",
      "chart",
-     "bullets",
+     "image_text",
+     "kpi",
      "cards",
      "title"
     ],
@@ -61,57 +64,63 @@
      "slide13",
      "slide21",
      "slide22",
-     "slide12",
+     "slide8",
+     "slide17",
      "slide4",
      "slide7"
     ],
-    "text_items_per_slide": 4.7,
-    "words_per_item": 8.4,
+    "text_items_per_slide": 4.1,
+    "words_per_item": 7.9,
     "chart": 0,
     "table": 2,
-    "kpi": 1,
+    "kpi": 2,
     "picture": 0,
     "skipped": 0
    },
    "audit": {
-    "errors": 1,
-    "warnings": 18,
+    "errors": 3,
+    "warnings": 25,
     "info": 1,
-    "contextual": 4,
+    "contextual": 7,
     "by_check": {
      "C01_title_insight": 3,
-     "C07_no_garbage": 1,
+     "C02_content_matches_title": 1,
+     "C07_no_garbage": 2,
+     "C08_no_typos": 1,
      "D02_bullet_words": 1,
-     "D05_fill": 4,
+     "D05_fill": 6,
+     "L02_overlap": 1,
      "L03_text_overflow": 2,
      "L05_off_grid": 2,
      "L06_in_margins": 2,
      "T02_font_size": 1,
-     "T06_contrast": 4
+     "T06_contrast": 7
     },
     "slides_with_issues": [
      1,
      2,
+     3,
      4,
      5,
      6,
      7,
-     8
+     8,
+     9
     ],
     "checks_run": 35,
-    "duration_s": 37.958,
+    "duration_s": 55.411,
     "path": "executive.audit.json",
     "kind": "deterministic+contextual",
     "autofix": {
-     "applied": 11,
+     "applied": 15,
      "skipped": 3,
      "before": {
-      "errors": 5,
-      "warnings": 21
+      "errors": 9,
+      "warnings": 27
      },
      "after": {
       "errors": 0,
-      "warnings": 15
+      "warnings": 21
      },
      "items": [
       {
@@ -180,6 +189,38 @@
       },
       {
        "slide_idx": 8,
+       "element_id": "4",
+       "check_id": "L03_text_overflow",
+       "fix": "shrink_font_by_scale",
+       "before": "18 pt",
+       "after": "12.9 pt"
+      },
+      {
+       "slide_idx": 8,
+       "element_id": "15",
+       "check_id": "L03_text_overflow",
+       "fix": "shrink_font_by_scale",
+       "before": "44 pt",
+       "after": "36.4 pt"
+      },
+      {
+       "slide_idx": 8,
+       "element_id": "16",
+       "check_id": "L03_text_overflow",
+       "fix": "shrink_font_by_scale",
+       "before": "44 pt",
+       "after": "35.4 pt"
+      },
+      {
+       "slide_idx": 8,
+       "element_id": "17",
+       "check_id": "L03_text_overflow",
+       "fix": "shrink_font_by_scale",
+       "before": "44 pt",
+       "after": "35.4 pt"
+      },
+      {
+       "slide_idx": 9,
        "element_id": "66",
        "check_id": "L03_text_overflow",
        "fix": "shrink_font_by_scale",
@@ -187,7 +228,7 @@
        "after": "11.2 pt, текст укорочен"
       },
       {
-       "slide_idx": 8,
+       "slide_idx": 9,
        "element_id": "67",
        "check_id": "L03_text_overflow",
        "fix": "shrink_font_by_scale",
@@ -195,7 +236,7 @@
        "after": "13 pt"
       },
       {
-       "slide_idx": 8,
+       "slide_idx": 9,
        "element_id": "68",
        "check_id": "L03_text_overflow",
        "fix": "shrink_font_by_scale",
@@ -211,13 +252,13 @@
       },
       {
        "slide_idx": 7,
-       "element_id": "29",
+       "element_id": "5",
        "check_id": "D02_bullet_words",
        "fix": "refill_slot",
        "reason": "нечего менять"
       },
       {
-       "slide_idx": 8,
+       "slide_idx": 9,
        "element_id": "64",
        "check_id": "L03_text_overflow",
        "fix": "shrink_font_by_scale",
@@ -232,14 +273,15 @@
     "html": "executive.html"
    },
    "timings_s": {
-    "layout": 0.025,
-    "render": 1.627,
-    "audit": 0.716,
-    "autofix": 2.818,
-    "png": 76.82,
-    "audit_contextual": 37.286,
-    "export_pdf": 0.006,
-    "export_html": 7.259
+    "layout": 0.026,
+    "render": 0.728,
+    "audit": 0.27,
+    "autofix": 0.969,
+    "png": 21.787,
+    "audit_contextual": 55.13,
+    "export_pdf": 0.01,
+    "export_html": 2.219,
+    "deck_total": 81.141
    }
   },
   {
@@ -287,12 +329,13 @@
     "skipped": 0
    },
    "audit": {
-    "errors": 3,
-    "warnings": 27,
+    "errors": 4,
+    "warnings": 26,
     "info": 1,
     "contextual": 11,
     "by_check": {
-     "C01_title_insight": 5,
+     "C01_title_insight": 4,
+     "C02_content_matches_title": 1,
      "C03_one_message": 1,
      "C06_images_relevant": 1,
      "C07_no_garbage": 3,
@@ -308,7 +351,6 @@
     "slides_with_issues": [
      2,
      3,
-     4,
      5,
      6,
      7,
@@ -318,7 +360,7 @@
      11
     ],
     "checks_run": 35,
-    "duration_s": 45.003,
+    "duration_s": 122.305,
     "path": "narrative.audit.json",
     "kind": "deterministic+contextual",
     "autofix": {
@@ -421,14 +463,15 @@
     "html": "narrative.html"
    },
    "timings_s": {
-    "layout": 0.026,
-    "render": 2.792,
-    "audit": 0.941,
-    "autofix": 3.804,
-    "png": 93.709,
-    "audit_contextual": 44.025,
-    "export_pdf": 0.007,
-    "export_html": 6.82
+    "layout": 0.006,
+    "render": 0.711,
+    "audit": 0.315,
+    "autofix": 1.051,
+    "png": 28.754,
+    "audit_contextual": 121.975,
+    "export_pdf": 0.003,
+    "export_html": 1.912,
+    "deck_total": 154.733
    }
   },
   {
@@ -470,21 +513,20 @@
     "chart": 2,
     "table": 0,
     "kpi": 3,
-    "picture": 0,
+    "picture": 1,
     "skipped": 0
    },
    "audit": {
-    "errors": 5,
-    "warnings": 23,
+    "errors": 3,
+    "warnings": 22,
     "info": 1,
-    "contextual": 11,
+    "contextual": 9,
     "by_check": {
-     "C01_title_insight": 5,
-     "C02_content_matches_title": 1,
-     "C07_no_garbage": 4,
-     "C08_no_typos": 1,
+     "C01_title_insight": 4,
+     "C07_no_garbage": 3,
+     "C08_no_typos": 2,
      "D02_bullet_words": 1,
-     "D05_fill": 5,
+     "D05_fill": 4,
      "L02_overlap": 3,
      "L03_text_overflow": 1,
      "T02_font_size": 1,
@@ -493,7 +535,6 @@
     "slides_with_issues": [
      1,
      2,
-     3,
      4,
      5,
      6,
@@ -503,19 +544,19 @@
      10
     ],
     "checks_run": 35,
-    "duration_s": 67.455,
+    "duration_s": 56.311,
     "path": "visual.audit.json",
     "kind": "deterministic+contextual",
     "autofix": {
-     "applied": 15,
+     "applied": 14,
      "skipped": 2,
      "before": {
       "errors": 9,
-      "warnings": 22
+      "warnings": 21
      },
      "after": {
       "errors": 0,
-      "warnings": 17
+      "warnings": 16
      },
      "items": [
       {
@@ -599,14 +640,6 @@
        "after": "подписи данных"
       },
       {
-       "slide_idx": 7,
-       "element_id": "2",
-       "check_id": "I02_placeholder_text",
-       "fix": "drop_shape",
-       "before": "2",
-       "after": "удалён"
-      },
-      {
        "slide_idx": 8,
        "element_id": "4",
        "check_id": "L03_text_overflow",
@@ -661,22 +694,23 @@
     "html": "visual.html"
    },
    "timings_s": {
-    "images": 0.012,
-    "layout": 0.03,
-    "render": 3.123,
-    "audit": 1.185,
-    "autofix": 4.143,
-    "png": 83.428,
-    "audit_contextual": 66.695,
-    "export_pdf": 0.006,
-    "export_html": 8.733
+    "images": 0.009,
+    "layout": 0.005,
+    "render": 0.767,
+    "audit": 0.319,
+    "autofix": 1.459,
+    "png": 25.281,
+    "audit_contextual": 55.97,
+    "export_pdf": 0.001,
+    "export_html": 2.224,
+    "deck_total": 86.042
    }
   }
  ],
  "timings_s": {
-  "parse": 0.989,
+  "parse": 0.898,
   "outline": 0.0,
-  "total": 447.333
+  "total": 322.994
  },
  "warnings": [],
  "not_implemented": []

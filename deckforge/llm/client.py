@@ -66,8 +66,13 @@ class LLMClient:
         return {"reasoning": {"enabled": False}, "chat_template_kwargs": {"enable_thinking": False}}
 
     # ── основной вызов скилла ────────────────────────────────────────────────
-    def run_skill(self, skill: Skill, images: list[Path] | None = None, **inputs: Any) -> dict | str:
-        """Выполняет скилл; если у скилла есть schema — возвращает распарсенный и валидный JSON."""
+    def run_skill(self, skill: Skill, images: list[Path] | None = None, deadline: float | None = None,
+                  **inputs: Any) -> dict | str:
+        """Выполняет скилл; если у скилла есть schema — возвращает распарсенный и валидный JSON.
+
+        `deadline` — момент `time.monotonic()`, к которому ответ должен быть: таймаут запроса урезается до остатка,
+        повторных попыток после дедлайна нет (бюджет времени на колоду важнее ответа).
+        """
         system, user = skill.render(**{k: _as_text(v) for k, v in inputs.items()})
         content: Any = user
         if images:
@@ -87,8 +92,17 @@ class LLMClient:
         last_err: Exception | None = None
         for attempt in range(self.retries + 1):
             t0 = time.perf_counter()
+            client = self._client
+            if deadline is not None:
+                left = deadline - time.monotonic()
+                if left <= 0:
+                    last_err = TimeoutError("бюджет времени исчерпан" + (f" (после: {last_err})" if last_err else ""))
+                    self.calls.append(LLMCall(skill.id, model, 0.0, ok=False, error=str(last_err)[:200]))
+                    break
+                if left < self.timeout_s:
+                    client = self._client.with_options(timeout=max(1.0, left))
             try:
-                resp = self._client.chat.completions.create(**kwargs)
+                resp = client.chat.completions.create(**kwargs)
                 text = resp.choices[0].message.content or ""
                 usage = resp.usage
                 self.calls.append(LLMCall(skill.id, model, time.perf_counter() - t0,
@@ -104,10 +118,17 @@ class LLMClient:
                     time.sleep(1.5 * (attempt + 1))
         raise RuntimeError(f"skill {skill.id} failed after {self.retries + 1} attempts: {last_err}")
 
-    def generate_image(self, prompt: str, out_path: Path, size: str = "1024x576") -> Path:
-        """Text-to-image; расширение out_path подгоняется под media_type ответа."""
+    def generate_image(self, prompt: str, out_path: Path, size: str = "1024x576",
+                       deadline: float | None = None) -> Path:
+        """Text-to-image; расширение out_path подгоняется под media_type ответа. `deadline` — как у run_skill."""
         if not self.images_enabled:
             raise RuntimeError("генерация изображений отключена (нет ключа или T2I_MODEL пуст)")
+        timeout = self.timeout_s
+        if deadline is not None:
+            left = deadline - time.monotonic()
+            if left <= 0:
+                raise TimeoutError("бюджет времени исчерпан")
+            timeout = min(timeout, max(1.0, left))
         t0 = time.perf_counter()
         if "openrouter.ai" in self.image_base_url:
             import httpx
@@ -116,15 +137,16 @@ class LLMClient:
                 self.image_base_url.rstrip("/") + "/images",
                 headers={"Authorization": f"Bearer {self.image_api_key}"},
                 json={"model": self.image_model, "prompt": prompt, "size": size},
-                timeout=self.timeout_s,
+                timeout=timeout,
             )
             r.raise_for_status()
             item = r.json()["data"][0]
             raw = base64.b64decode(item["b64_json"])
             media = item.get("media_type", "image/png")
         else:
-            resp = self._image_client.images.generate(model=self.image_model, prompt=prompt, size=size, n=1,
-                                                      response_format="b64_json")
+            client = self._image_client if timeout == self.timeout_s else self._image_client.with_options(timeout=timeout)
+            resp = client.images.generate(model=self.image_model, prompt=prompt, size=size, n=1,
+                                          response_format="b64_json")
             item = resp.data[0]
             if item.b64_json:
                 raw = base64.b64decode(item.b64_json)

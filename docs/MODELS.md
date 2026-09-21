@@ -18,7 +18,7 @@
 
 ## Сервис и параметры вызовов
 
-Все колоды в `examples/` сделаны через **OpenRouter** (`LLM_BASE_URL=https://openrouter.ai/api/v1`) — текст, зрение и картинки одним ключом; `.env.example` в репозитории — рабочая конфигурация без ключа. Клиент — `deckforge/llm/client.py` (`LLMClient`, OpenAI SDK): таймаут 120 с, 2 ретрая, `DECK_MAX_PARALLEL_LLM=4` параллельных вызова, `DECK_TIME_BUDGET_S=300` на колоду. Промпты и параметры — только в `skills/<name>/v<N>/skill.yaml`, в коде их нет; версия каждого скилла попадает в `manifest.json` колоды вместе с `models` и журналом `llm_calls`.
+Все колоды в `examples/` сделаны через **OpenRouter** (`LLM_BASE_URL=https://openrouter.ai/api/v1`) — текст, зрение и картинки одним ключом; `.env.example` в репозитории — рабочая конфигурация без ключа. Клиент — `deckforge/llm/client.py` (`LLMClient`, OpenAI SDK): таймаут 120 с, 2 ретрая, `DECK_MAX_PARALLEL_LLM=4` параллельных вызова, `DECK_TIME_BUDGET_S=300` на колоду — вызовы получают дедлайн колоды: таймаут запроса урезается до остатка, после дедлайна ретраев нет, судья и картинки при нехватке времени пропускаются (`pipeline/run.build_deck`), так что 5 минут выдерживаются при любой латентности инференса. Промпты и параметры — только в `skills/<name>/v<N>/skill.yaml`, в коде их нет; версия каждого скилла попадает в `manifest.json` колоды вместе с `models` и журналом `llm_calls`.
 
 | Скилл | Роль модели | temperature | max_tokens | Ответ | Вход |
 |---|---|---|---|---|---|

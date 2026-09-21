@@ -1719,23 +1719,104 @@
   },
   {
    "idx": 7,
-   "exemplar_id": "slide19",
-   "archetype": "cards",
+   "exemplar_id": "slide3",
+   "archetype": "section",
    "elements": [
     {
-     "slot_id": "872",
+     "slot_id": "417",
      "kind": "title",
      "box": {
-      "x": 177971,
+      "x": 210243,
+      "y": 878488,
+      "w": 4288279,
+      "h": 1496698
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "«За месяц мы впервые увидели, где реально теряется время, — и перестали спорить об этом на ретро»",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "size_pt": 20.3
+     }
+    },
+    {
+     "slot_id": "418",
+     "kind": "subtitle",
+     "box": {
+      "x": 210685,
+      "y": 2940812,
+      "w": 4287837,
+      "h": 285750
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Руководитель разработки, команда платёжного шлюза",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "size_pt": 12.0
+     }
+    }
+   ],
+   "notes": "",
+   "outline_ref": 7
+  },
+  {
+   "idx": 8,
+   "exemplar_id": "slide45",
+   "archetype": "kpi",
+   "elements": [
+    {
+     "slot_id": "2341",
+     "kind": "title",
+     "box": {
+      "x": 177970,
       "y": 282949,
-      "w": 5025400,
-      "h": 753371
+      "w": 6792985,
+      "h": 724203
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "Команды перестали спорить о потере времени на ретро",
+         "text": "Оценка пилота командами выросла с 3,4 до 4,7",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1758,48 +1839,13 @@
      }
     },
     {
-     "slot_id": "858",
-     "kind": "body",
+     "slot_id": "2348",
+     "kind": "number",
      "box": {
-      "x": 438148,
-      "y": 1819373,
-      "w": 3009884,
-      "h": 854757
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "«За месяц мы впервые увидели, где реально теряется время, — и перестали спорить об этом на ретро» — Руководитель разработки, команда платёжного шлюза",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "861",
-     "kind": "label",
-     "box": {
-      "x": 3809980,
-      "y": 1590803,
-      "w": 3022584,
-      "h": 165079
+      "x": 854932,
+      "y": 2991623,
+      "w": 1423651,
+      "h": 417135
      },
      "paragraphs": [
       {
@@ -1828,19 +1874,19 @@
      }
     },
     {
-     "slot_id": "862",
-     "kind": "body",
+     "slot_id": "2342",
+     "kind": "label",
      "box": {
-      "x": 3809981,
-      "y": 1819373,
-      "w": 3009884,
-      "h": 854757
+      "x": 285749,
+      "y": 1307494,
+      "w": 1614880,
+      "h": 149630
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "оценка после пилота (из 5)",
+         "text": "оценка после пилота",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1859,17 +1905,18 @@
       "accent": "0077FF",
       "palette": "0077FF",
       "font": "Play",
-      "text_color": "000000"
+      "text_color": "000000",
+      "size_pt": 9.8
      }
     },
     {
-     "slot_id": "866",
-     "kind": "label",
+     "slot_id": "2349",
+     "kind": "number",
      "box": {
-      "x": 438148,
-      "y": 3264604,
-      "w": 3022584,
-      "h": 165079
+      "x": 3776371,
+      "y": 2991622,
+      "w": 1423651,
+      "h": 417135
      },
      "paragraphs": [
       {
@@ -1898,19 +1945,19 @@
      }
     },
     {
-     "slot_id": "867",
-     "kind": "body",
+     "slot_id": "2344",
+     "kind": "label",
      "box": {
-      "x": 438148,
-      "y": 3493174,
-      "w": 3009884,
-      "h": 854757
+      "x": 3333728,
+      "y": 1307494,
+      "w": 1614880,
+      "h": 149630
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "оценка до пилота (из 5)",
+         "text": "оценка до пилота",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1929,17 +1976,18 @@
       "accent": "0077FF",
       "palette": "0077FF",
       "font": "Play",
-      "text_color": "000000"
+      "text_color": "000000",
+      "size_pt": 9.8
      }
     },
     {
-     "slot_id": "870",
-     "kind": "label",
+     "slot_id": "2350",
+     "kind": "number",
      "box": {
-      "x": 3809980,
-      "y": 3264604,
-      "w": 3022584,
-      "h": 165079
+      "x": 6795780,
+      "y": 2980839,
+      "w": 1423651,
+      "h": 417135
      },
      "paragraphs": [
       {
@@ -1968,19 +2016,19 @@
      }
     },
     {
-     "slot_id": "871",
-     "kind": "body",
+     "slot_id": "2346",
+     "kind": "label",
      "box": {
-      "x": 3809981,
-      "y": 3493174,
-      "w": 3009884,
-      "h": 854757
+      "x": 6381707,
+      "y": 1306712,
+      "w": 1614880,
+      "h": 149630
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "дня: средний срок ответа на запрос",
+         "text": "дня: средний срок…",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1999,15 +2047,16 @@
       "accent": "0077FF",
       "palette": "0077FF",
       "font": "Play",
-      "text_color": "000000"
+      "text_color": "000000",
+      "size_pt": 9.8
      }
     }
    ],
    "notes": "",
-   "outline_ref": 7
+   "outline_ref": 8
   },
   {
-   "idx": 8,
+   "idx": 9,
    "exemplar_id": "slide17",
    "archetype": "cards",
    "elements": [
@@ -2468,10 +2517,10 @@
     }
    ],
    "notes": "",
-   "outline_ref": 8
+   "outline_ref": 9
   },
   {
-   "idx": 9,
+   "idx": 10,
    "exemplar_id": "slide6",
    "archetype": "closing",
    "elements": [
@@ -2512,7 +2561,7 @@
     }
    ],
    "notes": "",
-   "outline_ref": 9
+   "outline_ref": 10
   }
  ],
  "slide_w": 9144000,

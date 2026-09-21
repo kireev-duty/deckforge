@@ -113,20 +113,6 @@
    }
   },
   {
-   "check_id": "C03_one_message",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 4,
-   "element_id": null,
-   "box": null,
-   "message": "Слайд содержит четыре отдельных тезиса, которые нельзя логично объединить в одно предложение без потери смысла.",
-   "autofix": null,
-   "evidence": {
-    "question": "Слайд пересказывается одним предложением",
-    "sources": "doc:product:что-получает-команда-и-руководитель"
-   }
-  },
-  {
    "check_id": "D05_fill",
    "kind": "deterministic",
    "severity": "warning",
@@ -220,17 +206,39 @@
    "kind": "deterministic",
    "severity": "warning",
    "slide_idx": 7,
-   "element_id": "786",
+   "element_id": "456",
    "box": {
-    "x": 658811,
-    "y": 3780646,
-    "w": 2880000,
-    "h": 1233637
+    "x": 3359150,
+    "y": 579395,
+    "w": 7520885,
+    "h": 4549196
    },
-   "message": "Пункт из 23 слов (норма ≤ 15): ««За месяц мы впервые увидели, где реально теряется время, — …»",
+   "message": "Пункт из 17 слов (норма ≤ 15): ««За месяц мы впервые увидели, где реально теряется время, — …»",
    "autofix": "refill_slot",
    "evidence": {
-    "words": 23
+    "words": 17
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 7,
+   "element_id": "457",
+   "box": {
+    "x": 3359150,
+    "y": 5738829,
+    "w": 8200516,
+    "h": 461946
+   },
+   "message": "Контраст текста #0077FF к фону #FFFFFF = 4.1:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.13,
+    "text_color": "0077FF",
+    "background": "FFFFFF",
+    "need": 4.5,
+    "template_color": 1
    }
   },
   {
@@ -238,26 +246,124 @@
    "kind": "deterministic",
    "severity": "info",
    "slide_idx": 7,
-   "element_id": "786",
+   "element_id": "457",
    "box": {
-    "x": 658811,
-    "y": 3780646,
-    "w": 2880000,
-    "h": 1233637
+    "x": 3359150,
+    "y": 5738829,
+    "w": 8200516,
+    "h": 461946
    },
-   "message": "Кегль 12.8 pt не из шкалы шаблона (ближайший 14.1 pt) (подгонка: 80% от кегля образца 16 pt)",
+   "message": "Кегль 21.6 pt не из шкалы шаблона (ближайший 20 pt) (подгонка: 90% от кегля образца 24 pt)",
    "autofix": "snap_font_size",
    "evidence": {
-    "size_pt": 12.8,
-    "nearest_pt": 14.1,
-    "base_pt": 16.0
+    "size_pt": 21.6,
+    "nearest_pt": 20.0,
+    "base_pt": 24.0
+   }
+  },
+  {
+   "check_id": "L04_text_clipped",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": "445",
+   "box": {
+    "x": 8113464,
+    "y": 4251273,
+    "w": 5417327,
+    "h": 1080000
+   },
+   "message": "Текст выходит за край слайда (right на 105 pt)",
+   "autofix": "clamp_to_slide",
+   "evidence": {
+    "in_exemplar": 1,
+    "over_right": 1338791
+   }
+  },
+  {
+   "check_id": "L04_text_clipped",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": "447",
+   "box": {
+    "x": 8112125,
+    "y": 2139491,
+    "w": 5417327,
+    "h": 1080000
+   },
+   "message": "Текст выходит за край слайда (right на 105 pt)",
+   "autofix": "clamp_to_slide",
+   "evidence": {
+    "in_exemplar": 1,
+    "over_right": 1337452
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": "445",
+   "box": {
+    "x": 8113464,
+    "y": 4251273,
+    "w": 5417327,
+    "h": 1080000
+   },
+   "message": "Кегль 56.9 pt не из шкалы шаблона (ближайший 48 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 56.9,
+    "nearest_pt": 48.0,
+    "base_pt": 88.0
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": "447",
+   "box": {
+    "x": 8112125,
+    "y": 2139491,
+    "w": 5417327,
+    "h": 1080000
+   },
+   "message": "Кегль 56.9 pt не из шкалы шаблона (ближайший 48 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 56.9,
+    "nearest_pt": 48.0,
+    "base_pt": 88.0
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": "450",
+   "box": {
+    "x": 1022258,
+    "y": 2740903,
+    "w": 5417327,
+    "h": 2437575
+   },
+   "message": "Кегль 145.9 pt не из шкалы шаблона (ближайший 48 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 145.9,
+    "nearest_pt": 48.0,
+    "base_pt": 239.0
    }
   },
   {
    "check_id": "D05_fill",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 8,
+   "slide_idx": 9,
    "element_id": null,
    "box": null,
    "message": "Слайд перегружен: контент занимает 88% рабочей области (норма 25%–75%)",
@@ -304,5 +410,5 @@
   "C10_table_legend_relevant",
   "C11_flow"
  ],
- "duration_s": 40.314
+ "duration_s": 48.865
 }

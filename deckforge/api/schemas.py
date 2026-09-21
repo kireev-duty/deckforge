@@ -29,6 +29,7 @@ class StrategyInfo(BaseModel):
     images: str
     icons: bool
     archetype_priority: list[str]
+    audience_hint: str = ""
 
 
 class TemplateInfo(BaseModel):

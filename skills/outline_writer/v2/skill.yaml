@@ -1,0 +1,17 @@
+name: outline_writer
+version: v2
+model_role: text
+temperature: 0.4
+max_tokens: 6000
+response_format: json_schema   # schema.json
+inputs: [brief, purpose, audience, language, target_slides, content_pack, available_archetypes]
+changelog: |
+  v2 — неполный пакет. Когда бриф ссылается на файлы/данные, которых нет среди фрагментов (только brief.md
+  без product.md и data/*.json), модель восстанавливала их «по памяти»: ряд по месяцам, таблицу до/после, цитату,
+  и подписывала sources выдуманными id (m:approval_time, product.md). Правила 2 и 3: такие данные не восстанавливать,
+  в sources — только id из пакета и brief. Режим «только бриф» (ТЗ п. 2: наполнение по краткому брифу) — штатный:
+  тезисы без данных формулировать по брифу, но без чисел; chart/table/kpi/quote без источника не делать.
+  v1 — первая версия. Заголовки-выводы, только факты из контент-пакета, архетипы из списка шаблона.
+  До первого потребителя (content/outline_writer.py) уточнено: outline один на прогон —
+  вход strategy_rules убран (стратегия применяется в layout/); описаны поля данных (chart/table/kpis/steps/quote),
+  `section` на каждом содержательном слайде, слайды-разделители не генерируются.

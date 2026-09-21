@@ -61,7 +61,7 @@
    "slide_idx": 3,
    "element_id": null,
    "box": null,
-   "message": "В заголовке присутствует многоточие, что выглядит как обрезанный текст или служебная заглушка.",
+   "message": "В заголовке присутствует многоточие, что выглядит как служебный мусор или обрезанный текст.",
    "autofix": null,
    "evidence": {
     "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
@@ -243,13 +243,55 @@
    }
   },
   {
+   "check_id": "C02_content_matches_title",
+   "kind": "contextual",
+   "severity": "error",
+   "slide_idx": 7,
+   "element_id": null,
+   "box": null,
+   "message": "Содержимое слайда (обрезанная цитата) не раскрывает тему заголовка полностью.",
+   "autofix": null,
+   "evidence": {
+    "question": "Содержимое слайда соответствует заголовку",
+    "sources": "m:quote"
+   }
+  },
+  {
+   "check_id": "C05_has_content",
+   "kind": "contextual",
+   "severity": "error",
+   "slide_idx": 7,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд содержит только заголовок и обрезанный текст, не являющийся полноценным содержанием.",
+   "autofix": null,
+   "evidence": {
+    "question": "На слайде есть содержание, а не только заголовок",
+    "sources": "m:quote"
+   }
+  },
+  {
+   "check_id": "C07_no_garbage",
+   "kind": "contextual",
+   "severity": "error",
+   "slide_idx": 7,
+   "element_id": null,
+   "box": null,
+   "message": "Текст «За месяц мы впервые…» является незавершенным фрагментом (заглушкой).",
+   "autofix": null,
+   "evidence": {
+    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
+    "sources": "m:quote"
+   }
+  },
+  {
    "check_id": "C03_one_message",
    "kind": "contextual",
    "severity": "warning",
    "slide_idx": 7,
    "element_id": null,
    "box": null,
-   "message": "Слайд содержит три разных метрики (оценки и срок ответа), которые не объединяются в одно предложение без потери смысла.",
+   "message": "Слайд не пересказывается одним предложением, так как текст обрывается на многоточии.",
    "autofix": null,
    "evidence": {
     "question": "Слайд пересказывается одним предложением",
@@ -257,42 +299,144 @@
    }
   },
   {
-   "check_id": "D02_bullet_words",
-   "kind": "deterministic",
+   "check_id": "C06_images_relevant",
+   "kind": "contextual",
    "severity": "warning",
    "slide_idx": 7,
-   "element_id": "648",
-   "box": {
-    "x": 418676,
-    "y": 3902697,
-    "w": 2563675,
-    "h": 1277378
-   },
-   "message": "Пункт из 23 слов (норма ≤ 15): ««За месяц мы впервые увидели, где реально теряется время, — …»",
-   "autofix": "refill_slot",
+   "element_id": null,
+   "box": null,
+   "message": "Абстрактная 3D-графика (планета) не относится к теме ретро или потери времени.",
+   "autofix": null,
    "evidence": {
-    "words": 23
+    "question": "Картинки и иконки относятся к теме слайда",
+    "sources": "m:quote"
    }
   },
   {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
+   "check_id": "D05_fill",
+   "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 8,
+   "slide_idx": 7,
    "element_id": null,
    "box": null,
-   "message": "Заголовок называет тему, а не содержит вывод.",
-   "autofix": null,
+   "message": "Слайд пустоват: контент занимает 16% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
    "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "m:score,m:response_days"
+    "fill": 0.164
    }
   },
   {
    "check_id": "L02_overlap",
    "kind": "deterministic",
    "severity": "warning",
+   "slide_idx": 7,
+   "element_id": "812",
+   "box": {
+    "x": 1036774,
+    "y": 1354821,
+    "w": 1941953,
+    "h": 237442
+   },
+   "message": "Блоки «Команды перестали спорить о по…» и ««За месяц мы впервые…» наложились (50% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "813",
+    "ratio": 0.5,
+    "in_exemplar": 1
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 7,
+   "element_id": "812",
+   "box": {
+    "x": 558184,
+    "y": 1484262,
+    "w": 216000,
+    "h": 108001
+   },
+   "message": "Блоки «Команды перестали спорить о по…» и картинка наложились (50% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "816",
+    "ratio": 0.5,
+    "in_exemplar": 1
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
    "slide_idx": 8,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд пустоват: контент занимает 19% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.193
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 8,
+   "element_id": "729",
+   "box": {
+    "x": 6938670,
+    "y": 2804349,
+    "w": 2850777,
+    "h": 483181
+   },
+   "message": "Кегль 47.8 pt не из шкалы шаблона (ближайший 54 pt) (подгонка: 80% от кегля образца 60 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 47.8,
+    "nearest_pt": 54.0,
+    "base_pt": 60.0
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 8,
+   "element_id": "734",
+   "box": {
+    "x": 439193,
+    "y": 2517730,
+    "w": 2850777,
+    "h": 483181
+   },
+   "message": "Кегль 45.4 pt не из шкалы шаблона (ближайший 54 pt) (подгонка: 84% от кегля образца 54 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 45.4,
+    "nearest_pt": 54.0,
+    "base_pt": 54.0
+   }
+  },
+  {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 9,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок называет тему, а не содержит вывод.",
+   "autofix": null,
+   "evidence": {
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "doc:product:риски-запуска-и-как-они-закрываются"
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 9,
    "element_id": "487",
    "box": {
     "x": 437111,
@@ -312,7 +456,7 @@
    "check_id": "L02_overlap",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 8,
+   "slide_idx": 9,
    "element_id": "490",
    "box": {
     "x": 4370093,
@@ -332,7 +476,7 @@
    "check_id": "L02_overlap",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 8,
+   "slide_idx": 9,
    "element_id": "493",
    "box": {
     "x": 437111,
@@ -352,7 +496,7 @@
    "check_id": "L02_overlap",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 8,
+   "slide_idx": 9,
    "element_id": "496",
    "box": {
     "x": 4370093,
@@ -372,7 +516,7 @@
    "check_id": "L02_overlap",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 8,
+   "slide_idx": 9,
    "element_id": "499",
    "box": {
     "x": 8303177,
@@ -392,7 +536,7 @@
    "check_id": "L02_overlap",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 8,
+   "slide_idx": 9,
    "element_id": "502",
    "box": {
     "x": 8303177,
@@ -406,20 +550,6 @@
     "other_id": "504",
     "ratio": 0.209,
     "in_exemplar": 1
-   }
-  },
-  {
-   "check_id": "C08_no_typos",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 9,
-   "element_id": null,
-   "box": null,
-   "message": "В заголовке слово «команды» некорректно разбито на строки, что выглядит как опечатка.",
-   "autofix": null,
-   "evidence": {
-    "question": "Текст без опечаток",
-    "sources": "doc:product:риски-запуска-и-как-они-закрываются"
    }
   }
  ],
@@ -460,5 +590,5 @@
   "C10_table_legend_relevant",
   "C11_flow"
  ],
- "duration_s": 40.04
+ "duration_s": 50.664
 }

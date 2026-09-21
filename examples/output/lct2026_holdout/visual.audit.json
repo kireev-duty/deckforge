@@ -2,16 +2,16 @@
  "deck_path": "visual.pptx",
  "findings": [
   {
-   "check_id": "C07_no_garbage",
+   "check_id": "C08_no_typos",
    "kind": "contextual",
-   "severity": "error",
+   "severity": "warning",
    "slide_idx": 1,
    "element_id": null,
    "box": null,
-   "message": "В первой карточке текст обрывается многоточием («До 9,5 часов в...»), что является дефектом оформления.",
+   "message": "В первой карточке текст обрывается на букве «в...», что является ошибкой оформления.",
    "autofix": null,
    "evidence": {
-    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
+    "question": "Текст без опечаток",
     "sources": "doc:product:почему-перегрузка-не-видна-руководителю-"
    }
   },
@@ -56,24 +56,10 @@
    "slide_idx": 2,
    "element_id": null,
    "box": null,
-   "message": "В тексте третьей карточки есть незакрытая скобка и многоточие, что выглядит как служебный мусор или незавершенный текст.",
+   "message": "В третьей карточке текст обрезан многоточием («месяца (май–август…»), что выглядит как служебный артефакт или ошибка верстки.",
    "autofix": null,
    "evidence": {
     "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
-    "sources": "m:pilot"
-   }
-  },
-  {
-   "check_id": "C08_no_typos",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 2,
-   "element_id": null,
-   "box": null,
-   "message": "В тексте «месяца (май–август…» отсутствует закрывающая скобка.",
-   "autofix": null,
-   "evidence": {
-    "question": "Текст без опечаток",
     "sources": "m:pilot"
    }
   },
@@ -157,20 +143,6 @@
    }
   },
   {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 3,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок является тематическим описанием процесса, а не выводом о результате или ценности.",
-   "autofix": null,
-   "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "doc:product:как-работает-сервис-пять-шагов"
-   }
-  },
-  {
    "check_id": "D05_fill",
    "kind": "deterministic",
    "severity": "warning",
@@ -204,13 +176,27 @@
    }
   },
   {
+   "check_id": "C07_no_garbage",
+   "kind": "contextual",
+   "severity": "error",
+   "slide_idx": 5,
+   "element_id": null,
+   "box": null,
+   "message": "В заголовке присутствует служебный мусор в виде многоточия.",
+   "autofix": null,
+   "evidence": {
+    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
+    "sources": "m:coordination_hours"
+   }
+  },
+  {
    "check_id": "C01_title_insight",
    "kind": "contextual",
    "severity": "warning",
    "slide_idx": 5,
    "element_id": null,
    "box": null,
-   "message": "Заголовок называет тему («Время на согласования»), а не содержит вывод (например, «Время на согласования упало вдвое»).",
+   "message": "Заголовок содержит многоточие и не формулирует вывод, а лишь называет тему.",
    "autofix": null,
    "evidence": {
     "question": "Заголовок содержит вывод, а не просто называет тему",
@@ -254,16 +240,16 @@
    }
   },
   {
-   "check_id": "C07_no_garbage",
+   "check_id": "C08_no_typos",
    "kind": "contextual",
-   "severity": "error",
+   "severity": "warning",
    "slide_idx": 7,
    "element_id": null,
    "box": null,
-   "message": "Визуально текст цитаты накладывается на имя автора, что выглядит как артефакт верстки или служебный мусор.",
+   "message": "Визуально текст цитаты перекрывается строкой с авторством, что делает его нечитаемым.",
    "autofix": null,
    "evidence": {
-    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
+    "question": "Текст без опечаток",
     "sources": "m:quote"
    }
   },
@@ -283,19 +269,6 @@
    "autofix": "refill_slot",
    "evidence": {
     "words": 17
-   }
-  },
-  {
-   "check_id": "D05_fill",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 7,
-   "element_id": null,
-   "box": null,
-   "message": "Слайд пустоват: контент занимает 20% рабочей области (норма 25%–75%)",
-   "autofix": "change_exemplar",
-   "evidence": {
-    "fill": 0.199
    }
   },
   {
@@ -319,27 +292,13 @@
    }
   },
   {
-   "check_id": "C02_content_matches_title",
-   "kind": "contextual",
-   "severity": "error",
-   "slide_idx": 8,
-   "element_id": null,
-   "box": null,
-   "message": "Слайд содержит метрику о сроках ответа, которая не отражена в заголовке.",
-   "autofix": null,
-   "evidence": {
-    "question": "Содержимое слайда соответствует заголовку",
-    "sources": "m:score,m:response_days"
-   }
-  },
-  {
    "check_id": "C07_no_garbage",
    "kind": "contextual",
    "severity": "error",
    "slide_idx": 8,
    "element_id": null,
    "box": null,
-   "message": "Третий текст обрывается многоточием, что выглядит как служебный мусор или ошибка генерации.",
+   "message": "В третьей карточке текст обрезан многоточием («...»), что выглядит как служебный мусор или ошибка верстки.",
    "autofix": null,
    "evidence": {
     "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
@@ -446,7 +405,7 @@
    "slide_idx": 10,
    "element_id": null,
    "box": null,
-   "message": "Заголовок называет тему (запуск), а не содержит вывод или конкретную дату завершения.",
+   "message": "Заголовок является незавершенным предложением и называет тему, а не содержит вывод.",
    "autofix": null,
    "evidence": {
     "question": "Заголовок содержит вывод, а не просто называет тему",
@@ -531,5 +490,5 @@
   "C10_table_legend_relevant",
   "C11_flow"
  ],
- "duration_s": 67.455
+ "duration_s": 56.311
 }

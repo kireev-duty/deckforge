@@ -3,7 +3,7 @@
 # Схема полей — deckforge/core/strategy.py (Strategy).
 name: executive
 version: v1
-target_slides: {min: 8, max: 10}
+target_slides: {min: 10, max: 11}   # диапазоны заданы для объёма 12 по умолчанию; под другой объём сдвигаются (Strategy.for_target)
 density:
   max_bullets: 6
   max_words_per_bullet: 12
@@ -12,6 +12,7 @@ archetype_priority: [kpi, table, cards, bullets, two_column, chart, process, age
 data_visualization: {numeric_series: table, comparison: table, key_metrics: kpi}
 sections: false          # без слайдов-разделителей
 images: minimal          # картинки только если есть в контент-пакете
+audience_hint: руководителю на 5 минут — статус, отчёт, решение по цифрам; читается без докладчика
 outline_rules: |
   Структура: титул → главный вывод (KPI) → 3–5 слайдов с доказательствами (таблицы/сравнения) → риски → план → следующие шаги → финал.
   Каждый слайд самодостаточен: заголовок-вывод + 3–5 фактов. Никаких слайдов-разделителей.

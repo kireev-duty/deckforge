@@ -1,5 +1,5 @@
 {
- "created": "2026-09-18T13:47:43+00:00",
+ "created": "2026-09-21T12:26:36+00:00",
  "template": {
   "id": "69e4a68c4372",
   "path": "data/templates/VK_WorkSpace_Клиентская_конференция_Шаблон_03.pptx",
@@ -10,7 +10,12 @@
  "outline_title": "Пульс команды: итоги пилота и план запуска",
  "strategy": {
   "name": "executive",
-  "version": "v1"
+  "version": "v1",
+  "target_slides": {
+   "min": 10,
+   "max": 11
+  },
+  "audience_hint": "руководителю на 5 минут — статус, отчёт, решение по цифрам; читается без докладчика"
  },
  "skills": {
   "audit_judge": "v1"
@@ -25,90 +30,99 @@
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 9.560268900000665,
-   "prompt_tokens": 2708,
-   "completion_tokens": 550,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 9.69737879999957,
-   "prompt_tokens": 2796,
-   "completion_tokens": 437,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 9.839183500000217,
-   "prompt_tokens": 2734,
-   "completion_tokens": 447,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 9.22330940000029,
-   "prompt_tokens": 2757,
-   "completion_tokens": 431,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 9.550239100000908,
-   "prompt_tokens": 2737,
-   "completion_tokens": 469,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 23.327267600001505,
+   "duration_s": 10.408669200001896,
    "prompt_tokens": 2770,
-   "completion_tokens": 465,
+   "completion_tokens": 474,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 23.673743399998784,
+   "duration_s": 17.859483599997475,
+   "prompt_tokens": 2843,
+   "completion_tokens": 308,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 15.829924099998607,
+   "prompt_tokens": 2737,
+   "completion_tokens": 504,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 26.756550699999934,
+   "prompt_tokens": 2734,
+   "completion_tokens": 345,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 14.029024899999058,
+   "prompt_tokens": 2804,
+   "completion_tokens": 287,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 32.71243200000026,
+   "prompt_tokens": 2708,
+   "completion_tokens": 548,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 6.295603499998833,
+   "prompt_tokens": 2698,
+   "completion_tokens": 458,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 10.016565699999774,
+   "prompt_tokens": 2704,
+   "completion_tokens": 442,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 17.66743679999854,
    "prompt_tokens": 2784,
-   "completion_tokens": 490,
+   "completion_tokens": 372,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 13.254595700000209,
-   "prompt_tokens": 2671,
-   "completion_tokens": 386,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 18.1507724999974,
-   "prompt_tokens": 2768,
-   "completion_tokens": 204,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v1",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 20.643585499998153,
-   "prompt_tokens": 2818,
+   "duration_s": 16.10141470000235,
+   "prompt_tokens": 2822,
    "completion_tokens": 370,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 17.285517100001016,
+   "prompt_tokens": 2718,
+   "completion_tokens": 366,
    "ok": true,
    "error": null
   }
@@ -151,16 +165,21 @@
   },
   {
    "idx": 7,
-   "archetype": "cards",
+   "archetype": "quote",
    "title": "Команды перестали спорить о потере времени на ретро"
   },
   {
    "idx": 8,
+   "archetype": "kpi",
+   "title": "Оценка пилота командами выросла с 3,4 до 4,7"
+  },
+  {
+   "idx": 9,
    "archetype": "cards",
    "title": "Три ключевых риска запуска и их закрытие"
   },
   {
-   "idx": 9,
+   "idx": 10,
    "archetype": "closing",
    "title": "Пульс команды"
   }
@@ -217,20 +236,27 @@
   },
   {
    "idx": 7,
-   "archetype": "cards",
-   "exemplar_id": "slide13",
-   "exemplar_archetype": "cards",
-   "score": -0.1499999999999999
+   "archetype": "quote",
+   "exemplar_id": "slide25",
+   "exemplar_archetype": "image_text",
+   "score": -10.05
   },
   {
    "idx": 8,
+   "archetype": "kpi",
+   "exemplar_id": "slide19",
+   "exemplar_archetype": "kpi",
+   "score": 0.8500000000000001
+  },
+  {
+   "idx": 9,
    "archetype": "cards",
    "exemplar_id": "slide8",
    "exemplar_archetype": "cards",
    "score": 2.95
   },
   {
-   "idx": 9,
+   "idx": 10,
    "archetype": "closing",
    "exemplar_id": "slide28",
    "exemplar_archetype": "closing",
@@ -239,7 +265,7 @@
  ],
  "warnings": [],
  "stats": {
-  "slides": 10,
+  "slides": 11,
   "archetypes": [
    "title",
    "cards",
@@ -248,7 +274,8 @@
    "cards",
    "table",
    "table",
-   "cards",
+   "image_text",
+   "kpi",
    "cards",
    "closing"
   ],
@@ -260,34 +287,36 @@
    "slide13",
    "slide14",
    "slide14",
-   "slide13",
+   "slide25",
+   "slide19",
    "slide8",
    "slide28"
   ],
-  "text_items_per_slide": 7.2,
-  "words_per_item": 6.2,
+  "text_items_per_slide": 6.2,
+  "words_per_item": 6.0,
   "chart": 0,
   "table": 2,
-  "kpi": 1,
+  "kpi": 2,
   "picture": 0,
   "skipped": 0
  },
  "audit": {
-  "errors": 1,
-  "warnings": 20,
-  "info": 3,
-  "contextual": 5,
+  "errors": 4,
+  "warnings": 23,
+  "info": 5,
+  "contextual": 8,
   "by_check": {
    "C01_title_insight": 2,
+   "C02_content_matches_title": 1,
    "C03_one_message": 1,
-   "C07_no_garbage": 1,
-   "C08_no_typos": 1,
-   "D02_bullet_words": 1,
-   "D05_fill": 3,
-   "L02_overlap": 8,
+   "C05_has_content": 1,
+   "C06_images_relevant": 1,
+   "C07_no_garbage": 2,
+   "D05_fill": 5,
+   "L02_overlap": 10,
    "L05_off_grid": 2,
    "L06_in_margins": 2,
-   "T02_font_size": 3
+   "T02_font_size": 5
   },
   "slides_with_issues": [
    2,
@@ -299,19 +328,19 @@
    9
   ],
   "checks_run": 35,
-  "duration_s": 40.04,
+  "duration_s": 50.664,
   "path": "executive.audit.json",
   "kind": "deterministic+contextual",
   "autofix": {
-   "applied": 2,
-   "skipped": 1,
+   "applied": 4,
+   "skipped": 0,
    "before": {
-    "errors": 2,
-    "warnings": 16
+    "errors": 4,
+    "warnings": 19
    },
    "after": {
     "errors": 0,
-    "warnings": 16
+    "warnings": 19
    },
    "items": [
     {
@@ -331,11 +360,20 @@
      "after": "45.4 pt"
     },
     {
-     "slide_idx": 7,
-     "element_id": "648",
-     "check_id": "D02_bullet_words",
-     "fix": "refill_slot",
-     "reason": "нечего менять"
+     "slide_idx": 8,
+     "element_id": "729",
+     "check_id": "L03_text_overflow",
+     "fix": "shrink_font_by_scale",
+     "before": "60 pt",
+     "after": "47.8 pt"
+    },
+    {
+     "slide_idx": 8,
+     "element_id": "734",
+     "check_id": "L03_text_overflow",
+     "fix": "shrink_font_by_scale",
+     "before": "54 pt",
+     "after": "45.4 pt"
     }
    ]
   }
@@ -354,15 +392,17 @@
   "html": "executive.html"
  },
  "timings_s": {
-  "parse": 0.214,
+  "parse": 0.259,
   "outline": 0.0,
-  "layout": 0.004,
-  "render": 0.42,
-  "audit": 0.273,
-  "autofix": 0.702,
-  "png": 7.91,
-  "audit_contextual": 39.769,
-  "export_pdf": 0.007,
-  "export_html": 4.168
- }
+  "layout": 0.005,
+  "render": 0.524,
+  "audit": 0.321,
+  "autofix": 0.783,
+  "png": 8.442,
+  "audit_contextual": 50.351,
+  "export_pdf": 0.019,
+  "export_html": 4.797,
+  "deck_total": 65.248
+ },
+ "time_budget_s": 300
 }

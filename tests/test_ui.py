@@ -76,3 +76,34 @@ def test_apply_selected_fixes_in_ui(template_path, tmp_path: Path, no_fitting) -
     assert metrics["Ошибок до → после"].endswith(f"→ {metrics['Ошибок']}")
     left = [c for c in at.checkbox if c.key and c.key.startswith("fix_narrative_")]
     assert len(left) < len(boxes) and all(not c.value for c in left)
+
+
+@pytest.mark.filterwarnings("ignore::DeprecationWarning")
+def test_public_mode_without_key_runs_ready_outline(template_path, tmp_path: Path,
+                                                    monkeypatch: pytest.MonkeyPatch) -> None:
+    """Демо-стенд без ключа: LLM-режимы и судья недоступны, «Готовый outline» собирает колоду без LLM."""
+    from streamlit.testing.v1 import AppTest
+
+    template_path("VK Tech")
+    monkeypatch.setenv("DECKFORGE_PUBLIC", "1")
+    monkeypatch.setenv("LLM_API_KEY", "")  # load_dotenv не перетирает заданное — ключ из .env не подхватится
+    monkeypatch.setenv("DECKFORGE_UI_ROOT", str(tmp_path))
+    at = AppTest.from_file(str(REPO / "deckforge" / "ui" / "app.py"), default_timeout=180).run()
+    assert not at.exception, at.exception
+    assert any("Демо-стенд" in i.value for i in at.info)
+    judge = next(c for c in at.sidebar.checkbox if c.label.startswith("VLM-судья"))
+    assert judge.disabled and not judge.value
+    assert at.button[0].disabled and at.warning  # «Только шаблон» без ключа
+
+    at.radio(key="content_mode").set_value("Готовый outline").run()
+    assert not at.button[0].disabled
+    at.sidebar.multiselect[0].set_value(["executive"])
+    for c in at.sidebar.checkbox:
+        if c.label in ("PNG-превью", "Экспорт PDF"):
+            c.uncheck()
+    at.run()
+    at.button[0].click().run()
+    assert not at.exception, at.exception
+    res = at.session_state["result"]
+    assert res.content_source == "outline" and [d.strategy for d in res.decks] == ["executive"]
+    assert res.decks[0].pptx.exists() and Path(at.session_state["run_dir"]).is_relative_to(tmp_path)

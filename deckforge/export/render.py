@@ -6,6 +6,7 @@ import os
 import shutil
 import subprocess
 import tempfile
+import threading
 import time
 from pathlib import Path
 
@@ -13,6 +14,9 @@ import pymupdf
 from PIL import Image
 
 RETRY_PAUSE_S = 2.0
+# профиль LibreOffice общий, и два soffice на нём одновременно мешают друг другу (второй падает или ждёт первый):
+# на публичном стенде в одном процессе крутятся несколько сессий UI — конвертации идут строго по одной
+_SOFFICE_LOCK = threading.Lock()
 SOFFICE_CANDIDATES = [
     os.environ.get("SOFFICE_PATH", ""),
     r"C:\Program Files\LibreOffice\program\soffice.exe",
@@ -36,7 +40,8 @@ def find_soffice() -> str:
 def pptx_to_pdf(pptx: Path, out_dir: Path, timeout: int = 180, retries: int = 1) -> Path:
     """.pptx → .pdf в отдельном профиле LibreOffice, чтобы не конфликтовать с открытым GUI.
 
-    Один повтор: профиль общий для всех процессов deckforge, и параллельный soffice изредка роняет запуск.
+    Внутри процесса конвертации сериализуются (`_SOFFICE_LOCK`); один повтор — на случай soffice из другого
+    процесса на том же профиле: он изредка роняет запуск.
     """
     out_dir.mkdir(parents=True, exist_ok=True)
     profile = Path(tempfile.gettempdir()) / "deckforge_lo_profile"
@@ -53,7 +58,8 @@ def pptx_to_pdf(pptx: Path, out_dir: Path, timeout: int = 180, retries: int = 1)
     ]
     for attempt in range(retries + 1):
         try:
-            subprocess.run(cmd, check=True, timeout=timeout, capture_output=True)
+            with _SOFFICE_LOCK:
+                subprocess.run(cmd, check=True, timeout=timeout, capture_output=True)
             break
         except subprocess.CalledProcessError as e:
             if attempt < retries:

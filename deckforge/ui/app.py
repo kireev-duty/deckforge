@@ -1,11 +1,15 @@
 """Streamlit UI: шаблон → бриф → варианты → аудит с выбором фиксов → экспорт (`streamlit run deckforge/ui/app.py`).
 
 Пайплайн вызывается in-process; файлы прогона — `out/ui/runs/<время>/`, загруженные шаблоны — `out/ui/templates/`.
+`DECKFORGE_PUBLIC=1` — публичный демо-стенд (Hugging Face Space, `deploy/hf_space/`): генерации всех сессий идут
+по одной, VLM-судья по умолчанию выключен, в списке шаблонов — датасет и загруженные в этой сессии.
 """
 
 from __future__ import annotations
 
+import os
 import sys
+import threading
 from datetime import datetime
 from pathlib import Path
 
@@ -16,7 +20,7 @@ if str(ROOT) not in sys.path:  # `streamlit run` запускает файл к�
     sys.path.insert(0, str(ROOT))
 
 from deckforge.core.autofix import FIXES, fix_plan_rows
-from deckforge.core.ir import AuditReport, Finding
+from deckforge.core.ir import AuditReport, DeckOutline, Finding
 from deckforge.core.strategy import list_strategies
 from deckforge.llm import load_dotenv
 from deckforge.pipeline import (
@@ -35,20 +39,27 @@ from deckforge.pipeline.workspace import (
 )
 from deckforge.ui.overlay import draw_findings
 
-UI_ROOT = ROOT / "out" / "ui"
+UI_ROOT = Path(os.environ.get("DECKFORGE_UI_ROOT") or ROOT / "out" / "ui")  # тесты подменяют на tmp
 EXAMPLE_PACK = ROOT / "examples" / "content_pack"
+# outline финальных примеров (бриф выведен из шаблона VK Tech) — режим без LLM: работает без ключа и при сбое API
+READY_OUTLINE = ROOT / "examples" / "output" / "vk_tech" / "outline.json"
+QUEUE_TIMEOUT_S = 600
 # ступени лестницы входа: подпись режима → пояснение под ним
 CONTENT_MODES = {
     "Только шаблон": "ничего вводить не нужно",
     "Тема одной строкой": "одна фраза вместо брифа",
     "Бриф и файлы": "свои исходные материалы",
+    "Готовый outline": "без LLM, ≈30 с — контент примеров VK Tech",
 }
+LLM_MODES = ("Только шаблон", "Тема одной строкой", "Бриф и файлы")
 PURPOSES = ["product", "feature", "project", "initiative", "report", "other"]
 HOW_LABEL = {"safe": "безопасный", "ir": "по выбору (теряет часть контента)", "replan": "нужен пересбор",
              "template": "дизайн шаблона — не чиним", "n/a": "—"}
 
 st.set_page_config(page_title="deckforge", page_icon="🎞️", layout="wide")
 load_dotenv()
+PUBLIC = os.environ.get("DECKFORGE_PUBLIC", "") == "1"
+HAS_KEY = bool(os.environ.get("LLM_API_KEY", "").strip())
 
 
 @st.cache_resource
@@ -63,6 +74,12 @@ def parsed_template(template_id: str) -> ParsedTemplate:
     return store().parsed(entry)
 
 
+@st.cache_resource
+def run_lock() -> threading.Lock:
+    """Одна генерация на процесс: сессии UI делят CPU, LibreOffice и лимит ключа."""
+    return threading.Lock()
+
+
 def ss(key: str, default=None):
     return st.session_state.get(key, default)
 
@@ -75,15 +92,15 @@ def sidebar() -> tuple[TemplateEntry | None, dict]:
     st.sidebar.caption("Цифровой дизайнер презентаций — VK Tech, ЛЦТ 2026")
 
     st.sidebar.subheader("1. Шаблон")
-    entries = store().list()
-    names = {f"{'📦 ' if e.builtin else '📤 '}{e.name}": e for e in entries}
+    names = visible_templates()
     up = st.sidebar.file_uploader("Свой шаблон .pptx", type=["pptx"], key="template_upload")
     if up is not None and ss("uploaded_name") != up.name:
         try:
             entry = store().add_upload(up.name, up.getvalue())
             st.session_state["uploaded_name"] = up.name
+            st.session_state.setdefault("my_uploads", set()).add(entry.id)
             st.session_state["template_choice"] = f"{'📦 ' if entry.builtin else '📤 '}{entry.name}"
-            names = {f"{'📦 ' if e.builtin else '📤 '}{e.name}": e for e in store().list()}
+            names = visible_templates()
         except BadUpload as e:
             st.sidebar.error(str(e))
     choice = st.sidebar.selectbox("Из датасета или загруженный", list(names), key="template_choice")
@@ -97,7 +114,8 @@ def sidebar() -> tuple[TemplateEntry | None, dict]:
         "target_slides": st.sidebar.slider("Ориентир по объёму (слайдов)", 6, 20, 12),
         "strategies": st.sidebar.multiselect("Варианты вёрстки", list_strategies(), default=list_strategies()),
         "autofix": st.sidebar.checkbox("Безопасные автофиксы", True, help="Уменьшить кегль, привести к шкале и т.п. — без потери смысла"),
-        "judge": st.sidebar.checkbox("VLM-судья (11 вопросов по PNG)", True, help="≈30 с на колоду, нужны LibreOffice и API"),
+        "judge": st.sidebar.checkbox("VLM-судья (11 вопросов по PNG)", HAS_KEY and not PUBLIC, disabled=not HAS_KEY,
+                                     help="≈30–60 с на колоду, нужны LibreOffice и API" if HAS_KEY else "нет LLM_API_KEY"),
         "render_png": st.sidebar.checkbox("PNG-превью", soffice_available(), disabled=not soffice_available(),
                                           help="LibreOffice не найден" if not soffice_available() else "≈10 с на колоду"),
         "pdf": st.sidebar.checkbox("Экспорт PDF", soffice_available(), disabled=not soffice_available()),
@@ -106,6 +124,13 @@ def sidebar() -> tuple[TemplateEntry | None, dict]:
     if not soffice_available():
         st.sidebar.warning("LibreOffice не найден: без PNG, PDF и VLM-судьи. Задайте SOFFICE_PATH.")
     return entry, opts
+
+
+def visible_templates() -> dict[str, TemplateEntry]:
+    """Подпись → шаблон. На публичном стенде чужие загрузки не показываем: только датасет и свои."""
+    mine = ss("my_uploads", set())
+    return {f"{'📦 ' if e.builtin else '📤 '}{e.name}": e for e in store().list()
+            if not PUBLIC or e.builtin or e.id in mine}
 
 
 # ──────────────────────────── шаг 1: шаблон ────────────────────────────
@@ -157,7 +182,13 @@ def brief_form(entry: TemplateEntry, opts: dict) -> None:
         captions=[CONTENT_MODES[m] for m in CONTENT_MODES],
     )
     brief, topic, files, use_example = "", "", [], False
-    if mode == "Только шаблон":
+    if mode in LLM_MODES and not HAS_KEY:
+        st.warning("Ключ LLM не задан (`LLM_API_KEY`) — этот режим недоступен. Режим «Готовый outline» работает без LLM.")
+    if mode == "Готовый outline":
+        st.info("Контент — готовый outline примеров из репозитория (`examples/output/vk_tech/outline.json`: бриф "
+                "выведен из шаблона VK Tech). LLM не вызывается: шаблон разбирается, три стратегии верстают этот "
+                "контент по образцам выбранного шаблона, аудит и автофиксы — как обычно.")
+    elif mode == "Только шаблон":
         st.info("Бриф выведет из самого шаблона скилл `template_brief`: бренд, тексты слайдов-образцов, палитра "
                 "и стиль → тема, аудитория и тезисы. Конкретных цифр и имён в колоде не будет — подтвердить их нечем.")
     elif mode == "Тема одной строкой":
@@ -179,12 +210,13 @@ def brief_form(entry: TemplateEntry, opts: dict) -> None:
             st.caption("Файлов нет — колода только по брифу: цифры берутся из текста брифа, "
                        "диаграмм и таблиц без данных не будет.")
     disabled = not opts["strategies"] or (mode == "Тема одной строкой" and not topic.strip()) \
-        or (mode == "Бриф и файлы" and not brief.strip())
+        or (mode == "Бриф и файлы" and not brief.strip()) or (mode in LLM_MODES and not HAS_KEY)
     if st.button("Сгенерировать варианты", type="primary", disabled=disabled, width="stretch"):
-        generate(entry, opts, brief, files or [], use_example, topic)
+        generate(entry, opts, brief, files or [], use_example, topic, ready=mode == "Готовый outline")
 
 
-def generate(entry: TemplateEntry, opts: dict, brief: str, files: list, use_example: bool, topic: str = "") -> None:
+def generate(entry: TemplateEntry, opts: dict, brief: str, files: list, use_example: bool, topic: str = "",
+             ready: bool = False) -> None:
     run_dir = UI_ROOT / "runs" / datetime.now().strftime("%Y%m%d-%H%M%S")
     pack_files = [(f.name, f.getvalue()) for f in files]
     if use_example:
@@ -204,13 +236,22 @@ def generate(entry: TemplateEntry, opts: dict, brief: str, files: list, use_exam
         export=["pptx", *(["pdf"] if opts["pdf"] else []), *(["html"] if opts["html"] else [])],
         audit={"deterministic": True, "contextual": opts["judge"], "autofix": opts["autofix"]},
     )
+    outline = DeckOutline.model_validate_json(READY_OUTLINE.read_text("utf-8")) if ready else None
+    lock = run_lock()
     with st.status("Генерация…", expanded=True) as status:
+        if not lock.acquire(blocking=False):
+            status.write("В очереди: идёт генерация в другой сессии, начну сразу после неё…")
+            if not lock.acquire(timeout=QUEUE_TIMEOUT_S):
+                status.update(label="Очередь не дошла за 10 минут — попробуйте позже", state="error")
+                return
         try:
-            result = run(cfg, progress=status.write)
+            result = run(cfg, outline=outline, outline_path=READY_OUTLINE if ready else None, progress=status.write)
         except Exception as e:  # noqa: BLE001
             status.update(label=f"Ошибка: {type(e).__name__}", state="error")
             st.exception(e)
             return
+        finally:
+            lock.release()
         status.update(label=f"Готово за {result.total_s:.0f} с → {run_dir.name}", state="complete", expanded=False)
     st.session_state["result"] = result
     st.session_state["decks"] = {d.strategy: d for d in result.decks}
@@ -376,6 +417,11 @@ def main() -> None:
     entry, opts = sidebar()
     st.title("Цифровой дизайнер презентаций")
     st.caption("Шаблон .pptx → дизайн-система → три варианта колоды из брифа → аудит с фиксами → .pptx / .pdf")
+    if PUBLIC:
+        st.info("Демо-стенд. Выберите шаблон слева (или загрузите свой .pptx), режим «Только шаблон» → "
+                "«Сгенерировать варианты»: три колоды за 1–3 минуты. Генерации всех посетителей идут по одной; "
+                "VLM-судья включается в боковой панели (+1–2 мин на колоду). Исходный код и готовые примеры — "
+                "[GitHub](https://github.com/kireev-duty/deckforge).")
     if entry is None:
         st.info("Выберите шаблон в боковой панели или загрузите свой .pptx.")
         return

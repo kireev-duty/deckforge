@@ -26,8 +26,37 @@ ruff check deckforge tools tests
 | `tools/make_fixtures.py --audit` | «плохие» слайды из `tests/fixtures/bad_slides.py` в `out/fixtures/` — посмотреть глазами |
 | `tools/powerpoint_check.py <glob>` | открытие и сохранение колод в настоящем PowerPoint (Windows, COM) |
 | `tools/check_env.py` | проверка `.env` и доступности моделей |
+| `tools/build_gallery.py [--space-url …]` | галерея готовых колод `examples/output` → `out/gallery/` (GitHub Pages) |
+| `deploy/hf_space/stage.py [dir]` | staging-папка демо-стенда → `out/hf_space/` |
 
 Полная матрица стресс-теста идёт около 40 минут; пока она идёт, код в `deckforge/` не править — каждая пара стартует новым подпроцессом.
+
+## Демо-стенд
+
+Публичный стенд — Streamlit UI в [Hugging Face Space](https://huggingface.co/spaces/kireev-duty/deckforge) (Docker SDK, CPU basic). Галерея готовых колод — [GitHub Pages](https://kireev-duty.github.io/deckforge/).
+
+| Что | Где |
+|---|---|
+| образ стенда: шаблоны датасета и outline примеров внутри образа, шрифты Play и Montserrat, uid 1000, порт 7860 | `deploy/hf_space/Dockerfile` |
+| карточка Space (front matter: `sdk: docker`, `app_port`) | `deploy/hf_space/space_readme.md` → `README.md` Space |
+| состав Space: код, промпты, стратегии, `data/{templates,holdout,archetypes}`, `examples/content_pack`, outline VK Tech | `deploy/hf_space/stage.py` |
+| деплой: тег `v*` или ручной запуск → staging → `upload_folder` в Space, дальше Space сам собирает образ (≈10 мин) | `.github/workflows/deploy-space.yml` |
+| галерея: тег `v*` или ручной запуск → `build_gallery.py` → Pages | `.github/workflows/pages.yml` |
+
+Публичный режим UI включает `DECKFORGE_PUBLIC=1` (`deckforge/ui/app.py`): одна генерация на процесс (`run_lock`, очередь до 10 минут), судья по умолчанию выключен, в списке шаблонов — датасет и загруженные в этой сессии. Без `LLM_API_KEY` доступен только «Готовый outline» (`examples/output/vk_tech/outline.json`). Конвертации LibreOffice в одном процессе идут строго по одной: общий профиль (`export/render._SOFFICE_LOCK`).
+
+Секреты:
+- GitHub → Settings → Secrets and variables → Actions: секрет `HF_TOKEN` (write-токен HF); переменные `HF_SPACE` (`<владелец>/deckforge`, если владелец не совпадает с токеном) и `HF_SPACE_URL` (ссылка для кнопки в галерее).
+- Space → Settings → Variables and secrets: секрет `LLM_API_KEY` (отдельный ключ OpenRouter с credit limit), переменные `LLM_BASE_URL`, `LLM_MODEL`, `VLM_MODEL` — как в `.env.example`, `T2I_MODEL` — пусто.
+- GitHub → Settings → Pages → Source: GitHub Actions.
+
+Локальная проверка образа:
+
+```bash
+python deploy/hf_space/stage.py                     # → out/hf_space (≈90 МБ; нужны шаблоны из LFS)
+docker build -t deckforge-space out/hf_space
+docker run --rm -p 7860:7860 --env-file .env deckforge-space   # http://localhost:7860
+```
 
 ## Правила
 

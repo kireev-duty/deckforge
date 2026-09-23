@@ -1,5 +1,9 @@
 # DECKFORGE — цифровой дизайнер презентаций
 
+[![Попробовать онлайн — Hugging Face Space](https://huggingface.co/datasets/huggingface/badges/resolve/main/open-in-hf-spaces-md.svg)](https://huggingface.co/spaces/kireev-duty/deckforge)
+
+**Попробовать без установки:** [демо-стенд](https://huggingface.co/spaces/kireev-duty/deckforge) → выбрать шаблон слева (или загрузить свой .pptx) → «Только шаблон» → «Сгенерировать варианты»: три колоды за 1–3 минуты, с аудитом и скачиванием .pptx / .pdf / .html. Если ключ LLM стенда исчерпан или API недоступен, работает режим «Готовый outline»: он собирает колоды без LLM. **Готовые 12 колод** (4 шаблона × 3 стратегии) можно открыть в браузере: [галерея](https://kireev-duty.github.io/deckforge/).
+
 Сервис читает произвольный .pptx-шаблон как набор правил (дизайн-система + слайды-образцы) и собирает по нему новую презентацию: структура → тексты → вёрстка нативными объектами → аудит → экспорт в .pptx / .pdf / .html. Три стратегии вёрстки на один и тот же контент.
 
 Контент — лестница входа: контент-пакет с брифом и данными, если он есть; иначе тема одной строкой; а если на входе **только шаблон**, бриф выводится из него самого (бренд, тексты слайдов-образцов, палитра — скилл `template_brief`), и прогон идёт дальше без изменений. Чем меньше исходников, тем меньше в колоде проверяемых чисел: то, чего нет в источнике, не выдумывается.
@@ -41,7 +45,7 @@ cp .env.example .env                                 # заполнить LLM_AP
 
 | Роль | Сервис | Модель (id в API) | Веса / лицензия | Параметры вызова | Где задано |
 |---|---|---|---|---|---|
-| текст (`LLM_MODEL`) — outline, промпты картинок | OpenRouter | `qwen/qwen3.8-27b-20260814` (Qwen3.8-27B) | 27B dense, Apache 2.0 | `outline_writer`: temperature 0.4, max_tokens 6000; `image_prompter`: 0.6 / 400; `response_format=json_object`, thinking выключен | `skills/<name>/v1/skill.yaml`, `deckforge/llm/client.py` |
+| текст (`LLM_MODEL`) — бриф из шаблона, outline, промпты картинок | OpenRouter | `qwen/qwen3.8-27b-20260814` (Qwen3.8-27B) | 27B dense, Apache 2.0 | `template_brief`: temperature 0.5, max_tokens 2000; `outline_writer`: 0.4 / 6000; `image_prompter`: 0.6 / 400; `response_format=json_object`, thinking выключен | `skills/<name>/v<N>/skill.yaml` (действующая версия — `current` в `skills/registry.yaml`), `deckforge/llm/client.py` |
 | зрение (`VLM_MODEL`) — разметка образцов шаблона, VLM-судья | OpenRouter | та же `qwen/qwen3.8-27b-20260814` | — | `template_tagger`: 0.1 / 1500; `audit_judge`: 0.0 / 1200; PNG слайдов как `image_url` (data-URL), thinking выключен | то же |
 | text-to-image (`T2I_MODEL`) — иллюстрации | OpenRouter, тот же ключ (`POST /images`) | `black-forest-labs/flux.2-klein-4b` (FLUX.2 [klein] 4B) | 4B, Apache 2.0 | размер 1024×576, ≤ 4 картинки на колоду, кэш по sha1 промпта | `deckforge/content/images.py` |
 
@@ -106,6 +110,7 @@ docker compose run --rm cli parse "data/templates/VK Tech шаблон.pptx"
 - Только модели с открытыми весами (Apache 2.0 / MIT) до 35B; text-to-image до 20B.
 - Десктопные браузеры. HTML-экспорт проверен в Chrome, Firefox 156 и Яндекс.Браузере (Chromium 150) — слайды рендерятся пиксель в пиксель; Safari не проверялся (нет macOS), специфичных для WebKit возможностей экспорт не использует (SVG, `@font-face`, flex). Streamlit UI проверен в тех же трёх браузерах.
 - Целевой объём 10–15 слайдов или заданный пользователем (`target_slides` сдвигает диапазоны стратегий: executive 10–11, narrative 12–15, visual 10–12 при объёме 12; стратегия может дать меньше, если контента мало — например 5). Каждая колода ≤ 5 минут независимо от латентности инференса — бюджет `DECK_TIME_BUDGET_S`, см. «Инференс и модели».
+- Демо-стенд ([Hugging Face Space](https://huggingface.co/spaces/kireev-duty/deckforge), бесплатный CPU): генерации всех посетителей идут по одной, остальные видят «В очереди»; VLM-судья по умолчанию выключен (+1–2 мин на колоду, включается в боковой панели); иллюстрации выключены. После 48 ч без посетителей Space засыпает, и первое открытие занимает 1–2 минуты. У ключа LLM стенда лимит расходов; когда он исчерпан, остаётся режим «Готовый outline» без LLM. Устройство стенда — [DEVELOPMENT.md](docs/DEVELOPMENT.md#демо-стенд).
 - Streamlit UI выполняет прогон in-process: новый прогон, запущенный поверх идущего, обрывает предыдущий (папка прогона остаётся без `run.json` и части колод) — дождитесь завершения; параллельные задания — через API (`POST /generate`, job'ы в пуле).
 - Пиктограммы и схемы: иконки берутся только из образцов самого шаблона (`SlotKind.ICON`) — на шаблоне без иконок их не будет; SmartArt-подобные схемы (process / cycle / pyramid) не собираются из автофигур — `process` верстается только на process-образцах шаблона, без них контент уходит в карточки или список. Собственная библиотека иконок и генерация схем — в бэклоге.
 - В `.pptx` объекты нативные (текст, фигуры, chart, table, picture) — открытие, сохранение и редактируемость проверены в PowerPoint (Microsoft 365, `tools/powerpoint_check.py`); в `.html` диаграммы рисуются SVG по данным chart, таблицы — HTML-таблицами.

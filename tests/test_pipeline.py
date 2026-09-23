@@ -10,6 +10,18 @@ from tests.conftest import FakeClient, cassette
 
 REPO = Path(__file__).resolve().parents[1]
 NO_JUDGE = {"deterministic": True, "contextual": False, "autofix": True}
+# ответ template_brief в режиме «на входе только шаблон»
+TEMPLATE_BRIEF = {
+    "topic": "VK Tech: корпоративные сервисы для команд",
+    "brand": "VK Tech",
+    "purpose": "product",
+    "audience": "ИТ-руководители крупных компаний",
+    "summary": "Показать, из чего состоит платформа и зачем она корпоративным командам.",
+    "key_points": ["Команды теряют время на переключение между сервисами",
+                   "Единая платформа закрывает коммуникации и документы",
+                   "Разворачивается в контуре заказчика"],
+    "tone": "светлый корпоративный, синий акцент",
+}
 
 
 def _soffice() -> bool:
@@ -23,20 +35,81 @@ def _soffice() -> bool:
 
 
 def test_example_config_loads() -> None:
+    """В датасете только шаблоны: конфиги-примеры работают без контент-пакета."""
     cfg = load_config(REPO / "configs" / "run.example.yaml")
-    assert cfg.template.is_absolute() and cfg.content_pack.is_absolute() and cfg.output_dir.is_absolute()
-    assert cfg.strategies == ["executive", "narrative", "visual"] and cfg.purpose == "product"
+    assert cfg.template.is_absolute() and cfg.output_dir.is_absolute() and cfg.content_pack is None
+    assert cfg.strategies == ["executive", "narrative", "visual"] and cfg.purpose == "other"
     assert cfg.audit.autofix is True and cfg.audit.contextual is True and "pdf" in cfg.export
 
 
-def test_empty_pack_fails_before_llm(template_path, tmp_path: Path) -> None:
+def test_final_configs_run_on_templates_alone() -> None:
+    """9 витринных колод + holdout собираются из шаблонов; контент один на все — через --outline."""
+    finals = sorted((REPO / "configs" / "final").glob("*.yaml"))
+    assert [p.stem for p in finals] == ["lct2026_holdout", "vk_education", "vk_tech", "vk_workspace"]
+    for path in finals:
+        cfg = load_config(path)
+        assert cfg.content_pack is None and not cfg.topic, f"{path.name}: контент-пакета в датасете нет"
+        assert cfg.template.is_absolute() and cfg.strategies == ["executive", "narrative", "visual"]
+        assert cfg.output_dir.name == path.stem and cfg.output_dir.parent.name == "output"
+
+
+def test_empty_pack_falls_back_to_template_brief(template_path, tmp_path: Path) -> None:
+    """Пустой пакет — не ошибка: бриф выводится из шаблона (ТЗ: на входе может быть только шаблон)."""
     (tmp_path / "pack").mkdir()
     cfg = RunConfig(template=template_path("VK Tech"), content_pack=tmp_path / "pack", strategies=["executive"],
                     output_dir=tmp_path / "run", audit=NO_JUDGE)
+    client = FakeClient(by_skill={"template_brief": [TEMPLATE_BRIEF], "outline_writer": [cassette("outline_writer_pulse")]})
+    res = run(cfg, client=client)
+
+    assert [c.skill for c in client.calls] == ["template_brief@v2", "outline_writer@v3"]
+    assert res.content_source == "template"
+    brief = (tmp_path / "run" / "brief.md").read_text("utf-8")
+    assert TEMPLATE_BRIEF["topic"] in brief and TEMPLATE_BRIEF["key_points"][0] in brief
+    m = json.loads(res.decks[0].manifest.read_text("utf-8"))
+    assert m["content_source"] == "template" and m["brief"] == "brief.md"
+    assert m["skills"]["template_brief"] == "v2" and m["timings_s"]["brief"] >= 0
+    assert any("только шаблон" in w for w in res.warnings)
+    # слепок шаблона дошёл до модели цельным, а бриф — в outline_writer
+    digest = client.inputs[0]["template_digest"]
+    assert "Файл шаблона:" in digest and "Слайды-образцы" in digest
+    assert TEMPLATE_BRIEF["topic"] in client.inputs[1]["brief"]
+
+
+def test_topic_only_run(template_path, tmp_path: Path) -> None:
+    """Тема одной строкой: LLM зовётся только за outline, бриф — сама тема."""
+    cfg = RunConfig(template=template_path("VK Tech"), topic="Пульс команды: как мерить вовлечённость",
+                    strategies=["executive"], output_dir=tmp_path / "run", audit=NO_JUDGE)
     client = FakeClient(cassette("outline_writer_pulse"))
-    with pytest.raises(RuntimeError, match="контент-пакет пуст"):
-        run(cfg, client=client)
-    assert not client.calls
+    res = run(cfg, client=client)
+
+    assert [c.skill for c in client.calls] == ["outline_writer@v3"]
+    assert res.content_source == "topic"
+    assert (tmp_path / "run" / "brief.md").read_text("utf-8").startswith("Пульс команды")
+    assert client.inputs[0]["brief"].startswith("Пульс команды") and client.inputs[0]["content_pack"] == ""
+    m = json.loads(res.decks[0].manifest.read_text("utf-8"))
+    assert m["content_source"] == "topic" and m["content_pack"] == ""
+
+
+def test_ready_outline_carries_brief_to_next_template(template_path, tmp_path: Path) -> None:
+    """Один контент на несколько шаблонов: с готовым outline рядом лежащий brief.md едет в прогон."""
+    from deckforge.core.ir import DeckOutline
+
+    src = tmp_path / "first"
+    src.mkdir()
+    outline_path = src / "outline.json"
+    outline = DeckOutline.model_validate_json(
+        (REPO / "examples" / "content_pack" / "outline.json").read_text("utf-8"))
+    outline_path.write_text(outline.model_dump_json(indent=1), "utf-8")
+    (src / "brief.md").write_text("# Тема из шаблона\n\nТезис один.\n", "utf-8")
+
+    cfg = RunConfig(template=template_path("VK Tech"), strategies=["executive"], output_dir=tmp_path / "run",
+                    audit=NO_JUDGE)
+    res = run(cfg, outline=outline, outline_path=outline_path)
+
+    assert res.content_source == "outline"
+    assert (tmp_path / "run" / "brief.md").read_text("utf-8").startswith("# Тема из шаблона")
+    m = json.loads(res.decks[0].manifest.read_text("utf-8"))
+    assert m["content_source"] == "outline" and m["brief"] == "brief.md" and m["content_pack"] == ""
 
 
 def test_run_with_fake_llm(template_path, tmp_path: Path) -> None:
@@ -55,9 +128,9 @@ def test_run_with_fake_llm(template_path, tmp_path: Path) -> None:
     for d in res.decks:
         assert d.pptx.exists() and d.pptx.stat().st_size > 100_000 and d.ir_json.exists()
         m = json.loads(d.manifest.read_text("utf-8"))
-        assert m["skills"] == {"outline_writer": "v2"}
+        assert m["skills"] == {"outline_writer": "v3"}
         assert m["models"]["text"] == "fake-text"
-        assert m["llm_calls"][0]["skill"] == "outline_writer@v2"
+        assert m["llm_calls"][0]["skill"] == "outline_writer@v3"
         assert {"parse", "outline", "layout", "render", "audit", "autofix"} <= set(m["timings_s"])
         assert d.audit is not None and d.audit.exists() and m["audit"]["checks_run"] == 24
         assert m["audit"]["errors"] == d.audit_summary["errors"] and "by_check" in m["audit"]
@@ -254,7 +327,7 @@ def test_run_with_contextual_judge(template_path, tmp_path: Path) -> None:
     d = res.decks[0]
     m = json.loads(d.manifest.read_text("utf-8"))
     n = m["stats"]["slides"]
-    assert len(client.calls) == n and all(c.skill == "audit_judge@v1" for c in client.calls)
+    assert len(client.calls) == n and all(c.skill == "audit_judge@v2" for c in client.calls)
     assert all(len(imgs) == 1 and imgs[0].suffix == ".png" for imgs in client.images)
     assert client.inputs[0]["prev_slide_title"].startswith("(нет") and client.inputs[0]["language"] == "ru"
     assert any("[brief" in i["source_facts"] or "metrics:" in i["source_facts"] for i in client.inputs)
@@ -262,7 +335,7 @@ def test_run_with_contextual_judge(template_path, tmp_path: Path) -> None:
     assert len(report["checks_run"]) == 24 + 11
     ctx = [f for f in report["findings"] if f["kind"] == "contextual"]
     assert ctx and m["audit"]["contextual"] == len(ctx) and m["audit"]["kind"] == "deterministic+contextual"
-    assert m["skills"]["audit_judge"] == "v1" and "audit_contextual" in m["timings_s"] and "png" in m["timings_s"]
+    assert m["skills"]["audit_judge"] == "v2" and "audit_contextual" in m["timings_s"] and "png" in m["timings_s"]
     assert len(d.pngs) == n and not (tmp_path / "executive" / "contact.png").exists()
     # бюджет времени: судья получил дедлайн, время колоды и бюджет — в manifest и compare.md
     assert all(dl is not None for dl in client.deadlines) and m["time_budget_s"] == 300
@@ -294,6 +367,8 @@ def test_time_budget_skips_judge_and_images(template_path, tmp_path: Path, monke
     assert any("images: пропущено" in w for w in m["warnings"])
     assert any("VLM-судья пропущен" in w for w in m["warnings"])
     assert m["time_budget_s"] == 10 and m["timings_s"]["deck_total"] > 0
+    # превышение бюджета не замалчивается: предупреждение есть ровно тогда, когда колода вышла за него
+    assert (m["timings_s"]["deck_total"] > 10) == any("бюджет времени колоды превышен" in w for w in m["warnings"])
     assert m["strategy"]["target_slides"] == {"min": 10, "max": 12}
 
 

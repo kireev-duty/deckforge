@@ -1,10 +1,13 @@
 # Воспроизводимый прогон: deckforge run --config configs/run.example.yaml
 # (или .venv\Scripts\python.exe -m deckforge.cli run -c configs/run.example.yaml [--png] [--outline готовый.json])
 # Относительные пути — от корня репозитория.
+# На входе только шаблон — контента в датасете нет: бриф выводит скилл template_brief
+# и пишет в <output_dir>/brief.md. Свой контент включается одной из двух строк ниже:
+#   content_pack: examples/content_pack      # папка: brief.md + *.md + data/*.json|csv|xlsx
+#   topic: "Платформа для команд: что она даёт"   # или тема одной строкой (флаг --topic)
 template: data/templates/VK Tech шаблон.pptx
-content_pack: examples/content_pack          # brief.md + data/*.json|csv (+ другие *.md)
-purpose: product                             # feature | product | project | initiative | report | other
-audience: "руководители продуктовых направлений"
+purpose: other                               # feature | product | project | initiative | report | other
+audience: ""                                 # пусто — назначение и аудиторию предложит template_brief
 language: ru
 target_slides: 12                            # ориентир для outline; итоговый объём задаёт стратегия
 strategies: [executive, narrative, visual]   # три варианта вёрстки на одном outline

@@ -1,11 +1,12 @@
 # Финальный прогон: три варианта на шаблоне «vk_tech» → examples/output/vk_tech/
 #   .venv\Scripts\python.exe -m deckforge.cli run -c configs/final/vk_tech.yaml
-# Один outline на все шаблоны: сначала прогнать vk_tech, затем остальные с --outline examples/output/vk_tech/outline.json
+# На входе только шаблон (контент-пакета в датасете нет): бриф выводит скилл template_brief
+# и кладёт в examples/output/vk_tech/brief.md. Этот прогон — первый: полученный outline.json
+# идёт на остальные три шаблона через --outline (ТЗ §6: один контент × 3 шаблона × 3 варианта).
 
 template: data/templates/VK Tech шаблон.pptx
-content_pack: examples/content_pack
-purpose: product
-audience: "руководители продуктовых направлений"
+purpose: other                               # назначение и аудиторию предложит template_brief
+audience: ""
 language: ru
 target_slides: 12
 strategies: [executive, narrative, visual]

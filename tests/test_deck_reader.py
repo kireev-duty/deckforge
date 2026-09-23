@@ -9,17 +9,15 @@ import pytest
 from deckforge.core.deck_reader import background_picture_part, read_shapes
 from deckforge.core.ir import DeckIR, SlotKind
 from deckforge.core.package import Package, PartCtx
+from tests.conftest import build_sample_deck
 
 REPO = Path(__file__).resolve().parents[1]
-DECK = REPO / "examples" / "output" / "vk_tech" / "narrative.pptx"
 
 
 @pytest.fixture(scope="module")
-def deck():
-    if not DECK.exists() or DECK.stat().st_size < 10_000:
-        pytest.skip("нет examples/output/vk_tech/narrative.pptx (LFS?)")
-    ir = DeckIR.model_validate_json(DECK.with_suffix(".ir.json").read_text("utf-8"))
-    pkg = Package(DECK)
+def deck(tmp_path_factory):
+    path, ir = build_sample_deck(tmp_path_factory.mktemp("deck"))
+    pkg = Package(path)
     slides = []
     for part in pkg.slides:
         ctx = PartCtx.for_slide(pkg, part)

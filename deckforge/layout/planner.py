@@ -45,7 +45,15 @@ def plan(
     """
     available = available or set(Archetype)
     warnings: list[str] = []
-    slides = [visualize(sanitize_data(s, warnings), strategy) for s in outline.slides]
+    sane = [sanitize_data(s, warnings) for s in outline.slides]
+    kept = [s for s in sane if not _is_empty(s)]
+    # если содержательных слайдов не осталось вовсе — колоду не выбрасываем, верстаем как есть
+    if any(s.archetype not in _STRUCTURAL for s in kept):
+        for s in sane:
+            if _is_empty(s):
+                warnings.append(f"слайд {s.idx} «{s.title[:40]}»: без содержимого — пропущен")
+        sane = kept
+    slides = [visualize(s, strategy) for s in sane]
     slides = split_mixed_data(slides)
     slides = apply_density(slides, strategy)
     slides = split_kpis(slides, strategy, kpi_capacity)
@@ -57,6 +65,20 @@ def plan(
 
 
 # ──────────────────────────── 0. санация данных ────────────────────────────
+
+# структурные слайды живут без тела: у них содержание — заголовок и подзаголовок
+_STRUCTURAL = (Archetype.TITLE, Archetype.SECTION, Archetype.CLOSING)
+
+
+def _is_empty(s: OutlineSlide) -> bool:
+    """Контентный слайд, на котором остался бы один заголовок (I03 в аудите).
+
+    Готовый outline (`--outline`, build_variants) идёт мимо `content.outline_writer.repair_outline`,
+    поэтому пустой слайд снимается и здесь.
+    """
+    if s.archetype in _STRUCTURAL:
+        return False
+    return not (s.bullets or s.paragraphs or s.kpis or s.steps or s.chart or s.table or s.quote or s.image)
 
 
 def sanitize_data(src: OutlineSlide, warnings: list[str]) -> OutlineSlide:
@@ -336,7 +358,7 @@ def _merge(a: OutlineSlide, b: OutlineSlide) -> OutlineSlide:
     merged.archetype = Archetype.CARDS
     merged.subtitle = b.title
     merged.bullets = _items(a) + _items(b)
-    merged.steps, merged.kpis, merged.quote, merged.quote_author = [], [], None, None
+    merged.steps, merged.kpis, merged.quote, merged.quote_author, merged.paragraphs = [], [], None, None, []
     merged.image = a.image or b.image
     merged.sources = list(dict.fromkeys(a.sources + b.sources))
     merged.speaker_notes = "\n".join(x for x in (a.speaker_notes, b.speaker_notes) if x)
@@ -374,9 +396,15 @@ def _text_only(s: OutlineSlide) -> bool:
 
 def _mergeable(s: OutlineSlide) -> bool:
     """Слайд с одним видом текстового контента, который можно превратить в пункты карточек."""
-    if s.archetype not in _MERGEABLE or s.chart or s.table:
+    if s.chart or s.table:
+        return False
+    if s.archetype == Archetype.IMAGE_TEXT:
+        # без готовой картинки это обычный текст (executive картинок не генерирует); с картинкой — разворот, не трогаем
+        if s.image is not None and s.image.path:
+            return False
+    elif s.archetype not in _MERGEABLE:
         return False  # картинка слиянию не мешает
-    kinds = sum(1 for x in (s.bullets, s.steps, s.kpis, s.quote) if x)
+    kinds = sum(1 for x in (s.bullets, s.steps, s.kpis, s.quote, s.paragraphs) if x)
     return kinds == 1
 
 
@@ -390,6 +418,8 @@ def _items(s: OutlineSlide) -> list[str]:
         return [f"{k.value} — {k.label}" for k in s.kpis]
     if s.quote:
         return [f"«{s.quote}»" + (f" — {s.quote_author}" if s.quote_author else "")]
+    if s.paragraphs:  # абзац image_text без картинки — такая же карточка
+        return list(s.paragraphs)
     return []
 
 

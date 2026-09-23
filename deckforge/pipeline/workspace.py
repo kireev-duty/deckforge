@@ -110,9 +110,13 @@ class TemplateStore:
 
 
 def write_content_pack(dest: Path, brief: str, files: list[tuple[str, bytes]]) -> Path:
-    """Контент-пакет из запроса: `brief.md` + файлы (`*.md|txt` → корень, `*.json|csv` → `data/`)."""
+    """Контент-пакет из запроса: `brief.md` + файлы (`*.md|txt` → корень, `*.json|csv` → `data/`).
+
+    Пустой бриф файлом не становится: пакет из одних загруженных файлов — штатный случай.
+    """
     dest.mkdir(parents=True, exist_ok=True)
-    (dest / "brief.md").write_text(brief.strip() + "\n", "utf-8")
+    if brief.strip():
+        (dest / "brief.md").write_text(brief.strip() + "\n", "utf-8")
     for name, data in files:
         ext = Path(name).suffix.lower()
         if ext not in PACK_EXT:

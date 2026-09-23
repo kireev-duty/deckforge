@@ -40,6 +40,23 @@ def test_check_catches_its_fixture(prefix: str, tmp_path: Path) -> None:
             assert f.element_id and f.box is not None
 
 
+def test_placeholder_dictionary_catches_template_notes() -> None:
+    """Обращения шаблона к автору («не забудьте удалить этот слайд») — такие же заглушки, как lorem ipsum.
+
+    Встретилось в `data/wild/шаблон-макет МТУСИ.pptx` в режиме «на входе только шаблон»:
+    слайды-инструкции годятся как образцы, но их служебные надписи в колоду попадать не должны.
+    """
+    from deckforge.core.placeholders import is_placeholder_text
+
+    assert is_placeholder_text("P.S. Не забудьте удалить этот слайд из финальной версии вашей презентации")
+    assert is_placeholder_text("Удалите этот слайд перед показом")
+    assert is_placeholder_text("Этот слайд нужно удалить")
+    assert is_placeholder_text("Delete this slide before presenting")
+    # не заглушки: обычный текст колоды про удаление данных и про слайды
+    assert not is_placeholder_text("Удалите дубликаты записей перед загрузкой в витрину")
+    assert not is_placeholder_text("Слайд с архитектурой решения")
+
+
 def test_broken_file_reports_only_i01(tmp_path: Path) -> None:
     case = FIXTURES["I01"](tmp_path)
     report = audit_deck(case.pptx, case.dna)

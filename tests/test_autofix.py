@@ -112,6 +112,21 @@ def test_shrink_font_title_cuts_clause_not_words() -> None:
     assert float(fixed.style_overrides["size_pt"]) < 28.8 and "укорочен" not in res2.applied[0]["after"]
 
 
+def test_shrink_font_large_title_goes_below_70_percent() -> None:
+    """Заголовок 36 pt (ЛЦТ2026): пол как у подгонки — до 18 pt, а не 70 % (25,2 pt), иначе L03 остаётся после фикса."""
+    from deckforge.core.ir import Exemplar, Slot, TemplateDNA
+
+    title = "Клиенты получают стабильность и снижение рисков"
+    el = _text("2", title, kind=SlotKind.TITLE, size_pt=32.4)
+    slot = Slot(id="2", kind=SlotKind.TITLE, box=el.box, max_chars=30, max_lines=1, size_pt=36.0)
+    dna = TemplateDNA.model_construct(exemplars=[Exemplar(id="slide1", source_index=0, layout_name="",
+                                                          archetype="bullets", slots=[slot])])
+    res = apply_fixes(_deck(_slide(el)), [_finding("L03_text_overflow", "shrink_font_by_scale", element_id="2", need_pt=91, have_pt=60)], dna)
+    fixed = res.ir.slides[0].elements[0]
+    assert 18.0 <= float(fixed.style_overrides["size_pt"]) < 25.2
+    assert fixed.paragraphs[0].runs[0].text == title
+
+
 def test_shrink_font_kpi_number_scales_run_not_unit() -> None:
     el = Element(slot_id="9", kind=SlotKind.NUMBER, box=Box(x=0, y=0, w=914400, h=914400),
                  paragraphs=[Paragraph(runs=[TextRun(text="42%", size_pt=80.0), TextRun(text=" дня", size_pt=28.0)])])

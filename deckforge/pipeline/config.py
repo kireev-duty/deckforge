@@ -27,7 +27,9 @@ class AuditConfig(BaseModel):
 
 class RunConfig(BaseModel):
     template: Path
-    content_pack: Path
+    # контент-пакет и тема опциональны: без них бриф выводится из самого шаблона (content/template_brief.py)
+    content_pack: Path | None = None
+    topic: str = ""  # тема/задача одной строкой — средняя ступень между пакетом и «только шаблон»
     purpose: Purpose = "other"
     audience: str = ""
     language: str = "ru"
@@ -47,7 +49,9 @@ class RunConfig(BaseModel):
 
     @field_validator("template", "content_pack", "output_dir", mode="after")
     @classmethod
-    def _abs(cls, p: Path) -> Path:
+    def _abs(cls, p: Path | None) -> Path | None:
+        if p is None:
+            return None
         return p if p.is_absolute() else ROOT / p
 
     @field_validator("strategies", mode="after")

@@ -52,6 +52,7 @@ def parse_cmd(
 def run_cmd(
     config: Path = typer.Option(..., "--config", "-c", help="YAML-конфиг прогона (см. configs/run.example.yaml)"),
     outline: Path | None = typer.Option(None, "--outline", help="готовый outline.json — шаг content и LLM пропускаются"),
+    topic: str | None = typer.Option(None, "--topic", help="тема одной строкой вместо контент-пакета"),
     output_dir: Path | None = typer.Option(None, "--output-dir", "-o", help="переопределить output_dir из конфига"),
     render_png: bool = typer.Option(False, "--png", help="PNG-превью и contact.png для каждой колоды"),
     no_fix: bool = typer.Option(False, "--no-fix", help="не применять автофиксы (audit.autofix: false)"),
@@ -59,10 +60,16 @@ def run_cmd(
     no_images: bool = typer.Option(False, "--no-images", help="без иллюстраций (images: off)"),
     verbose: bool = typer.Option(False, "--verbose", "-v"),
 ) -> None:
-    """Прогон по конфигу: outline → колоды по стратегиям → аудит и автофиксы → экспорт."""
+    """Прогон по конфигу: outline → колоды по стратегиям → аудит и автофиксы → экспорт.
+
+    `content_pack` в конфиге опционален: без него контент берётся из `--topic`, а если нет и темы —
+    бриф выводится из самого шаблона (скилл `template_brief`).
+    """
     logging.basicConfig(level=logging.INFO if verbose else logging.WARNING, format="%(levelname)s %(name)s: %(message)s")
     load_dotenv()
     cfg = load_config(config)
+    if topic:
+        cfg = cfg.model_copy(update={"topic": topic, "content_pack": None})
     if output_dir is not None:
         cfg = cfg.model_copy(update={"output_dir": output_dir.resolve()})
     if render_png:
@@ -74,7 +81,7 @@ def run_cmd(
     if no_images:
         cfg = cfg.model_copy(update={"images": "off"})
     ready = DeckOutline.model_validate_json(outline.read_text("utf-8")) if outline else None
-    result = run(cfg, outline=ready, progress=lambda m: typer.echo(f"  {m}"))
+    result = run(cfg, outline=ready, progress=lambda m: typer.echo(f"  {m}"), outline_path=outline)
     for w in result.warnings:
         typer.echo(f"  ! {w}")
     typer.echo(f"\n{(result.output_dir / 'compare.md').read_text('utf-8')}")

@@ -63,6 +63,29 @@ def find_template(name_part: str) -> Path | None:
     return None
 
 
+SAMPLE_OUTLINE = REPO / "examples" / "content_pack" / "outline.json"
+
+
+def build_sample_deck(out_dir: Path, strategy: str = "narrative"):
+    """Колода VK Tech по синтетическому outline «Пульс» (есть chart, table, KPI) без LLM и LibreOffice.
+
+    Для тестов читателей готовой колоды: `examples/output` собран в режиме «только шаблон», данных в нём нет."""
+    from deckforge.core.ir import DeckOutline
+    from deckforge.core.strategy import load_strategy
+    from deckforge.layout import build_deck_ir
+    from deckforge.parsing.dna import build_dna
+    from deckforge.render import render_pptx
+
+    pptx = find_template("VK Tech")
+    if pptx is None:
+        pytest.skip("нет шаблона VK Tech (LFS?)")
+    dna = build_dna(pptx)
+    outline = DeckOutline.model_validate_json(SAMPLE_OUTLINE.read_text("utf-8"))
+    res = build_deck_ir(outline, load_strategy(strategy), dna.exemplars, dna.template_id, dna.slide_w, dna.slide_h,
+                        {"accent": "0077FF", "font": "Play", "palette": "0077FF,00AEE8"})
+    return render_pptx(res.ir, pptx, dna.exemplars, out_dir / f"{strategy}.pptx"), res.ir
+
+
 @pytest.fixture
 def template_path():
     """Фабрика: template_path("VK Tech") → Path или pytest.skip."""

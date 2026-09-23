@@ -1,4 +1,7 @@
-"""Оркестрация прогона: шаблон + контент-пакет → outline → колоды по стратегиям.
+"""Оркестрация прогона: шаблон (+ контент, если он есть) → outline → колоды по стратегиям.
+
+Контент — лестница (`content_for_outline`): контент-пакет пользователя → тема одной строкой →
+только шаблон, из которого бриф выводит скилл `template_brief`.
 
 Этапы (`parse_template`, `make_outline`, `build_deck`, `refine_deck`, `run`) — отдельные функции,
 из которых CLI, UI и API собирают цикл; каждая колода получает `manifest.json` с провенансом.
@@ -21,7 +24,14 @@ from deckforge.audit import audit_deck, with_contextual
 from deckforge.audit import summary as audit_summary
 from deckforge.audit.contextual import CHECK_IDS as CONTEXTUAL_CHECKS
 from deckforge.audit.contextual import ERROR_CHECK_ID, judge_deck, slides_from_ir
-from deckforge.content import load_content_pack, write_outline
+from deckforge.content import (
+    ContentPack,
+    drop_unsourced_numbers,
+    load_content_pack,
+    pack_from_brief,
+    write_outline,
+    write_template_brief,
+)
 from deckforge.content.images import illustrate
 from deckforge.core.autofix import plan_fixes
 from deckforge.core.ir import Archetype, AuditReport, DeckIR, DeckOutline, Exemplar, Finding, TemplateDNA
@@ -46,6 +56,14 @@ Progress = Callable[[str], None]
 IMAGES_RESERVE_S = 90.0
 JUDGE_RESERVE_S = 30.0
 EXPORT_RESERVE_S = 15.0
+
+# ступени лестницы входа (OutlineStep.content_source) — для CLI/UI и run.json
+CONTENT_SOURCE_NOTE = {
+    "pack": "контент-пакет пользователя",
+    "topic": "тема одной строкой (brief.md)",
+    "template": "только шаблон — бриф выведен из него (skill template_brief)",
+    "outline": "готовый outline.json",
+}
 
 
 def rel_path(p: Path | str | None, base: Path) -> str:
@@ -111,6 +129,10 @@ class OutlineStep:
     attempts: int = 0
     skills_used: dict[str, str] = field(default_factory=dict)
     llm_calls: list[dict] = field(default_factory=list)
+    content_source: str = "pack"  # pack | topic | template | outline
+    brief_path: Path | None = None  # бриф, выведенный из темы или шаблона
+    pack: ContentPack | None = None  # то, из чего собран outline — факты для судьи
+    brief_seconds: float = 0.0  # вызов template_brief, входит в `seconds`
 
 
 @dataclass
@@ -186,10 +208,23 @@ class RunContext:
         if ctx.contextual_on and ctx.client is None:
             ctx.client = LLMClient()  # outline готовый, но судье нужна VLM
         if ctx.contextual_on:
-            try:
-                ctx.pack = load_content_pack(cfg.content_pack)
-            except FileNotFoundError:
-                ctx.warnings.append("audit.contextual: контент-пакет не найден — судья работает без фактов (C04 неточна)")
+            # факты судье: то, из чего собран outline; с готовым outline — пакет с диска, если он задан
+            ctx.pack = outline.pack
+            if ctx.pack is None and outline.brief_path is not None and outline.brief_path.is_file():
+                # готовый outline с перенесённым брифом: судья сверяет колоду с ним
+                ctx.pack = pack_from_brief(outline.brief_path.read_text("utf-8"))
+            if ctx.pack is None and cfg.content_pack is not None:
+                try:
+                    ctx.pack = load_content_pack(cfg.content_pack)
+                except FileNotFoundError:
+                    ctx.warnings.append("audit.contextual: контент-пакет не найден — судья проверяет только "
+                                        "самосогласованность колоды (C04)")
+            elif ctx.pack is None:
+                ctx.warnings.append("audit.contextual: исходных материалов нет — судья проверяет только "
+                                    "самосогласованность колоды (C04)")
+            elif outline.content_source == "template":
+                ctx.warnings.append("audit.contextual: исходники — бриф, выведенный из шаблона; "
+                                    "C04 проверяет самосогласованность колоды")
         return ctx
 
 
@@ -203,6 +238,8 @@ class RunResult:
     warnings: list[str] = field(default_factory=list)
     run_json: Path | None = None
     parsed: ParsedTemplate | None = None
+    content_source: str = "pack"  # pack | topic | template | outline
+    brief_path: Path | None = None  # бриф по теме или выведенный из шаблона
 
     @property
     def total_s(self) -> float:
@@ -228,27 +265,100 @@ def parse_template(template: Path, out_dir: Path | None = None) -> ParsedTemplat
     return ParsedTemplate(template, exemplars, tokens, dna, _style(tokens), meta, round(time.perf_counter() - t0, 3))
 
 
+@dataclass
+class ContentStep:
+    """Из чего собирается outline: пакет пользователя, тема строкой или бриф, выведенный из шаблона."""
+
+    pack: ContentPack
+    source: str  # pack | topic | template
+    purpose: str
+    audience: str
+    brief_path: Path | None = None
+    warnings: list[str] = field(default_factory=list)
+    skills_used: dict[str, str] = field(default_factory=dict)
+
+
+def content_for_outline(cfg: RunConfig, parsed: ParsedTemplate, out_dir: Path, client: LLMClient) -> ContentStep:
+    """Лестница входа: контент-пакет → тема одной строкой → только шаблон (бриф пишет `template_brief`).
+
+    Пустой или отсутствующий пакет — не ошибка, а спуск на ступень ниже с предупреждением.
+    """
+    warnings: list[str] = []
+    if cfg.content_pack is not None:
+        try:
+            pack = load_content_pack(cfg.content_pack)
+        except FileNotFoundError:
+            warnings.append(f"контент-пакет не найден ({cfg.content_pack}) — контент по теме или по шаблону")
+        else:
+            if pack.fragments:
+                return ContentStep(pack, "pack", cfg.purpose, cfg.audience)
+            warnings.append(f"контент-пакет пуст ({cfg.content_pack}) — контент по теме или по шаблону")
+
+    if cfg.topic.strip():
+        text = cfg.topic.strip()
+        path = out_dir / "brief.md"
+        path.write_text(text + "\n", "utf-8")
+        warnings.append(f"контент-пакета нет — outline по теме: «{text[:80]}»")
+        return ContentStep(pack_from_brief(text), "topic", cfg.purpose, cfg.audience, path, warnings)
+
+    # на входе только шаблон: бренд, тексты образцов и стиль → бриф
+    brief = write_template_brief(
+        client, parsed.dna, name=Path(cfg.template).name, language=cfg.language, target_slides=cfg.target_slides,
+        purpose="" if cfg.purpose == "other" else cfg.purpose, audience=cfg.audience,
+    )
+    path = out_dir / "brief.md"
+    path.write_text(brief.to_brief_text(), "utf-8")
+    warnings.append(f"на входе только шаблон — бриф выведен из него: «{brief.topic}»; "
+                    "конкретных цифр и имён в колоде не будет")
+    return ContentStep(pack_from_brief(brief.to_brief_text()), "template", brief.purpose or cfg.purpose,
+                    brief.audience or cfg.audience, path, warnings,
+                    {"template_brief": _skill_version(client, "template_brief")})
+
+
 def make_outline(cfg: RunConfig, parsed: ParsedTemplate, out_dir: Path, client: LLMClient | None = None,
-                 outline: DeckOutline | None = None) -> OutlineStep:
-    """Один outline на прогон; с готовым `outline` LLM не вызывается."""
+                 outline: DeckOutline | None = None, outline_path: Path | None = None) -> OutlineStep:
+    """Один outline на прогон; с готовым `outline` LLM не вызывается.
+
+    `outline_path` — откуда взят готовый outline: лежащий рядом `brief.md` переносится в прогон,
+    чтобы в манифесте остался след, из чего собран контент (один контент на несколько шаблонов).
+    """
     out_dir.mkdir(parents=True, exist_ok=True)
     path = out_dir / "outline.json"
     if outline is not None:
         path.write_text(outline.model_dump_json(indent=1), "utf-8")
-        return OutlineStep(outline, path)
+        return OutlineStep(outline, path, content_source="outline", brief_path=_copy_brief(outline_path, out_dir))
     t0 = time.perf_counter()
-    pack = load_content_pack(cfg.content_pack)
-    if not pack.fragments:
-        raise RuntimeError(f"контент-пакет пуст: нужен brief.md или файлы в {cfg.content_pack}")
     client = client or LLMClient()
+    content = content_for_outline(cfg, parsed, out_dir, client)
+    t_brief = round(time.perf_counter() - t0, 3) if content.source == "template" else 0.0
     res = write_outline(
-        client, pack, purpose=cfg.purpose, audience=cfg.audience, language=cfg.language,
+        client, content.pack, purpose=content.purpose, audience=content.audience, language=cfg.language,
         target_slides=cfg.target_slides, available_archetypes=parsed.archetypes,
     )
+    outline_out, num_warnings = res.outline, []
+    if content.source in ("template", "topic"):
+        # источника у чисел нет: KPI «100 %» и «24/7» модель дорисовывает сама
+        outline_out, num_warnings = drop_unsourced_numbers(res.outline, content.pack.brief)
     (out_dir / "outline.raw.json").write_text(json.dumps(res.raw, ensure_ascii=False, indent=1), "utf-8")
-    path.write_text(res.outline.model_dump_json(indent=1), "utf-8")
-    return OutlineStep(res.outline, path, list(res.warnings), round(time.perf_counter() - t0, 3), res.attempts,
-                       {"outline_writer": _skill_version(client, "outline_writer")}, [asdict(c) for c in client.calls])
+    path.write_text(outline_out.model_dump_json(indent=1), "utf-8")
+    return OutlineStep(outline_out, path, content.warnings + list(res.warnings) + num_warnings,
+                       round(time.perf_counter() - t0, 3),
+                       res.attempts,
+                       {**content.skills_used, "outline_writer": _skill_version(client, "outline_writer")},
+                       [asdict(c) for c in client.calls], content.source, content.brief_path, content.pack, t_brief)
+
+
+def _copy_brief(outline_path: Path | None, out_dir: Path) -> Path | None:
+    """`brief.md` рядом с готовым outline → в папку прогона (провенанс общего контента)."""
+    if outline_path is None:
+        return None
+    src = Path(outline_path).with_name("brief.md")
+    if not src.is_file():
+        return None
+    dest = out_dir / "brief.md"
+    if src.resolve() != dest.resolve():
+        shutil.copyfile(src, dest)
+    return dest
 
 
 def build_deck(ctx: RunContext, strategy_name: str, progress: Progress | None = None) -> DeckResult:
@@ -362,7 +472,9 @@ def build_deck(ctx: RunContext, strategy_name: str, progress: Progress | None = 
     manifest = {
         "created": datetime.now(UTC).isoformat(timespec="seconds"),
         "template": {**parsed.meta, "path": rel_path(parsed.template, out_dir)},
-        "content_pack": rel_path(cfg.content_pack, out_dir),
+        "content_source": ctx.outline.content_source,
+        "content_pack": rel_path(cfg.content_pack, out_dir) if cfg.content_pack else "",
+        "brief": rel_path(ctx.outline.brief_path, out_dir) if ctx.outline.brief_path else "",
         "outline": rel_path(ctx.outline.path, out_dir),
         "outline_title": outline.title,
         "strategy": {"name": strategy.name, "version": strategy.version,
@@ -377,7 +489,8 @@ def build_deck(ctx: RunContext, strategy_name: str, progress: Progress | None = 
         "audit": audit_info,
         "images": images_info,
         "exports": deck.exports,
-        "timings_s": {"parse": parsed.seconds, "outline": ctx.outline.seconds, **deck_timings},
+        "timings_s": {"parse": parsed.seconds, **({"brief": ctx.outline.brief_seconds} if ctx.outline.brief_seconds
+                                                  else {}), "outline": ctx.outline.seconds, **deck_timings},
         "time_budget_s": cfg.time_budget_s,
     }
     deck.manifest.write_text(json.dumps(manifest, ensure_ascii=False, indent=1), "utf-8")
@@ -475,6 +588,7 @@ def run(
     client: LLMClient | None = None,
     outline: DeckOutline | None = None,
     progress: Progress | None = None,
+    outline_path: Path | None = None,
 ) -> RunResult:
     """Полный прогон по конфигу; с готовым `outline` шаг content пропускается."""
     say = progress or (lambda msg: log.info(msg))
@@ -487,8 +601,9 @@ def run(
     say(f"parse: {len(parsed.exemplars)} образцов, шрифт {tokens.fonts[0] if tokens.fonts else '?'}, "
         f"accent #{(tokens.palette('accent') or ['?'])[0]} ({parsed.seconds:.1f}s)")
 
-    step = make_outline(cfg, parsed, out_dir, client, outline)
+    step = make_outline(cfg, parsed, out_dir, client, outline, outline_path)
     if outline is None:
+        say(f"контент: {CONTENT_SOURCE_NOTE.get(step.content_source, step.content_source)}")
         say(f"outline: {len(step.outline.slides)} слайдов за {step.seconds:.1f}s, попыток {step.attempts}"
             + (f", предупреждений {len(step.warnings)}" if step.warnings else ""))
     else:
@@ -510,7 +625,8 @@ def run(
 
     (out_dir / "compare.md").write_text(compare_table(rows) + "\n", "utf-8")
     timings["total"] = round(time.perf_counter() - t_start, 3)
-    result = RunResult(out_dir, step.outline, step.path, decks, timings, warnings, parsed=parsed)
+    result = RunResult(out_dir, step.outline, step.path, decks, timings, warnings, parsed=parsed,
+                       content_source=step.content_source, brief_path=step.brief_path)
     result.run_json = out_dir / "run.json"
     result.run_json.write_text(json.dumps(run_summary(cfg, result), ensure_ascii=False, indent=1), "utf-8")
     say(f"готово за {timings['total']:.1f}s → {out_dir}")
@@ -528,6 +644,8 @@ def run_summary(cfg: RunConfig, result: RunResult) -> dict:
         "created": datetime.now(UTC).isoformat(timespec="seconds"),
         "config": config,
         "template": {**result.parsed.meta, "path": rel_path(result.parsed.template, out)} if result.parsed else {},
+        "content_source": result.content_source,
+        "brief": rel_path(result.brief_path, out) if result.brief_path else "",
         "outline": rel_path(result.outline_path, out),
         "decks": [{"strategy": d.strategy, "pptx": rel_path(d.pptx, out), "manifest": rel_path(d.manifest, out),
                    "stats": d.stats, "audit": d.audit_summary, "exports": d.exports, "timings_s": d.timings_s}

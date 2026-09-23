@@ -243,7 +243,30 @@ class SlideProfile:
             thumbnail=thumbnail,
             tags=self.tags,
             confidence=round(self.confidence, 2),
+            card_frames=self.card_frames,
         )
+
+    @property
+    def card_frames(self) -> bool:
+        """У каждого body сетки своя подложка-фигура на слайде, в которой нет центров других body —
+        так же её ищет рендер (`_remove_empty_containers`), чтобы убрать пустую карточку."""
+        bodies = [s for s in self.slots if s.kind == SlotKind.BODY]
+        if len(bodies) < 2:
+            return False
+        slot_ids = {s.id for s in self.slots}
+        frames = [sh for sh in self.features.shapes if sh.id not in slot_ids and not sh.fixed and sh.visible
+                  and sh.kind in ("shape", "pic") and sh.area <= CARD_MAX_AREA]
+        by_id = {sh.id: sh for sh in self.features.shapes}
+        centers = [(b.box.x + b.box.w / 2, b.box.y + b.box.h / 2) for b in bodies]
+        inside = lambda box, c: box.x <= c[0] <= box.x2 and box.y <= c[1] <= box.y2
+
+        def removable(b: Slot, c: tuple[float, float]) -> bool:
+            own = by_id.get(b.id)
+            if own is not None and (own.visible or own.is_placeholder):
+                return True  # рамка у самого слота — рендер удаляет его целиком
+            return any(inside(f.box, c) and sum(inside(f.box, o) for o in centers) == 1 for f in frames)
+
+        return all(removable(b, c) for b, c in zip(bodies, centers))
 
 
 # ──────────────────────────── сбор фигур ────────────────────────────
@@ -1170,9 +1193,13 @@ def apply_vlm(p: SlideProfile, res: dict) -> SlideProfile:
         if slot.id in decor and slot.kind != protected:
             continue  # схлопнутый слот таблицы/диаграммы модель иногда считает декором
         role = roles.get(slot.id)
+        shape = shapes_by_id.get(slot.id)
         if role in {k.value for k in SlotKind} and slot.kind != protected:
             kind = SlotKind(role)
-            shape = shapes_by_id.get(slot.id)
+            if shape is not None and shape.kind == "pic" and kind not in (SlotKind.PICTURE, SlotKind.ICON):
+                # текст в p:pic не пишется, а место под фото модель в нём не видит — это декор-бейдж
+                # (номера шагов картинками у VK Tech): иначе подпись шага молча пропадала бы
+                continue
             if kind == SlotKind.DATE and slot.placeholder_type != "dt" and shape is not None and not _in_edge_zone(shape):
                 # дата в контентной зоне — подпись события таймлайна, а не поле
                 kind = SlotKind.LABEL
@@ -1279,7 +1306,8 @@ def profiles_json(profiles: list[SlideProfile]) -> list[dict]:
             "index": p.index, "layout": p.layout_name, "archetype": p.archetype.value, "confidence": p.confidence,
             "source": p.source, "ambiguous": p.ambiguous, "rules_archetype": p.rules_archetype.value if p.rules_archetype else None,
             "candidates": [str(c) for c in p.candidates[:4]], "tags": p.tags,
-            "slots": [s.model_dump() for s in p.slots], "fixed": p.fixed_ids, "shapes": shapes_summary(p),
+            "slots": [s.model_dump() for s in p.slots], "fixed": p.fixed_ids, "card_frames": p.card_frames,
+            "shapes": shapes_summary(p),
             "vlm": p.vlm_raw,  # единственное, что берётся из кэша при загрузке
         }
         for p in profiles

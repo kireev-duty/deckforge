@@ -29,13 +29,17 @@ from deckforge.layout.fitting import (
     GLYPH_WIDTH,
     MIN_SIZE_SCALE,
     NUMBER_MIN_SCALE,
+    STRUCTURAL_TITLE_MIN_SCALE,
     UNIT_SCALE,
     chars_at_scale,
     fit_number,
     fit_size,
     normalize,
     shorten,
+    shorten_title,
     slot_capacity,
+    text_min_scale,
+    title_min_scale,
     split_label_body,
     split_number_unit,
     xml_safe,
@@ -133,6 +137,14 @@ def build_deck_ir(
             result.warnings.append(msg)
             log.warning(msg)
             continue  # тот же остаток с тем же архетипом пошёл бы по кругу
+        if leftover is not None and s.archetype in (Archetype.TITLE, Archetype.CLOSING):
+            # продолжение титула встало бы между титулом и первым разделом, финала — после финала;
+            # призыв к действию на обложке/финале — не факт, его потеря видна в предупреждении
+            msg = (f"слайд {s.idx} «{s.title[:40]}»: {_n_items(leftover)} пунктов не поместились в "
+                   f"{s.archetype.value}-образец {e.id} — опущены")
+            result.warnings.append(msg)
+            log.warning(msg)
+            continue
         if leftover is not None:
             # не влезло — на слайд-продолжение; лишний слайд заметен и правится, потерянный факт — нет
             n_left = _n_items(leftover)
@@ -177,7 +189,7 @@ def _compact_alternative(
 
 
 def _n_items(s: OutlineSlide) -> int:
-    return len(s.kpis) + len(s.bullets) + len(s.steps)
+    return len(s.kpis) + len(s.bullets) + len(s.steps) + len(s.paragraphs)
 
 
 def _nothing_placed(s: OutlineSlide, leftover: OutlineSlide) -> bool:
@@ -195,8 +207,10 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
     left_kpis: list = []
     left_items: list[str] = []
     quote_as_title = bool(s.quote) and e.archetype in (Archetype.SECTION, Archetype.TITLE)
-    if e.archetype in STRUCTURAL and s.archetype not in STRUCTURAL and not by_kind[SlotKind.BODY] and not quote_as_title:
-        # контент на титульном образце: подзаголовок работает телом, иначе класть некуда
+    if e.archetype in STRUCTURAL and not by_kind[SlotKind.BODY] and not quote_as_title and (
+        s.archetype not in STRUCTURAL or not s.subtitle
+    ):
+        # контент на титульном образце (или текст финала без своего подзаголовка): подзаголовок работает телом
         by_kind[SlotKind.BODY], by_kind[SlotKind.SUBTITLE] = by_kind[SlotKind.SUBTITLE][:1], by_kind[SlotKind.SUBTITLE][1:]
     if (s.chart or s.table) and not (by_kind[SlotKind.CHART] or by_kind[SlotKind.TABLE]) and by_kind[SlotKind.BODY]:
         # data-слота нет — нативный объект встаёт на место самого крупного текстового блока
@@ -204,8 +218,8 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
         by_kind[SlotKind.BODY] = [b for b in by_kind[SlotKind.BODY] if b is not host]
         by_kind[SlotKind.CHART if s.chart else SlotKind.TABLE].append(host)
 
-    def put(slot: Slot, text: str, bullet: bool = False) -> None:
-        if el := text_element(slot, text, style, bullet=bullet):
+    def put(slot: Slot, text: str, bullet: bool = False, min_scale: float | None = None) -> None:
+        if el := text_element(slot, text, style, bullet=bullet, min_scale=min_scale):
             elements.append(el)
 
     def put_list(slot: Slot, items: list[str], bullet: bool) -> None:
@@ -214,13 +228,14 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
 
     subtitles = list(by_kind[SlotKind.SUBTITLE])
     if by_kind[SlotKind.TITLE]:
-        put(by_kind[SlotKind.TITLE][0], f"«{s.quote}»" if quote_as_title else s.title)
+        put(by_kind[SlotKind.TITLE][0], f"«{s.quote}»" if quote_as_title else s.title,
+            min_scale=title_min_scale(by_kind[SlotKind.TITLE][0], e.archetype in STRUCTURAL))
     elif subtitles:  # образец без заголовка, но с подзаголовком — заголовок туда
         put(subtitles.pop(0), f"«{s.quote}»" if quote_as_title else s.title)
     if subtitles:
         sub = (s.quote_author or s.title) if quote_as_title else s.subtitle
         if sub:
-            put(subtitles[0], sub)
+            put(subtitles[0], sub, min_scale=STRUCTURAL_TITLE_MIN_SCALE if e.archetype in STRUCTURAL else None)
     elif s.subtitle and s.archetype in STRUCTURAL and e.archetype not in STRUCTURAL and by_kind[SlotKind.BODY]             and not (s.bullets or s.steps or s.kpis or s.paragraphs):
         # титул на текстовом образце: подзаголовок — в тело
         put(by_kind[SlotKind.BODY][0], s.subtitle)
@@ -281,6 +296,11 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
 
     items = s.bullets or ([STEP_NUMBERING.format(n=i + 1, text=t) for i, t in enumerate(s.steps)] if s.steps else [])
     numbered = bool(s.steps) and not s.bullets
+    # абзацы — такой же контент, как буллеты, только без маркеров: иначе у образца с карточками
+    # им некуда лечь и слайд уезжает в рендер с одним заголовком (I03)
+    plain = not items and bool(s.paragraphs)
+    if plain:
+        items = list(s.paragraphs)
     free_labels, bodies = labels[labels_used:], bodies[bodies_used:]
     if numbered and numbers and not s.kpis:
         # крупные цифры схемы — номера шагов, иначе рендер их сотрёт
@@ -293,7 +313,7 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
         if s.quote_author and (captions or free_labels):
             put((captions or free_labels)[0], s.quote_author)
     elif items and len(bodies) == 1:
-        put_list(bodies[0], items, bullet=len(items) > 1 and not numbered)
+        put_list(bodies[0], items, bullet=len(items) > 1 and not numbered and not plain)
     elif items and len(bodies) > 1:
         raw = s.steps if numbered else items
         paired = pair_labels(bodies, free_labels)
@@ -322,8 +342,6 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
         left_items = (s.steps if numbered else items)[len(free_labels):]
     elif items:  # класть некуда — весь список в остаток
         left_items = list(s.steps if numbered else items)
-    elif s.paragraphs and bodies:
-        put_list(bodies[0], s.paragraphs, bullet=False)
 
     # номер страницы текстом (без плейсхолдера sldNum) — перенумеровать
     for num_slot in by_kind[SlotKind.SLIDE_NUMBER]:
@@ -346,6 +364,8 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
                             kpis=left_kpis, sources=list(s.sources))
     if numbered:
         leftover.steps = left_items
+    elif plain:
+        leftover.paragraphs = left_items
     else:
         leftover.bullets = left_items
     return slide_ir, leftover
@@ -354,21 +374,28 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
 # ──────────────────────────── элементы ────────────────────────────
 
 
-def text_element(slot: Slot, text: str, style: dict, bullet: bool = False) -> Element | None:
+def text_element(
+    slot: Slot, text: str, style: dict, bullet: bool = False, min_scale: float | None = None,
+) -> Element | None:
     text = normalize(text)
+    if min_scale is None:
+        min_scale = text_min_scale(slot)
     if not text:
         return None
     if slot.kind == SlotKind.NUMBER:
         return number_element(slot, text, style)
     overrides = dict(style)
     cap = slot_capacity(slot)
+    cut = shorten_title if slot.kind == SlotKind.TITLE else shorten
     if cap and len(text) > cap:
-        size = fit_size(text, slot)
+        size = fit_size(text, slot, min_scale)
         if size and slot.size_pt:
-            overrides["size_pt"] = size
-            text = shorten(text, chars_at_scale(slot))  # режем, только если не спас минимальный кегль
+            text = cut(text, chars_at_scale(slot, min_scale))  # режем, только если не спас минимальный кегль
+            # голова заголовка до «:» может влезть и крупнее
+            if size := fit_size(text, slot, min_scale):
+                overrides["size_pt"] = size
         else:
-            text = shorten(text, cap)
+            text = cut(text, cap)
     return Element(slot_id=slot.id, kind=slot.kind, box=slot.box, style_overrides=overrides,
                    paragraphs=[Paragraph(runs=[TextRun(text=text)], bullet=bullet)])
 

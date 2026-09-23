@@ -119,6 +119,31 @@ def test_timeline_years_are_labels_not_footer_dates(profiles: list[SlideProfile]
     assert all(kinds[i] == SlotKind.LABEL for i in years), {i: kinds[i] for i in years}
 
 
+@pytest.mark.parametrize("profiles", [pytest.param("VK Tech", id="VK Tech")], indirect=True)
+def test_vlm_text_role_on_picture_is_decor(profiles: list[SlideProfile]) -> None:
+    """Бейджи-картинки шагов (VK Tech, слайд 8), которые VLM зовёт `label`: текст в p:pic не пишется —
+    слот снимается, иначе подписи шагов молча пропадали бы, а picture-слот штрафовался бы как пустая рамка."""
+    import copy
+
+    from deckforge.parsing.layout_classifier import apply_vlm
+
+    p = copy.deepcopy({p.index + 1: p for p in profiles}[8])
+    pics = [s.id for s in p.features.shapes if s.kind == "pic" and s.id in {x.id for x in p.slots}]
+    assert pics
+    apply_vlm(p, {"archetype": "agenda", "confidence": 0.95, "slot_roles": {i: "label" for i in pics}})
+    assert not {s.id for s in p.slots} & set(pics)
+    assert sum(1 for s in p.slots if s.kind == SlotKind.BODY) == 5
+
+
+@pytest.mark.parametrize("profiles", [pytest.param("VK Tech", id="VK Tech")], indirect=True)
+def test_card_frames(profiles: list[SlideProfile]) -> None:
+    """slide14 — у каждой карточки своя подложка (пустую рендер уберёт); slide19 — полосы на ряд
+    и сетка «01–04» картинкой лейаута (пустая карточка осталась бы видна)."""
+    by_no = {p.index + 1: p for p in profiles}
+    assert by_no[14].card_frames and by_no[14].to_exemplar().card_frames
+    assert not by_no[19].card_frames
+
+
 # ── чужие шаблоны из data/wild (пропускаются, если файла нет) ──
 
 WILD_EXPECTED: dict[str, dict[int, Archetype]] = {

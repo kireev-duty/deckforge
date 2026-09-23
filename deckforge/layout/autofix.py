@@ -6,7 +6,7 @@ import re
 from dataclasses import dataclass, field
 
 from deckforge.core.autofix import FIXES, is_fixable
-from deckforge.core.ir import Box, DeckIR, Element, Finding, SlideIR, Slot, SlotKind, TemplateDNA
+from deckforge.core.ir import Archetype, Box, DeckIR, Element, Finding, SlideIR, Slot, SlotKind, TemplateDNA
 from deckforge.layout.fitting import (
     MIN_SIZE_SCALE,
     NUMBER_MIN_SCALE,
@@ -14,6 +14,8 @@ from deckforge.layout.fitting import (
     normalize,
     shorten,
     shorten_words,
+    text_min_scale,
+    title_min_scale,
 )
 
 MAX_BULLET_WORDS = 15  # норма D02
@@ -91,7 +93,13 @@ def fix_shrink_font(slide: SlideIR, el: Element, slot: Slot | None, f: Finding) 
     current = _current_size(el, base)
     if current is None:
         return None
-    floor = NUMBER_MIN_SCALE if el.kind == SlotKind.NUMBER else MIN_SIZE_SCALE
+    if el.kind == SlotKind.NUMBER:
+        floor = NUMBER_MIN_SCALE
+    elif el.kind == SlotKind.TITLE and slot is not None:
+        # тот же пол, что у подгонки: крупный заголовок — до 18 pt, титул/раздел/финал — до 55 %
+        floor = title_min_scale(slot, slide.archetype in (Archetype.TITLE, Archetype.SECTION, Archetype.CLOSING))
+    else:
+        floor = text_min_scale(slot) if slot is not None else MIN_SIZE_SCALE
     min_size = (base or current) * floor
     new_size = max(round(current * scale, 1), round(min_size, 1))
     if new_size >= current:

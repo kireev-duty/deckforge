@@ -9,7 +9,7 @@ from statistics import median
 from deckforge.core.ir import Archetype, Exemplar, OutlineSlide, Slot, SlotKind
 from deckforge.core.strategy import Strategy
 from deckforge.core.units import EMU_PER_INCH
-from deckforge.layout.fitting import MIN_SIZE_SCALE, chars_at_scale
+from deckforge.layout.fitting import MIN_SIZE_SCALE, chars_at_scale, text_min_scale, title_min_scale
 
 # хвост цепочки: текстовые образцы, затем структурные — чтобы слайд не пропал на любом шаблоне
 _TEXT_TAIL = [Archetype.BULLETS, Archetype.CARDS, Archetype.TWO_COLUMN, Archetype.IMAGE_TEXT, Archetype.AGENDA]
@@ -38,14 +38,27 @@ FLEXIBLE = {Archetype.BULLETS, Archetype.CARDS, Archetype.TWO_COLUMN, Archetype.
 ARCH_RANK_PENALTY = 4.0  # шаг по цепочке фолбэков
 FLEX_RANK_PENALTY = 2.0  # шаг по archetype_priority стратегии
 REUSE_PENALTY = 2.0
+# штраф за повтор растёт до трёх использований: дальше пустая карточка (EMPTY_CARD_PENALTY) не должна становиться
+# «выгоднее» — в колоде из одних карточек (режим «только шаблон») иначе всплывала сетка 2×2 с пустой «04»
+REUSE_MAX_COUNT = 3
 NO_TITLE_PENALTY = 5.0
 TRUNCATION_PENALTY = 3.0  # текст не влезет даже при минимальном кегле
+BODY_TRUNCATION_PENALTY = 6.0  # весь текст слайда в одном теле и он не влезает — теряется хвост абзаца («Оплата…»)
 MIN_TABLE_COL_W = int(1.0 * EMU_PER_INCH)
 OVERLAP_PENALTY = 5.0  # заголовок образца заходит под контентный блок
 OVERLAP_SHARE = 0.2
+# ...и сам заголовок длиннее видимой части строки: текст переносится по всей ширине бокса и уходит под блок
+TITLE_UNDER_CONTENT_PENALTY = 8.0
 EXTRA_PICTURE_PENALTY = 2.5  # за каждую рамку под картинку сверх одной
 DATA_IN_BODY_PENALTY = 6.0  # chart/table на место текстового блока
-TIGHT_SHARE = 0.5  # слот «тесный», если вмещает меньше половины среднего пункта
+TIGHT_SHARE = 1.0  # слот «тесный», если даже при минимальном кегле не вмещает средний пункт — иначе «Соответствие…»
+# пустая карточка сетки видна (у VK Tech сетка 2×2 с «01–04» нарисована картинкой в фоне лейаута и не убирается),
+# судья считает её мусором (C07) — поэтому она дороже двух повторов образца
+EMPTY_CARD_PENALTY = 5.0
+REMOVABLE_CARD_PENALTY = 1.5  # у карточки своя подложка (Exemplar.card_frames) — пустую рендер убирает
+TIGHT_SLOT_PENALTY = 4.0  # за каждый тесный слот: пункт в нём обрежется «…» — дороже одного пункта на продолжении
+SHORT_CARD_PENALTY = 6.0  # карточек меньше пунктов — остаток уйдёт на продолжение: дороже пустой карточки
+SPARSE_GRID_PENALTY = 4.0  # заполнено не больше половины карточек: один абзац в сетке 2×2
 BIG_NUMBER_SHARE = 0.65  # доля от медианного кегля, с которой number-слот считается KPI-цифрой
 IMPOSSIBLE = -1000.0
 
@@ -64,6 +77,7 @@ class Needs:
     text_chars: int = 0  # суммарная длина списка (для одного body-слота)
     table_cols: int = 0
     quote_chars: int = 0
+    item_chars: tuple[int, ...] = ()  # длина каждого пункта — тесноту слота считаем к его пункту, а не к среднему
 
     @classmethod
     def of(cls, s: OutlineSlide) -> Needs:
@@ -71,7 +85,7 @@ class Needs:
         return cls(items=len(lst), kpis=len(s.kpis), chart=s.chart is not None, table=s.table is not None,
                    image=has_image(s), quote=bool(s.quote), title_chars=len(s.title),
                    text_chars=sum(len(t) for t in lst) + 2 * len(lst), table_cols=len(s.table.header) if s.table else 0,
-                   quote_chars=len(s.quote or "") + 2)
+                   quote_chars=len(s.quote or "") + 2, item_chars=tuple(len(t) for t in lst))
 
 
 def has_image(s: OutlineSlide) -> bool:
@@ -109,7 +123,7 @@ def pick_exemplar(
             for e in exemplars:
                 if e.archetype != arch or e.archetype == Archetype.FREEFORM or (exclude and e.id in exclude):
                     continue
-                score = score_exemplar(e, needs, strategy, slide_area) - rank_penalty * rank - REUSE_PENALTY * used.get(e.id, 0)
+                score = score_exemplar(e, needs, strategy, slide_area) - rank_penalty * rank - REUSE_PENALTY * min(used.get(e.id, 0), REUSE_MAX_COUNT)
                 if score <= IMPOSSIBLE:
                     continue
                 key = (score, -e.source_index, e)
@@ -123,13 +137,15 @@ def pick_exemplar(
 def score_exemplar(e: Exemplar, n: Needs, strategy: Strategy, slide_area: int) -> float:
     kinds = _count_kinds(e.slots)
     score = e.confidence
-    titles = [s for s in e.slots if s.kind == SlotKind.TITLE]
+    title_scale = title_min_scale(titles[0], e.archetype in STRUCTURAL) if (titles := [s for s in e.slots if s.kind == SlotKind.TITLE]) else MIN_SIZE_SCALE
     if n.title_chars and not (titles or n.quote):
         score -= NO_TITLE_PENALTY * (0.4 if kinds[SlotKind.SUBTITLE] else 1.0)  # заголовок ляжет в subtitle
-    elif titles and n.title_chars and (cap := chars_at_scale(titles[0], MIN_SIZE_SCALE)) and n.title_chars > cap:
+    elif titles and n.title_chars and n.title_chars > (chars_at_scale(titles[0], title_scale) or n.title_chars):
         score -= TRUNCATION_PENALTY
     if titles and _overlaps_content(titles[0], e.slots):
         score -= OVERLAP_PENALTY
+        if n.title_chars > _visible_title_chars(titles[0], e.slots, title_scale):
+            score -= TITLE_UNDER_CONTENT_PENALTY
     real_bodies = [s for s in e.slots if s.kind == SlotKind.BODY]
     bodies = real_bodies
     if not bodies and e.archetype in STRUCTURAL and (n.items or n.kpis):
@@ -167,18 +183,26 @@ def score_exemplar(e: Exemplar, n: Needs, strategy: Strategy, slide_area: int) -
     if n.items:
         labels = kinds[SlotKind.LABEL] + kinds[SlotKind.CAPTION]
         if len(bodies) == 1:
-            cap = bodies[0].max_items or 6
+            # однострочное тело (подпись-примечание) без max_items — один пункт, а не шесть по умолчанию
+            cap = bodies[0].max_items or bodies[0].max_lines or 6
             score += 1.0 if n.items <= cap else -1.5 * (n.items - cap)
             if (chars := chars_at_scale(bodies[0], MIN_SIZE_SCALE)) and n.text_chars > chars:
-                score -= TRUNCATION_PENALTY
+                score -= BODY_TRUNCATION_PENALTY
         elif len(bodies) > 1:
-            score += _capacity_score(len(bodies), n.items, empty_penalty=1.5)
+            # пустую карточку со своей подложкой рендер уберёт — остаётся только пробел в сетке
+            score += _capacity_score(len(bodies), n.items,
+                                     empty_penalty=REMOVABLE_CARD_PENALTY if e.card_frames else EMPTY_CARD_PENALTY,
+                                     short_penalty=SHORT_CARD_PENALTY)
+            if n.items * 2 <= len(bodies):
+                score -= SPARSE_GRID_PENALTY
             if kinds[SlotKind.LABEL] and kinds[SlotKind.LABEL] != len(bodies):  # нерегулярная сетка карточек
                 score -= 1.0 * abs(kinds[SlotKind.LABEL] - len(bodies))
-            score -= TRUNCATION_PENALTY * _tight_slots(bodies[: n.items], n)
+            score -= TIGHT_SLOT_PENALTY * _tight_slots(bodies[: n.items], n)
         elif labels:
-            score += _capacity_score(labels, n.items, empty_penalty=1.0) - 1.0
-            score -= TRUNCATION_PENALTY * _tight_slots([s for s in e.slots if s.kind in (SlotKind.LABEL, SlotKind.CAPTION)][: n.items], n)
+            score += _capacity_score(labels, n.items, empty_penalty=EMPTY_CARD_PENALTY) - 1.0
+            if n.items * 2 <= labels:
+                score -= SPARSE_GRID_PENALTY
+            score -= TIGHT_SLOT_PENALTY * _tight_slots([s for s in e.slots if s.kind in (SlotKind.LABEL, SlotKind.CAPTION)][: n.items], n)
         else:
             score -= 2.0 * n.items
     # без картинки в контенте рамка образца останется с чужим фото
@@ -210,6 +234,24 @@ def _overlaps_content(title: Slot, slots: list[Slot]) -> bool:
     return False
 
 
+def _visible_title_chars(title: Slot, slots: list[Slot], scale: float) -> int:
+    """Сколько знаков заголовка уместится в одну строку на свободной от контента части бокса."""
+    left, right = title.box.x, title.box.x2
+    for s in slots:
+        if s.kind not in (SlotKind.BODY, SlotKind.PICTURE, SlotKind.CHART, SlotKind.TABLE):
+            continue
+        if min(title.box.y2, s.box.y2) <= max(title.box.y, s.box.y) or s.box.x2 <= left or s.box.x >= right:
+            continue
+        # блок справа обрезает строку справа, блок слева — слева
+        if s.box.x > left + (right - left) / 2:
+            right = s.box.x
+        else:
+            left = max(left, s.box.x2)
+    share = max(0, right - left) / max(1, title.box.w)
+    cpl = (title.max_chars or 0) / max(1, title.max_lines or 1)
+    return int(cpl * share / scale)
+
+
 def _big_numbers(slots: list[Slot]) -> int:
     """Сколько number-слотов «крупные» — не мельче BIG_NUMBER_SHARE от медианного кегля цифр образца."""
     sizes = [s.size_pt or 0 for s in slots if s.kind == SlotKind.NUMBER]
@@ -220,11 +262,12 @@ def _big_numbers(slots: list[Slot]) -> int:
 
 
 def _tight_slots(slots: list[Slot], n: Needs) -> int:
-    """Сколько слотов под пункты не вместят средний пункт даже при минимальном кегле."""
+    """Сколько слотов не вместят свой пункт даже при минимальном кегле (пункт i — в слот i, как раскладывает builder)."""
     if not n.items or not slots:
         return 0
     avg = n.text_chars / n.items
-    return sum(1 for s in slots if (cap := chars_at_scale(s, MIN_SIZE_SCALE)) and cap < avg * TIGHT_SHARE)
+    lens = n.item_chars or (avg,) * len(slots)
+    return sum(1 for s, need in zip(slots, lens) if (cap := chars_at_scale(s, text_min_scale(s))) and cap < need * TIGHT_SHARE)
 
 
 def _capacity_score(have: int, need: int, empty_penalty: float, short_penalty: float = 3.0) -> float:

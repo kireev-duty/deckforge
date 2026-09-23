@@ -172,6 +172,9 @@ class Exemplar(BaseModel):
     thumbnail: str | None = None  # путь к PNG-рендеру
     tags: list[str] = Field(default_factory=list)  # семантические теги от VLM
     confidence: float = 1.0  # уверенность классификации
+    # у каждой карточки сетки (≥ 2 body) своя подложка на слайде: пустую карточку рендер уберёт целиком.
+    # False — карточки нарисованы общим фоном (полоса на ряд, картинка лейаута) и пустая останется видна
+    card_frames: bool = False
 
 
 class TemplateDNA(BaseModel):

@@ -241,6 +241,26 @@ def test_kpis_fall_back_to_bullets_when_no_numbers_or_cards() -> None:
     assert [p.runs[0].text for p in body.paragraphs] == ["42% — перегружены", "12 — команд"]
 
 
+def test_paragraphs_are_laid_out_like_bullets() -> None:
+    """Абзац — такой же контент: без этого слайд из режима «только шаблон» уезжал с одним заголовком."""
+    from deckforge.layout.builder import build_slide
+
+    slide = OutlineSlide(idx=1, archetype=Archetype.CARDS, title="Т",
+                         paragraphs=["Первый абзац про продукт", "Второй абзац про внедрение"])
+    cards = [x for x in _exemplars() if x.archetype == Archetype.CARDS]
+    e, _ = pick_exemplar(slide, cards, strategy(), SLIDE_W * SLIDE_H)
+    assert e is not None
+    ir, left = build_slide(0, slide, e, SLIDE_H, {})
+
+    placed = [" ".join(r.text for p in el.paragraphs for r in p.runs) for el in ir.elements
+              if el.kind in (SlotKind.BODY, SlotKind.LABEL)]
+    assert any("Первый абзац" in t for t in placed), placed
+    # маркеров у абзацев нет
+    assert all(not p.bullet for el in ir.elements for p in el.paragraphs)
+    if left is not None:  # остаток возвращается абзацами, а не буллетами
+        assert left.paragraphs and not left.bullets
+
+
 # ──────────────────────────── fitting ────────────────────────────
 
 
@@ -492,3 +512,171 @@ def test_strategies_differ_on_same_content(template_path) -> None:
     assert len(seqs["executive"]) < len(seqs["narrative"])
     assert "chart" not in seqs["executive"] and "chart" in seqs["visual"]
     assert "section" in seqs["narrative"] and "section" not in seqs["visual"] and "section" not in seqs["executive"]
+
+
+# ──────────────────── режим «только шаблон»: текст без данных на VK Tech ────────────────────
+
+
+def test_structural_title_shrinks_before_cut() -> None:
+    """Заголовок финала 51 знак в слоте на 17: ужимается до STRUCTURAL_TITLE_MIN_SCALE, а не «…»."""
+    from deckforge.layout.builder import text_element
+    from deckforge.layout.fitting import STRUCTURAL_TITLE_MIN_SCALE
+
+    slot = Slot(id="1", kind=SlotKind.TITLE, box=Box(x=0, y=0, w=4_373_113, h=1_085_547), max_chars=17, max_lines=1,
+                size_pt=36.0)
+    text = "Следующий шаг: консультация для оценки применимости"
+    el = text_element(slot, text, {}, min_scale=STRUCTURAL_TITLE_MIN_SCALE)
+    assert el.paragraphs[0].runs[0].text == text
+    assert 36.0 * STRUCTURAL_TITLE_MIN_SCALE <= el.style_overrides["size_pt"] < 36.0
+
+
+def test_shorten_title_keeps_lead_before_colon() -> None:
+    from deckforge.layout.fitting import shorten_title
+
+    assert shorten_title("VK Tech: корпоративные ИТ-решения для цифровой трансформации", 20) == "VK Tech"
+    assert shorten_title("Короткий", 20) == "Короткий"
+    assert shorten_title("Заголовок без разделителей и очень длинный хвост", 20).endswith("…")
+
+
+def _template_only_outline() -> DeckOutline:
+    """Как outline из template_brief: длинные заголовки, по 3 пункта, абзацы без картинок, данных нет."""
+    bullets = ["Рост сложности ИТ-ландшафта создаёт риски для процессов", "Разрозненность систем снижает эффективность команд",
+               "Увеличение операционных расходов из-за дублирования функций"]
+    para = ("Сохранение накопленных данных и отлаженных процессов. API-шлюзы и коннекторы для лёгкого подключения "
+            "к текущему стеку.")
+    slides = [OutlineSlide(idx=0, archetype=Archetype.TITLE, title="VK Tech: корпоративные ИТ-решения для цифровой трансформации",
+                           subtitle="Единая экосистема для автоматизации и масштабирования бизнеса")]
+    for i in range(1, 13):  # карточек больше, чем повторов одного образца до потолка штрафа
+        if i % 3:
+            slides.append(OutlineSlide(idx=i, archetype=Archetype.CARDS, title=f"Тезис {i}: почему это важно", bullets=bullets))
+        else:
+            slides.append(OutlineSlide(idx=i, archetype=Archetype.IMAGE_TEXT, title="Бесшовная интеграция с существующими системами",
+                                       paragraphs=[para]))
+    slides.append(OutlineSlide(idx=13, archetype=Archetype.CLOSING, title="Следующий шаг: консультация для оценки применимости"))
+    return DeckOutline(title="VK Tech", purpose="other", slides=slides)
+
+
+@pytest.mark.parametrize("name", ["executive", "narrative", "visual"])
+def test_template_only_text_fits_without_empty_cards(template_path, name: str) -> None:
+    """D1–D3 на VK Tech: нет «…», сетка не заполнена меньше чем на половину и без пустых карточек,
+    заголовок не уходит под контентный блок (slide31), подписи не пишутся в картинки."""
+    from deckforge.layout.exemplar_picker import _overlaps_content, _visible_title_chars
+    from deckforge.layout.fitting import MIN_SIZE_SCALE
+
+    pptx = template_path("VK Tech")
+    exemplars = load_exemplars(pptx)
+    tokens = extract_tokens(pptx)
+    res = build_deck_ir(_template_only_outline(), load_strategy(name), exemplars, tokens.template_id,
+                        tokens.slide_w, tokens.slide_h)
+    by_id = {e.id: e for e in exemplars}
+    for s in res.ir.slides:
+        texts = ["".join(r.text for r in p.runs) for e in s.elements for p in e.paragraphs]
+        assert not any(t.endswith("…") for t in texts), (s.idx, s.exemplar_id, texts)
+        ex = by_id[s.exemplar_id]
+        bodies = [x for x in ex.slots if x.kind == SlotKind.BODY]
+        filled = {e.slot_id for e in s.elements}
+        if len(bodies) > 1 and not ex.card_frames:
+            # сетка нарисована общим фоном (slide19 — картинкой лейаута): пустая карточка осталась бы видна;
+            # карточка заполнена, если занят её body или подпись
+            texts_filled = sum(1 for x in ex.slots if x.kind in (SlotKind.BODY, SlotKind.LABEL) and x.id in filled)
+            assert texts_filled >= len(bodies), (s.idx, s.exemplar_id, "пустая карточка")
+        title = next((x for x in ex.slots if x.kind == SlotKind.TITLE), None)
+        if title is not None and s.archetype not in (Archetype.TITLE, Archetype.CLOSING, Archetype.SECTION) \
+                and _overlaps_content(title, ex.slots):
+            placed = next(t for e, t in zip(s.elements, texts) if e.kind == SlotKind.TITLE)
+            assert len(placed) <= _visible_title_chars(title, ex.slots, MIN_SIZE_SCALE), (s.idx, s.exemplar_id)
+
+
+def test_title_drops_empty_speaker_photo_frame(template_path, tmp_path) -> None:
+    """Титул VK Tech: рамка под фото докладчика с подсказкой «Вставить фото» без картинки убирается,
+    и T05 не считает это удалением фиксированного элемента."""
+    from deckforge.audit import audit_deck
+    from deckforge.parsing.dna import build_dna
+
+    pptx = template_path("VK Tech")
+    dna = build_dna(pptx)
+    outline = DeckOutline(title="VK Tech", purpose="other", slides=[_template_only_outline().slides[0]])
+    res = build_deck_ir(outline, load_strategy("executive"), dna.exemplars, dna.template_id, dna.slide_w, dna.slide_h)
+    assert res.ir.slides[0].exemplar_id == "slide2"
+    out = render_pptx(res.ir, pptx, dna.exemplars, tmp_path / "title.pptx")
+    ids = {str(sh.shape_id) for sh in Presentation(str(out)).slides[0].shapes}
+    assert not ids & {"411", "412"}, ids
+    report = audit_deck(out, dna, res.ir, checks=["T05"])
+    assert not report.findings, [f.message for f in report.findings]
+
+
+def test_image_text_without_picture_merges_to_fit_volume(tmp_path) -> None:
+    """Outline из шаблона чередует cards и image_text по 3 пункта: без готовой картинки image_text — такой же
+    текст и сливается, иначе executive не укладывается в свой диапазон; с картинкой разворот не трогаем."""
+    bullets = ["Пункт первый про платформу", "Пункт второй про внедрение", "Пункт третий про поддержку"]
+    body = [OutlineSlide(idx=i, archetype=Archetype.CARDS if i % 2 else Archetype.IMAGE_TEXT, title=f"Тезис {i}",
+                         bullets=list(bullets)) for i in range(1, 11)]
+    slides = [OutlineSlide(idx=0, archetype=Archetype.TITLE, title="Т"), *body,
+              OutlineSlide(idx=11, archetype=Archetype.CLOSING, title="Ф")]
+    st = load_strategy("executive")
+    res = plan(DeckOutline(title="Т", purpose="other", slides=slides), st, set(Archetype))
+    assert st.target_slides.min <= len(res.slides) <= st.target_slides.max, res.warnings
+
+    pic = tmp_path / "p.png"
+    pic.write_bytes(b"x")
+    for s in slides:
+        if s.archetype == Archetype.IMAGE_TEXT:
+            s.image = ImageSpec(prompt="p", path=str(pic))
+    res = plan(DeckOutline(title="Т", purpose="other", slides=slides), st, set(Archetype))
+    assert sum(1 for s in res.slides if s.archetype == Archetype.IMAGE_TEXT) == 5
+
+
+def test_closing_text_never_goes_after_closing(template_path) -> None:
+    """Финал с телом («Обсудим подбор решения…») на шаблоне, где у closing-образца нет тела (VK Education):
+    текст — в свободный подзаголовок или опускается, но колода кончается финалом, а не продолжением."""
+    pptx = template_path("VK Education")
+    exemplars = load_exemplars(pptx)
+    tokens = extract_tokens(pptx)
+    outline = _template_only_outline()
+    outline.slides[-1].bullets = ["Обсудим подбор решения под ваши задачи", "Свяжитесь с нами для начала сотрудничества"]
+    for name in ("executive", "narrative", "visual"):
+        res = build_deck_ir(outline, load_strategy(name), exemplars, tokens.template_id, tokens.slide_w, tokens.slide_h)
+        texts = ["".join(r.text for p in e.paragraphs for r in p.runs) for e in res.ir.slides[-1].elements]
+        assert texts and texts[0].startswith("Следующий шаг"), (name, texts)
+        assert not any("продолжение" in w and "Следующий шаг" in w for w in res.warnings), res.warnings
+
+
+def test_title_min_scale_floor() -> None:
+    from deckforge.layout.fitting import MIN_SIZE_SCALE, STRUCTURAL_TITLE_MIN_SCALE, title_min_scale
+
+    slot = lambda pt: Slot(id="t", kind=SlotKind.TITLE, box=Box(x=0, y=0, w=1, h=1), max_chars=20, max_lines=1, size_pt=pt)
+    assert title_min_scale(slot(24.0), False) == MIN_SIZE_SCALE  # 24 pt не ужимаем сильнее обычного
+    assert title_min_scale(slot(36.0), False) == STRUCTURAL_TITLE_MIN_SCALE  # 36 pt — до ~20 pt
+    assert abs(title_min_scale(slot(30.0), False) - 0.6) < 1e-9  # 18 pt
+    assert title_min_scale(slot(24.0), True) == STRUCTURAL_TITLE_MIN_SCALE
+    # текст: шаг процесса по 20 pt (VK WorkSpace) — до 12 pt, мелкий текст — прежние 70 %
+    from deckforge.layout.fitting import text_min_scale
+
+    body = lambda pt: Slot(id="b", kind=SlotKind.BODY, box=Box(x=0, y=0, w=1, h=1), max_chars=18, max_lines=1, size_pt=pt)
+    assert abs(text_min_scale(body(20.0)) - 0.6) < 1e-9 and text_min_scale(body(14.0)) == MIN_SIZE_SCALE
+
+
+def test_single_line_body_is_one_item() -> None:
+    """Однострочное тело-примечание без max_items (VK WorkSpace slide15) не вмещает три пункта."""
+    from deckforge.layout.exemplar_picker import Needs, score_exemplar
+
+    def ex(lines: int) -> Exemplar:
+        return Exemplar(id=f"e{lines}", source_index=0, layout_name="", archetype=Archetype.CARDS, slots=[
+            Slot(id="t", kind=SlotKind.TITLE, box=Box(x=0, y=0, w=8_000_000, h=500_000), max_chars=60, max_lines=1, size_pt=24),
+            Slot(id="b", kind=SlotKind.BODY, box=Box(x=0, y=900_000, w=8_000_000, h=300_000 * lines), max_chars=66 * lines,
+                 max_lines=lines, size_pt=14)])
+    slide = OutlineSlide(idx=1, archetype=Archetype.CARDS, title="Т", bullets=["Комплексность", "Готовность", "Этапы"])
+    n = Needs.of(slide)
+    assert score_exemplar(ex(1), n, strategy(), SLIDE_W * SLIDE_H) < score_exemplar(ex(6), n, strategy(), SLIDE_W * SLIDE_H)
+
+
+def test_paragraph_slides_merge_into_cards() -> None:
+    """image_text с одним абзацем (ответ модели «text» → paragraphs) сливается с соседними карточками,
+    абзац становится пунктом, а в слитом слайде не остаётся абзацев рядом с пунктами."""
+    from deckforge.layout.planner import merge_pair
+
+    a = OutlineSlide(idx=1, archetype=Archetype.CARDS, title="А", bullets=["один", "два", "три"])
+    b = OutlineSlide(idx=2, archetype=Archetype.IMAGE_TEXT, title="Б", paragraphs=["Абзац про интеграцию."])
+    merged = merge_pair([a, b], max_bullets=6)
+    assert merged is not None and len(merged) == 1
+    assert merged[0].bullets == ["один", "два", "три", "Абзац про интеграцию."] and not merged[0].paragraphs

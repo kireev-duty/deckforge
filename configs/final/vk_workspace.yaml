@@ -1,11 +1,12 @@
 # Финальный прогон: три варианта на шаблоне «vk_workspace» → examples/output/vk_workspace/
-#   .venv\Scripts\python.exe -m deckforge.cli run -c configs/final/vk_workspace.yaml
-# Один outline на все шаблоны: сначала прогнать vk_tech, затем остальные с --outline examples/output/vk_tech/outline.json
+#   .venv\Scripts\python.exe -m deckforge.cli run -c configs/final/vk_workspace.yaml ^
+#       --outline examples/output/vk_tech/outline.json
+# Контент один на все шаблоны и выведен из шаблона VK Tech (контент-пакета в датасете нет):
+# сначала прогоняется vk_tech, отсюда берётся его outline.json (и brief.md рядом с ним).
 
 template: data/templates/VK_WorkSpace_Клиентская_конференция_Шаблон_03.pptx
-content_pack: examples/content_pack
-purpose: product
-audience: "руководители продуктовых направлений"
+purpose: other
+audience: ""
 language: ru
 target_slides: 12
 strategies: [executive, narrative, visual]

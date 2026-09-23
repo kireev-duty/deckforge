@@ -10,9 +10,9 @@ import pytest
 
 from deckforge.core.ir import ChartSpec, DeckIR, SlotKind
 from deckforge.export.html import eot_to_ttf, export_html, svg_chart
+from tests.conftest import build_sample_deck
 
 REPO = Path(__file__).resolve().parents[1]
-DECK = REPO / "examples" / "output" / "vk_tech" / "narrative.pptx"
 WILD = REPO / "data" / "wild" / "presentation_eng_dark.pptx"
 
 
@@ -22,10 +22,8 @@ def _ready(p: Path) -> bool:
 
 @pytest.fixture(scope="module")
 def exported(tmp_path_factory) -> tuple[str, DeckIR]:
-    if not _ready(DECK):
-        pytest.skip("нет examples/output/vk_tech/narrative.pptx")
-    ir = DeckIR.model_validate_json(DECK.with_suffix(".ir.json").read_text("utf-8"))
-    out = export_html(DECK, tmp_path_factory.mktemp("html") / "narrative.html", ir=ir, title="Пульс")
+    deck, ir = build_sample_deck(tmp_path_factory.mktemp("deck"))
+    out = export_html(deck, tmp_path_factory.mktemp("html") / "narrative.html", ir=ir, title="Пульс")
     assert out.stat().st_size < 3_000_000
     return out.read_text("utf-8"), ir
 
@@ -48,9 +46,11 @@ def test_all_ir_text_present(exported) -> None:
     for s in ir.slides:
         for e in s.elements:
             for p in e.paragraphs:
-                text = "".join(r.text for r in p.runs).strip()
-                if text and html.escape(text) not in doc:
-                    missing.append((s.idx, text[:40]))
+                # run — отдельный <span>: у KPI число и единица измерения разного кегля
+                for r in p.runs:
+                    text = r.text.strip()
+                    if text and html.escape(text) not in doc:
+                        missing.append((s.idx, text[:40]))
     assert not missing, missing
 
 

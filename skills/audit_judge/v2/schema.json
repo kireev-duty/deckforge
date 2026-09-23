@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditJudgeAnswers",
+  "type": "object",
+  "required": ["answers"],
+  "properties": {
+    "answers": {
+      "type": "object",
+      "propertyNames": {"pattern": "^C(0[1-9]|1[01])$"},
+      "additionalProperties": {
+        "type": "object",
+        "required": ["ok"],
+        "properties": {"ok": {"type": "boolean"}, "note": {"type": "string"}}
+      }
+    }
+  }
+}

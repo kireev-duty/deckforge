@@ -37,6 +37,12 @@ from deckforge.ui.overlay import draw_findings
 
 UI_ROOT = ROOT / "out" / "ui"
 EXAMPLE_PACK = ROOT / "examples" / "content_pack"
+# ступени лестницы входа: подпись режима → пояснение под ним
+CONTENT_MODES = {
+    "Только шаблон": "ничего вводить не нужно",
+    "Тема одной строкой": "одна фраза вместо брифа",
+    "Бриф и файлы": "свои исходные материалы",
+}
 PURPOSES = ["product", "feature", "project", "initiative", "report", "other"]
 HOW_LABEL = {"safe": "безопасный", "ir": "по выбору (теряет часть контента)", "replan": "нужен пересбор",
              "template": "дизайн шаблона — не чиним", "n/a": "—"}
@@ -145,37 +151,54 @@ def show_template(entry: TemplateEntry) -> ParsedTemplate:
 
 
 def brief_form(entry: TemplateEntry, opts: dict) -> None:
-    st.subheader("Бриф и контент-пакет")
-    default_brief = (EXAMPLE_PACK / "brief.md").read_text("utf-8") if (EXAMPLE_PACK / "brief.md").exists() else ""
-    brief = st.text_area("Бриф (brief.md)", default_brief, height=260,
-                         help="Цель, аудитория, ключевые тезисы. Факты для слайдов — в файлах ниже.")
-    c1, c2 = st.columns([3, 2])
-    with c1:
-        files = st.file_uploader("Файлы контент-пакета: текст (.md, .txt, .docx, .pdf) и данные (.json, .csv, .xlsx)",
-                                 type=["md", "txt", "docx", "pdf", "json", "csv", "xlsx"], accept_multiple_files=True)
-    with c2:
-        use_example = st.checkbox("Добавить пример «Пульс команды» (product.md + metrics.json)",
-                                  value=not files, help=f"{EXAMPLE_PACK}")
-    if not files and not use_example:
-        st.caption("Файлов нет — колода только по брифу: цифры берутся из текста брифа, диаграмм и таблиц без данных не будет.")
-    disabled = not brief.strip() or not opts["strategies"]
+    st.subheader("Контент")
+    mode = st.radio(
+        "Что есть на входе", list(CONTENT_MODES), horizontal=True, key="content_mode",
+        captions=[CONTENT_MODES[m] for m in CONTENT_MODES],
+    )
+    brief, topic, files, use_example = "", "", [], False
+    if mode == "Только шаблон":
+        st.info("Бриф выведет из самого шаблона скилл `template_brief`: бренд, тексты слайдов-образцов, палитра "
+                "и стиль → тема, аудитория и тезисы. Конкретных цифр и имён в колоде не будет — подтвердить их нечем.")
+    elif mode == "Тема одной строкой":
+        topic = st.text_input("Тема презентации", "",
+                              placeholder="Платформа для совместной работы: что она даёт корпоративным командам")
+        st.caption("Структуру и тексты сервис придумает сам; чисел без источника не будет.")
+    else:
+        default_brief = (EXAMPLE_PACK / "brief.md").read_text("utf-8") if (EXAMPLE_PACK / "brief.md").exists() else ""
+        brief = st.text_area("Бриф (brief.md)", default_brief, height=260,
+                             help="Цель, аудитория, ключевые тезисы. Факты для слайдов — в файлах ниже.")
+        c1, c2 = st.columns([3, 2])
+        with c1:
+            files = st.file_uploader("Файлы контент-пакета: текст (.md, .txt, .docx, .pdf) и данные (.json, .csv, .xlsx)",
+                                     type=["md", "txt", "docx", "pdf", "json", "csv", "xlsx"], accept_multiple_files=True)
+        with c2:
+            use_example = st.checkbox("Добавить пример «Пульс команды» (product.md + metrics.json)",
+                                      value=not files, help=f"{EXAMPLE_PACK}")
+        if not files and not use_example:
+            st.caption("Файлов нет — колода только по брифу: цифры берутся из текста брифа, "
+                       "диаграмм и таблиц без данных не будет.")
+    disabled = not opts["strategies"] or (mode == "Тема одной строкой" and not topic.strip()) \
+        or (mode == "Бриф и файлы" and not brief.strip())
     if st.button("Сгенерировать варианты", type="primary", disabled=disabled, width="stretch"):
-        generate(entry, opts, brief, files or [], use_example)
+        generate(entry, opts, brief, files or [], use_example, topic)
 
 
-def generate(entry: TemplateEntry, opts: dict, brief: str, files: list, use_example: bool) -> None:
+def generate(entry: TemplateEntry, opts: dict, brief: str, files: list, use_example: bool, topic: str = "") -> None:
     run_dir = UI_ROOT / "runs" / datetime.now().strftime("%Y%m%d-%H%M%S")
     pack_files = [(f.name, f.getvalue()) for f in files]
     if use_example:
         pack_files += [(p.name, p.read_bytes()) for p in EXAMPLE_PACK.glob("*.md") if p.name != "brief.md"]
         pack_files += [(p.name, p.read_bytes()) for p in (EXAMPLE_PACK / "data").glob("*.*")]
-    try:
-        pack_dir = write_content_pack(run_dir / "content_pack", brief, pack_files)
-    except BadUpload as e:
-        st.error(str(e))
-        return
+    pack_dir = None
+    if brief.strip() or pack_files:
+        try:
+            pack_dir = write_content_pack(run_dir / "content_pack", brief, pack_files)
+        except BadUpload as e:
+            st.error(str(e))
+            return
     cfg = RunConfig(
-        template=entry.path, content_pack=pack_dir, purpose=opts["purpose"], audience=opts["audience"],
+        template=entry.path, content_pack=pack_dir, topic=topic, purpose=opts["purpose"], audience=opts["audience"],
         language=opts["language"], target_slides=opts["target_slides"], strategies=opts["strategies"], images="off",
         output_dir=run_dir, render_png=opts["render_png"],
         export=["pptx", *(["pdf"] if opts["pdf"] else []), *(["html"] if opts["html"] else [])],
@@ -208,6 +231,10 @@ def show_results() -> None:
     compare = run_dir / "compare.md"
     if compare.exists():
         st.markdown(compare.read_text("utf-8"))
+    if getattr(result, "brief_path", None) and Path(result.brief_path).exists():
+        label = ("Бриф, выведенный из шаблона" if result.content_source == "template" else "Тема прогона")
+        with st.expander(f"{label} (brief.md)"):
+            st.markdown(Path(result.brief_path).read_text("utf-8"))
     if result.warnings:
         with st.expander(f"Предупреждения прогона ({len(result.warnings)})"):
             st.write("\n".join(f"- {w}" for w in result.warnings))

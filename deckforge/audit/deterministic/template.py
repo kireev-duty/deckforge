@@ -9,6 +9,7 @@ from deckforge.audit.context import STEP, SYMBOL_FONTS, AuditContext, ShapeRec, 
 from deckforge.audit.deterministic.base import finding
 from deckforge.core.colors import contrast_ratio, delta_e, hex_to_rgb, rgb_to_hsl
 from deckforge.core.ir import Finding, Severity
+from deckforge.core.placeholders import is_photo_prompt
 
 MAX_FONT_FAMILIES = 2
 SIZE_TOL = 0.08  # кегль «из шкалы», если отличается меньше
@@ -168,7 +169,7 @@ def check_T05(ctx: AuditContext) -> list[Finding]:
             empty_ph = ctx.exemplar_empty_placeholders(slide.exemplar)
             for fid in slide.exemplar.fixed:
                 bb = ref.get(fid)
-                if bb is None or _is_zone_caption(ctx, slide, fid, bb):
+                if bb is None or _is_zone_caption(ctx, slide, fid, bb) or _is_photo_prompt_frame(ctx, slide, bb, ref):
                     continue
                 if fid in empty_ph:
                     # пустой плейсхолдер образца рендер убирает намеренно
@@ -209,6 +210,19 @@ def _is_zone_caption(ctx: AuditContext, slide: SlideCtx, fid: str, bb: tuple[int
         return False
     fy, fh = bb[1] / ctx.slide_h, bb[3] / ctx.slide_h
     return not (fy + fh <= EDGE_ZONE or fy >= 1 - EDGE_ZONE)
+
+
+def _is_photo_prompt_frame(ctx: AuditContext, slide: SlideCtx, bb: tuple[int, int, int, int],
+                           ref: dict[str, tuple[int, int, int, int]]) -> bool:
+    """Рамка под подсказкой «Вставить фото» в образце: без картинки рендер убирает её вместе с подсказкой."""
+    for sid, text in (ctx.exemplar_texts(slide.exemplar).items() if slide.exemplar else ()):
+        pb = ref.get(sid)
+        if pb is None or not is_photo_prompt(text):
+            continue
+        cx, cy = pb[0] + pb[2] / 2, pb[1] + pb[3] / 2
+        if bb[0] <= cx <= bb[0] + bb[2] and bb[1] <= cy <= bb[1] + bb[3]:
+            return True
+    return False
 
 
 def _same_geometry(sh: ShapeRec, box, position: bool) -> bool:

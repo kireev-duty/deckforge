@@ -126,9 +126,23 @@ def test_generate_rejects_bad_input(api: TestClient) -> None:
     base = {"template_id": vk["id"], "brief": BRIEF, "strategies": "executive", "judge": False, "render_png": False}
     assert api.post("/generate", data={**base, "template_id": "nope"}).status_code == 404
     assert api.post("/generate", data={**base, "strategies": "executive,fancy"}).status_code == 400
-    assert api.post("/generate", data={**base, "brief": "коротко"}).status_code == 422
     r = api.post("/generate", data=base, files=[("files", ("evil.exe", b"MZ", "application/octet-stream"))])
     assert r.status_code == 400
+
+
+def test_generate_without_brief_is_accepted(api: TestClient) -> None:
+    """На входе только шаблон: короткий бриф больше не 422, пустой — тоже (бриф выведет template_brief)."""
+    vk = _vk_tech(api)
+    base = {"template_id": vk["id"], "strategies": "executive", "judge": False, "autofix": False,
+            "render_png": False, "export": "pptx"}
+    r = api.post("/generate", data={**base, "brief": "коротко"})
+    assert r.status_code == 202, r.text
+
+    r = api.post("/generate", data={**base, "brief": ""})
+    assert r.status_code == 202, r.text
+    job = api.get(f"/jobs/{r.json()['id']}").json()
+    assert job["status"] == "done", job.get("error")
+    assert api.get(f"/jobs/{job['id']}/files/brief.md").status_code == 200
 
 
 def test_audit_foreign_deck(api: TestClient) -> None:

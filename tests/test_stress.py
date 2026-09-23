@@ -98,6 +98,30 @@ def test_sanitize_data_aligns_series_and_drops_empty() -> None:
     assert sanitize_data(clean, w) is clean and len(w) == 5
 
 
+def test_plan_drops_empty_content_slides() -> None:
+    """Готовый outline идёт мимо repair_outline — пустой контентный слайд снимает планировщик (иначе I03)."""
+    from deckforge.layout.planner import plan
+
+    slides = [
+        OutlineSlide(idx=0, archetype=Archetype.TITLE, title="Т"),
+        OutlineSlide(idx=1, archetype=Archetype.BULLETS, title="Пустой"),
+        OutlineSlide(idx=2, archetype=Archetype.CARDS, title="С тезисами", bullets=["а", "б"]),
+        OutlineSlide(idx=3, archetype=Archetype.CHART, title="Битая диаграмма",
+                     chart=ChartSpec(kind="bar", title="", categories=[], series={})),
+        OutlineSlide(idx=4, archetype=Archetype.CLOSING, title="Т"),
+    ]
+    res = plan(DeckOutline(title="т", purpose="other", slides=slides), load_strategy("executive"))
+    titles = [s.title for s in res.slides]
+    assert "Пустой" not in titles and "Битая диаграмма" not in titles  # chart без данных → bullets без тела
+    assert titles[0] == "Т" and "С тезисами" in titles and titles[-1] == "Т"
+    assert sum("без содержимого — пропущен" in w for w in res.warnings) == 2
+
+    # если пустыми оказались все контентные слайды — колоду не выбрасываем
+    only_empty = [slides[0], OutlineSlide(idx=1, archetype=Archetype.BULLETS, title="Пустой")]
+    res2 = plan(DeckOutline(title="т", purpose="other", slides=only_empty), load_strategy("executive"))
+    assert [s.title for s in res2.slides] == ["Т", "Пустой"]
+
+
 def test_kpis_next_to_chart_go_to_own_slide() -> None:
     mixed = OutlineSlide(idx=1, archetype=Archetype.KPI, title="т", kpis=so._kpis(2), bullets=["а"], chart=so._chart(3))
     out = split_mixed_data([mixed])

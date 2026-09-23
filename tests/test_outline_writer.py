@@ -34,7 +34,7 @@ def test_cassette_becomes_valid_outline() -> None:
     assert used and used <= pack.ids()
     assert any(s.chart for s in o.slides) and any(s.table for s in o.slides) and any(s.kpis for s in o.slides)
     assert all(isinstance(st, str) for s in o.slides for st in s.steps)
-    assert res.attempts == 1 and client.calls[0].skill == "outline_writer@v2"
+    assert res.attempts == 1 and client.calls[0].skill == "outline_writer@v3"
     inputs = client.inputs[0]
     assert "strategy_rules" not in inputs and inputs["target_slides"] == 12
     assert "- kpi:" in inputs["available_archetypes"] and "- section:" not in inputs["available_archetypes"]
@@ -69,7 +69,8 @@ def test_repair_fixes_bad_answer() -> None:
     t = by_title["Рваная таблица"].table
     assert t and t.rows == [["1", ""], ["1", "2"], ["d", "e"]]
     assert by_title["Карточки в своём поле"].bullets == ["А — а-текст", "Б"]
-    assert by_title["KPI без цифр"].archetype == Archetype.BULLETS
+    # kpi без цифр → bullets, а буллетов нет: остался бы один заголовок — слайд снимается
+    assert "KPI без цифр" not in by_title and "«KPI без цифр»: текстовый слайд без содержимого — пропущен" in text
     assert "   " not in by_title and "без заголовка" in text
     assert by_title["Нет в шаблоне"].archetype == Archetype.BULLETS and "неизвестные sources: nope" in text
     assert by_title["Нет в шаблоне"].sources == []
@@ -98,6 +99,52 @@ def test_nested_content_object_is_lifted() -> None:
     assert o.slides[1].archetype == Archetype.KPI and o.slides[1].kpis[0].value == "12"
     assert o.slides[2].bullets == ["своё"]  # своё поле важнее вложенного
     assert sum("content" in w for w in warnings) == 3
+
+
+def test_two_column_sides_and_plain_text_become_content() -> None:
+    """Формы из прогона «только шаблон»: колонки объектами left/right и абзац в поле text."""
+    raw = {"title": "T", "purpose": "report", "slides": [
+        {"idx": 0, "archetype": "title", "title": "T"},
+        {"idx": 1, "archetype": "two_column", "title": "Стиль",
+         "left": {"heading": "Шрифты", "text": "Montserrat для заголовков"},
+         "right": {"heading": "Цвета", "text": "акцентный розовый"}},
+        {"idx": 2, "archetype": "image_text", "title": "Демонстрация", "image": "placeholder",
+         "text": "Экран продукта с ключевыми функциями"},
+        {"idx": 3, "archetype": "two_column", "title": "Своё важнее", "bullets": ["своё"],
+         "left": {"heading": "Ч", "text": "чужое"}},
+        {"idx": 4, "archetype": "closing", "title": "T"},
+    ]}
+    avail = {Archetype.TITLE, Archetype.TWO_COLUMN, Archetype.IMAGE_TEXT, Archetype.BULLETS, Archetype.CLOSING}
+    o, warnings = repair_outline(raw, avail, {"brief"})
+
+    by_title = {s.title: s for s in o.slides}
+    assert by_title["Стиль"].bullets == ["Шрифты — Montserrat для заголовков", "Цвета — акцентный розовый"]
+    assert by_title["Демонстрация"].paragraphs == ["Экран продукта с ключевыми функциями"]
+    assert by_title["Демонстрация"].image is None  # "placeholder" строкой — не ImageSpec
+    assert by_title["Своё важнее"].bullets == ["своё"]
+    assert sum("колонки" in w or "«text»" in w for w in warnings) == 2
+    assert not any("без содержимого" in w for w in warnings)
+
+
+def test_empty_text_slide_is_dropped_or_filled_from_subtitle() -> None:
+    """Режим «только шаблон»: модель отдаёт текстовые слайды без тела — до колоды они доезжать не должны (I03)."""
+    raw = {"title": "T", "purpose": "other", "slides": [
+        {"idx": 0, "archetype": "title", "title": "T"},
+        {"idx": 1, "archetype": "bullets", "title": "Пустой", "bullets": []},
+        {"idx": 2, "archetype": "cards", "title": "Из подзаголовка", "subtitle": "Что делает продукт"},
+        {"idx": 3, "archetype": "bullets", "title": "С содержимым", "bullets": ["есть"]},
+        {"idx": 4, "archetype": "section", "title": "Раздел"},
+        {"idx": 5, "archetype": "closing", "title": "T"},
+    ]}
+    avail = {Archetype.TITLE, Archetype.BULLETS, Archetype.CARDS, Archetype.SECTION, Archetype.CLOSING}
+    o, warnings = repair_outline(raw, avail, set())
+
+    titles = [s.title for s in o.slides]
+    assert titles == ["T", "Из подзаголовка", "С содержимым", "Раздел", "T"]  # пустой выброшен
+    assert [s.idx for s in o.slides] == [0, 1, 2, 3, 4]  # и перенумерованы
+    assert o.slides[1].paragraphs == ["Что делает продукт"] and o.slides[1].subtitle is None
+    assert any("«Пустой»: текстовый слайд без содержимого — пропущен" in w for w in warnings)
+    assert any("«Из подзаголовка»: текст слайда взят из «subtitle»" in w for w in warnings)
 
 
 def test_brief_only_pack_warns_about_missing_files(tmp_path: Path) -> None:

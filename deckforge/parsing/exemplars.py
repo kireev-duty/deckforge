@@ -26,6 +26,7 @@ def exemplars_from_json(data: list[dict]) -> list[Exemplar]:
             id=f"slide{d['index'] + 1}", source_index=d["index"], layout_name=d["layout"],
             archetype=Archetype(d["archetype"]), slots=[Slot(**s) for s in d["slots"]], fixed=d.get("fixed", []),
             fill_ratio=d.get("fill_ratio", 0.0), tags=d.get("tags", []), confidence=d.get("confidence", 1.0),
+            card_frames=d.get("card_frames", False),
         )
         for d in data
     ]

@@ -50,9 +50,9 @@ def test_findings_from_cassette() -> None:
     s = SlideText(idx=2, title="t", archetype=Archetype.CARDS, sources=["brief:продукт"])
     found = findings_from_answers(answers[2], s)
     ids = {f.check_id: f for f in found}
-    assert set(ids) == {"C04_facts_in_sources", "C07_no_garbage"}
-    assert ids["C04_facts_in_sources"].severity == Severity.ERROR and ids["C04_facts_in_sources"].kind == "contextual"
-    assert "9,5" in ids["C04_facts_in_sources"].message and ids["C04_facts_in_sources"].evidence["sources"] == "brief:продукт"
+    assert set(ids) == {"C04_facts_consistent", "C07_no_garbage"}
+    assert ids["C04_facts_consistent"].severity == Severity.ERROR and ids["C04_facts_consistent"].kind == "contextual"
+    assert "9,5" in ids["C04_facts_consistent"].message and ids["C04_facts_consistent"].evidence["sources"] == "brief:продукт"
     assert all(f.autofix is None and f.slide_idx == 2 for f in found)
     # титул: всё «да» → находок нет
     assert findings_from_answers(answers[0], SlideText(idx=0, archetype=Archetype.TITLE)) == []
@@ -80,9 +80,9 @@ def test_judge_deck_calls_per_slide_and_survives_errors(tmp_path: Path) -> None:
     client = FakeClient(by_skill={"audit_judge": [answers[2], RuntimeError("timeout"), answers[0]]})
     # workers=1: очередь ответов разбирается по порядку слайдов
     found = judge_deck(_png(tmp_path, 3), slides, client, language="ru", workers=1)
-    assert len(client.calls) == 3 and all(c.skill == "audit_judge@v1" for c in client.calls)
+    assert len(client.calls) == 3 and all(c.skill == "audit_judge@v2" for c in client.calls)
     by_slide = {i: [f.check_id for f in found if f.slide_idx == i] for i in range(3)}
-    assert by_slide[0] == ["C04_facts_in_sources", "C07_no_garbage"]
+    assert by_slide[0] == ["C04_facts_consistent", "C07_no_garbage"]
     assert by_slide[1] == [ERROR_CHECK_ID] and found[2].severity == Severity.INFO and "timeout" in found[2].message
     assert by_slide[2] == []
     inputs = {i["slide_idx"]: i for i in client.inputs}
@@ -128,6 +128,24 @@ def test_judge_deck_deadline_skips_remaining_slides(tmp_path: Path) -> None:
     deadline = time.monotonic() + 60
     found = judge_deck(_png(tmp_path, 4), slides, client, workers=2, deadline=deadline)
     assert len(client.calls) == 4 and found == [] and client.deadlines == [deadline] * 4
+
+
+def test_judge_deck_does_not_wait_for_answers_past_deadline(tmp_path: Path) -> None:
+    """Начатый вызов, который не успел ответить, судья не ждёт: колода не должна выходить за бюджет."""
+    import time
+
+    slides = [SlideText(idx=i, title=f"T{i}", archetype=Archetype.CARDS) for i in range(3)]
+
+    class Hanging(FakeClient):
+        def run_skill(self, skill, images=None, deadline=None, **inputs):
+            time.sleep(10)  # ответа к дедлайну не будет
+            return {"answers": {}}
+
+    t0 = time.monotonic()
+    found = judge_deck(_png(tmp_path, 3), slides, Hanging(), workers=3, deadline=t0 + 0.3)
+    assert time.monotonic() - t0 < 5  # вернулись сразу после дедлайна, а не через 10 с
+    assert [f.slide_idx for f in found] == [0, 1, 2]
+    assert all(f.check_id == ERROR_CHECK_ID and f.severity == Severity.INFO and "бюджет" in f.message for f in found)
 
 
 def test_slides_from_ir_collects_text_and_facts(template_path) -> None:

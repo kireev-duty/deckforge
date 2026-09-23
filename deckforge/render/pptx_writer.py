@@ -22,7 +22,7 @@ from pptx.slide import Slide
 
 from deckforge.core.ir import Box, DeckIR, Element, Exemplar, Paragraph, SlideIR, SlotKind, TemplateDNA
 from deckforge.core.ooxml import NS, A, P, R, absolute_bbox, iter_shapes, localname, shape_id, shape_text
-from deckforge.core.placeholders import is_placeholder_text
+from deckforge.core.placeholders import is_photo_prompt, is_placeholder_text
 from deckforge.render.charts import add_chart
 from deckforge.render.tables import add_table
 
@@ -35,6 +35,7 @@ TEXT_KINDS = {
 PICTURE_KINDS = {SlotKind.PICTURE, SlotKind.ICON}
 # поля (номер, колонтитулы) при отсутствии элемента не очищаем
 KEEP_IF_UNFILLED = {SlotKind.SLIDE_NUMBER, SlotKind.FOOTER, SlotKind.DATE}
+PHOTO_FRAME_MAX_SHARE = 0.1  # рамка под подсказкой «Вставить фото» крупнее — это уже часть композиции, не трогаем
 LAYOUT_FIELD_PH = {"sldNum", "dt", "ftr"}
 # связи, которые в копии не нужны
 SKIP_RELTYPES = {RT.SLIDE_LAYOUT, RT.NOTES_SLIDE, RT.SLIDE}
@@ -307,14 +308,21 @@ class DeckWriter:
         # незаполненные слоты очищаем, чтобы не остался текст образца
         unfilled: list[Box] = []
         for slot in exemplar.slots:
-            if slot.id in filled or slot.kind in KEEP_IF_UNFILLED or slot.kind not in TEXT_KINDS | PICTURE_KINDS:
+            if slot.id in filled or slot.kind not in TEXT_KINDS | PICTURE_KINDS:
                 continue
             sp = shapes.get(slot.id)
             if sp is None:
                 continue
+            if slot.kind in KEEP_IF_UNFILLED:
+                # поля (номер, колонтитул) оставляем как есть, но не обращения шаблона к автору
+                # («P.S. Не забудьте удалить этот слайд» в колонтитуле слайда-инструкции чужого шаблона)
+                if is_placeholder_text(" ".join(t.text or "" for t in sp.iter(A + "t"))):
+                    clear_text(sp)
+                continue
             if slot.kind in PICTURE_KINDS:
                 self._clear_picture_captions(sp, el_box=slot.box, shapes=shapes, slot_ids=slot_ids)
-                if sp.find("p:nvSpPr/p:nvPr/p:ph", NS) is not None:
+                if sp.find("p:nvSpPr/p:nvPr/p:ph", NS) is not None or _is_empty_photo_frame(sp):
+                    # плейсхолдер или нарисованная рамка «Вставить фото»: без картинки — пустой серый блок
                     _remove(sp)
                 elif sp.find("p:txBody", NS) is not None:
                     clear_text(sp)
@@ -327,15 +335,37 @@ class DeckWriter:
                 clear_text(sp)
         fixed = set(exemplar.fixed)
         self._remove_empty_containers(shapes, unfilled, [e.box for e in slide_ir.elements if e.slot_id in filled],
-                                      slot_ids, fixed)
+                                      # незаполненная иконка пустой карточки уходит вместе с её подложкой
+                                      slot_ids - {s.id for s in exemplar.slots if s.kind == SlotKind.ICON and s.id not in filled},
+                                      fixed)
         # текст образца вне слотов и фиксированных элементов не переносим; короткий декор вроде «01» оставляем
         for sid, sp in shapes.items():
             if sid in slot_ids or sp.getparent() is None or localname(sp) != "sp" or sp.find("p:txBody", NS) is None:
                 continue
             text = shape_text(sp)
+            raw = " ".join(t.text or "" for t in sp.iter(A + "t"))
+            if is_photo_prompt(raw):
+                # «Вставить фото» поверх пустой рамки: без картинки остался бы белый квадрат (фото докладчика)
+                self._remove_photo_frame(sp, shapes, slot_ids)
+                continue
             # заглушка в нескольких абзацах — тоже заглушка, даже у «фиксированного» элемента
-            if is_placeholder_text(" ".join(t.text or "" for t in sp.iter(A + "t"))) or sid not in fixed and _is_sample_text(text):
+            if is_placeholder_text(raw) or sid not in fixed and _is_sample_text(text):
                 clear_text(sp)
+
+    def _remove_photo_frame(self, prompt: etree._Element, shapes: dict[str, etree._Element], slot_ids: set[str]) -> None:
+        """Убрать подсказку «Вставить фото» и небольшие пустые рамки под ней (без текста и без картинки)."""
+        bb = absolute_bbox(prompt)
+        _remove(prompt)
+        if bb is None:
+            return
+        cx, cy = bb[0] + bb[2] / 2, bb[1] + bb[3] / 2
+        max_area = PHOTO_FRAME_MAX_SHARE * self.prs.slide_width * self.prs.slide_height
+        for sid, other in shapes.items():
+            if sid in slot_ids or other.getparent() is None or not _is_empty_photo_frame(other) or shape_text(other).strip():
+                continue
+            ob = absolute_bbox(other)
+            if ob and ob[2] * ob[3] <= max_area and ob[0] <= cx <= ob[0] + ob[2] and ob[1] <= cy <= ob[1] + ob[3]:
+                _remove(other)
 
     def _remove_empty_containers(
         self, shapes: dict[str, etree._Element], unfilled: list[Box], filled: list[Box],
@@ -741,6 +771,14 @@ def _insert_after_geom(sp_pr: etree._Element, el: etree._Element) -> None:
         anchor.addnext(el)
     else:
         sp_pr.insert(0, el)
+
+
+def _is_empty_photo_frame(sp: etree._Element) -> bool:
+    """Фигура-заглушка под фото: своя заливка/обводка, но не картинка (фото шаблона в blipFill не трогаем)."""
+    if localname(sp) != "sp" or not _has_visible_frame(sp):
+        return False
+    sp_pr = sp.find("p:spPr", NS)
+    return sp_pr is None or sp_pr.find("a:blipFill", NS) is None
 
 
 def _has_visible_frame(sp: etree._Element) -> bool:

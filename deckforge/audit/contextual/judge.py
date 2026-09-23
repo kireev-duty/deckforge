@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import logging
 import time
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, wait
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -26,7 +26,8 @@ QUESTIONS: dict[str, tuple[str, Severity, str]] = {
     "C01": ("title_insight", Severity.WARNING, "Заголовок содержит вывод, а не просто называет тему"),
     "C02": ("content_matches_title", Severity.ERROR, "Содержимое слайда соответствует заголовку"),
     "C03": ("one_message", Severity.WARNING, "Слайд пересказывается одним предложением"),
-    "C04": ("facts_in_sources", Severity.ERROR, "Все цифры и факты со слайда есть в исходных материалах"),
+    "C04": ("facts_consistent", Severity.ERROR,
+            "Цифры и утверждения непротиворечивы и не спорят с исходными материалами, если они есть"),
     "C05": ("has_content", Severity.ERROR, "На слайде есть содержание, а не только заголовок"),
     "C06": ("images_relevant", Severity.WARNING, "Картинки и иконки относятся к теме слайда"),
     "C07": ("no_garbage", Severity.ERROR, "Нет служебного мусора: реплик спикера, кусков промпта, заглушек"),
@@ -129,7 +130,8 @@ def judge_deck(pngs: list[Path], slides: list[SlideText], client: Any, language:
     """Один вызов VLM на слайд, параллельно; PNG и slides сопоставляются по порядку.
 
     `deadline` (`time.monotonic()`) — бюджет времени колоды: слайды, не проверенные к нему, получают info-находку
-    `C00_judge_error` «не проверен», оставшиеся вызовы не делаются.
+    `C00_judge_error` «не проверен», оставшиеся вызовы не делаются, а начатых и не ответивших к дедлайну
+    судья не ждёт (иначе колода выходила за бюджет на время последнего запроса).
     """
     from deckforge.llm.skills import load_skill
 
@@ -163,8 +165,23 @@ def judge_deck(pngs: list[Path], slides: list[SlideText], client: Any, language:
             return skipped(s, f"не ответил: {str(e)[:120]}")
         return findings_from_answers(res if isinstance(res, dict) else {}, s)
 
-    with ThreadPoolExecutor(max_workers=max(1, workers)) as pool:
-        results = list(pool.map(one, range(len(pairs))))
+    pool = ThreadPoolExecutor(max_workers=max(1, workers))
+    try:
+        futures = {pool.submit(one, i): i for i in range(len(pairs))}
+        wait(futures, timeout=max(0.0, deadline - time.monotonic()) if deadline is not None else None)
+        results: list[list[Finding]] = []
+        for fut, i in futures.items():
+            if not fut.done():
+                # начатый HTTP-запрос не прервать — ответа просто не ждём, бюджет колоды важнее
+                fut.cancel()
+                results.append(skipped(pairs[i][1], "слайд не проверен — бюджет времени колоды исчерпан"))
+                continue
+            try:
+                results.append(fut.result())
+            except Exception as e:  # noqa: BLE001 — сам `one` ошибки ловит, это страховка
+                results.append(skipped(pairs[i][1], f"не ответил: {str(e)[:120]}"))
+    finally:
+        pool.shutdown(wait=False, cancel_futures=True)
     findings = [f for chunk in results for f in chunk]
     findings.sort(key=lambda f: (f.slide_idx, f.check_id))
     return findings

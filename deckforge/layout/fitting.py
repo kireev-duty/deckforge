@@ -10,7 +10,12 @@ from deckforge.core.ir import Slot, SlotKind
 TAIL_SEPARATORS = (" — ", " – ", ": ", "; ", ", ", " (")
 LEAD_SEPARATORS = (" — ", " – ", ": ")
 MIN_SIZE_SCALE = 0.7
-SIZE_STEPS = (0.9, 0.8, 0.7)
+# заголовок титула/раздела/финала набран крупно (36–50 pt) — его можно ужать сильнее, чем текст
+STRUCTURAL_TITLE_MIN_SCALE = 0.55
+SIZE_STEPS = (0.9, 0.8, 0.7, 0.6, 0.55)
+MIN_LEAD_CHARS = 5  # «VK Tech: …» → «VK Tech» — голова до двоеточия годится в заголовок
+TITLE_MIN_PT = 18.0  # крупный заголовок (32–40 pt) можно ужать до этого кегля, но не ниже STRUCTURAL_TITLE_MIN_SCALE
+TEXT_MIN_PT = 12.0  # крупный текст (шаги по 20 pt у WorkSpace) — до этого кегля; мелкий (≤ 17 pt) — до MIN_SIZE_SCALE
 MIN_HEAD_SHARE = 0.3  # голова до разделителя короче — режем по словам
 NUMBER_MIN_SCALE = 0.4  # крупную цифру KPI можно ужать сильнее
 UNIT_SCALE = 0.35  # единица измерения рядом с крупной цифрой
@@ -41,6 +46,41 @@ def shorten(text: str, max_chars: int | None) -> str:
     if not max_chars or len(text) <= max_chars:
         return text
     return cut_tail(text, max_chars) or _cut_words(text, max_chars)
+
+
+def shorten_title(text: str, max_chars: int | None) -> str:
+    """Заголовок: сначала хвост по разделителям, затем голова до «:» / « — » любой длины, и только потом «…».
+
+    «Следующий шаг: консультация для оценки…» хуже, чем «Следующий шаг»: обрубок читается как заглушка."""
+    text = normalize(text)
+    if not max_chars or len(text) <= max_chars:
+        return text
+    if head := cut_tail(text, max_chars):
+        return head
+    for sep in LEAD_SEPARATORS:
+        idx = text.find(sep)
+        if idx > 0:
+            head = text[:idx].rstrip(" ,;:—–(")
+            if MIN_LEAD_CHARS <= len(head) <= max_chars:
+                return head
+    return _cut_words(text, max_chars)
+
+
+def title_min_scale(slot: Slot, structural: bool) -> float:
+    """Нижняя граница кегля заголовка: титул/раздел/финал — STRUCTURAL_TITLE_MIN_SCALE; обычный слайд — MIN_SIZE_SCALE,
+    а крупный заголовок (у ЛЦТ2026 и VK Education 32–36 pt) — до TITLE_MIN_PT: иначе «Архитектура обеспечивает…»."""
+    if structural:
+        return STRUCTURAL_TITLE_MIN_SCALE
+    if not slot.size_pt:
+        return MIN_SIZE_SCALE
+    return min(MIN_SIZE_SCALE, max(STRUCTURAL_TITLE_MIN_SCALE, TITLE_MIN_PT / slot.size_pt))
+
+
+def text_min_scale(slot: Slot) -> float:
+    """Нижняя граница кегля текста слота: MIN_SIZE_SCALE, а крупный текст — до TEXT_MIN_PT (не ниже 0,55)."""
+    if not slot.size_pt:
+        return MIN_SIZE_SCALE
+    return min(MIN_SIZE_SCALE, max(STRUCTURAL_TITLE_MIN_SCALE, TEXT_MIN_PT / slot.size_pt))
 
 
 def cut_tail(text: str, max_chars: int) -> str | None:
@@ -163,4 +203,4 @@ def _cut_words(text: str, max_chars: int) -> str:
     return cut.rstrip(" ,;:—–(") + ELLIPSIS
 
 
-__all__ = ["chars_at_scale", "cut_tail", "fit_number", "fit_size", "normalize", "shorten", "shorten_words", "slot_capacity", "split_label_body", "split_number_unit", "xml_safe"]
+__all__ = ["STRUCTURAL_TITLE_MIN_SCALE", "chars_at_scale", "cut_tail", "fit_number", "fit_size", "normalize", "shorten", "shorten_title", "shorten_words", "text_min_scale", "title_min_scale", "slot_capacity", "split_label_body", "split_number_unit", "xml_safe"]

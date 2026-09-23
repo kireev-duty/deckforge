@@ -46,7 +46,8 @@ from deckforge.pipeline import RunConfig, refine_deck, run, soffice_available
 from deckforge.pipeline.config import Purpose
 
 DECK_FILES = ("pptx", "pdf", "html", "ir.json", "audit.json", "manifest.json")
-RUN_FILES = ("outline.json", "outline.raw.json", "run.json", "compare.md", "dna.json")
+# brief.md — бриф по теме или выведенный из шаблона (режим «на входе только шаблон»)
+RUN_FILES = ("outline.json", "outline.raw.json", "run.json", "compare.md", "dna.json", "brief.md")
 _PNG = re.compile(r"^(slide_\d{2}\.png|contact\.png)$")
 
 
@@ -124,7 +125,8 @@ def create_app(root: Path | str = Path("out/api"), client_factory: Callable[[], 
     async def generate(
         s: S,
         template_id: str = Form(...),
-        brief: str = Form(..., min_length=20, description="текст брифа (brief.md)"),
+        brief: str = Form("", description="текст брифа (brief.md); пусто — контент по теме или по шаблону"),
+        topic: str = Form("", description="тема одной строкой, если брифа и файлов нет"),
         purpose: Purpose = Form("other"),
         audience: str = Form(""),
         language: str = Form("ru"),
@@ -145,10 +147,13 @@ def create_app(root: Path | str = Path("out/api"), client_factory: Callable[[], 
         # job попадает в реестр только после проверки входа, иначе 400 оставлял бы «зомби»
         job = s.jobs.new(entry)
         try:
-            pack_dir = write_content_pack(job.dir / "content_pack", brief,
-                                          [(f.filename or "file", await f.read()) for f in files])
+            # ни брифа, ни файлов — контент по теме, а без неё бриф выводится из самого шаблона
+            uploads = [(f.filename or "file", await f.read()) for f in files]
+            pack_dir = (write_content_pack(job.dir / "content_pack", brief, uploads)
+                        if brief.strip() or uploads else None)
             cfg = RunConfig(
-                template=entry.path, content_pack=pack_dir, purpose=purpose, audience=audience, language=language,
+                template=entry.path, content_pack=pack_dir, topic=topic,
+                purpose=purpose, audience=audience, language=language,
                 target_slides=target_slides, strategies=names, images="off", output_dir=job.dir,
                 render_png=render_png, export=[e.strip() for e in export.split(",") if e.strip()],  # type: ignore[arg-type]
                 audit={"deterministic": True, "contextual": judge, "autofix": autofix},

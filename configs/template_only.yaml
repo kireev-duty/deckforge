@@ -1,0 +1,22 @@
+# То же, что run.example.yaml (на входе только шаблон), но на holdout-шаблоне ЛЦТ2026 —
+# сценарий «незнакомый шаблон, который сервис видит впервые».
+# .venv\Scripts\python.exe -m deckforge.cli run -c configs/template_only.yaml --png
+# Бриф выводит из самого шаблона скилл template_brief (бренд, тексты слайдов-образцов, палитра)
+# и пишет его в <output_dir>/brief.md. Добавить тему одной строкой: --topic "…" (или ключ topic ниже).
+# Относительные пути — от корня репозитория.
+template: data/holdout/ЛЦТ2026 Шаблон презентации.pptx
+# content_pack: не задан — это и есть режим «только шаблон»
+# topic: "Платформа для совместной работы: что даёт командам"
+purpose: other                               # не задано — назначение предложит template_brief
+audience: ""                                 # то же самое: аудиторию выведет модель
+language: ru
+target_slides: 12
+strategies: [executive, narrative, visual]
+images: auto
+audit:
+  deterministic: true
+  contextual: true                           # C04 у судьи здесь проверяет самосогласованность колоды
+  autofix: true
+export: [pptx, pdf, html]
+output_dir: out/run/template_only
+render_png: false

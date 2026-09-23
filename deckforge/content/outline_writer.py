@@ -25,6 +25,7 @@ NOT_OFFERED = {Archetype.SECTION, Archetype.FREEFORM, Archetype.TEAM, Archetype.
 TEXT_FALLBACK = Archetype.BULLETS
 PURPOSES: tuple[str, ...] = get_args(DeckOutline.model_fields["purpose"].annotation)
 ALIAS_LIST_FIELDS = ("cards", "items", "points", "columns", "benefits", "risks", "list")
+SIDE_FIELDS = ("left", "right")  # two_column объектами вместо списка
 TEXT_ARCHETYPES = {a.value for a in (Archetype.BULLETS, Archetype.CARDS, Archetype.TWO_COLUMN, Archetype.IMAGE_TEXT,
                                      Archetype.AGENDA)}
 # имена файлов пакета в тексте брифа: `product.md`, data/metrics.json
@@ -214,11 +215,22 @@ def _repair_slide(s: dict[str, Any], available: set[Archetype], warnings: list[s
         if isinstance(extra, list) and extra and not s["bullets"]:
             s["bullets"] = [_item_text(b) for b in extra if _item_text(b)]
             warnings.append(f"{label}: поле «{alias}» → bullets")
+    # two_column моделью выдаётся объектами left/right {heading, text} — иначе колонки теряются целиком
+    sides = [x for key in SIDE_FIELDS if (x := s.pop(key, None))]
+    if sides and not s["bullets"]:
+        s["bullets"] = [t for x in sides if (t := _item_text(x))]
+        if s["bullets"]:
+            warnings.append(f"{label}: колонки «{'»/«'.join(SIDE_FIELDS)}» → bullets")
     if len(s["bullets"]) > MAX_BULLETS:
         warnings.append(f"{label}: {len(s['bullets'])} буллетов → первые {MAX_BULLETS}")
         s["bullets"] = s["bullets"][:MAX_BULLETS]
     s["steps"] = [_item_text(b) for b in s.get("steps", []) if _item_text(b)]
     s["paragraphs"] = [_item_text(b) for b in s.get("paragraphs", []) if _item_text(b)]
+    # текст абзацем в поле «text» (обычно у image_text) — тоже содержимое слайда
+    body = s.pop("text", None)
+    if isinstance(body, str) and body.strip() and not s["bullets"] and not s["paragraphs"]:
+        s["paragraphs"] = [body.strip()]
+        warnings.append(f"{label}: поле «text» → paragraphs")
     s["sources"] = [str(x) for x in s.get("sources", [])]
 
     # KPI
@@ -272,14 +284,23 @@ def _repair_slide(s: dict[str, Any], available: set[Archetype], warnings: list[s
             warnings.append(f"{label}: process без шагов → {TEXT_FALLBACK.value}")
             s["archetype"] = TEXT_FALLBACK.value
     if s["archetype"] in TEXT_ARCHETYPES and not (s["bullets"] or s.get("paragraphs")):
-        warnings.append(f"{label}: текстовый слайд без содержимого — останется только заголовок")
+        # содержание часто уезжает в подзаголовок (особенно у брифа, выведенного из шаблона)
+        subtitle = str(s.get("subtitle") or "").strip()
+        if subtitle:
+            s["paragraphs"] = [subtitle]
+            s.pop("subtitle", None)
+            warnings.append(f"{label}: текст слайда взят из «subtitle»")
+        elif not any(s.get(key) for key in ("kpis", "steps", "chart", "table", "quote", "image")):
+            # иначе на слайде остался бы один заголовок — это I03 в аудите
+            warnings.append(f"{label}: текстовый слайд без содержимого — пропущен")
+            return None
     return s
 
 
 def _item_text(item: Any) -> str:
     """Пункт списка: строка или объект {title, text} → «Заголовок — текст»."""
     if isinstance(item, dict):
-        head = str(item.get("title") or item.get("label") or item.get("name") or "").strip()
+        head = str(item.get("title") or item.get("label") or item.get("name") or item.get("heading") or "").strip()
         body = str(item.get("text") or item.get("description") or item.get("body") or item.get("value") or "").strip()
         return f"{head} — {body}" if head and body else head or body
     return str(item).strip() if item is not None else ""

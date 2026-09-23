@@ -12,10 +12,19 @@ skills:
   outline_writer:
     description: Из брифа и контент-пакета строит DeckOutline — состав, порядок и содержание слайдов до вёрстки
     model_role: text
-    current: v2
+    current: v3
     history:
       - {version: v1, note: "initial; до первого потребителя убран вход strategy_rules (outline один на прогон), добавлен section на слайдах"}
       - {version: v2, note: "неполный пакет: данные из файлов, которых нет среди фрагментов, не восстанавливать; sources — только id из пакета"}
+      - {version: v3, note: "заголовок слайда ≤ 70 символов, title/closing ≤ 40, subtitle ≤ 60, абзац ≤ 2 предложений — узкие колонки и крупный кегль структурных слайдов"}
+
+  template_brief:
+    description: На входе только шаблон — по его слепку (бренд, тексты образцов, палитра) пишет бриф вместо brief.md
+    model_role: text
+    current: v2
+    history:
+      - {version: v1, note: "initial; режим без контент-пакета — бриф выводится из самого шаблона"}
+      - {version: v2, note: "тезисов столько, сколько содержательных слайдов (было 5–8 → колода на 9 слайдов при целевых 12); задан состав тезисов"}
 
   slide_filler:
     description: Подгоняет текст слайда под слоты выбранного образца (лимиты символов/строк), не меняя смысл
@@ -27,9 +36,10 @@ skills:
   audit_judge:
     description: Контекстуальный аудит — 11 да/нет вопросов по PNG слайда и исходным материалам
     model_role: vision
-    current: v1
+    current: v2
     history:
       - {version: v1, note: initial}
+      - {version: v2, note: "C04 — самосогласованность колоды вместо сверки с исходниками: их может не быть (режим «только шаблон»)"}
 
   image_prompter:
     description: Формирует промпт для text-to-image с учётом палитры и стиля шаблона
@@ -39,7 +49,8 @@ skills:
       - {version: v1, note: initial}
 
 agents:
-  # Оркестраторы, объединяющие скиллы. Конфиги — в agents/<name>.yaml (порядок шагов, ретраи, бюджеты времени).
+  # Оркестраторы, объединяющие скиллы: состав и порядок шагов версионируются здесь,
+  # исполняет их pipeline/run.py (ретраи и бюджет времени — LLMClient и DECK_TIME_BUDGET_S).
   deck_generator:
     current: v1
     steps: [outline_writer, layout, slide_filler, render, audit, autofix]

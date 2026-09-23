@@ -1,0 +1,13 @@
+name: template_brief
+version: v1
+model_role: text
+temperature: 0.5
+max_tokens: 1500
+response_format: json_schema   # schema.json
+inputs: [template_digest, language, target_slides, purpose_hint, audience_hint]
+changelog: |
+  v1 — режим «на входе только шаблон» (ни брифа, ни контент-пакета). По слепку шаблона
+  (имя файла, палитра, шрифты, архетипы образцов, теги VLM, тексты слайдов-образцов)
+  модель определяет бренд и тему и пишет короткий бриф, который дальше идёт в outline_writer
+  вместо brief.md. Цифры, даты, имена клиентов и цитаты не выдумываются: проверить их нечем,
+  а судья (C04) ловит несамосогласованность.

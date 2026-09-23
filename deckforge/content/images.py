@@ -2,6 +2,8 @@
 
 Какие слайды иллюстрировать — по `Strategy.images` и `RunConfig.images` (off / minimal / preferred / always).
 Результат кладётся в `<out_dir>/images/` с кэшем по sha1 входов; ошибка API — слайд остаётся без картинки.
+Кэш общий для колод прогона, а они собираются параллельно: одну картинку генерирует одна колода,
+остальные ждут её по ключу и берут из кэша.
 """
 
 from __future__ import annotations
@@ -9,6 +11,8 @@ from __future__ import annotations
 import hashlib
 import json
 import logging
+import os
+import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass, field
@@ -28,6 +32,9 @@ IMAGE_SIZE = "1024x576"  # 16:9; рендер делает center-crop под д
 PICTURE_ARCHETYPES = (Archetype.IMAGE_TEXT, Archetype.IMAGE_FULL)
 TEXT_ARCHETYPES = (Archetype.BULLETS, Archetype.CARDS, Archetype.TWO_COLUMN, Archetype.QUOTE)
 FRAME_ARCHETYPES = (Archetype.TITLE, Archetype.CLOSING)
+# полосатые локи по ключу кэша: одинаковую картинку (narrative и visual иллюстрируют одни слайды) генерирует
+# один поток, второй ждёт и читает кэш — не платит дважды и не пишет тот же файл одновременно
+_KEY_LOCKS = [threading.Lock() for _ in range(64)]
 
 
 @dataclass
@@ -93,7 +100,7 @@ def illustrate(
 ) -> IllustrateResult:
     """Копия outline с `image.path` у проиллюстрированных слайдов.
 
-    `deadline` (`time.monotonic()`) — бюджет времени колоды: промпт и генерация после него не вызываются,
+    `deadline` (`time.monotonic()`) — бюджет времени прогона: промпт и генерация после него не вызываются,
     слайд остаётся без иллюстрации с предупреждением (кэш читается всегда).
     """
     mode = effective_mode(cfg_mode, strategy)
@@ -135,18 +142,40 @@ def _illustrate_one(s: OutlineSlide, client: LLMClient, skill: Any, style: dict,
     hint = (s.image.prompt or s.image.alt) if s.image else ""
     key = _cache_key(s.title, text, hint, style.get("palette", ""), client.image_model)
     meta = img_dir / f"{key}.json"
-    if meta.exists():
-        try:
-            d = json.loads(meta.read_text("utf-8"))
-            cached = Path(d.get("path") or "")
-            if not cached.is_absolute():  # в кэше имя файла рядом с .json
-                cached = img_dir / cached
-            if d.get("path") and cached.exists():
-                return ImageItem(s.idx, s.title, "cache", str(cached), d.get("prompt"))
-        except (OSError, ValueError):
-            pass
+    hit = _from_cache(s, meta, img_dir)
+    if hit is not None:
+        return hit
+    lock = _KEY_LOCKS[int(key[:8], 16) % len(_KEY_LOCKS)]
+    wait_s = -1 if deadline is None else max(0.0, deadline - time.monotonic())
+    if not lock.acquire(timeout=wait_s):
+        return ImageItem(s.idx, s.title, "failed", error="бюджет времени прогона исчерпан")
+    try:
+        # пока ждали лок, картинку могла сделать соседняя колода
+        return _from_cache(s, meta, img_dir) or _generate(s, client, skill, style, style_tags, text, hint, key,
+                                                          img_dir, deadline)
+    finally:
+        lock.release()
+
+
+def _from_cache(s: OutlineSlide, meta: Path, img_dir: Path) -> ImageItem | None:
+    if not meta.exists():
+        return None
+    try:
+        d = json.loads(meta.read_text("utf-8"))
+        cached = Path(d.get("path") or "")
+        if not cached.is_absolute():  # в кэше имя файла рядом с .json
+            cached = img_dir / cached
+        if d.get("path") and cached.exists():
+            return ImageItem(s.idx, s.title, "cache", str(cached), d.get("prompt"))
+    except (OSError, ValueError):
+        pass
+    return None
+
+
+def _generate(s: OutlineSlide, client: LLMClient, skill: Any, style: dict, style_tags: str, text: str, hint: str,
+              key: str, img_dir: Path, deadline: float | None) -> ImageItem:
     if deadline is not None and time.monotonic() >= deadline:
-        return ImageItem(s.idx, s.title, "failed", error="бюджет времени колоды исчерпан")
+        return ImageItem(s.idx, s.title, "failed", error="бюджет времени прогона исчерпан")
     try:
         ans = client.run_skill(
             skill, slide_title=s.title, slide_text=(hint + "\n" + text).strip() or s.title,
@@ -159,7 +188,11 @@ def _illustrate_one(s: OutlineSlide, client: LLMClient, skill: Any, style: dict,
     except Exception as e:  # noqa: BLE001
         log.warning("images: слайд %s: %s", s.idx, e)
         return ImageItem(s.idx, s.title, "failed", error=str(e)[:160])
-    meta.write_text(json.dumps({"prompt": prompt, "path": Path(path).name}, ensure_ascii=False, indent=1), "utf-8")
+    # .json — признак готовой картинки: пишется после .png и атомарно (читатель не увидит половину файла)
+    meta = img_dir / f"{key}.json"
+    tmp = meta.with_name(f"{meta.name}.{threading.get_ident()}.tmp")
+    tmp.write_text(json.dumps({"prompt": prompt, "path": Path(path).name}, ensure_ascii=False, indent=1), "utf-8")
+    os.replace(tmp, meta)
     return ImageItem(s.idx, s.title, "generated", str(path), prompt)
 
 

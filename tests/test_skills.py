@@ -101,6 +101,70 @@ def test_client_deadline_limits_retries_and_timeout(monkeypatch: pytest.MonkeyPa
     assert 1 <= len(log) <= 2 and timeouts and all(t <= 2 for t in timeouts)
 
 
+def test_client_fork_keeps_own_journal() -> None:
+    """Колоды прогона параллельны: у форка свой журнал (manifest колоды), родитель видит все вызовы."""
+    from deckforge.llm.client import LLMClient
+
+    parent = LLMClient(api_key="x", retries=0)
+    parent._client = _OpenAI([], fail=False, timeouts=[])
+    a, b = parent.fork(), parent.fork()
+    skill = load_skill("image_prompter")
+    inputs = {"slide_title": "t", "slide_text": "x", "palette": "", "style_tags": "", "aspect": "16:9"}
+    a.run_skill(skill, **inputs)
+    b.run_skill(skill, **inputs)
+    b.run_skill(skill, **inputs)
+    assert len(a.calls) == 1 and len(b.calls) == 2 and len(parent.calls) == 3
+    assert a._client is parent._client and a.text_model == parent.text_model
+
+
+def test_client_concurrency_limit(monkeypatch: pytest.MonkeyPatch) -> None:
+    """LLM_MAX_CONCURRENCY: одновременных запросов не больше лимита (общий у форков); место в очереди
+    ждём не дольше дедлайна."""
+    import threading
+    import time
+    from types import SimpleNamespace
+
+    from deckforge.llm.client import LLMClient
+
+    active, peak, lock = [0], [0], threading.Lock()
+
+    class SlowCompletions:
+        def create(self, **kwargs):
+            with lock:
+                active[0] += 1
+                peak[0] = max(peak[0], active[0])
+            time.sleep(0.1)
+            with lock:
+                active[0] -= 1
+            return SimpleNamespace(choices=[SimpleNamespace(message=SimpleNamespace(content='{"prompt": "ok"}'))],
+                                   usage=None)
+
+    monkeypatch.setenv("LLM_MAX_CONCURRENCY", "2")
+    parent = LLMClient(api_key="x", retries=0)
+    assert parent.max_concurrency == 2
+    parent._client = SimpleNamespace(chat=SimpleNamespace(completions=SlowCompletions()),
+                                     with_options=lambda timeout: parent._client)
+    skill = load_skill("image_prompter")
+    inputs = {"slide_title": "t", "slide_text": "x", "palette": "", "style_tags": "", "aspect": "16:9"}
+    forks = [parent.fork() for _ in range(3)]
+    threads = [threading.Thread(target=f.run_skill, args=(skill,), kwargs=inputs) for f in forks for _ in range(2)]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+    assert peak[0] == 2 and len(parent.calls) == 6 and all(c.ok for c in parent.calls)
+    # оба места заняты дольше дедлайна — запрос не уходит, ошибка про бюджет
+    parent._sem.acquire()
+    parent._sem.acquire()
+    try:
+        with pytest.raises(RuntimeError, match="бюджет"):
+            parent.run_skill(skill, deadline=time.monotonic() + 0.2, **inputs)
+    finally:
+        parent._sem.release()
+        parent._sem.release()
+    assert parent.calls[-1].ok is False
+
+
 def test_strategies_have_required_keys() -> None:
     names = list_strategies()
     assert {"executive", "narrative", "visual"} <= set(names)

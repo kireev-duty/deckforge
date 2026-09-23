@@ -167,6 +167,8 @@ def check_T05(ctx: AuditContext) -> list[Finding]:
         if slide.exemplar is not None:
             ref = ctx.exemplar_shapes(slide.exemplar)
             empty_ph = ctx.exemplar_empty_placeholders(slide.exemplar)
+            # плашку-«чип» под заголовком рендер растягивает под текст (Slot.plate_id) — ширина в пределах plate_max_w
+            plates = {s.plate_id: s.plate_max_w or 0 for s in slide.exemplar.slots if s.plate_id}
             for fid in slide.exemplar.fixed:
                 bb = ref.get(fid)
                 if bb is None or _is_zone_caption(ctx, slide, fid, bb) or _is_photo_prompt_frame(ctx, slide, bb, ref):
@@ -182,6 +184,8 @@ def check_T05(ctx: AuditContext) -> list[Finding]:
                     continue
                 dx, dy = abs(sh.box.x - bb[0]), abs(sh.box.y - bb[1])
                 dw, dh = abs(sh.box.w - bb[2]), abs(sh.box.h - bb[3])
+                if fid in plates and bb[2] - STEP <= sh.box.w <= max(bb[2], plates[fid]) + STEP:
+                    dw = 0
                 if max(dx, dy, dw, dh) > STEP:
                     out.append(finding("T05_fixed_moved", slide, Severity.ERROR,
                                        f"Фиксированный элемент {fid} сдвинут на ({dx / 914400:.2f}\", {dy / 914400:.2f}\")",

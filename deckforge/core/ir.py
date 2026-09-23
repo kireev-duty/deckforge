@@ -157,6 +157,9 @@ class Slot(BaseModel):
     placeholder_type: str | None = None  # ph type из OOXML, если это плейсхолдер
     sample_text: str | None = None  # исходный текст (для отладки и few-shot)
     hard_lines: bool = False  # под слотом декор — строк больше max_lines не разрешать
+    # плашка-«чип» под заголовком уже его бокса (ЛЦТ2026): рендер растягивает её под текст, как spAutoFit
+    plate_id: str | None = None  # id фигуры-плашки в XML образца
+    plate_max_w: int | None = None  # до какой ширины (EMU) плашку можно растянуть, не задев соседей
 
 
 class Exemplar(BaseModel):
@@ -224,6 +227,16 @@ class KpiSpec(BaseModel):
     label: str
 
 
+class DiagramSpec(BaseModel):
+    """Схема из нативных автофигур (замена SmartArt): шаги процесса слева направо.
+
+    Ставит её planner (`apply_process_form`), когда стратегия просит схему, а своего process-образца
+    в шаблоне нет; рисует `render/diagrams.py` одной группой в цветах и шрифте шаблона."""
+
+    kind: Literal["process"] = "process"
+    items: list[str]
+
+
 class ImageSpec(BaseModel):
     prompt: str | None = None  # для text-to-image
     path: str | None = None  # готовый файл
@@ -245,6 +258,7 @@ class OutlineSlide(BaseModel):
     table: TableSpec | None = None
     image: ImageSpec | None = None
     steps: list[str] = Field(default_factory=list)  # для PROCESS
+    diagram: DiagramSpec | None = None  # шаги схемой из автофигур; ставит planner, не outline_writer
     quote: str | None = None
     quote_author: str | None = None
     speaker_notes: str = ""
@@ -285,6 +299,7 @@ class Element(BaseModel):
     paragraphs: list[Paragraph] = Field(default_factory=list)
     chart: ChartSpec | None = None
     table: TableSpec | None = None
+    diagram: DiagramSpec | None = None  # на месте текстового слота (обычно самого крупного body)
     image_path: str | None = None
     icon_name: str | None = None
     style_overrides: dict[str, str | float | bool] = Field(default_factory=dict)

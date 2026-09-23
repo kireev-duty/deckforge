@@ -10,3 +10,5 @@ examples/output/**/render/
 .streamlit/secrets.toml
 examples/output/**/*.png
 examples/output/**/outline.raw.json
+# PDF в папке PNG-превью — побайтовая копия <strategy>.pdf рядом (промежуточный файл рендера)
+examples/output/*/*/*.pdf

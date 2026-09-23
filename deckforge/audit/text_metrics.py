@@ -7,6 +7,7 @@
 from __future__ import annotations
 
 import os
+import threading
 from dataclasses import dataclass
 from functools import cache
 from pathlib import Path
@@ -36,6 +37,9 @@ WIDTH_FACTOR = {"play": 0.9, "montserrat": 1.1}
 AVG_CHAR_WIDTH = 0.5  # фолбэк без TTF, в долях кегля
 LINE_HEIGHT = 1.2  # single, в долях кегля
 MEASURE_PT = 100  # ширина линейна по кеглю
+# объекты FreeTypeFont общие (`_font` кэшируется), а аудит колод прогона идёт в параллельных потоках;
+# потокобезопасность замеров Pillow на одном шрифте не гарантирована — замеры по одному
+_MEASURE_LOCK = threading.Lock()
 
 
 @cache
@@ -86,7 +90,9 @@ class TextMeasurer:
         f, k = _font(self.font, self.bold)
         if f is None or not text:
             return len(text) * AVG_CHAR_WIDTH * size_pt
-        return f.getlength(text) * size_pt / MEASURE_PT * k
+        with _MEASURE_LOCK:
+            length = f.getlength(text)
+        return length * size_pt / MEASURE_PT * k
 
     def wrap_lines(self, text: str, size_pt: float, width_pt: float) -> list[str]:
         """Жадный перенос по словам в полосу width_pt; слово шире полосы рвётся по символам."""

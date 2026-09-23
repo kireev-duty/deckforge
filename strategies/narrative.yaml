@@ -2,7 +2,7 @@
 # Ось: минимум текста на слайд, ритм «раздел → мысль → цифра»; ключевые метрики — отдельными KPI-слайдами.
 # Схема полей — deckforge/core/strategy.py (Strategy).
 name: narrative
-version: v1
+version: v2
 target_slides: {min: 12, max: 15}
 density:
   max_bullets: 4
@@ -12,6 +12,7 @@ archetype_priority: [section, kpi, quote, bullets, image_text, cards, chart, pro
 data_visualization: {numeric_series: chart, comparison: two_column, key_metrics: kpi}
 sections: true           # разделы обозначаются слайдами section
 images: preferred        # где уместно — иллюстрация (генерируется по image.prompt)
+process_form: template   # шаги — process-образцом шаблона, а без него схемой из автофигур
 audience_hint: доклад со сцены, обучение, онбординг — слайд поддерживает рассказ, а не заменяет его
 outline_rules: |
   Структура истории: контекст → проблема (с цифрой боли) → решение → как это работает (шаги) → доказательства → что дальше → призыв к действию.

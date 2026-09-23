@@ -1,6 +1,7 @@
 """pipeline.run на фейковом LLM: outline → колоды + аудит/автофикс + manifest.json."""
 
 import json
+import time
 from pathlib import Path
 
 import pytest
@@ -201,7 +202,7 @@ class ImageFakeClient(FakeClient):
         from deckforge.llm.client import LLMCall
 
         Image.new("RGB", (64, 36), (0, 119, 255)).save(out_path)
-        self.calls.append(LLMCall("image_gen", self.image_model, 0.01))
+        self._log(LLMCall("image_gen", self.image_model, 0.01))
         return out_path
 
 
@@ -232,6 +233,39 @@ def test_images_generated_cached_and_rendered(template_path, tmp_path: Path) -> 
     assert len([c for c in client.calls if c.skill == "image_gen"]) == len(gen)
     off = run(cfg.model_copy(update={"images": "off", "output_dir": tmp_path / "off"}), client=client, outline=_outline()).decks[0]
     assert json.loads(off.manifest.read_text("utf-8"))["images"] == {}
+
+
+def test_image_generated_once_for_parallel_decks(tmp_path: Path) -> None:
+    """narrative и visual иллюстрируют одни слайды одновременно: картинку генерирует одна колода, вторая ждёт
+    её по ключу и берёт из кэша — без второй оплаты и без записи в тот же файл."""
+    import threading
+
+    from deckforge.content.images import _illustrate_one
+    from deckforge.core.ir import Archetype, OutlineSlide
+    from deckforge.llm.skills import load_skill
+
+    class SlowImages(ImageFakeClient):
+        def generate_image(self, prompt: str, out_path: Path, size: str = "1024x576", deadline: float | None = None):
+            time.sleep(0.2)
+            return super().generate_image(prompt, out_path, size, deadline)
+
+    client = SlowImages(by_skill={"image_prompter": [{"prompt": "abstract blue gradient"}]})
+    slide = OutlineSlide(idx=3, archetype=Archetype.IMAGE_TEXT, title="Платформа", paragraphs=["Один абзац текста"])
+    skill = load_skill("image_prompter")
+    results = []
+
+    def work(c) -> None:
+        results.append(_illustrate_one(slide, c, skill, {"palette": "0077FF"}, "light background", tmp_path))
+
+    threads = [threading.Thread(target=work, args=(client.fork(),)) for _ in range(2)]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+    assert sorted(r.source for r in results) == ["cache", "generated"]
+    assert results[0].path == results[1].path and Path(results[0].path).exists()
+    assert len([c for c in client.calls if c.skill == "image_gen"]) == 1
+    assert not list(tmp_path.glob("*.tmp"))
 
 
 def _outline():
@@ -297,13 +331,18 @@ def test_refine_deck_applies_user_fixes(template_path, tmp_path: Path, no_fittin
 
 @pytest.mark.skipif(not _soffice(), reason="нужен LibreOffice для PDF")
 def test_pdf_export(template_path, tmp_path: Path) -> None:
+    """PDF без PNG конвертируется во временную папку колоды; колоды экспортируются параллельно и не мешают друг другу."""
     cfg = RunConfig(template=template_path("VK Tech"), content_pack=REPO / "examples" / "content_pack",
-                    strategies=["executive"], output_dir=tmp_path, images="off", export=["pptx", "pdf", "html"],
+                    strategies=["executive", "narrative"], output_dir=tmp_path, images="off",
+                    export=["pptx", "pdf", "html"], max_parallel_decks=2,
                     audit={"deterministic": False, "contextual": False, "autofix": False})
     res = run(cfg, outline=_outline())
     d = res.decks[0]
-    assert d.pdf is not None and d.pdf.exists() and d.pdf.name == "executive.pdf" and d.pdf.stat().st_size > 10_000
-    assert not (tmp_path / "_pdf").exists()
+    assert d.pdf is not None, d.warnings
+    assert d.pdf.exists() and d.pdf.name == "executive.pdf" and d.pdf.stat().st_size > 10_000
+    assert res.decks[1].pdf is not None, res.decks[1].warnings
+    assert res.decks[1].pdf.name == "narrative.pdf" and res.decks[1].pdf.exists()
+    assert not list(tmp_path.glob("_pdf*"))
     assert d.html is not None and d.html.exists() and d.html.name == "executive.html"
     m = d.load_manifest()
     assert m["exports"] == {"pptx": "executive.pptx", "pdf": "executive.pdf", "html": "executive.html"}
@@ -346,11 +385,11 @@ def test_run_with_contextual_judge(template_path, tmp_path: Path) -> None:
 
 
 def test_time_budget_skips_judge_and_images(template_path, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    """ТЗ: колода ≤ 5 мин независимо от инференса — при исчерпанном бюджете судья и картинки пропускаются,
-    вёрстка, аудит и экспорт делаются всегда; бюджет читается из DECK_TIME_BUDGET_S."""
+    """ТЗ: три варианта ≤ 5 мин независимо от инференса — при исчерпанном бюджете прогона судья и картинки
+    пропускаются, вёрстка, аудит и экспорт делаются всегда; бюджет читается из RUN_TIME_BUDGET_S."""
     from deckforge.core.ir import DeckOutline
 
-    monkeypatch.setenv("DECK_TIME_BUDGET_S", "10")
+    monkeypatch.setenv("RUN_TIME_BUDGET_S", "10")
     monkeypatch.setenv("DECK_MAX_PARALLEL_LLM", "2")
     outline = DeckOutline.model_validate_json((REPO / "examples" / "content_pack" / "outline.json").read_text("utf-8"))
     cfg = RunConfig(template=template_path("VK Tech"), content_pack=REPO / "examples" / "content_pack",
@@ -366,10 +405,106 @@ def test_time_budget_skips_judge_and_images(template_path, tmp_path: Path, monke
     assert d.pptx.exists() and d.audit is not None and m["audit"]["kind"] == "deterministic"
     assert any("images: пропущено" in w for w in m["warnings"])
     assert any("VLM-судья пропущен" in w for w in m["warnings"])
-    assert m["time_budget_s"] == 10 and m["timings_s"]["deck_total"] > 0
+    assert m["time_budget_s"] == 10 and 0 < m["timings_s"]["deck_build"] <= m["timings_s"]["deck_total"]
     # превышение бюджета не замалчивается: предупреждение есть ровно тогда, когда колода вышла за него
-    assert (m["timings_s"]["deck_total"] > 10) == any("бюджет времени колоды превышен" in w for w in m["warnings"])
+    assert (m["timings_s"]["deck_total"] > 10) == any("бюджет времени прогона превышен" in w for w in m["warnings"])
     assert m["strategy"]["target_slides"] == {"min": 10, "max": 12}
+    run_json = json.loads(res.run_json.read_text("utf-8"))
+    assert (run_json["timings_s"]["total"] > 10) == any("бюджет времени прогона превышен: " in w
+                                                        for w in run_json["warnings"] if not w.startswith("visual"))
+
+
+def test_run_config_budget_and_strategies(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Бюджет — на прогон (прежнее имя DECK_TIME_BUDGET_S читается как запасное); повторы стратегий убираются."""
+    monkeypatch.delenv("RUN_TIME_BUDGET_S", raising=False)
+    monkeypatch.delenv("RUN_MAX_PARALLEL_DECKS", raising=False)
+    monkeypatch.setenv("DECK_TIME_BUDGET_S", "42")
+    cfg = RunConfig(template=Path("t.pptx"), strategies=["visual", " executive", "visual"])
+    assert cfg.time_budget_s == 42 and cfg.max_parallel_decks == 3
+    assert cfg.strategies == ["visual", "executive"]
+    monkeypatch.setenv("RUN_TIME_BUDGET_S", "240")
+    monkeypatch.setenv("RUN_MAX_PARALLEL_DECKS", "1")
+    cfg = RunConfig(template=Path("t.pptx"))
+    assert cfg.time_budget_s == 240 and cfg.max_parallel_decks == 1
+
+
+def test_decks_build_in_parallel(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Колоды прогона — в потоках одновременно; результат в порядке конфига, прогресс — только из вызывающего
+    потока (Streamlit пишет в статус только из потока скрипта), ошибка колоды — после того, как досчитались остальные."""
+    import importlib
+    import threading
+
+    run_mod = importlib.import_module("deckforge.pipeline.run")  # в пакете имя run — функция
+    names = ["executive", "narrative", "visual"]
+    active, peak, finished, lock = [0], [0], [], threading.Lock()
+    barrier = threading.Barrier(len(names), timeout=10)
+
+    def fake_build(ctx, name, progress=None):
+        with lock:
+            active[0] += 1
+            peak[0] = max(peak[0], active[0])
+        if ctx != "seq":
+            barrier.wait()  # не дойдут все три одновременно — BrokenBarrierError
+        time.sleep({"executive": 0.3, "narrative": 0.05, "visual": 0.15}[name])
+        progress(f"{name}: готово")
+        with lock:
+            active[0] -= 1
+            finished.append(name)
+        if ctx == "boom" and name == "narrative":
+            raise RuntimeError("narrative упала")
+        return name
+
+    monkeypatch.setattr(run_mod, "build_deck", fake_build)
+    main = threading.current_thread()
+    said: list[tuple[str, bool]] = []
+
+    def say(msg: str) -> None:
+        said.append((msg, threading.current_thread() is main))
+
+    assert run_mod._build_decks("ok", names, say, workers=3) == names
+    assert peak[0] == 3 and all(on_main for _, on_main in said)
+    assert sorted(m for m, _ in said) == sorted(f"{n}: готово" for n in names)
+
+    finished.clear()
+    barrier.reset()
+    with pytest.raises(RuntimeError, match="narrative упала"):
+        run_mod._build_decks("boom", names, say, workers=3)
+    assert sorted(finished) == sorted(names)
+
+    peak[0] = 0
+    assert run_mod._build_decks("seq", names, say, workers=1) == names and peak[0] == 1
+
+
+@pytest.mark.skipif(not _soffice(), reason="нужен LibreOffice для PNG")
+def test_parallel_decks_share_deadline_and_keep_own_calls(template_path, tmp_path: Path) -> None:
+    """Три колоды с судьёй параллельно: дедлайн один на прогон, в manifest колоды — только её вызовы LLM."""
+    from deckforge.pipeline.run import EXPORT_RESERVE_S
+
+    cfg = RunConfig(template=template_path("VK Tech"), content_pack=REPO / "examples" / "content_pack",
+                    strategies=["executive", "narrative", "visual"], output_dir=tmp_path, images="off", render_dpi=40,
+                    time_budget_s=300, max_parallel_decks=3,
+                    audit={"deterministic": True, "contextual": True, "autofix": False})
+    client = FakeClient(by_skill={"audit_judge": cassette("audit_judge_pulse")})
+    messages: list[str] = []
+    t0 = time.monotonic()
+    res = run(cfg, client=client, outline=_outline(), progress=messages.append)
+    assert [d.strategy for d in res.decks] == cfg.strategies
+    # дедлайн судьи у всех колод один: старт прогона + бюджет − резерв на экспорт
+    assert len(set(client.deadlines)) == 1
+    assert abs(client.deadlines[0] - (t0 + 300 - EXPORT_RESERVE_S)) < 5
+    n_judge = 0
+    for d in res.decks:
+        m = d.load_manifest()
+        judge = [c for c in m["llm_calls"] if c["skill"].startswith("audit_judge")]
+        assert len(judge) == m["stats"]["slides"] and m["audit"]["kind"] == "deterministic+contextual"
+        assert m["time_budget_s"] == 300 and 0 < m["timings_s"]["deck_build"] <= m["timings_s"]["deck_total"] < 300
+        n_judge += len(judge)
+    assert len(client.calls) == n_judge
+    run_json = json.loads(res.run_json.read_text("utf-8"))
+    assert run_json["config"]["max_parallel_decks"] == 3 and "decks" in run_json["timings_s"]
+    assert max(d["timings_s"]["deck_total"] for d in run_json["decks"]) <= run_json["timings_s"]["total"]
+    assert any(m.startswith("сборка:") and "параллельно (3 потока)" in m for m in messages)
+    assert "параллельно (3 потока)" in (tmp_path / "compare.md").read_text("utf-8")
 
 
 def test_target_slides_shifts_strategy_ranges(template_path, tmp_path: Path) -> None:

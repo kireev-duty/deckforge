@@ -52,6 +52,9 @@ class Strategy(BaseModel):
     sections: bool = False
     images: Literal["minimal", "preferred", "always"] = "minimal"
     icons: bool = False
+    # шаги процесса: diagram — всегда схема из автофигур (замена SmartArt); template — process-образец шаблона,
+    # а без него схема; list — process-образец шаблона, а без него нумерованный список/карточки
+    process_form: Literal["diagram", "template", "list"] = "list"
     outline_rules: str = ""
     audience_hint: str = ""  # кому и когда нужен этот вариант — «актуальность различий» для UI и compare.md
 

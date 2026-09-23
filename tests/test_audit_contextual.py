@@ -124,10 +124,38 @@ def test_judge_deck_deadline_skips_remaining_slides(tmp_path: Path) -> None:
     found = judge_deck(_png(tmp_path, 4), slides, client, workers=2, deadline=time.monotonic() - 1)
     assert client.calls == [] and [f.slide_idx for f in found] == [0, 1, 2, 3]
     assert all(f.check_id == ERROR_CHECK_ID and f.severity == Severity.INFO and "бюджет" in f.message for f in found)
-    # дедлайн впереди — вызовы идут и получают его
-    deadline = time.monotonic() + 60
+    # дедлайн впереди и ближе окна слайда — вызовы идут и получают его
+    deadline = time.monotonic() + 30
     found = judge_deck(_png(tmp_path, 4), slides, client, workers=2, deadline=deadline)
     assert len(client.calls) == 4 and found == [] and client.deadlines == [deadline] * 4
+
+
+def test_judge_slide_window_does_not_hold_deck(tmp_path: Path, monkeypatch) -> None:
+    """Зависший запрос одного слайда закрывается окном SLIDE_TIMEOUT_S, а не дедлайном прогона."""
+    import time
+
+    from deckforge.audit.contextual import judge as judge_mod
+
+    monkeypatch.setattr(judge_mod, "SLIDE_TIMEOUT_S", 0.3)
+    answers = cassette("audit_judge_pulse")
+    slides = [SlideText(idx=i, title=f"T{i}", archetype=Archetype.CARDS) for i in range(3)]
+
+    class OneHangs(FakeClient):
+        def run_skill(self, skill, images=None, deadline=None, **inputs):
+            self.deadlines.append(deadline)
+            if inputs["slide_idx"] == 2:  # клиент честно ждёт до своего дедлайна и сдаётся
+                time.sleep(max(0.0, deadline - time.monotonic()))
+                raise TimeoutError("нет ответа")
+            return answers[0]
+
+    client = OneHangs()
+    run_deadline = time.monotonic() + 120
+    t0 = time.monotonic()
+    found = judge_deck(_png(tmp_path, 3), slides, client, workers=3, deadline=run_deadline)
+    assert time.monotonic() - t0 < 5  # колода не ждала 120 с
+    assert all(d < run_deadline for d in client.deadlines)
+    assert [(f.slide_idx, f.check_id) for f in found] == [(1, ERROR_CHECK_ID)]
+    assert "нет ответа" in found[0].message
 
 
 def test_judge_deck_does_not_wait_for_answers_past_deadline(tmp_path: Path) -> None:

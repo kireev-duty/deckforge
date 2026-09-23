@@ -18,6 +18,9 @@ log = logging.getLogger(__name__)
 
 SKILL_NAME = "audit_judge"
 WORKERS = 4
+# окно на один слайд (с повтором внутри): зависший запрос провайдера не держит колоду до дедлайна прогона —
+# слайд получает C00 «не ответил», остальные судятся дальше (VK Tech executive: один слайд ждал 240 с)
+SLIDE_TIMEOUT_S = 60.0
 MAX_FACT_CHARS = 6000  # фактов в промпт на слайд
 MAX_TEXT_CHARS = 2000
 
@@ -129,7 +132,7 @@ def judge_deck(pngs: list[Path], slides: list[SlideText], client: Any, language:
                workers: int = WORKERS, deadline: float | None = None) -> list[Finding]:
     """Один вызов VLM на слайд, параллельно; PNG и slides сопоставляются по порядку.
 
-    `deadline` (`time.monotonic()`) — бюджет времени колоды: слайды, не проверенные к нему, получают info-находку
+    `deadline` (`time.monotonic()`) — бюджет времени прогона: слайды, не проверенные к нему, получают info-находку
     `C00_judge_error` «не проверен», оставшиеся вызовы не делаются, а начатых и не ответивших к дедлайну
     судья не ждёт (иначе колода выходила за бюджет на время последнего запроса).
     """
@@ -150,7 +153,7 @@ def judge_deck(pngs: list[Path], slides: list[SlideText], client: Any, language:
     def one(i: int) -> list[Finding]:
         png, s = pairs[i]
         if deadline is not None and time.monotonic() >= deadline:
-            return skipped(s, "слайд не проверен — бюджет времени колоды исчерпан")
+            return skipped(s, "слайд не проверен — бюджет времени прогона исчерпан")
         inputs = {
             "slide_idx": s.idx + 1, "slide_title": s.title or "(без заголовка)",
             "slide_text": s.text or "(текста нет)",
@@ -158,8 +161,10 @@ def judge_deck(pngs: list[Path], slides: list[SlideText], client: Any, language:
             "next_slide_title": titles[i + 1] if i + 1 < len(titles) else "(нет — последний слайд)",
             "source_facts": s.facts or "(факты не переданы)", "language": language,
         }
+        window = time.monotonic() + SLIDE_TIMEOUT_S
         try:
-            res = client.run_skill(skill, images=[png], deadline=deadline, **inputs)
+            res = client.run_skill(skill, images=[png], deadline=window if deadline is None else min(deadline, window),
+                                   **inputs)
         except Exception as e:  # noqa: BLE001
             log.warning("contextual: слайд %d — %s", s.idx + 1, e)
             return skipped(s, f"не ответил: {str(e)[:120]}")
@@ -172,9 +177,9 @@ def judge_deck(pngs: list[Path], slides: list[SlideText], client: Any, language:
         results: list[list[Finding]] = []
         for fut, i in futures.items():
             if not fut.done():
-                # начатый HTTP-запрос не прервать — ответа просто не ждём, бюджет колоды важнее
+                # начатый HTTP-запрос не прервать — ответа просто не ждём, бюджет прогона важнее
                 fut.cancel()
-                results.append(skipped(pairs[i][1], "слайд не проверен — бюджет времени колоды исчерпан"))
+                results.append(skipped(pairs[i][1], "слайд не проверен — бюджет времени прогона исчерпан"))
                 continue
             try:
                 results.append(fut.result())

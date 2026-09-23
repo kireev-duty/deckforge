@@ -17,6 +17,9 @@ RETRY_PAUSE_S = 2.0
 # профиль LibreOffice общий, и два soffice на нём одновременно мешают друг другу (второй падает или ждёт первый):
 # на публичном стенде в одном процессе крутятся несколько сессий UI — конвертации идут строго по одной
 _SOFFICE_LOCK = threading.Lock()
+# PyMuPDF при импорте переводит MuPDF в однопоточный режим (`mupdf.reinit_singlethreaded()`), а колоды прогона
+# рендерят PNG параллельно — растеризация тоже по одной
+_MUPDF_LOCK = threading.Lock()
 SOFFICE_CANDIDATES = [
     os.environ.get("SOFFICE_PATH", ""),
     r"C:\Program Files\LibreOffice\program\soffice.exe",
@@ -80,7 +83,7 @@ def pptx_to_pdf(pptx: Path, out_dir: Path, timeout: int = 180, retries: int = 1)
 def pdf_to_pngs(pdf: Path, out_dir: Path, dpi: int = 72, pages: set[int] | None = None) -> list[Path]:
     out_dir.mkdir(parents=True, exist_ok=True)
     paths = []
-    with pymupdf.open(pdf) as doc:
+    with _MUPDF_LOCK, pymupdf.open(pdf) as doc:
         for i, page in enumerate(doc, start=1):
             if pages and i not in pages:
                 continue

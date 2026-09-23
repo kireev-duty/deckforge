@@ -14,9 +14,13 @@ ROOT = Path(__file__).resolve().parents[2]
 Purpose = Literal["feature", "product", "project", "initiative", "report", "other"]
 
 
-def _env_int(name: str, default: int) -> int:
-    raw = os.environ.get(name, "").strip()
-    return int(raw) if raw.isdigit() else default
+def _env_int(name: str, default: int, *fallbacks: str) -> int:
+    """Целое из env; `fallbacks` — прежние имена переменной (читаются, если основной нет)."""
+    for key in (name, *fallbacks):
+        raw = os.environ.get(key, "").strip()
+        if raw.isdigit():
+            return int(raw)
+    return default
 
 
 class AuditConfig(BaseModel):
@@ -42,9 +46,14 @@ class RunConfig(BaseModel):
     seed: int | None = None
     render_png: bool = False  # PNG-превью + contact.png (LibreOffice)
     render_dpi: int = 72
-    # бюджет времени на одну колоду (ТЗ: ≤ 5 мин) — считается от старта outline; при нехватке пропускаются
-    # картинки, затем VLM-судья (вёрстка, аудит и экспорт — всегда). По умолчанию — из .env.
-    time_budget_s: int = Field(default_factory=lambda: _env_int("DECK_TIME_BUDGET_S", 300), ge=10)
+    # бюджет времени на весь прогон — все стратегии вместе (уточнение ТЗ: три варианта ≤ 5 мин, колоды можно
+    # собирать параллельно); часы — от старта прогона (разбор, бриф и outline входят). При нехватке пропускаются
+    # картинки, затем VLM-судья (вёрстка, аудит и экспорт — всегда). DECK_TIME_BUDGET_S — прежнее имя.
+    time_budget_s: int = Field(default_factory=lambda: _env_int("RUN_TIME_BUDGET_S", 300, "DECK_TIME_BUDGET_S"),
+                               ge=10)
+    # сколько колод собирается одновременно (потоки); 1 — по очереди, как раньше
+    max_parallel_decks: int = Field(default_factory=lambda: _env_int("RUN_MAX_PARALLEL_DECKS", 3), ge=1, le=8)
+    # параллельных вызовов LLM внутри одной колоды (судья по слайдам, картинки)
     max_parallel_llm: int = Field(default_factory=lambda: _env_int("DECK_MAX_PARALLEL_LLM", 4), ge=1, le=16)
 
     @field_validator("template", "content_pack", "output_dir", mode="after")
@@ -59,7 +68,8 @@ class RunConfig(BaseModel):
     def _non_empty(cls, v: list[str]) -> list[str]:
         if not v:
             raise ValueError("strategies: нужна хотя бы одна стратегия")
-        return [s.strip() for s in v]
+        # без повторов: колоды одного имени писали бы одни и те же файлы (а параллельно — одновременно)
+        return list(dict.fromkeys(s.strip() for s in v))
 
 
 def load_config(path: str | Path) -> RunConfig:

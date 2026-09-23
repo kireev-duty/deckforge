@@ -50,7 +50,11 @@ skills:
 
 agents:
   # Оркестраторы, объединяющие скиллы: состав и порядок шагов версионируются здесь,
-  # исполняет их pipeline/run.py (ретраи и бюджет времени — LLMClient и DECK_TIME_BUDGET_S).
+  # исполняет их pipeline/run.py (ретраи и бюджет времени — LLMClient и RUN_TIME_BUDGET_S — один дедлайн на прогон).
   deck_generator:
-    current: v1
-    steps: [outline_writer, layout, slide_filler, render, audit, autofix]
+    current: v2
+    # template_brief — только когда на входе один шаблон; image_prompter и audit_judge пропускаются при нехватке бюджета
+    steps: [template_brief, outline_writer, image_prompter, layout, render, audit, autofix, audit_judge, export]
+    history:
+      - {version: v1, steps: [outline_writer, layout, slide_filler, render, audit, autofix], note: "план; slide_filler так и не подключён"}
+      - {version: v2, note: "шаги по факту pipeline/run.py: бриф из шаблона, иллюстрации, VLM-судья, экспорт; схема процесса — шаг layout (process_form стратегии)"}

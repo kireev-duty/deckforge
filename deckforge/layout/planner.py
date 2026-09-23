@@ -10,7 +10,7 @@ import math
 import re
 from dataclasses import dataclass, field
 
-from deckforge.core.ir import Archetype, ChartSpec, DeckOutline, KpiSpec, OutlineSlide, TableSpec
+from deckforge.core.ir import Archetype, ChartSpec, DeckOutline, DiagramSpec, KpiSpec, OutlineSlide, TableSpec
 from deckforge.core.strategy import Strategy
 from deckforge.layout.fitting import shorten_words
 
@@ -23,6 +23,7 @@ _NUM = re.compile(r"^[+\-−–]?\d+(?:[.,]\d+)?$")
 _MERGEABLE = (Archetype.BULLETS, Archetype.TWO_COLUMN, Archetype.CARDS, Archetype.PROCESS, Archetype.KPI, Archetype.QUOTE)
 _MERGE_LAST = (Archetype.KPI, Archetype.QUOTE)  # только когда текстовых пар не осталось
 STEP_NUMBERING = "{n}. {text}"
+DIAGRAM_MIN_STEPS, DIAGRAM_MAX_STEPS = 2, 6  # схема шевронами в один ряд; больше — нумерованный список
 
 
 @dataclass
@@ -56,6 +57,7 @@ def plan(
     slides = [visualize(s, strategy) for s in sane]
     slides = split_mixed_data(slides)
     slides = apply_density(slides, strategy)
+    slides = [apply_process_form(s, strategy, available) for s in slides]
     slides = split_kpis(slides, strategy, kpi_capacity)
     slides = apply_sections(slides, strategy, available)
     slides = fit_count(slides, strategy, warnings)
@@ -78,7 +80,7 @@ def _is_empty(s: OutlineSlide) -> bool:
     """
     if s.archetype in _STRUCTURAL:
         return False
-    return not (s.bullets or s.paragraphs or s.kpis or s.steps or s.chart or s.table or s.quote or s.image)
+    return not (s.bullets or s.paragraphs or s.kpis or s.steps or s.chart or s.table or s.quote or s.image or s.diagram)
 
 
 def sanitize_data(src: OutlineSlide, warnings: list[str]) -> OutlineSlide:
@@ -282,6 +284,23 @@ def apply_density(slides: list[OutlineSlide], strategy: Strategy) -> list[Outlin
         s.steps = [shorten_words(b, d.max_words_per_bullet) for b in s.steps]
         out.extend(split_slide(s, d.max_bullets))
     return out
+
+
+def apply_process_form(s: OutlineSlide, strategy: Strategy, available: set[Archetype]) -> OutlineSlide:
+    """Шаги процесса → схема из автофигур (замена SmartArt) по `Strategy.process_form`.
+
+    `diagram` — всегда (visual: процессы видны с задних рядов); `template` — только если в шаблоне нет
+    своего process-образца (narrative держит стиль автора, где он есть); `list` — никогда.
+    Больше DIAGRAM_MAX_STEPS шагов схемой не рисуем — они остаются нумерованным списком."""
+    wanted = strategy.process_form == "diagram" or (strategy.process_form == "template"
+                                                    and Archetype.PROCESS not in available)
+    if (not wanted or not s.steps or s.bullets or not DIAGRAM_MIN_STEPS <= len(s.steps) <= DIAGRAM_MAX_STEPS
+            or s.chart or s.table or s.kpis):
+        return s
+    s.diagram = DiagramSpec(kind="process", items=list(s.steps))
+    s.steps = []
+    s.archetype = Archetype.PROCESS
+    return s
 
 
 def split_slide(s: OutlineSlide, max_items: int, items_attr: str = "bullets") -> list[OutlineSlide]:

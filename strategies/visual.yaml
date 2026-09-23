@@ -2,7 +2,7 @@
 # Ось: любой числовой ряд и любое сравнение — диаграмма; текст — короткие тезисы в карточках с пиктограммами.
 # Схема полей — deckforge/core/strategy.py (Strategy).
 name: visual
-version: v1
+version: v2
 target_slides: {min: 10, max: 12}
 density:
   max_bullets: 6
@@ -13,6 +13,7 @@ data_visualization: {numeric_series: chart, comparison: chart, key_metrics: kpi}
 sections: false
 images: always           # каждому слайду без графика/схемы — иконка или иллюстрация
 icons: true              # буллеты сопровождаются пиктограммами
+process_form: diagram    # шаги — всегда схемой из автофигур (шевроны в цветах шаблона, замена SmartArt)
 audience_hint: публичная защита, конференция, маркетинг — цифры и процессы видны с задних рядов
 outline_rules: |
   Любой числовой ряд — диаграмма с подписями осей и единицами. Любая последовательность действий — схема шагов (process).

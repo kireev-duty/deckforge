@@ -12,6 +12,7 @@ archetype_priority: [kpi, table, cards, bullets, two_column, chart, process, age
 data_visualization: {numeric_series: table, comparison: table, key_metrics: kpi}
 sections: false          # без слайдов-разделителей
 images: minimal          # картинки только если есть в контент-пакете
+process_form: list       # шаги без process-образца — нумерованный список: плотнее схемы
 audience_hint: руководителю на 5 минут — статус, отчёт, решение по цифрам; читается без докладчика
 outline_rules: |
   Структура: титул → главный вывод (KPI) → 3–5 слайдов с доказательствами (таблицы/сравнения) → риски → план → следующие шаги → финал.

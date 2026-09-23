@@ -34,6 +34,11 @@ from deckforge.core.units import emu_to_px
 log = logging.getLogger(__name__)
 
 PX_PER_PT = 96 / 72
+# многоугольники стрелочных автофигур (w, h, глубина острия d) — схема шагов из render/diagrams
+ARROW_POLYGONS = {
+    "homePlate": lambda w, h, d: [(0, 0), (w - d, 0), (w, h / 2), (w - d, h), (0, h)],
+    "chevron": lambda w, h, d: [(0, 0), (w - d, 0), (w, h / 2), (w - d, h), (0, h), (d, h / 2)],
+}
 MIME = {".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".gif": "image/gif", ".svg": "image/svg+xml",
         ".webp": "image/webp", ".bmp": "image/bmp", ".tif": "image/tiff", ".tiff": "image/tiff"}
 SKIP_MEDIA = (".emf", ".wmf")
@@ -165,6 +170,11 @@ class HtmlExporter:
             css.append("border-radius:50%")
         elif s.geom == "roundRect":
             css.append(f"border-radius:{min(w, h) * (s.geom_adj if s.geom_adj is not None else 0.16667):.1f}px")
+        elif s.geom in ARROW_POLYGONS:
+            # шаги схемы из автофигур: остриё глубиной adj·min(w, h), у шеврона — выемка слева
+            d = min(w, h) * (s.geom_adj if s.geom_adj is not None else 0.5)
+            pts = ARROW_POLYGONS[s.geom](w, h, d)
+            css.append("clip-path:polygon(" + ",".join(f"{px:.1f}px {py:.1f}px" for px, py in pts) + ")")
         tf = _transform(s)
         if tf:
             css.append(tf)

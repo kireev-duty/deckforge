@@ -5,6 +5,7 @@
 
 Этапы (`parse_template`, `make_outline`, `build_deck`, `refine_deck`, `run`) — отдельные функции,
 из которых CLI, UI и API собирают цикл; каждая колода получает `manifest.json` с провенансом.
+Колоды одного прогона собираются параллельно (потоки) под общим дедлайном: три варианта ≤ 5 минут вместе.
 """
 
 from __future__ import annotations
@@ -12,9 +13,11 @@ from __future__ import annotations
 import hashlib
 import json
 import logging
+import queue
 import shutil
 import time
 from collections.abc import Callable, Iterable
+from concurrent.futures import FIRST_COMPLETED, Future, ThreadPoolExecutor, wait
 from dataclasses import asdict, dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
@@ -51,11 +54,13 @@ log = logging.getLogger(__name__)
 
 Progress = Callable[[str], None]
 
-# резервы бюджета времени колоды (с): картинки не начинаются, если до дедлайна меньше IMAGES_RESERVE_S,
+# резервы бюджета времени прогона (с): картинки не начинаются, если до дедлайна меньше IMAGES_RESERVE_S,
 # судья — если меньше JUDGE_RESERVE_S; EXPORT_RESERVE_S оставляется на PDF/HTML после судьи
 IMAGES_RESERVE_S = 90.0
 JUDGE_RESERVE_S = 30.0
 EXPORT_RESERVE_S = 15.0
+# как часто поток прогона разбирает очередь сообщений параллельных колод (с)
+PROGRESS_POLL_S = 0.3
 
 # ступени лестницы входа (OutlineStep.content_source) — для CLI/UI и run.json
 CONTENT_SOURCE_NOTE = {
@@ -177,7 +182,7 @@ class DeckResult:
 
 @dataclass
 class RunContext:
-    """Общее для всех колод прогона: конфиг, шаблон, outline, клиент LLM, факты для судьи."""
+    """Общее для всех колод прогона: конфиг, шаблон, outline, клиент LLM, факты для судьи, дедлайн."""
 
     cfg: RunConfig
     parsed: ParsedTemplate
@@ -186,27 +191,39 @@ class RunContext:
     pack: Any = None  # контент-пакет — факты для судьи
     contextual_on: bool = False
     warnings: list[str] = field(default_factory=list)
+    t_start: float = 0.0  # time.monotonic() старта прогона — от него бюджет `cfg.time_budget_s`
 
-    def client_for_images(self) -> LLMClient | None:
-        """Клиент для иллюстраций: общий клиент прогона, иначе новый."""
-        if self.client is None and self.cfg.images != "off":
-            try:
-                self.client = LLMClient()
-            except Exception as e:  # noqa: BLE001 — без .env колода собирается без картинок
-                self.warnings.append(f"images: клиент LLM недоступен ({str(e)[:80]}) — без иллюстраций")
-        return self.client
+    @property
+    def deadline(self) -> float:
+        """Общий дедлайн всех колод прогона (`time.monotonic()`)."""
+        return self.t_start + self.cfg.time_budget_s
+
+    def deck_client(self) -> LLMClient | None:
+        """Клиент колоды: те же соединения и лимит, свой журнал вызовов (manifest колоды — только её вызовы)."""
+        return self.client.fork() if self.client is not None else None
 
     @classmethod
     def prepare(cls, cfg: RunConfig, parsed: ParsedTemplate, outline: OutlineStep,
-                client: LLMClient | None = None) -> RunContext:
-        """Будет ли VLM-судья (нужны LibreOffice и клиент); факты из контент-пакета."""
-        ctx = cls(cfg, parsed, outline, client)
+                client: LLMClient | None = None, t_start: float | None = None) -> RunContext:
+        """Будет ли VLM-судья (нужны LibreOffice и клиент); факты из контент-пакета; часы прогона.
+
+        Без `t_start` прогон считается начатым с разбора шаблона: `build_deck` по отдельности
+        видит тот же остаток бюджета, что и внутри `run()`."""
+        if t_start is None:
+            t_start = time.monotonic() - parsed.seconds - outline.seconds
+        ctx = cls(cfg, parsed, outline, client, t_start=t_start)
         ctx.contextual_on = cfg.audit.contextual and cfg.audit.deterministic
         if ctx.contextual_on and not soffice_available():
             ctx.warnings.append("audit.contextual: LibreOffice не найден — контекстуальный аудит пропущен")
             ctx.contextual_on = False
         if ctx.contextual_on and ctx.client is None:
             ctx.client = LLMClient()  # outline готовый, но судье нужна VLM
+        if ctx.client is None and cfg.images != "off":
+            # клиент картинок — здесь, а не лениво в колоде: колоды собираются параллельно
+            try:
+                ctx.client = LLMClient()
+            except Exception as e:  # noqa: BLE001 — без .env колода собирается без картинок
+                ctx.warnings.append(f"images: клиент LLM недоступен ({str(e)[:80]}) — без иллюстраций")
         if ctx.contextual_on:
             # факты судье: то, из чего собран outline; с готовым outline — пакет с диска, если он задан
             ctx.pack = outline.pack
@@ -362,7 +379,10 @@ def _copy_brief(outline_path: Path | None, out_dir: Path) -> Path | None:
 
 
 def build_deck(ctx: RunContext, strategy_name: str, progress: Progress | None = None) -> DeckResult:
-    """Одна стратегия: layout → render → аудит → safe-автофиксы → IR → PNG → VLM-судья → PDF → manifest."""
+    """Одна стратегия: layout → render → аудит → safe-автофиксы → IR → PNG → VLM-судья → PDF → manifest.
+
+    Потокобезопасна относительно соседних колод прогона: общий только дедлайн `ctx.deadline`,
+    файлы колоды названы по стратегии, журнал LLM — свой (`ctx.deck_client`)."""
     say = progress or (lambda msg: log.info(msg))
     cfg, parsed, outline = ctx.cfg, ctx.parsed, ctx.outline.outline
     out_dir = cfg.output_dir
@@ -372,14 +392,15 @@ def build_deck(ctx: RunContext, strategy_name: str, progress: Progress | None = 
     deck_warnings: list[str] = []
     skills_used = dict(ctx.outline.skills_used)
     images_info: dict = {}
-    # часы колоды: её доля outline (один вызов на прогон) + всё ниже; дедлайн — бюджет из конфига
+    client = ctx.deck_client()
+    # дедлайн один на прогон: все колоды (параллельно) должны уложиться в бюджет от старта прогона
     t_deck0 = time.monotonic()
-    deadline = t_deck0 + cfg.time_budget_s - ctx.outline.seconds
+    deadline = ctx.deadline
     if cfg.images != "off" and deadline - time.monotonic() < IMAGES_RESERVE_S:
-        deck_warnings.append("images: пропущено — бюджет времени колоды почти исчерпан после outline")
+        deck_warnings.append("images: пропущено — бюджет времени прогона почти исчерпан после outline")
     elif cfg.images != "off":
         # иллюстрации до вёрстки: picker учитывает наличие картинки
-        ill = illustrate(outline, strategy, parsed.style, ctx.client_for_images(), out_dir, cfg_mode=cfg.images,
+        ill = illustrate(outline, strategy, parsed.style, client, out_dir, cfg_mode=cfg.images,
                          parallel=cfg.max_parallel_llm, deadline=deadline - IMAGES_RESERVE_S)
         outline, images_info = ill.outline, ill.summary()
         for item in images_info.get("items", []):
@@ -426,18 +447,18 @@ def build_deck(ctx: RunContext, strategy_name: str, progress: Progress | None = 
     if ctx.contextual_on and not pngs:
         deck_warnings.append("audit.contextual: VLM-судья пропущен — нет PNG")
     if ctx.contextual_on and pngs and report is not None and deadline - time.monotonic() < JUDGE_RESERVE_S:
-        deck_warnings.append("audit.contextual: VLM-судья пропущен — бюджет времени колоды исчерпан")
+        deck_warnings.append("audit.contextual: VLM-судья пропущен — бюджет времени прогона исчерпан")
     elif ctx.contextual_on and pngs and report is not None:
         t0 = time.perf_counter()
         slides = slides_from_ir(res.ir, outline, ctx.pack)
-        found = judge_deck(pngs, slides, ctx.client, language=outline.language, workers=cfg.max_parallel_llm,
+        found = judge_deck(pngs, slides, client, language=outline.language, workers=cfg.max_parallel_llm,
                            deadline=deadline - EXPORT_RESERVE_S)
         deck_timings["audit_contextual"] = round(time.perf_counter() - t0, 3)
         report = with_contextual(report, found, CONTEXTUAL_CHECKS, deck_timings["audit_contextual"])
-        skills_used["audit_judge"] = _skill_version(ctx.client, "audit_judge")
+        skills_used["audit_judge"] = _skill_version(client, "audit_judge")
         n_skipped = sum(1 for f in found if f.check_id == ERROR_CHECK_ID and "бюджет" in f.message)
         if n_skipped:
-            deck_warnings.append(f"audit.contextual: {n_skipped} слайдов не проверены судьёй — бюджет времени колоды")
+            deck_warnings.append(f"audit.contextual: {n_skipped} слайдов не проверены судьёй — бюджет времени прогона")
     if report is not None:
         audit_path = out_dir / f"{strategy.name}.audit.json"
         audit_path.write_text(_portable_report(report, out_dir), "utf-8")
@@ -460,12 +481,17 @@ def build_deck(ctx: RunContext, strategy_name: str, progress: Progress | None = 
             deck_warnings.append(err)
         deck_timings["export_html"] = round(time.perf_counter() - t0, 3)
 
-    # время колоды целиком: доля outline + всё от картинок до HTML (parse кэшируется и не считается)
-    deck_timings["deck_total"] = round(ctx.outline.seconds + time.monotonic() - t_deck0, 3)
+    # deck_build — работа самой колоды (картинки … HTML); deck_total — от старта прогона (разбор, бриф, outline
+    # и параллельные соседи входят) до готовности колоды: через сколько пользователь её получил
+    now = time.monotonic()
+    deck_timings["deck_build"] = round(now - t_deck0, 3)
+    deck_timings["deck_total"] = round(now - ctx.t_start, 3)
     if deck_timings["deck_total"] > cfg.time_budget_s:
-        deck_warnings.append(f"бюджет времени колоды превышен: {deck_timings['deck_total']:.0f} с > {cfg.time_budget_s} с")
+        deck_warnings.append(f"бюджет времени прогона превышен: колода готова через {deck_timings['deck_total']:.0f} с "
+                             f"> {cfg.time_budget_s} с")
 
-    llm_calls = [asdict(c) for c in ctx.client.calls] if ctx.client is not None else list(ctx.outline.llm_calls)
+    # журнал вызовов: outline (общий для колод прогона) + вызовы этой колоды
+    llm_calls = list(ctx.outline.llm_calls) + ([asdict(c) for c in client.calls] if client is not None else [])
     choices = [c.__dict__ for c in res.choices]
     deck = DeckResult(strategy.name, pptx_out, ir_path, out_dir / f"{strategy.name}.manifest.json", st, deck_warnings,
                       choices, pngs, deck_timings, audit_path, audit_info, pdf_path, html_path, strategy.audience_hint)
@@ -480,7 +506,7 @@ def build_deck(ctx: RunContext, strategy_name: str, progress: Progress | None = 
         "strategy": {"name": strategy.name, "version": strategy.version,
                      "target_slides": strategy.target_slides.model_dump(), "audience_hint": strategy.audience_hint},
         "skills": skills_used,
-        "models": _models(ctx.client),
+        "models": _models(client),
         "llm_calls": llm_calls,
         "plan": [{"idx": s.idx, "archetype": s.archetype.value, "title": s.title} for s in res.plan.slides],
         "choices": choices,
@@ -507,7 +533,8 @@ def build_deck(ctx: RunContext, strategy_name: str, progress: Progress | None = 
         + (f", png {deck_timings['png']:.1f}s" if pngs else "")
         + (f", pdf {deck_timings['export_pdf']:.1f}s" if pdf_path else "")
         + (f", html {deck_timings['export_html']:.1f}s" if html_path else "")
-        + f"; всего {deck_timings['deck_total']:.0f}s из {cfg.time_budget_s})")
+        + f"; колода {deck_timings['deck_build']:.0f}s, готова через {deck_timings['deck_total']:.0f}s "
+          f"из {cfg.time_budget_s} бюджета прогона)")
     return deck
 
 
@@ -590,9 +617,13 @@ def run(
     progress: Progress | None = None,
     outline_path: Path | None = None,
 ) -> RunResult:
-    """Полный прогон по конфигу; с готовым `outline` шаг content пропускается."""
+    """Полный прогон по конфигу; с готовым `outline` шаг content пропускается.
+
+    Колоды собираются параллельно (`cfg.max_parallel_decks` потоков) под общим дедлайном
+    `cfg.time_budget_s` от старта прогона; `progress` вызывается только из потока, вызвавшего `run`."""
     say = progress or (lambda msg: log.info(msg))
     t_start = time.perf_counter()
+    t_run0 = time.monotonic()
     out_dir = cfg.output_dir
     out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -611,20 +642,29 @@ def run(
     warnings = [f"outline: {w}" for w in step.warnings]
     timings: dict[str, float] = {"parse": parsed.seconds, "outline": step.seconds}
 
-    ctx = RunContext.prepare(cfg, parsed, step, client)
-    warnings += ctx.warnings
-    decks: list[DeckResult] = []
+    ctx = RunContext.prepare(cfg, parsed, step, client, t_start=t_run0)
+    workers = min(cfg.max_parallel_decks, len(cfg.strategies))
+    left = ctx.deadline - time.monotonic()
+    say(f"сборка: {', '.join(cfg.strategies)} — {_how_built(len(cfg.strategies), workers) or 'одна колода'}, "
+        f"бюджет {cfg.time_budget_s} с на прогон, осталось {left:.0f} с")
+    t0 = time.perf_counter()
+    decks = _build_decks(ctx, cfg.strategies, say, workers)
+    timings["decks"] = round(time.perf_counter() - t0, 3)
+    warnings += ctx.warnings  # после колод: сюда же пишут шаги, идущие внутри них
     rows: dict[str, dict] = {}
-    for name in cfg.strategies:
-        d = build_deck(ctx, name, say)
-        decks.append(d)
+    for d in decks:
         rows[d.strategy] = {**d.stats, "audit_errors": d.audit_summary.get("errors", "—"),
                             "audit_warnings": d.audit_summary.get("warnings", "—"),
                             "deck_total": d.timings_s.get("deck_total"), "audience_hint": d.audience_hint}
         warnings += [w if w.startswith(d.strategy) else f"{d.strategy}: {w}" for w in d.warnings]
 
-    (out_dir / "compare.md").write_text(compare_table(rows) + "\n", "utf-8")
     timings["total"] = round(time.perf_counter() - t_start, 3)
+    if timings["total"] > cfg.time_budget_s:
+        warnings.append(f"бюджет времени прогона превышен: {timings['total']:.0f} с > {cfg.time_budget_s} с")
+    how = _how_built(len(decks), workers)
+    (out_dir / "compare.md").write_text(
+        compare_table(rows) + f"\n\n{'Варианты собраны ' + how if how else 'Колода собрана'} за {timings['total']:.0f} с "
+        f"из {cfg.time_budget_s} с бюджета прогона (разбор, outline и колоды).\n", "utf-8")
     result = RunResult(out_dir, step.outline, step.path, decks, timings, warnings, parsed=parsed,
                        content_source=step.content_source, brief_path=step.brief_path)
     result.run_json = out_dir / "run.json"
@@ -657,6 +697,46 @@ def run_summary(cfg: RunConfig, result: RunResult) -> dict:
 
 
 # ──────────────────────────── вспомогательное ────────────────────────────
+
+
+def _build_decks(ctx: RunContext, names: list[str], say: Progress, workers: int) -> list[DeckResult]:
+    """Колоды по стратегиям; при `workers > 1` — в потоках под общим дедлайном `ctx.deadline`.
+
+    Сообщения колод идут через очередь и передаются в `say` из вызывающего потока: Streamlit пишет в статус
+    только из потока скрипта. Результат — в порядке `names`, а не готовности; ошибка колоды пробрасывается,
+    когда досчитаются остальные."""
+    if workers <= 1 or len(names) <= 1:
+        return [build_deck(ctx, name, say) for name in names]
+    inbox: queue.SimpleQueue[str] = queue.SimpleQueue()
+
+    def drain() -> None:
+        while True:
+            try:
+                msg = inbox.get_nowait()
+            except queue.Empty:
+                return
+            say(msg)
+
+    pool = ThreadPoolExecutor(max_workers=workers, thread_name_prefix="deck")
+    try:
+        futures: dict[str, Future[DeckResult]] = {n: pool.submit(build_deck, ctx, n, inbox.put) for n in names}
+        pending = set(futures.values())
+        while pending:
+            _, pending = wait(pending, timeout=PROGRESS_POLL_S, return_when=FIRST_COMPLETED)
+            drain()
+    finally:
+        pool.shutdown(wait=True, cancel_futures=True)
+    drain()
+    return [futures[n].result() for n in names]
+
+
+def _how_built(n_decks: int, workers: int) -> str:
+    """«параллельно (3 потока)» / «по очереди»; для одной колоды — пусто."""
+    if n_decks <= 1:
+        return ""
+    if workers <= 1:
+        return "по очереди"
+    return f"параллельно ({workers} {'потока' if workers < 5 else 'потоков'})"
 
 
 def _portable_report(report: AuditReport, base: Path) -> str:
@@ -702,13 +782,16 @@ def _export_pdf(pptx: Path, rendered_dir: Path | None) -> tuple[Path | None, str
         return target, None
     if not soffice_available():
         return None, "export.pdf: LibreOffice не найден — PDF пропущен"
+    # своя временная папка у колоды: колоды прогона экспортируются параллельно
+    tmp_dir = pptx.parent / f"_pdf_{pptx.stem}"
     try:
-        tmp = pptx_to_pdf(pptx, pptx.parent / "_pdf")
+        tmp = pptx_to_pdf(pptx, tmp_dir)
         shutil.move(str(tmp), target)
-        shutil.rmtree(pptx.parent / "_pdf", ignore_errors=True)
         return target, None
     except Exception as e:  # noqa: BLE001
         return None, f"export.pdf: {str(e)[:120]}"
+    finally:
+        shutil.rmtree(tmp_dir, ignore_errors=True)
 
 
 def _export_html(pptx: Path, ir: DeckIR | None, title: str | None) -> tuple[Path | None, str | None]:
@@ -734,6 +817,8 @@ def _style(tokens: TemplateTokens) -> dict:
         "palette": ",".join(tokens.palette("accent") + tokens.palette("secondary")),
         "font": tokens.fonts[0] if tokens.fonts else "Arial",
         "text_color": (tokens.palette("text") or ["212121"])[0],
+        # шкала кеглей шаблона — схема из автофигур берёт кегли из неё (T02)
+        "type_scale": ",".join(f"{v:g}" for v in sorted({t.size_pt for t in tokens.typography})),
     }
 
 

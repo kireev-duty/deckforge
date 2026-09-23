@@ -28,6 +28,7 @@ TEMPLATE_DIRS = [ROOT / "data" / "templates", ROOT / "data" / "holdout"]
 WILD_DIR = ROOT / "data" / "wild"
 MAX_PER_REF = 4  # слайдов колоды на один слайд outline
 BLOAT = 2.0  # слайдов колоды к max(len(outline), target_slides.max)
+DECK_STEPS = ("layout", "render", "audit", "autofix", "export_html")  # время колоды в отчёте
 
 
 def per_ref_max(slides: list) -> int:
@@ -83,7 +84,8 @@ def worker(case: str, template: Path, strategies: list[str], out_dir: Path, html
             problems.append("html не собран")
         rows.append({
             "strategy": d.strategy, "status": "fail" if problems else "ok", "problems": problems,
-            "seconds": round(sum(v for k, v in d.timings_s.items() if k not in ("parse", "outline")), 2),
+            # шаги самой колоды; deck_total/deck_build включают соседние колоды — они собираются параллельно
+            "seconds": round(sum(d.timings_s.get(k, 0.0) for k in DECK_STEPS), 2),
             "slides": d.stats["slides"], "skipped": d.stats["skipped"], "ir_slides": len(ir.slides),
             "max_per_ref": max_per_ref, "outline_slides": len(outline.slides),
             "errors": d.audit_summary.get("errors"), "warnings": d.audit_summary.get("warnings"),

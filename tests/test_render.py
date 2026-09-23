@@ -84,3 +84,39 @@ def test_pptx_to_pdf_serialized_across_threads(tmp_path: Path, monkeypatch: pyte
         t.join()
     assert peak[0] == 1
     assert all((tmp_path / "out" / f"d{i}.pdf").exists() for i in range(4))
+
+
+def test_pdf_to_pngs_serialized_across_threads(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Колоды прогона рендерят PNG параллельно, а MuPDF в однопоточном режиме — растеризация строго по одной."""
+    import threading
+    import time
+    from contextlib import contextmanager
+    from types import SimpleNamespace
+
+    active, peak, lock = [0], [0], threading.Lock()
+
+    class Page:
+        def get_pixmap(self, dpi: int):
+            time.sleep(0.02)
+            return SimpleNamespace(save=lambda p: Path(p).write_bytes(b"png"))
+
+    @contextmanager
+    def fake_open(pdf):
+        with lock:
+            active[0] += 1
+            peak[0] = max(peak[0], active[0])
+        try:
+            yield [Page(), Page()]
+        finally:
+            with lock:
+                active[0] -= 1
+
+    monkeypatch.setattr(render.pymupdf, "open", fake_open)
+    threads = [threading.Thread(target=render.pdf_to_pngs, args=(tmp_path / f"d{i}.pdf", tmp_path / f"png{i}"))
+               for i in range(4)]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+    assert peak[0] == 1
+    assert all(len(list((tmp_path / f"png{i}").glob("slide_*.png"))) == 2 for i in range(4))

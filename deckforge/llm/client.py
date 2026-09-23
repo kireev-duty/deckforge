@@ -3,9 +3,13 @@
 from __future__ import annotations
 
 import base64
+import copy
 import json
 import os
+import threading
 import time
+from collections.abc import Iterator
+from contextlib import contextmanager
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -40,9 +44,13 @@ class LLMClient:
     image_model: str = field(default_factory=lambda: os.environ.get("T2I_MODEL", "black-forest-labs/flux.2-klein-4b"))
     timeout_s: float = 120.0
     retries: int = 2
+    # общий лимит одновременных запросов к провайдеру (все колоды прогона вместе); 0 — без лимита
+    max_concurrency: int = field(default_factory=lambda: _env_int("LLM_MAX_CONCURRENCY", 0))
     calls: list[LLMCall] = field(default_factory=list)
 
     def __post_init__(self) -> None:
+        self._parent: LLMClient | None = None
+        self._sem = threading.BoundedSemaphore(self.max_concurrency) if self.max_concurrency > 0 else None
         self._client = OpenAI(base_url=self.base_url, api_key=self.api_key or "missing", timeout=self.timeout_s)
         # пустые T2I_* = использовать LLM-провайдер и его ключ
         self.image_base_url = self.image_base_url or self.base_url
@@ -56,6 +64,35 @@ class LLMClient:
 
     def model_for(self, role: str) -> str:
         return {"text": self.text_model, "vision": self.vision_model, "image": self.image_model}[role]
+
+    def fork(self) -> LLMClient:
+        """Тот же клиент (соединения, лимит `max_concurrency`), но свой журнал `calls` — для manifest колоды.
+
+        Колоды прогона собираются параллельно: у каждой свой форк, а вызов пишется и в журнал родителя,
+        так что у родителя по-прежнему все вызовы прогона."""
+        child = copy.copy(self)
+        child.calls = []
+        child._parent = self
+        return child
+
+    def _log(self, call: LLMCall) -> None:
+        self.calls.append(call)
+        if self._parent is not None:
+            self._parent._log(call)
+
+    @contextmanager
+    def _slot(self, deadline: float | None) -> Iterator[None]:
+        """Место под запрос в общем лимите `max_concurrency`; в очереди ждём не дольше дедлайна."""
+        if self._sem is None:
+            yield
+            return
+        wait_s = None if deadline is None else max(0.0, deadline - time.monotonic())
+        if not self._sem.acquire(timeout=wait_s):
+            raise TimeoutError("бюджет времени исчерпан в очереди к провайдеру (LLM_MAX_CONCURRENCY)")
+        try:
+            yield
+        finally:
+            self._sem.release()
 
     @staticmethod
     def no_think_extra() -> dict[str, Any]:
@@ -71,7 +108,8 @@ class LLMClient:
         """Выполняет скилл; если у скилла есть schema — возвращает распарсенный и валидный JSON.
 
         `deadline` — момент `time.monotonic()`, к которому ответ должен быть: таймаут запроса урезается до остатка,
-        повторных попыток после дедлайна нет (бюджет времени на колоду важнее ответа).
+        повторных попыток после дедлайна нет (бюджет времени прогона важнее ответа). При `max_concurrency`
+        запрос ждёт места в очереди не дольше дедлайна.
         """
         system, user = skill.render(**{k: _as_text(v) for k, v in inputs.items()})
         content: Any = user
@@ -92,44 +130,60 @@ class LLMClient:
         last_err: Exception | None = None
         for attempt in range(self.retries + 1):
             t0 = time.perf_counter()
-            client = self._client
-            if deadline is not None:
-                left = deadline - time.monotonic()
-                if left <= 0:
-                    last_err = TimeoutError("бюджет времени исчерпан" + (f" (после: {last_err})" if last_err else ""))
-                    self.calls.append(LLMCall(skill.id, model, 0.0, ok=False, error=str(last_err)[:200]))
-                    break
-                if left < self.timeout_s:
-                    client = self._client.with_options(timeout=max(1.0, left))
+            if deadline is not None and deadline - time.monotonic() <= 0:
+                last_err = TimeoutError("бюджет времени исчерпан" + (f" (после: {last_err})" if last_err else ""))
+                self._log(LLMCall(skill.id, model, 0.0, ok=False, error=str(last_err)[:200]))
+                break
             try:
-                resp = client.chat.completions.create(**kwargs)
+                with self._slot(deadline):
+                    # остаток до дедлайна — после ожидания в очереди лимита
+                    resp = self._until(deadline).chat.completions.create(**kwargs)
                 text = resp.choices[0].message.content or ""
                 usage = resp.usage
-                self.calls.append(LLMCall(skill.id, model, time.perf_counter() - t0,
-                                          usage.prompt_tokens if usage else 0,
-                                          usage.completion_tokens if usage else 0))
+                self._log(LLMCall(skill.id, model, time.perf_counter() - t0,
+                                  usage.prompt_tokens if usage else 0,
+                                  usage.completion_tokens if usage else 0))
                 if skill.schema:
                     return _parse_json(text)
                 return text
             except Exception as e:  # noqa: BLE001
                 last_err = e
-                self.calls.append(LLMCall(skill.id, model, time.perf_counter() - t0, ok=False, error=str(e)[:200]))
+                self._log(LLMCall(skill.id, model, time.perf_counter() - t0, ok=False, error=str(e)[:200]))
                 if attempt < self.retries:
                     time.sleep(1.5 * (attempt + 1))
         raise RuntimeError(f"skill {skill.id} failed after {self.retries + 1} attempts: {last_err}")
+
+    def _until(self, deadline: float | None) -> OpenAI:
+        """Клиент с таймаутом запроса, урезанным до остатка до дедлайна."""
+        if deadline is None:
+            return self._client
+        left = deadline - time.monotonic()
+        return self._client if left >= self.timeout_s else self._client.with_options(timeout=max(1.0, left))
 
     def generate_image(self, prompt: str, out_path: Path, size: str = "1024x576",
                        deadline: float | None = None) -> Path:
         """Text-to-image; расширение out_path подгоняется под media_type ответа. `deadline` — как у run_skill."""
         if not self.images_enabled:
             raise RuntimeError("генерация изображений отключена (нет ключа или T2I_MODEL пуст)")
+        if deadline is not None and deadline - time.monotonic() <= 0:
+            raise TimeoutError("бюджет времени исчерпан")
+        t0 = time.perf_counter()
+        with self._slot(deadline):
+            raw, media = self._t2i(prompt, size, deadline)
+        ext = ".jpg" if "jpeg" in media or "jpg" in media else ".png"
+        out_path = out_path.with_suffix(ext)
+        out_path.write_bytes(raw)
+        self._log(LLMCall("image_gen", self.image_model, time.perf_counter() - t0))
+        return out_path
+
+    def _t2i(self, prompt: str, size: str, deadline: float | None) -> tuple[bytes, str]:
+        """Запрос к T2I-провайдеру → (байты, media_type); таймаут — не дальше дедлайна."""
         timeout = self.timeout_s
         if deadline is not None:
             left = deadline - time.monotonic()
             if left <= 0:
                 raise TimeoutError("бюджет времени исчерпан")
             timeout = min(timeout, max(1.0, left))
-        t0 = time.perf_counter()
         if "openrouter.ai" in self.image_base_url:
             import httpx
 
@@ -155,14 +209,15 @@ class LLMClient:
 
                 raw = httpx.get(item.url, timeout=60).content
             media = "image/png"
-        ext = ".jpg" if "jpeg" in media or "jpg" in media else ".png"
-        out_path = out_path.with_suffix(ext)
-        out_path.write_bytes(raw)
-        self.calls.append(LLMCall("image_gen", self.image_model, time.perf_counter() - t0))
-        return out_path
+        return raw, media
 
 
 # ── утилиты ───────────────────────────────────────────────────────────────────
+
+
+def _env_int(name: str, default: int) -> int:
+    raw = os.environ.get(name, "").strip()
+    return int(raw) if raw.isdigit() else default
 
 
 def _as_text(v: Any) -> str:

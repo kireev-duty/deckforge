@@ -26,6 +26,16 @@ TITLE_LINES = 2  # заголовку можно две строки, даже �
 ELLIPSIS = "…"
 WORD_TOLERANCE = 3  # на столько слов сверх лимита пункт не режем
 MIN_WORDS_TO_CUT = 2  # короче — по словам не режем
+DANGLING_WORDS = frozenset({
+    "с", "со", "и", "в", "во", "на", "для", "по", "к", "ко", "о", "об", "от", "до", "из", "у", "а", "но", "или",
+    "за", "при", "без", "над", "под", "через", "что", "как", "не",
+    "a", "an", "the", "of", "for", "and", "or", "to", "in", "on", "with", "by", "at", "from",
+})
+# слова, перед которыми заголовок можно закончить без «…»: дальше идёт уточнение, а не ядро фразы
+PHRASE_BREAKS = frozenset({
+    "и", "с", "со", "для", "на", "в", "во", "как", "при", "без", "через", "или", "за", "от", "до", "из",
+    "and", "with", "for", "in", "on", "via", "as", "without", "through", "or",
+})
 _WS = re.compile(r"\s+")
 # символы, недопустимые в XML 1.0 — lxml бросает на них ValueError при записи
 _XML_BAD = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f\ud800-\udfff\ufffe\uffff]")
@@ -63,6 +73,15 @@ def shorten_title(text: str, max_chars: int | None) -> str:
             head = text[:idx].rstrip(" ,;:—–(")
             if MIN_LEAD_CHARS <= len(head) <= max_chars:
                 return head
+    # граница фразы перед предлогом/союзом: «Демонстрация возможностей на вашей инфраструктуре» →
+    # «Демонстрация возможностей» — законченная фраза без «…» (многоточие судья считает мусором, C07)
+    words = text.split(" ")
+    for i in range(len(words) - 1, MIN_WORDS_TO_CUT - 1, -1):
+        if words[i].lower() not in PHRASE_BREAKS:
+            continue
+        head = " ".join(words[:i]).rstrip(" ,;:—–(")
+        if len(head) <= max_chars and len(head) >= max_chars * MIN_HEAD_SHARE:
+            return head
     return _cut_words(text, max_chars)
 
 
@@ -200,7 +219,11 @@ def _cut_words(text: str, max_chars: int) -> str:
     cut = text[: max_chars - len(ELLIPSIS) + 1]
     # лимит короче первого слова — оставляем его целиком
     cut = cut.rsplit(" ", 1)[0] if " " in cut else text.split(" ", 1)[0]
-    return cut.rstrip(" ,;:—–(") + ELLIPSIS
+    # «Бесшовная интеграция с…» — висящий предлог/союз перед многоточием читается как обрыв на полуслове
+    words = cut.split(" ")
+    while len(words) > 1 and words[-1].lower().rstrip(",;:") in DANGLING_WORDS:
+        words.pop()
+    return " ".join(words).rstrip(" ,;:—–(") + ELLIPSIS
 
 
 __all__ = ["STRUCTURAL_TITLE_MIN_SCALE", "chars_at_scale", "cut_tail", "fit_number", "fit_size", "normalize", "shorten", "shorten_title", "shorten_words", "text_min_scale", "title_min_scale", "slot_capacity", "split_label_body", "split_number_unit", "xml_safe"]

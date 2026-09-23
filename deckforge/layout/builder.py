@@ -10,6 +10,7 @@ from deckforge.core.ir import (
     ChartSpec,
     DeckIR,
     DeckOutline,
+    DiagramSpec,
     Element,
     Exemplar,
     OutlineSlide,
@@ -23,7 +24,7 @@ from deckforge.core.ir import (
 )
 from deckforge.core.strategy import Strategy
 from deckforge.core.units import EMU_PER_PT
-from deckforge.layout.exemplar_picker import STRUCTURAL, Needs, has_image, pick_exemplar, score_exemplar
+from deckforge.layout.exemplar_picker import STRUCTURAL, Needs, content_box, has_image, pick_exemplar, score_exemplar
 from deckforge.layout.fitting import (
     DIGIT_WIDTH,
     GLYPH_WIDTH,
@@ -83,7 +84,9 @@ class LayoutResult:
 def layout_deck(outline: DeckOutline, dna: TemplateDNA, strategy: Strategy) -> LayoutResult:
     style = {"accent": (dna.palette("accent") or ["000000"])[0], "font": dna.fonts[0] if dna.fonts else "Arial",
              "palette": ",".join(dna.palette("accent") + dna.palette("secondary")),
-             "text_color": (dna.palette("text") or ["212121"])[0]}
+             "text_color": (dna.palette("text") or ["212121"])[0],
+             # шкала кеглей шаблона — схема из автофигур берёт кегли из неё (T02)
+             "type_scale": ",".join(f"{v:g}" for v in sorted({t.size_pt for t in dna.typography}))}
     return build_deck_ir(outline, strategy, dna.exemplars, dna.template_id, dna.slide_w, dna.slide_h, style)
 
 
@@ -104,6 +107,10 @@ def build_deck_ir(
         # образец, в который не лёг ни один пункт, не берём — иначе контент пропадёт молча
         tried: set[str] = set()
         first: tuple | None = None  # лучший по скору; к нему возвращаемся, если остальные не лучше
+        if s.diagram and pick_exemplar(s, exemplars, strategy, slide_w * slide_h, used)[0] is None:
+            # схеме негде встать (нет широкого body) — шаги нумерованным списком, как без неё
+            s = s.model_copy(update={"steps": list(s.diagram.items), "diagram": None})
+            result.warnings.append(f"слайд {s.idx} «{s.title[:40]}»: нет образца под схему — шаги списком")
         while True:
             e, score = pick_exemplar(s, exemplars, strategy, slide_w * slide_h, used, exclude=tried)
             if e is None:
@@ -189,7 +196,7 @@ def _compact_alternative(
 
 
 def _n_items(s: OutlineSlide) -> int:
-    return len(s.kpis) + len(s.bullets) + len(s.steps) + len(s.paragraphs)
+    return len(s.kpis) + len(s.bullets) + len(s.steps) + len(s.paragraphs) + (len(s.diagram.items) if s.diagram else 0)
 
 
 def _nothing_placed(s: OutlineSlide, leftover: OutlineSlide) -> bool:
@@ -212,6 +219,17 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
     ):
         # контент на титульном образце (или текст финала без своего подзаголовка): подзаголовок работает телом
         by_kind[SlotKind.BODY], by_kind[SlotKind.SUBTITLE] = by_kind[SlotKind.SUBTITLE][:1], by_kind[SlotKind.SUBTITLE][1:]
+    if s.diagram and not by_kind[SlotKind.BODY]:
+        # образец без тела (структурный резерв) — шаги обычным списком
+        s = s.model_copy(update={"steps": list(s.diagram.items), "diagram": None})
+    if s.diagram:
+        # схема из автофигур — на всю контентную область образца; слоты внутри неё рендер убирает
+        host = max(by_kind[SlotKind.BODY], key=lambda x: x.box.w * x.box.h)
+        area = content_box(e.slots) or host.box
+        for kind in (SlotKind.BODY, SlotKind.LABEL, SlotKind.CAPTION, SlotKind.NUMBER, SlotKind.PICTURE, SlotKind.ICON):
+            by_kind[kind] = []
+        elements.append(Element(slot_id=host.id, kind=SlotKind.BODY, box=area, style_overrides=dict(style),
+                                diagram=DiagramSpec(kind=s.diagram.kind, items=[normalize(t) for t in s.diagram.items])))
     if (s.chart or s.table) and not (by_kind[SlotKind.CHART] or by_kind[SlotKind.TABLE]) and by_kind[SlotKind.BODY]:
         # data-слота нет — нативный объект встаёт на место самого крупного текстового блока
         host = max(by_kind[SlotKind.BODY], key=lambda x: x.box.w * x.box.h)

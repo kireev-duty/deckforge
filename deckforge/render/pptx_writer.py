@@ -20,10 +20,11 @@ from pptx.opc.packuri import PackURI
 from pptx.parts.slide import SlidePart
 from pptx.slide import Slide
 
-from deckforge.core.ir import Box, DeckIR, Element, Exemplar, Paragraph, SlideIR, SlotKind, TemplateDNA
+from deckforge.core.ir import Box, DeckIR, Element, Exemplar, Paragraph, SlideIR, Slot, SlotKind, TemplateDNA
 from deckforge.core.ooxml import NS, A, P, R, absolute_bbox, iter_shapes, localname, shape_id, shape_text
-from deckforge.core.placeholders import is_photo_prompt, is_placeholder_text
+from deckforge.core.placeholders import is_photo_prompt, is_placeholder_text, is_speaker_text
 from deckforge.render.charts import add_chart
+from deckforge.render.diagrams import add_diagram
 from deckforge.render.tables import add_table
 
 log = logging.getLogger(__name__)
@@ -33,6 +34,8 @@ TEXT_KINDS = {
     SlotKind.FOOTER, SlotKind.DATE, SlotKind.OTHER,
 }
 PICTURE_KINDS = {SlotKind.PICTURE, SlotKind.ICON}
+# слоты, которые схема из автофигур не убирает: заголовки и поля
+DIAGRAM_KEEP_KINDS = {SlotKind.TITLE, SlotKind.SUBTITLE, SlotKind.SLIDE_NUMBER, SlotKind.FOOTER, SlotKind.DATE}
 # поля (номер, колонтитулы) при отсутствии элемента не очищаем
 KEEP_IF_UNFILLED = {SlotKind.SLIDE_NUMBER, SlotKind.FOOTER, SlotKind.DATE}
 PHOTO_FRAME_MAX_SHARE = 0.1  # рамка под подсказкой «Вставить фото» крупнее — это уже часть композиции, не трогаем
@@ -46,6 +49,8 @@ FILL_TAGS = ("noFill", "solidFill", "gradFill", "blipFill", "pattFill", "grpFill
 BULLET_TAGS = ("buNone", "buChar", "buAutoNum", "buBlip")
 DEFAULT_BULLET_MARL = 285750  # 0.3125", как в Office
 DARK_BG_LUMINANCE = 0.45  # ниже — фон тёмный, нативным объектам светлый текст
+PLATE_CHAR_WIDTH = 0.65  # ширина знака в долях кегля для плашки под заголовком: жирная кириллица ≈ 0,63
+EMU_PER_PT = 12700
 LIGHT_TEXT = "FFFFFF"
 # схемные цвета фона по роли, без резолва темы
 SCHEME_LIGHT = {"bg1", "lt1", "bg2", "lt2"}
@@ -291,7 +296,11 @@ class DeckWriter:
             if sp is None:
                 log.warning("слайд %s: слот %s не найден в образце %s", slide_ir.idx, el.slot_id, exemplar.id)
                 continue
-            if el.kind in (SlotKind.CHART, SlotKind.TABLE) and (el.chart or el.table):
+            if el.diagram is not None:
+                keep = set(exemplar.fixed) | {s.id for s in exemplar.slots if s.kind in DIAGRAM_KEEP_KINDS}
+                self._place_diagram(slide, el, shapes, keep)
+                filled.add(el.slot_id)
+            elif el.kind in (SlotKind.CHART, SlotKind.TABLE) and (el.chart or el.table):
                 self._replace_with_native(slide, sp, el, shapes, slot_ids, set(exemplar.fixed))
                 filled.add(el.slot_id)
             elif el.kind in (SlotKind.PICTURE, SlotKind.ICON) and el.image_path:
@@ -305,8 +314,12 @@ class DeckWriter:
             elif el.paragraphs:
                 fill_text(sp, el.paragraphs, el.style_overrides)
                 filled.add(el.slot_id)
+                slot = next((s for s in exemplar.slots if s.id == el.slot_id), None)
+                if slot is not None and slot.plate_id and (plate := shapes.get(slot.plate_id)) is not None:
+                    _grow_plate(plate, sp, slot, el)
         # незаполненные слоты очищаем, чтобы не остался текст образца
         unfilled: list[Box] = []
+        filled_boxes = [s.box for s in exemplar.slots if s.id in filled]
         for slot in exemplar.slots:
             if slot.id in filled or slot.kind not in TEXT_KINDS | PICTURE_KINDS:
                 continue
@@ -328,12 +341,25 @@ class DeckWriter:
                     clear_text(sp)
                 continue
             unfilled.append(slot.box)
-            if sp.find("p:nvSpPr/p:nvPr/p:ph", NS) is not None or _has_visible_frame(sp):
-                # пустой плейсхолдер показывает подсказку, слот с рамкой — пустую карточку: удаляем целиком
+            framed = sp.find("p:nvSpPr/p:nvPr/p:ph", NS) is not None or _has_visible_frame(sp)
+            if framed and any(_contains_center(slot.box, b) for b in filled_boxes):
+                # рамка карточки, в которой заполнена подпись (VK WorkSpace slide6: body — сама карточка,
+                # label и иконка внутри): без рамки подпись висела бы на фоне слайда
+                clear_text(sp)
+            elif framed:
+                # пустой плейсхолдер показывает подсказку, слот с рамкой — пустую карточку: удаляем целиком,
+                # вместе с незаполненными слотами внутри (иконка третьей карточки не остаётся одна)
                 _remove(sp)
+                for inner in exemplar.slots:
+                    if inner.id not in filled and inner.id != slot.id and inner.kind not in KEEP_IF_UNFILLED \
+                            and _contains_center(slot.box, inner.box) and (isp := shapes.get(inner.id)) is not None:
+                        _remove(isp)
             elif sp.find("p:txBody", NS) is not None:
                 clear_text(sp)
         fixed = set(exemplar.fixed)
+        for slot in exemplar.slots:
+            if slot.kind in TEXT_KINDS and slot.sample_text and is_speaker_text(slot.sample_text):
+                self._remove_speaker_avatars(shapes, slot.box, slot_ids | fixed)
         self._remove_empty_containers(shapes, unfilled, [e.box for e in slide_ir.elements if e.slot_id in filled],
                                       # незаполненная иконка пустой карточки уходит вместе с её подложкой
                                       slot_ids - {s.id for s in exemplar.slots if s.kind == SlotKind.ICON and s.id not in filled},
@@ -367,6 +393,21 @@ class DeckWriter:
             if ob and ob[2] * ob[3] <= max_area and ob[0] <= cx <= ob[0] + ob[2] and ob[1] <= cy <= ob[1] + ob[3]:
                 _remove(other)
 
+    def _remove_speaker_avatars(self, shapes: dict[str, etree._Element], box: Box, keep: set[str]) -> None:
+        """Пустой кружок-аватар в одной строке с подписью докладчика (VK WorkSpace: титул и финал) — заглушка фото."""
+        max_area = PHOTO_FRAME_MAX_SHARE * self.prs.slide_width * self.prs.slide_height
+        for sid, sp in shapes.items():
+            if sid in keep or sp.getparent() is None or not _is_empty_photo_frame(sp) or shape_text(sp).strip():
+                continue
+            bb = absolute_bbox(sp)
+            if bb is None or bb[2] * bb[3] > max_area:
+                continue
+            ob = Box(x=bb[0], y=bb[1], w=bb[2], h=bb[3])
+            same_row = min(ob.y2, box.y2) - max(ob.y, box.y) >= 0.5 * min(ob.h, box.h)
+            gap = max(box.x - ob.x2, ob.x - box.x2)
+            if same_row and gap <= box.h:
+                _remove(sp)
+
     def _remove_empty_containers(
         self, shapes: dict[str, etree._Element], unfilled: list[Box], filled: list[Box],
         slot_ids: set[str], fixed: set[str],
@@ -392,6 +433,31 @@ class DeckWriter:
                         and _center_inside(other, box) and (ob := absolute_bbox(other)) and ob[2] * ob[3] < bb[2] * bb[3]:
                     _remove(other)
             _remove(sp)
+
+    def _place_diagram(self, slide: Slide, el: Element, shapes: dict[str, etree._Element], keep: set[str]) -> None:
+        """Схема на всю контентную область: слоты и декор внутри неё уходят, фон и подложки крупнее — остаются.
+
+        Цвет подписей — по заливке того, что под боксом (белая карточка на тёмном слайде), а не только по фону."""
+        box_area = el.box.w * el.box.h
+        for sid, sp in shapes.items():
+            if sid in keep or sp.getparent() is None or localname(sp) not in ("sp", "pic", "grpSp", "graphicFrame", "cxnSp"):
+                continue
+            bb = absolute_bbox(sp)
+            if bb is None or bb[2] * bb[3] > box_area or not _center_inside(sp, el.box):
+                continue
+            _remove(sp)
+        overrides = dict(el.style_overrides)
+        lum = _under_luminance(slide, shapes, el.box)
+        if lum is not None and lum < DARK_BG_LUMINANCE:
+            overrides["palette_text"] = overrides.get("text_color") or ""  # номер на светлом шевроне — тёмным
+            overrides["text_color"] = LIGHT_TEXT
+
+        def caption_color(b: Box) -> str | None:
+            # под центром бокса может быть зазор между карточками (тёмный фон), а под подписью — белая карточка
+            under = _under_luminance(slide, shapes, b)
+            return LIGHT_TEXT if under is not None and under < DARK_BG_LUMINANCE else None
+
+        add_diagram(slide, el.diagram, el.box, overrides, caption_color=caption_color)
 
     def _replace_with_native(
         self, slide: Slide, sp: etree._Element, el: Element, shapes: dict[str, etree._Element],
@@ -719,6 +785,28 @@ def background_luminance(slide: Slide) -> float | None:
     return None
 
 
+def _under_luminance(slide: Slide, shapes: dict[str, etree._Element], box: Box) -> float | None:
+    """Яркость того, что под боксом: наименьшая залитая фигура, накрывающая его центр, иначе фон слайда."""
+    cx, cy = box.x + box.w / 2, box.y + box.h / 2
+    best: tuple[int, etree._Element] | None = None
+    for sp in shapes.values():
+        if sp.getparent() is None or localname(sp) != "sp":
+            continue
+        sp_pr = sp.find("p:spPr", NS)
+        if sp_pr is None or sp_pr.find("a:solidFill", NS) is None:
+            continue
+        bb = absolute_bbox(sp)
+        if bb is None or not (bb[0] <= cx <= bb[0] + bb[2] and bb[1] <= cy <= bb[1] + bb[3]):
+            continue
+        if bb[2] * bb[3] < 0.5 * box.w * box.h:
+            continue  # мелкая фигура (иконка, маркер) — не подложка
+        if best is None or bb[2] * bb[3] < best[0]:
+            best = (bb[2] * bb[3], sp_pr)
+    if best is not None:
+        return _fill_luminance(best[1], slide.part)
+    return background_luminance(slide)
+
+
 def _fill_luminance(bg: etree._Element, part: Part) -> float | None:
     if (blip := bg.find(".//a:blipFill/a:blip", NS)) is not None and blip.get(R + "embed"):
         try:
@@ -771,6 +859,44 @@ def _insert_after_geom(sp_pr: etree._Element, el: etree._Element) -> None:
         anchor.addnext(el)
     else:
         sp_pr.insert(0, el)
+
+
+def _grow_plate(plate: etree._Element, text_sp: etree._Element, slot: Slot, el: Element) -> None:
+    """Растянуть плашку-«чип» под заголовком вправо под ширину текста (как spAutoFit), не шире slot.plate_max_w.
+
+    Ширина текста — оценка по числу знаков и кеглю (PLATE_CHAR_WIDTH): плашка чуть шире текста лучше,
+    чем текст за её краем. Плашка охватывает бокс текста — бокс растёт на столько же (центровка сохраняется);
+    плашка под началом широкого бокса — растёт одна, и тогда центрированный заголовок не трогаем.
+    Плашку в группе не трогаем."""
+    xfrm = plate.find("p:spPr/a:xfrm", NS)
+    ext = xfrm.find("a:ext", NS) if xfrm is not None else None
+    off = xfrm.find("a:off", NS) if xfrm is not None else None
+    parent = plate.getparent()
+    if ext is None or off is None or parent is None or parent.tag == P + "grpSp" or not slot.plate_max_w:
+        return
+    cur = int(ext.get("cx", "0"))
+    text_ext = text_sp.find("p:spPr/a:xfrm/a:ext", NS)
+    surrounds = int(off.get("x", "0")) + cur >= slot.box.x2 - slot.box.w // 10
+    if surrounds and text_ext is None:
+        return  # бокс текста без своего xfrm (наследует лейаут) — растягивать нечего
+    if not surrounds and any(p.get("algn") in ("ctr", "r", "just") for p in text_sp.iter(A + "pPr")):
+        return
+    text = " ".join("".join(r.text for r in p.runs) for p in el.paragraphs).strip()
+    size = max((r.size_pt for p in el.paragraphs for r in p.runs if r.size_pt), default=None) \
+        or el.style_overrides.get("size_pt") or slot.size_pt or 18.0
+    pad = max(0, slot.box.x - int(off.get("x", "0")))
+    need = 2 * pad + int(len(text) * PLATE_CHAR_WIDTH * float(size) * EMU_PER_PT)
+    if need > cur:
+        new = min(need, slot.plate_max_w)
+        ext.set("cx", str(new))
+        if surrounds:
+            text_ext.set("cx", str(int(text_ext.get("cx", "0")) + new - cur))
+
+
+def _contains_center(outer: Box, inner: Box) -> bool:
+    """Центр inner внутри outer (сам себя бокс тоже «содержит»)."""
+    cx, cy = inner.x + inner.w / 2, inner.y + inner.h / 2
+    return outer.x <= cx <= outer.x2 and outer.y <= cy <= outer.y2
 
 
 def _is_empty_photo_frame(sp: etree._Element) -> bool:

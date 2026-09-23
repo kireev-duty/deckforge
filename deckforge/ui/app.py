@@ -131,7 +131,8 @@ def sidebar() -> tuple[TemplateEntry | None, dict]:
         "strategies": st.sidebar.multiselect("Варианты вёрстки", list_strategies(), default=list_strategies()),
         "autofix": st.sidebar.checkbox("Безопасные автофиксы", True, help="Уменьшить кегль, привести к шкале и т.п. — без потери смысла"),
         "judge": st.sidebar.checkbox("VLM-судья (11 вопросов по PNG)", HAS_KEY and not PUBLIC, disabled=not HAS_KEY,
-                                     help="≈30–60 с на колоду, нужны LibreOffice и API" if HAS_KEY else "нет LLM_API_KEY"),
+                                     help="≈1–2 мин на все варианты (колоды проверяются параллельно), нужны "
+                                          "LibreOffice и API" if HAS_KEY else "нет LLM_API_KEY"),
         "render_png": st.sidebar.checkbox("PNG-превью", soffice_available(), disabled=not soffice_available(),
                                           help="LibreOffice не найден" if not soffice_available() else "≈10 с на колоду"),
         "pdf": st.sidebar.checkbox("Экспорт PDF", soffice_available(), disabled=not soffice_available()),
@@ -268,7 +269,8 @@ def generate(entry: TemplateEntry, opts: dict, brief: str, files: list, use_exam
             return
         finally:
             lock.release()
-        status.update(label=f"Готово за {result.total_s:.0f} с → {run_dir.name}", state="complete", expanded=False)
+        status.update(label=f"Готово за {result.total_s:.0f} с из {cfg.time_budget_s} с бюджета → {run_dir.name}",
+                      state="complete", expanded=False)
     st.session_state["result"] = result
     st.session_state["decks"] = {d.strategy: d for d in result.decks}
     st.session_state["run_dir"] = run_dir
@@ -435,8 +437,9 @@ def main() -> None:
     st.caption("Шаблон .pptx → дизайн-система → три варианта колоды из брифа → аудит с фиксами → .pptx / .pdf")
     if PUBLIC:
         st.info("Демо-стенд. Выберите шаблон слева (или загрузите свой .pptx), режим «Только шаблон» → "
-                "«Сгенерировать варианты»: три колоды за 1–3 минуты. Генерации всех посетителей идут по одной; "
-                "VLM-судья включается в боковой панели (+1–2 мин на колоду). Исходный код и готовые примеры — "
+                "«Сгенерировать варианты»: три колоды собираются параллельно, за 1–3 минуты. Генерации всех "
+                "посетителей идут по одной; VLM-судья включается в боковой панели (+1–2 мин на прогон). "
+                "Исходный код и готовые примеры — "
                 "[GitHub](https://github.com/kireev-duty/deckforge).")
     if entry is None:
         st.info("Выберите шаблон в боковой панели или загрузите свой .pptx.")

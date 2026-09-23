@@ -8,7 +8,7 @@ from __future__ import annotations
 from deckforge.audit.context import STEP, AuditContext, ShapeRec, SlideCtx
 from deckforge.audit.deterministic.base import finding
 from deckforge.audit.text_metrics import LINE_HEIGHT, TextMeasurer
-from deckforge.core.ir import Box, Finding, Severity, SlotKind
+from deckforge.core.ir import Box, Finding, Severity, Slot, SlotKind
 from deckforge.core.units import EMU_PER_PT
 
 TITLE_LINES = 2  # = layout/fitting.TITLE_LINES
@@ -27,10 +27,26 @@ ASPECT_TOL = 0.03
 
 
 def _in_exemplar(slide: SlideCtx, shape: ShapeRec) -> bool:
-    """Бокс фигуры совпадает с боксом слота образца — геометрия унаследована (по боксу, т.к. id меняется)."""
+    """Бокс фигуры совпадает с боксом слота образца — геометрия унаследована (по боксу, т.к. id меняется).
+
+    Фигуры схемы из автофигур (Element.diagram) — тоже: внешний бокс схемы — контентная область образца,
+    а кромки шагов внутри неё задаёт ритм схемы, а не сетка шаблона."""
     if slide.exemplar is None:
         return False
-    return any(_same_box(slot.box, shape.box) for slot in slide.exemplar.slots)
+    if slide.ir is not None and any(el.diagram is not None and _inside(shape.box, el.box) for el in slide.ir.elements):
+        return True
+    return any(_same_box(slot.box, shape.box) or _grown_with_plate(slot, shape.box) for slot in slide.exemplar.slots)
+
+
+def _grown_with_plate(slot: Slot, box: Box) -> bool:
+    """Бокс заголовка, растянутый рендером вместе с плашкой-«чипом» (Slot.plate_id): x, y, h — как у слота."""
+    return (slot.plate_id is not None and abs(slot.box.x - box.x) <= STEP and abs(slot.box.y - box.y) <= STEP
+            and abs(slot.box.h - box.h) <= STEP and slot.box.w - STEP <= box.w <= slot.box.w + (slot.plate_max_w or 0))
+
+
+def _inside(inner: Box, outer: Box, tol: int = STEP) -> bool:
+    return (inner.x >= outer.x - tol and inner.y >= outer.y - tol
+            and inner.x2 <= outer.x2 + tol and inner.y2 <= outer.y2 + tol)
 
 
 def _same_box(a: Box, b: Box, tol: int = STEP) -> bool:

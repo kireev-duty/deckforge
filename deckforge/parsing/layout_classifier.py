@@ -65,6 +65,13 @@ LOGO_PIC_AREA = 0.05  # мелкая картинка у края — логот
 TITLE_MAX_CHARS = 80
 PLATE_MAX_SHARE = 0.8  # плашка под заголовком уже его бокса — вместимость по плашке
 CHIP_MAX_HEIGHT = 2.0  # плашка ниже двух боксов заголовка — «чип», строк сверх неё нет
+GROW_PRSTS = {"rect", "roundRect", "snipRoundRect", "round2SameRect", "flowChartAlternateProcess"}
+GROW_GAP = 0.02  # зазор (доля ширины слайда) между растянутой плашкой и соседней фигурой
+# плашка растёт не больше чем вдвое: соседи бывают нарисованы в фоне лейаута (логотипы партнёров ЛЦТ2026
+# справа сверху — картинка-подложка) и среди фигур их не видно
+GROW_MAX_FACTOR = 2.0
+# вместимость растущей плашки: оценка _capacity (0,5 кегля на знак) оптимистична для жирной кириллицы (≈0,63)
+GROW_WIDTH_SAFETY = 0.85
 CARD_MAX_AREA = 0.40  # подложка крупнее — фон, а не карточка
 CARD_MARGIN = 0.08  # отступ от нижнего края карточки при расчёте вместимости
 DATA_SLOT_MIN_AREA = 0.08  # chart/table-слот мельче — подпись внутри нарисованной диаграммы
@@ -983,6 +990,45 @@ def _backing_plate(s: ShapeInfo, shapes: list[ShapeInfo]) -> Box | None:
     return None
 
 
+def _growable_plate(s: ShapeInfo, shapes: list[ShapeInfo]) -> tuple[Box, str, int] | None:
+    """Плашка-«чип» уже бокса заголовка, которую можно растянуть под текст: (вместимость, id плашки, её макс. ширина).
+
+    ЛЦТ2026: бокс заголовка на всю ширину, розовая roundRect под ним — на треть; белый текст за краем плашки
+    пропадает на белом фоне. Простую автофигуру высотой с бокс рендер растягивает вправо — до края бокса
+    и не ближе GROW_GAP к соседней фигуре в той же полосе (логотипы партнёров сверху справа). Если плашка
+    охватывает бокс целиком, рендер растягивает и бокс текста (`render/pptx_writer._grow_plate`)."""
+    for p in shapes:
+        if p is s or p.kind != "shape" or p.text or not p.visible or p.prst not in GROW_PRSTS or not p.overlaps(s):
+            continue
+        x1, y1 = max(p.box.x, s.box.x), max(p.box.y, s.box.y)
+        x2, y2 = min(p.box.x2, s.box.x2), min(p.box.y2, s.box.y2)
+        if x2 <= x1 or y2 <= y1:
+            continue
+        covers_start = p.box.x <= s.box.x + s.box.w * 0.1 and (y2 - y1) >= s.box.h * 0.6
+        narrower = (x2 - x1) < s.box.w * PLATE_MAX_SHARE
+        # плашка охватывает бокс целиком (ЛЦТ2026 slide2: «ВВОДНЫЕ») — растут оба, бокс текста вместе с плашкой
+        surrounds = p.box.x2 >= s.box.x2 - s.box.w * 0.1
+        if not covers_start or not (narrower or surrounds) or p.box.h >= s.box.h * CHIP_MAX_HEIGHT:
+            continue
+        slide_w = int(s.box.w / max(s.fw, 1e-6))
+        gap = int(GROW_GAP * slide_w)  # доля ширины слайда → EMU
+        limit = min(s.box.x2 if narrower else slide_w - gap, p.box.x + int(p.box.w * GROW_MAX_FACTOR))
+        for o in shapes:
+            if o is s or o is p or o.kind in ("connector", "sldnum", "footer", "date"):
+                continue
+            same_band = min(o.box.y2, p.box.y2) > max(o.box.y, p.box.y)
+            if same_band and o.box.x >= p.box.x2 - gap and (o.visible or o.kind in ("pic", "pic_ph") or o.text):
+                limit = min(limit, o.box.x - gap)
+        if limit <= p.box.x2:
+            return None  # расти некуда — прежняя вместимость по плашке
+        right_pad = max(0, s.box.x - p.box.x)  # отступ текста от края плашки — такой же справа
+        text_w = int((limit - right_pad - x1) * GROW_WIDTH_SAFETY)
+        if text_w <= x2 - x1:
+            return None
+        return Box(x=x1, y=y1, w=text_w, h=y2 - y1), p.id, limit - p.box.x
+    return None
+
+
 def _card_room(s: ShapeInfo, shapes: list[ShapeInfo]) -> Box | None:
     """Текст внутри карточки: подложка накрывает бокс целиком и заметно ниже — вместимость до её края."""
     best: ShapeInfo | None = None
@@ -1030,10 +1076,14 @@ def _underline_room(s: ShapeInfo, shapes: list[ShapeInfo]) -> Box | None:
 def _slot(s: ShapeInfo, kind: SlotKind, shapes: list[ShapeInfo] | None = None) -> Slot:
     max_chars = max_lines = max_items = None
     hard_lines = False
+    plate_id = plate_max_w = None
     if kind in (SlotKind.TITLE, SlotKind.SUBTITLE, SlotKind.BODY, SlotKind.CAPTION, SlotKind.LABEL, SlotKind.NUMBER):
         room = None
         if shapes and kind == SlotKind.TITLE:
-            room = _backing_plate(s, shapes)
+            if (grow := _growable_plate(s, shapes)) is not None:
+                room, plate_id, plate_max_w = grow
+            else:
+                room = _backing_plate(s, shapes)
             # текст переносится по краю бокса, а не плашки — лишних строк не разрешаем
             hard_lines = room is not None
             if (under := _underline_room(s, shapes)) is not None:
@@ -1046,6 +1096,7 @@ def _slot(s: ShapeInfo, kind: SlotKind, shapes: list[ShapeInfo] | None = None) -
     return Slot(
         id=s.id, kind=kind, box=s.box, max_chars=max_chars, max_lines=max_lines, max_items=max_items,
         size_pt=s.size_pt or None, placeholder_type=s.ph_type, sample_text=s.text[:200] or None, hard_lines=hard_lines,
+        plate_id=plate_id, plate_max_w=plate_max_w,
     )
 
 

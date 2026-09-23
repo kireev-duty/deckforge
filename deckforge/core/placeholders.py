@@ -27,9 +27,21 @@ def is_photo_prompt(text: str) -> bool:
     return bool(PHOTO_PROMPT.search(" ".join(text.split())))
 
 
+# подпись докладчика на титуле/финале («Имя Спикера, должность»): рядом с ней шаблон рисует пустой кружок-аватар;
+# фото докладчика у сервиса нет ни в одном режиме, поэтому рамка рядом с такой подписью — заглушка
+SPEAKER_PROMPT = re.compile(r"(имя|фио)\s*,?\s*(спикер|докладчик|выступающ)|(спикер|докладчик)\w*\s*,?\s*должност|"
+                            r"\bфио\b|фамилия\s*,?\s*имя|имя\s*,?\s*фамилия|speaker\s*name|"
+                            r"name\s*,?\s*(surname|position|job\s*title)", re.IGNORECASE)
+
+
+def is_speaker_text(text: str) -> bool:
+    return bool(SPEAKER_PROMPT.search(" ".join(text.split())))
+
+
 def is_placeholder_text(text: str) -> bool:
     t = " ".join(text.split()).strip().lower()
     return bool(t) and (t in PLACEHOLDER_WHOLE or any(p.search(t) for p in PLACEHOLDER_PATTERNS))
 
 
-__all__ = ["PHOTO_PROMPT", "PLACEHOLDER_PATTERNS", "PLACEHOLDER_WHOLE", "is_photo_prompt", "is_placeholder_text"]
+__all__ = ["PHOTO_PROMPT", "PLACEHOLDER_PATTERNS", "PLACEHOLDER_WHOLE", "SPEAKER_PROMPT", "is_photo_prompt",
+           "is_placeholder_text", "is_speaker_text"]

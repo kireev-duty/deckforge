@@ -269,3 +269,73 @@ def test_picture_fill_and_crop(template_path, tmp_path: Path):
         assert sr is None
     else:
         assert sr is not None and int(sr.get("t", 0)) == expected[1] and int(sr.get("l", 0)) == expected[0]
+
+
+# ──────────────────────────── пустые рамки: аватар, карточка с иконкой, плашка-«чип» ────────────────────────────
+
+
+def _text_el(slot, text: str) -> Element:
+    return Element(slot_id=slot.id, kind=slot.kind, box=slot.box, paragraphs=[Paragraph(runs=[TextRun(text=text)])])
+
+
+def _render_one(tpl, exemplars, e, elements, out: Path):
+    slides = [SlideIR(idx=0, exemplar_id=e.id, archetype=e.archetype, elements=elements, outline_ref=0)]
+    prs = Presentation(str(render_pptx(_deck(exemplars, slides), tpl, exemplars, out)))
+    return {shape_id(sp): sp for sp in iter_shapes(prs.slides[0].part._element.find("p:cSld/p:spTree", NS))}
+
+
+def test_speaker_avatar_removed(template_path, tmp_path: Path):
+    """VK WorkSpace: серый кружок-аватар рядом с «Имя Спикера, должность» — заглушка фото, уходит всегда."""
+    tpl = template_path("WorkSpace")
+    exemplars = [p.to_exemplar() for p in classify_template(tpl)]
+    e = next(e for e in exemplars if any(s.sample_text and "Спикер" in s.sample_text for s in e.slots)
+             and any(s.kind == SlotKind.TITLE for s in e.slots))
+    title = next(s for s in e.slots if s.kind == SlotKind.TITLE)
+    speaker = next(s for s in e.slots if s.sample_text and "Спикер" in s.sample_text)
+    shapes = _render_one(tpl, exemplars, e, [_text_el(title, "Т"), _text_el(speaker, "Подзаголовок")],
+                         tmp_path / "avatar.pptx")
+    for sp in shapes.values():
+        geom = sp.find("p:spPr/a:prstGeom", NS)
+        assert not (geom is not None and geom.get("prst") == "ellipse" and not shape_text(sp).strip()), "аватар остался"
+
+
+def test_empty_card_takes_its_icon(template_path, tmp_path: Path):
+    """Сетка, где body — сама карточка: пустая уходит вместе со своей иконкой; карточка с подписью — остаётся."""
+    tpl = template_path("WorkSpace")
+    exemplars = [p.to_exemplar() for p in classify_template(tpl)]
+    e = next(e for e in exemplars if e.card_frames and sum(s.kind == SlotKind.BODY for s in e.slots) == 3
+             and sum(s.kind == SlotKind.ICON for s in e.slots) == 3)
+    title = next(s for s in e.slots if s.kind == SlotKind.TITLE)
+    bodies = sorted((s for s in e.slots if s.kind == SlotKind.BODY), key=lambda s: s.box.x)
+    icons = sorted((s for s in e.slots if s.kind == SlotKind.ICON), key=lambda s: s.box.x)
+    labels = sorted((s for s in e.slots if s.kind == SlotKind.LABEL), key=lambda s: s.box.x)
+
+    # две карточки из трёх: третья уходит, её иконка — тоже
+    shapes = _render_one(tpl, exemplars, e, [_text_el(title, "Т"), _text_el(bodies[0], "а"), _text_el(bodies[1], "б")],
+                         tmp_path / "two.pptx")
+    assert bodies[2].id not in shapes and icons[2].id not in shapes
+    assert icons[0].id in shapes and icons[1].id in shapes
+
+    # заполнены только подписи внутри карточек: рамки карточек остаются
+    if labels:
+        shapes = _render_one(tpl, exemplars, e, [_text_el(title, "Т"), *(_text_el(lb, f"п{i}") for i, lb in enumerate(labels))],
+                             tmp_path / "labels.pptx")
+        assert all(b.id in shapes for b in bodies)
+
+
+def test_title_chip_plate_grows(template_path, tmp_path: Path):
+    """ЛЦТ2026: плашка-«чип» уже бокса заголовка растягивается под длинный заголовок, но не шире plate_max_w."""
+    tpl = template_path("ЛЦТ2026")
+    exemplars = [p.to_exemplar() for p in classify_template(tpl)]
+    e, title = next((e, s) for e in exemplars for s in e.slots if s.kind == SlotKind.TITLE and s.plate_id)
+    assert title.max_lines == 1 and title.hard_lines and title.plate_max_w
+    src = {shape_id(sp): sp for sp in iter_shapes(
+        Presentation(str(tpl)).slides[int(e.id.removeprefix("slide")) - 1].part._element.find("p:cSld/p:spTree", NS))}
+    w0 = int(src[title.plate_id].find("p:spPr/a:xfrm/a:ext", NS).get("cx"))
+    shapes = _render_one(tpl, exemplars, e, [_text_el(title, "Бесшовная интеграция с корпоративными системами")],
+                         tmp_path / "chip.pptx")
+    w = int(shapes[title.plate_id].find("p:spPr/a:xfrm/a:ext", NS).get("cx"))
+    assert w0 < w <= title.plate_max_w
+    # короткий заголовок плашку не трогает
+    shapes = _render_one(tpl, exemplars, e, [_text_el(title, "Итоги")], tmp_path / "chip_short.pptx")
+    assert int(shapes[title.plate_id].find("p:spPr/a:xfrm/a:ext", NS).get("cx")) == w0

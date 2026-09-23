@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from statistics import median
 
-from deckforge.core.ir import Archetype, Exemplar, OutlineSlide, Slot, SlotKind
+from deckforge.core.ir import Archetype, Box, Exemplar, OutlineSlide, Slot, SlotKind
 from deckforge.core.strategy import Strategy
 from deckforge.core.units import EMU_PER_INCH
 from deckforge.layout.fitting import MIN_SIZE_SCALE, chars_at_scale, text_min_scale, title_min_scale
@@ -33,6 +33,8 @@ FALLBACKS: dict[Archetype, list[Archetype]] = {
     Archetype.FREEFORM: [Archetype.BULLETS, Archetype.CARDS, Archetype.TWO_COLUMN, *_LAST],
 }
 STRUCTURAL = (Archetype.TITLE, Archetype.SECTION, Archetype.CLOSING)
+DIAGRAM_CHAIN = [Archetype.BULLETS, Archetype.TWO_COLUMN, Archetype.CARDS, Archetype.IMAGE_TEXT, Archetype.AGENDA]
+NON_CONTENT_KINDS = {SlotKind.TITLE, SlotKind.SUBTITLE, SlotKind.SLIDE_NUMBER, SlotKind.FOOTER, SlotKind.DATE}
 # текстовые архетипы, между которыми стратегия выбирает сама
 FLEXIBLE = {Archetype.BULLETS, Archetype.CARDS, Archetype.TWO_COLUMN, Archetype.IMAGE_TEXT}
 ARCH_RANK_PENALTY = 4.0  # шаг по цепочке фолбэков
@@ -59,6 +61,11 @@ REMOVABLE_CARD_PENALTY = 1.5  # у карточки своя подложка (E
 TIGHT_SLOT_PENALTY = 4.0  # за каждый тесный слот: пункт в нём обрежется «…» — дороже одного пункта на продолжении
 SHORT_CARD_PENALTY = 6.0  # карточек меньше пунктов — остаток уйдёт на продолжение: дороже пустой карточки
 SPARSE_GRID_PENALTY = 4.0  # заполнено не больше половины карточек: один абзац в сетке 2×2
+DIAGRAM_MIN_AREA = 0.15  # body под схему меньше этой доли слайда — шевроны не читаются
+DIAGRAM_GOOD_AREA = 0.4  # с этой доли — полный бонус
+DIAGRAM_MIN_ASPECT = 1.3  # ряд шевронов: бокс шире высоты
+DIAGRAM_GRID_MATCH = 2.0  # колонок сетки образца столько же, сколько шагов — шаг в своей карточке
+DIAGRAM_GRID_MISMATCH = 8.0  # иначе шевроны лягут поперёк неубираемых карточек
 BIG_NUMBER_SHARE = 0.65  # доля от медианного кегля, с которой number-слот считается KPI-цифрой
 IMPOSSIBLE = -1000.0
 
@@ -78,6 +85,7 @@ class Needs:
     table_cols: int = 0
     quote_chars: int = 0
     item_chars: tuple[int, ...] = ()  # длина каждого пункта — тесноту слота считаем к его пункту, а не к среднему
+    diagram: int = 0  # шагов схемы из автофигур (DiagramSpec): ей нужен один широкий body
 
     @classmethod
     def of(cls, s: OutlineSlide) -> Needs:
@@ -85,7 +93,8 @@ class Needs:
         return cls(items=len(lst), kpis=len(s.kpis), chart=s.chart is not None, table=s.table is not None,
                    image=has_image(s), quote=bool(s.quote), title_chars=len(s.title),
                    text_chars=sum(len(t) for t in lst) + 2 * len(lst), table_cols=len(s.table.header) if s.table else 0,
-                   quote_chars=len(s.quote or "") + 2, item_chars=tuple(len(t) for t in lst))
+                   quote_chars=len(s.quote or "") + 2, item_chars=tuple(len(t) for t in lst),
+                   diagram=len(s.diagram.items) if s.diagram else 0)
 
 
 def has_image(s: OutlineSlide) -> bool:
@@ -110,7 +119,8 @@ def pick_exemplar(
     """Лучший образец и его скор; (None, IMPOSSIBLE), если ни один не годится. `exclude` — уже отвергнутые."""
     used = used or {}
     needs = Needs.of(slide)
-    chain = candidate_archetypes(slide.archetype, strategy)
+    # схеме из автофигур нужен образец с одним широким текстовым блоком, а не process-образец шаблона
+    chain = DIAGRAM_CHAIN if needs.diagram else candidate_archetypes(slide.archetype, strategy)
     rank_penalty = FLEX_RANK_PENALTY if slide.archetype in FLEXIBLE else ARCH_RANK_PENALTY
     # структурные образцы для контентного слайда — последний резерв, иначе штраф за повторы
     # сделал бы титул «выгоднее» карточек; цитата — исключение, ей section/title подходят
@@ -162,6 +172,24 @@ def score_exemplar(e: Exemplar, n: Needs, strategy: Strategy, slide_area: int) -
             score += 2.0 if (n.chart and kinds[SlotKind.CHART]) or (n.table and kinds[SlotKind.TABLE]) else 0.0
         if n.table_cols and data_slots[0].box.w / n.table_cols < MIN_TABLE_COL_W:
             score -= TRUNCATION_PENALTY
+    if n.diagram:
+        # схема занимает всю контентную область образца (карточки, иконки, картинки уходят), заголовок остаётся
+        box = content_box(e.slots)
+        if not real_bodies or box is None:
+            return IMPOSSIBLE
+        share = box.w * box.h / slide_area if slide_area else 0.0
+        if share < DIAGRAM_MIN_AREA or box.w < box.h * DIAGRAM_MIN_ASPECT:
+            return IMPOSSIBLE
+        if titles and _intersection(titles[0].box, box) > OVERLAP_SHARE * titles[0].box.w * titles[0].box.h:
+            return IMPOSSIBLE  # заголовок внутри контентной области — схема легла бы на него
+        score += 4.0 * min(1.0, share / DIAGRAM_GOOD_AREA)
+        cols = _body_columns(real_bodies)
+        if cols > 1:
+            # сетка без своих подложек (нарисована в фоне лейаута) не уберётся, а свои подложки бывают
+            # фиксированными элементами шаблона (ЛЦТ2026 slide11: две белые карточки на всех слайдах) и тоже
+            # остаются: шаги должны лечь по колонкам, иначе шевроны идут поперёк карточек
+            score += DIAGRAM_GRID_MATCH if cols == n.diagram else -DIAGRAM_GRID_MISMATCH
+        bodies = []
     if n.quote:  # нужен body под текст либо крупный заголовок
         if e.archetype in (Archetype.SECTION, Archetype.TITLE):
             if not titles:
@@ -212,13 +240,42 @@ def score_exemplar(e: Exemplar, n: Needs, strategy: Strategy, slide_area: int) -
             score += {"minimal": 0.5, "preferred": 3.0, "always": 5.0}[strategy.images]
             score -= EXTRA_PICTURE_PENALTY * (pics - 1)
         else:
-            score += {"minimal": -3.0, "preferred": -5.0, "always": -2.0}[strategy.images]
+            # картинки генерируются до вёрстки: нет image — её и не будет (лимит на колоду, сбой T2I),
+            # поэтому visual штрафуется как narrative — иначе пустая рамка или мокап устройства без экрана
+            score += {"minimal": -3.0, "preferred": -5.0, "always": -5.0}[strategy.images]
     if icons and strategy.icons:
         score += 1.0
     fill = min(1.0, sum(s.box.w * s.box.h for s in e.slots) / slide_area) if slide_area else 0.0
     if fill > strategy.density.max_fill_ratio:
         score -= (fill - strategy.density.max_fill_ratio) * 10.0
     return score
+
+
+def _body_columns(bodies: list[Slot]) -> int:
+    """Сколько колонок в сетке тел: левые кромки ближе половины самого узкого тела — одна колонка."""
+    if not bodies:
+        return 0
+    tol = min(b.box.w for b in bodies) // 2
+    cols: list[int] = []
+    for x in sorted(b.box.x for b in bodies):
+        if not cols or x - cols[-1] > tol:
+            cols.append(x)
+    return len(cols)
+
+
+def _intersection(a: Box, b: Box) -> int:
+    w = min(a.x2, b.x2) - max(a.x, b.x)
+    h = min(a.y2, b.y2) - max(a.y, b.y)
+    return w * h if w > 0 and h > 0 else 0
+
+
+def content_box(slots: list[Slot]) -> Box | None:
+    """Контентная область образца: объединение слотов, кроме заголовков и полей (номер, колонтитул, дата)."""
+    boxes = [s.box for s in slots if s.kind not in NON_CONTENT_KINDS]
+    if not boxes:
+        return None
+    x, y = min(b.x for b in boxes), min(b.y for b in boxes)
+    return Box(x=x, y=y, w=max(b.x2 for b in boxes) - x, h=max(b.y2 for b in boxes) - y)
 
 
 def _overlaps_content(title: Slot, slots: list[Slot]) -> bool:

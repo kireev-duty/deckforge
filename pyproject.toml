@@ -1,6 +1,6 @@
 [project]
 name = "deckforge"
-version = "0.1.0"
+version = "0.1.2"
 description = "Digital presentation designer: parses any .pptx template into a design system and generates on-brand decks from a brief"
 requires-python = ">=3.12"
 dependencies = [
@@ -20,7 +20,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8", "pytest-asyncio", "ruff", "pywin32; sys_platform == 'win32'"]  # pywin32 — tools/powerpoint_check.py
+dev = ["pytest>=8", "pytest-asyncio", "ruff", "pywin32; sys_platform == 'win32'", "playwright>=1.40"]  # pywin32 — tools/powerpoint_check.py, playwright — tools/browser_check.py
 
 [project.scripts]
 deckforge = "deckforge.cli:app"

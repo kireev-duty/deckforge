@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import copy
 import json
+import threading
 from pathlib import Path
 
 import pytest
@@ -19,7 +21,10 @@ def cassette(name: str) -> dict | list:
 
 
 class FakeClient:
-    """Подменяет LLMClient: позиционные ответы по очереди (последний повторяется), `by_skill` — на конкретный скилл."""
+    """Подменяет LLMClient: позиционные ответы по очереди (последний повторяется), `by_skill` — на конкретный скилл.
+
+    Как у LLMClient: `fork()` — клиент колоды со своим журналом `calls` (вызов пишется и родителю); очереди
+    ответов и `inputs`/`images`/`deadlines` общие и под локом — колоды и судья зовут клиент из разных потоков."""
 
     text_model = "fake-text"
     vision_model = "fake-vision"
@@ -34,22 +39,37 @@ class FakeClient:
         self.inputs: list[dict] = []
         self.images: list[list[Path]] = []
         self.deadlines: list[float | None] = []
+        self._lock = threading.RLock()
+        self._parent: FakeClient | None = None
+
+    def fork(self) -> FakeClient:
+        child = copy.copy(self)
+        child.calls = []
+        child._parent = self
+        return child
+
+    def _log(self, call: LLMCall) -> None:
+        with self._lock:
+            self.calls.append(call)
+        if self._parent is not None:
+            self._parent._log(call)
 
     def run_skill(self, skill, images=None, deadline=None, **inputs):
-        self.inputs.append(inputs)
-        self.images.append(list(images or []))
-        self.deadlines.append(deadline)
-        queue = self.by_skill.get(skill.name)
-        if queue is not None:
-            resp = queue.pop(0) if len(queue) > 1 else queue[0]
-        elif self.responses:
-            resp = self.responses.pop(0) if len(self.responses) > 1 else self.responses[0]
-        else:
-            raise RuntimeError(f"FakeClient: нет ответа для скилла {skill.id}")
+        with self._lock:
+            self.inputs.append(inputs)
+            self.images.append(list(images or []))
+            self.deadlines.append(deadline)
+            queue = self.by_skill.get(skill.name)
+            if queue is not None:
+                resp = queue.pop(0) if len(queue) > 1 else queue[0]
+            elif self.responses:
+                resp = self.responses.pop(0) if len(self.responses) > 1 else self.responses[0]
+            else:
+                raise RuntimeError(f"FakeClient: нет ответа для скилла {skill.id}")
         if isinstance(resp, Exception):
-            self.calls.append(LLMCall(skill.id, self.text_model, 0.01, ok=False, error=str(resp)))
+            self._log(LLMCall(skill.id, self.text_model, 0.01, ok=False, error=str(resp)))
             raise resp
-        self.calls.append(LLMCall(skill.id, self.text_model, 0.01, 10, 10))
+        self._log(LLMCall(skill.id, self.text_model, 0.01, 10, 10))
         return resp
 
 

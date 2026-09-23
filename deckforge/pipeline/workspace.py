@@ -5,12 +5,17 @@
 
 from __future__ import annotations
 
+import logging
+import os
 import re
 import threading
 import uuid
 import zipfile
 from dataclasses import dataclass
 from pathlib import Path
+from urllib.parse import quote
+
+import httpx
 
 from deckforge.pipeline.config import ROOT
 from deckforge.pipeline.run import ParsedTemplate, parse_template, sha1_of
@@ -21,6 +26,9 @@ MAX_PACK_FILE_BYTES = 20 << 20
 # текст — в корень, данные — в data/ (см. content/content_pack.py)
 PACK_EXT = {".md": "", ".txt": "", ".docx": "", ".pdf": "", ".json": "data", ".csv": "data", ".xlsx": "data"}
 _SAFE = re.compile(r"[^\w\-. ]+", re.UNICODE)
+LFS_POINTER_MAX = 1000  # байт: указатель git-lfs вместо .pptx
+LFS_TIMEOUT_S = 60
+log = logging.getLogger(__name__)
 
 
 class BadUpload(ValueError):
@@ -54,6 +62,32 @@ class TemplateEntry:
     parsed: ParsedTemplate | None = None
 
 
+def _download(url: str) -> bytes:
+    r = httpx.get(url, timeout=LFS_TIMEOUT_S, follow_redirects=True)
+    r.raise_for_status()
+    return r.content
+
+
+def fetch_lfs(path: Path, base_url: str) -> bool:
+    """Указатель git-lfs вместо шаблона датасета → скачать файл из `<base_url>/<путь от корня репо>`.
+
+    Хостинг, который клонирует репо без LFS (Streamlit Community Cloud), иначе остался бы без шаблонов датасета.
+    `DECKFORGE_LFS_BASE` — например `https://media.githubusercontent.com/media/<owner>/<repo>/<ref>`.
+    Ошибка сети или не-.pptx в ответе — предупреждение в лог, шаблон пропускается, как раньше."""
+    url = f"{base_url.rstrip('/')}/{quote(path.relative_to(ROOT).as_posix())}"
+    tmp = path.with_name(f".{path.name}.{uuid.uuid4().hex}.part")
+    try:
+        tmp.write_bytes(_download(url))
+        check_pptx(tmp)
+        tmp.replace(path)
+        return True
+    except (httpx.HTTPError, OSError, BadUpload) as e:
+        log.warning("шаблон %s не скачан из LFS: %s", path.name, e)
+        return False
+    finally:
+        tmp.unlink(missing_ok=True)
+
+
 class TemplateStore:
     """Шаблоны датасета + загруженные (`root/templates/<sha1>/<name>__<sha1>.pptx`).
 
@@ -64,10 +98,13 @@ class TemplateStore:
         self.root.mkdir(parents=True, exist_ok=True)
         self._items: dict[str, TemplateEntry] = {}
         self._lock = threading.Lock()
+        lfs_base = os.environ.get("DECKFORGE_LFS_BASE", "").strip()
         for d in DATASET_DIRS:
             if d.is_dir():
                 for p in sorted(d.glob("*.pptx")):
-                    if p.stat().st_size > 1000:  # LFS-указатель пропускаем
+                    if p.stat().st_size <= LFS_POINTER_MAX and lfs_base:
+                        fetch_lfs(p, lfs_base)
+                    if p.stat().st_size > LFS_POINTER_MAX:  # LFS-указатель пропускаем
                         sid = sha1_of(p)
                         self._items[sid] = TemplateEntry(sid, p.stem, p, True)
         for p in sorted(self.root.glob("*/*.pptx")):

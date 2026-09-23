@@ -1,0 +1,6 @@
+# Streamlit: локальный запуск и демо-стенд на Streamlit Community Cloud (DEVELOPMENT.md, «Демо-стенд»)
+[server]
+maxUploadSize = 60  # МБ — как MAX_TEMPLATE_BYTES в pipeline/workspace.py
+
+[browser]
+gatherUsageStats = false

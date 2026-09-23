@@ -1,7 +1,7 @@
 """Streamlit UI: шаблон → бриф → варианты → аудит с выбором фиксов → экспорт (`streamlit run deckforge/ui/app.py`).
 
 Пайплайн вызывается in-process; файлы прогона — `out/ui/runs/<время>/`, загруженные шаблоны — `out/ui/templates/`.
-`DECKFORGE_PUBLIC=1` — публичный демо-стенд (Hugging Face Space, `deploy/hf_space/`): генерации всех сессий идут
+`DECKFORGE_PUBLIC=1` — публичный демо-стенд (Streamlit Community Cloud, DEVELOPMENT «Демо-стенд»): генерации всех сессий идут
 по одной, VLM-судья по умолчанию выключен, в списке шаблонов — датасет и загруженные в этой сессии.
 """
 
@@ -58,6 +58,22 @@ HOW_LABEL = {"safe": "безопасный", "ir": "по выбору (теря�
 
 st.set_page_config(page_title="deckforge", page_icon="🎞️", layout="wide")
 load_dotenv()
+
+
+def _secrets_to_env() -> None:
+    """Секреты хостинга (Streamlit Community Cloud: TOML в настройках приложения) → `os.environ`.
+
+    Пайплайн читает ключи и режим стенда из окружения; `.env` и заданные переменные главнее."""
+    try:
+        items = dict(st.secrets)
+    except Exception:  # noqa: BLE001 — файла секретов нет: локальный запуск
+        return
+    for k, v in items.items():
+        if isinstance(v, (str, int, float, bool)):
+            os.environ.setdefault(k, str(v))
+
+
+_secrets_to_env()
 PUBLIC = os.environ.get("DECKFORGE_PUBLIC", "") == "1"
 HAS_KEY = bool(os.environ.get("LLM_API_KEY", "").strip())
 

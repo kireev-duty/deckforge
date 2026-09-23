@@ -3,9 +3,8 @@
 # Ключ LLM в GitHub не нужен: он лежит в Secrets самого Space (DEVELOPMENT.md, «Демо-стенд»).
 name: deploy-space
 
+# Только ручной запуск: бесплатный CPU для Docker-Spaces требует HF PRO; основной стенд — Streamlit Community Cloud.
 on:
-  push:
-    tags: ["v*"]
   workflow_dispatch:
 
 concurrency:

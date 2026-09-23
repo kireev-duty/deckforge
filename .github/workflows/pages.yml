@@ -1,5 +1,5 @@
 # Галерея готовых колод examples/output на GitHub Pages (tools/build_gallery.py): HTML и PDF колод + превью.
-# Settings → Pages → Source: GitHub Actions. Переменная репозитория HF_SPACE_URL — ссылка на демо-стенд для кнопки.
+# Settings → Pages → Source: GitHub Actions. Переменная репозитория DEMO_URL — ссылка на демо-стенд для кнопки.
 name: pages
 
 on:
@@ -30,7 +30,7 @@ jobs:
           python-version: "3.12"
       - run: pip install -q pymupdf
       - name: Галерея
-        run: python tools/build_gallery.py --out site --ref "${GITHUB_REF_NAME}" --space-url "${{ vars.HF_SPACE_URL }}"
+        run: python tools/build_gallery.py --out site --ref "${GITHUB_REF_NAME}" --space-url "${{ vars.DEMO_URL }}"
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site

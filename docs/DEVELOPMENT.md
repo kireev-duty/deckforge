@@ -33,29 +33,39 @@ ruff check deckforge tools tests
 
 ## Демо-стенд
 
-Публичный стенд — Streamlit UI в [Hugging Face Space](https://huggingface.co/spaces/kireev-duty/deckforge) (Docker SDK, CPU basic). Галерея готовых колод — [GitHub Pages](https://kireev-duty.github.io/deckforge/).
+Публичный стенд — Streamlit UI на [Streamlit Community Cloud](https://deckforge.streamlit.app) (бесплатно, из публичного репо, ветка `master`). Галерея готовых колод — [GitHub Pages](https://kireev-duty.github.io/deckforge/).
 
 | Что | Где |
 |---|---|
-| образ стенда: шаблоны датасета и outline примеров внутри образа, шрифты Play и Montserrat, uid 1000, порт 7860 | `deploy/hf_space/Dockerfile` |
-| карточка Space (front matter: `sdk: docker`, `app_port`) | `deploy/hf_space/space_readme.md` → `README.md` Space |
-| состав Space: код, промпты, стратегии, `data/{templates,holdout,archetypes}`, `examples/content_pack`, outline VK Tech | `deploy/hf_space/stage.py` |
-| деплой: тег `v*` или ручной запуск → staging → `upload_folder` в Space, дальше Space сам собирает образ (≈10 мин) | `.github/workflows/deploy-space.yml` |
-| галерея: тег `v*` или ручной запуск → `build_gallery.py` → Pages | `.github/workflows/pages.yml` |
+| Python-зависимости стенда (те же, что в `pyproject.toml`; синхронность — `tests/test_workspace.py`) | `requirements.txt` |
+| apt-пакеты: LibreOffice Impress, шрифты Montserrat / Liberation / DejaVu | `packages.txt` |
+| лимит загрузки 60 МБ, без телеметрии | `.streamlit/config.toml` |
+| секреты Cloud (TOML в настройках приложения) → `os.environ` | `ui/app._secrets_to_env` |
+| шаблоны датасета: Cloud может клонировать репо без Git LFS — указатели докачиваются из `DECKFORGE_LFS_BASE` | `pipeline/workspace.fetch_lfs` |
+| галерея: тег `v*` или ручной запуск → `build_gallery.py` → Pages (кнопка — переменная `DEMO_URL`) | `.github/workflows/pages.yml` |
 
 Публичный режим UI включает `DECKFORGE_PUBLIC=1` (`deckforge/ui/app.py`): одна генерация на процесс (`run_lock`, очередь до 10 минут), судья по умолчанию выключен, в списке шаблонов — датасет и загруженные в этой сессии. Без `LLM_API_KEY` доступен только «Готовый outline» (`examples/output/vk_tech/outline.json`). Конвертации LibreOffice в одном процессе идут строго по одной: общий профиль (`export/render._SOFFICE_LOCK`).
 
-Секреты:
-- GitHub → Settings → Secrets and variables → Actions: секрет `HF_TOKEN` (write-токен HF); переменные `HF_SPACE` (`<владелец>/deckforge`, если владелец не совпадает с токеном) и `HF_SPACE_URL` (ссылка для кнопки в галерее).
-- Space → Settings → Variables and secrets: секрет `LLM_API_KEY` (отдельный ключ OpenRouter с credit limit), переменные `LLM_BASE_URL`, `LLM_MODEL`, `VLM_MODEL` — как в `.env.example`, `T2I_MODEL` — пусто.
-- GitHub → Settings → Pages → Source: GitHub Actions.
+Деплой на Streamlit Cloud (один раз, дальше приложение само подхватывает push в `master`): share.streamlit.io → Create app → репо `kireev-duty/deckforge`, ветка `master`, файл `deckforge/ui/app.py`, адрес `deckforge` → Advanced settings: Python 3.12, Secrets:
 
-Локальная проверка образа:
+```toml
+LLM_API_KEY = "sk-or-…"
+LLM_BASE_URL = "https://openrouter.ai/api/v1"
+LLM_MODEL = "qwen/qwen3.8-27b-20260814"
+VLM_MODEL = "qwen/qwen3.8-27b-20260814"
+T2I_MODEL = ""
+DECKFORGE_PUBLIC = "1"
+DECKFORGE_LFS_BASE = "https://media.githubusercontent.com/media/kireev-duty/deckforge/master"
+```
+
+Логи сборки и перезапуск — «Manage app» в правом нижнем углу приложения.
+
+Запасной вариант с полноценным образом (свои шрифты Play, 2 vCPU / 16 ГБ) — Docker-Space на Hugging Face; бесплатный CPU для Docker-Spaces теперь требует PRO. Всё готово: образ `deploy/hf_space/Dockerfile`, staging `deploy/hf_space/stage.py`, деплой — ручной запуск `.github/workflows/deploy-space.yml` (секрет `HF_TOKEN`, секреты Space — те же ключи, что выше). Локальная проверка образа:
 
 ```bash
 python deploy/hf_space/stage.py                     # → out/hf_space (≈90 МБ; нужны шаблоны из LFS)
 docker build -t deckforge-space out/hf_space
-docker run --rm -p 7860:7860 --env-file .env deckforge-space   # http://localhost:7860
+docker run --rm -p 7860:7860 -e LLM_API_KEY deckforge-space   # http://localhost:7860; --env-file не режет комментарии
 ```
 
 ## Правила

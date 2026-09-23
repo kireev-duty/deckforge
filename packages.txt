@@ -1,0 +1,6 @@
+libreoffice-impress
+libreoffice-calc
+fonts-montserrat
+fonts-liberation
+fonts-dejavu-core
+fontconfig

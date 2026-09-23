@@ -1,0 +1,15 @@
+# Зависимости для Streamlit Community Cloud (демо-стенд) — те же, что в pyproject.toml [project.dependencies];
+# синхронность проверяет tests/test_ui.py. Локально ставится pip install -e .
+python-pptx>=1.0
+lxml>=5
+pydantic>=2
+pymupdf>=1.24
+openpyxl>=3.1
+pillow>=10
+typer>=0.12
+pyyaml>=6
+openai>=1.40
+httpx>=0.27
+fastapi>=0.115
+uvicorn>=0.30
+streamlit>=1.38

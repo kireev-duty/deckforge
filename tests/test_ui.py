@@ -107,3 +107,23 @@ def test_public_mode_without_key_runs_ready_outline(template_path, tmp_path: Pat
     res = at.session_state["result"]
     assert res.content_source == "outline" and [d.strategy for d in res.decks] == ["executive"]
     assert res.decks[0].pptx.exists() and Path(at.session_state["run_dir"]).is_relative_to(tmp_path)
+
+
+@pytest.mark.filterwarnings("ignore::DeprecationWarning")
+def test_hosting_secrets_become_env(template_path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Streamlit Community Cloud: режим стенда и ключи приходят из st.secrets, а не из окружения."""
+    import os
+
+    from streamlit.testing.v1 import AppTest
+
+    template_path("VK Tech")
+    monkeypatch.delenv("DECKFORGE_PUBLIC", raising=False)
+    monkeypatch.delenv("DECKFORGE_TEST_SECRET", raising=False)
+    at = AppTest.from_file(str(REPO / "deckforge" / "ui" / "app.py"), default_timeout=60)
+    at.secrets["DECKFORGE_PUBLIC"] = "1"
+    at.secrets["DECKFORGE_TEST_SECRET"] = "x"
+    at.run()
+    assert not at.exception, at.exception
+    assert any("Демо-стенд" in i.value for i in at.info)
+    assert os.environ.pop("DECKFORGE_TEST_SECRET") == "x"
+    os.environ.pop("DECKFORGE_PUBLIC", None)  # AppTest в том же процессе — не протекать в другие тесты

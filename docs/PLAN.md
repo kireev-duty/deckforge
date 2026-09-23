@@ -37,7 +37,7 @@
 - [x] Аудит визуализирует проблемы в UI, пользователь выбирает фиксы
 - [x] Время генерации колоды ≤5 мин — бюджет `DECK_TIME_BUDGET_S` действует в пайплайне (картинки → судья пропускаются при нехватке), факт в manifest `timings_s.deck_total` — см. «Бюджет времени» в ARCHITECTURE
 - [x] `examples/output` перегенерированы финальным кодом в режиме «только шаблон»: бриф и outline выведены из VK Tech (`content_source: template`, `template_brief@v2`, `outline_writer@v3`, `audit_judge@v2`), остальные три шаблона — на том же outline. 12 колод: объём в диапазоне стратегии, детерминированных ошибок 0, время 34–74 с на колоду
-- [ ] Публичный демо-стенд (https://huggingface.co/spaces/kireev-duty/deckforge) и галерея 12 колод (https://kireev-duty.github.io/deckforge/); бейдж и ссылки в начале README. Образ `deploy/hf_space/`, деплой — `.github/workflows/deploy-space.yml` и `pages.yml` по тегу (DEVELOPMENT.md, «Демо-стенд»)
+- [ ] Публичный демо-стенд (https://deckforge.streamlit.app, Streamlit Community Cloud) и галерея 12 колод (https://kireev-duty.github.io/deckforge/); бейдж и ссылки в начале README. Галерея — `.github/workflows/pages.yml` по тегу; HF Space — запасной, требует PRO (DEVELOPMENT.md, «Демо-стенд»)
 - [ ] Видео-демо ≤7 мин без склеек (сценарий — `docs/DEMO.md`)
 - [x] Питч-дек по структуре ТЗ и шаблона ЛЦТ2026 — `docs/deckforge_pitch.pptx`; проверен в PowerPoint
 - [ ] Загрузить на платформу хакатона все материалы: ссылка на публичный репозиторий (тег `v0.1.2`), питч `docs/deckforge_pitch.pptx`, видео-демо, 12 колод из `examples/output`

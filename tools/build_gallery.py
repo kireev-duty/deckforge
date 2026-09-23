@@ -160,7 +160,7 @@ def build(out: Path, space_url: str = "", ref: str = "master") -> Path:
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--out", type=Path, default=ROOT / "out" / "gallery")
-    ap.add_argument("--space-url", default="", help="ссылка на демо-стенд (Hugging Face Space)")
+    ap.add_argument("--space-url", default="", help="ссылка на демо-стенд")
     ap.add_argument("--ref", default="master", help="ветка или тег для ссылок на .pptx и manifest")
     args = ap.parse_args()
     index = build(args.out, args.space_url, args.ref)

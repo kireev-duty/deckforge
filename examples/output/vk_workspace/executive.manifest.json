@@ -1,13 +1,15 @@
 {
- "created": "2026-09-21T12:26:36+00:00",
+ "created": "2026-09-23T08:20:36+00:00",
  "template": {
   "id": "69e4a68c4372",
   "path": "data/templates/VK_WorkSpace_Клиентская_конференция_Шаблон_03.pptx",
   "sha1": "69e4a68c4372"
  },
- "content_pack": "examples/content_pack",
+ "content_source": "outline",
+ "content_pack": "",
+ "brief": "brief.md",
  "outline": "outline.json",
- "outline_title": "Пульс команды: итоги пилота и план запуска",
+ "outline_title": "VK Tech: Безопасность и инфраструктура",
  "strategy": {
   "name": "executive",
   "version": "v1",
@@ -18,7 +20,7 @@
   "audience_hint": "руководителю на 5 минут — статус, отчёт, решение по цифрам; читается без докладчика"
  },
  "skills": {
-  "audit_judge": "v1"
+  "audit_judge": "v2"
  },
  "models": {
   "text": "qwen/qwen3.8-27b-20260814",
@@ -28,101 +30,101 @@
  },
  "llm_calls": [
   {
-   "skill": "audit_judge@v1",
+   "skill": "audit_judge@v2",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 10.408669200001896,
-   "prompt_tokens": 2770,
+   "duration_s": 4.218082700012019,
+   "prompt_tokens": 1450,
    "completion_tokens": 474,
    "ok": true,
    "error": null
   },
   {
-   "skill": "audit_judge@v1",
+   "skill": "audit_judge@v2",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 17.859483599997475,
-   "prompt_tokens": 2843,
-   "completion_tokens": 308,
+   "duration_s": 7.817899099987699,
+   "prompt_tokens": 1471,
+   "completion_tokens": 418,
    "ok": true,
    "error": null
   },
   {
-   "skill": "audit_judge@v1",
+   "skill": "audit_judge@v2",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 15.829924099998607,
-   "prompt_tokens": 2737,
-   "completion_tokens": 504,
+   "duration_s": 9.00275730001158,
+   "prompt_tokens": 1486,
+   "completion_tokens": 447,
    "ok": true,
    "error": null
   },
   {
-   "skill": "audit_judge@v1",
+   "skill": "audit_judge@v2",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 26.756550699999934,
-   "prompt_tokens": 2734,
-   "completion_tokens": 345,
+   "duration_s": 13.07131600001594,
+   "prompt_tokens": 1497,
+   "completion_tokens": 502,
    "ok": true,
    "error": null
   },
   {
-   "skill": "audit_judge@v1",
+   "skill": "audit_judge@v2",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 14.029024899999058,
-   "prompt_tokens": 2804,
-   "completion_tokens": 287,
+   "duration_s": 6.333456699998351,
+   "prompt_tokens": 1469,
+   "completion_tokens": 424,
    "ok": true,
    "error": null
   },
   {
-   "skill": "audit_judge@v1",
+   "skill": "audit_judge@v2",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 32.71243200000026,
-   "prompt_tokens": 2708,
-   "completion_tokens": 548,
+   "duration_s": 6.139269000006607,
+   "prompt_tokens": 1462,
+   "completion_tokens": 451,
    "ok": true,
    "error": null
   },
   {
-   "skill": "audit_judge@v1",
+   "skill": "audit_judge@v2",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 6.295603499998833,
-   "prompt_tokens": 2698,
-   "completion_tokens": 458,
+   "duration_s": 3.8266195000032894,
+   "prompt_tokens": 1460,
+   "completion_tokens": 383,
    "ok": true,
    "error": null
   },
   {
-   "skill": "audit_judge@v1",
+   "skill": "audit_judge@v2",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 10.016565699999774,
-   "prompt_tokens": 2704,
-   "completion_tokens": 442,
+   "duration_s": 4.312754700018559,
+   "prompt_tokens": 1448,
+   "completion_tokens": 273,
    "ok": true,
    "error": null
   },
   {
-   "skill": "audit_judge@v1",
+   "skill": "audit_judge@v2",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 17.66743679999854,
-   "prompt_tokens": 2784,
-   "completion_tokens": 372,
+   "duration_s": 3.2075072999869008,
+   "prompt_tokens": 1442,
+   "completion_tokens": 347,
    "ok": true,
    "error": null
   },
   {
-   "skill": "audit_judge@v1",
+   "skill": "audit_judge@v2",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 16.10141470000235,
-   "prompt_tokens": 2822,
-   "completion_tokens": 370,
+   "duration_s": 7.812674899992999,
+   "prompt_tokens": 1466,
+   "completion_tokens": 483,
    "ok": true,
    "error": null
   },
   {
-   "skill": "audit_judge@v1",
+   "skill": "audit_judge@v2",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 17.285517100001016,
-   "prompt_tokens": 2718,
-   "completion_tokens": 366,
+   "duration_s": 21.50939059999655,
+   "prompt_tokens": 1514,
+   "completion_tokens": 386,
    "ok": true,
    "error": null
   }
@@ -131,57 +133,57 @@
   {
    "idx": 0,
    "archetype": "title",
-   "title": "Пульс команды: итоги пилота и план запуска"
+   "title": "VK Tech: Безопасность и инфраструктура"
   },
   {
    "idx": 1,
    "archetype": "cards",
-   "title": "Руководитель не видит перегрузку из-за шести системных причин"
+   "title": "Риски цифровой инфраструктуры растут"
   },
   {
    "idx": 2,
-   "archetype": "kpi",
-   "title": "Пилот охватил 12 команд и 118 человек за 4 месяца"
+   "archetype": "cards",
+   "title": "Бесшовная интеграция с системами"
   },
   {
    "idx": 3,
    "archetype": "process",
-   "title": "Сервис работает по пяти шагам от подключения до ретро"
+   "title": "Этапы внедрения решения"
   },
   {
    "idx": 4,
-   "archetype": "cards",
-   "title": "Команда получает ранние риски и честное ретро"
+   "archetype": "image_text",
+   "title": "Автоматизация рутинных IT-задач"
   },
   {
    "idx": 5,
-   "archetype": "table",
-   "title": "Время на согласования в пилоте упало почти вдвое"
+   "archetype": "cards",
+   "title": "Стандарты безопасности и соответствие"
   },
   {
    "idx": 6,
-   "archetype": "table",
-   "title": "Доля времени на разработку выросла на 16 п.п."
+   "archetype": "cards",
+   "title": "Гибкая модель лицензирования"
   },
   {
    "idx": 7,
-   "archetype": "quote",
-   "title": "Команды перестали спорить о потере времени на ретро"
+   "archetype": "image_text",
+   "title": "Долгосрочная поддержка и развитие"
   },
   {
    "idx": 8,
-   "archetype": "kpi",
-   "title": "Оценка пилота командами выросла с 3,4 до 4,7"
+   "archetype": "bullets",
+   "title": "Стратегические преимущества"
   },
   {
    "idx": 9,
    "archetype": "cards",
-   "title": "Три ключевых риска запуска и их закрытие"
+   "title": "Почему VK Tech"
   },
   {
    "idx": 10,
    "archetype": "closing",
-   "title": "Пульс команды"
+   "title": "Начнём с пилотного проекта"
   }
  ],
  "choices": [
@@ -195,72 +197,72 @@
   {
    "idx": 1,
    "archetype": "cards",
-   "exemplar_id": "slide23",
+   "exemplar_id": "slide22",
    "exemplar_archetype": "cards",
-   "score": 3.0
+   "score": 2.95
   },
   {
    "idx": 2,
-   "archetype": "kpi",
-   "exemplar_id": "slide19",
-   "exemplar_archetype": "kpi",
-   "score": 2.85
+   "archetype": "cards",
+   "exemplar_id": "slide5",
+   "exemplar_archetype": "cards",
+   "score": 2.95
   },
   {
    "idx": 3,
    "archetype": "process",
-   "exemplar_id": "slide22",
-   "exemplar_archetype": "cards",
-   "score": -4.05
+   "exemplar_id": "slide27",
+   "exemplar_archetype": "process",
+   "score": 3.0
   },
   {
    "idx": 4,
-   "archetype": "cards",
-   "exemplar_id": "slide13",
+   "archetype": "image_text",
+   "exemplar_id": "slide6",
    "exemplar_archetype": "cards",
-   "score": 1.85
+   "score": -0.6
   },
   {
    "idx": 5,
-   "archetype": "table",
-   "exemplar_id": "slide14",
-   "exemplar_archetype": "table",
-   "score": 2.95
+   "archetype": "cards",
+   "exemplar_id": "slide10",
+   "exemplar_archetype": "cards",
+   "score": 2.9
   },
   {
    "idx": 6,
-   "archetype": "table",
-   "exemplar_id": "slide14",
-   "exemplar_archetype": "table",
-   "score": -2.05
+   "archetype": "cards",
+   "exemplar_id": "slide5",
+   "exemplar_archetype": "cards",
+   "score": 0.9500000000000002
   },
   {
    "idx": 7,
-   "archetype": "quote",
-   "exemplar_id": "slide25",
-   "exemplar_archetype": "image_text",
-   "score": -10.05
+   "archetype": "image_text",
+   "exemplar_id": "slide15",
+   "exemplar_archetype": "cards",
+   "score": -0.55
   },
   {
    "idx": 8,
-   "archetype": "kpi",
-   "exemplar_id": "slide19",
-   "exemplar_archetype": "kpi",
-   "score": 0.8500000000000001
+   "archetype": "bullets",
+   "exemplar_id": "slide6",
+   "exemplar_archetype": "cards",
+   "score": 0.8999999999999999
   },
   {
    "idx": 9,
    "archetype": "cards",
-   "exemplar_id": "slide8",
+   "exemplar_id": "slide10",
    "exemplar_archetype": "cards",
-   "score": 2.95
+   "score": 0.8999999999999999
   },
   {
    "idx": 10,
    "archetype": "closing",
-   "exemplar_id": "slide28",
+   "exemplar_id": "slide29",
    "exemplar_archetype": "closing",
-   "score": 0.95
+   "score": -2.0
   }
  ],
  "warnings": [],
@@ -269,58 +271,57 @@
   "archetypes": [
    "title",
    "cards",
-   "kpi",
+   "cards",
+   "process",
    "cards",
    "cards",
-   "table",
-   "table",
-   "image_text",
-   "kpi",
+   "cards",
+   "cards",
+   "cards",
    "cards",
    "closing"
   ],
   "exemplars": [
    "slide1",
-   "slide23",
-   "slide19",
    "slide22",
-   "slide13",
-   "slide14",
-   "slide14",
-   "slide25",
-   "slide19",
-   "slide8",
-   "slide28"
+   "slide5",
+   "slide27",
+   "slide6",
+   "slide10",
+   "slide5",
+   "slide15",
+   "slide6",
+   "slide10",
+   "slide29"
   ],
-  "text_items_per_slide": 6.2,
-  "words_per_item": 6.0,
+  "text_items_per_slide": 3.6,
+  "words_per_item": 3.8,
   "chart": 0,
-  "table": 2,
-  "kpi": 2,
+  "table": 0,
+  "kpi": 0,
   "picture": 0,
   "skipped": 0
  },
  "audit": {
   "errors": 4,
-  "warnings": 23,
-  "info": 5,
-  "contextual": 8,
+  "warnings": 29,
+  "info": 1,
+  "contextual": 12,
   "by_check": {
-   "C01_title_insight": 2,
+   "C01_title_insight": 8,
    "C02_content_matches_title": 1,
-   "C03_one_message": 1,
-   "C05_has_content": 1,
-   "C06_images_relevant": 1,
-   "C07_no_garbage": 2,
-   "D05_fill": 5,
-   "L02_overlap": 10,
-   "L05_off_grid": 2,
-   "L06_in_margins": 2,
-   "T02_font_size": 5
+   "C05_has_content": 2,
+   "C07_no_garbage": 1,
+   "D05_fill": 2,
+   "L02_overlap": 4,
+   "T02_font_size": 1,
+   "T06_contrast": 15
   },
   "slides_with_issues": [
+   1,
    2,
    3,
+   4,
    5,
    6,
    7,
@@ -328,52 +329,44 @@
    9
   ],
   "checks_run": 35,
-  "duration_s": 50.664,
+  "duration_s": 25.962,
   "path": "executive.audit.json",
   "kind": "deterministic+contextual",
   "autofix": {
-   "applied": 4,
+   "applied": 3,
    "skipped": 0,
    "before": {
-    "errors": 4,
-    "warnings": 19
+    "errors": 0,
+    "warnings": 24
    },
    "after": {
     "errors": 0,
-    "warnings": 19
+    "warnings": 21
    },
    "items": [
     {
-     "slide_idx": 2,
-     "element_id": "729",
-     "check_id": "L03_text_overflow",
-     "fix": "shrink_font_by_scale",
-     "before": "60 pt",
-     "after": "47.8 pt"
+     "slide_idx": 3,
+     "element_id": "859",
+     "check_id": "T02_font_size",
+     "fix": "snap_font_size",
+     "before": "12 pt",
+     "after": "11 pt"
     },
     {
-     "slide_idx": 2,
-     "element_id": "734",
-     "check_id": "L03_text_overflow",
-     "fix": "shrink_font_by_scale",
-     "before": "54 pt",
-     "after": "45.4 pt"
+     "slide_idx": 3,
+     "element_id": "860",
+     "check_id": "T02_font_size",
+     "fix": "snap_font_size",
+     "before": "12 pt",
+     "after": "11 pt"
     },
     {
-     "slide_idx": 8,
-     "element_id": "729",
-     "check_id": "L03_text_overflow",
-     "fix": "shrink_font_by_scale",
-     "before": "60 pt",
-     "after": "47.8 pt"
-    },
-    {
-     "slide_idx": 8,
-     "element_id": "734",
-     "check_id": "L03_text_overflow",
-     "fix": "shrink_font_by_scale",
-     "before": "54 pt",
-     "after": "45.4 pt"
+     "slide_idx": 3,
+     "element_id": "862",
+     "check_id": "T02_font_size",
+     "fix": "snap_font_size",
+     "before": "12 pt",
+     "after": "11 pt"
     }
    ]
   }
@@ -392,17 +385,17 @@
   "html": "executive.html"
  },
  "timings_s": {
-  "parse": 0.259,
+  "parse": 0.227,
   "outline": 0.0,
-  "layout": 0.005,
-  "render": 0.524,
-  "audit": 0.321,
-  "autofix": 0.783,
-  "png": 8.442,
-  "audit_contextual": 50.351,
-  "export_pdf": 0.019,
-  "export_html": 4.797,
-  "deck_total": 65.248
+  "layout": 0.006,
+  "render": 0.395,
+  "audit": 0.225,
+  "autofix": 0.588,
+  "png": 6.595,
+  "audit_contextual": 25.746,
+  "export_pdf": 0.004,
+  "export_html": 3.356,
+  "deck_total": 36.921
  },
  "time_budget_s": 300
 }

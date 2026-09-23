@@ -2,115 +2,59 @@
  "deck_path": "narrative.pptx",
  "findings": [
   {
-   "check_id": "L04_text_clipped",
-   "kind": "deterministic",
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
    "severity": "warning",
-   "slide_idx": 4,
-   "element_id": "445",
-   "box": {
-    "x": 8113464,
-    "y": 4251273,
-    "w": 5417327,
-    "h": 1080000
-   },
-   "message": "Текст выходит за край слайда (right на 105 pt)",
-   "autofix": "clamp_to_slide",
+   "slide_idx": 3,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок является тематическим, а не утверждающим вывод.",
+   "autofix": null,
    "evidence": {
-    "in_exemplar": 1,
-    "over_right": 1338791
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "brief"
    }
   },
   {
-   "check_id": "L04_text_clipped",
-   "kind": "deterministic",
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
    "severity": "warning",
    "slide_idx": 4,
-   "element_id": "447",
-   "box": {
-    "x": 8112125,
-    "y": 2139491,
-    "w": 5417327,
-    "h": 1080000
-   },
-   "message": "Текст выходит за край слайда (right на 105 pt)",
-   "autofix": "clamp_to_slide",
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок является тематическим, а не утверждающим выводом.",
+   "autofix": null,
    "evidence": {
-    "in_exemplar": 1,
-    "over_right": 1337452
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "brief"
    }
   },
   {
-   "check_id": "T02_font_size",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 4,
-   "element_id": "445",
-   "box": {
-    "x": 8113464,
-    "y": 4251273,
-    "w": 5417327,
-    "h": 1080000
-   },
-   "message": "Кегль 56.9 pt не из шкалы шаблона (ближайший 48 pt)",
-   "autofix": "snap_font_size",
-   "evidence": {
-    "size_pt": 56.9,
-    "nearest_pt": 48.0,
-    "base_pt": 88.0
-   }
-  },
-  {
-   "check_id": "T02_font_size",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 4,
-   "element_id": "447",
-   "box": {
-    "x": 8112125,
-    "y": 2139491,
-    "w": 5417327,
-    "h": 1080000
-   },
-   "message": "Кегль 56.9 pt не из шкалы шаблона (ближайший 48 pt)",
-   "autofix": "snap_font_size",
-   "evidence": {
-    "size_pt": 56.9,
-    "nearest_pt": 48.0,
-    "base_pt": 88.0
-   }
-  },
-  {
-   "check_id": "T02_font_size",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 4,
-   "element_id": "450",
-   "box": {
-    "x": 1022258,
-    "y": 2740903,
-    "w": 5417327,
-    "h": 2437575
-   },
-   "message": "Кегль 145.9 pt не из шкалы шаблона (ближайший 48 pt)",
-   "autofix": "snap_font_size",
-   "evidence": {
-    "size_pt": 145.9,
-    "nearest_pt": 48.0,
-    "base_pt": 239.0
-   }
-  },
-  {
-   "check_id": "C03_one_message",
+   "check_id": "C01_title_insight",
    "kind": "contextual",
    "severity": "warning",
    "slide_idx": 5,
    "element_id": null,
    "box": null,
-   "message": "Слайд содержит пять отдельных пунктов с деталями, которые нельзя уместить в одно предложение без потери смысла.",
+   "message": "Заголовок является нейтральным названием темы, а не содержит вывод или ключевую мысль.",
    "autofix": null,
    "evidence": {
-    "question": "Слайд пересказывается одним предложением",
-    "sources": "m:coordination_hours"
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "brief"
+   }
+  },
+  {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 7,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок называет тему, а не содержит вывод или конкретное преимущество.",
+   "autofix": null,
+   "evidence": {
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "brief"
    }
   },
   {
@@ -120,30 +64,24 @@
    "slide_idx": 7,
    "element_id": null,
    "box": null,
-   "message": "Слайд перегружен: контент занимает 75% рабочей области (норма 25%–75%)",
+   "message": "Слайд перегружен: контент занимает 78% рабочей области (норма 25%–75%)",
    "autofix": "change_exemplar",
    "evidence": {
-    "fill": 0.752
+    "fill": 0.785
    }
   },
   {
-   "check_id": "T02_font_size",
-   "kind": "deterministic",
-   "severity": "info",
-   "slide_idx": 7,
-   "element_id": "1054",
-   "box": {
-    "x": 677334,
-    "y": 692150,
-    "w": 4008966,
-    "h": 1746250
-   },
-   "message": "Кегль 32.4 pt не из шкалы шаблона (ближайший 36 pt) (подгонка: 90% от кегля образца 36 pt)",
-   "autofix": "snap_font_size",
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок просто называет тему, не содержит вывода.",
+   "autofix": null,
    "evidence": {
-    "size_pt": 32.4,
-    "nearest_pt": 36.0,
-    "base_pt": 36.0
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "brief"
    }
   },
   {
@@ -156,229 +94,48 @@
    "message": "Слайд пустоват: контент занимает 23% рабочей области (норма 25%–75%)",
    "autofix": "change_exemplar",
    "evidence": {
-    "fill": 0.227
+    "fill": 0.229
    }
   },
   {
-   "check_id": "T06_contrast",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 8,
-   "element_id": "901",
-   "box": {
-    "x": 658812,
-    "y": 1531802,
-    "w": 3000000,
-    "h": 2209800
-   },
-   "message": "Контраст текста #FFFFFF к фону #FFFFFF = 1.0:1 (нужно 4.5:1)",
-   "autofix": "snap_color",
-   "evidence": {
-    "contrast": 1.0,
-    "text_color": "FFFFFF",
-    "background": "FFFFFF",
-    "need": 4.5,
-    "template_color": 1
-   }
-  },
-  {
-   "check_id": "C02_content_matches_title",
-   "kind": "contextual",
-   "severity": "error",
-   "slide_idx": 9,
-   "element_id": null,
-   "box": null,
-   "message": "Слайд содержит отзыв, а не описание рисков и их закрытия, заявленных в заголовке.",
-   "autofix": null,
-   "evidence": {
-    "question": "Содержимое слайда соответствует заголовку",
-    "sources": "doc:product:риски-запуска-и-как-они-закрываются"
-   }
-  },
-  {
-   "check_id": "C11_flow",
+   "check_id": "C01_title_insight",
    "kind": "contextual",
    "severity": "warning",
    "slide_idx": 9,
    "element_id": null,
    "box": null,
-   "message": "Слайд с цитатой логически разрывает последовательность от анализа времени (предыдущий) к рискам запуска (текущий заголовок) и результатам (следующий).",
+   "message": "Заголовок является тематическим, а не утверждением или выводом.",
    "autofix": null,
    "evidence": {
-    "question": "Слайд логически связан с соседними",
-    "sources": "doc:product:риски-запуска-и-как-они-закрываются"
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "brief"
    }
   },
   {
-   "check_id": "D02_bullet_words",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 9,
-   "element_id": "456",
-   "box": {
-    "x": 3359150,
-    "y": 579395,
-    "w": 7520885,
-    "h": 4549196
-   },
-   "message": "Пункт из 17 слов (норма ≤ 15): ««За месяц мы впервые увидели, где реально теряется время, — …»",
-   "autofix": "refill_slot",
-   "evidence": {
-    "words": 17
-   }
-  },
-  {
-   "check_id": "T06_contrast",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 9,
-   "element_id": "457",
-   "box": {
-    "x": 3359150,
-    "y": 5738829,
-    "w": 8200516,
-    "h": 461946
-   },
-   "message": "Контраст текста #0077FF к фону #FFFFFF = 4.1:1 (нужно 4.5:1)",
-   "autofix": "snap_color",
-   "evidence": {
-    "contrast": 4.13,
-    "text_color": "0077FF",
-    "background": "FFFFFF",
-    "need": 4.5,
-    "template_color": 1
-   }
-  },
-  {
-   "check_id": "T02_font_size",
-   "kind": "deterministic",
-   "severity": "info",
-   "slide_idx": 9,
-   "element_id": "457",
-   "box": {
-    "x": 3359150,
-    "y": 5738829,
-    "w": 8200516,
-    "h": 461946
-   },
-   "message": "Кегль 21.6 pt не из шкалы шаблона (ближайший 20 pt) (подгонка: 90% от кегля образца 24 pt)",
-   "autofix": "snap_font_size",
-   "evidence": {
-    "size_pt": 21.6,
-    "nearest_pt": 20.0,
-    "base_pt": 24.0
-   }
-  },
-  {
-   "check_id": "C06_images_relevant",
+   "check_id": "C01_title_insight",
    "kind": "contextual",
    "severity": "warning",
    "slide_idx": 10,
    "element_id": null,
    "box": null,
-   "message": "Абстрактные фигуры на слайде не относятся к теме «Результаты».",
+   "message": "Заголовок является тематическим, а не утверждающим вывод.",
    "autofix": null,
    "evidence": {
-    "question": "Картинки и иконки относятся к теме слайда",
-    "sources": "doc:product:план-на-квартал"
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "brief"
    }
   },
   {
-   "check_id": "L04_text_clipped",
+   "check_id": "D05_fill",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 11,
-   "element_id": "445",
-   "box": {
-    "x": 8113464,
-    "y": 4251273,
-    "w": 5417327,
-    "h": 1080000
-   },
-   "message": "Текст выходит за край слайда (right на 105 pt)",
-   "autofix": "clamp_to_slide",
+   "slide_idx": 10,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд перегружен: контент занимает 85% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
    "evidence": {
-    "in_exemplar": 1,
-    "over_right": 1338791
-   }
-  },
-  {
-   "check_id": "L04_text_clipped",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 11,
-   "element_id": "447",
-   "box": {
-    "x": 8112125,
-    "y": 2139491,
-    "w": 5417327,
-    "h": 1080000
-   },
-   "message": "Текст выходит за край слайда (right на 105 pt)",
-   "autofix": "clamp_to_slide",
-   "evidence": {
-    "in_exemplar": 1,
-    "over_right": 1337452
-   }
-  },
-  {
-   "check_id": "T02_font_size",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 11,
-   "element_id": "445",
-   "box": {
-    "x": 8113464,
-    "y": 4251273,
-    "w": 5417327,
-    "h": 1080000
-   },
-   "message": "Кегль 56.9 pt не из шкалы шаблона (ближайший 48 pt)",
-   "autofix": "snap_font_size",
-   "evidence": {
-    "size_pt": 56.9,
-    "nearest_pt": 48.0,
-    "base_pt": 88.0
-   }
-  },
-  {
-   "check_id": "T02_font_size",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 11,
-   "element_id": "447",
-   "box": {
-    "x": 8112125,
-    "y": 2139491,
-    "w": 5417327,
-    "h": 1080000
-   },
-   "message": "Кегль 56.9 pt не из шкалы шаблона (ближайший 48 pt)",
-   "autofix": "snap_font_size",
-   "evidence": {
-    "size_pt": 56.9,
-    "nearest_pt": 48.0,
-    "base_pt": 88.0
-   }
-  },
-  {
-   "check_id": "T02_font_size",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 11,
-   "element_id": "450",
-   "box": {
-    "x": 1022258,
-    "y": 2740903,
-    "w": 5417327,
-    "h": 2437575
-   },
-   "message": "Кегль 145.9 pt не из шкалы шаблона (ближайший 48 pt)",
-   "autofix": "snap_font_size",
-   "evidence": {
-    "size_pt": 145.9,
-    "nearest_pt": 48.0,
-    "base_pt": 239.0
+    "fill": 0.848
    }
   },
   {
@@ -388,7 +145,7 @@
    "slide_idx": 12,
    "element_id": null,
    "box": null,
-   "message": "Заголовок называет тему (риски и закрытие), а не содержит вывод (например, «Риски запуска минимизированы планом»).",
+   "message": "Заголовок просто называет тему, а не содержит вывод.",
    "autofix": null,
    "evidence": {
     "question": "Заголовок содержит вывод, а не просто называет тему",
@@ -396,16 +153,59 @@
    }
   },
   {
-   "check_id": "D05_fill",
+   "check_id": "T06_contrast",
    "kind": "deterministic",
    "severity": "warning",
    "slide_idx": 12,
+   "element_id": "268",
+   "box": {
+    "x": 658813,
+    "y": 2357767,
+    "w": 5142954,
+    "h": 2142466
+   },
+   "message": "Контраст текста #FFFFFF к фону #0077FF = 4.1:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.13,
+    "text_color": "FFFFFF",
+    "background": "0077FF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 13,
    "element_id": null,
    "box": null,
-   "message": "Слайд пустоват: контент занимает 23% рабочей области (норма 25%–75%)",
-   "autofix": "change_exemplar",
+   "message": "Заголовок «Почему VK Tech» является вопросительной темой, а не утверждением с выводом.",
+   "autofix": null,
    "evidence": {
-    "fill": 0.229
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": ""
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 14,
+   "element_id": "1082",
+   "box": {
+    "x": 620713,
+    "y": 2483712,
+    "w": 5475287,
+    "h": 1477328
+   },
+   "message": "Кегль 54 pt не из шкалы шаблона (ближайший 48 pt) (подгонка: 90% от кегля образца 60 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 54.0,
+    "nearest_pt": 48.0,
+    "base_pt": 60.0
    }
   }
  ],
@@ -437,7 +237,7 @@
   "C01_title_insight",
   "C02_content_matches_title",
   "C03_one_message",
-  "C04_facts_in_sources",
+  "C04_facts_consistent",
   "C05_has_content",
   "C06_images_relevant",
   "C07_no_garbage",
@@ -446,5 +246,5 @@
   "C10_table_legend_relevant",
   "C11_flow"
  ],
- "duration_s": 58.243
+ "duration_s": 39.872
 }

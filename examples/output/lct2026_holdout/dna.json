@@ -185,7 +185,8 @@
    "fill_ratio": 0.0,
    "thumbnail": null,
    "tags": [],
-   "confidence": 0.9
+   "confidence": 0.9,
+   "card_frames": false
   },
   {
    "id": "slide2",
@@ -259,7 +260,8 @@
     "логотипы",
     "декоративная 3D-графика"
    ],
-   "confidence": 0.95
+   "confidence": 0.95,
+   "card_frames": false
   },
   {
    "id": "slide3",
@@ -496,7 +498,8 @@
     "структура презентации",
     "тёмный фон"
    ],
-   "confidence": 0.95
+   "confidence": 0.95,
+   "card_frames": true
   },
   {
    "id": "slide4",
@@ -775,7 +778,8 @@
     "нумерация",
     "структура"
    ],
-   "confidence": 0.95
+   "confidence": 0.95,
+   "card_frames": true
   },
   {
    "id": "slide5",
@@ -1051,7 +1055,8 @@
     "шрифты",
     "гайдлайн"
    ],
-   "confidence": 0.95
+   "confidence": 0.95,
+   "card_frames": false
   },
   {
    "id": "slide6",
@@ -1144,7 +1149,8 @@
     "сетка",
     "тёмный фон"
    ],
-   "confidence": 0.95
+   "confidence": 0.95,
+   "card_frames": false
   },
   {
    "id": "slide7",
@@ -1211,7 +1217,8 @@
    "fill_ratio": 0.148,
    "thumbnail": null,
    "tags": [],
-   "confidence": 0.9
+   "confidence": 0.9,
+   "card_frames": false
   },
   {
    "id": "slide8",
@@ -1396,7 +1403,8 @@
     "описание решения",
     "логотипы"
    ],
-   "confidence": 0.9
+   "confidence": 0.9,
+   "card_frames": false
   },
   {
    "id": "slide9",
@@ -1715,7 +1723,8 @@
    "fill_ratio": 0.409,
    "thumbnail": null,
    "tags": [],
-   "confidence": 0.9
+   "confidence": 0.9,
+   "card_frames": true
   },
   {
    "id": "slide10",
@@ -1919,7 +1928,8 @@
     "горизонтальные разделители",
     "нумерация справа"
    ],
-   "confidence": 0.95
+   "confidence": 0.95,
+   "card_frames": false
   },
   {
    "id": "slide11",
@@ -2032,7 +2042,8 @@
     "логотипы",
     "сравнение"
    ],
-   "confidence": 0.95
+   "confidence": 0.95,
+   "card_frames": true
   },
   {
    "id": "slide12",
@@ -2099,7 +2110,8 @@
    "fill_ratio": 0.329,
    "thumbnail": null,
    "tags": [],
-   "confidence": 0.8
+   "confidence": 0.8,
+   "card_frames": false
   },
   {
    "id": "slide13",
@@ -2172,7 +2184,8 @@
     "один текстовый блок",
     "логотипы"
    ],
-   "confidence": 0.9
+   "confidence": 0.9,
+   "card_frames": false
   },
   {
    "id": "slide14",
@@ -2247,7 +2260,8 @@
     "тёмный фон",
     "логотипы"
    ],
-   "confidence": 0.95
+   "confidence": 0.95,
+   "card_frames": false
   },
   {
    "id": "slide15",
@@ -2386,7 +2400,8 @@
    "fill_ratio": 0.209,
    "thumbnail": null,
    "tags": [],
-   "confidence": 0.9
+   "confidence": 0.9,
+   "card_frames": true
   },
   {
    "id": "slide16",
@@ -2653,7 +2668,8 @@
    "fill_ratio": 0.367,
    "thumbnail": null,
    "tags": [],
-   "confidence": 1.0
+   "confidence": 1.0,
+   "card_frames": true
   },
   {
    "id": "slide17",
@@ -2864,7 +2880,8 @@
    "fill_ratio": 0.371,
    "thumbnail": null,
    "tags": [],
-   "confidence": 1.0
+   "confidence": 1.0,
+   "card_frames": true
   },
   {
    "id": "slide18",
@@ -3239,7 +3256,8 @@
    "fill_ratio": 0.323,
    "thumbnail": null,
    "tags": [],
-   "confidence": 0.9
+   "confidence": 0.9,
+   "card_frames": true
   },
   {
    "id": "slide19",
@@ -3350,7 +3368,8 @@
     "логотипы",
     "декоративный фон"
    ],
-   "confidence": 0.9
+   "confidence": 0.9,
+   "card_frames": false
   },
   {
    "id": "slide20",
@@ -3520,7 +3539,8 @@
     "вертикальный список",
     "логотипы"
    ],
-   "confidence": 0.95
+   "confidence": 0.95,
+   "card_frames": false
   },
   {
    "id": "slide21",
@@ -3697,7 +3717,8 @@
    "fill_ratio": 0.547,
    "thumbnail": null,
    "tags": [],
-   "confidence": 0.95
+   "confidence": 0.95,
+   "card_frames": true
   },
   {
    "id": "slide22",
@@ -3910,7 +3931,8 @@
    "fill_ratio": 0.684,
    "thumbnail": null,
    "tags": [],
-   "confidence": 0.95
+   "confidence": 0.95,
+   "card_frames": true
   },
   {
    "id": "slide23",
@@ -4123,7 +4145,8 @@
    "fill_ratio": 0.65,
    "thumbnail": null,
    "tags": [],
-   "confidence": 0.95
+   "confidence": 0.95,
+   "card_frames": true
   },
   {
    "id": "slide24",
@@ -4216,7 +4239,8 @@
     "тёмный фон",
     "связи линиями"
    ],
-   "confidence": 0.9
+   "confidence": 0.9,
+   "card_frames": true
   },
   {
    "id": "slide25",
@@ -4534,7 +4558,8 @@
     "схема",
     "коннекторы"
    ],
-   "confidence": 0.95
+   "confidence": 0.95,
+   "card_frames": true
   },
   {
    "id": "slide26",
@@ -4646,7 +4671,8 @@
     "логотипы",
     "светлый фон"
    ],
-   "confidence": 0.95
+   "confidence": 0.95,
+   "card_frames": true
   },
   {
    "id": "slide27",
@@ -4805,7 +4831,8 @@
    "fill_ratio": 0.39,
    "thumbnail": null,
    "tags": [],
-   "confidence": 0.8
+   "confidence": 0.8,
+   "card_frames": true
   },
   {
    "id": "slide28",
@@ -5036,7 +5063,8 @@
    "fill_ratio": 0.541,
    "thumbnail": null,
    "tags": [],
-   "confidence": 0.9
+   "confidence": 0.9,
+   "card_frames": true
   },
   {
    "id": "slide29",
@@ -5303,7 +5331,8 @@
    "fill_ratio": 0.467,
    "thumbnail": null,
    "tags": [],
-   "confidence": 0.85
+   "confidence": 0.85,
+   "card_frames": true
   },
   {
    "id": "slide30",
@@ -5496,7 +5525,8 @@
    "fill_ratio": 0.348,
    "thumbnail": null,
    "tags": [],
-   "confidence": 0.7
+   "confidence": 0.7,
+   "card_frames": false
   },
   {
    "id": "slide31",
@@ -6103,7 +6133,8 @@
    "fill_ratio": 0.245,
    "thumbnail": null,
    "tags": [],
-   "confidence": 0.9
+   "confidence": 0.9,
+   "card_frames": false
   },
   {
    "id": "slide32",
@@ -9644,7 +9675,8 @@
    "fill_ratio": 0.245,
    "thumbnail": null,
    "tags": [],
-   "confidence": 0.9
+   "confidence": 0.9,
+   "card_frames": false
   },
   {
    "id": "slide33",
@@ -11709,7 +11741,8 @@
    "fill_ratio": 0.168,
    "thumbnail": null,
    "tags": [],
-   "confidence": 0.9
+   "confidence": 0.9,
+   "card_frames": false
   },
   {
    "id": "slide34",
@@ -14152,7 +14185,8 @@
    "fill_ratio": 0.22,
    "thumbnail": null,
    "tags": [],
-   "confidence": 0.9
+   "confidence": 0.9,
+   "card_frames": false
   },
   {
    "id": "slide35",
@@ -16307,7 +16341,8 @@
    "fill_ratio": 0.181,
    "thumbnail": null,
    "tags": [],
-   "confidence": 0.9
+   "confidence": 0.9,
+   "card_frames": false
   },
   {
    "id": "slide36",
@@ -20370,7 +20405,8 @@
    "fill_ratio": 0.253,
    "thumbnail": null,
    "tags": [],
-   "confidence": 0.9
+   "confidence": 0.9,
+   "card_frames": false
   },
   {
    "id": "slide37",
@@ -20428,7 +20464,8 @@
     "декоративные элементы",
     "инструкция"
    ],
-   "confidence": 0.95
+   "confidence": 0.95,
+   "card_frames": false
   }
  ],
  "embedded_fonts": [],

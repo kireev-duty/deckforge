@@ -2,128 +2,30 @@
  "deck_path": "visual.pptx",
  "findings": [
   {
-   "check_id": "C07_no_garbage",
+   "check_id": "C01_title_insight",
    "kind": "contextual",
-   "severity": "error",
-   "slide_idx": 1,
+   "severity": "warning",
+   "slide_idx": 2,
    "element_id": null,
    "box": null,
-   "message": "В первой карточке текст обрывается на многоточии («До 9,5 часов в...»).",
+   "message": "Заголовок является тематическим названием, а не сформулированным выводом.",
    "autofix": null,
    "evidence": {
-    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
-    "sources": "doc:product:почему-перегрузка-не-видна-руководителю-"
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "brief"
    }
   },
   {
    "check_id": "D05_fill",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 1,
+   "slide_idx": 2,
    "element_id": null,
    "box": null,
-   "message": "Слайд перегружен: контент занимает 88% рабочей области (норма 25%–75%)",
+   "message": "Слайд перегружен: контент занимает 78% рабочей области (норма 25%–75%)",
    "autofix": "change_exemplar",
    "evidence": {
-    "fill": 0.882
-   }
-  },
-  {
-   "check_id": "L04_text_clipped",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 2,
-   "element_id": "445",
-   "box": {
-    "x": 8113464,
-    "y": 4251273,
-    "w": 5417327,
-    "h": 1080000
-   },
-   "message": "Текст выходит за край слайда (right на 105 pt)",
-   "autofix": "clamp_to_slide",
-   "evidence": {
-    "in_exemplar": 1,
-    "over_right": 1338791
-   }
-  },
-  {
-   "check_id": "L04_text_clipped",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 2,
-   "element_id": "447",
-   "box": {
-    "x": 8112125,
-    "y": 2139491,
-    "w": 5417327,
-    "h": 1080000
-   },
-   "message": "Текст выходит за край слайда (right на 105 pt)",
-   "autofix": "clamp_to_slide",
-   "evidence": {
-    "in_exemplar": 1,
-    "over_right": 1337452
-   }
-  },
-  {
-   "check_id": "T02_font_size",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 2,
-   "element_id": "445",
-   "box": {
-    "x": 8113464,
-    "y": 4251273,
-    "w": 5417327,
-    "h": 1080000
-   },
-   "message": "Кегль 56.9 pt не из шкалы шаблона (ближайший 48 pt)",
-   "autofix": "snap_font_size",
-   "evidence": {
-    "size_pt": 56.9,
-    "nearest_pt": 48.0,
-    "base_pt": 88.0
-   }
-  },
-  {
-   "check_id": "T02_font_size",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 2,
-   "element_id": "447",
-   "box": {
-    "x": 8112125,
-    "y": 2139491,
-    "w": 5417327,
-    "h": 1080000
-   },
-   "message": "Кегль 56.9 pt не из шкалы шаблона (ближайший 48 pt)",
-   "autofix": "snap_font_size",
-   "evidence": {
-    "size_pt": 56.9,
-    "nearest_pt": 48.0,
-    "base_pt": 88.0
-   }
-  },
-  {
-   "check_id": "T02_font_size",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 2,
-   "element_id": "450",
-   "box": {
-    "x": 1022258,
-    "y": 2740903,
-    "w": 5417327,
-    "h": 2437575
-   },
-   "message": "Кегль 145.9 pt не из шкалы шаблона (ближайший 48 pt)",
-   "autofix": "snap_font_size",
-   "evidence": {
-    "size_pt": 145.9,
-    "nearest_pt": 48.0,
-    "base_pt": 239.0
+    "fill": 0.785
    }
   },
   {
@@ -133,319 +35,164 @@
    "slide_idx": 3,
    "element_id": null,
    "box": null,
-   "message": "Заголовок просто называет тему процесса, а не содержит вывод о его пользе или результате.",
+   "message": "Заголовок является тематическим, а не утверждающим вывод.",
    "autofix": null,
    "evidence": {
     "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "doc:product:как-работает-сервис-пять-шагов"
+    "sources": "brief"
    }
   },
   {
-   "check_id": "T06_contrast",
-   "kind": "deterministic",
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
    "severity": "warning",
-   "slide_idx": 3,
-   "element_id": "344",
-   "box": {
-    "x": 671515,
-    "y": 2678282,
-    "w": 1807593,
-    "h": 830242
-   },
-   "message": "Контраст текста #FFFFFF к фону #0077FF = 4.1:1 (нужно 4.5:1)",
-   "autofix": "snap_color",
+   "slide_idx": 4,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок является тематическим, а не содержит вывод или ключевую мысль.",
+   "autofix": null,
    "evidence": {
-    "contrast": 4.13,
-    "text_color": "FFFFFF",
-    "background": "0077FF",
-    "need": 4.5,
-    "template_color": 1
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "brief"
    }
   },
   {
-   "check_id": "T06_contrast",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 3,
-   "element_id": "348",
-   "box": {
-    "x": 3265841,
-    "y": 2678282,
-    "w": 1807593,
-    "h": 830242
-   },
-   "message": "Контраст текста #FFFFFF к фону #0077FF = 4.1:1 (нужно 4.5:1)",
-   "autofix": "snap_color",
-   "evidence": {
-    "contrast": 4.13,
-    "text_color": "FFFFFF",
-    "background": "0077FF",
-    "need": 4.5,
-    "template_color": 1
-   }
-  },
-  {
-   "check_id": "T02_font_size",
-   "kind": "deterministic",
-   "severity": "info",
-   "slide_idx": 3,
-   "element_id": "344",
-   "box": {
-    "x": 671515,
-    "y": 2678282,
-    "w": 1807593,
-    "h": 830242
-   },
-   "message": "Кегль 12.8 pt не из шкалы шаблона (ближайший 14.1 pt) (подгонка: 80% от кегля образца 16 pt)",
-   "autofix": "snap_font_size",
-   "evidence": {
-    "size_pt": 12.8,
-    "nearest_pt": 14.1,
-    "base_pt": 16.0
-   }
-  },
-  {
-   "check_id": "T02_font_size",
-   "kind": "deterministic",
-   "severity": "info",
-   "slide_idx": 3,
-   "element_id": "345",
-   "box": {
-    "x": 671514,
-    "y": 4026791,
-    "w": 1807593,
-    "h": 830242
-   },
-   "message": "Кегль 12.8 pt не из шкалы шаблона (ближайший 14.1 pt) (подгонка: 80% от кегля образца 16 pt)",
-   "autofix": "snap_font_size",
-   "evidence": {
-    "size_pt": 12.8,
-    "nearest_pt": 14.1,
-    "base_pt": 16.0
-   }
-  },
-  {
-   "check_id": "T02_font_size",
-   "kind": "deterministic",
-   "severity": "info",
-   "slide_idx": 3,
-   "element_id": "348",
-   "box": {
-    "x": 3265841,
-    "y": 2678282,
-    "w": 1807593,
-    "h": 830242
-   },
-   "message": "Кегль 11.2 pt не из шкалы шаблона (ближайший 9 pt) (подгонка: 70% от кегля образца 16 pt)",
-   "autofix": "snap_font_size",
-   "evidence": {
-    "size_pt": 11.2,
-    "nearest_pt": 9.0,
-    "base_pt": 16.0
-   }
-  },
-  {
-   "check_id": "T02_font_size",
-   "kind": "deterministic",
-   "severity": "info",
-   "slide_idx": 3,
-   "element_id": "349",
-   "box": {
-    "x": 3265840,
-    "y": 4026791,
-    "w": 1807593,
-    "h": 830242
-   },
-   "message": "Кегль 12.8 pt не из шкалы шаблона (ближайший 14.1 pt) (подгонка: 80% от кегля образца 16 pt)",
-   "autofix": "snap_font_size",
-   "evidence": {
-    "size_pt": 12.8,
-    "nearest_pt": 14.1,
-    "base_pt": 16.0
-   }
-  },
-  {
-   "check_id": "D05_fill",
-   "kind": "deterministic",
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
    "severity": "warning",
    "slide_idx": 5,
    "element_id": null,
    "box": null,
-   "message": "Слайд перегружен: контент занимает 92% рабочей области (норма 25%–75%)",
-   "autofix": "change_exemplar",
+   "message": "Заголовок является тематическим, а не содержит вывод или тезис.",
+   "autofix": null,
    "evidence": {
-    "fill": 0.919
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "brief"
+   }
+  },
+  {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 6,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок является тематическим, а не утверждающим вывод.",
+   "autofix": null,
+   "evidence": {
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "brief"
+   }
+  },
+  {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 7,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок является тематическим, а не утверждающим вывод.",
+   "autofix": null,
+   "evidence": {
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "brief"
+   }
+  },
+  {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок является тематическим, а не утверждающим вывод.",
+   "autofix": null,
+   "evidence": {
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "brief"
    }
   },
   {
    "check_id": "D05_fill",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 6,
+   "slide_idx": 8,
    "element_id": null,
    "box": null,
-   "message": "Слайд перегружен: контент занимает 92% рабочей области (норма 25%–75%)",
+   "message": "Слайд перегружен: контент занимает 85% рабочей области (норма 25%–75%)",
    "autofix": "change_exemplar",
    "evidence": {
-    "fill": 0.919
+    "fill": 0.848
    }
   },
   {
-   "check_id": "D02_bullet_words",
-   "kind": "deterministic",
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
    "severity": "warning",
-   "slide_idx": 7,
-   "element_id": "456",
-   "box": {
-    "x": 3359150,
-    "y": 579395,
-    "w": 7520885,
-    "h": 4549196
-   },
-   "message": "Пункт из 17 слов (норма ≤ 15): ««За месяц мы впервые увидели, где реально теряется время, — …»",
-   "autofix": "refill_slot",
+   "slide_idx": 9,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок является тематическим, а не утверждающим вывод.",
+   "autofix": null,
    "evidence": {
-    "words": 17
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "brief"
    }
   },
   {
    "check_id": "T06_contrast",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 7,
-   "element_id": "457",
+   "slide_idx": 9,
+   "element_id": "268",
    "box": {
-    "x": 3359150,
-    "y": 5738829,
-    "w": 8200516,
-    "h": 461946
+    "x": 658813,
+    "y": 2357767,
+    "w": 5142954,
+    "h": 2142466
    },
-   "message": "Контраст текста #0077FF к фону #FFFFFF = 4.1:1 (нужно 4.5:1)",
+   "message": "Контраст текста #FFFFFF к фону #0077FF = 4.1:1 (нужно 4.5:1)",
    "autofix": "snap_color",
    "evidence": {
     "contrast": 4.13,
-    "text_color": "0077FF",
-    "background": "FFFFFF",
+    "text_color": "FFFFFF",
+    "background": "0077FF",
     "need": 4.5,
     "template_color": 1
+   }
+  },
+  {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 10,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок «Почему VK Tech» является вопросительной темой, а не утверждением с выводом.",
+   "autofix": null,
+   "evidence": {
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "brief"
    }
   },
   {
    "check_id": "T02_font_size",
    "kind": "deterministic",
    "severity": "info",
-   "slide_idx": 7,
-   "element_id": "457",
+   "slide_idx": 11,
+   "element_id": "1082",
    "box": {
-    "x": 3359150,
-    "y": 5738829,
-    "w": 8200516,
-    "h": 461946
+    "x": 620713,
+    "y": 2483712,
+    "w": 5475287,
+    "h": 1477328
    },
-   "message": "Кегль 21.6 pt не из шкалы шаблона (ближайший 20 pt) (подгонка: 90% от кегля образца 24 pt)",
+   "message": "Кегль 54 pt не из шкалы шаблона (ближайший 48 pt) (подгонка: 90% от кегля образца 60 pt)",
    "autofix": "snap_font_size",
    "evidence": {
-    "size_pt": 21.6,
-    "nearest_pt": 20.0,
-    "base_pt": 24.0
-   }
-  },
-  {
-   "check_id": "L04_text_clipped",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 8,
-   "element_id": "445",
-   "box": {
-    "x": 8113464,
-    "y": 4251273,
-    "w": 5417327,
-    "h": 1080000
-   },
-   "message": "Текст выходит за край слайда (right на 105 pt)",
-   "autofix": "clamp_to_slide",
-   "evidence": {
-    "in_exemplar": 1,
-    "over_right": 1338791
-   }
-  },
-  {
-   "check_id": "L04_text_clipped",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 8,
-   "element_id": "447",
-   "box": {
-    "x": 8112125,
-    "y": 2139491,
-    "w": 5417327,
-    "h": 1080000
-   },
-   "message": "Текст выходит за край слайда (right на 105 pt)",
-   "autofix": "clamp_to_slide",
-   "evidence": {
-    "in_exemplar": 1,
-    "over_right": 1337452
-   }
-  },
-  {
-   "check_id": "T02_font_size",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 8,
-   "element_id": "445",
-   "box": {
-    "x": 8113464,
-    "y": 4251273,
-    "w": 5417327,
-    "h": 1080000
-   },
-   "message": "Кегль 56.9 pt не из шкалы шаблона (ближайший 48 pt)",
-   "autofix": "snap_font_size",
-   "evidence": {
-    "size_pt": 56.9,
+    "size_pt": 54.0,
     "nearest_pt": 48.0,
-    "base_pt": 88.0
-   }
-  },
-  {
-   "check_id": "T02_font_size",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 8,
-   "element_id": "447",
-   "box": {
-    "x": 8112125,
-    "y": 2139491,
-    "w": 5417327,
-    "h": 1080000
-   },
-   "message": "Кегль 56.9 pt не из шкалы шаблона (ближайший 48 pt)",
-   "autofix": "snap_font_size",
-   "evidence": {
-    "size_pt": 56.9,
-    "nearest_pt": 48.0,
-    "base_pt": 88.0
-   }
-  },
-  {
-   "check_id": "T02_font_size",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 8,
-   "element_id": "450",
-   "box": {
-    "x": 1022258,
-    "y": 2740903,
-    "w": 5417327,
-    "h": 2437575
-   },
-   "message": "Кегль 145.9 pt не из шкалы шаблона (ближайший 48 pt)",
-   "autofix": "snap_font_size",
-   "evidence": {
-    "size_pt": 145.9,
-    "nearest_pt": 48.0,
-    "base_pt": 239.0
+    "base_pt": 60.0
    }
   }
  ],
@@ -477,7 +224,7 @@
   "C01_title_insight",
   "C02_content_matches_title",
   "C03_one_message",
-  "C04_facts_in_sources",
+  "C04_facts_consistent",
   "C05_has_content",
   "C06_images_relevant",
   "C07_no_garbage",
@@ -486,5 +233,5 @@
   "C10_table_legend_relevant",
   "C11_flow"
  ],
- "duration_s": 38.419
+ "duration_s": 19.721
 }

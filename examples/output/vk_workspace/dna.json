@@ -216,7 +216,8 @@
    "fill_ratio": 0.022,
    "thumbnail": null,
    "tags": [],
-   "confidence": 1.0
+   "confidence": 1.0,
+   "card_frames": false
   },
   {
    "id": "slide2",
@@ -427,7 +428,8 @@
    "fill_ratio": 0.243,
    "thumbnail": null,
    "tags": [],
-   "confidence": 1.0
+   "confidence": 1.0,
+   "card_frames": false
   },
   {
    "id": "slide3",
@@ -539,7 +541,8 @@
     "шаблон",
     "несколько блоков"
    ],
-   "confidence": 0.6
+   "confidence": 0.6,
+   "card_frames": false
   },
   {
    "id": "slide4",
@@ -671,7 +674,8 @@
     "тёмный фон",
     "3D декор"
    ],
-   "confidence": 0.95
+   "confidence": 0.95,
+   "card_frames": false
   },
   {
    "id": "slide5",
@@ -765,7 +769,8 @@
     "иконки",
     "вертикальный стек"
    ],
-   "confidence": 0.95
+   "confidence": 0.95,
+   "card_frames": true
   },
   {
    "id": "slide6",
@@ -958,7 +963,8 @@
    "fill_ratio": 0.463,
    "thumbnail": null,
    "tags": [],
-   "confidence": 0.9
+   "confidence": 0.9,
+   "card_frames": true
   },
   {
    "id": "slide7",
@@ -1097,7 +1103,8 @@
    "fill_ratio": 0.47,
    "thumbnail": null,
    "tags": [],
-   "confidence": 0.9
+   "confidence": 0.9,
+   "card_frames": true
   },
   {
    "id": "slide8",
@@ -1457,7 +1464,8 @@
     "сетка 3×2",
     "нумерация"
    ],
-   "confidence": 0.95
+   "confidence": 0.95,
+   "card_frames": false
   },
   {
    "id": "slide9",
@@ -1920,7 +1928,8 @@
    "fill_ratio": 0.521,
    "thumbnail": null,
    "tags": [],
-   "confidence": 1.0
+   "confidence": 1.0,
+   "card_frames": true
   },
   {
    "id": "slide10",
@@ -2064,7 +2073,8 @@
     "иконки",
     "вертикальный стек"
    ],
-   "confidence": 0.9
+   "confidence": 0.9,
+   "card_frames": true
   },
   {
    "id": "slide11",
@@ -2437,7 +2447,8 @@
     "чек-листы",
     "иконки"
    ],
-   "confidence": 0.95
+   "confidence": 0.95,
+   "card_frames": true
   },
   {
    "id": "slide12",
@@ -2792,7 +2803,8 @@
    "fill_ratio": 0.357,
    "thumbnail": null,
    "tags": [],
-   "confidence": 1.0
+   "confidence": 1.0,
+   "card_frames": false
   },
   {
    "id": "slide13",
@@ -3047,7 +3059,8 @@
     "3D-мокап",
     "две секции"
    ],
-   "confidence": 0.85
+   "confidence": 0.85,
+   "card_frames": true
   },
   {
    "id": "slide14",
@@ -3096,7 +3109,8 @@
    "fill_ratio": 0.108,
    "thumbnail": null,
    "tags": [],
-   "confidence": 0.95
+   "confidence": 0.95,
+   "card_frames": false
   },
   {
    "id": "slide15",
@@ -3224,7 +3238,8 @@
     "синий футер",
     "декоративные точки"
    ],
-   "confidence": 0.95
+   "confidence": 0.95,
+   "card_frames": false
   },
   {
    "id": "slide16",
@@ -3381,7 +3396,8 @@
    "fill_ratio": 0.207,
    "thumbnail": null,
    "tags": [],
-   "confidence": 0.75
+   "confidence": 0.75,
+   "card_frames": false
   },
   {
    "id": "slide17",
@@ -3466,7 +3482,8 @@
    "fill_ratio": 0.283,
    "thumbnail": null,
    "tags": [],
-   "confidence": 0.9
+   "confidence": 0.9,
+   "card_frames": false
   },
   {
    "id": "slide18",
@@ -3538,7 +3555,8 @@
     "иллюстрация",
     "крупная цифра"
    ],
-   "confidence": 0.7
+   "confidence": 0.7,
+   "card_frames": false
   },
   {
    "id": "slide19",
@@ -3713,33 +3731,15 @@
    "fill_ratio": 1.0,
    "thumbnail": null,
    "tags": [],
-   "confidence": 0.85
+   "confidence": 0.85,
+   "card_frames": false
   },
   {
    "id": "slide20",
    "source_index": 19,
    "layout_name": "11_Заголовок",
    "archetype": "chart",
-   "slots": [
-    {
-     "id": "742",
-     "kind": "chart",
-     "box": {
-      "x": 0,
-      "y": 863148,
-      "w": 11173527,
-      "h": 5131703
-     },
-     "max_chars": null,
-     "max_lines": null,
-     "max_items": null,
-     "font": null,
-     "size_pt": null,
-     "placeholder_type": null,
-     "sample_text": null,
-     "hard_lines": false
-    }
-   ],
+   "slots": [],
    "fixed": [
     "741"
    ],
@@ -3750,7 +3750,8 @@
     "кольцевые графики",
     "тёмный фон"
    ],
-   "confidence": 0.95
+   "confidence": 0.95,
+   "card_frames": false
   },
   {
    "id": "slide21",
@@ -3775,24 +3776,6 @@
      "placeholder_type": "title",
      "sample_text": "Графики",
      "hard_lines": false
-    },
-    {
-     "id": "750",
-     "kind": "chart",
-     "box": {
-      "x": 0,
-      "y": 1431024,
-      "w": 12192000,
-      "h": 4567949
-     },
-     "max_chars": null,
-     "max_lines": null,
-     "max_items": null,
-     "font": null,
-     "size_pt": null,
-     "placeholder_type": null,
-     "sample_text": null,
-     "hard_lines": false
     }
    ],
    "fixed": [],
@@ -3804,7 +3787,8 @@
     "3 серии",
     "4 категории"
    ],
-   "confidence": 0.95
+   "confidence": 0.95,
+   "card_frames": false
   },
   {
    "id": "slide22",
@@ -3997,7 +3981,8 @@
    "fill_ratio": 0.236,
    "thumbnail": null,
    "tags": [],
-   "confidence": 0.95
+   "confidence": 0.95,
+   "card_frames": false
   },
   {
    "id": "slide23",
@@ -4244,7 +4229,8 @@
    "fill_ratio": 0.323,
    "thumbnail": null,
    "tags": [],
-   "confidence": 1.0
+   "confidence": 1.0,
+   "card_frames": true
   },
   {
    "id": "slide24",
@@ -4339,7 +4325,8 @@
     "тёмный фон",
     "call to action"
    ],
-   "confidence": 0.95
+   "confidence": 0.95,
+   "card_frames": false
   },
   {
    "id": "slide25",
@@ -4557,7 +4544,8 @@
     "тёмный фон",
     "3D-объект"
    ],
-   "confidence": 0.95
+   "confidence": 0.95,
+   "card_frames": false
   },
   {
    "id": "slide26",
@@ -4739,7 +4727,8 @@
     "тёмный фон",
     "горизонтальная линия"
    ],
-   "confidence": 0.95
+   "confidence": 0.95,
+   "card_frames": false
   },
   {
    "id": "slide27",
@@ -4914,7 +4903,8 @@
    "fill_ratio": 0.151,
    "thumbnail": null,
    "tags": [],
-   "confidence": 1.0
+   "confidence": 1.0,
+   "card_frames": false
   },
   {
    "id": "slide28",
@@ -4945,7 +4935,8 @@
    "fill_ratio": 0.0,
    "thumbnail": null,
    "tags": [],
-   "confidence": 0.95
+   "confidence": 0.95,
+   "card_frames": false
   },
   {
    "id": "slide29",
@@ -5030,7 +5021,8 @@
    "fill_ratio": 0.119,
    "thumbnail": null,
    "tags": [],
-   "confidence": 1.0
+   "confidence": 1.0,
+   "card_frames": false
   }
  ],
  "embedded_fonts": [

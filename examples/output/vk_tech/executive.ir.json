@@ -20,7 +20,7 @@
       {
        "runs": [
         {
-         "text": "Пульс команды",
+         "text": "VK Tech: Безопасность и инфраструктура",
          "bold": false,
          "italic": false,
          "color": null,
@@ -40,7 +40,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 34.0
+      "size_pt": 29.2
      }
     },
     {
@@ -56,7 +56,7 @@
       {
        "runs": [
         {
-         "text": "Аналитика нагрузки для продуктовых команд",
+         "text": "Корпоративные решения для защиты данных и процессов",
          "bold": false,
          "italic": false,
          "color": null,
@@ -76,7 +76,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 14.4
+      "size_pt": 11.2
      }
     }
    ],
@@ -85,11 +85,11 @@
   },
   {
    "idx": 1,
-   "exemplar_id": "slide17",
+   "exemplar_id": "slide18",
    "archetype": "cards",
    "elements": [
     {
-     "slot_id": "808",
+     "slot_id": "845",
      "kind": "title",
      "box": {
       "x": 177970,
@@ -101,7 +101,7 @@
       {
        "runs": [
         {
-         "text": "Руководитель не видит перегрузку из-за шести системных причин",
+         "text": "Риски цифровой инфраструктуры растут",
          "bold": false,
          "italic": false,
          "color": null,
@@ -124,42 +124,7 @@
      }
     },
     {
-     "slot_id": "780",
-     "kind": "label",
-     "box": {
-      "x": 438148,
-      "y": 1590803,
-      "w": 2539987,
-      "h": 165079
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Статусы вместо работы",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "781",
+     "slot_id": "821",
      "kind": "body",
      "box": {
       "x": 438148,
@@ -171,7 +136,7 @@
       {
        "runs": [
         {
-         "text": "До 9,5 часов в неделю на встречи и отчёты",
+         "text": "Угрозы безопасности становятся более сложными",
          "bold": false,
          "italic": false,
          "color": null,
@@ -194,45 +159,10 @@
      }
     },
     {
-     "slot_id": "785",
-     "kind": "label",
-     "box": {
-      "x": 3327380,
-      "y": 1590803,
-      "w": 2539986,
-      "h": 165079
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Скрытая перегрузка",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "786",
+     "slot_id": "826",
      "kind": "body",
      "box": {
-      "x": 3327380,
+      "x": 3327389,
       "y": 1819373,
       "w": 2527287,
       "h": 854757
@@ -241,7 +171,7 @@
       {
        "runs": [
         {
-         "text": "Трекер показывает задачи, а не людей",
+         "text": "Отсутствие централизованного управления данными",
          "bold": false,
          "italic": false,
          "color": null,
@@ -264,45 +194,10 @@
      }
     },
     {
-     "slot_id": "790",
-     "kind": "label",
-     "box": {
-      "x": 6216621,
-      "y": 1590803,
-      "w": 2539986,
-      "h": 165079
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Поздние сигналы",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "791",
+     "slot_id": "831",
      "kind": "body",
      "box": {
-      "x": 6216621,
+      "x": 6216612,
       "y": 1819373,
       "w": 2527287,
       "h": 854757
@@ -311,7 +206,7 @@
       {
        "runs": [
         {
-         "text": "О выгорании узнают на ретро или при увольнении",
+         "text": "Операционные барьеры для корпоративных команд",
          "bold": false,
          "italic": false,
          "color": null,
@@ -334,54 +229,19 @@
      }
     },
     {
-     "slot_id": "796",
-     "kind": "label",
-     "box": {
-      "x": 438148,
-      "y": 3264604,
-      "w": 2539987,
-      "h": 165079
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Ручные отчёты",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "797",
+     "slot_id": "837",
      "kind": "body",
      "box": {
       "x": 438148,
       "y": 3493174,
-      "w": 2527287,
+      "w": 2527303,
       "h": 854757
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "Данные устаревают за день",
+         "text": "Платформа обеспечивает комплексную защиту данных и процессов.",
          "bold": false,
          "italic": false,
          "color": null,
@@ -404,124 +264,19 @@
      }
     },
     {
-     "slot_id": "801",
-     "kind": "label",
-     "box": {
-      "x": 3327380,
-      "y": 3264604,
-      "w": 2539986,
-      "h": 165079
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Спор об ощущениях",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "802",
+     "slot_id": "844",
      "kind": "body",
      "box": {
-      "x": 3327380,
+      "x": 3327408,
       "y": 3493174,
-      "w": 2527287,
+      "w": 2552687,
       "h": 854757
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "Обсуждение впечатлений, а не фактов",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "806",
-     "kind": "label",
-     "box": {
-      "x": 6216621,
-      "y": 3264604,
-      "w": 2539986,
-      "h": 165079
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Нет общей картины",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "807",
-     "kind": "body",
-     "box": {
-      "x": 6216621,
-      "y": 3493174,
-      "w": 2527287,
-      "h": 854757
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Разные представления о приоритетах у смежных команд",
+         "text": "Архитектура масштабируется под требования крупных предприятий.",
          "bold": false,
          "italic": false,
          "color": null,
@@ -549,11 +304,11 @@
   },
   {
    "idx": 2,
-   "exemplar_id": "slide45",
-   "archetype": "kpi",
+   "exemplar_id": "slide24",
+   "archetype": "cards",
    "elements": [
     {
-     "slot_id": "2341",
+     "slot_id": "1050",
      "kind": "title",
      "box": {
       "x": 177970,
@@ -565,7 +320,7 @@
       {
        "runs": [
         {
-         "text": "Пилот охватил 12 команд и 118 человек за 4 месяца",
+         "text": "Бесшовная интеграция с системами",
          "bold": false,
          "italic": false,
          "color": null,
@@ -588,19 +343,19 @@
      }
     },
     {
-     "slot_id": "2348",
-     "kind": "number",
+     "slot_id": "1036",
+     "kind": "body",
      "box": {
-      "x": 854932,
-      "y": 2991623,
-      "w": 1423651,
-      "h": 417135
+      "x": 476248,
+      "y": 1628898,
+      "w": 2463787,
+      "h": 831742
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "12",
+         "text": "Интеграция без сбоев с текущими системами",
          "bold": false,
          "italic": false,
          "color": null,
@@ -623,19 +378,19 @@
      }
     },
     {
-     "slot_id": "2342",
-     "kind": "label",
+     "slot_id": "1042",
+     "kind": "body",
      "box": {
-      "x": 285749,
-      "y": 1307494,
-      "w": 1614880,
-      "h": 149630
+      "x": 3365479,
+      "y": 1628898,
+      "w": 2463787,
+      "h": 831742
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "команд в пилоте",
+         "text": "Поддержка существующих корпоративных процессов",
          "bold": false,
          "italic": false,
          "color": null,
@@ -658,19 +413,19 @@
      }
     },
     {
-     "slot_id": "2349",
-     "kind": "number",
+     "slot_id": "1047",
+     "kind": "body",
      "box": {
-      "x": 3776371,
-      "y": 2991622,
-      "w": 1423651,
-      "h": 417135
+      "x": 6254721,
+      "y": 1628898,
+      "w": 2463787,
+      "h": 831742
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "118",
+         "text": "Соответствие отраслевым стандартам безопасности",
          "bold": false,
          "italic": false,
          "color": null,
@@ -690,112 +445,6 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "2344",
-     "kind": "label",
-     "box": {
-      "x": 3333728,
-      "y": 1307494,
-      "w": 1614880,
-      "h": 149630
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "участников",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "2350",
-     "kind": "number",
-     "box": {
-      "x": 6795780,
-      "y": 2980839,
-      "w": 1423651,
-      "h": 417135
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "4",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "2346",
-     "kind": "label",
-     "box": {
-      "x": 6381707,
-      "y": 1306712,
-      "w": 1614880,
-      "h": 149630
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "месяца (май–август…",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000",
-      "size_pt": 9.8
      }
     }
    ],
@@ -804,406 +453,6 @@
   },
   {
    "idx": 3,
-   "exemplar_id": "slide47",
-   "archetype": "process",
-   "elements": [
-    {
-     "slot_id": "2401",
-     "kind": "title",
-     "box": {
-      "x": 177970,
-      "y": 282949,
-      "w": 6792985,
-      "h": 724203
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Сервис работает по пяти шагам от подключения до ретро",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "2402",
-     "kind": "label",
-     "box": {
-      "x": 285749,
-      "y": 1383651,
-      "w": 1614880,
-      "h": 149630
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Подключение",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "2404",
-     "kind": "body",
-     "box": {
-      "x": 285749,
-      "y": 2198570,
-      "w": 1614880,
-      "h": 202471
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Трекер и календарь через OAuth за…",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000",
-      "size_pt": 6.3
-     }
-    },
-    {
-     "slot_id": "2405",
-     "kind": "label",
-     "box": {
-      "x": 2600311,
-      "y": 1383651,
-      "w": 1614880,
-      "h": 149630
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Сбор сигналов",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "2407",
-     "kind": "body",
-     "box": {
-      "x": 2600311,
-      "y": 2198570,
-      "w": 1614880,
-      "h": 202471
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Сроки, статусы",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000",
-      "size_pt": 6.3
-     }
-    },
-    {
-     "slot_id": "2408",
-     "kind": "label",
-     "box": {
-      "x": 4853011,
-      "y": 1383651,
-      "w": 1614880,
-      "h": 149630
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Модель нагрузки",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "2410",
-     "kind": "body",
-     "box": {
-      "x": 4853011,
-      "y": 2198570,
-      "w": 1614880,
-      "h": 202471
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Оценка перегрузки на человека и…",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000",
-      "size_pt": 6.3
-     }
-    },
-    {
-     "slot_id": "2411",
-     "kind": "label",
-     "box": {
-      "x": 7162762,
-      "y": 1383651,
-      "w": 1614880,
-      "h": 149630
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Еженедельный дайджест",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000",
-      "size_pt": 9.8
-     }
-    },
-    {
-     "slot_id": "2413",
-     "kind": "body",
-     "box": {
-      "x": 7162762,
-      "y": 2198570,
-      "w": 1614880,
-      "h": 202471
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Три риска и три рекомендации лиду",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000",
-      "size_pt": 6.3
-     }
-    },
-    {
-     "slot_id": "2414",
-     "kind": "label",
-     "box": {
-      "x": 318685,
-      "y": 3129704,
-      "w": 1614880,
-      "h": 149630
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Ретро с данными",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "2416",
-     "kind": "body",
-     "box": {
-      "x": 318685,
-      "y": 3944623,
-      "w": 1614880,
-      "h": 202471
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Обсуждение по фактам",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000",
-      "size_pt": 6.3
-     }
-    }
-   ],
-   "notes": "",
-   "outline_ref": 3
-  },
-  {
-   "idx": 4,
    "exemplar_id": "slide14",
    "archetype": "cards",
    "elements": [
@@ -1220,7 +469,7 @@
       {
        "runs": [
         {
-         "text": "Команда получает ранние риски и честное ретро",
+         "text": "Этапы внедрения решения",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1255,7 +504,7 @@
       {
        "runs": [
         {
-         "text": "Риски заранее",
+         "text": "01",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1290,7 +539,7 @@
       {
        "runs": [
         {
-         "text": "Дайджест приходит в понедельник до планирования",
+         "text": "Аудит текущей инфраструктуры",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1325,7 +574,7 @@
       {
        "runs": [
         {
-         "text": "Меньше статусов",
+         "text": "02",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1360,7 +609,7 @@
       {
        "runs": [
         {
-         "text": "Отчёты собираются автоматически",
+         "text": "Проектирование архитектуры",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1395,7 +644,7 @@
       {
        "runs": [
         {
-         "text": "Честное ретро",
+         "text": "03",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1430,7 +679,7 @@
       {
        "runs": [
         {
-         "text": "Обсуждение цифр, а не впечатлений",
+         "text": "Пилотное внедрение",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1465,7 +714,7 @@
       {
        "runs": [
         {
-         "text": "Приватность",
+         "text": "04",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1500,7 +749,121 @@
       {
        "runs": [
         {
-         "text": "Сервис видит только метаданные",
+         "text": "Масштабирование и поддержка",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000"
+     }
+    }
+   ],
+   "notes": "",
+   "outline_ref": 3
+  },
+  {
+   "idx": 4,
+   "exemplar_id": "slide24",
+   "archetype": "cards",
+   "elements": [
+    {
+     "slot_id": "1050",
+     "kind": "title",
+     "box": {
+      "x": 177970,
+      "y": 282949,
+      "w": 6792985,
+      "h": 724203
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Автоматизация рутинных IT-задач",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "1036",
+     "kind": "body",
+     "box": {
+      "x": 476248,
+      "y": 1628898,
+      "w": 2463787,
+      "h": 831742
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Сценарий использования фокусируется на автоматизации.",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "1042",
+     "kind": "body",
+     "box": {
+      "x": 3365479,
+      "y": 1628898,
+      "w": 2463787,
+      "h": 831742
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Освобождение ресурсов отделов для стратегических задач.",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1528,11 +891,11 @@
   },
   {
    "idx": 5,
-   "exemplar_id": "slide34",
-   "archetype": "table",
+   "exemplar_id": "slide24",
+   "archetype": "cards",
    "elements": [
     {
-     "slot_id": "1351",
+     "slot_id": "1050",
      "kind": "title",
      "box": {
       "x": 177970,
@@ -1544,7 +907,7 @@
       {
        "runs": [
         {
-         "text": "Время на согласования в пилоте упало почти вдвое",
+         "text": "Стандарты безопасности и соответствие",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1567,45 +930,101 @@
      }
     },
     {
-     "slot_id": "1368",
-     "kind": "table",
+     "slot_id": "1036",
+     "kind": "body",
      "box": {
-      "x": 4071917,
-      "y": 1281280,
-      "w": 4786287,
-      "h": 3196198
+      "x": 476248,
+      "y": 1628898,
+      "w": 2463787,
+      "h": 831742
      },
-     "paragraphs": [],
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Высокий уровень соответствия стандартам",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
      "chart": null,
-     "table": {
-      "header": [
-       "",
-       "Пилотные команды, ч/нед",
-       "Контрольная группа, ч/нед"
-      ],
-      "rows": [
-       [
-        "Май",
-        "9,5",
-        "9,3"
-       ],
-       [
-        "Июнь",
-        "7,1",
-        "9,6"
-       ],
-       [
-        "Июль",
-        "5,8",
-        "9,1"
-       ],
-       [
-        "Август",
-        "5,2",
-        "9,4"
-       ]
-      ]
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "1042",
+     "kind": "body",
+     "box": {
+      "x": 3365479,
+      "y": 1628898,
+      "w": 2463787,
+      "h": 831742
      },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Защита данных на всех уровнях",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "1047",
+     "kind": "body",
+     "box": {
+      "x": 6254721,
+      "y": 1628898,
+      "w": 2463787,
+      "h": 831742
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Регулярные обновления и патчи безопасности",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
      "image_path": null,
      "icon_name": null,
      "style_overrides": {
@@ -1621,11 +1040,11 @@
   },
   {
    "idx": 6,
-   "exemplar_id": "slide35",
-   "archetype": "table",
+   "exemplar_id": "slide14",
+   "archetype": "cards",
    "elements": [
     {
-     "slot_id": "1648",
+     "slot_id": "685",
      "kind": "title",
      "box": {
       "x": 177970,
@@ -1637,7 +1056,7 @@
       {
        "runs": [
         {
-         "text": "Доля времени на разработку выросла на 16 п.п.",
+         "text": "Гибкая модель лицензирования",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1660,50 +1079,102 @@
      }
     },
     {
-     "slot_id": "1479",
-     "kind": "table",
+     "slot_id": "668",
+     "kind": "label",
      "box": {
-      "x": 285749,
-      "y": 1233662,
-      "w": 8539118,
-      "h": 3196198
+      "x": 438148,
+      "y": 1590803,
+      "w": 1817678,
+      "h": 165079
      },
-     "paragraphs": [],
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Подстройка под бюджет клиента",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
      "chart": null,
-     "table": {
-      "header": [
-       "Тип работы",
-       "До пилота",
-       "После пилота",
-       "Изменение"
-      ],
-      "rows": [
-       [
-        "Согласования",
-        "31",
-        "17",
-        "−14 п.п."
-       ],
-       [
-        "Статусы и отчёты",
-        "18",
-        "9",
-        "−9 п.п."
-       ],
-       [
-        "Разработка и дизайн",
-        "38",
-        "54",
-        "+16 п.п."
-       ],
-       [
-        "Прочее",
-        "13",
-        "20",
-        "+7 п.п."
-       ]
-      ]
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "size_pt": 8.4
+     }
+    },
+    {
+     "slot_id": "674",
+     "kind": "body",
+     "box": {
+      "x": 2605074,
+      "y": 1819373,
+      "w": 1804978,
+      "h": 2290464
      },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Прозрачные условия сотрудничества",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000"
+     }
+    },
+    {
+     "slot_id": "679",
+     "kind": "body",
+     "box": {
+      "x": 4772001,
+      "y": 1819373,
+      "w": 1804978,
+      "h": 2290464
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Масштабируемость подписки по мере роста",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
      "image_path": null,
      "icon_name": null,
      "style_overrides": {
@@ -1719,23 +1190,23 @@
   },
   {
    "idx": 7,
-   "exemplar_id": "slide3",
-   "archetype": "section",
+   "exemplar_id": "slide9",
+   "archetype": "image_text",
    "elements": [
     {
-     "slot_id": "417",
+     "slot_id": "503",
      "kind": "title",
      "box": {
-      "x": 210243,
-      "y": 878488,
-      "w": 4288279,
-      "h": 1496698
+      "x": 430360,
+      "y": 338829,
+      "w": 3945697,
+      "h": 753371
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "«За месяц мы впервые увидели, где реально теряется время, — и перестали спорить об этом на ретро»",
+         "text": "Долгосрочная поддержка и развитие",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1754,24 +1225,36 @@
       "accent": "0077FF",
       "palette": "0077FF",
       "font": "Play",
-      "text_color": "000000",
-      "size_pt": 20.3
+      "text_color": "000000"
      }
     },
     {
-     "slot_id": "418",
-     "kind": "subtitle",
+     "slot_id": "505",
+     "kind": "body",
      "box": {
-      "x": 210685,
-      "y": 2940812,
-      "w": 4287837,
-      "h": 285750
+      "x": 4637088,
+      "y": 676278,
+      "w": 3862387,
+      "h": 3737102
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "Руководитель разработки, команда платёжного шлюза",
+         "text": "Гарантия поддержки и развития продукта.",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      },
+      {
+       "runs": [
+        {
+         "text": "Долгосрочный контракт обеспечивает стабильность.",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1790,8 +1273,7 @@
       "accent": "0077FF",
       "palette": "0077FF",
       "font": "Play",
-      "text_color": "000000",
-      "size_pt": 12.0
+      "text_color": "000000"
      }
     }
    ],
@@ -1800,11 +1282,11 @@
   },
   {
    "idx": 8,
-   "exemplar_id": "slide45",
-   "archetype": "kpi",
+   "exemplar_id": "slide24",
+   "archetype": "cards",
    "elements": [
     {
-     "slot_id": "2341",
+     "slot_id": "1050",
      "kind": "title",
      "box": {
       "x": 177970,
@@ -1816,7 +1298,7 @@
       {
        "runs": [
         {
-         "text": "Оценка пилота командами выросла с 3,4 до 4,7",
+         "text": "Стратегические преимущества",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1839,19 +1321,19 @@
      }
     },
     {
-     "slot_id": "2348",
-     "kind": "number",
+     "slot_id": "1036",
+     "kind": "body",
      "box": {
-      "x": 854932,
-      "y": 2991623,
-      "w": 1423651,
-      "h": 417135
+      "x": 476248,
+      "y": 1628898,
+      "w": 2463787,
+      "h": 831742
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "4,7",
+         "text": "Соответствие стандартам",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1874,55 +1356,19 @@
      }
     },
     {
-     "slot_id": "2342",
-     "kind": "label",
+     "slot_id": "1042",
+     "kind": "body",
      "box": {
-      "x": 285749,
-      "y": 1307494,
-      "w": 1614880,
-      "h": 149630
+      "x": 3365479,
+      "y": 1628898,
+      "w": 2463787,
+      "h": 831742
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "оценка после пилота",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000",
-      "size_pt": 9.8
-     }
-    },
-    {
-     "slot_id": "2349",
-     "kind": "number",
-     "box": {
-      "x": 3776371,
-      "y": 2991622,
-      "w": 1423651,
-      "h": 417135
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "3,4",
+         "text": "Поддержка и мониторинг",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1945,55 +1391,19 @@
      }
     },
     {
-     "slot_id": "2344",
-     "kind": "label",
+     "slot_id": "1047",
+     "kind": "body",
      "box": {
-      "x": 3333728,
-      "y": 1307494,
-      "w": 1614880,
-      "h": 149630
+      "x": 6254721,
+      "y": 1628898,
+      "w": 2463787,
+      "h": 831742
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "оценка до пилота",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000",
-      "size_pt": 9.8
-     }
-    },
-    {
-     "slot_id": "2350",
-     "kind": "number",
-     "box": {
-      "x": 6795780,
-      "y": 2980839,
-      "w": 1423651,
-      "h": 417135
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "0,6",
+         "text": "Единая платформа",
          "bold": false,
          "italic": false,
          "color": null,
@@ -2013,42 +1423,6 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "2346",
-     "kind": "label",
-     "box": {
-      "x": 6381707,
-      "y": 1306712,
-      "w": 1614880,
-      "h": 149630
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "дня: средний срок…",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000",
-      "size_pt": 9.8
      }
     }
    ],
@@ -2057,11 +1431,11 @@
   },
   {
    "idx": 9,
-   "exemplar_id": "slide17",
+   "exemplar_id": "slide24",
    "archetype": "cards",
    "elements": [
     {
-     "slot_id": "808",
+     "slot_id": "1050",
      "kind": "title",
      "box": {
       "x": 177970,
@@ -2073,7 +1447,7 @@
       {
        "runs": [
         {
-         "text": "Три ключевых риска запуска и их закрытие",
+         "text": "Почему VK Tech",
          "bold": false,
          "italic": false,
          "color": null,
@@ -2096,54 +1470,19 @@
      }
     },
     {
-     "slot_id": "780",
-     "kind": "label",
-     "box": {
-      "x": 438148,
-      "y": 1590803,
-      "w": 2539987,
-      "h": 165079
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Недоверие команд",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "781",
+     "slot_id": "1036",
      "kind": "body",
      "box": {
-      "x": 438148,
-      "y": 1819373,
-      "w": 2527287,
-      "h": 854757
+      "x": 476248,
+      "y": 1628898,
+      "w": 2463787,
+      "h": 831742
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "Доступ только к метаданным, отчёт видит команда",
+         "text": "Экспертиза в корпоративных решениях",
          "bold": false,
          "italic": false,
          "color": null,
@@ -2166,54 +1505,19 @@
      }
     },
     {
-     "slot_id": "785",
-     "kind": "label",
-     "box": {
-      "x": 3327380,
-      "y": 1590803,
-      "w": 2539986,
-      "h": 165079
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Нагрузка на инфраструктуру",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "786",
+     "slot_id": "1042",
      "kind": "body",
      "box": {
-      "x": 3327380,
-      "y": 1819373,
-      "w": 2527287,
-      "h": 854757
+      "x": 3365479,
+      "y": 1628898,
+      "w": 2463787,
+      "h": 831742
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "Подключение волнами по 20 команд в месяц",
+         "text": "Надёжная и масштабируемая инфраструктура",
          "bold": false,
          "italic": false,
          "color": null,
@@ -2236,264 +1540,19 @@
      }
     },
     {
-     "slot_id": "790",
-     "kind": "label",
-     "box": {
-      "x": 6216621,
-      "y": 1590803,
-      "w": 2539986,
-      "h": 165079
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Ложные тревоги",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "791",
+     "slot_id": "1047",
      "kind": "body",
      "box": {
-      "x": 6216621,
-      "y": 1819373,
-      "w": 2527287,
-      "h": 854757
+      "x": 6254721,
+      "y": 1628898,
+      "w": 2463787,
+      "h": 831742
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "Калибровка порога по первым двум неделям",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "796",
-     "kind": "label",
-     "box": {
-      "x": 438148,
-      "y": 3264604,
-      "w": 2539987,
-      "h": 165079
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "1. Октябрь",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "797",
-     "kind": "body",
-     "box": {
-      "x": 438148,
-      "y": 3493174,
-      "w": 2527287,
-      "h": 854757
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Подключение 20 команд, политика доступа",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "801",
-     "kind": "label",
-     "box": {
-      "x": 3327380,
-      "y": 3264604,
-      "w": 2539986,
-      "h": 165079
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "2. Ноябрь",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "802",
-     "kind": "body",
-     "box": {
-      "x": 3327380,
-      "y": 3493174,
-      "w": 2527287,
-      "h": 854757
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Ещё 40 команд, интеграция с целями",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "806",
-     "kind": "label",
-     "box": {
-      "x": 6216621,
-      "y": 3264604,
-      "w": 2539986,
-      "h": 165079
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "3. Декабрь",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "807",
-     "kind": "body",
-     "box": {
-      "x": 6216621,
-      "y": 3493174,
-      "w": 2527287,
-      "h": 854757
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Все команды, отчёт для руководителей",
+         "text": "Фокус на безопасности и эффективности",
          "bold": false,
          "italic": false,
          "color": null,
@@ -2537,7 +1596,7 @@
       {
        "runs": [
         {
-         "text": "Пульс команды",
+         "text": "Начнём с пилотного проекта",
          "bold": false,
          "italic": false,
          "color": null,

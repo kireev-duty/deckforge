@@ -1,8 +1,8 @@
 | стратегия | слайдов | архетипы по порядку | пунктов/слайд | слов/пункт | chart | table | kpi | пропущено | аудит err/warn | время, с |
 |---|---|---|---|---|---|---|---|---|---|---|
-| executive | 11 | title → cards → kpi → cards → cards → table → table → image_text → kpi → cards → closing | 6.2 | 6.0 | 0 | 2 | 2 | 0 | 4/23 | 65 |
-| narrative | 13 | title → cards → cards → kpi → cards → cards → chart → table → image_text → kpi → cards → process → closing | 4.4 | 5.8 | 1 | 1 | 2 | 0 | 3/28 | 72 |
-| visual | 12 | title → cards → kpi → cards → cards → chart → chart → image_text → kpi → cards → cards → closing | 4.7 | 6.0 | 2 | 0 | 2 | 0 | 3/22 | 70 |
+| executive | 11 | title → cards → cards → process → cards → cards → cards → cards → cards → cards → closing | 3.6 | 3.8 | 0 | 0 | 0 | 0 | 4/29 | 37 |
+| narrative | 12 | title → cards → cards → cards → process → cards → cards → cards → cards → cards → cards → closing | 3.2 | 3.8 | 0 | 0 | 0 | 0 | 3/35 | 41 |
+| visual | 12 | title → cards → cards → cards → process → cards → cards → cards → cards → cards → cards → closing | 3.2 | 3.8 | 0 | 0 | 0 | 0 | 3/35 | 34 |
 
 - **executive** — руководителю на 5 минут — статус, отчёт, решение по цифрам; читается без докладчика
 - **narrative** — доклад со сцены, обучение, онбординг — слайд поддерживает рассказ, а не заменяет его

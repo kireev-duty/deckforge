@@ -5,7 +5,7 @@
 
 | Роль | Модель | Размер | Лицензия | Модальности | Где используется | HuggingFace |
 |---|---|---|---|---|---|---|
-| text + vision (`LLM_MODEL`, `VLM_MODEL`) | Qwen3.8-27B | 27B dense | Apache 2.0 | текст, изображения, видео → текст; контекст 262k | `outline_writer`, `image_prompter`, `template_tagger`, `audit_judge` (`slide_filler` — скилл есть, в пайплайн не подключён) | https://huggingface.co/Qwen/Qwen3.8-27B |
+| text + vision (`LLM_MODEL`, `VLM_MODEL`) | Qwen3.8-27B | 27B dense | Apache 2.0 | текст, изображения, видео → текст; контекст 262k | `outline_writer`, `template_brief`, `image_prompter`, `template_tagger`, `audit_judge` (`slide_filler` — скилл есть, в пайплайн не подключён) | https://huggingface.co/Qwen/Qwen3.8-27B |
 | image (`T2I_MODEL`) | FLUX.2 [klein] 4B | 4B | Apache 2.0 | текст → изображение | иллюстрации в слайдах (`image_prompter` → картинка) | https://huggingface.co/black-forest-labs/FLUX.2-klein-4B |
 
 Почему одна модель на текст и зрение: Qwen3.8-27B — та же модель, которую VK предоставляет командам топ-10 на своём инференсе (ТЗ, раздел 3), и она нативно мультимодальна. Один и тот же промпт-стек работает на отборе (через OpenRouter) и в финале (инференс VK) без переписывания.
@@ -22,10 +22,11 @@
 
 | Скилл | Роль модели | temperature | max_tokens | Ответ | Вход |
 |---|---|---|---|---|---|
-| `outline_writer` v1 | text | 0.4 | 6000 | JSON по `schema.json` (`response_format=json_object`, валидация своя) | бриф + контент-пакет + архетипы шаблона |
+| `outline_writer` v3 | text | 0.4 | 6000 | JSON по `schema.json` (`response_format=json_object`, валидация своя) | бриф + контент-пакет + архетипы шаблона |
+| `template_brief` v2 | text | 0.5 | 2000 | JSON (тема, бренд, назначение, аудитория, тезисы) | слепок шаблона (`template_digest`) — режим «на входе только шаблон» |
 | `image_prompter` v1 | text | 0.6 | 400 | JSON | заголовок, текст слайда, палитра |
 | `template_tagger` v1 | vision | 0.1 | 1500 | JSON | PNG слайда-образца |
-| `audit_judge` v1 | vision | 0.0 | 1200 | JSON (11 вопросов) | PNG готового слайда + его текст |
+| `audit_judge` v2 | vision | 0.0 | 1200 | JSON (11 вопросов) | PNG готового слайда + его текст (+ факты источника, если они есть) |
 | `slide_filler` v1 | text | 0.3 | 2000 | JSON | (в пайплайн не подключён) |
 | text-to-image | image | — | — | JPEG/PNG b64 | промпт от `image_prompter`, размер 1024×576 |
 
@@ -41,5 +42,6 @@ Qwen3.x по умолчанию «думает» — это съедает `max_
 
 ## Не-ML компоненты
 
-- Иконки: Tabler Icons (MIT) — SVG, перекрашиваются в акцентный цвет палитры, вставляются как PNG.
+- Иконки: только из самого шаблона — пиктограммы слайдов-образцов переносятся вместе с клонированным XML
+  (`SlotKind.ICON`); собственной библиотеки иконок нет, на шаблоне без пиктограмм их не появится (README, «Ограничения»).
 - Метрики шрифтов для оценки вместимости текста: Pillow `ImageFont` по TTF из шаблона; при отсутствии — Arial как приближение.

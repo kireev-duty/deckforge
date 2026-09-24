@@ -4,7 +4,7 @@
 
 **Цифровой дизайнер презентаций.** Читает любой .pptx-шаблон как дизайн-систему и собирает по нему новую презентацию из нативных объектов PowerPoint — в трёх вариантах вёрстки, с аудитом и экспортом в .pptx, .pdf и .html.
 
-[![Открыть в Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://deckforge.streamlit.app) [![Галерея: 12 колод](https://img.shields.io/badge/%D0%B3%D0%B0%D0%BB%D0%B5%D1%80%D0%B5%D1%8F-12_%D0%BA%D0%BE%D0%BB%D0%BE%D0%B4-0077FF?logo=githubpages&logoColor=white)](https://kireev-duty.github.io/deckforge/) [![Release v0.1.2](https://img.shields.io/badge/release-v0.1.2-2ea44f?logo=github)](https://github.com/kireev-duty/deckforge/releases/tag/v0.1.2) [![Python 3.12+](https://img.shields.io/badge/python-3.12+-3776AB?logo=python&logoColor=white)](pyproject.toml) [![License: MIT](https://img.shields.io/badge/license-MIT-yellow)](LICENSE) [![ЛЦТ 2026 · кейс VK Tech](https://img.shields.io/badge/%D0%9B%D0%A6%D0%A2_2026-%D0%BA%D0%B5%D0%B9%D1%81_VK_Tech-7B2CBF)](docs/PLAN.md)
+[![Открыть в Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://deckforge.streamlit.app) [![Галерея: 12 колод](https://img.shields.io/badge/%D0%B3%D0%B0%D0%BB%D0%B5%D1%80%D0%B5%D1%8F-12_%D0%BA%D0%BE%D0%BB%D0%BE%D0%B4-0077FF?logo=githubpages&logoColor=white)](https://kireev-duty.github.io/deckforge/) [![Release v0.1.3](https://img.shields.io/badge/release-v0.1.3-2ea44f?logo=github)](https://github.com/kireev-duty/deckforge/releases/tag/v0.1.3) [![Python 3.12+](https://img.shields.io/badge/python-3.12+-3776AB?logo=python&logoColor=white)](pyproject.toml) [![License: MIT](https://img.shields.io/badge/license-MIT-yellow)](LICENSE) [![ЛЦТ 2026 · кейс VK Tech](https://img.shields.io/badge/%D0%9B%D0%A6%D0%A2_2026-%D0%BA%D0%B5%D0%B9%D1%81_VK_Tech-7B2CBF)](docs/PLAN.md)
 
 [Демо-стенд](https://deckforge.streamlit.app) · [Галерея колод](https://kireev-duty.github.io/deckforge/) · [Архитектура](docs/ARCHITECTURE.md) · [Аудит](docs/AUDIT.md) · [Модели](docs/MODELS.md) · [Сценарий демо](docs/DEMO.md)
 
@@ -17,7 +17,7 @@
 
 ## Что умеет
 
-- **Любой шаблон → дизайн-система.** Палитра с ролями, типографическая шкала, сетка и поля, фиксированные элементы и слайды-образцы по архетипам — из фактического использования на слайдах, а не из `theme.xml`.
+- **Любой шаблон → дизайн-система.** Палитра с ролями, типографическая шкала, сетка и поля, фиксированные элементы и слайды-образцы по архетипам — из фактического использования на слайдах, а не из `theme.xml`. Подходят .pptx, .potx, .ppsx и .pptm; шаблон без слайдов (только мастер и лейауты) размечается по лейаутам. Неоднозначные образцы уточняет VLM — кнопкой в UI или `deckforge prepare`, до генерации и вне её бюджета.
 - **Контент — по лестнице.** Контент-пакет (бриф, тексты, данные) → тема одной строкой → **только шаблон**: бриф выводится из самого шаблона. Чисел и фактов без источника сервис не выдумывает.
 - **Три варианта вёрстки** на одном контенте — executive, narrative, visual. Они различаются плотностью и способом показа данных; стиль шаблона не трогают.
 - **Нативные объекты.** Слайды собираются клонированием образцов шаблона: текст, фигуры, chart, table, picture; схемы процесса — редактируемые автофигуры. Растровых слайдов нет.
@@ -101,13 +101,16 @@ cp .env.example .env                 # вписать LLM_API_KEY
 
 `tools/check_env.py` проверяет ключи, доступ к моделям и LibreOffice. Если после clone шаблоны в `data/` весят ~130 байт, это LFS-указатели: поставьте git-lfs и выполните `git lfs pull`.
 
-Разметка образцов шаблонов датасета — ответы VLM `template_tagger`, привязанные к sha1 файла, — лежит в `data/archetypes/`. С ней `examples/output` воспроизводятся без вызова VLM на этапе разбора. Новый шаблон размечается правилами; VLM-уточнение — `tools/classify_layouts.py --vlm "path/to/template.pptx"`.
+Разметка образцов шаблонов датасета — ответы VLM `template_tagger`, привязанные к sha1 файла, — лежит в `data/archetypes/`. С ней `examples/output` воспроизводятся без вызова VLM на этапе разбора. Новый шаблон сразу размечается правилами; VLM-уточнение — `deckforge prepare "path/to/template.pptx"` или кнопка «Уточнить разметку VLM» в UI. Ответы модели ложатся в `out/archetypes/`, и следующий разбор их применяет.
 
 ## Запуск
 
 ```bash
 # разбор шаблона: палитра с ролями, шрифты, шкала, сетка, образцы по архетипам
 deckforge parse "path/to/template.pptx" [--json dna.json]
+
+# подготовка шаблона (вне бюджета генерации): PNG образцов → правила + VLM → кэш разметки в out/archetypes/
+deckforge prepare "path/to/template.potx" [--no-vlm] [--parallel 4]
 
 # три варианта по конфигу: контент → outline (LLM) → колоды по стратегиям → аудит → автофиксы → .pptx / .pdf / .html
 deckforge run --config configs/run.example.yaml [--png] [--no-judge] [--no-images] [--outline готовый.json]
@@ -126,7 +129,7 @@ streamlit run deckforge/ui/app.py
 uvicorn deckforge.api.app:app --reload
 ```
 
-`deckforge …` — то же, что `python -m deckforge.cli …`. API: `GET /templates`, `POST /generate` → `GET /jobs/{id}` → `…/decks/{strategy}/audit` | `fix` | `files/{name}`.
+`deckforge …` — то же, что `python -m deckforge.cli …`. API: `GET /templates`, `POST /templates` [→ `POST /templates/{id}/prepare`], `POST /generate` → `GET /jobs/{id}` → `…/decks/{strategy}/audit` | `fix` | `files/{name}`.
 
 ### Результат прогона
 
@@ -229,7 +232,7 @@ docker compose run --rm cli parse "data/templates/VK Tech шаблон.pptx"
 ## Интерфейс
 
 Один экран, пять шагов:
-1. шаблон — из датасета или свой .pptx;
+1. шаблон — из датасета или свой .pptx / .potx; у своего — кнопка «Уточнить разметку VLM» (30–60 с, до генерации);
 2. контент — только шаблон, тема одной строкой или бриф с файлами (.md, .txt, .docx, .pdf, .json, .csv, .xlsx);
 3. три варианта с превью;
 4. аудит с выбором фиксов и подсветкой находок на слайде;
@@ -326,6 +329,7 @@ tests/              pytest: разбор шаблонов, каждая пров
 - **UI:** прогон выполняется in-process. Новый прогон, запущенный поверх идущего, обрывает предыдущий. Параллельные задания — через API (`POST /generate`).
 - **Схемы (замена SmartArt):** только процесс из 2–6 шагов — ряд шевронов из автофигур в цветах и шрифте шаблона. Это редактируемые фигуры, а не объект SmartArt; схем cycle и pyramid пока нет.
 - **Пиктограммы** берутся только из образцов самого шаблона: на шаблоне без иконок их не будет.
+- **Шаблон без слайдов** (обычный .potx) размечается по лейаутам: на каждый лейаут с плейсхолдерами — слайд-образец. Кегли и геометрия берутся из плейсхолдеров лейаута, поэтому колода получается проще, чем по шаблону со слайдами-примерами. Лейауты без плейсхолдеров образцов не дают.
 - **Проверка в PowerPoint:** в .pptx только нативные объекты. Открытие, сохранение и редактируемость проверены в PowerPoint (Microsoft 365, `tools/powerpoint_check.py`).
 
 ## Лицензия

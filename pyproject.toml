@@ -1,6 +1,6 @@
 [project]
 name = "deckforge"
-version = "0.1.2"
+version = "0.1.3"
 description = "Digital presentation designer: parses any .pptx template into a design system and generates on-brand decks from a brief"
 requires-python = ">=3.12"
 dependencies = [

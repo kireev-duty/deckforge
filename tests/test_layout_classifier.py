@@ -8,6 +8,7 @@ import pytest
 from lxml import etree
 
 from deckforge.core.ir import Archetype, Box, Slot, SlotKind
+from deckforge.core.ooxml import NS, absolute_bbox
 from deckforge.parsing.layout_classifier import (
     ShapeInfo,
     SlideProfile,
@@ -15,7 +16,6 @@ from deckforge.parsing.layout_classifier import (
     build_slots,
     classify_template,
 )
-from deckforge.parsing.ooxml import NS, absolute_bbox
 from tests.conftest import REPO
 
 A = Archetype

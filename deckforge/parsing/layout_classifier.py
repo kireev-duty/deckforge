@@ -25,14 +25,11 @@ from typing import TYPE_CHECKING
 from lxml import etree
 
 from deckforge.core.ir import ARCHETYPE_HINTS, Archetype, Box, Exemplar, Slot, SlotKind
-from deckforge.parsing.ooxml import (
+from deckforge.core.ooxml import (
     NS,
     A,
     P,
-    Package,
-    PartCtx,
     absolute_bbox,
-    font_scale,
     graphic_kind,
     iter_shapes,
     localname,
@@ -41,6 +38,7 @@ from deckforge.parsing.ooxml import (
     shape_name,
     shape_text,
 )
+from deckforge.core.package import Package, PartCtx, font_scale
 
 if TYPE_CHECKING:
     from deckforge.llm.client import LLMClient

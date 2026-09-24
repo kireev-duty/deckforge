@@ -3,8 +3,8 @@
 import pytest
 
 from deckforge.core.colors import contrast_ratio
+from deckforge.core.package import Package
 from deckforge.parsing import TemplateTokens, extract_tokens
-from deckforge.parsing.ooxml import Package
 
 TEMPLATES = [
     # (подстрока имени файла, основной шрифт, accent)

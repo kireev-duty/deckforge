@@ -26,8 +26,7 @@ ruff check deckforge tools tests
 | `tools/make_fixtures.py --audit` | «плохие» слайды из `tests/fixtures/bad_slides.py` в `out/fixtures/` — посмотреть глазами |
 | `tools/powerpoint_check.py <glob>` | открытие и сохранение колод в настоящем PowerPoint (Windows, COM) |
 | `tools/check_env.py` | проверка `.env` и доступности моделей |
-| `tools/build_gallery.py [--space-url …]` | галерея готовых колод `examples/output` → `out/gallery/` (GitHub Pages) |
-| `deploy/hf_space/stage.py [dir]` | staging-папка демо-стенда → `out/hf_space/` |
+| `tools/build_gallery.py [--demo-url …]` | галерея готовых колод `examples/output` → `out/gallery/` (GitHub Pages) |
 
 Полная матрица стресс-теста идёт около 40 минут; пока она идёт, код в `deckforge/` не править — каждая пара стартует новым подпроцессом.
 
@@ -59,14 +58,6 @@ DECKFORGE_LFS_BASE = "https://media.githubusercontent.com/media/kireev-duty/deck
 ```
 
 Логи сборки и перезапуск — «Manage app» в правом нижнем углу приложения.
-
-Запасной вариант с полноценным образом (свои шрифты Play, 2 vCPU / 16 ГБ) — Docker-Space на Hugging Face; бесплатный CPU для Docker-Spaces теперь требует PRO. Всё готово: образ `deploy/hf_space/Dockerfile`, staging `deploy/hf_space/stage.py`, деплой — ручной запуск `.github/workflows/deploy-space.yml` (секрет `HF_TOKEN`, секреты Space — те же ключи, что выше). Локальная проверка образа:
-
-```bash
-python deploy/hf_space/stage.py                     # → out/hf_space (≈90 МБ; нужны шаблоны из LFS)
-docker build -t deckforge-space out/hf_space
-docker run --rm -p 7860:7860 -e LLM_API_KEY deckforge-space   # http://localhost:7860; --env-file не режет комментарии
-```
 
 ## Правила
 

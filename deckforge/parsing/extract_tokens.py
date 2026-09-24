@@ -22,17 +22,8 @@ from pydantic import BaseModel, Field
 
 from deckforge.core.colors import chroma, contrast_ratio, delta_e
 from deckforge.core.ir import ColorToken, TypeToken
-from deckforge.parsing.ooxml import (
-    NS,
-    Package,
-    PartCtx,
-    bbox,
-    font_scale,
-    iter_shapes,
-    localname,
-    owner_shape,
-    placeholder,
-)
+from deckforge.core.ooxml import NS, bbox, iter_shapes, localname, placeholder
+from deckforge.core.package import Package, PartCtx, font_scale, owner_shape
 
 # ──────────────────────────── настраиваемые пороги ────────────────────────────
 

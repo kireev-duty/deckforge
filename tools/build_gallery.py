@@ -1,6 +1,6 @@
 """Статическая галерея готовых колод `examples/output` для GitHub Pages: шаблон × стратегия, без LLM и LibreOffice.
 
-    python tools/build_gallery.py [--out out/gallery] [--space-url URL] [--ref master]
+    python tools/build_gallery.py [--out out/gallery] [--demo-url URL] [--ref master]
 
 В галерею копируются самодостаточные .html и .pdf колод; превью — первая страница PDF (PyMuPDF);
 .pptx тяжёлые (≈160 МБ на 12 колод) — ссылка на файл в репозитории (LFS отдаёт его как raw).
@@ -58,7 +58,7 @@ def deck_cards(run_dir: Path, out: Path, ref: str) -> list[dict]:
     return cards
 
 
-def render_page(sections: list[tuple[str, str, list[dict]]], space_url: str, ref: str) -> str:
+def render_page(sections: list[tuple[str, str, list[dict]]], demo_url: str, ref: str) -> str:
     e = html.escape
     blocks = []
     for title, brief_url, cards in sections:
@@ -86,7 +86,7 @@ def render_page(sections: list[tuple[str, str, list[dict]]], space_url: str, ref
 </article>''')
         blocks.append(f'<section><h2>{e(title)}</h2><p class="sub"><a href="{e(brief_url)}">сводка вариантов '
                       f'(compare.md)</a></p><div class="grid">{"".join(items)}</div></section>')
-    space = (f'<a class="cta" href="{e(space_url)}">Попробовать сервис онлайн →</a>' if space_url else "")
+    demo = (f'<a class="cta" href="{e(demo_url)}">Попробовать сервис онлайн →</a>' if demo_url else "")
     return f'''<!doctype html>
 <html lang="ru">
 <head>
@@ -133,7 +133,7 @@ footer {{ color:var(--muted); font-size:13px; padding-bottom:40px; }}
   шаблона VK Tech, его outline свёрстан по образцам каждого шаблона. HTML открывается в браузере
   (←/→ — листать, F — режим показа); .pptx — нативные объекты, редактируются в PowerPoint.
   «Аудит» — ошибки/предупреждения после автофиксов.</p>
-  <p>{space}<a href="https://github.com/{REPO}">Код и документация на GitHub</a></p>
+  <p>{demo}<a href="https://github.com/{REPO}">Код и документация на GitHub</a></p>
 </header>
 <main>
 {"".join(blocks)}
@@ -144,7 +144,7 @@ footer {{ color:var(--muted); font-size:13px; padding-bottom:40px; }}
 '''
 
 
-def build(out: Path, space_url: str = "", ref: str = "master") -> Path:
+def build(out: Path, demo_url: str = "", ref: str = "master") -> Path:
     if out.exists():
         shutil.rmtree(out)
     out.mkdir(parents=True)
@@ -152,7 +152,7 @@ def build(out: Path, space_url: str = "", ref: str = "master") -> Path:
                   key=lambda d: (list(TEMPLATES).index(d.name) if d.name in TEMPLATES else len(TEMPLATES), d.name))
     sections = [(TEMPLATES.get(d.name, d.name), f"https://github.com/{REPO}/blob/{ref}/examples/output/{d.name}/compare.md",
                  deck_cards(d, out, ref)) for d in dirs]
-    (out / "index.html").write_text(render_page(sections, space_url, ref), "utf-8")
+    (out / "index.html").write_text(render_page(sections, demo_url, ref), "utf-8")
     (out / ".nojekyll").write_text("", "utf-8")
     return out / "index.html"
 
@@ -160,10 +160,10 @@ def build(out: Path, space_url: str = "", ref: str = "master") -> Path:
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--out", type=Path, default=ROOT / "out" / "gallery")
-    ap.add_argument("--space-url", default="", help="ссылка на демо-стенд")
+    ap.add_argument("--demo-url", default="", help="ссылка на демо-стенд")
     ap.add_argument("--ref", default="master", help="ветка или тег для ссылок на .pptx и manifest")
     args = ap.parse_args()
-    index = build(args.out, args.space_url, args.ref)
+    index = build(args.out, args.demo_url, args.ref)
     n = sum(1 for _ in args.out.rglob("*.html")) - 1
     print(f"{index} — {n} колод")
 

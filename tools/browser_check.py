@@ -1,6 +1,8 @@
 """browser_check — HTML-экспорт и Streamlit UI в трёх браузерных движках (Playwright): Chromium, Firefox, WebKit.
 
-WebKit — движок Safari; на Windows это ближайшая к Safari проверка (живой Safari на macOS — отдельно).
+WebKit — движок Safari; по уточнению жюри проверка в нём засчитывается как проверка в Safari. Сборка WebKit под
+Windows не применяет ось wght вариативных веб-шрифтов (Google Fonts, шрифты Streamlit): жирный на скриншотах тонкий,
+Δ этого не ловит. Это особенность сборки, а не колоды: системные шрифты жирные, Safari вариативные шрифты поддерживает.
 
 HTML: каждая колода в режиме показа (`?present#N`) — ошибки JS, число слайдов, скриншоты, расхождение
 WebKit/Firefox с Chromium и Chromium с PNG LibreOffice. UI: Streamlit поднимается на свободном порту без ключа
@@ -194,7 +196,9 @@ def check_ui(pw, engines: list[str], port: int, out: Path) -> list[UiResult]:
 
 def report(html: list[HtmlResult], ui: list[UiResult], out: Path) -> Path:
     lines = ["# Проверка в браузерных движках (Playwright)", "",
-             "WebKit — движок Safari; живой Safari на macOS этим не заменяется полностью.", ""]
+             "WebKit — движок Safari; по уточнению жюри проверка в нём засчитывается как проверка в Safari.",
+             "WebKit под Windows рисует вариативные веб-шрифты (Google Fonts, Streamlit) без оси wght — "
+             "тонкий жирный на скриншотах это особенность сборки, а не дефект.", ""]
     if ui:
         lines += ["## Streamlit UI", "", "| движок | итог | шаги | ошибки JS | время, с |", "|---|---|---|---|---|"]
         for r in ui:

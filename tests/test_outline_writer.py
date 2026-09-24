@@ -76,6 +76,26 @@ def test_repair_fixes_bad_answer() -> None:
     assert by_title["Нет в шаблоне"].sources == []
 
 
+def test_kpi_words_become_bullets() -> None:
+    """Прогон «только шаблон» (VK Tech, 24.09): KPI-слайд со словами вместо цифр — в кольцах KPI-образца
+    «Гибкая» читалась как сломанная диаграмма. Словесные KPI — буллеты, числовые остаются KPI."""
+    raw = {"title": "T", "purpose": "product", "slides": [
+        {"idx": 0, "archetype": "title", "title": "T"},
+        {"idx": 1, "archetype": "kpi", "title": "Снижение стоимости владения", "kpis": [
+            {"value": "Гибкая", "label": "Модель лицензирования"}, {"value": "Эксперты", "label": "Сопровождение"}]},
+        {"idx": 2, "archetype": "kpi", "title": "Пилот", "kpis": [
+            {"value": "12", "label": "команд"}, {"value": "Быстро", "label": "Подключение"}]},
+        {"idx": 3, "archetype": "closing", "title": "T"},
+    ]}
+    o, warnings = repair_outline(raw, {Archetype.TITLE, Archetype.KPI, Archetype.BULLETS, Archetype.CLOSING}, {"brief"})
+    words, mixed = o.slides[1], o.slides[2]
+    assert words.archetype == Archetype.BULLETS and not words.kpis
+    assert words.bullets == ["Модель лицензирования — Гибкая", "Сопровождение — Эксперты"]
+    assert mixed.archetype == Archetype.KPI and [k.value for k in mixed.kpis] == ["12"]
+    assert mixed.bullets == ["Подключение — Быстро"]
+    assert sum("KPI без цифр" in w for w in warnings) == 2
+
+
 def test_unknown_sources_are_dropped_known_kept() -> None:
     raw = {"title": "T", "purpose": "report", "slides": [
         {"idx": 0, "archetype": "title", "title": "T"},

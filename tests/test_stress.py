@@ -344,17 +344,21 @@ def test_repair_outline_scalars_instead_of_lists() -> None:
 
 
 @pytest.mark.parametrize("name", sorted(TEMPLATES))
-def test_synthetic_templates_survive_pipeline(tmp_path: Path, name: str) -> None:
+def test_synthetic_templates_survive_pipeline(tmp_path: Path, name: str, monkeypatch: pytest.MonkeyPatch) -> None:
+    import importlib
+
     from deckforge.audit import audit_deck
     from deckforge.export.html import export_html
     from deckforge.pipeline import parse_template
 
+    monkeypatch.setattr(importlib.import_module("deckforge.pipeline.run"), "PREPARED_DIR", tmp_path / "prepared")
     pptx = TEMPLATES[name](tmp_path)
     parsed = parse_template(pptx)
     outline = so.base()
     for strategy in STRATEGIES:
         res = _build(parsed, outline, strategy)
-        out = render_pptx(res.ir, pptx, parsed.exemplars, tmp_path / f"{name}_{strategy}.pptx")
+        # parsed.template, а не pptx: шаблон без слайдов разбирается из копии с образцами из лейаутов
+        out = render_pptx(res.ir, parsed.template, parsed.exemplars, tmp_path / f"{name}_{strategy}.pptx")
         report = audit_deck(out, parsed.dna, res.ir)
         export_html(out, out.with_suffix(".html"), ir=res.ir)
         skipped = [c for c in res.choices if c.exemplar_id is None]
@@ -366,13 +370,38 @@ def test_synthetic_templates_survive_pipeline(tmp_path: Path, name: str) -> None
             assert not [f for f in report.findings if f.check_id == "L07_picture_stretched" and f.severity == "error"]
 
 
-def test_empty_template_gives_empty_deck_not_crash(tmp_path: Path) -> None:
+def _run_executive(pptx: Path, tmp_path: Path):
     from deckforge.pipeline import RunConfig, run
 
-    pptx = TEMPLATES["empty_presentation"](tmp_path)
     cfg = RunConfig(template=pptx, content_pack=REPO / "examples" / "content_pack", strategies=["executive"],
                     output_dir=tmp_path / "run", images="off",
                     audit={"deterministic": True, "contextual": False, "autofix": True})
-    res = run(cfg, outline=so.base())
+    return run(cfg, outline=so.base())
+
+
+def test_template_without_slides_uses_layouts(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Презентация без слайдов (как .potx): образцы — из лейаутов с плейсхолдерами, колода собирается."""
+    import importlib
+
+    monkeypatch.setattr(importlib.import_module("deckforge.pipeline.run"), "PREPARED_DIR", tmp_path / "prepared")
+    res = _run_executive(TEMPLATES["empty_presentation"](tmp_path), tmp_path)
+    assert res.decks[0].stats["slides"] >= 8 and res.decks[0].stats["skipped"] == 0
+    assert any("нет слайдов" in w for w in res.warnings)
+
+
+def test_template_without_exemplars_gives_empty_deck_not_crash(tmp_path: Path,
+                                                               monkeypatch: pytest.MonkeyPatch) -> None:
+    """Ни слайдов, ни плейсхолдеров в лейаутах — образцов нет: пустая колода с предупреждениями, без падения."""
+    import importlib
+
+    from pptx import Presentation
+
+    monkeypatch.setattr(importlib.import_module("deckforge.pipeline.run"), "PREPARED_DIR", tmp_path / "prepared")
+    prs = Presentation(str(TEMPLATES["empty_presentation"](tmp_path)))
+    for layout in prs.slide_layouts:
+        for ph in list(layout.placeholders):
+            ph.element.getparent().remove(ph.element)
+    prs.save(str(pptx := tmp_path / "bare.pptx"))
+    res = _run_executive(pptx, tmp_path)
     assert res.decks[0].stats["slides"] == 0 and res.decks[0].stats["skipped"] == len(res.decks[0].choices)
     assert any("пропущен" in w for w in res.warnings)

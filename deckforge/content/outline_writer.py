@@ -238,6 +238,13 @@ def _repair_slide(s: dict[str, Any], available: set[Archetype], warnings: list[s
     for k in s.get("kpis", []):
         if isinstance(k, dict) and k.get("value") is not None and k.get("label"):
             kpis.append({"value": str(k["value"]).strip(), "label": str(k["label"]).strip()})
+    # «KPI» без единой цифры («Гибкая» — «Модель лицензирования») — тезис, а не метрика: крупным словом
+    # в кольце KPI-образца он читается как сломанная диаграмма; уходит в буллеты «подпись — значение»
+    wordy = [k for k in kpis if not any(ch.isdigit() for ch in k["value"])]
+    if wordy:
+        kpis = [k for k in kpis if k not in wordy]
+        s["bullets"] = (s["bullets"] + [f"{k['label']} — {k['value']}" for k in wordy])[:MAX_BULLETS]
+        warnings.append(f"{label}: KPI без цифр ({len(wordy)}) → буллеты")
     if len(kpis) > MAX_KPIS:
         warnings.append(f"{label}: {len(kpis)} KPI → первые {MAX_KPIS}")
         kpis = kpis[:MAX_KPIS]

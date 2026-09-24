@@ -42,6 +42,13 @@ class TemplateInfo(BaseModel):
     summary: dict | None = None  # ParsedTemplate.summary(), если уже разобран
 
 
+class PrepareResponse(BaseModel):
+    """Итог подготовки шаблона (`pipeline/prepare.PrepareReport.summary()`) и шаблон после неё."""
+
+    template: TemplateInfo
+    report: dict
+
+
 class DeckInfo(BaseModel):
     strategy: str
     stats: dict

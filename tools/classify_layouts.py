@@ -1,7 +1,9 @@
 """classify_layouts — таблица «слайд → архетип → слоты» по шаблонам, с VLM-уточнением неоднозначных.
 
-Рендер в PNG, классификация правилами, при --vlm — уточнение неоднозначных слайдов через template_tagger.
-Результат — out/archetypes/<stem>.md + .json; --publish кладёт ответы VLM в data/archetypes/<stem>.json.
+Обёртка над `deckforge.pipeline.prepare.prepare_template` (то же делают `deckforge prepare`, кнопка в UI и
+`POST /templates/{id}/prepare`): рендер в PNG, классификация правилами, при --vlm — уточнение неоднозначных
+слайдов через template_tagger и кэш ответов в out/archetypes/<stem>.json. Таблица — out/archetypes/<stem>.md;
+--publish кладёт ответы VLM в data/archetypes/<stem>.json (в репо, для чистого clone).
 
     .venv\\Scripts\\python.exe tools\\classify_layouts.py "data\\templates\\*.pptx" [--vlm] [--publish] [--no-render] [--parallel 4]
 """
@@ -12,25 +14,14 @@ import argparse
 import glob
 import json
 import sys
-import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from deckforge.parsing.exemplars import ARCHETYPES_BUNDLED, cache_payload, vlm_payload
-from deckforge.parsing.layout_classifier import classify_template, markdown_table
+from deckforge.parsing.exemplars import ARCHETYPES_BUNDLED, vlm_payload
+from deckforge.pipeline.prepare import prepare_template
 from tools.check_env import load_dotenv
-from tools.render_deck import render
-
-
-def thumbnails_for(pptx: Path, do_render: bool) -> dict[int, Path]:
-    out = ROOT / "out" / "render" / pptx.stem
-    pngs = sorted(out.glob("slide_*.png"))
-    if not pngs and do_render:
-        print(f"  рендер {pptx.name} → {out}")
-        pngs = render(pptx, out, contact=True)
-    return {int(p.stem.split("_")[1]) - 1: p for p in pngs}
 
 
 def main() -> None:
@@ -54,27 +45,17 @@ def main() -> None:
     a.out.mkdir(parents=True, exist_ok=True)
 
     for f in files:
-        t0 = time.perf_counter()
-        thumbs = thumbnails_for(f, not a.no_render)
-        profiles = classify_template(f, client, thumbs, max_parallel=a.parallel)
-        ambiguous = [p for p in profiles if p.source == "vlm" or p.ambiguous]
-        changed = [p for p in profiles if p.source == "vlm" and p.archetype != p.rules_archetype]
-        md = markdown_table(profiles, f.name)
-        md += (f"\n\nНеоднозначных (→ VLM): {len(ambiguous)} из {len(profiles)}; VLM изменила вердикт: {len(changed)}"
-               f" ({', '.join(str(p.index + 1) for p in changed) or '—'}); {time.perf_counter() - t0:.0f} с")
+        report = prepare_template(f, client, progress=lambda m: print(f"  {m}"), max_parallel=a.parallel,
+                                  do_render=not a.no_render, cache_dir=a.out)
+        md = report.markdown()
         print(md, "\n")
-        (a.out / f"{f.stem}.md").write_text(md, "utf-8")
-        # кэш: снимок профилей + sha1 шаблона; при загрузке берутся только ответы VLM
-        (a.out / f"{f.stem}.json").write_text(json.dumps(cache_payload(f, profiles), ensure_ascii=False, indent=1), "utf-8")
-        if a.publish:
+        for w in report.warnings:
+            print(f"  ! {w}")
+        (a.out / f"{report.template.stem}.md").write_text(md, "utf-8")
+        if a.publish and report.cache is not None:
             ARCHETYPES_BUNDLED.mkdir(parents=True, exist_ok=True)
-            (ARCHETYPES_BUNDLED / f"{f.stem}.json").write_text(
-                json.dumps(vlm_payload(f, profiles), ensure_ascii=False, indent=1), "utf-8")
-        if client is not None:
-            errors = [c for c in client.calls if not c.ok]
-            print(f"  VLM-вызовов: {len(client.calls)}, ошибок: {len(errors)}, "
-                  f"время: {sum(c.duration_s for c in client.calls):.0f} с суммарно")
-            client.calls.clear()
+            (ARCHETYPES_BUNDLED / f"{report.template.stem}.json").write_text(
+                json.dumps(vlm_payload(report.template, report.profiles), ensure_ascii=False, indent=1), "utf-8")
 
 
 if __name__ == "__main__":

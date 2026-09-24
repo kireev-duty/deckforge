@@ -704,3 +704,29 @@ def test_paragraph_goes_to_roomiest_text_slot() -> None:
     ir, _ = build_slide(0, OutlineSlide(idx=1, archetype=Archetype.IMAGE_TEXT, title="Т", paragraphs=["Коротко."]),
                         ex, SLIDE_H, {})
     assert {el.slot_id for el in ir.elements if el.paragraphs} == {"t", "note"}
+
+
+def test_slide_image_avoids_picture_under_text() -> None:
+    """Картинка слайда не ложится на подложку под текст образца (VK Tech slide32: код на тёмной картинке) —
+    цвет текста образца рассчитан на его подложку; без картинки в контенте такой образец не штрафуется."""
+    from deckforge.layout.exemplar_picker import BACKDROP_PICTURE_PENALTY, Needs, score_exemplar
+
+    w, h = 12192000, 6858000
+    title = Slot(id="t", kind=SlotKind.TITLE, box=Box(x=400000, y=300000, w=11000000, h=800000), max_chars=60,
+                 max_lines=2)
+    body = Slot(id="b", kind=SlotKind.BODY, box=Box(x=600000, y=1600000, w=5000000, h=3000000), max_chars=400,
+                max_lines=10, max_items=6)
+    side = Slot(id="p", kind=SlotKind.PICTURE, box=Box(x=6400000, y=1600000, w=5000000, h=3000000))
+    under = Slot(id="p", kind=SlotKind.PICTURE, box=Box(x=400000, y=1400000, w=5400000, h=3400000))
+
+    def ex(pic: Slot) -> Exemplar:
+        return Exemplar(id="x", source_index=0, layout_name="", archetype=Archetype.IMAGE_TEXT, slots=[title, body, pic])
+
+    needs = dict(items=3, kpis=0, chart=False, table=False, quote=False, title_chars=40, text_chars=96,
+                 item_chars=(30, 30, 30))
+    visual = load_strategy("visual")
+    with_image = Needs(image=True, **needs)
+    gap = score_exemplar(ex(side), with_image, visual, w * h) - score_exemplar(ex(under), with_image, visual, w * h)
+    assert gap >= BACKDROP_PICTURE_PENALTY
+    no_image = Needs(image=False, **needs)
+    assert abs(score_exemplar(ex(side), no_image, visual, w * h) - score_exemplar(ex(under), no_image, visual, w * h)) < 1.0

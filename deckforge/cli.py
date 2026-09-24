@@ -1,4 +1,4 @@
-"""CLI: parse / run / audit / export."""
+"""CLI: parse / prepare / run / audit / export."""
 
 from __future__ import annotations
 
@@ -17,7 +17,7 @@ app = typer.Typer(help="deckforge — цифровой дизайнер през
 
 @app.callback()
 def _root() -> None:
-    """Подкоманды: parse, run, audit, export."""
+    """Подкоманды: parse, prepare, run, audit, export."""
 
 
 @app.command("parse")
@@ -46,6 +46,29 @@ def parse_cmd(
     if json_out:
         json_out.write_text(parsed.dna.model_dump_json(indent=1), "utf-8")
         typer.echo(f"\nTemplateDNA → {json_out}")
+
+
+@app.command("prepare")
+def prepare_cmd(
+    template: Path = typer.Argument(..., help="шаблон .pptx / .potx"),
+    vlm: bool = typer.Option(True, "--vlm/--no-vlm", help="уточнять неоднозначные образцы VLM (нужны API и LibreOffice)"),
+    parallel: int = typer.Option(4, "--parallel", help="одновременных запросов к VLM"),
+) -> None:
+    """Подготовка шаблона (вне бюджета генерации): PNG образцов → правила + VLM → кэш разметки в out/archetypes."""
+    from deckforge.pipeline import prepare_template
+
+    client = None
+    if vlm:
+        load_dotenv()
+        from deckforge.llm.client import LLMClient
+
+        client = LLMClient()
+    report = prepare_template(template, client, progress=lambda m: typer.echo(f"  {m}"), max_parallel=parallel)
+    for w in report.warnings:
+        typer.echo(f"  ! {w}")
+    typer.echo(f"\n{report.markdown()}")
+    if report.cache:
+        typer.echo(f"\nразметка VLM → {report.cache}")
 
 
 @app.command("run")

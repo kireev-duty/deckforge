@@ -15,10 +15,11 @@ from deckforge.pipeline.run import (
     run_summary,
     soffice_available,
 )
+from deckforge.pipeline.prepare import PrepareReport, prepare_template
 from deckforge.pipeline.stats import compare_table, deck_stats
 
 __all__ = [
-    "DeckResult", "OutlineStep", "ParsedTemplate", "RunConfig", "RunContext", "RunResult", "build_deck",
-    "compare_table", "deck_stats", "load_config", "make_outline", "parse_template", "refine_deck", "run",
-    "run_summary", "soffice_available",
+    "DeckResult", "OutlineStep", "ParsedTemplate", "PrepareReport", "RunConfig", "RunContext", "RunResult",
+    "build_deck", "compare_table", "deck_stats", "load_config", "make_outline", "parse_template",
+    "prepare_template", "refine_deck", "run", "run_summary", "soffice_available",
 ]

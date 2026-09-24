@@ -73,6 +73,16 @@ def load_profiles(pptx: str | Path, cache_dir: Path | None = None) -> list[Slide
     return profiles
 
 
+def has_vlm_labels(pptx: str | Path, cache_dir: Path | None = None) -> bool:
+    """Есть ли для шаблона ответы VLM в кэше (кэш без них — прогон classify_layouts без --vlm)."""
+    cache = find_vlm_cache(Path(pptx), cache_dir)
+    if cache is None:
+        return False
+    data = json.loads(cache.read_text("utf-8"))
+    entries = data.get("slides", data) if isinstance(data, dict) else data
+    return any(d.get("vlm") for d in entries)
+
+
 def load_exemplars(pptx: str | Path, cache_dir: Path | None = None) -> list[Exemplar]:
     return [p.to_exemplar() for p in load_profiles(pptx, cache_dir)]
 
@@ -91,4 +101,4 @@ def vlm_payload(pptx: Path, profiles: list[SlideProfile]) -> dict:
 
 
 __all__ = ["ARCHETYPES_BUNDLED", "ARCHETYPES_CACHE", "cache_payload", "exemplars_from_json", "find_vlm_cache",
-           "load_exemplars", "load_profiles", "template_sha1", "vlm_payload"]
+           "has_vlm_labels", "load_exemplars", "load_profiles", "template_sha1", "vlm_payload"]

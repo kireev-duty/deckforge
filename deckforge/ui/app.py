@@ -23,15 +23,18 @@ from deckforge.core.autofix import FIXES, fix_plan_rows
 from deckforge.core.ir import AuditReport, DeckOutline, Finding
 from deckforge.core.strategy import list_strategies
 from deckforge.llm import load_dotenv
+from deckforge.llm.client import LLMClient
 from deckforge.pipeline import (
     DeckResult,
     ParsedTemplate,
     RunConfig,
+    prepare_template,
     refine_deck,
     run,
     soffice_available,
 )
 from deckforge.pipeline.workspace import (
+    UPLOAD_SUFFIXES,
     BadUpload,
     TemplateEntry,
     TemplateStore,
@@ -109,7 +112,8 @@ def sidebar() -> tuple[TemplateEntry | None, dict]:
 
     st.sidebar.subheader("1. Шаблон")
     names = visible_templates()
-    up = st.sidebar.file_uploader("Свой шаблон .pptx", type=["pptx"], key="template_upload")
+    up = st.sidebar.file_uploader("Свой шаблон .pptx", type=[s.lstrip(".") for s in UPLOAD_SUFFIXES],
+                                  key="template_upload", help=".potx, .ppsx, .pptm тоже подойдут — приводятся к .pptx")
     if up is not None and ss("uploaded_name") != up.name:
         try:
             entry = store().add_upload(up.name, up.getvalue())
@@ -183,10 +187,41 @@ def show_template(entry: TemplateEntry) -> ParsedTemplate:
         contact = ROOT / "out" / "render" / entry.path.stem / "contact.png"
         if contact.exists():
             st.image(str(contact), caption="слайды шаблона", width=520)
-        else:
-            st.caption("Разбор ≈ 1 с; классификация образцов — правилами по геометрии"
-                       + ("" if entry.builtin else " (VLM-уточнение для загруженных шаблонов — в следующей версии)"))
+        prepare_block(entry, parsed)
     return parsed
+
+
+def prepare_block(entry: TemplateEntry, parsed: ParsedTemplate) -> None:
+    """Источник разметки образцов и подготовка загруженного шаблона VLM (вне бюджета генерации)."""
+    vlm = parsed.meta.get("labels") == "rules+vlm"
+    note = parsed.meta.get("normalized")
+    st.caption(f"Разметка образцов: {'правила по геометрии + VLM' if vlm else 'правила по геометрии'}"
+               + (f" · шаблон приведён к .pptx: {note}" if note else ""))
+    if entry.builtin:
+        return  # датасет размечен VLM заранее (data/archetypes)
+    ready = HAS_KEY and soffice_available()
+    label = "Уточнить разметку VLM" if not vlm else "Разметить VLM заново"
+    if not st.button(f"{label} (≈ 30–60 с)", key=f"prepare_{entry.id}", disabled=not ready,
+                     help="PNG образцов → неоднозначные слайды уточняет VLM (template_tagger); подготовка идёт "
+                          "до генерации и в бюджет 5 минут не входит" if ready else "нужны LLM_API_KEY и LibreOffice"):
+        return
+    lock = run_lock()
+    if not lock.acquire(blocking=False):
+        st.warning("Сейчас идёт генерация — подготовка шаблона после неё.")
+        return
+    try:
+        with st.status("Подготовка шаблона…", expanded=True) as status:
+            report = prepare_template(entry.path, LLMClient(), progress=status.write)
+            for w in report.warnings:
+                status.write(f"⚠ {w}")
+            status.update(label=f"Разметка готова за {report.seconds:.0f} с: VLM сменила архетип у "
+                                f"{len(report.vlm_changed)} из {report.ambiguous} неоднозначных образцов",
+                          state="complete")
+    finally:
+        lock.release()
+    store().invalidate(entry.id)
+    parsed_template.clear()
+    st.rerun()
 
 
 # ──────────────────────────── шаг 2: бриф и запуск ────────────────────────────
@@ -445,9 +480,13 @@ def main() -> None:
         st.info("Выберите шаблон в боковой панели или загрузите свой .pptx.")
         return
     try:
-        show_template(entry)
+        parsed = show_template(entry)
     except Exception as e:  # noqa: BLE001
         st.error(f"Шаблон не разобран: {type(e).__name__}: {e}")
+        return
+    if not parsed.exemplars:
+        st.error("В шаблоне нет ни слайдов-образцов, ни лейаутов с плейсхолдерами — собирать колоду не из чего. "
+                 "Добавьте в шаблон хотя бы по одному слайду каждого типа.")
         return
     st.divider()
     brief_form(entry, opts)

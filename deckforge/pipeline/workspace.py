@@ -1,6 +1,7 @@
 """Реестр шаблонов (датасет + загруженные) и сборка контент-пакета из запроса — общее для UI и API.
 
-Имена файлов от пользователя — только очищенный basename; .pptx проверяется как zip.
+Имена файлов от пользователя — только очищенный basename; .pptx проверяется как zip. Загруженный .potx /
+.ppsx / .pptm и шаблон без слайдов хранятся уже приведёнными к .pptx со слайдами-образцами (`parsing/normalize`).
 """
 
 from __future__ import annotations
@@ -17,6 +18,7 @@ from urllib.parse import quote
 
 import httpx
 
+from deckforge.parsing.normalize import UPLOAD_SUFFIXES, needs_normalize, normalize_template
 from deckforge.pipeline.config import ROOT
 from deckforge.pipeline.run import ParsedTemplate, parse_template, sha1_of
 
@@ -131,13 +133,26 @@ class TemplateStore:
             dest_dir = self.root / sid
             dest_dir.mkdir(exist_ok=True)
             dest = dest_dir / f"{stem}__{sid}.pptx"
-            tmp.replace(dest)
+            try:
+                why = needs_normalize(tmp)
+                if why is not None:  # .potx / .ppsx / .pptm или без слайдов: храним уже приведённый .pptx
+                    normalize_template(tmp, dest)
+            except Exception as e:  # битый пакет: для пользователя это 400, не 500
+                raise BadUpload(f"шаблон не удалось привести к .pptx: {type(e).__name__}: {e}") from e
+            if why is None:
+                tmp.replace(dest)
             entry = TemplateEntry(sid, stem, dest, False)
             with self._lock:
                 self._items[sid] = entry
             return entry
         finally:
             tmp.unlink(missing_ok=True)
+
+    def invalidate(self, template_id: str) -> None:
+        """Забыть разбор шаблона — после подготовки (`pipeline/prepare`) он пересчитается с новой разметкой."""
+        with self._lock:
+            if (entry := self._items.get(template_id)) is not None:
+                entry.parsed = None
 
     def parsed(self, entry: TemplateEntry) -> ParsedTemplate:
         with self._lock:
@@ -171,6 +186,7 @@ def write_content_pack(dest: Path, brief: str, files: list[tuple[str, bytes]]) -
 
 __all__ = [
     "DATASET_DIRS",
+    "UPLOAD_SUFFIXES",
     "BadUpload",
     "TemplateEntry",
     "TemplateStore",

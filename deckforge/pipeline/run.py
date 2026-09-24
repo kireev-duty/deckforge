@@ -44,9 +44,10 @@ from deckforge.export.render import find_soffice, pptx_to_pdf
 from deckforge.layout import LayoutResult, apply_fixes, build_deck_ir
 from deckforge.llm.client import LLMClient
 from deckforge.parsing.dna import build_dna
-from deckforge.parsing.exemplars import load_exemplars
+from deckforge.parsing.exemplars import has_vlm_labels, load_exemplars
 from deckforge.parsing.extract_tokens import TemplateTokens, extract_tokens
-from deckforge.pipeline.config import RunConfig
+from deckforge.parsing.normalize import needs_normalize, normalize_template
+from deckforge.pipeline.config import ROOT, RunConfig
 from deckforge.pipeline.stats import compare_table, deck_stats
 from deckforge.render import render_pptx
 
@@ -64,6 +65,8 @@ PROGRESS_POLL_S = 0.3
 # проходов автофиксов: перенос строк дискретный, и одного уменьшения кегля бывает мало (ЛЦТ2026:
 # заголовок 36 → 27,9 pt — всё ещё три строки в боксе на две); следующий — пока ошибок становится меньше
 AUTOFIX_ROUNDS = 2
+# нормализованные копии шаблонов (.potx, шаблон без слайдов) — `prepared_template`
+PREPARED_DIR = ROOT / "out" / "prepared"
 
 # ступени лестницы входа (OutlineStep.content_source) — для CLI/UI и run.json
 CONTENT_SOURCE_NOTE = {
@@ -269,10 +272,24 @@ class RunResult:
 # ──────────────────────────── этапы ────────────────────────────
 
 
+def prepared_template(template: Path) -> tuple[Path, str | None]:
+    """.potx / .ppsx / .pptm или шаблон без слайдов → нормализованная копия в `out/prepared/` (кэш по sha1
+    исходника) и причина; обычный .pptx со слайдами — как есть. Рендер клонирует образцы из той же копии."""
+    template = Path(template)
+    why = needs_normalize(template)
+    if why is None:
+        return template, None
+    dest = PREPARED_DIR / f"{template.stem}__{sha1_of(template)}.pptx"
+    if not dest.exists():
+        normalize_template(template, dest)
+    return dest, why
+
+
 def parse_template(template: Path, out_dir: Path | None = None) -> ParsedTemplate:
     """Токены + образцы + сетка → TemplateDNA; с `out_dir` рядом пишется `dna.json`."""
     t0 = time.perf_counter()
-    template = Path(template)
+    source = Path(template)
+    template, normalized = prepared_template(source)
     exemplars = load_exemplars(template)
     tokens = extract_tokens(template)
     dna = build_dna(template, exemplars, tokens)
@@ -281,7 +298,10 @@ def parse_template(template: Path, out_dir: Path | None = None) -> ParsedTemplat
         # в файле путь относительный, в памяти — абсолютный
         (out_dir / "dna.json").write_text(
             dna.model_copy(update={"source_path": rel_path(template, out_dir)}).model_dump_json(indent=1), "utf-8")
-    meta = {"id": tokens.template_id, "path": str(template), "sha1": sha1_of(template)}
+    meta = {"id": tokens.template_id, "path": str(template), "sha1": sha1_of(template),
+            "labels": "rules+vlm" if has_vlm_labels(template) else "rules"}
+    if normalized:
+        meta |= {"source": source.name, "normalized": normalized}
     return ParsedTemplate(template, exemplars, tokens, dna, _style(tokens), meta, round(time.perf_counter() - t0, 3))
 
 
@@ -634,6 +654,8 @@ def run(
     tokens = parsed.tokens
     say(f"parse: {len(parsed.exemplars)} образцов, шрифт {tokens.fonts[0] if tokens.fonts else '?'}, "
         f"accent #{(tokens.palette('accent') or ['?'])[0]} ({parsed.seconds:.1f}s)")
+    if parsed.meta.get("normalized"):
+        say(f"шаблон {parsed.meta['source']}: {parsed.meta['normalized']}")
 
     step = make_outline(cfg, parsed, out_dir, client, outline, outline_path)
     if outline is None:
@@ -643,6 +665,8 @@ def run(
     else:
         say(f"outline: передан готовый ({len(step.outline.slides)} слайдов), LLM не вызывался")
     warnings = [f"outline: {w}" for w in step.warnings]
+    if parsed.meta.get("normalized"):
+        warnings.insert(0, f"шаблон {parsed.meta['source']}: {parsed.meta['normalized']}")
     timings: dict[str, float] = {"parse": parsed.seconds, "outline": step.seconds}
 
     ctx = RunContext.prepare(cfg, parsed, step, client, t_start=t_run0)

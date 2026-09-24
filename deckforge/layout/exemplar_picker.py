@@ -52,6 +52,10 @@ OVERLAP_SHARE = 0.2
 # ...и сам заголовок длиннее видимой части строки: текст переносится по всей ширине бокса и уходит под блок
 TITLE_UNDER_CONTENT_PENALTY = 8.0
 EXTRA_PICTURE_PENALTY = 2.5  # за каждую рамку под картинку сверх одной
+# рамка, в которую ляжет картинка слайда, — подложка под текст образца (VK Tech slide32: код на тёмной картинке):
+# цвет текста рассчитан на подложку шаблона, на сгенерированной иллюстрации контраст — дело случая
+BACKDROP_PICTURE_PENALTY = 8.0
+BACKDROP_SHARE = 0.5  # текстовый слот лежит на рамке этой долей своей площади
 DATA_IN_BODY_PENALTY = 6.0  # chart/table на место текстового блока
 TIGHT_SHARE = 1.0  # слот «тесный», если даже при минимальном кегле не вмещает средний пункт — иначе «Соответствие…»
 # пустая карточка сетки видна (у VK Tech сетка 2×2 с «01–04» нарисована картинкой в фоне лейаута и не убирается),
@@ -239,6 +243,8 @@ def score_exemplar(e: Exemplar, n: Needs, strategy: Strategy, slide_area: int) -
         if n.image:
             score += {"minimal": 0.5, "preferred": 3.0, "always": 5.0}[strategy.images]
             score -= EXTRA_PICTURE_PENALTY * (pics - 1)
+            if _is_backdrop(_first_picture(e.slots, slide_area), e.slots):
+                score -= BACKDROP_PICTURE_PENALTY
         else:
             # картинки генерируются до вёрстки: нет image — её и не будет (лимит на колоду, сбой T2I),
             # поэтому visual штрафуется как narrative — иначе пустая рамка или мокап устройства без экрана
@@ -261,6 +267,20 @@ def _body_columns(bodies: list[Slot]) -> int:
         if not cols or x - cols[-1] > tol:
             cols.append(x)
     return len(cols)
+
+
+def _first_picture(slots: list[Slot], slide_area: int) -> Slot:
+    """Рамка, куда builder положит картинку: первая в порядке чтения (`builder._slots_by_kind` — ряд по 1/12 высоты).
+
+    Высота слайда — из площади при 16:9: она нужна только для группировки в ряды."""
+    row = max(1, int((slide_area * 9 / 16) ** 0.5) // 12)
+    return min((s for s in slots if s.kind == SlotKind.PICTURE), key=lambda s: (s.box.y // row, s.box.x))
+
+
+def _is_backdrop(pic: Slot, slots: list[Slot]) -> bool:
+    """Поверх рамки под картинку лежит текст образца (тело, подпись, цифра) — это подложка, а не место для иллюстрации."""
+    return any(_intersection(pic.box, s.box) >= BACKDROP_SHARE * max(1, s.box.w * s.box.h) for s in slots
+               if s.kind in (SlotKind.BODY, SlotKind.LABEL, SlotKind.CAPTION, SlotKind.NUMBER))
 
 
 def _intersection(a: Box, b: Box) -> int:

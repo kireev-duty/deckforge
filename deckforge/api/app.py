@@ -1,7 +1,7 @@
 """HTTP API поверх `pipeline/`: `uvicorn deckforge.api.app:app --reload`, Swagger на /docs.
 
-Цикл: `POST /templates` → `POST /generate` → `GET /jobs/{id}` → `.../decks/{strategy}/audit` → `POST .../fix`
-→ `GET .../files/{name}`. Job'ы в памяти, файлы в `out/api/`.
+Цикл: `POST /templates` [→ `POST /templates/{id}/prepare`] → `POST /generate` → `GET /jobs/{id}`
+→ `.../decks/{strategy}/audit` → `POST .../fix` → `GET .../files/{name}`. Job'ы в памяти, файлы в `out/api/`.
 """
 
 # без `from __future__ import annotations`: FastAPI резолвит аннотации
@@ -35,6 +35,7 @@ from deckforge.api.schemas import (
     Health,
     JobCreated,
     JobInfo,
+    PrepareResponse,
     StrategyInfo,
     TemplateInfo,
 )
@@ -42,7 +43,7 @@ from deckforge.core.autofix import fix_plan_rows
 from deckforge.core.strategy import list_strategies, load_strategy
 from deckforge.llm import load_dotenv
 from deckforge.llm.client import LLMClient
-from deckforge.pipeline import RunConfig, refine_deck, run, soffice_available
+from deckforge.pipeline import RunConfig, prepare_template, refine_deck, run, soffice_available
 from deckforge.pipeline.config import Purpose
 
 DECK_FILES = ("pptx", "pdf", "html", "ir.json", "audit.json", "manifest.json")
@@ -104,7 +105,7 @@ def create_app(root: Path | str = Path("out/api"), client_factory: Callable[[], 
 
     @app.post("/templates", response_model=TemplateInfo)
     async def upload_template(s: S, file: UploadFile = File(...)) -> TemplateInfo:
-        """Загрузить .pptx и разобрать в TemplateDNA; ответ — сводка."""
+        """Загрузить .pptx (или .potx / .ppsx / .pptm — приводятся к .pptx) и разобрать в TemplateDNA; ответ — сводка."""
         data = await file.read()
         try:
             entry = s.templates.add_upload(file.filename or "template.pptx", data)
@@ -118,6 +119,20 @@ def create_app(root: Path | str = Path("out/api"), client_factory: Callable[[], 
         entry = _template(s, template_id)
         s.templates.parsed(entry)
         return _template_info(entry)
+
+    @app.post("/templates/{template_id}/prepare", response_model=PrepareResponse)
+    def prepare(s: S, template_id: str, vlm: bool = True) -> PrepareResponse:
+        """Подготовка шаблона (вне бюджета генерации, 30–60 с): PNG образцов → правила + VLM → кэш разметки.
+
+        Следующий разбор и `/generate` берут уточнённую разметку. `vlm=false` — только правила и PNG."""
+        entry = _template(s, template_id)
+        client = s.client_factory() if vlm else None
+        if client is not None and not getattr(client, "api_key", True):
+            raise HTTPException(400, "LLM_API_KEY не задан — подготовка с VLM недоступна (vlm=false — без неё)")
+        report = prepare_template(entry.path, client)
+        s.templates.invalidate(entry.id)
+        s.templates.parsed(entry)
+        return PrepareResponse(template=_template_info(entry), report=report.summary())
 
     # ──────────────── генерация ────────────────
 

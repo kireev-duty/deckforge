@@ -1,5 +1,5 @@
 {
- "created": "2026-09-23T08:21:51+00:00",
+ "created": "2026-09-24T12:33:22+00:00",
  "config": {
   "template": "data/templates/VK_WorkSpace_Клиентская_конференция_Шаблон_03.pptx",
   "content_pack": null,
@@ -29,12 +29,14 @@
   "render_png": true,
   "render_dpi": 72,
   "time_budget_s": 300,
+  "max_parallel_decks": 3,
   "max_parallel_llm": 4
  },
  "template": {
   "id": "69e4a68c4372",
   "path": "data/templates/VK_WorkSpace_Клиентская_конференция_Шаблон_03.pptx",
-  "sha1": "69e4a68c4372"
+  "sha1": "69e4a68c4372",
+  "labels": "rules+vlm"
  },
  "content_source": "outline",
  "brief": "brief.md",
@@ -50,7 +52,7 @@
      "title",
      "cards",
      "cards",
-     "process",
+     "cards",
      "cards",
      "cards",
      "cards",
@@ -61,19 +63,19 @@
     ],
     "exemplars": [
      "slide1",
-     "slide22",
+     "slide13",
      "slide5",
-     "slide27",
+     "slide15",
      "slide6",
+     "slide22",
      "slide10",
      "slide5",
      "slide15",
      "slide6",
-     "slide10",
      "slide29"
     ],
     "text_items_per_slide": 3.6,
-    "words_per_item": 3.8,
+    "words_per_item": 6.1,
     "chart": 0,
     "table": 0,
     "kpi": 0,
@@ -81,70 +83,99 @@
     "skipped": 0
    },
    "audit": {
-    "errors": 4,
-    "warnings": 29,
+    "errors": 0,
+    "warnings": 28,
     "info": 1,
-    "contextual": 12,
+    "contextual": 1,
     "by_check": {
-     "C01_title_insight": 8,
-     "C02_content_matches_title": 1,
-     "C05_has_content": 2,
-     "C07_no_garbage": 1,
+     "C03_one_message": 1,
+     "D02_bullet_words": 2,
      "D05_fill": 2,
-     "L02_overlap": 4,
+     "L02_overlap": 6,
      "T02_font_size": 1,
-     "T06_contrast": 15
+     "T06_contrast": 17
     },
     "slides_with_issues": [
      1,
      2,
      3,
      4,
-     5,
      6,
      7,
      8,
      9
     ],
     "checks_run": 35,
-    "duration_s": 25.962,
+    "duration_s": 30.574,
     "path": "executive.audit.json",
     "kind": "deterministic+contextual",
     "autofix": {
-     "applied": 3,
+     "applied": 7,
      "skipped": 0,
      "before": {
       "errors": 0,
-      "warnings": 24
+      "warnings": 32
      },
      "after": {
       "errors": 0,
-      "warnings": 21
+      "warnings": 27
      },
      "items": [
       {
-       "slide_idx": 3,
-       "element_id": "859",
+       "slide_idx": 1,
+       "element_id": "657",
+       "check_id": "D02_bullet_words",
+       "fix": "refill_slot",
+       "before": "17 слов",
+       "after": "17 слов"
+      },
+      {
+       "slide_idx": 2,
+       "element_id": "441",
        "check_id": "T02_font_size",
        "fix": "snap_font_size",
-       "before": "12 pt",
-       "after": "11 pt"
+       "before": "21.6 pt",
+       "after": "20 pt"
       },
       {
        "slide_idx": 3,
-       "element_id": "860",
-       "check_id": "T02_font_size",
-       "fix": "snap_font_size",
-       "before": "12 pt",
-       "after": "11 pt"
+       "element_id": "681",
+       "check_id": "D02_bullet_words",
+       "fix": "refill_slot",
+       "before": "18 слов",
+       "after": "18 слов"
       },
       {
-       "slide_idx": 3,
-       "element_id": "862",
+       "slide_idx": 5,
+       "element_id": "768",
        "check_id": "T02_font_size",
        "fix": "snap_font_size",
-       "before": "12 pt",
-       "after": "11 pt"
+       "before": "21.6 pt",
+       "after": "20 pt"
+      },
+      {
+       "slide_idx": 6,
+       "element_id": "547",
+       "check_id": "T02_font_size",
+       "fix": "snap_font_size",
+       "before": "21.6 pt",
+       "after": "20 pt"
+      },
+      {
+       "slide_idx": 7,
+       "element_id": "441",
+       "check_id": "T02_font_size",
+       "fix": "snap_font_size",
+       "before": "21.6 pt",
+       "after": "20 pt"
+      },
+      {
+       "slide_idx": 8,
+       "element_id": "681",
+       "check_id": "D02_bullet_words",
+       "fix": "refill_slot",
+       "before": "16 слов",
+       "after": "7 слов"
       }
      ]
     }
@@ -155,15 +186,16 @@
     "html": "executive.html"
    },
    "timings_s": {
-    "layout": 0.006,
-    "render": 0.395,
-    "audit": 0.225,
-    "autofix": 0.588,
-    "png": 6.595,
-    "audit_contextual": 25.746,
-    "export_pdf": 0.004,
-    "export_html": 3.356,
-    "deck_total": 36.921
+    "layout": 0.007,
+    "render": 0.813,
+    "audit": 0.535,
+    "autofix": 1.186,
+    "png": 8.663,
+    "audit_contextual": 30.075,
+    "export_pdf": 0.003,
+    "export_html": 6.245,
+    "deck_build": 47.533,
+    "deck_total": 48.044
    }
   },
   {
@@ -177,7 +209,7 @@
      "cards",
      "cards",
      "cards",
-     "process",
+     "cards",
      "cards",
      "cards",
      "cards",
@@ -189,19 +221,19 @@
     "exemplars": [
      "slide1",
      "slide5",
-     "slide10",
-     "slide6",
-     "slide27",
-     "slide5",
-     "slide10",
-     "slide6",
      "slide15",
+     "slide10",
+     "slide15",
+     "slide6",
+     "slide22",
      "slide5",
      "slide10",
-     "slide28"
+     "slide15",
+     "slide6",
+     "slide29"
     ],
-    "text_items_per_slide": 3.2,
-    "words_per_item": 3.8,
+    "text_items_per_slide": 3.0,
+    "words_per_item": 6.8,
     "chart": 0,
     "table": 0,
     "kpi": 0,
@@ -209,18 +241,16 @@
     "skipped": 0
    },
    "audit": {
-    "errors": 3,
-    "warnings": 35,
-    "info": 4,
-    "contextual": 11,
+    "errors": 0,
+    "warnings": 32,
+    "info": 0,
+    "contextual": 1,
     "by_check": {
-     "C01_title_insight": 8,
-     "C05_has_content": 2,
-     "C07_no_garbage": 1,
+     "C01_title_insight": 1,
+     "D02_bullet_words": 2,
      "D05_fill": 2,
      "L02_overlap": 6,
-     "T02_font_size": 4,
-     "T06_contrast": 19
+     "T06_contrast": 21
     },
     "slides_with_issues": [
      1,
@@ -228,51 +258,98 @@
      3,
      4,
      5,
-     6,
      7,
      8,
      9,
      10
     ],
     "checks_run": 35,
-    "duration_s": 21.685,
+    "duration_s": 39.727,
     "path": "narrative.audit.json",
     "kind": "deterministic+contextual",
     "autofix": {
-     "applied": 3,
+     "applied": 9,
      "skipped": 0,
      "before": {
-      "errors": 0,
-      "warnings": 30
+      "errors": 1,
+      "warnings": 37
      },
      "after": {
       "errors": 0,
-      "warnings": 27
+      "warnings": 31
      },
      "items": [
       {
-       "slide_idx": 4,
-       "element_id": "859",
+       "slide_idx": 1,
+       "element_id": "441",
        "check_id": "T02_font_size",
        "fix": "snap_font_size",
-       "before": "12 pt",
-       "after": "11 pt"
+       "before": "21.6 pt",
+       "after": "20 pt"
+      },
+      {
+       "slide_idx": 2,
+       "element_id": "681",
+       "check_id": "L03_text_overflow",
+       "fix": "shrink_font_by_scale",
+       "before": "18 pt",
+       "after": "15.9 pt"
+      },
+      {
+       "slide_idx": 2,
+       "element_id": "681",
+       "check_id": "D02_bullet_words",
+       "fix": "refill_slot",
+       "before": "17 слов",
+       "after": "17 слов"
+      },
+      {
+       "slide_idx": 3,
+       "element_id": "547",
+       "check_id": "T02_font_size",
+       "fix": "snap_font_size",
+       "before": "21.6 pt",
+       "after": "20 pt"
       },
       {
        "slide_idx": 4,
-       "element_id": "860",
-       "check_id": "T02_font_size",
-       "fix": "snap_font_size",
-       "before": "12 pt",
-       "after": "11 pt"
+       "element_id": "681",
+       "check_id": "D02_bullet_words",
+       "fix": "refill_slot",
+       "before": "18 слов",
+       "after": "18 слов"
       },
       {
-       "slide_idx": 4,
-       "element_id": "862",
+       "slide_idx": 6,
+       "element_id": "768",
        "check_id": "T02_font_size",
        "fix": "snap_font_size",
-       "before": "12 pt",
-       "after": "11 pt"
+       "before": "21.6 pt",
+       "after": "20 pt"
+      },
+      {
+       "slide_idx": 7,
+       "element_id": "441",
+       "check_id": "T02_font_size",
+       "fix": "snap_font_size",
+       "before": "21.6 pt",
+       "after": "20 pt"
+      },
+      {
+       "slide_idx": 8,
+       "element_id": "547",
+       "check_id": "T02_font_size",
+       "fix": "snap_font_size",
+       "before": "21.6 pt",
+       "after": "20 pt"
+      },
+      {
+       "slide_idx": 9,
+       "element_id": "681",
+       "check_id": "D02_bullet_words",
+       "fix": "refill_slot",
+       "before": "16 слов",
+       "after": "7 слов"
       }
      ]
     }
@@ -283,16 +360,17 @@
     "html": "narrative.html"
    },
    "timings_s": {
-    "images": 10.012,
-    "layout": 0.006,
-    "render": 0.339,
-    "audit": 0.213,
-    "autofix": 0.558,
-    "png": 5.703,
-    "audit_contextual": 21.479,
-    "export_pdf": 0.003,
-    "export_html": 2.471,
-    "deck_total": 40.79
+    "images": 8.08,
+    "layout": 0.012,
+    "render": 0.867,
+    "audit": 0.604,
+    "autofix": 2.142,
+    "png": 8.334,
+    "audit_contextual": 39.362,
+    "export_pdf": 0.004,
+    "export_html": 4.441,
+    "deck_build": 63.854,
+    "deck_total": 64.375
    }
   },
   {
@@ -306,7 +384,7 @@
      "cards",
      "cards",
      "cards",
-     "process",
+     "cards",
      "cards",
      "cards",
      "cards",
@@ -318,19 +396,19 @@
     "exemplars": [
      "slide1",
      "slide6",
-     "slide10",
-     "slide5",
-     "slide27",
-     "slide6",
-     "slide10",
-     "slide5",
      "slide15",
-     "slide6",
      "slide10",
+     "slide5",
+     "slide6",
+     "slide15",
+     "slide10",
+     "slide5",
+     "slide13",
+     "slide6",
      "slide29"
     ],
-    "text_items_per_slide": 3.2,
-    "words_per_item": 3.8,
+    "text_items_per_slide": 3.1,
+    "words_per_item": 5.8,
     "chart": 0,
     "table": 0,
     "kpi": 0,
@@ -338,15 +416,18 @@
     "skipped": 0
    },
    "audit": {
-    "errors": 3,
-    "warnings": 35,
-    "info": 0,
-    "contextual": 11,
+    "errors": 2,
+    "warnings": 37,
+    "info": 1,
+    "contextual": 3,
     "by_check": {
-     "C01_title_insight": 8,
-     "C05_has_content": 3,
-     "D05_fill": 2,
-     "L02_overlap": 5,
+     "C04_facts_consistent": 1,
+     "C05_has_content": 1,
+     "C08_no_typos": 1,
+     "D02_bullet_words": 2,
+     "D05_fill": 5,
+     "L02_overlap": 9,
+     "T02_font_size": 1,
      "T06_contrast": 20
     },
     "slides_with_issues": [
@@ -355,51 +436,98 @@
      3,
      4,
      5,
-     6,
      7,
      8,
      9,
      10
     ],
     "checks_run": 35,
-    "duration_s": 19.255,
+    "duration_s": 27.264,
     "path": "visual.audit.json",
     "kind": "deterministic+contextual",
     "autofix": {
-     "applied": 3,
+     "applied": 9,
      "skipped": 0,
      "before": {
-      "errors": 0,
-      "warnings": 30
+      "errors": 2,
+      "warnings": 41
      },
      "after": {
       "errors": 0,
-      "warnings": 27
+      "warnings": 36
      },
      "items": [
       {
-       "slide_idx": 4,
-       "element_id": "859",
+       "slide_idx": 2,
+       "element_id": "681",
+       "check_id": "L03_text_overflow",
+       "fix": "shrink_font_by_scale",
+       "before": "18 pt",
+       "after": "15.9 pt"
+      },
+      {
+       "slide_idx": 2,
+       "element_id": "681",
+       "check_id": "D02_bullet_words",
+       "fix": "refill_slot",
+       "before": "17 слов",
+       "after": "17 слов"
+      },
+      {
+       "slide_idx": 3,
+       "element_id": "547",
        "check_id": "T02_font_size",
        "fix": "snap_font_size",
-       "before": "12 pt",
-       "after": "11 pt"
+       "before": "21.6 pt",
+       "after": "20 pt"
       },
       {
        "slide_idx": 4,
-       "element_id": "860",
-       "check_id": "T02_font_size",
-       "fix": "snap_font_size",
-       "before": "12 pt",
-       "after": "11 pt"
+       "element_id": "442",
+       "check_id": "L03_text_overflow",
+       "fix": "shrink_font_by_scale",
+       "before": "18 pt",
+       "after": "15.9 pt"
       },
       {
        "slide_idx": 4,
-       "element_id": "862",
+       "element_id": "442",
+       "check_id": "D02_bullet_words",
+       "fix": "refill_slot",
+       "before": "18 слов",
+       "after": "18 слов"
+      },
+      {
+       "slide_idx": 4,
+       "element_id": "441",
        "check_id": "T02_font_size",
        "fix": "snap_font_size",
-       "before": "12 pt",
-       "after": "11 pt"
+       "before": "21.6 pt",
+       "after": "20 pt"
+      },
+      {
+       "slide_idx": 7,
+       "element_id": "547",
+       "check_id": "T02_font_size",
+       "fix": "snap_font_size",
+       "before": "21.6 pt",
+       "after": "20 pt"
+      },
+      {
+       "slide_idx": 8,
+       "element_id": "441",
+       "check_id": "T02_font_size",
+       "fix": "snap_font_size",
+       "before": "21.6 pt",
+       "after": "20 pt"
+      },
+      {
+       "slide_idx": 9,
+       "element_id": "648",
+       "check_id": "D02_bullet_words",
+       "fix": "refill_slot",
+       "before": "16 слов",
+       "after": "7 слов"
       }
      ]
     }
@@ -410,23 +538,25 @@
     "html": "visual.html"
    },
    "timings_s": {
-    "images": 5.267,
-    "layout": 0.005,
-    "render": 0.343,
-    "audit": 0.212,
-    "autofix": 0.561,
-    "png": 5.994,
-    "audit_contextual": 19.035,
-    "export_pdf": 0.004,
-    "export_html": 2.481,
-    "deck_total": 33.909
+    "images": 8.074,
+    "layout": 0.007,
+    "render": 0.957,
+    "audit": 0.806,
+    "autofix": 2.291,
+    "png": 16.386,
+    "audit_contextual": 26.751,
+    "export_pdf": 0.005,
+    "export_html": 6.555,
+    "deck_build": 61.857,
+    "deck_total": 62.384
    }
   }
  ],
  "timings_s": {
-  "parse": 0.227,
+  "parse": 0.338,
   "outline": 0.0,
-  "total": 112.015
+  "decks": 63.873,
+  "total": 64.379
  },
  "warnings": [],
  "not_implemented": []

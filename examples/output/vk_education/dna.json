@@ -149,7 +149,10 @@
      "size_pt": 60.0,
      "placeholder_type": "title",
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "236",
@@ -167,7 +170,10 @@
      "size_pt": 20.0,
      "placeholder_type": "body",
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -199,7 +205,10 @@
      "size_pt": 60.0,
      "placeholder_type": "title",
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "242",
@@ -217,7 +226,10 @@
      "size_pt": 20.0,
      "placeholder_type": "body",
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -254,7 +266,10 @@
      "size_pt": 48.0,
      "placeholder_type": "title",
      "sample_text": "Напишите темупрезентации в две или три строчки",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "248",
@@ -272,7 +287,10 @@
      "size_pt": 20.0,
      "placeholder_type": "body",
      "sample_text": "Имя ФамилияОписание спикеры, должность и регалии",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "250",
@@ -290,7 +308,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -322,7 +343,10 @@
      "size_pt": 60.0,
      "placeholder_type": "title",
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "255",
@@ -340,7 +364,10 @@
      "size_pt": 20.0,
      "placeholder_type": "body",
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -377,7 +404,10 @@
      "size_pt": 60.0,
      "placeholder_type": "title",
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "261",
@@ -395,7 +425,10 @@
      "size_pt": 20.0,
      "placeholder_type": "body",
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -432,7 +465,10 @@
      "size_pt": 48.0,
      "placeholder_type": "title",
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "268",
@@ -450,7 +486,10 @@
      "size_pt": 20.0,
      "placeholder_type": "body",
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "269",
@@ -468,7 +507,10 @@
      "size_pt": null,
      "placeholder_type": "pic",
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -505,7 +547,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": "Пример оформления 4 текстовых блоков",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "274",
@@ -523,7 +568,10 @@
      "size_pt": 18.0,
      "placeholder_type": null,
      "sample_text": "Шрифт для заголовков — VK Sans Display Medium Основной цвет — синий, но можно свободно использовать дополнительные.",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "275",
@@ -541,7 +589,10 @@
      "size_pt": 18.0,
      "placeholder_type": null,
      "sample_text": "В заголовках уже заданнужный размер шрифтаВыравниваем текст по левому краю(исключения — схемы и таблицы).",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "277",
@@ -559,7 +610,10 @@
      "size_pt": 18.0,
      "placeholder_type": null,
      "sample_text": "Шрифт для заголовков и акцентов — VK Sans Display Medium Основной цвет — синий, но можно свободно использовать дополнительные.",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "278",
@@ -577,7 +631,10 @@
      "size_pt": 18.0,
      "placeholder_type": null,
      "sample_text": "В заголовках уже заданнужный размер шрифтаВыравниваем текст по левому краю(исключения — схемы и таблицы).",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -609,7 +666,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": "Пример оформления 6 текстовых блоков",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "284",
@@ -627,7 +687,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Шрифт для заголовковVK Sans Display Medium Основной цвет — синий, но можно свободно использовать дополнительные.",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "285",
@@ -645,7 +708,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "В заголовках уже заданнужный размер шрифтаВыравниваем текст по левому краю (исключения — схемы и таблицы).",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "286",
@@ -663,7 +729,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Шрифт для заголовковVK Sans Display Medium Основной цвет — синий, но можно свободно использовать дополнительные.",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "287",
@@ -681,7 +750,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "В заголовках уже заданнужный размер шрифтаВыравниваем текст по левому краю (исключения — схемы и таблицы).",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "288",
@@ -699,7 +771,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Шрифт для заголовковVK Sans Display Medium Основной цвет — синий, но можно свободно использовать дополнительные.",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "289",
@@ -717,7 +792,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "В заголовках уже заданнужный размер шрифтаВыравниваем текст по левому краю (исключения — схемы и таблицы).",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -749,7 +827,10 @@
      "size_pt": 48.0,
      "placeholder_type": "title",
      "sample_text": "Пример слайда-разделителя",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "301",
@@ -767,7 +848,10 @@
      "size_pt": 14.0,
      "placeholder_type": null,
      "sample_text": "Точки используются для навигации. Число разделов = число точек.",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -799,7 +883,10 @@
      "size_pt": 48.0,
      "placeholder_type": "title",
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "313",
@@ -817,7 +904,10 @@
      "size_pt": 14.0,
      "placeholder_type": null,
      "sample_text": "Точки используются для навигации. Число разделов = число точек.",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -849,7 +939,10 @@
      "size_pt": 48.0,
      "placeholder_type": "title",
      "sample_text": "Пример слайда-разделителя",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "324",
@@ -867,7 +960,10 @@
      "size_pt": 14.0,
      "placeholder_type": null,
      "sample_text": "Точки используются для навигации. Число разделов = число точек.",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -899,7 +995,10 @@
      "size_pt": 48.0,
      "placeholder_type": "title",
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "337",
@@ -917,7 +1016,10 @@
      "size_pt": 14.0,
      "placeholder_type": null,
      "sample_text": "Точки используются для навигации. Число разделов = число точек.",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -949,7 +1051,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": "Оформление схем",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "347",
@@ -967,7 +1072,10 @@
      "size_pt": 17.0,
      "placeholder_type": null,
      "sample_text": "Текст выравниваем по центру и по середине фигуры. Можно использовать акцентные символы и числа",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "344",
@@ -985,7 +1093,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Текстовый блок",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "348",
@@ -1003,7 +1114,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Текстовый блок",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "351",
@@ -1021,7 +1135,10 @@
      "size_pt": 44.0,
      "placeholder_type": null,
      "sample_text": "10млн",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "345",
@@ -1039,7 +1156,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Текстовый блок",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "349",
@@ -1057,7 +1177,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Текстовый блок",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "343",
@@ -1075,7 +1198,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Подпись",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "346",
@@ -1093,7 +1219,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Текстовый блок",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "350",
@@ -1111,7 +1240,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Текстовый блок",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "353",
@@ -1129,7 +1261,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [
@@ -1182,7 +1317,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": "Оформление схем",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "378",
@@ -1200,7 +1338,10 @@
      "size_pt": 17.0,
      "placeholder_type": null,
      "sample_text": "Текст выравниваем по центру и по середине фигуры. Можно использовать акцентные символы и числа",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "375",
@@ -1218,7 +1359,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Текстовый блок",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "379",
@@ -1236,7 +1380,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Текстовый блок",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "382",
@@ -1254,7 +1401,10 @@
      "size_pt": 44.0,
      "placeholder_type": null,
      "sample_text": "10млн",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "376",
@@ -1272,7 +1422,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Текстовый блок",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "380",
@@ -1290,7 +1443,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Текстовый блок",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "374",
@@ -1308,7 +1464,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Подпись",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "377",
@@ -1326,7 +1485,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Текстовый блок",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "381",
@@ -1344,7 +1506,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Текстовый блок",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "384",
@@ -1362,7 +1527,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [
@@ -1416,7 +1584,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": "Оформление кода",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "407",
@@ -1434,7 +1605,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "body { padding: 0; margin: 0; height: 100vh; overflow: hidden; font-family: ‘MailSans Roman’, sans-serif; background: url(https://github.com/supahfunk/gradientwaves-svg/blob/master/dist/img/bg-gradien",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "405",
@@ -1452,7 +1626,10 @@
      "size_pt": 16.0,
      "placeholder_type": "body",
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [
@@ -1491,7 +1668,10 @@
      "size_pt": 48.0,
      "placeholder_type": "title",
      "sample_text": "Пример слайда-разделителя",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -1523,7 +1703,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": "Заголовок + четыре преимущества",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "437",
@@ -1541,7 +1724,10 @@
      "size_pt": 18.0,
      "placeholder_type": null,
      "sample_text": "Описание под буллитом (в три строки и больше)",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "435",
@@ -1559,7 +1745,10 @@
      "size_pt": 18.0,
      "placeholder_type": null,
      "sample_text": "Описание под буллитом (в три строки и больше)",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "438",
@@ -1577,7 +1766,10 @@
      "size_pt": 18.0,
      "placeholder_type": null,
      "sample_text": "Описание под буллитом (в три строки и больше)",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "436",
@@ -1595,7 +1787,10 @@
      "size_pt": 18.0,
      "placeholder_type": null,
      "sample_text": "Описание под буллитом (в три строки и больше)",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -1627,7 +1822,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": "Заголовок — ключевая мысль слайда",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "447",
@@ -1645,7 +1843,10 @@
      "size_pt": 88.0,
      "placeholder_type": "body",
      "sample_text": "33%",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "450",
@@ -1663,7 +1864,10 @@
      "size_pt": 239.0,
      "placeholder_type": null,
      "sample_text": "43%",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "448",
@@ -1681,7 +1885,10 @@
      "size_pt": 16.0,
      "placeholder_type": "body",
      "sample_text": "Объяснение этого показателя",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "445",
@@ -1699,7 +1906,10 @@
      "size_pt": 88.0,
      "placeholder_type": "body",
      "sample_text": "23%",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "451",
@@ -1717,7 +1927,10 @@
      "size_pt": 24.0,
      "placeholder_type": null,
      "sample_text": "Описание — что это за показатель?",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "446",
@@ -1735,7 +1948,10 @@
      "size_pt": 16.0,
      "placeholder_type": "body",
      "sample_text": "Объяснение этого показателя",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -1767,7 +1983,10 @@
      "size_pt": 40.0,
      "placeholder_type": "body",
      "sample_text": "VK активно развивается и стремится стать центром технологической экспертизы в России. Уверен, что опыт коллег поможет в достижении этой амбициозной цели. Их практическая экспертиза в разработке и внед",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "457",
@@ -1785,7 +2004,10 @@
      "size_pt": 24.0,
      "placeholder_type": "body",
      "sample_text": "Владимир Кириенко, генеральный директор VK",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -1822,7 +2044,10 @@
      "size_pt": 20.0,
      "placeholder_type": null,
      "sample_text": "Имя Фамилия",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "465",
@@ -1840,7 +2065,10 @@
      "size_pt": 20.0,
      "placeholder_type": null,
      "sample_text": "Имя Фамилия",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "468",
@@ -1858,7 +2086,10 @@
      "size_pt": 20.0,
      "placeholder_type": null,
      "sample_text": "Имя Фамилия",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "471",
@@ -1876,7 +2107,10 @@
      "size_pt": 20.0,
      "placeholder_type": null,
      "sample_text": "Имя Фамилия",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "463",
@@ -1894,7 +2128,10 @@
      "size_pt": 14.0,
      "placeholder_type": null,
      "sample_text": "Должность",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "466",
@@ -1912,7 +2149,10 @@
      "size_pt": 14.0,
      "placeholder_type": null,
      "sample_text": "Должность",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "469",
@@ -1930,7 +2170,10 @@
      "size_pt": 14.0,
      "placeholder_type": null,
      "sample_text": "Должность",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "472",
@@ -1948,7 +2191,10 @@
      "size_pt": 14.0,
      "placeholder_type": null,
      "sample_text": "Должность",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "474",
@@ -1966,7 +2212,10 @@
      "size_pt": 20.0,
      "placeholder_type": null,
      "sample_text": "Имя Фамилия",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "477",
@@ -1984,7 +2233,10 @@
      "size_pt": 20.0,
      "placeholder_type": null,
      "sample_text": "Имя Фамилия",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "480",
@@ -2002,7 +2254,10 @@
      "size_pt": 20.0,
      "placeholder_type": null,
      "sample_text": "Имя Фамилия",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "483",
@@ -2020,7 +2275,10 @@
      "size_pt": 20.0,
      "placeholder_type": null,
      "sample_text": "Имя Фамилия",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "475",
@@ -2038,7 +2296,10 @@
      "size_pt": 14.0,
      "placeholder_type": null,
      "sample_text": "Должность",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "478",
@@ -2056,7 +2317,10 @@
      "size_pt": 14.0,
      "placeholder_type": null,
      "sample_text": "Должность",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "481",
@@ -2074,7 +2338,10 @@
      "size_pt": 14.0,
      "placeholder_type": null,
      "sample_text": "Должность",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "484",
@@ -2092,7 +2359,10 @@
      "size_pt": 14.0,
      "placeholder_type": null,
      "sample_text": "Должность",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "464",
@@ -2110,7 +2380,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "467",
@@ -2128,7 +2401,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "470",
@@ -2146,7 +2422,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "473",
@@ -2164,7 +2443,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "476",
@@ -2182,7 +2464,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "479",
@@ -2200,7 +2485,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "482",
@@ -2218,7 +2506,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "485",
@@ -2236,7 +2527,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -2268,7 +2562,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": "Заголовок — ключевая мысль слайда",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "496",
@@ -2286,7 +2583,10 @@
      "size_pt": 32.0,
      "placeholder_type": null,
      "sample_text": "1",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "497",
@@ -2304,7 +2604,10 @@
      "size_pt": 32.0,
      "placeholder_type": null,
      "sample_text": "2",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "498",
@@ -2322,7 +2625,10 @@
      "size_pt": 32.0,
      "placeholder_type": null,
      "sample_text": "3",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "499",
@@ -2340,7 +2646,10 @@
      "size_pt": 32.0,
      "placeholder_type": null,
      "sample_text": "4",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "495",
@@ -2358,7 +2667,10 @@
      "size_pt": 12.0,
      "placeholder_type": null,
      "sample_text": "Описание первого преимущества или шага(в три строки и больше)",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "492",
@@ -2376,7 +2688,10 @@
      "size_pt": 12.0,
      "placeholder_type": null,
      "sample_text": "Описание второго преимущества или шага(в три строки и больше)",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "493",
@@ -2394,7 +2709,10 @@
      "size_pt": 12.0,
      "placeholder_type": null,
      "sample_text": "Описание третьего преимущества или шага(в три строки и больше)",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "494",
@@ -2412,7 +2730,10 @@
      "size_pt": 12.0,
      "placeholder_type": null,
      "sample_text": "Описание четвертого преимущества или шага(в три строки и больше)",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -2449,7 +2770,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": "Заголовок — ключевая мысль слайда",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "511",
@@ -2467,7 +2791,10 @@
      "size_pt": 32.0,
      "placeholder_type": null,
      "sample_text": "1",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "512",
@@ -2485,7 +2812,10 @@
      "size_pt": 32.0,
      "placeholder_type": null,
      "sample_text": "2",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "513",
@@ -2503,7 +2833,10 @@
      "size_pt": 32.0,
      "placeholder_type": null,
      "sample_text": "3",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "514",
@@ -2521,7 +2854,10 @@
      "size_pt": 32.0,
      "placeholder_type": null,
      "sample_text": "4",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "515",
@@ -2539,7 +2875,10 @@
      "size_pt": 32.0,
      "placeholder_type": null,
      "sample_text": "5",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "510",
@@ -2557,7 +2896,10 @@
      "size_pt": 12.0,
      "placeholder_type": null,
      "sample_text": "Описание первого преимущества или шага(в три строки и больше)",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "506",
@@ -2575,7 +2917,10 @@
      "size_pt": 12.0,
      "placeholder_type": null,
      "sample_text": "Описание второго преимущества или шага(в три строки и больше)",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "507",
@@ -2593,7 +2938,10 @@
      "size_pt": 12.0,
      "placeholder_type": null,
      "sample_text": "Описание третьего преимущества или шага(в три строки и больше)",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "508",
@@ -2611,7 +2959,10 @@
      "size_pt": 12.0,
      "placeholder_type": null,
      "sample_text": "Описание четвертого преимущества или шага(в три строки и больше)",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "509",
@@ -2629,7 +2980,10 @@
      "size_pt": 12.0,
      "placeholder_type": null,
      "sample_text": "Описание пятого преимущества или шага(в три строки и больше)",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -2666,7 +3020,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": "Заголовок — ключевая мысль слайда",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "524",
@@ -2684,7 +3041,10 @@
      "size_pt": 32.0,
      "placeholder_type": null,
      "sample_text": "1",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "525",
@@ -2702,7 +3062,10 @@
      "size_pt": 32.0,
      "placeholder_type": null,
      "sample_text": "2",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "526",
@@ -2720,7 +3083,10 @@
      "size_pt": 32.0,
      "placeholder_type": null,
      "sample_text": "3",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "527",
@@ -2738,7 +3104,10 @@
      "size_pt": 32.0,
      "placeholder_type": null,
      "sample_text": "4",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "523",
@@ -2756,7 +3125,10 @@
      "size_pt": 12.0,
      "placeholder_type": null,
      "sample_text": "Описание первого преимущества или шага(в три строки и больше)",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "520",
@@ -2774,7 +3146,10 @@
      "size_pt": 12.0,
      "placeholder_type": null,
      "sample_text": "Описание второго преимущества или шага(в три строки и больше)",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "521",
@@ -2792,7 +3167,10 @@
      "size_pt": 12.0,
      "placeholder_type": null,
      "sample_text": "Описание третьего преимущества или шага(в три строки и больше)",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "522",
@@ -2810,7 +3188,10 @@
      "size_pt": 12.0,
      "placeholder_type": null,
      "sample_text": "Описание четвертого преимущества или шага(в три строки и больше)",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "532",
@@ -2828,7 +3209,10 @@
      "size_pt": 32.0,
      "placeholder_type": null,
      "sample_text": "5",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "533",
@@ -2846,7 +3230,10 @@
      "size_pt": 32.0,
      "placeholder_type": null,
      "sample_text": "6",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "534",
@@ -2864,7 +3251,10 @@
      "size_pt": 32.0,
      "placeholder_type": null,
      "sample_text": "7",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "535",
@@ -2882,7 +3272,10 @@
      "size_pt": 32.0,
      "placeholder_type": null,
      "sample_text": "8",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "531",
@@ -2900,7 +3293,10 @@
      "size_pt": 12.0,
      "placeholder_type": null,
      "sample_text": "Описание пятого преимущества или шага(в три строки и больше)",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "528",
@@ -2918,7 +3314,10 @@
      "size_pt": 12.0,
      "placeholder_type": null,
      "sample_text": "Описание шестого преимущества или шага(в три строки и больше)",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "529",
@@ -2936,7 +3335,10 @@
      "size_pt": 12.0,
      "placeholder_type": null,
      "sample_text": "Описание седьмого преимущества или шага(в три строки и больше)",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "530",
@@ -2954,7 +3356,10 @@
      "size_pt": 12.0,
      "placeholder_type": null,
      "sample_text": "Описание восьмого преимущества или шага(в три строки и больше)",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -2991,7 +3396,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": "Заголовок слайда и несколько тезисов под буллитами",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "541",
@@ -3009,7 +3417,10 @@
      "size_pt": 16.0,
      "placeholder_type": "body",
      "sample_text": "​​здесь текст в две строки или более (любые детали проекта)​​здесь текст в две строки или более (любые детали проекта)​​здесь текст в две строки или более (любые детали проекта)​​здесь текст в две стр",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "542",
@@ -3027,7 +3438,10 @@
      "size_pt": 16.0,
      "placeholder_type": "body",
      "sample_text": "​​здесь текст в две строки или более (любые детали проекта)​​здесь текст в две строки или более (любые детали проекта)​​здесь текст в две строки или более (любые детали проекта)​​здесь текст в две стр",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -3059,7 +3473,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": "Интерфейсные иконки",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "757",
@@ -3077,7 +3494,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Иконки можно брать из этого слайда, масштабировать и изменять цвет",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "549",
@@ -3095,7 +3515,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "550",
@@ -3113,7 +3536,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "551",
@@ -3131,7 +3557,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "552",
@@ -3149,7 +3578,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "553",
@@ -3167,7 +3599,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "554",
@@ -3185,7 +3620,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "555",
@@ -3203,7 +3641,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "556",
@@ -3221,7 +3662,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "557",
@@ -3239,7 +3683,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "558",
@@ -3257,7 +3704,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "559",
@@ -3275,7 +3725,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "560",
@@ -3293,7 +3746,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "561",
@@ -3311,7 +3767,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "562",
@@ -3329,7 +3788,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "563",
@@ -3347,7 +3809,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "564",
@@ -3365,7 +3830,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "565",
@@ -3383,7 +3851,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "566",
@@ -3401,7 +3872,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "567",
@@ -3419,7 +3893,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "568",
@@ -3437,7 +3914,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "569",
@@ -3455,7 +3935,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "570",
@@ -3473,7 +3956,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "571",
@@ -3491,7 +3977,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "572",
@@ -3509,7 +3998,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "573",
@@ -3527,7 +4019,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "574",
@@ -3545,7 +4040,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "575",
@@ -3563,7 +4061,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "576",
@@ -3581,7 +4082,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "577",
@@ -3599,7 +4103,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "578",
@@ -3617,7 +4124,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "579",
@@ -3635,7 +4145,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "580",
@@ -3653,7 +4166,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "581",
@@ -3671,7 +4187,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "582",
@@ -3689,7 +4208,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "583",
@@ -3707,7 +4229,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "584",
@@ -3725,7 +4250,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "585",
@@ -3743,7 +4271,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "586",
@@ -3761,7 +4292,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "587",
@@ -3779,7 +4313,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "588",
@@ -3797,7 +4334,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "589",
@@ -3815,7 +4355,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "590",
@@ -3833,7 +4376,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "591",
@@ -3851,7 +4397,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "592",
@@ -3869,7 +4418,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "593",
@@ -3887,7 +4439,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "594",
@@ -3905,7 +4460,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "595",
@@ -3923,7 +4481,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "596",
@@ -3941,7 +4502,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "597",
@@ -3959,7 +4523,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "598",
@@ -3977,7 +4544,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "599",
@@ -3995,7 +4565,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "600",
@@ -4013,7 +4586,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "601",
@@ -4031,7 +4607,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "602",
@@ -4049,7 +4628,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "603",
@@ -4067,7 +4649,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "604",
@@ -4085,7 +4670,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "605",
@@ -4103,7 +4691,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "606",
@@ -4121,7 +4712,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "607",
@@ -4139,7 +4733,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "608",
@@ -4157,7 +4754,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "609",
@@ -4175,7 +4775,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "610",
@@ -4193,7 +4796,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "611",
@@ -4211,7 +4817,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "612",
@@ -4229,7 +4838,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "613",
@@ -4247,7 +4859,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "614",
@@ -4265,7 +4880,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "615",
@@ -4283,7 +4901,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "616",
@@ -4301,7 +4922,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "617",
@@ -4319,7 +4943,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "618",
@@ -4337,7 +4964,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "619",
@@ -4355,7 +4985,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "620",
@@ -4373,7 +5006,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "621",
@@ -4391,7 +5027,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "622",
@@ -4409,7 +5048,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "623",
@@ -4427,7 +5069,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "624",
@@ -4445,7 +5090,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "625",
@@ -4463,7 +5111,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "626",
@@ -4481,7 +5132,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "627",
@@ -4499,7 +5153,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "628",
@@ -4517,7 +5174,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "629",
@@ -4535,7 +5195,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "630",
@@ -4553,7 +5216,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "631",
@@ -4571,7 +5237,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "632",
@@ -4589,7 +5258,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "633",
@@ -4607,7 +5279,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "634",
@@ -4625,7 +5300,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "635",
@@ -4643,7 +5321,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "636",
@@ -4661,7 +5342,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "637",
@@ -4679,7 +5363,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "638",
@@ -4697,7 +5384,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "639",
@@ -4715,7 +5405,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "640",
@@ -4733,7 +5426,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "641",
@@ -4751,7 +5447,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "642",
@@ -4769,7 +5468,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "643",
@@ -4787,7 +5489,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "644",
@@ -4805,7 +5510,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "645",
@@ -4823,7 +5531,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "646",
@@ -4841,7 +5552,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "647",
@@ -4859,7 +5573,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "648",
@@ -4877,7 +5594,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "649",
@@ -4895,7 +5615,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "650",
@@ -4913,7 +5636,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "651",
@@ -4931,7 +5657,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "652",
@@ -4949,7 +5678,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "653",
@@ -4967,7 +5699,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "654",
@@ -4985,7 +5720,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "655",
@@ -5003,7 +5741,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "656",
@@ -5021,7 +5762,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "657",
@@ -5039,7 +5783,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "658",
@@ -5057,7 +5804,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "659",
@@ -5075,7 +5825,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "660",
@@ -5093,7 +5846,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "661",
@@ -5111,7 +5867,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "662",
@@ -5129,7 +5888,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "663",
@@ -5147,7 +5909,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "664",
@@ -5165,7 +5930,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "665",
@@ -5183,7 +5951,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "666",
@@ -5201,7 +5972,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "667",
@@ -5219,7 +5993,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "668",
@@ -5237,7 +6014,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "669",
@@ -5255,7 +6035,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "670",
@@ -5273,7 +6056,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "671",
@@ -5291,7 +6077,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "672",
@@ -5309,7 +6098,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "673",
@@ -5327,7 +6119,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "674",
@@ -5345,7 +6140,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "675",
@@ -5363,7 +6161,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "676",
@@ -5381,7 +6182,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "677",
@@ -5399,7 +6203,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "678",
@@ -5417,7 +6224,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "679",
@@ -5435,7 +6245,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "680",
@@ -5453,7 +6266,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "681",
@@ -5471,7 +6287,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "682",
@@ -5489,7 +6308,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "683",
@@ -5507,7 +6329,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "684",
@@ -5525,7 +6350,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "685",
@@ -5543,7 +6371,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "686",
@@ -5561,7 +6392,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "687",
@@ -5579,7 +6413,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "688",
@@ -5597,7 +6434,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "689",
@@ -5615,7 +6455,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "690",
@@ -5633,7 +6476,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "691",
@@ -5651,7 +6497,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "692",
@@ -5669,7 +6518,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "693",
@@ -5687,7 +6539,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "694",
@@ -5705,7 +6560,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "695",
@@ -5723,7 +6581,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "696",
@@ -5741,7 +6602,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "697",
@@ -5759,7 +6623,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "698",
@@ -5777,7 +6644,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "699",
@@ -5795,7 +6665,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "700",
@@ -5813,7 +6686,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "701",
@@ -5831,7 +6707,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "702",
@@ -5849,7 +6728,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "703",
@@ -5867,7 +6749,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "704",
@@ -5885,7 +6770,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "705",
@@ -5903,7 +6791,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "706",
@@ -5921,7 +6812,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "707",
@@ -5939,7 +6833,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "708",
@@ -5957,7 +6854,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "709",
@@ -5975,7 +6875,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "710",
@@ -5993,7 +6896,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "711",
@@ -6011,7 +6917,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "712",
@@ -6029,7 +6938,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "713",
@@ -6047,7 +6959,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "714",
@@ -6065,7 +6980,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "715",
@@ -6083,7 +7001,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "716",
@@ -6101,7 +7022,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "717",
@@ -6119,7 +7043,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "718",
@@ -6137,7 +7064,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "719",
@@ -6155,7 +7085,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "720",
@@ -6173,7 +7106,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "721",
@@ -6191,7 +7127,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "722",
@@ -6209,7 +7148,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "723",
@@ -6227,7 +7169,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "724",
@@ -6245,7 +7190,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "725",
@@ -6263,7 +7211,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "726",
@@ -6281,7 +7232,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "727",
@@ -6299,7 +7253,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "728",
@@ -6317,7 +7274,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "729",
@@ -6335,7 +7295,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "730",
@@ -6353,7 +7316,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "731",
@@ -6371,7 +7337,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "732",
@@ -6389,7 +7358,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "733",
@@ -6407,7 +7379,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "734",
@@ -6425,7 +7400,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "735",
@@ -6443,7 +7421,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "736",
@@ -6461,7 +7442,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "737",
@@ -6479,7 +7463,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "738",
@@ -6497,7 +7484,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "739",
@@ -6515,7 +7505,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "740",
@@ -6533,7 +7526,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "741",
@@ -6551,7 +7547,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "742",
@@ -6569,7 +7568,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "743",
@@ -6587,7 +7589,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "744",
@@ -6605,7 +7610,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "745",
@@ -6623,7 +7631,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "746",
@@ -6641,7 +7652,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "747",
@@ -6659,7 +7673,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "748",
@@ -6677,7 +7694,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "749",
@@ -6695,7 +7715,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "750",
@@ -6713,7 +7736,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "751",
@@ -6731,7 +7757,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "752",
@@ -6749,7 +7778,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "753",
@@ -6767,7 +7799,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "754",
@@ -6785,7 +7820,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "755",
@@ -6803,7 +7841,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "756",
@@ -6821,7 +7862,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -6853,7 +7897,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": "Заголовок — ключевая мысль слайда",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "765",
@@ -6871,7 +7918,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Тезис под тематическойиконкой (например,об идее проекта)",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "766",
@@ -6889,7 +7939,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Ещё тезис под иконкой (например, о месте проекта в экосистеме)",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "767",
@@ -6907,7 +7960,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "И третий тезис (что-то о срокахи расписании)",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "773",
@@ -6925,7 +7981,10 @@
      "size_pt": 14.8,
      "placeholder_type": null,
      "sample_text": "Иконки можно брать из VKUI Icons Library. Фирменный синий #0077FF",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "762",
@@ -6943,7 +8002,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "769",
@@ -6961,7 +8023,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "770",
@@ -6979,7 +8044,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "771",
@@ -6997,7 +8065,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "772",
@@ -7015,7 +8086,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -7047,7 +8121,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": "Заголовок — ключевая мысль слайда",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "786",
@@ -7065,7 +8142,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Тезис под тематическойиконкой (например,об идее проекта)",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "787",
@@ -7083,7 +8163,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Ещё тезис под иконкой (например, о месте проекта в экосистеме)",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "788",
@@ -7101,7 +8184,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "И третий тезис (что-то о срокахи расписании)",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "789",
@@ -7119,7 +8205,10 @@
      "size_pt": 14.8,
      "placeholder_type": null,
      "sample_text": "Иконки можно брать из VKUI Icons Library. Фирменный синий #0077FF",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "778",
@@ -7137,7 +8226,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "779",
@@ -7155,7 +8247,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "780",
@@ -7173,7 +8268,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "783",
@@ -7191,7 +8289,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "784",
@@ -7209,7 +8310,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "785",
@@ -7227,7 +8331,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -7259,7 +8366,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": "Заголовок — ключевая мысль слайда",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "800",
@@ -7277,7 +8387,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Тезис под тематическойиконкой (например,об идее проекта)",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "801",
@@ -7295,7 +8408,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Ещё тезис под иконкой (например, о месте проекта в экосистеме)",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "802",
@@ -7313,7 +8429,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "И третий тезис (что-то о срокахи расписании)",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "796",
@@ -7331,7 +8450,10 @@
      "size_pt": 14.8,
      "placeholder_type": null,
      "sample_text": "Иконки можно брать из VKUI Icons Library. Фирменный синий #0077FF",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "797",
@@ -7349,7 +8471,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "798",
@@ -7367,7 +8492,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "799",
@@ -7385,7 +8513,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -7417,7 +8548,10 @@
      "size_pt": 48.0,
      "placeholder_type": null,
      "sample_text": "Пример слайда-разделителя",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -7449,7 +8583,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": "Слайды со скриншотами",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "819",
@@ -7467,7 +8604,10 @@
      "size_pt": 16.0,
      "placeholder_type": "body",
      "sample_text": "Рамки адаптированы под безрамочный Android и iPhone 12. Скачать другие мокапы (iPad, iPhone 7, телефоны Samsung и Xiaomi) можно на Facebook Devices.Можно скопировать скриншот и просто вставить его на ",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "821",
@@ -7485,7 +8625,10 @@
      "size_pt": null,
      "placeholder_type": "pic",
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -7522,7 +8665,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": "Слайды со скриншотами",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "827",
@@ -7540,7 +8686,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "828",
@@ -7558,7 +8707,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -7595,7 +8747,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": "Слайды со скриншотами",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "834",
@@ -7613,7 +8768,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "835",
@@ -7631,7 +8789,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "837",
@@ -7649,7 +8810,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "838",
@@ -7667,7 +8831,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -7704,7 +8871,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": "Слайдысо скриншотами",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "844",
@@ -7722,7 +8892,10 @@
      "size_pt": 16.0,
      "placeholder_type": "body",
      "sample_text": "Если нужно показать несколько скриншотов постов или интерфейса, можно продублировать слайд и менять скрины на том же месте. Только проследите, чтобы остальные элементы слайда не сместились.Для навигац",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "851",
@@ -7740,7 +8913,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -7777,7 +8953,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": "Построй своё будущее в IT вместе с VK",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "856",
@@ -7795,7 +8974,10 @@
      "size_pt": 14.0,
      "placeholder_type": "body",
      "sample_text": "С 2011 года мы создаём бесплатные образовательные и развивающие проекты и инициативы вокруг технологий с ведущими экспертами VK в каждой специальности и с самым широким спектром программ в IT и non-te",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "858",
@@ -7813,7 +8995,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -7850,7 +9035,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "863",
@@ -7868,7 +9056,10 @@
      "size_pt": 16.0,
      "placeholder_type": "body",
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -7900,7 +9091,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "869",
@@ -7918,7 +9112,10 @@
      "size_pt": 16.0,
      "placeholder_type": "body",
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -7950,7 +9147,10 @@
      "size_pt": 48.0,
      "placeholder_type": null,
      "sample_text": "Пример слайда-разделителя",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -7982,7 +9182,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": "Оформление таблиц",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "888",
@@ -8000,7 +9203,10 @@
      "size_pt": 16.0,
      "placeholder_type": "body",
      "sample_text": "Удаляем все лишние заливки, границы ячеек и выделения в тексте. Границы уместны, когда хотим обозначить легенду или размещаем на слайде большую таблицу.Выравниваем содержимое текстовых ячеек по левому",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "889",
@@ -8018,7 +9224,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": "Заголовок столбца, млнЗаголовок столбца, млнАкцент1510Строка144Строка119Строка85Строка53",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -8050,7 +9259,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": "Оформление большой таблицы: пример",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "895",
@@ -8068,7 +9280,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": "1 кв. 20182 кв. 20183 кв. 20184 кв. 20181 кв. 20192 кв. 20193 кв. 20194 кв. 20191 кв. 20202 кв. 2020ИтогоПлатежные карты32%38%39%39%37%29%40%31%37%30%35%Потребительские кредиты33%29%26%23%27%26%23%23%",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -8100,7 +9315,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": "Оформление большой таблицы: пример",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "901",
@@ -8118,7 +9336,10 @@
      "size_pt": null,
      "placeholder_type": null,
      "sample_text": "ВремяТемаВладелец сессииКлючевые вопросы10:00 – 10:05Вступительное словоЛюбовь ПшеничниковаДиректор по развитию стратегических партнерствЦели проведения мероприятия;Ожидаемые результаты 10:05 – 10:25К",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -8155,7 +9376,10 @@
      "size_pt": 48.0,
      "placeholder_type": null,
      "sample_text": "Пример слайда-разделителя",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -8187,7 +9411,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": "Таймлайн без акцентов",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "922",
@@ -8205,7 +9432,10 @@
      "size_pt": 32.0,
      "placeholder_type": null,
      "sample_text": "2010",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "924",
@@ -8223,7 +9453,10 @@
      "size_pt": 32.0,
      "placeholder_type": null,
      "sample_text": "2011",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "926",
@@ -8241,7 +9474,10 @@
      "size_pt": 32.0,
      "placeholder_type": null,
      "sample_text": "2012",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "940",
@@ -8259,7 +9495,10 @@
      "size_pt": 32.0,
      "placeholder_type": null,
      "sample_text": "2013",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "921",
@@ -8277,7 +9516,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Важное событиев жизни компании",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "923",
@@ -8295,7 +9537,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Важное событиев жизни компании",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "925",
@@ -8313,7 +9558,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Важное событиев жизни компании",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "939",
@@ -8331,7 +9579,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Важное событиев жизни компании",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "931",
@@ -8349,7 +9600,10 @@
      "size_pt": 32.0,
      "placeholder_type": null,
      "sample_text": "2014",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "933",
@@ -8367,7 +9621,10 @@
      "size_pt": 32.0,
      "placeholder_type": null,
      "sample_text": "2015",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "935",
@@ -8385,7 +9642,10 @@
      "size_pt": 32.0,
      "placeholder_type": null,
      "sample_text": "2016",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "930",
@@ -8403,7 +9663,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Важное событиев жизни компании",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "932",
@@ -8421,7 +9684,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Важное событиев жизни компании",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "934",
@@ -8439,7 +9705,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Важное событиев жизни компании",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [
@@ -8479,7 +9748,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": "Диаграмма Ганта",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "977",
@@ -8497,7 +9769,10 @@
      "size_pt": 14.0,
      "placeholder_type": null,
      "sample_text": "Задача №1",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "978",
@@ -8515,7 +9790,10 @@
      "size_pt": 14.0,
      "placeholder_type": null,
      "sample_text": "Задача №2",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "979",
@@ -8533,7 +9811,10 @@
      "size_pt": 14.0,
      "placeholder_type": null,
      "sample_text": "Задача №3",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "980",
@@ -8551,7 +9832,10 @@
      "size_pt": 14.0,
      "placeholder_type": null,
      "sample_text": "Задача №4",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "981",
@@ -8569,7 +9853,10 @@
      "size_pt": 14.0,
      "placeholder_type": null,
      "sample_text": "Задача №5",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "957",
@@ -8587,7 +9874,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Апр",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "958",
@@ -8605,7 +9895,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Май",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "959",
@@ -8623,7 +9916,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Июнь",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "960",
@@ -8641,7 +9937,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Июль",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "961",
@@ -8659,7 +9958,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Авг",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "962",
@@ -8677,7 +9979,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Сен",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "963",
@@ -8695,7 +10000,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Окт",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "964",
@@ -8713,7 +10021,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Ноя",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -8745,7 +10056,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": "Нумерация",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "991",
@@ -8763,7 +10077,10 @@
      "size_pt": 36.0,
      "placeholder_type": null,
      "sample_text": "1",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "990",
@@ -8781,7 +10098,10 @@
      "size_pt": 36.0,
      "placeholder_type": null,
      "sample_text": "2",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "988",
@@ -8799,7 +10119,10 @@
      "size_pt": 36.0,
      "placeholder_type": null,
      "sample_text": "3",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "989",
@@ -8817,7 +10140,10 @@
      "size_pt": 36.0,
      "placeholder_type": null,
      "sample_text": "4",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "992",
@@ -8835,7 +10161,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Здесь можно добавить пояснение к этапу",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "993",
@@ -8853,7 +10182,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Второй этап важный, поэтому яркий",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "994",
@@ -8871,7 +10203,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Здесь можно добавить пояснение к этапу",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "995",
@@ -8889,7 +10224,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "Здесь можно добавить пояснение к этапу",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -8921,7 +10259,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": "Примеры диаграмм",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "1002",
@@ -8939,7 +10280,10 @@
      "size_pt": 20.0,
      "placeholder_type": null,
      "sample_text": "Сравнение всех городов сразу",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "1004",
@@ -8957,7 +10301,10 @@
      "size_pt": 20.0,
      "placeholder_type": null,
      "sample_text": "Диаграмма про Петербург",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -8987,14 +10334,17 @@
       "w": 10855854,
       "h": 644241
      },
-     "max_chars": 42,
-     "max_lines": 1,
+     "max_chars": 66,
+     "max_lines": 2,
      "max_items": null,
      "font": null,
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": "Примеры диаграмм",
-     "hard_lines": false
+     "hard_lines": true,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "1016",
@@ -9012,7 +10362,10 @@
      "size_pt": 44.0,
      "placeholder_type": null,
      "sample_text": "42%",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "1017",
@@ -9030,7 +10383,10 @@
      "size_pt": 44.0,
      "placeholder_type": null,
      "sample_text": "32%",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "1011",
@@ -9048,7 +10404,10 @@
      "size_pt": 88.0,
      "placeholder_type": null,
      "sample_text": "22%пояснение",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "1020",
@@ -9066,7 +10425,10 @@
      "size_pt": 18.0,
      "placeholder_type": null,
      "sample_text": "пояснение",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "1021",
@@ -9084,7 +10446,10 @@
      "size_pt": 18.0,
      "placeholder_type": null,
      "sample_text": "пояснение",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "1018",
@@ -9102,7 +10467,10 @@
      "size_pt": 44.0,
      "placeholder_type": null,
      "sample_text": "22%",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "1019",
@@ -9120,7 +10488,10 @@
      "size_pt": 44.0,
      "placeholder_type": null,
      "sample_text": "12%",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "1022",
@@ -9138,7 +10509,10 @@
      "size_pt": 18.0,
      "placeholder_type": null,
      "sample_text": "пояснение",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "1023",
@@ -9156,7 +10530,10 @@
      "size_pt": 18.0,
      "placeholder_type": null,
      "sample_text": "пояснение",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [
@@ -9200,7 +10577,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": "Гистограмма и диаграмма с областями",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -9238,7 +10618,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": "Пример оформления графика",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "1040",
@@ -9256,7 +10639,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "DAU",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "1043",
@@ -9274,7 +10660,10 @@
      "size_pt": 16.0,
      "placeholder_type": null,
      "sample_text": "MAU",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -9311,7 +10700,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": "Пример оформления графика",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -9348,7 +10740,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": "Пример оформления графика",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -9385,7 +10780,10 @@
      "size_pt": 36.0,
      "placeholder_type": "title",
      "sample_text": "Оформление диаграмм",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "1069",
@@ -9403,7 +10801,10 @@
      "size_pt": 14.0,
      "placeholder_type": null,
      "sample_text": "Перекрытие рядов = ±50%.Боковой зазор = 0%. Избавляемся от линий сетки, засечек. В примере — метки данных вместо вертикальной оси. Оси можно использовать, если данных много (например, показываем динам",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "1065",
@@ -9421,7 +10822,10 @@
      "size_pt": 14.0,
      "placeholder_type": null,
      "sample_text": "DAU",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "1068",
@@ -9439,7 +10843,10 @@
      "size_pt": 14.0,
      "placeholder_type": null,
      "sample_text": "MAU",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -9476,7 +10883,10 @@
      "size_pt": 60.0,
      "placeholder_type": "title",
      "sample_text": "Спасибо за внимание!",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "1077",
@@ -9494,7 +10904,10 @@
      "size_pt": 16.0,
      "placeholder_type": "body",
      "sample_text": "Василий Иванов, должность/подзаголовок",
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "1076",
@@ -9512,7 +10925,10 @@
      "size_pt": null,
      "placeholder_type": "pic",
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [],
@@ -9544,7 +10960,10 @@
      "size_pt": 60.0,
      "placeholder_type": "title",
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "1084",
@@ -9562,7 +10981,10 @@
      "size_pt": 16.0,
      "placeholder_type": "body",
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [
@@ -9601,7 +11023,10 @@
      "size_pt": 60.0,
      "placeholder_type": "title",
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "1090",
@@ -9619,7 +11044,10 @@
      "size_pt": null,
      "placeholder_type": "pic",
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [
@@ -9658,7 +11086,10 @@
      "size_pt": 60.0,
      "placeholder_type": "title",
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     },
     {
      "id": "1097",
@@ -9676,7 +11107,10 @@
      "size_pt": null,
      "placeholder_type": "pic",
      "sample_text": null,
-     "hard_lines": false
+     "hard_lines": false,
+     "plate_id": null,
+     "plate_max_w": null,
+     "wrap_w": null
     }
    ],
    "fixed": [

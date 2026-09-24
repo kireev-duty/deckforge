@@ -1,5 +1,5 @@
 {
- "created": "2026-09-23T08:19:56+00:00",
+ "created": "2026-09-24T12:32:14+00:00",
  "config": {
   "template": "data/templates/Шаблон презентации VK Education.pptx",
   "content_pack": null,
@@ -29,12 +29,14 @@
   "render_png": true,
   "render_dpi": 72,
   "time_budget_s": 300,
+  "max_parallel_decks": 3,
   "max_parallel_llm": 4
  },
  "template": {
   "id": "6576a887482e",
   "path": "data/templates/Шаблон презентации VK Education.pptx",
-  "sha1": "6576a887482e"
+  "sha1": "6576a887482e",
+  "labels": "rules+vlm"
  },
  "content_source": "outline",
  "brief": "brief.md",
@@ -50,30 +52,30 @@
      "title",
      "cards",
      "cards",
-     "process",
      "image_text",
      "cards",
      "cards",
+     "cards",
+     "cards",
      "image_text",
      "cards",
-     "cards",
-     "closing"
+     "title"
     ],
     "exemplars": [
      "slide5",
-     "slide22",
      "slide7",
-     "slide21",
+     "slide7",
      "slide15",
-     "slide7",
      "slide17",
-     "slide30",
+     "slide22",
      "slide26",
      "slide27",
-     "slide53"
+     "slide30",
+     "slide28",
+     "slide4"
     ],
-    "text_items_per_slide": 3.1,
-    "words_per_item": 4.2,
+    "text_items_per_slide": 2.9,
+    "words_per_item": 8.4,
     "chart": 0,
     "table": 0,
     "kpi": 1,
@@ -82,43 +84,38 @@
    },
    "audit": {
     "errors": 2,
-    "warnings": 11,
+    "warnings": 5,
     "info": 1,
-    "contextual": 12,
+    "contextual": 2,
     "by_check": {
-     "C01_title_insight": 8,
      "C02_content_matches_title": 1,
-     "C05_has_content": 1,
-     "C06_images_relevant": 1,
-     "C08_no_typos": 1,
-     "D05_fill": 1,
-     "T02_font_size": 1
+     "C07_no_garbage": 1,
+     "D02_bullet_words": 2,
+     "D05_fill": 2,
+     "T02_font_size": 1,
+     "T06_contrast": 1
     },
     "slides_with_issues": [
+     0,
      1,
      2,
      3,
-     4,
-     5,
-     6,
-     7,
-     8,
-     9
+     4
     ],
     "checks_run": 35,
-    "duration_s": 45.357,
+    "duration_s": 42.149,
     "path": "executive.audit.json",
     "kind": "deterministic+contextual",
     "autofix": {
-     "applied": 1,
+     "applied": 5,
      "skipped": 0,
      "before": {
       "errors": 0,
-      "warnings": 2
+      "warnings": 8
      },
      "after": {
       "errors": 0,
-      "warnings": 1
+      "warnings": 5
      },
      "items": [
       {
@@ -128,6 +125,38 @@
        "fix": "snap_font_size",
        "before": "12 pt",
        "after": "14.1 pt"
+      },
+      {
+       "slide_idx": 1,
+       "element_id": "278",
+       "check_id": "D02_bullet_words",
+       "fix": "refill_slot",
+       "before": "17 слов",
+       "after": "17 слов"
+      },
+      {
+       "slide_idx": 3,
+       "element_id": "405",
+       "check_id": "D02_bullet_words",
+       "fix": "refill_slot",
+       "before": "18 слов",
+       "after": "18 слов"
+      },
+      {
+       "slide_idx": 4,
+       "element_id": "430",
+       "check_id": "T02_font_size",
+       "fix": "snap_font_size",
+       "before": "21.6 pt",
+       "after": "20 pt"
+      },
+      {
+       "slide_idx": 8,
+       "element_id": "819",
+       "check_id": "D02_bullet_words",
+       "fix": "refill_slot",
+       "before": "16 слов",
+       "after": "7 слов"
       }
      ]
     }
@@ -138,15 +167,16 @@
     "html": "executive.html"
    },
    "timings_s": {
-    "layout": 0.004,
-    "render": 0.722,
-    "audit": 0.378,
-    "autofix": 1.204,
-    "png": 6.443,
-    "audit_contextual": 44.955,
-    "export_pdf": 0.004,
-    "export_html": 1.303,
-    "deck_total": 55.019
+    "layout": 0.024,
+    "render": 2.917,
+    "audit": 1.042,
+    "autofix": 3.011,
+    "png": 10.823,
+    "audit_contextual": 41.138,
+    "export_pdf": 0.002,
+    "export_html": 2.672,
+    "deck_build": 61.637,
+    "deck_total": 63.841
    }
   },
   {
@@ -161,16 +191,16 @@
      "section",
      "image_text",
      "cards",
-     "process",
+     "image_text",
+     "cards",
      "section",
-     "image_text",
      "cards",
      "cards",
-     "image_text",
      "section",
+     "cards",
      "image_text",
      "cards",
-     "closing"
+     "title"
     ],
     "exemplars": [
      "slide5",
@@ -178,61 +208,60 @@
      "slide9",
      "slide30",
      "slide7",
-     "slide21",
-     "slide10",
      "slide15",
      "slide17",
+     "slide10",
+     "slide22",
      "slide26",
-     "slide33",
      "slide11",
-     "slide6",
      "slide27",
-     "slide53"
+     "slide33",
+     "slide28",
+     "slide4"
     ],
-    "text_items_per_slide": 2.8,
-    "words_per_item": 4.2,
+    "text_items_per_slide": 2.6,
+    "words_per_item": 8.4,
     "chart": 0,
     "table": 0,
     "kpi": 1,
-    "picture": 3,
+    "picture": 2,
     "skipped": 0
    },
    "audit": {
-    "errors": 0,
-    "warnings": 13,
-    "info": 1,
-    "contextual": 9,
+    "errors": 2,
+    "warnings": 9,
+    "info": 0,
+    "contextual": 5,
     "by_check": {
-     "C01_title_insight": 9,
+     "C06_images_relevant": 1,
+     "C07_no_garbage": 2,
+     "C08_no_typos": 1,
+     "C09_one_language": 1,
+     "D02_bullet_words": 2,
      "D05_fill": 3,
-     "T02_font_size": 1,
      "T06_contrast": 1
     },
     "slides_with_issues": [
+     0,
      3,
-     4,
      5,
-     7,
-     8,
-     9,
-     10,
-     12,
-     13
+     6,
+     12
     ],
     "checks_run": 35,
-    "duration_s": 39.872,
+    "duration_s": 40.728,
     "path": "narrative.audit.json",
     "kind": "deterministic+contextual",
     "autofix": {
-     "applied": 1,
+     "applied": 5,
      "skipped": 0,
      "before": {
       "errors": 0,
-      "warnings": 5
+      "warnings": 9
      },
      "after": {
       "errors": 0,
-      "warnings": 4
+      "warnings": 6
      },
      "items": [
       {
@@ -242,6 +271,38 @@
        "fix": "snap_font_size",
        "before": "12 pt",
        "after": "14.1 pt"
+      },
+      {
+       "slide_idx": 3,
+       "element_id": "819",
+       "check_id": "D02_bullet_words",
+       "fix": "refill_slot",
+       "before": "17 слов",
+       "after": "17 слов"
+      },
+      {
+       "slide_idx": 5,
+       "element_id": "405",
+       "check_id": "D02_bullet_words",
+       "fix": "refill_slot",
+       "before": "18 слов",
+       "after": "18 слов"
+      },
+      {
+       "slide_idx": 6,
+       "element_id": "430",
+       "check_id": "T02_font_size",
+       "fix": "snap_font_size",
+       "before": "21.6 pt",
+       "after": "20 pt"
+      },
+      {
+       "slide_idx": 12,
+       "element_id": "844",
+       "check_id": "D02_bullet_words",
+       "fix": "refill_slot",
+       "before": "16 слов",
+       "after": "7 слов"
       }
      ]
     }
@@ -252,16 +313,17 @@
     "html": "narrative.html"
    },
    "timings_s": {
-    "images": 6.151,
-    "layout": 0.011,
-    "render": 0.663,
-    "audit": 0.376,
-    "autofix": 1.022,
-    "png": 6.262,
-    "audit_contextual": 39.525,
-    "export_pdf": 0.001,
-    "export_html": 2.219,
-    "deck_total": 56.234
+    "images": 41.642,
+    "layout": 0.006,
+    "render": 1.03,
+    "audit": 0.457,
+    "autofix": 1.632,
+    "png": 9.877,
+    "audit_contextual": 40.228,
+    "export_pdf": 0.004,
+    "export_html": 3.744,
+    "deck_build": 98.626,
+    "deck_total": 100.861
    }
   },
   {
@@ -275,73 +337,72 @@
      "cards",
      "image_text",
      "cards",
-     "process",
      "image_text",
      "cards",
      "cards",
-     "image_text",
+     "cards",
+     "cards",
      "image_text",
      "cards",
-     "closing"
+     "title"
     ],
     "exemplars": [
      "slide5",
      "slide7",
      "slide15",
      "slide7",
-     "slide21",
      "slide30",
      "slide26",
+     "slide22",
      "slide27",
-     "slide33",
-     "slide6",
      "slide28",
-     "slide53"
+     "slide33",
+     "slide17",
+     "slide4"
     ],
-    "text_items_per_slide": 2.8,
-    "words_per_item": 4.2,
+    "text_items_per_slide": 2.3,
+    "words_per_item": 8.5,
     "chart": 0,
     "table": 0,
-    "kpi": 1,
+    "kpi": 0,
     "picture": 3,
     "skipped": 0
    },
    "audit": {
-    "errors": 0,
-    "warnings": 12,
-    "info": 1,
-    "contextual": 9,
+    "errors": 2,
+    "warnings": 7,
+    "info": 0,
+    "contextual": 3,
     "by_check": {
-     "C01_title_insight": 9,
-     "D05_fill": 2,
-     "T02_font_size": 1,
+     "C04_facts_consistent": 1,
+     "C07_no_garbage": 1,
+     "C08_no_typos": 1,
+     "D02_bullet_words": 2,
+     "D05_fill": 3,
      "T06_contrast": 1
     },
     "slides_with_issues": [
+     0,
      2,
-     3,
      4,
      5,
-     6,
-     7,
-     8,
      9,
      10
     ],
     "checks_run": 35,
-    "duration_s": 19.721,
+    "duration_s": 33.125,
     "path": "visual.audit.json",
     "kind": "deterministic+contextual",
     "autofix": {
-     "applied": 1,
+     "applied": 5,
      "skipped": 0,
      "before": {
       "errors": 0,
-      "warnings": 4
+      "warnings": 9
      },
      "after": {
       "errors": 0,
-      "warnings": 3
+      "warnings": 6
      },
      "items": [
       {
@@ -351,6 +412,38 @@
        "fix": "snap_font_size",
        "before": "12 pt",
        "after": "14.1 pt"
+      },
+      {
+       "slide_idx": 2,
+       "element_id": "405",
+       "check_id": "D02_bullet_words",
+       "fix": "refill_slot",
+       "before": "17 слов",
+       "after": "17 слов"
+      },
+      {
+       "slide_idx": 4,
+       "element_id": "819",
+       "check_id": "D02_bullet_words",
+       "fix": "refill_slot",
+       "before": "18 слов",
+       "after": "18 слов"
+      },
+      {
+       "slide_idx": 9,
+       "element_id": "844",
+       "check_id": "D02_bullet_words",
+       "fix": "refill_slot",
+       "before": "16 слов",
+       "after": "7 слов"
+      },
+      {
+       "slide_idx": 10,
+       "element_id": "430",
+       "check_id": "T02_font_size",
+       "fix": "snap_font_size",
+       "before": "21.6 pt",
+       "after": "20 pt"
       }
      ]
     }
@@ -361,24 +454,29 @@
     "html": "visual.html"
    },
    "timings_s": {
-    "images": 6.66,
-    "layout": 0.004,
-    "render": 0.686,
-    "audit": 0.328,
-    "autofix": 0.992,
-    "png": 5.019,
-    "audit_contextual": 19.388,
+    "images": 48.688,
+    "layout": 0.008,
+    "render": 1.707,
+    "audit": 0.773,
+    "autofix": 2.085,
+    "png": 8.494,
+    "audit_contextual": 32.519,
     "export_pdf": 0.002,
-    "export_html": 0.902,
-    "deck_total": 33.988
+    "export_html": 1.702,
+    "deck_build": 95.987,
+    "deck_total": 98.229
    }
   }
  ],
  "timings_s": {
-  "parse": 0.412,
+  "parse": 1.744,
   "outline": 0.0,
-  "total": 145.864
+  "decks": 98.674,
+  "total": 100.868
  },
- "warnings": [],
+ "warnings": [
+  "narrative: images: слайд 9 «Комплексные решения снижают операционные»: Server error '502 Bad Gateway' for url 'https://openrouter.ai/api/v1/images'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Statu",
+  "visual: images: слайд 1 «Цифровая трансформация требует надежной »: Server error '502 Bad Gateway' for url 'https://openrouter.ai/api/v1/images'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Statu"
+ ],
  "not_implemented": []
 }

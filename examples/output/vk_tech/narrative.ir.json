@@ -1,6 +1,6 @@
 {
  "template_id": "33d997b25b4c",
- "strategy": "narrative@v1",
+ "strategy": "narrative@v2",
  "slides": [
   {
    "idx": 0,
@@ -20,7 +20,7 @@
       {
        "runs": [
         {
-         "text": "VK Tech: Безопасность и инфраструктура",
+         "text": "VK Tech: IT-решения для бизнеса",
          "bold": false,
          "italic": false,
          "color": null,
@@ -33,6 +33,7 @@
      ],
      "chart": null,
      "table": null,
+     "diagram": null,
      "image_path": null,
      "icon_name": null,
      "style_overrides": {
@@ -40,7 +41,8 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 29.2
+      "type_scale": "4,6.9,9,10.1,12,16.2,24",
+      "size_pt": 34.0
      }
     },
     {
@@ -56,7 +58,7 @@
       {
        "runs": [
         {
-         "text": "Корпоративные решения для защиты данных и процессов",
+         "text": "Безопасность, инфраструктура и сервис для цифровой трансформации",
          "bold": false,
          "italic": false,
          "color": null,
@@ -69,6 +71,7 @@
      ],
      "chart": null,
      "table": null,
+     "diagram": null,
      "image_path": null,
      "icon_name": null,
      "style_overrides": {
@@ -76,7 +79,8 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 11.2
+      "type_scale": "4,6.9,9,10.1,12,16.2,24",
+      "size_pt": 8.8
      }
     }
    ],
@@ -101,7 +105,7 @@
       {
        "runs": [
         {
-         "text": "Риски цифровой инфраструктуры растут",
+         "text": "Цифровая трансформация требует надежной технологической основы",
          "bold": false,
          "italic": false,
          "color": null,
@@ -114,13 +118,15 @@
      ],
      "chart": null,
      "table": null,
+     "diagram": null,
      "image_path": null,
      "icon_name": null,
      "style_overrides": {
       "accent": "0077FF",
       "palette": "0077FF",
       "font": "Play",
-      "text_color": "000000"
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
      }
     },
     {
@@ -136,7 +142,7 @@
       {
        "runs": [
         {
-         "text": "Угрозы безопасности становятся более сложными",
+         "text": "Надежность — Стабильная работа систем критически важна для непрерывности бизнеса.",
          "bold": false,
          "italic": false,
          "color": null,
@@ -149,13 +155,15 @@
      ],
      "chart": null,
      "table": null,
+     "diagram": null,
      "image_path": null,
      "icon_name": null,
      "style_overrides": {
       "accent": "0077FF",
       "palette": "0077FF",
       "font": "Play",
-      "text_color": "000000"
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
      }
     },
     {
@@ -171,7 +179,7 @@
       {
        "runs": [
         {
-         "text": "Отсутствие централизованного управления данными",
+         "text": "Безопасность — Защита данных и инфраструктуры от внешних угроз.",
          "bold": false,
          "italic": false,
          "color": null,
@@ -184,13 +192,15 @@
      ],
      "chart": null,
      "table": null,
+     "diagram": null,
      "image_path": null,
      "icon_name": null,
      "style_overrides": {
       "accent": "0077FF",
       "palette": "0077FF",
       "font": "Play",
-      "text_color": "000000"
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
      }
     },
     {
@@ -206,7 +216,7 @@
       {
        "runs": [
         {
-         "text": "Операционные барьеры для корпоративных команд",
+         "text": "Эффективность — Снижение операционных рисков и повышение продуктивности процессов.",
          "bold": false,
          "italic": false,
          "color": null,
@@ -219,13 +229,15 @@
      ],
      "chart": null,
      "table": null,
+     "diagram": null,
      "image_path": null,
      "icon_name": null,
      "style_overrides": {
       "accent": "0077FF",
       "palette": "0077FF",
       "font": "Play",
-      "text_color": "000000"
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
      }
     }
    ],
@@ -263,13 +275,15 @@
      ],
      "chart": null,
      "table": null,
+     "diagram": null,
      "image_path": null,
      "icon_name": null,
      "style_overrides": {
       "accent": "0077FF",
       "palette": "0077FF",
       "font": "Play",
-      "text_color": "000000"
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
      }
     }
    ],
@@ -294,7 +308,7 @@
       {
        "runs": [
         {
-         "text": "Сквозная защита корпоративных данных",
+         "text": "VK Tech разрабатывает корпоративное ПО по строгим стандартам",
          "bold": false,
          "italic": false,
          "color": null,
@@ -307,13 +321,16 @@
      ],
      "chart": null,
      "table": null,
+     "diagram": null,
      "image_path": null,
      "icon_name": null,
      "style_overrides": {
       "accent": "0077FF",
       "palette": "0077FF",
       "font": "Play",
-      "text_color": "000000"
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24",
+      "size_pt": 16.8
      }
     },
     {
@@ -329,20 +346,7 @@
       {
        "runs": [
         {
-         "text": "Платформа обеспечивает комплексную защиту данных и процессов.",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      },
-      {
-       "runs": [
-        {
-         "text": "Архитектура масштабируется под требования крупных предприятий.",
+         "text": "Мы создаем комплексные IT-решения, соответствующие международным стандартам безопасности. Архитектура обеспечивает защиту корпоративной инфраструктуры и соответствие регуляторным требованиям.",
          "bold": false,
          "italic": false,
          "color": null,
@@ -355,13 +359,15 @@
      ],
      "chart": null,
      "table": null,
+     "diagram": null,
      "image_path": null,
      "icon_name": null,
      "style_overrides": {
       "accent": "0077FF",
       "palette": "0077FF",
       "font": "Play",
-      "text_color": "000000"
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
      }
     },
     {
@@ -376,7 +382,8 @@
      "paragraphs": [],
      "chart": null,
      "table": null,
-     "image_path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\images\\cd357331cc1d07b0.jpg",
+     "diagram": null,
+     "image_path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\images\\5f4d61e03fef3c9a.jpg",
      "icon_name": null,
      "style_overrides": {}
     }
@@ -402,7 +409,7 @@
       {
        "runs": [
         {
-         "text": "Бесшовная интеграция с системами",
+         "text": "Архитектура решений обеспечивает масштабируемость и защиту",
          "bold": false,
          "italic": false,
          "color": null,
@@ -415,13 +422,15 @@
      ],
      "chart": null,
      "table": null,
+     "diagram": null,
      "image_path": null,
      "icon_name": null,
      "style_overrides": {
       "accent": "0077FF",
       "palette": "0077FF",
       "font": "Play",
-      "text_color": "000000"
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
      }
     },
     {
@@ -437,7 +446,7 @@
       {
        "runs": [
         {
-         "text": "Интеграция без сбоев с текущими системами",
+         "text": "Масштабируемость — Гибкое расширение функциональности под рост бизнеса.",
          "bold": false,
          "italic": false,
          "color": null,
@@ -450,13 +459,15 @@
      ],
      "chart": null,
      "table": null,
+     "diagram": null,
      "image_path": null,
      "icon_name": null,
      "style_overrides": {
       "accent": "0077FF",
       "palette": "0077FF",
       "font": "Play",
-      "text_color": "000000"
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
      }
     },
     {
@@ -472,7 +483,7 @@
       {
        "runs": [
         {
-         "text": "Поддержка существующих корпоративных процессов",
+         "text": "Защита — Многоуровневая безопасность данных и сетевой инфраструктуры.",
          "bold": false,
          "italic": false,
          "color": null,
@@ -485,13 +496,15 @@
      ],
      "chart": null,
      "table": null,
+     "diagram": null,
      "image_path": null,
      "icon_name": null,
      "style_overrides": {
       "accent": "0077FF",
       "palette": "0077FF",
       "font": "Play",
-      "text_color": "000000"
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
      }
     },
     {
@@ -507,7 +520,7 @@
       {
        "runs": [
         {
-         "text": "Соответствие отраслевым стандартам безопасности",
+         "text": "Интеграция — Соединение с существующими корпоративными системами.",
          "bold": false,
          "italic": false,
          "color": null,
@@ -520,13 +533,15 @@
      ],
      "chart": null,
      "table": null,
+     "diagram": null,
      "image_path": null,
      "icon_name": null,
      "style_overrides": {
       "accent": "0077FF",
       "palette": "0077FF",
       "font": "Play",
-      "text_color": "000000"
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
      }
     }
    ],
@@ -535,374 +550,6 @@
   },
   {
    "idx": 5,
-   "exemplar_id": "slide14",
-   "archetype": "cards",
-   "elements": [
-    {
-     "slot_id": "685",
-     "kind": "title",
-     "box": {
-      "x": 177970,
-      "y": 282949,
-      "w": 6792985,
-      "h": 724203
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Этапы внедрения решения",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "668",
-     "kind": "label",
-     "box": {
-      "x": 438148,
-      "y": 1590803,
-      "w": 1817678,
-      "h": 165079
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "01",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "669",
-     "kind": "body",
-     "box": {
-      "x": 438148,
-      "y": 1819373,
-      "w": 1804978,
-      "h": 2290464
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Аудит текущей инфраструктуры",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "673",
-     "kind": "label",
-     "box": {
-      "x": 2605074,
-      "y": 1590803,
-      "w": 1817678,
-      "h": 165079
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "02",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "674",
-     "kind": "body",
-     "box": {
-      "x": 2605074,
-      "y": 1819373,
-      "w": 1804978,
-      "h": 2290464
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Проектирование архитектуры",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "678",
-     "kind": "label",
-     "box": {
-      "x": 4772001,
-      "y": 1590803,
-      "w": 1817678,
-      "h": 165079
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "03",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "679",
-     "kind": "body",
-     "box": {
-      "x": 4772001,
-      "y": 1819373,
-      "w": 1804978,
-      "h": 2290464
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Пилотное внедрение",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "683",
-     "kind": "label",
-     "box": {
-      "x": 6938927,
-      "y": 1590803,
-      "w": 1817678,
-      "h": 165079
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "04",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "684",
-     "kind": "body",
-     "box": {
-      "x": 6938927,
-      "y": 1819373,
-      "w": 1804978,
-      "h": 2290464
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Масштабирование и поддержка",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    }
-   ],
-   "notes": "",
-   "outline_ref": 5
-  },
-  {
-   "idx": 6,
-   "exemplar_id": "slide3",
-   "archetype": "section",
-   "elements": [
-    {
-     "slot_id": "417",
-     "kind": "title",
-     "box": {
-      "x": 210243,
-      "y": 878488,
-      "w": 4288279,
-      "h": 1496698
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Сценарии",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    }
-   ],
-   "notes": "",
-   "outline_ref": 6
-  },
-  {
-   "idx": 7,
    "exemplar_id": "slide9",
    "archetype": "image_text",
    "elements": [
@@ -919,7 +566,7 @@
       {
        "runs": [
         {
-         "text": "Автоматизация рутинных IT-задач",
+         "text": "Интеграция сервисов автоматизирует ключевые бизнес-процессы",
          "bold": false,
          "italic": false,
          "color": null,
@@ -932,13 +579,16 @@
      ],
      "chart": null,
      "table": null,
+     "diagram": null,
      "image_path": null,
      "icon_name": null,
      "style_overrides": {
       "accent": "0077FF",
       "palette": "0077FF",
       "font": "Play",
-      "text_color": "000000"
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24",
+      "size_pt": 16.8
      }
     },
     {
@@ -954,20 +604,7 @@
       {
        "runs": [
         {
-         "text": "Сценарий использования фокусируется на автоматизации.",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      },
-      {
-       "runs": [
-        {
-         "text": "Освобождение ресурсов отделов для стратегических задач.",
+         "text": "Наши решения позволяют автоматизировать рутинные операции, снижая нагрузку на сотрудников и минимизируя риск человеческих ошибок в критических процессах.",
          "bold": false,
          "italic": false,
          "color": null,
@@ -980,13 +617,15 @@
      ],
      "chart": null,
      "table": null,
+     "diagram": null,
      "image_path": null,
      "icon_name": null,
      "style_overrides": {
       "accent": "0077FF",
       "palette": "0077FF",
       "font": "Play",
-      "text_color": "000000"
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
      }
     },
     {
@@ -1001,9 +640,324 @@
      "paragraphs": [],
      "chart": null,
      "table": null,
-     "image_path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\images\\8bfbc9a0c0cc1501.jpg",
+     "diagram": null,
+     "image_path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\images\\c43832cb45b12f07.jpg",
      "icon_name": null,
      "style_overrides": {}
+    }
+   ],
+   "notes": "",
+   "outline_ref": 5
+  },
+  {
+   "idx": 6,
+   "exemplar_id": "slide14",
+   "archetype": "cards",
+   "elements": [
+    {
+     "slot_id": "685",
+     "kind": "title",
+     "box": {
+      "x": 177970,
+      "y": 282949,
+      "w": 6792985,
+      "h": 724203
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Решения адаптируются под требования отраслей и масштабов",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "668",
+     "kind": "label",
+     "box": {
+      "x": 438148,
+      "y": 1590803,
+      "w": 1817678,
+      "h": 165079
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Гибкость",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "669",
+     "kind": "body",
+     "box": {
+      "x": 438148,
+      "y": 1819373,
+      "w": 1804978,
+      "h": 2290464
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Настройка под специфические потребности различных отраслей.",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "673",
+     "kind": "label",
+     "box": {
+      "x": 2605074,
+      "y": 1590803,
+      "w": 1817678,
+      "h": 165079
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Масштаб",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "674",
+     "kind": "body",
+     "box": {
+      "x": 2605074,
+      "y": 1819373,
+      "w": 1804978,
+      "h": 2290464
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Поддержка как малого бизнеса, так и крупных корпораций.",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "678",
+     "kind": "label",
+     "box": {
+      "x": 4772001,
+      "y": 1590803,
+      "w": 1817678,
+      "h": 165079
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Кастомизация",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "679",
+     "kind": "body",
+     "box": {
+      "x": 4772001,
+      "y": 1819373,
+      "w": 1804978,
+      "h": 2290464
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Учет уникальных бизнес-процессов клиента.",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    }
+   ],
+   "notes": "",
+   "outline_ref": 6
+  },
+  {
+   "idx": 7,
+   "exemplar_id": "slide3",
+   "archetype": "section",
+   "elements": [
+    {
+     "slot_id": "417",
+     "kind": "title",
+     "box": {
+      "x": 210243,
+      "y": 878488,
+      "w": 4288279,
+      "h": 1496698
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Процесс",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
     }
    ],
    "notes": "",
@@ -1011,6 +965,422 @@
   },
   {
    "idx": 8,
+   "exemplar_id": "slide17",
+   "archetype": "cards",
+   "elements": [
+    {
+     "slot_id": "808",
+     "kind": "title",
+     "box": {
+      "x": 177970,
+      "y": 282949,
+      "w": 6792985,
+      "h": 724203
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Внедрение проходит поэтапно: от аудита до поддержки",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "780",
+     "kind": "label",
+     "box": {
+      "x": 438148,
+      "y": 1590803,
+      "w": 2539987,
+      "h": 165079
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Аудит",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "781",
+     "kind": "body",
+     "box": {
+      "x": 438148,
+      "y": 1819373,
+      "w": 2527287,
+      "h": 854757
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Анализ текущих процессов и инфраструктуры.",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "785",
+     "kind": "label",
+     "box": {
+      "x": 3327380,
+      "y": 1590803,
+      "w": 2539986,
+      "h": 165079
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Проектирование",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "786",
+     "kind": "body",
+     "box": {
+      "x": 3327380,
+      "y": 1819373,
+      "w": 2527287,
+      "h": 854757
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Разработка архитектуры и плана внедрения.",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "790",
+     "kind": "label",
+     "box": {
+      "x": 6216621,
+      "y": 1590803,
+      "w": 2539986,
+      "h": 165079
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Внедрение",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "791",
+     "kind": "body",
+     "box": {
+      "x": 6216621,
+      "y": 1819373,
+      "w": 2527287,
+      "h": 854757
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Установка, настройка и интеграция решений.",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "796",
+     "kind": "label",
+     "box": {
+      "x": 438148,
+      "y": 3264604,
+      "w": 2539987,
+      "h": 165079
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Запуск",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "797",
+     "kind": "body",
+     "box": {
+      "x": 438148,
+      "y": 3493174,
+      "w": 2527287,
+      "h": 854757
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Переход на новые процессы и обучение.",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "801",
+     "kind": "label",
+     "box": {
+      "x": 3327380,
+      "y": 3264604,
+      "w": 2539986,
+      "h": 165079
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Поддержка",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "802",
+     "kind": "body",
+     "box": {
+      "x": 3327380,
+      "y": 3493174,
+      "w": 2527287,
+      "h": 854757
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Сервисное обслуживание и развитие.",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    }
+   ],
+   "notes": "",
+   "outline_ref": 8
+  },
+  {
+   "idx": 9,
    "exemplar_id": "slide24",
    "archetype": "cards",
    "elements": [
@@ -1027,7 +1397,7 @@
       {
        "runs": [
         {
-         "text": "Стандарты безопасности и соответствие",
+         "text": "Защищенность данных соответствует международным стандартам",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1040,13 +1410,15 @@
      ],
      "chart": null,
      "table": null,
+     "diagram": null,
      "image_path": null,
      "icon_name": null,
      "style_overrides": {
       "accent": "0077FF",
       "palette": "0077FF",
       "font": "Play",
-      "text_color": "000000"
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
      }
     },
     {
@@ -1062,7 +1434,7 @@
       {
        "runs": [
         {
-         "text": "Высокий уровень соответствия стандартам",
+         "text": "Стандарты — Соответствие глобальным требованиям к безопасности данных.",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1075,13 +1447,15 @@
      ],
      "chart": null,
      "table": null,
+     "diagram": null,
      "image_path": null,
      "icon_name": null,
      "style_overrides": {
       "accent": "0077FF",
       "palette": "0077FF",
       "font": "Play",
-      "text_color": "000000"
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
      }
     },
     {
@@ -1097,7 +1471,7 @@
       {
        "runs": [
         {
-         "text": "Защита данных на всех уровнях",
+         "text": "Шифрование — Защита информации при передаче и хранении.",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1110,13 +1484,15 @@
      ],
      "chart": null,
      "table": null,
+     "diagram": null,
      "image_path": null,
      "icon_name": null,
      "style_overrides": {
       "accent": "0077FF",
       "palette": "0077FF",
       "font": "Play",
-      "text_color": "000000"
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
      }
     },
     {
@@ -1132,7 +1508,7 @@
       {
        "runs": [
         {
-         "text": "Регулярные обновления и патчи безопасности",
+         "text": "Контроль — Мониторинг доступа и действий пользователей.",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1145,85 +1521,7 @@
      ],
      "chart": null,
      "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    }
-   ],
-   "notes": "",
-   "outline_ref": 8
-  },
-  {
-   "idx": 9,
-   "exemplar_id": "slide14",
-   "archetype": "cards",
-   "elements": [
-    {
-     "slot_id": "685",
-     "kind": "title",
-     "box": {
-      "x": 177970,
-      "y": 282949,
-      "w": 6792985,
-      "h": 724203
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Гибкая модель лицензирования",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "668",
-     "kind": "label",
-     "box": {
-      "x": 438148,
-      "y": 1590803,
-      "w": 1817678,
-      "h": 165079
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Подстройка под бюджет клиента",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
+     "diagram": null,
      "image_path": null,
      "icon_name": null,
      "style_overrides": {
@@ -1231,77 +1529,7 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "size_pt": 8.4
-     }
-    },
-    {
-     "slot_id": "674",
-     "kind": "body",
-     "box": {
-      "x": 2605074,
-      "y": 1819373,
-      "w": 1804978,
-      "h": 2290464
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Прозрачные условия сотрудничества",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "679",
-     "kind": "body",
-     "box": {
-      "x": 4772001,
-      "y": 1819373,
-      "w": 1804978,
-      "h": 2290464
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Масштабируемость подписки по мере роста",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
      }
     }
    ],
@@ -1310,114 +1538,6 @@
   },
   {
    "idx": 10,
-   "exemplar_id": "slide9",
-   "archetype": "image_text",
-   "elements": [
-    {
-     "slot_id": "503",
-     "kind": "title",
-     "box": {
-      "x": 430360,
-      "y": 338829,
-      "w": 3945697,
-      "h": 753371
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Долгосрочная поддержка и развитие",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "505",
-     "kind": "body",
-     "box": {
-      "x": 4637088,
-      "y": 676278,
-      "w": 3862387,
-      "h": 3737102
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Гарантия поддержки и развития продукта.",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      },
-      {
-       "runs": [
-        {
-         "text": "Долгосрочный контракт обеспечивает стабильность.",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000"
-     }
-    },
-    {
-     "slot_id": "506",
-     "kind": "picture",
-     "box": {
-      "x": 354563,
-      "y": 2341984,
-      "w": 4142792,
-      "h": 2090058
-     },
-     "paragraphs": [],
-     "chart": null,
-     "table": null,
-     "image_path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\images\\14f3a5c02844fc77.jpg",
-     "icon_name": null,
-     "style_overrides": {}
-    }
-   ],
-   "notes": "",
-   "outline_ref": 10
-  },
-  {
-   "idx": 11,
    "exemplar_id": "slide3",
    "archetype": "section",
    "elements": [
@@ -1434,7 +1554,7 @@
       {
        "runs": [
         {
-         "text": "Выгоды",
+         "text": "Сервис",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1447,13 +1567,283 @@
      ],
      "chart": null,
      "table": null,
+     "diagram": null,
      "image_path": null,
      "icon_name": null,
      "style_overrides": {
       "accent": "0077FF",
       "palette": "0077FF",
       "font": "Play",
-      "text_color": "000000"
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    }
+   ],
+   "notes": "",
+   "outline_ref": 10
+  },
+  {
+   "idx": 11,
+   "exemplar_id": "slide14",
+   "archetype": "cards",
+   "elements": [
+    {
+     "slot_id": "685",
+     "kind": "title",
+     "box": {
+      "x": 177970,
+      "y": 282949,
+      "w": 6792985,
+      "h": 724203
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Гибкая модель обслуживания включает полный цикл поддержки",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "668",
+     "kind": "label",
+     "box": {
+      "x": 438148,
+      "y": 1590803,
+      "w": 1817678,
+      "h": 165079
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Тестирование",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "669",
+     "kind": "body",
+     "box": {
+      "x": 438148,
+      "y": 1819373,
+      "w": 1804978,
+      "h": 2290464
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Проверка стабильности и функциональности систем.",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "673",
+     "kind": "label",
+     "box": {
+      "x": 2605074,
+      "y": 1590803,
+      "w": 1817678,
+      "h": 165079
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Логистика",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "674",
+     "kind": "body",
+     "box": {
+      "x": 2605074,
+      "y": 1819373,
+      "w": 1804978,
+      "h": 2290464
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Организация поставок и развертывания оборудования.",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "678",
+     "kind": "label",
+     "box": {
+      "x": 4772001,
+      "y": 1590803,
+      "w": 1817678,
+      "h": 165079
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Сервис",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "679",
+     "kind": "body",
+     "box": {
+      "x": 4772001,
+      "y": 1819373,
+      "w": 1804978,
+      "h": 2290464
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Оперативная техническая поддержка и консультации.",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
      }
     }
    ],
@@ -1462,23 +1852,23 @@
   },
   {
    "idx": 12,
-   "exemplar_id": "slide31",
+   "exemplar_id": "slide9",
    "archetype": "image_text",
    "elements": [
     {
-     "slot_id": "1207",
+     "slot_id": "503",
      "kind": "title",
      "box": {
-      "x": 157504,
-      "y": 286048,
-      "w": 6792985,
-      "h": 724203
+      "x": 430360,
+      "y": 338829,
+      "w": 3945697,
+      "h": 753371
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "Стратегические преимущества",
+         "text": "Комплексные решения снижают операционные риски",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1491,29 +1881,31 @@
      ],
      "chart": null,
      "table": null,
+     "diagram": null,
      "image_path": null,
      "icon_name": null,
      "style_overrides": {
       "accent": "0077FF",
       "palette": "0077FF",
       "font": "Play",
-      "text_color": "000000"
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
      }
     },
     {
-     "slot_id": "1205",
+     "slot_id": "505",
      "kind": "body",
      "box": {
-      "x": 3866535,
-      "y": 610451,
-      "w": 4964880,
-      "h": 3964265
+      "x": 4637088,
+      "y": 676278,
+      "w": 3862387,
+      "h": 3737102
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "Соответствие стандартам",
+         "text": "Использование единой экосистемы VK Tech минимизирует уязвимости",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1521,45 +1913,38 @@
         }
        ],
        "level": 0,
-       "bullet": true
-      },
-      {
-       "runs": [
-        {
-         "text": "Поддержка и мониторинг",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": true
-      },
-      {
-       "runs": [
-        {
-         "text": "Единая платформа",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": true
+       "bullet": false
       }
      ],
      "chart": null,
      "table": null,
+     "diagram": null,
      "image_path": null,
      "icon_name": null,
      "style_overrides": {
       "accent": "0077FF",
       "palette": "0077FF",
       "font": "Play",
-      "text_color": "000000"
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
      }
+    },
+    {
+     "slot_id": "506",
+     "kind": "picture",
+     "box": {
+      "x": 354563,
+      "y": 2341984,
+      "w": 4142792,
+      "h": 2090058
+     },
+     "paragraphs": [],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\images\\c8e8312a1b8447b2.jpg",
+     "icon_name": null,
+     "style_overrides": {}
     }
    ],
    "notes": "",
@@ -1583,7 +1968,7 @@
       {
        "runs": [
         {
-         "text": "Почему VK Tech",
+         "text": "Следующий шаг — обсуждение деталей и приоритетов",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1596,13 +1981,15 @@
      ],
      "chart": null,
      "table": null,
+     "diagram": null,
      "image_path": null,
      "icon_name": null,
      "style_overrides": {
       "accent": "0077FF",
       "palette": "0077FF",
       "font": "Play",
-      "text_color": "000000"
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
      }
     },
     {
@@ -1618,7 +2005,7 @@
       {
        "runs": [
         {
-         "text": "Экспертиза в корпоративных решениях",
+         "text": "Консультация — Обсуждение текущих задач и целей проекта.",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1631,13 +2018,15 @@
      ],
      "chart": null,
      "table": null,
+     "diagram": null,
      "image_path": null,
      "icon_name": null,
      "style_overrides": {
       "accent": "0077FF",
       "palette": "0077FF",
       "font": "Play",
-      "text_color": "000000"
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
      }
     },
     {
@@ -1653,7 +2042,7 @@
       {
        "runs": [
         {
-         "text": "Надёжная и масштабируемая инфраструктура",
+         "text": "План — Определение приоритетных направлений развития.",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1666,13 +2055,15 @@
      ],
      "chart": null,
      "table": null,
+     "diagram": null,
      "image_path": null,
      "icon_name": null,
      "style_overrides": {
       "accent": "0077FF",
       "palette": "0077FF",
       "font": "Play",
-      "text_color": "000000"
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
      }
     },
     {
@@ -1688,7 +2079,7 @@
       {
        "runs": [
         {
-         "text": "Фокус на безопасности и эффективности",
+         "text": "Старт — Запуск пилотного этапа или полного внедрения.",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1701,13 +2092,15 @@
      ],
      "chart": null,
      "table": null,
+     "diagram": null,
      "image_path": null,
      "icon_name": null,
      "style_overrides": {
       "accent": "0077FF",
       "palette": "0077FF",
       "font": "Play",
-      "text_color": "000000"
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
      }
     }
    ],
@@ -1732,7 +2125,7 @@
       {
        "runs": [
         {
-         "text": "Начнём с пилотного проекта",
+         "text": "Спасибо за внимание",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1745,13 +2138,53 @@
      ],
      "chart": null,
      "table": null,
+     "diagram": null,
      "image_path": null,
      "icon_name": null,
      "style_overrides": {
       "accent": "0077FF",
       "palette": "0077FF",
       "font": "Play",
-      "text_color": "000000"
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "448",
+     "kind": "body",
+     "box": {
+      "x": 572960,
+      "y": 2919770,
+      "w": 4107105,
+      "h": 502938
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Готовы обсудить детали вашего проекта. Свяжитесь с нами для начала сотрудничества.",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24",
+      "size_pt": 15.0
      }
     }
    ],

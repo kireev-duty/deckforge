@@ -2,6 +2,82 @@
  "deck_path": "visual.pptx",
  "findings": [
   {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 1,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд перегружен: контент занимает 76% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.763
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 1,
+   "element_id": "460",
+   "box": {
+    "x": 7911859,
+    "y": 3258988,
+    "w": 3057144,
+    "h": 251795
+   },
+   "message": "Блоки «Снижение операционных рисков и…» и «Эффективность» наложились (100% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "467",
+    "ratio": 1.0,
+    "in_exemplar": 1,
+    "text_reached": 0
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 1,
+   "element_id": "461",
+   "box": {
+    "x": 4240405,
+    "y": 3258988,
+    "w": 3057144,
+    "h": 251795
+   },
+   "message": "Блоки «Защита данных и инфраструктуры…» и «Безопасность» наложились (100% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "465",
+    "ratio": 1.0,
+    "in_exemplar": 1,
+    "text_reached": 0
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 1,
+   "element_id": "462",
+   "box": {
+    "x": 596659,
+    "y": 3258988,
+    "w": 3057144,
+    "h": 251795
+   },
+   "message": "Блоки «Стабильная работа систем крити…» и «Надежность» наложились (100% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "463",
+    "ratio": 1.0,
+    "in_exemplar": 1,
+    "text_reached": 0
+   }
+  },
+  {
    "check_id": "T06_contrast",
    "kind": "deterministic",
    "severity": "warning",
@@ -68,23 +144,41 @@
    }
   },
   {
-   "check_id": "L02_overlap",
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 1,
+   "element_id": "459",
+   "box": {
+    "x": 429253,
+    "y": 424691,
+    "w": 7827311,
+    "h": 1167572
+   },
+   "message": "Кегль 32.4 pt не из шкалы шаблона (ближайший 36 pt) (подгонка: 90% от кегля образца 36 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 32.4,
+    "nearest_pt": 36.0,
+    "base_pt": 36.0
+   }
+  },
+  {
+   "check_id": "D02_bullet_words",
    "kind": "deterministic",
    "severity": "warning",
    "slide_idx": 2,
-   "element_id": "547",
+   "element_id": "681",
    "box": {
-    "x": 5383513,
-    "y": 860119,
-    "w": 2873051,
-    "h": 191441
+    "x": 427864,
+    "y": 1837067,
+    "w": 3636000,
+    "h": 2022006
    },
-   "message": "Блоки «Сквозная защита корпоративных …» и «Платформа обеспечивает комплек…» наложились (11% площади меньшего)",
-   "autofix": "reflow_vertical",
+   "message": "Пункт из 17 слов (норма ≤ 15): «Мы создаем комплексные IT-решения, соответствующие междунаро…»",
+   "autofix": "refill_slot",
    "evidence": {
-    "other_id": "548",
-    "ratio": 0.112,
-    "in_exemplar": 1
+    "words": 17
    }
   },
   {
@@ -92,6 +186,28 @@
    "kind": "deterministic",
    "severity": "warning",
    "slide_idx": 2,
+   "element_id": "681",
+   "box": {
+    "x": 427864,
+    "y": 1837067,
+    "w": 3636000,
+    "h": 2022006
+   },
+   "message": "Контраст текста #0077FF к фону #212121 = 3.9:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 3.9,
+    "text_color": "0077FF",
+    "background": "212121",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 3,
    "element_id": "548",
    "box": {
     "x": 5383513,
@@ -113,7 +229,7 @@
    "check_id": "T06_contrast",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 2,
+   "slide_idx": 3,
    "element_id": "552",
    "box": {
     "x": 5383513,
@@ -132,44 +248,63 @@
    }
   },
   {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 3,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок является тематическим, а не утверждающим вывод.",
-   "autofix": null,
-   "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "L02_overlap",
+   "check_id": "T06_contrast",
    "kind": "deterministic",
    "severity": "warning",
    "slide_idx": 3,
-   "element_id": "441",
+   "element_id": "556",
+   "box": {
+    "x": 5383513,
+    "y": 4561261,
+    "w": 5917558,
+    "h": 1705685
+   },
+   "message": "Контраст текста #FFFFFF к фону #0077FF = 4.1:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.13,
+    "text_color": "FFFFFF",
+    "background": "0077FF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "D02_bullet_words",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 4,
+   "element_id": "442",
    "box": {
     "x": 5383513,
     "y": 860119,
-    "w": 2873051,
-    "h": 191441
+    "w": 5917558,
+    "h": 1705685
    },
-   "message": "Блоки «Бесшовная интеграция с система…» и «Интеграция без сбоев с текущим…» наложились (11% площади меньшего)",
-   "autofix": "reflow_vertical",
+   "message": "Пункт из 18 слов (норма ≤ 15): «Наши решения позволяют автоматизировать рутинные операции, с…»",
+   "autofix": "refill_slot",
    "evidence": {
-    "other_id": "442",
-    "ratio": 0.112,
-    "in_exemplar": 1
+    "words": 18
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 4,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд пустоват: контент занимает 21% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.211
    }
   },
   {
    "check_id": "T06_contrast",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 3,
+   "slide_idx": 4,
    "element_id": "442",
    "box": {
     "x": 5383513,
@@ -188,89 +323,129 @@
    }
   },
   {
-   "check_id": "T06_contrast",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 3,
-   "element_id": "446",
-   "box": {
-    "x": 5383513,
-    "y": 2710690,
-    "w": 5917558,
-    "h": 1705685
-   },
-   "message": "Контраст текста #0077FF к фону #151515 = 4.4:1 (нужно 4.5:1)",
-   "autofix": "snap_color",
-   "evidence": {
-    "contrast": 4.42,
-    "text_color": "0077FF",
-    "background": "151515",
-    "need": 4.5,
-    "template_color": 1
-   }
-  },
-  {
-   "check_id": "T06_contrast",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 3,
-   "element_id": "450",
-   "box": {
-    "x": 5383513,
-    "y": 4561261,
-    "w": 5917558,
-    "h": 1705685
-   },
-   "message": "Контраст текста #0077FF к фону #151515 = 4.4:1 (нужно 4.5:1)",
-   "autofix": "snap_color",
-   "evidence": {
-    "contrast": 4.42,
-    "text_color": "0077FF",
-    "background": "151515",
-    "need": 4.5,
-    "template_color": 1
-   }
-  },
-  {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 4,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок является тематическим, а не содержит вывод или ключевую мысль.",
-   "autofix": null,
-   "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "C05_has_content",
+   "check_id": "C04_facts_consistent",
    "kind": "contextual",
    "severity": "error",
    "slide_idx": 5,
    "element_id": null,
    "box": null,
-   "message": "Слайд содержит только два общих тезиса без конкретики, примеров или деталей.",
+   "message": "Текст в блоке «Масштаб» («Поддержка как малого бизнеса») обрывается и не раскрывает тему масштаба, что противоречит заголовку.",
    "autofix": null,
    "evidence": {
-    "question": "На слайде есть содержание, а не только заголовок",
+    "question": "Цифры и утверждения непротиворечивы и не спорят с исходными материалами, если они есть",
     "sources": "brief"
    }
   },
   {
-   "check_id": "C01_title_insight",
+   "check_id": "C08_no_typos",
    "kind": "contextual",
    "severity": "warning",
    "slide_idx": 5,
    "element_id": null,
    "box": null,
-   "message": "Заголовок является тематическим, а не утверждением или выводом.",
+   "message": "В блоке «Масштаб» текст обрывается на полуслове, что является ошибкой оформления.",
    "autofix": null,
    "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "question": "Текст без опечаток",
     "sources": "brief"
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 5,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд перегружен: контент занимает 76% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.763
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 5,
+   "element_id": "460",
+   "box": {
+    "x": 7911859,
+    "y": 3258988,
+    "w": 3057144,
+    "h": 251795
+   },
+   "message": "Блоки «Учет уникальных бизнес-процесс…» и «Кастомизация» наложились (100% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "467",
+    "ratio": 1.0,
+    "in_exemplar": 1,
+    "text_reached": 0
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 5,
+   "element_id": "461",
+   "box": {
+    "x": 4240405,
+    "y": 3258988,
+    "w": 3057144,
+    "h": 251795
+   },
+   "message": "Блоки «Поддержка как малого бизнеса» и «Масштаб» наложились (100% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "465",
+    "ratio": 1.0,
+    "in_exemplar": 1,
+    "text_reached": 0
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 5,
+   "element_id": "462",
+   "box": {
+    "x": 596659,
+    "y": 3258988,
+    "w": 3057144,
+    "h": 251795
+   },
+   "message": "Блоки «Настройка под специфические по…» и «Гибкость» наложились (100% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "463",
+    "ratio": 1.0,
+    "in_exemplar": 1,
+    "text_reached": 0
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 5,
+   "element_id": "460",
+   "box": {
+    "x": 7729481,
+    "y": 1666499,
+    "w": 3420000,
+    "h": 3525002
+   },
+   "message": "Контраст текста #0077FF к фону #212121 = 3.9:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 3.9,
+    "text_color": "0077FF",
+    "background": "212121",
+    "need": 4.5,
+    "template_color": 1
    }
   },
   {
@@ -318,44 +493,10 @@
    }
   },
   {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 6,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок является тематическим, а не утверждением или выводом.",
-   "autofix": null,
-   "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "L02_overlap",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 6,
-   "element_id": "547",
-   "box": {
-    "x": 5383513,
-    "y": 860119,
-    "w": 2873051,
-    "h": 191441
-   },
-   "message": "Блоки «Стандарты безопасности и соотв…» и «Высокий уровень соответствия с…» наложились (11% площади меньшего)",
-   "autofix": "reflow_vertical",
-   "evidence": {
-    "other_id": "548",
-    "ratio": 0.112,
-    "in_exemplar": 1
-   }
-  },
-  {
    "check_id": "T06_contrast",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 6,
+   "slide_idx": 7,
    "element_id": "548",
    "box": {
     "x": 5383513,
@@ -377,7 +518,7 @@
    "check_id": "T06_contrast",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 6,
+   "slide_idx": 7,
    "element_id": "552",
    "box": {
     "x": 5383513,
@@ -399,7 +540,7 @@
    "check_id": "T06_contrast",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 6,
+   "slide_idx": 7,
    "element_id": "556",
    "box": {
     "x": 5383513,
@@ -418,44 +559,10 @@
    }
   },
   {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 7,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок является тематическим названием, а не содержит вывод или утверждение.",
-   "autofix": null,
-   "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "L02_overlap",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 7,
-   "element_id": "441",
-   "box": {
-    "x": 5383513,
-    "y": 860119,
-    "w": 2873051,
-    "h": 191441
-   },
-   "message": "Блоки «Гибкая модель лицензирования» и «Подстройка под бюджет клиента» наложились (11% площади меньшего)",
-   "autofix": "reflow_vertical",
-   "evidence": {
-    "other_id": "442",
-    "ratio": 0.112,
-    "in_exemplar": 1
-   }
-  },
-  {
    "check_id": "T06_contrast",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 7,
+   "slide_idx": 8,
    "element_id": "442",
    "box": {
     "x": 5383513,
@@ -477,7 +584,7 @@
    "check_id": "T06_contrast",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 7,
+   "slide_idx": 8,
    "element_id": "446",
    "box": {
     "x": 5383513,
@@ -499,7 +606,7 @@
    "check_id": "T06_contrast",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 7,
+   "slide_idx": 8,
    "element_id": "450",
    "box": {
     "x": 5383513,
@@ -521,90 +628,13 @@
    "check_id": "C05_has_content",
    "kind": "contextual",
    "severity": "error",
-   "slide_idx": 8,
-   "element_id": null,
-   "box": null,
-   "message": "Слайд содержит лишь два коротких предложения без раскрытия деталей.",
-   "autofix": null,
-   "evidence": {
-    "question": "На слайде есть содержание, а не только заголовок",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 8,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок является тематическим, а не утверждающим вывод.",
-   "autofix": null,
-   "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "D05_fill",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 8,
-   "element_id": null,
-   "box": null,
-   "message": "Слайд пустоват: контент занимает 19% рабочей области (норма 25%–75%)",
-   "autofix": "change_exemplar",
-   "evidence": {
-    "fill": 0.187
-   }
-  },
-  {
-   "check_id": "T06_contrast",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 8,
-   "element_id": "684",
-   "box": {
-    "x": 423103,
-    "y": 5533764,
-    "w": 6565676,
-    "h": 395438
-   },
-   "message": "Контраст текста #FFFFFF к фону #0077FF = 4.1:1 (нужно 4.5:1)",
-   "autofix": "snap_color",
-   "evidence": {
-    "contrast": 4.13,
-    "text_color": "FFFFFF",
-    "background": "0077FF",
-    "need": 4.5,
-    "template_color": 1
-   }
-  },
-  {
-   "check_id": "C05_has_content",
-   "kind": "contextual",
-   "severity": "error",
    "slide_idx": 9,
    "element_id": null,
    "box": null,
-   "message": "Слайд содержит только заголовок и три коротких пункта без раскрытия.",
+   "message": "Слайд содержит только один тезис и пустые иконки, что является недостаточным содержанием для полноценного слайда.",
    "autofix": null,
    "evidence": {
     "question": "На слайде есть содержание, а не только заголовок",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 9,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок просто называет тему, а не содержит вывод.",
-   "autofix": null,
-   "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
     "sources": "brief"
    }
   },
@@ -615,24 +645,23 @@
    "slide_idx": 9,
    "element_id": null,
    "box": null,
-   "message": "Слайд пустоват: контент занимает 19% рабочей области (норма 25%–75%)",
+   "message": "Слайд пустоват: контент занимает 14% рабочей области (норма 25%–75%)",
    "autofix": "change_exemplar",
    "evidence": {
-    "fill": 0.186
+    "fill": 0.142
    }
   },
   {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
+   "check_id": "D05_fill",
+   "kind": "deterministic",
    "severity": "warning",
    "slide_idx": 10,
    "element_id": null,
    "box": null,
-   "message": "Заголовок «Почему VK Tech» является вопросительной темой, а не утверждением с выводом.",
-   "autofix": null,
+   "message": "Слайд перегружен: контент занимает 76% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
    "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "brief"
+    "fill": 0.763
    }
   },
   {
@@ -640,19 +669,62 @@
    "kind": "deterministic",
    "severity": "warning",
    "slide_idx": 10,
-   "element_id": "547",
+   "element_id": "460",
    "box": {
-    "x": 5383513,
-    "y": 860119,
-    "w": 2873051,
-    "h": 191441
+    "x": 7911859,
+    "y": 3258988,
+    "w": 3057144,
+    "h": 251795
    },
-   "message": "Блоки «Почему VK Tech» и «Экспертиза в корпоративных реш…» наложились (11% площади меньшего)",
+   "message": "Блоки «Запуск пилотного этапа или пол…» и «Старт» наложились (100% площади меньшего)",
    "autofix": "reflow_vertical",
    "evidence": {
-    "other_id": "548",
-    "ratio": 0.112,
-    "in_exemplar": 1
+    "other_id": "467",
+    "ratio": 1.0,
+    "in_exemplar": 1,
+    "text_reached": 0
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 10,
+   "element_id": "461",
+   "box": {
+    "x": 4240405,
+    "y": 3258988,
+    "w": 3057144,
+    "h": 251795
+   },
+   "message": "Блоки «Определение приоритетных напра…» и «План» наложились (100% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "465",
+    "ratio": 1.0,
+    "in_exemplar": 1,
+    "text_reached": 0
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 10,
+   "element_id": "462",
+   "box": {
+    "x": 596659,
+    "y": 3258988,
+    "w": 3057144,
+    "h": 251795
+   },
+   "message": "Блоки «Обсуждение текущих задач и цел…» и «Консультация» наложились (100% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "463",
+    "ratio": 1.0,
+    "in_exemplar": 1,
+    "text_reached": 0
    }
   },
   {
@@ -660,19 +732,19 @@
    "kind": "deterministic",
    "severity": "warning",
    "slide_idx": 10,
-   "element_id": "548",
+   "element_id": "460",
    "box": {
-    "x": 5383513,
-    "y": 860119,
-    "w": 5917558,
-    "h": 1705685
+    "x": 7729481,
+    "y": 1666499,
+    "w": 3420000,
+    "h": 3525002
    },
-   "message": "Контраст текста #FFFFFF к фону #0077FF = 4.1:1 (нужно 4.5:1)",
+   "message": "Контраст текста #0077FF к фону #212121 = 3.9:1 (нужно 4.5:1)",
    "autofix": "snap_color",
    "evidence": {
-    "contrast": 4.13,
-    "text_color": "FFFFFF",
-    "background": "0077FF",
+    "contrast": 3.9,
+    "text_color": "0077FF",
+    "background": "212121",
     "need": 4.5,
     "template_color": 1
    }
@@ -682,19 +754,19 @@
    "kind": "deterministic",
    "severity": "warning",
    "slide_idx": 10,
-   "element_id": "552",
+   "element_id": "461",
    "box": {
-    "x": 5383513,
-    "y": 2710690,
-    "w": 5917558,
-    "h": 1705685
+    "x": 4056891,
+    "y": 1666499,
+    "w": 3420000,
+    "h": 3525002
    },
-   "message": "Контраст текста #FFFFFF к фону #0077FF = 4.1:1 (нужно 4.5:1)",
+   "message": "Контраст текста #0077FF к фону #212121 = 3.9:1 (нужно 4.5:1)",
    "autofix": "snap_color",
    "evidence": {
-    "contrast": 4.13,
-    "text_color": "FFFFFF",
-    "background": "0077FF",
+    "contrast": 3.9,
+    "text_color": "0077FF",
+    "background": "212121",
     "need": 4.5,
     "template_color": 1
    }
@@ -704,19 +776,19 @@
    "kind": "deterministic",
    "severity": "warning",
    "slide_idx": 10,
-   "element_id": "556",
+   "element_id": "462",
    "box": {
-    "x": 5383513,
-    "y": 4561261,
-    "w": 5917558,
-    "h": 1705685
+    "x": 415687,
+    "y": 1666499,
+    "w": 3420000,
+    "h": 3525002
    },
-   "message": "Контраст текста #FFFFFF к фону #0077FF = 4.1:1 (нужно 4.5:1)",
+   "message": "Контраст текста #0077FF к фону #212121 = 3.9:1 (нужно 4.5:1)",
    "autofix": "snap_color",
    "evidence": {
-    "contrast": 4.13,
-    "text_color": "FFFFFF",
-    "background": "0077FF",
+    "contrast": 3.9,
+    "text_color": "0077FF",
+    "background": "212121",
     "need": 4.5,
     "template_color": 1
    }
@@ -759,5 +831,5 @@
   "C10_table_legend_relevant",
   "C11_flow"
  ],
- "duration_s": 19.255
+ "duration_s": 27.264
 }

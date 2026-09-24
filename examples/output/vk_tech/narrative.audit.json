@@ -13,53 +13,75 @@
     "w": 4288279,
     "h": 800046
    },
-   "message": "Кегль 26.3 pt не из шкалы шаблона (ближайший 24 pt)",
+   "message": "Кегль 30.6 pt не из шкалы шаблона (ближайший 24 pt)",
    "autofix": "snap_font_size",
    "evidence": {
-    "size_pt": 26.3,
+    "size_pt": 30.6,
     "nearest_pt": 24.0,
     "base_pt": 48.6
    }
   },
   {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
+   "check_id": "D02_bullet_words",
+   "kind": "deterministic",
    "severity": "warning",
    "slide_idx": 3,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок является тематическим названием, а не сформулированным выводом.",
-   "autofix": null,
+   "element_id": "505",
+   "box": {
+    "x": 4637088,
+    "y": 676278,
+    "w": 3862387,
+    "h": 3737102
+   },
+   "message": "Пункт из 17 слов (норма ≤ 15): «Мы создаем комплексные IT-решения, соответствующие междунаро…»",
+   "autofix": "refill_slot",
    "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "brief"
+    "words": 17
    }
   },
   {
-   "check_id": "C01_title_insight",
+   "check_id": "C07_no_garbage",
    "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 4,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок является тематическим, а не утверждающим выводом.",
-   "autofix": null,
-   "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
-   "severity": "warning",
+   "severity": "error",
    "slide_idx": 5,
    "element_id": null,
    "box": null,
-   "message": "Заголовок просто называет тему, а не содержит вывод.",
+   "message": "В центре слайда виден служебный текст-заглушка 'Same Service'.",
    "autofix": null,
    "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
+    "sources": "brief"
+   }
+  },
+  {
+   "check_id": "D02_bullet_words",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 5,
+   "element_id": "505",
+   "box": {
+    "x": 4637088,
+    "y": 676278,
+    "w": 3862387,
+    "h": 3737102
+   },
+   "message": "Пункт из 18 слов (норма ≤ 15): «Наши решения позволяют автоматизировать рутинные операции, с…»",
+   "autofix": "refill_slot",
+   "evidence": {
+    "words": 18
+   }
+  },
+  {
+   "check_id": "C03_one_message",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 6,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд содержит три отдельных тезиса, которые не сводятся к одному предложению без потери смысла.",
+   "autofix": null,
+   "evidence": {
+    "question": "Слайд пересказывается одним предложением",
     "sources": "brief"
    }
   },
@@ -67,7 +89,7 @@
    "check_id": "T06_contrast",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 5,
+   "slide_idx": 6,
    "element_id": "669",
    "box": {
     "x": 438148,
@@ -89,7 +111,7 @@
    "check_id": "T06_contrast",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 5,
+   "slide_idx": 6,
    "element_id": "674",
    "box": {
     "x": 2605074,
@@ -111,7 +133,7 @@
    "check_id": "T06_contrast",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 5,
+   "slide_idx": 6,
    "element_id": "679",
    "box": {
     "x": 4772001,
@@ -132,72 +154,140 @@
   {
    "check_id": "T06_contrast",
    "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 5,
-   "element_id": "684",
-   "box": {
-    "x": 6938927,
-    "y": 1819373,
-    "w": 1804978,
-    "h": 2290464
-   },
-   "message": "Контраст текста #8F8F8F к фону #FEFFFF = 3.2:1 (нужно 4.5:1)",
-   "autofix": "snap_color",
-   "evidence": {
-    "contrast": 3.23,
-    "text_color": "8F8F8F",
-    "background": "FEFFFF",
-    "need": 4.5,
-    "template_color": 1
-   }
-  },
-  {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 7,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок является тематическим, а не содержит вывод или утверждение.",
-   "autofix": null,
-   "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
    "severity": "warning",
    "slide_idx": 8,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок является тематическим, а не содержит вывод.",
-   "autofix": null,
+   "element_id": "781",
+   "box": {
+    "x": 438148,
+    "y": 1819373,
+    "w": 2527287,
+    "h": 854757
+   },
+   "message": "Контраст текста #8F8F8F к фону #FFFFFF = 3.2:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
    "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 9,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок является тематическим, а не утверждающим вывод.",
-   "autofix": null,
-   "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "brief"
+    "contrast": 3.23,
+    "text_color": "8F8F8F",
+    "background": "FFFFFF",
+    "need": 4.5,
+    "template_color": 1
    }
   },
   {
    "check_id": "T06_contrast",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 9,
+   "slide_idx": 8,
+   "element_id": "786",
+   "box": {
+    "x": 3327380,
+    "y": 1819373,
+    "w": 2527287,
+    "h": 854757
+   },
+   "message": "Контраст текста #8F8F8F к фону #FFFFFF = 3.2:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 3.23,
+    "text_color": "8F8F8F",
+    "background": "FFFFFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": "791",
+   "box": {
+    "x": 6216621,
+    "y": 1819373,
+    "w": 2527287,
+    "h": 854757
+   },
+   "message": "Контраст текста #8F8F8F к фону #FFFFFF = 3.2:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 3.23,
+    "text_color": "8F8F8F",
+    "background": "FFFFFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": "797",
+   "box": {
+    "x": 438148,
+    "y": 3493174,
+    "w": 2527287,
+    "h": 854757
+   },
+   "message": "Контраст текста #8F8F8F к фону #FFFFFF = 3.2:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 3.23,
+    "text_color": "8F8F8F",
+    "background": "FFFFFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": "802",
+   "box": {
+    "x": 3327380,
+    "y": 3493174,
+    "w": 2527287,
+    "h": 854757
+   },
+   "message": "Контраст текста #8F8F8F к фону #FFFFFF = 3.2:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 3.23,
+    "text_color": "8F8F8F",
+    "background": "FFFFFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 11,
+   "element_id": "669",
+   "box": {
+    "x": 438148,
+    "y": 1819373,
+    "w": 1804978,
+    "h": 2290464
+   },
+   "message": "Контраст текста #8F8F8F к фону #FEFFFF = 3.2:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 3.23,
+    "text_color": "8F8F8F",
+    "background": "FEFFFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 11,
    "element_id": "674",
    "box": {
     "x": 2605074,
@@ -219,7 +309,7 @@
    "check_id": "T06_contrast",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 9,
+   "slide_idx": 11,
    "element_id": "679",
    "box": {
     "x": 4772001,
@@ -235,20 +325,6 @@
     "background": "FEFFFF",
     "need": 4.5,
     "template_color": 1
-   }
-  },
-  {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 10,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок является тематическим, а не утверждающим вывод.",
-   "autofix": null,
-   "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "brief"
    }
   },
   {
@@ -258,7 +334,7 @@
    "slide_idx": 12,
    "element_id": null,
    "box": null,
-   "message": "Слайд содержит только заголовок и три коротких пункта без раскрытия сути, что является недостаточным содержанием.",
+   "message": "На слайде нет реального содержания, только заголовок и одна фраза-подзаголовок.",
    "autofix": null,
    "evidence": {
     "question": "На слайде есть содержание, а не только заголовок",
@@ -266,50 +342,16 @@
    }
   },
   {
-   "check_id": "C01_title_insight",
+   "check_id": "C03_one_message",
    "kind": "contextual",
    "severity": "warning",
    "slide_idx": 12,
    "element_id": null,
    "box": null,
-   "message": "Заголовок «Стратегические преимущества» является тематическим, а не выводным.",
+   "message": "Слайд не пересказывается одним предложением, так как текст дублирует смысл заголовка без добавления новой информации.",
    "autofix": null,
    "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": ""
-   }
-  },
-  {
-   "check_id": "L02_overlap",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 12,
-   "element_id": "1205",
-   "box": {
-    "x": 3866535,
-    "y": 610451,
-    "w": 3083954,
-    "h": 399800
-   },
-   "message": "Блоки «Соответствие стандартам Поддер…» и «Стратегические преимущества» наложились (25% площади меньшего)",
-   "autofix": "reflow_vertical",
-   "evidence": {
-    "other_id": "1207",
-    "ratio": 0.251,
-    "in_exemplar": 1
-   }
-  },
-  {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 13,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок «Почему VK Tech» является вопросительной темой, а не утверждением или выводом.",
-   "autofix": null,
-   "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "question": "Слайд пересказывается одним предложением",
     "sources": ""
    }
   }
@@ -351,5 +393,5 @@
   "C10_table_legend_relevant",
   "C11_flow"
  ],
- "duration_s": 35.807
+ "duration_s": 55.94
 }

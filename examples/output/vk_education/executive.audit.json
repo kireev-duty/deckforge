@@ -2,13 +2,58 @@
  "deck_path": "executive.pptx",
  "findings": [
   {
-   "check_id": "C02_content_matches_title",
+   "check_id": "C07_no_garbage",
    "kind": "contextual",
    "severity": "error",
+   "slide_idx": 0,
+   "element_id": null,
+   "box": null,
+   "message": "Текст подзаголовка обрывается многоточием, что выглядит как служебный мусор или заглушка.",
+   "autofix": null,
+   "evidence": {
+    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
+    "sources": "brief"
+   }
+  },
+  {
+   "check_id": "D02_bullet_words",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 1,
+   "element_id": "278",
+   "box": {
+    "x": 6154737,
+    "y": 4044294,
+    "w": 5391150,
+    "h": 2156481
+   },
+   "message": "Пункт из 17 слов (норма ≤ 15): «Мы создаем комплексные IT-решения, соответствующие междунаро…»",
+   "autofix": "refill_slot",
+   "evidence": {
+    "words": 17
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
    "slide_idx": 1,
    "element_id": null,
    "box": null,
-   "message": "Слайд смешивает проблемы и решения, хотя заголовок говорит только о рисках.",
+   "message": "Слайд перегружен: контент занимает 89% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.89
+   }
+  },
+  {
+   "check_id": "C02_content_matches_title",
+   "kind": "contextual",
+   "severity": "error",
+   "slide_idx": 2,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок упоминает только масштабируемость и защиту, но в содержимом присутствует блок про интеграцию.",
    "autofix": null,
    "evidence": {
     "question": "Содержимое слайда соответствует заголовку",
@@ -16,94 +61,28 @@
    }
   },
   {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 2,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок является тематическим, а не утверждающим выводом.",
-   "autofix": null,
-   "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
+   "check_id": "D02_bullet_words",
+   "kind": "deterministic",
    "severity": "warning",
    "slide_idx": 3,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок просто называет тему, не содержит вывода или ключевой мысли.",
-   "autofix": null,
+   "element_id": "405",
+   "box": {
+    "x": 671513,
+    "y": 2040889,
+    "w": 4897265,
+    "h": 3107760
+   },
+   "message": "Пункт из 18 слов (норма ≤ 15): «Наши решения позволяют автоматизировать рутинные операции, с…»",
+   "autofix": "refill_slot",
    "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 4,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок является тематическим, а не содержит вывод или утверждение.",
-   "autofix": null,
-   "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 5,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок является тематическим, а не утверждающим вывод.",
-   "autofix": null,
-   "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 6,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок является тематическим, а не содержит вывод или утверждение.",
-   "autofix": null,
-   "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "C08_no_typos",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 6,
-   "element_id": null,
-   "box": null,
-   "message": "В заголовке внутри схемы слово «лицензирования» некорректно перенесено на новую строку.",
-   "autofix": null,
-   "evidence": {
-    "question": "Текст без опечаток",
-    "sources": "brief"
+    "words": 18
    }
   },
   {
    "check_id": "D05_fill",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 6,
+   "slide_idx": 4,
    "element_id": null,
    "box": null,
    "message": "Слайд пустоват: контент занимает 23% рабочей области (норма 25%–75%)",
@@ -113,93 +92,45 @@
    }
   },
   {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 7,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок является тематическим, а не утверждающим вывод.",
-   "autofix": null,
+   "slide_idx": 4,
+   "element_id": "430",
+   "box": {
+    "x": 4308816,
+    "y": 2622416,
+    "w": 3574368,
+    "h": 1613168
+   },
+   "message": "Контраст текста #0077FF к фону #FFFFFF = 4.1:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
    "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "C06_images_relevant",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 7,
-   "element_id": null,
-   "box": null,
-   "message": "Изображение мобильного приложения не относится к теме долгосрочной поддержки.",
-   "autofix": null,
-   "evidence": {
-    "question": "Картинки и иконки относятся к теме слайда",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "C05_has_content",
-   "kind": "contextual",
-   "severity": "error",
-   "slide_idx": 8,
-   "element_id": null,
-   "box": null,
-   "message": "Слайд содержит только три коротких пункта без пояснений, что делает его содержимым крайне скудным.",
-   "autofix": null,
-   "evidence": {
-    "question": "На слайде есть содержание, а не только заголовок",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 8,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок «Стратегические преимущества» является тематическим, а не содержит конкретного вывода.",
-   "autofix": null,
-   "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 9,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок «Почему VK Tech» является вопросительной темой, а не утверждением с выводом.",
-   "autofix": null,
-   "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "brief"
+    "contrast": 4.13,
+    "text_color": "0077FF",
+    "background": "FFFFFF",
+    "need": 4.5,
+    "template_color": 1
    }
   },
   {
    "check_id": "T02_font_size",
    "kind": "deterministic",
    "severity": "info",
-   "slide_idx": 10,
-   "element_id": "1082",
+   "slide_idx": 8,
+   "element_id": "820",
    "box": {
-    "x": 620713,
-    "y": 2483712,
-    "w": 5475287,
-    "h": 1477328
+    "x": 677334,
+    "y": 692150,
+    "w": 5418666,
+    "h": 1081088
    },
-   "message": "Кегль 54 pt не из шкалы шаблона (ближайший 48 pt) (подгонка: 90% от кегля образца 60 pt)",
+   "message": "Кегль 32.4 pt не из шкалы шаблона (ближайший 36 pt) (подгонка: 90% от кегля образца 36 pt)",
    "autofix": "snap_font_size",
    "evidence": {
-    "size_pt": 54.0,
-    "nearest_pt": 48.0,
-    "base_pt": 60.0
+    "size_pt": 32.4,
+    "nearest_pt": 36.0,
+    "base_pt": 36.0
    }
   }
  ],
@@ -240,5 +171,5 @@
   "C10_table_legend_relevant",
   "C11_flow"
  ],
- "duration_s": 45.357
+ "duration_s": 42.149
 }

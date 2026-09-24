@@ -2,354 +2,10 @@
  "deck_path": "narrative.pptx",
  "findings": [
   {
-   "check_id": "D05_fill",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 1,
-   "element_id": null,
-   "box": null,
-   "message": "Слайд перегружен: контент занимает 88% рабочей области (норма 25%–75%)",
-   "autofix": "change_exemplar",
-   "evidence": {
-    "fill": 0.877
-   }
-  },
-  {
    "check_id": "T02_font_size",
    "kind": "deterministic",
    "severity": "info",
-   "slide_idx": 1,
-   "element_id": "2",
-   "box": {
-    "x": 533104,
-    "y": 414049,
-    "w": 5994696,
-    "h": 552061
-   },
-   "message": "Кегль 27.9 pt не из шкалы шаблона (ближайший 24 pt) (подгонка: 77% от кегля образца 36 pt)",
-   "autofix": "snap_font_size",
-   "evidence": {
-    "size_pt": 27.9,
-    "nearest_pt": 24.0,
-    "base_pt": 36.0
-   }
-  },
-  {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 2,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок является тематическим, а не утверждением или выводом.",
-   "autofix": null,
-   "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 3,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок является тематическим, а не утверждающим выводом.",
-   "autofix": null,
-   "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "D05_fill",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 3,
-   "element_id": null,
-   "box": null,
-   "message": "Слайд перегружен: контент занимает 88% рабочей области (норма 25%–75%)",
-   "autofix": "change_exemplar",
-   "evidence": {
-    "fill": 0.877
-   }
-  },
-  {
-   "check_id": "T02_font_size",
-   "kind": "deterministic",
-   "severity": "info",
-   "slide_idx": 3,
-   "element_id": "2",
-   "box": {
-    "x": 533104,
-    "y": 414049,
-    "w": 5994696,
-    "h": 552061
-   },
-   "message": "Кегль 27.9 pt не из шкалы шаблона (ближайший 24 pt) (подгонка: 77% от кегля образца 36 pt)",
-   "autofix": "snap_font_size",
-   "evidence": {
-    "size_pt": 27.9,
-    "nearest_pt": 24.0,
-    "base_pt": 36.0
-   }
-  },
-  {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 4,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок просто называет тему, не содержит вывода.",
-   "autofix": null,
-   "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "D01_bullets",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 4,
-   "element_id": "2",
-   "box": {
-    "x": 346075,
-    "y": 1458075,
-    "w": 2526079,
-    "h": 1476687
-   },
-   "message": "На слайде 8 пунктов (норма ≤ 6)",
-   "autofix": "split_slide",
-   "evidence": {
-    "bullets": 8
-   }
-  },
-  {
-   "check_id": "L02_overlap",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 4,
-   "element_id": "2",
-   "box": {
-    "x": 346075,
-    "y": 1814077,
-    "w": 2526079,
-    "h": 1120685
-   },
-   "message": "Блоки «01» и «Аудит текущей инфраструктуры» наложились (100% площади меньшего)",
-   "autofix": "reflow_vertical",
-   "evidence": {
-    "other_id": "3",
-    "ratio": 1.0,
-    "in_exemplar": 1
-   }
-  },
-  {
-   "check_id": "L02_overlap",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 4,
-   "element_id": "4",
-   "box": {
-    "x": 4832960,
-    "y": 1814077,
-    "w": 2526079,
-    "h": 1120685
-   },
-   "message": "Блоки «02» и «Проектирование архитектуры» наложились (100% площади меньшего)",
-   "autofix": "reflow_vertical",
-   "evidence": {
-    "other_id": "5",
-    "ratio": 1.0,
-    "in_exemplar": 1
-   }
-  },
-  {
-   "check_id": "L02_overlap",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 4,
-   "element_id": "6",
-   "box": {
-    "x": 9330862,
-    "y": 1814077,
-    "w": 2526079,
-    "h": 1120685
-   },
-   "message": "Блоки «03» и «Пилотное внедрение» наложились (100% площади меньшего)",
-   "autofix": "reflow_vertical",
-   "evidence": {
-    "other_id": "7",
-    "ratio": 1.0,
-    "in_exemplar": 1
-   }
-  },
-  {
-   "check_id": "L02_overlap",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 4,
-   "element_id": "8",
-   "box": {
-    "x": 2593517,
-    "y": 5181340,
-    "w": 2526079,
-    "h": 1120685
-   },
-   "message": "Блоки «04» и «Масштабирование и поддержка» наложились (100% площади меньшего)",
-   "autofix": "reflow_vertical",
-   "evidence": {
-    "other_id": "9",
-    "ratio": 1.0,
-    "in_exemplar": 1
-   }
-  },
-  {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 5,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок является тематическим, а не содержит вывод или тезис.",
-   "autofix": null,
-   "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "D05_fill",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 5,
-   "element_id": null,
-   "box": null,
-   "message": "Слайд перегружен: контент занимает 93% рабочей области (норма 25%–75%)",
-   "autofix": "change_exemplar",
-   "evidence": {
-    "fill": 0.928
-   }
-  },
-  {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 6,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок является тематическим, а не утверждающим вывод.",
-   "autofix": null,
-   "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 7,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок является тематическим, а не содержит вывод или утверждение.",
-   "autofix": null,
-   "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "C07_no_garbage",
-   "kind": "contextual",
-   "severity": "error",
-   "slide_idx": 8,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок содержит многоточие, что выглядит как обрезанный текст или служебный артефакт.",
-   "autofix": null,
-   "evidence": {
-    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 8,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок «Долгосрочная…» является обрывком и не содержит вывода, а лишь называет тему.",
-   "autofix": null,
-   "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "C05_has_content",
-   "kind": "contextual",
-   "severity": "error",
-   "slide_idx": 9,
-   "element_id": null,
-   "box": null,
-   "message": "Слайд содержит только заголовок и три коротких пункта без раскрытия сути.",
-   "autofix": null,
-   "evidence": {
-    "question": "На слайде есть содержание, а не только заголовок",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 9,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок является тематическим, а не содержит вывод.",
-   "autofix": null,
-   "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "D05_fill",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 9,
-   "element_id": null,
-   "box": null,
-   "message": "Слайд перегружен: контент занимает 88% рабочей области (норма 25%–75%)",
-   "autofix": "change_exemplar",
-   "evidence": {
-    "fill": 0.877
-   }
-  },
-  {
-   "check_id": "C01_title_insight",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 10,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок «Почему VK Tech» является вопросительной темой, а не утверждением-выводом.",
-   "autofix": null,
-   "evidence": {
-    "question": "Заголовок содержит вывод, а не просто называет тему",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "T02_font_size",
-   "kind": "deterministic",
-   "severity": "info",
-   "slide_idx": 11,
+   "slide_idx": 0,
    "element_id": "3",
    "box": {
     "x": 1,
@@ -363,6 +19,193 @@
     "size_pt": 39.1,
     "nearest_pt": 36.0,
     "base_pt": 48.0
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 1,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд перегружен: контент занимает 88% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.877
+   }
+  },
+  {
+   "check_id": "D02_bullet_words",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 2,
+   "element_id": "29",
+   "box": {
+    "x": 521133,
+    "y": 1263123,
+    "w": 5574868,
+    "h": 4937652
+   },
+   "message": "Пункт из 17 слов (норма ≤ 15): «Мы создаем комплексные IT-решения, соответствующие междунаро…»",
+   "autofix": "refill_slot",
+   "evidence": {
+    "words": 17
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 3,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд перегружен: контент занимает 88% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.877
+   }
+  },
+  {
+   "check_id": "D02_bullet_words",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 4,
+   "element_id": "7",
+   "box": {
+    "x": 595433,
+    "y": 1143695,
+    "w": 4807840,
+    "h": 4717356
+   },
+   "message": "Пункт из 18 слов (норма ≤ 15): «Наши решения позволяют автоматизировать рутинные операции, с…»",
+   "autofix": "refill_slot",
+   "evidence": {
+    "words": 18
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 4,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд перегружен: контент занимает 93% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.928
+   }
+  },
+  {
+   "check_id": "C07_no_garbage",
+   "kind": "contextual",
+   "severity": "error",
+   "slide_idx": 7,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок содержит многоточие, что выглядит как незавершенный текст.",
+   "autofix": null,
+   "evidence": {
+    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
+    "sources": "brief"
+   }
+  },
+  {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 7,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок обрывается многоточием и не содержит полного вывода.",
+   "autofix": null,
+   "evidence": {
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "brief"
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 7,
+   "element_id": "2",
+   "box": {
+    "x": 1260867,
+    "y": 451168,
+    "w": 4242509,
+    "h": 454025
+   },
+   "message": "Контраст текста #FFFFFF к фону #FF0053 = 3.9:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 3.91,
+    "text_color": "FFFFFF",
+    "background": "FF0053",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд перегружен: контент занимает 88% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.877
+   }
+  },
+  {
+   "check_id": "C05_has_content",
+   "kind": "contextual",
+   "severity": "error",
+   "slide_idx": 9,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд содержит только один короткий тезис, что является недостаточным объемом содержания для полноценного слайда.",
+   "autofix": null,
+   "evidence": {
+    "question": "На слайде есть содержание, а не только заголовок",
+    "sources": "brief"
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 9,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд перегружен: контент занимает 93% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.928
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 10,
+   "element_id": "9",
+   "box": {
+    "x": 525817,
+    "y": 421226,
+    "w": 9862734,
+    "h": 376138
+   },
+   "message": "Контраст текста #F2F2F2 к фону #FF0053 = 3.5:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 3.49,
+    "text_color": "F2F2F2",
+    "background": "FF0053",
+    "need": 4.5,
+    "template_color": 1
    }
   }
  ],
@@ -403,5 +246,5 @@
   "C10_table_legend_relevant",
   "C11_flow"
  ],
- "duration_s": 32.356
+ "duration_s": 30.183
 }

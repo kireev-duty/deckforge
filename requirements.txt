@@ -1,5 +1,5 @@
 # Зависимости для Streamlit Community Cloud (демо-стенд) — те же, что в pyproject.toml [project.dependencies];
-# синхронность проверяет tests/test_ui.py. Локально ставится pip install -e .
+# синхронность проверяет tests/test_workspace.py. Локально ставится pip install -e .
 python-pptx>=1.0
 lxml>=5
 pydantic>=2

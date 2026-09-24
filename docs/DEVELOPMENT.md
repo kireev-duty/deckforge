@@ -38,7 +38,7 @@ ruff check deckforge tools tests
 | Что | Где |
 |---|---|
 | Python-зависимости стенда (те же, что в `pyproject.toml`; синхронность — `tests/test_workspace.py`) | `requirements.txt` |
-| apt-пакеты: LibreOffice Impress, шрифты Montserrat / Liberation / DejaVu | `packages.txt` |
+| apt-пакеты: LibreOffice Impress, шрифты Liberation / DejaVu — только то, что есть и в Debian 11, и в Debian 12 (`fonts-montserrat` в bullseye нет, и один ненайденный пакет роняет весь `apt-get install`) | `packages.txt` |
 | лимит загрузки 60 МБ, без телеметрии | `.streamlit/config.toml` |
 | секреты Cloud (TOML в настройках приложения) → `os.environ` | `ui/app._secrets_to_env` |
 | шаблоны датасета: Cloud может клонировать репо без Git LFS — указатели докачиваются из `DECKFORGE_LFS_BASE` | `pipeline/workspace.fetch_lfs` |

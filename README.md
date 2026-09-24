@@ -1,117 +1,338 @@
-# DECKFORGE — цифровой дизайнер презентаций
+<div align="center">
 
-[![Попробовать онлайн — Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://deckforge.streamlit.app)
+# deckforge
 
-**Попробовать без установки:** [демо-стенд](https://deckforge.streamlit.app) → выбрать шаблон слева (или загрузить свой .pptx) → «Только шаблон» → «Сгенерировать варианты»: три колоды за 1–3 минуты, с аудитом и скачиванием .pptx / .pdf / .html. Если ключ LLM стенда исчерпан или API недоступен, работает режим «Готовый outline»: он собирает колоды без LLM. **Готовые 12 колод** (4 шаблона × 3 стратегии) можно открыть в браузере: [галерея](https://kireev-duty.github.io/deckforge/).
+**Цифровой дизайнер презентаций.** Читает любой .pptx-шаблон как дизайн-систему и собирает по нему новую презентацию из нативных объектов PowerPoint — в трёх вариантах вёрстки, с аудитом и экспортом в .pptx, .pdf и .html.
 
-Сервис читает произвольный .pptx-шаблон как набор правил (дизайн-система + слайды-образцы) и собирает по нему новую презентацию: структура → тексты → вёрстка нативными объектами → аудит → экспорт в .pptx / .pdf / .html. Три стратегии вёрстки на один и тот же контент.
+[![Открыть в Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://deckforge.streamlit.app) [![Галерея: 12 колод](https://img.shields.io/badge/%D0%B3%D0%B0%D0%BB%D0%B5%D1%80%D0%B5%D1%8F-12_%D0%BA%D0%BE%D0%BB%D0%BE%D0%B4-0077FF?logo=githubpages&logoColor=white)](https://kireev-duty.github.io/deckforge/) [![Release v0.1.2](https://img.shields.io/badge/release-v0.1.2-2ea44f?logo=github)](https://github.com/kireev-duty/deckforge/releases/tag/v0.1.2) [![Python 3.12+](https://img.shields.io/badge/python-3.12+-3776AB?logo=python&logoColor=white)](pyproject.toml) [![License: MIT](https://img.shields.io/badge/license-MIT-yellow)](LICENSE) [![ЛЦТ 2026 · кейс VK Tech](https://img.shields.io/badge/%D0%9B%D0%A6%D0%A2_2026-%D0%BA%D0%B5%D0%B9%D1%81_VK_Tech-7B2CBF)](docs/PLAN.md)
 
-Контент — лестница входа: контент-пакет с брифом и данными, если он есть; иначе тема одной строкой; а если на входе **только шаблон**, бриф выводится из него самого (бренд, тексты слайдов-образцов, палитра — скилл `template_brief`), и прогон идёт дальше без изменений. Чем меньше исходников, тем меньше в колоде проверяемых чисел: то, чего нет в источнике, не выдумывается.
+[Демо-стенд](https://deckforge.streamlit.app) · [Галерея колод](https://kireev-duty.github.io/deckforge/) · [Архитектура](docs/ARCHITECTURE.md) · [Аудит](docs/AUDIT.md) · [Модели](docs/MODELS.md) · [Сценарий демо](docs/DEMO.md)
 
-Кейс VK Tech, хакатон «Лидеры цифровой трансформации 2026».
+</div>
 
-## Документация
+<p align="center">
+  <img src="docs/img/hero.png" alt="Один и тот же контент на четырёх шаблонах: VK Tech, VK Education, VK WorkSpace и ЛЦТ 2026 — титул, этапы внедрения, карточки" width="100%">
+</p>
+<p align="center"><sub>Один контент — четыре шаблона (вариант visual). Шаблон ЛЦТ 2026 не использовался при разработке правил разбора.</sub></p>
 
-- [ARCHITECTURE.md](docs/ARCHITECTURE.md) — пайплайн и границы слоёв
-- [AUDIT.md](docs/AUDIT.md) — проверки и их покрытие
-- [MODELS.md](docs/MODELS.md) — модели, лицензии, требования
-- [DEMO.md](docs/DEMO.md) — сценарий живого прогона / видео-демо (≤ 7 минут) на неизвестном шаблоне
-- [DEVELOPMENT.md](docs/DEVELOPMENT.md) — окружение, служебные скрипты, правила для кода
-- [PLAN.md](docs/PLAN.md) — план разработки и чек-лист сдачи, [BACKLOG.md](docs/BACKLOG.md) — известные дефекты и что дальше
+## Что умеет
 
-## Сетап
+- **Любой шаблон → дизайн-система.** Палитра с ролями, типографическая шкала, сетка и поля, фиксированные элементы и слайды-образцы по архетипам — из фактического использования на слайдах, а не из `theme.xml`.
+- **Контент — по лестнице.** Контент-пакет (бриф, тексты, данные) → тема одной строкой → **только шаблон**: бриф выводится из самого шаблона. Чисел и фактов без источника сервис не выдумывает.
+- **Три варианта вёрстки** на одном контенте — executive, narrative, visual. Они различаются плотностью и способом показа данных; стиль шаблона не трогают.
+- **Нативные объекты.** Слайды собираются клонированием образцов шаблона: текст, фигуры, chart, table, picture; схемы процесса — редактируемые автофигуры. Растровых слайдов нет.
+- **Аудит — часть пайплайна.** 24 детерминированные проверки по XML и VLM-судья (11 вопросов по PNG слайда). Безопасные фиксы применяются сами, остальные пользователь выбирает в UI с подсветкой находки на слайде.
+- **Экспорт** в .pptx, .pdf и .html — один самодостаточный файл, где текст остаётся текстом, а диаграммы — SVG.
+- **Три варианта ≤ 5 минут вместе.** Колоды собираются параллельно под одним дедлайном прогона.
+- **Промпты — файлы, а не код.** Скиллы версионируются в `skills/<name>/v<N>/`; `manifest.json` каждой колоды хранит версии скиллов, моделей и стратегии.
 
-Требования: Python ≥ 3.12, Git LFS, LibreOffice (для рендера/PDF), доступ к OpenAI-совместимому inference API. Либо Docker — см. ниже.
+## Попробовать
+
+- **[Демо-стенд](https://deckforge.streamlit.app):** выбрать шаблон слева или загрузить свой .pptx → «Только шаблон» → «Сгенерировать варианты». Три колоды за 1–3 минуты, с аудитом и скачиванием .pptx / .pdf / .html.
+- **[Галерея](https://kireev-duty.github.io/deckforge/):** 12 готовых колод (4 шаблона × 3 стратегии) открываются прямо в браузере.
+
+> [!NOTE]
+> Стенд работает на бесплатном Streamlit Community Cloud и засыпает без посетителей. На заставке нажмите «Yes, get this app back up» — запуск занимает 1–2 минуты. Если ключ LLM стенда исчерпан или API недоступен, работает режим «Готовый outline»: он собирает колоды без LLM.
+
+## Как это работает
+
+```mermaid
+flowchart LR
+    T[".pptx шаблон"] --> P["parsing<br/>Template DNA"]
+    B["контент-пакет · тема<br/>(если есть)"] --> C["content<br/>бриф → outline"]
+    T -. "нет контента" .-> C
+    S["strategies/*.yaml"] --> L
+    P --> L["layout<br/>DeckIR × 3 стратегии"]
+    C --> L
+    L --> R["render<br/>.pptx, нативные объекты"]
+    R --> A["audit<br/>24 проверки + VLM-судья"]
+    A -- "автофиксы и фиксы по выбору" --> L
+    R --> E["export<br/>.pdf · .html"]
+```
+
+| Слой | Что делает |
+|---|---|
+| `parsing/` | .pptx → `TemplateDNA`: токены из фактического использования, сетка, фиксированные элементы, образцы по архетипам (правила по геометрии + VLM для неоднозначных) |
+| `content/` | контент-пакет, тема или сам шаблон → бриф → `DeckOutline` (один вызов LLM на прогон) |
+| `layout/` | стратегия → состав слайдов, выбор образца под каждый слайд, подгонка текста под слоты, применение автофиксов |
+| `render/` | `DeckIR` → .pptx: клонирование образцов, нативные chart / table / picture, схемы из автофигур |
+| `audit/` | детерминированные проверки по XML + VLM-судья по PNG; предлагает фиксы, но колоду не меняет |
+| `export/` | PDF и PNG через LibreOffice, собственный HTML-рендер готовой колоды |
+| `pipeline/` | этапы прогона, параллельная сборка вариантов под одним дедлайном, `manifest.json` |
+| `ui/`, `api/`, `cli.py` | Streamlit, FastAPI, CLI — точки входа без бизнес-логики |
+
+Зависимости только «вниз», контракты между слоями — `deckforge/core/ir.py`. Подробно — [ARCHITECTURE.md](docs/ARCHITECTURE.md).
+
+## Быстрый старт
+
+Нужны Python ≥ 3.12, Git LFS, LibreOffice (для PDF, PNG и VLM-судьи) и доступ к OpenAI-совместимому inference API. Либо только Docker — [см. ниже](#docker).
 
 ```bash
-git lfs install                                      # один раз на машине, ДО clone
+git lfs install                    # один раз на машине, ДО clone: шаблоны лежат в Git LFS
 git clone https://github.com/kireev-duty/deckforge.git && cd deckforge
 python -m venv .venv
-.venv\Scripts\python.exe -m pip install -e .[dev]     # Windows
-cp .env.example .env                                 # заполнить LLM_API_KEY и модели
-.venv\Scripts\python.exe tools\check_env.py           # проверка ключей и LibreOffice
+```
+
+<details open>
+<summary><b>Windows</b></summary>
+
+```bat
+.venv\Scripts\python.exe -m pip install -e .[dev]
+copy .env.example .env
+:: впишите LLM_API_KEY в .env
+.venv\Scripts\python.exe tools\check_env.py
 .venv\Scripts\python.exe -m pytest -q
 ```
 
-Переменные окружения — см. [.env.example](.env.example): `LLM_BASE_URL` / `LLM_API_KEY` / `LLM_MODEL` / `VLM_MODEL` — текст и зрение (одна модель), `T2I_MODEL` (+ `T2I_BASE_URL` / `T2I_API_KEY`, если провайдер другой) — text-to-image; пустой `T2I_MODEL` отключает картинки, сервис работает без них. `.env` (с ключом) в репо не хранится; какой сервис, модели и параметры использованы — раздел «Инференс и модели» ниже.
+</details>
 
-Шаблоны датасета (`data/templates/*.pptx`), holdout-шаблон (`data/holdout/`) и ТЗ (`docs/tz/`) лежат в Git LFS. Если после clone файлы весят ~130 байт — это LFS-указатели: поставьте git-lfs и выполните `git lfs pull`.
+<details>
+<summary><b>Linux</b></summary>
 
-Разметка образцов этих шаблонов (ответы VLM `template_tagger` по неоднозначным слайдам, привязаны к sha1 файла) лежит в репо в `data/archetypes/<шаблон>.json` — с ней `examples/output` воспроизводятся без вызова VLM на этапе парсинга. Для нового шаблона разметка — правилами; VLM-уточнение: `tools/classify_layouts.py --vlm "path/to/template.pptx"` (кэш в `out/archetypes/`, `--publish` — в `data/archetypes/`).
+```bash
+.venv/bin/pip install -e '.[dev]'
+cp .env.example .env                 # вписать LLM_API_KEY
+.venv/bin/python tools/check_env.py
+.venv/bin/python -m pytest -q
+```
 
-## Инференс и модели
+</details>
 
-Все колоды в репозитории (`examples/output/`) сгенерированы **через OpenRouter** (`https://openrouter.ai/api/v1`, OpenAI-совместимый API) этими моделями и с этими параметрами. [.env.example](.env.example) — это рабочая конфигурация проекта без ключа: `cp .env.example .env`, вписать `LLM_API_KEY` — и прогон воспроизводится. Ключ в репозитории не хранится.
+`tools/check_env.py` проверяет ключи, доступ к моделям и LibreOffice. Если после clone шаблоны в `data/` весят ~130 байт, это LFS-указатели: поставьте git-lfs и выполните `git lfs pull`.
 
-| Роль | Сервис | Модель (id в API) | Веса / лицензия | Параметры вызова | Где задано |
-|---|---|---|---|---|---|
-| текст (`LLM_MODEL`) — бриф из шаблона, outline, промпты картинок | OpenRouter | `qwen/qwen3.8-27b-20260814` (Qwen3.8-27B) | 27B dense, Apache 2.0 | `template_brief`: temperature 0.5, max_tokens 2000; `outline_writer`: 0.4 / 6000; `image_prompter`: 0.6 / 400; `response_format=json_object`, thinking выключен | `skills/<name>/v<N>/skill.yaml` (действующая версия — `current` в `skills/registry.yaml`), `deckforge/llm/client.py` |
-| зрение (`VLM_MODEL`) — разметка образцов шаблона, VLM-судья | OpenRouter | та же `qwen/qwen3.8-27b-20260814` | — | `template_tagger`: 0.1 / 1500; `audit_judge`: 0.0 / 1200; PNG слайдов как `image_url` (data-URL), thinking выключен | то же |
-| text-to-image (`T2I_MODEL`) — иллюстрации | OpenRouter, тот же ключ (`POST /images`) | `black-forest-labs/flux.2-klein-4b` (FLUX.2 [klein] 4B) | 4B, Apache 2.0 | размер 1024×576, ≤ 4 картинки на колоду, кэш по sha1 промпта | `deckforge/content/images.py` |
-
-Общие настройки (`.env`): `RUN_TIME_BUDGET_S=300` — бюджет времени на весь прогон, то есть на три варианта вместе (ТЗ и уточнение организаторов: все три ≤ 5 минут, независимо от латентности инференса; прежнее имя `DECK_TIME_BUDGET_S` тоже читается). Часы стартуют с начала прогона — разбор шаблона, бриф и outline входят. Колоды стратегий собираются параллельно (`RUN_MAX_PARALLEL_DECKS=3`, `1` — по очереди) под одним дедлайном: если до него остаётся мало времени, пропускаются сначала иллюстрации, затем VLM-судья (непроверенные слайды получают info-находку `C00`), а вызовы моделей после дедлайна не повторяются — вёрстка, детерминированный аудит, автофиксы и экспорт выполняются всегда. Факт — в manifest (`timings_s.deck_total` — через сколько от старта готова колода, `deck_build` — её собственная работа, `time_budget_s`) и в `run.json` (`timings_s.total`), при превышении — предупреждение. `DECK_MAX_PARALLEL_LLM=4` — параллельных вызовов внутри колоды (судья по слайдам, картинки); `LLM_MAX_CONCURRENCY` — общий лимит одновременных запросов на все колоды (0 — без лимита; для инференса с ограничением RPS). Замер на VK Tech с судьёй и картинками: три колоды готовы за 200 с от старта, из них 77 с — бриф и outline; на готовом outline 91 с против 213 с по очереди (ARCHITECTURE, «Бюджет времени на прогон»). Таймаут вызова 120 с, 2 ретрая (`LLMClient`). «Размышления» Qwen3.x выключаются в каждом вызове (`reasoning.enabled=false` для OpenRouter, `chat_template_kwargs.enable_thinking=false` для vLLM / инференса VK; переопределяется `LLM_NO_THINK_JSON`) — иначе они съедают `max_tokens` и втрое замедляют ответ. Переход на инференс VK — только `LLM_BASE_URL` и `LLM_API_KEY`, модель та же.
-
-Провенанс каждой колоды — её `manifest.json`: `models` (`text`, `vision`, `image`, `base_url`), `skills` (версии промптов), `strategy`, `llm_calls` (модель, длительность, токены каждого вызова). Лицензии, HF-ссылки и системные требования — [MODELS.md](docs/MODELS.md).
+Разметка образцов шаблонов датасета — ответы VLM `template_tagger`, привязанные к sha1 файла, — лежит в `data/archetypes/`. С ней `examples/output` воспроизводятся без вызова VLM на этапе разбора. Новый шаблон размечается правилами; VLM-уточнение — `tools/classify_layouts.py --vlm "path/to/template.pptx"`.
 
 ## Запуск
 
 ```bash
 # разбор шаблона: палитра с ролями, шрифты, шкала, сетка, образцы по архетипам
 deckforge parse "path/to/template.pptx" [--json dna.json]
-# генерация трёх вариантов по конфигу: контент (пакет / тема / сам шаблон) → outline (LLM) → иллюстрации (T2I)
-#   → колоды по стратегиям → аудит → safe-автофиксы → PNG → VLM-судья → .pptx / .pdf + manifest.json
-deckforge run --config configs/run.example.yaml            # или: python -m deckforge.cli run -c ... [--png] [--no-judge] [--no-images] [--outline готовый.json]
-# на входе только шаблон: ни брифа, ни файлов — бриф выводит из шаблона скилл template_brief
+
+# три варианта по конфигу: контент → outline (LLM) → колоды по стратегиям → аудит → автофиксы → .pptx / .pdf / .html
+deckforge run --config configs/run.example.yaml [--png] [--no-judge] [--no-images] [--outline готовый.json]
+
+# на входе только шаблон: бриф выводит из него скилл template_brief
 deckforge run --config configs/template_only.yaml [--topic "тема одной строкой"]
+
 # аудит любой колоды по шаблону (колода не меняется; --fix-plan — что чинилось бы)
 deckforge audit deck.pptx -t template.pptx [--ir deck.ir.json] [--contextual] [--fix-plan]
-# экспорт готовой колоды (своей или чужой): .html — один файл без LibreOffice; --pdf / --png — через LibreOffice
+
+# экспорт готовой колоды: .html — без LibreOffice; --pdf / --png — через LibreOffice
 deckforge export deck.pptx [--html out.html] [--pdf] [--png] [--ir deck.ir.json]
-# веб-интерфейс: шаблон → бриф → варианты → аудит с выбором фиксов → экспорт
+
+# веб-интерфейс и HTTP API (Swagger на /docs)
 streamlit run deckforge/ui/app.py
-# HTTP API (Swagger на /docs): GET /templates, POST /generate → GET /jobs/{id} → .../decks/{strategy}/audit | fix | files/{name}
 uvicorn deckforge.api.app:app --reload
 ```
 
-Результат прогона (`out/run/<name>/` или `out/ui/runs/<время>/`): `outline.json`, `dna.json`, `brief.md` (если бриф выведен из темы или из шаблона), на каждую стратегию — `<strategy>.pptx`, `.pdf`, `.html`, `.ir.json`, `.audit.json`, `.manifest.json` (провенанс: версии скиллов/моделей/стратегии, план, образцы, автофиксы, картинки, тайминги) и PNG в `<strategy>/`; сгенерированные иллюстрации — в `images/` (кэш по sha1 входов, повторный прогон их не платит); сводка — `compare.md`, `run.json`.
+`deckforge …` — то же, что `python -m deckforge.cli …`. API: `GET /templates`, `POST /generate` → `GET /jobs/{id}` → `…/decks/{strategy}/audit` | `fix` | `files/{name}`.
 
-### UI
+### Результат прогона
 
-Один экран, пять шагов: шаблон (датасет или свой .pptx) → контент (только шаблон / тема одной строкой / бриф и файлы .md/.txt/.docx/.pdf, .json/.csv/.xlsx) → три варианта с превью → аудит с выбором фиксов и подсветкой находок на слайде → скачивание .pptx / .pdf / .html / json. В режимах «только шаблон» и «тема» выведенный бриф показывается рядом с вариантами и лежит в прогоне как `brief.md`.
+```text
+out/run/<name>/                      # или out/ui/runs/<время>/ для UI
+├── outline.json                     # структура и тексты — один на все стратегии
+├── brief.md                         # бриф, если выведен из темы или из шаблона
+├── dna.json                         # Template DNA шаблона
+├── <strategy>.pptx | .pdf | .html   # колода и экспорт
+├── <strategy>.ir.json               # DeckIR после автофиксов
+├── <strategy>.audit.json            # находки аудита
+├── <strategy>.manifest.json         # провенанс: скиллы, модели, стратегия, план, автофиксы, картинки, тайминги
+├── <strategy>/                      # PNG-превью слайдов
+├── images/                          # иллюстрации: кэш по sha1 входов, повторный прогон их не оплачивает
+├── compare.md                       # сравнение вариантов
+└── run.json                         # сводка прогона
+```
 
-![Шаблон и параметры: палитра по использованию, шрифты, шкала, образцы по архетипам, контактный лист](docs/img/ui_1_setup.png)
-
-![Варианты: сводка по стратегиям и PNG-превью каждой колоды](docs/img/ui_2_variants.png)
-
-![Аудит: метрики, фиксы по выбору (безопасные и «по выбору»), подсветка находок на слайде](docs/img/ui_3_audit.png)
-
-HTML-экспорт — собственный рендер по XML готовой колоды (`deckforge/export/html.py`), а не растр: один самодостаточный файл, текст остаётся текстом, диаграммы — SVG, таблицы — `<table>`, картинки вшиты (WebP), фон/декор мастера и лейаута на месте. Открывается с `file://` в Chrome, Firefox, Яндекс и WebKit (движок Safari); ←/→ — листать, F — режим показа, печать — слайд на страницу. Встроенные шрифты датасета (Play) хранятся в .pptx в сжатом EOT и в HTML не вшиваются — при наличии сети подключаются с Google Fonts (OFL), офлайн — Arial. Примеры: `examples/output/<template>/<strategy>.html`.
-
-## Docker
+### Docker
 
 ```bash
-cp .env.example .env                 # ключи и модели; без ключей работают parse и run --outline --no-judge --no-images
+cp .env.example .env                 # ключи и модели; без ключа работают parse и run --outline --no-judge --no-images
 docker compose build                 # python 3.12 + LibreOffice Impress, ≈1,6 ГБ
 docker compose up                    # API http://localhost:8000/docs и UI http://localhost:8501
 docker compose run --rm cli run -c configs/run.example.yaml --png     # прогон конфигом → ./out/run/vk_tech
 docker compose run --rm cli parse "data/templates/VK Tech шаблон.pptx"
 ```
 
-`./data` (шаблоны из Git LFS и разметка их образцов `data/archetypes` — ответы VLM, с которыми собраны примеры; без API чистый clone размечает шаблоны датасета так же), `./examples`, `./out` (в т.ч. рабочий кэш разметки `out/archetypes`) и `./configs` монтируются с хоста. Шрифтов Play/Montserrat в образе нет — LibreOffice подставляет DejaVu/Liberation, поэтому PDF/PNG из контейнера чуть отличаются от локальных; .pptx и .html от этого не зависят.
+С хоста монтируются:
+- `./data` — шаблоны из Git LFS и разметка их образцов `data/archetypes`;
+- `./examples`;
+- `./out` — в том числе рабочий кэш разметки `out/archetypes`;
+- `./configs`.
 
-Инструменты разработчика: `tools/pptx_xray.py` (структура шаблона), `tools/render_deck.py` (PNG-превью и PDF), `tools/build_variants.py` (три стратегии на одном готовом outline без LLM: по умолчанию `examples/content_pack/outline.json` × шаблон → `out/variants/`), `tools/browser_check.py` (HTML-колоды и UI в Chromium / Firefox / WebKit через Playwright: `pip install playwright && python -m playwright install chromium firefox webkit` → `out/browsers/report.md`). Примеры: `examples/output/<template>/` — 4 шаблона × 3 стратегии (.pptx/.pdf/.html с судьёй и картинками). Контент-пакет датасета — это только три шаблона, поэтому на входе примеров нет ничего, кроме .pptx: бриф выведен из шаблона VK Tech (`examples/output/vk_tech/brief.md`, `content_source: template`), его `outline.json` идёт на остальные три шаблона — один контент × 4 шаблона (`configs/final/*.yaml`; пути в manifest относительные). `examples/content_pack/` — синтетический пакет «Пульс команды»: пример ступени «бриф и файлы» и фикстура тестов (в нём есть ряды, таблица и KPI), к датасету не относится. Презентация для защиты — `docs/deckforge_pitch.pptx`.
+Шрифтов Play и Montserrat в образе нет, LibreOffice подставляет DejaVu или Liberation. Поэтому PDF и PNG из контейнера чуть отличаются от локальных, а .pptx и .html — нет.
 
-## Стратегии вёрстки
+## Переменные окружения
 
-`strategies/{executive,narrative,visual}.yaml` — три варианта одной и той же презентации. Стратегия не меняет стиль шаблона, а задаёт плотность (число слайдов, буллетов, слов) и способ показа данных (таблица / диаграмма / крупные цифры). Для кого какой: **executive** — руководителю на 5 минут, читается без докладчика; **narrative** — доклад со сцены, обучение; **visual** — публичная защита, конференция (`audience_hint` в YAML, показывается в UI и `compare.md`). Подробнее — [ARCHITECTURE.md](docs/ARCHITECTURE.md#три-стратегии-ось-различий).
+Рабочая конфигурация — [.env.example](.env.example): `cp .env.example .env` и вписать `LLM_API_KEY`. Файл `.env` с ключом в репозиторий не попадает.
+
+| Переменная | По умолчанию | Назначение |
+|---|---|---|
+| `LLM_BASE_URL` | `https://openrouter.ai/api/v1` | OpenAI-совместимый endpoint; для инференса VK меняются только он и ключ |
+| `LLM_API_KEY` | — | ключ API. Без него работают `parse`, `run --outline --no-judge --no-images` и режим UI «Готовый outline» |
+| `LLM_MODEL` | `qwen/qwen3.8-27b-20260814` | текст: бриф из шаблона, outline, промпты картинок |
+| `VLM_MODEL` | `qwen/qwen3.8-27b-20260814` | зрение: разметка образцов шаблона, VLM-судья |
+| `T2I_MODEL` | `black-forest-labs/flux.2-klein-4b` | иллюстрации; пустое значение отключает картинки |
+| `T2I_BASE_URL`, `T2I_API_KEY` | как у LLM | другой провайдер для картинок — задать оба |
+| `SOFFICE_PATH` | автопоиск | путь к LibreOffice (PDF, PNG, VLM-судья) |
+| `RUN_TIME_BUDGET_S` | `300` | бюджет на весь прогон — три варианта вместе, от старта; прежнее имя `DECK_TIME_BUDGET_S` тоже читается |
+| `RUN_MAX_PARALLEL_DECKS` | `3` | сколько колод собирать параллельно; `1` — по очереди |
+| `DECK_MAX_PARALLEL_LLM` | `4` | параллельных вызовов модели внутри колоды (судья по слайдам, картинки) |
+| `LLM_MAX_CONCURRENCY` | `0` | общий лимит одновременных запросов на все колоды; `0` — без лимита (для инференса с ограничением RPS) |
+| `LLM_NO_THINK_JSON` | выключение reasoning для OpenRouter и vLLM | JSON с параметрами, которые выключают «размышления» Qwen3.x в каждом вызове |
+| `DECKFORGE_PUBLIC` | — | `1` — режим публичного стенда: генерации всех посетителей по одной, судья по умолчанию выключен |
+| `DECKFORGE_LFS_BASE` | — | откуда докачать шаблоны датасета, если хостинг клонировал репозиторий без Git LFS |
+| `DECKFORGE_FONTS_DIR` | — | дополнительная папка с TTF для метрик текста в аудите |
+
+## Инференс и модели
+
+Все колоды в `examples/output/` сгенерированы **через OpenRouter** (OpenAI-совместимый API) этими моделями и с этими параметрами. С `.env.example` и своим ключом прогон воспроизводится.
+
+| Роль | Модель | Веса, лицензия | Параметры вызова (temperature / max_tokens) |
+|---|---|---|---|
+| **текст** (`LLM_MODEL`): бриф из шаблона, outline, промпты картинок | Qwen3.8-27B<br>`qwen/qwen3.8-27b-20260814` | 27B dense, Apache 2.0 | `template_brief` 0.5 / 2000 · `outline_writer` 0.4 / 6000 · `image_prompter` 0.6 / 400; `response_format=json_object` |
+| **зрение** (`VLM_MODEL`): разметка образцов, VLM-судья | та же модель | — | `template_tagger` 0.1 / 1500 · `audit_judge` 0.0 / 1200; PNG слайда как `image_url` |
+| **text-to-image** (`T2I_MODEL`): иллюстрации | FLUX.2 [klein] 4B<br>`black-forest-labs/flux.2-klein-4b` | 4B, Apache 2.0 | 1024×576, ≤ 4 картинки на колоду, кэш по sha1 промпта |
+
+Где задано:
+- параметры вызовов — `skills/<name>/v<N>/skill.yaml`, действующая версия — `current` в `skills/registry.yaml`;
+- клиент — `deckforge/llm/client.py`;
+- картинки — `deckforge/content/images.py`.
+
+- **Бюджет времени.** Три колоды собираются параллельно под одним дедлайном `RUN_TIME_BUDGET_S`. Когда до него остаётся мало, сначала пропускаются иллюстрации, затем VLM-судья; вёрстка, детерминированный аудит, автофиксы и экспорт выполняются всегда.
+- **Замер.** VK Tech с судьёй и картинками: три колоды готовы за 200 с от старта. На готовом outline — 91 с против 213 с при сборке по очереди. Подробно — [ARCHITECTURE, «Бюджет времени на прогон»](docs/ARCHITECTURE.md#бюджет-времени-на-прогон-три-варианта--5-мин).
+- **Вызовы.** Таймаут 120 с, 2 ретрая. «Размышления» Qwen3.x выключены в каждом вызове: иначе они съедают `max_tokens` и втрое замедляют ответ.
+- **Переход на инференс VK** — меняются только `LLM_BASE_URL` и `LLM_API_KEY`, модель та же.
+
+Провенанс каждой колоды — её `manifest.json`: модели, версии скиллов, стратегия, журнал вызовов LLM с длительностью и токенами. Лицензии, ссылки на Hugging Face и системные требования — [MODELS.md](docs/MODELS.md).
+
+## Три стратегии
+
+Стратегия не меняет стиль шаблона. Она задаёт, **сколько** сказать на слайде и **в какой форме** показать данные — `strategies/{executive,narrative,visual}.yaml`.
+
+| | executive | narrative | visual |
+|---|---|---|---|
+| для кого | руководителю на 5 минут, читается без докладчика | доклад со сцены, обучение, онбординг | публичная защита, конференция |
+| объём (при ориентире 12) | 10–11 слайдов | 12–15 | 10–12 |
+| числовой ряд | таблица | диаграмма | диаграмма |
+| ключевые метрики | KPI или карточки | KPI, по слайду | KPI |
+| шаги процесса | образец шаблона или нумерованный список | образец шаблона, без него — схема | схема из автофигур |
+| разделители разделов | нет | да | нет |
+
+<p align="center">
+  <img src="docs/img/strategies.png" alt="Первые шесть слайдов трёх вариантов на шаблоне VK Tech" width="100%">
+</p>
+
+Почему ось различий именно такая и как стратегия применяется в пайплайне — [ARCHITECTURE, «Три стратегии»](docs/ARCHITECTURE.md#три-стратегии-ось-различий).
+
+## Интерфейс
+
+Один экран, пять шагов:
+1. шаблон — из датасета или свой .pptx;
+2. контент — только шаблон, тема одной строкой или бриф с файлами (.md, .txt, .docx, .pdf, .json, .csv, .xlsx);
+3. три варианта с превью;
+4. аудит с выбором фиксов и подсветкой находок на слайде;
+5. скачивание .pptx / .pdf / .html / json.
+
+**Шаблон разобран:** палитра по фактическому использованию, шрифты, шкала, образцы по архетипам, слайды шаблона.
+
+![Шаблон разобран: палитра, шрифты, шкала, образцы по архетипам, контактный лист слайдов шаблона](docs/img/ui_1_setup.png)
+
+**Варианты** (режим «Только шаблон»):
+- сравнение стратегий и для кого каждая;
+- бриф, выведенный из шаблона;
+- PNG-превью колоды.
+
+Три колоды собраны параллельно за 62 с.
+
+![Варианты: таблица сравнения стратегий, бриф, PNG-превью колоды executive](docs/img/ui_2_variants.png)
+
+**Аудит** (контент «Пульс команды», VLM-судья включён):
+- ошибка исправлена автофиксом (1 → 0);
+- две находки судьи;
+- фиксы по выбору;
+- подсветка находок на слайде.
+
+![Аудит: метрики, фиксы по выбору, подсветка находок на слайде](docs/img/ui_3_audit.png)
+
+HTML-экспорт — собственный рендер по XML готовой колоды (`deckforge/export/html.py`), а не растр:
+- текст остаётся текстом, диаграммы — SVG, таблицы — `<table>`, картинки вшиты;
+- фон и декор мастера и лейаута на месте;
+- открывается с `file://`: ←/→ — листать, F — режим показа, печать — слайд на страницу.
+
+## Примеры
+
+Контент-пакет датасета — это только три шаблона, поэтому примеры собраны в режиме «только шаблон». Бриф выведен из шаблона VK Tech ([brief.md](examples/output/vk_tech/brief.md)), его [outline](examples/output/vk_tech/outline.json) прогнан на всех четырёх шаблонах (`configs/final/*.yaml`). Детерминированных ошибок аудита нет ни в одной из 12 колод.
+
+| Шаблон | executive | narrative | visual | Сравнение |
+|---|---|---|---|---|
+| VK Tech | [.pptx](examples/output/vk_tech/executive.pptx) · [.html](https://kireev-duty.github.io/deckforge/vk_tech/executive.html) · 11 сл. | [.pptx](examples/output/vk_tech/narrative.pptx) · [.html](https://kireev-duty.github.io/deckforge/vk_tech/narrative.html) · 15 сл. | [.pptx](examples/output/vk_tech/visual.pptx) · [.html](https://kireev-duty.github.io/deckforge/vk_tech/visual.html) · 12 сл. | [compare.md](examples/output/vk_tech/compare.md) |
+| VK Education | [.pptx](examples/output/vk_education/executive.pptx) · [.html](https://kireev-duty.github.io/deckforge/vk_education/executive.html) · 11 сл. | [.pptx](examples/output/vk_education/narrative.pptx) · [.html](https://kireev-duty.github.io/deckforge/vk_education/narrative.html) · 15 сл. | [.pptx](examples/output/vk_education/visual.pptx) · [.html](https://kireev-duty.github.io/deckforge/vk_education/visual.html) · 12 сл. | [compare.md](examples/output/vk_education/compare.md) |
+| VK WorkSpace | [.pptx](examples/output/vk_workspace/executive.pptx) · [.html](https://kireev-duty.github.io/deckforge/vk_workspace/executive.html) · 11 сл. | [.pptx](examples/output/vk_workspace/narrative.pptx) · [.html](https://kireev-duty.github.io/deckforge/vk_workspace/narrative.html) · 12 сл. | [.pptx](examples/output/vk_workspace/visual.pptx) · [.html](https://kireev-duty.github.io/deckforge/vk_workspace/visual.html) · 12 сл. | [compare.md](examples/output/vk_workspace/compare.md) |
+| ЛЦТ 2026 (holdout) | [.pptx](examples/output/lct2026_holdout/executive.pptx) · [.html](https://kireev-duty.github.io/deckforge/lct2026_holdout/executive.html) · 11 сл. | [.pptx](examples/output/lct2026_holdout/narrative.pptx) · [.html](https://kireev-duty.github.io/deckforge/lct2026_holdout/narrative.html) · 12 сл. | [.pptx](examples/output/lct2026_holdout/visual.pptx) · [.html](https://kireev-duty.github.io/deckforge/lct2026_holdout/visual.html) · 12 сл. | [compare.md](examples/output/lct2026_holdout/compare.md) |
+
+Рядом с каждой колодой лежат её .pdf, `manifest.json`, `ir.json` и `audit.json`.
+
+Ось визуализации данных (таблица ↔ диаграмма ↔ KPI) лучше видна на синтетическом пакете «Пульс команды» (`examples/content_pack`), где есть ряды, таблица и метрики. Он воспроизводится без LLM: `tools/build_variants.py "data/templates/VK Tech шаблон.pptx"`.
+
+## Структура репозитория
+
+```text
+deckforge/          пакет; слои зависят только «вниз»
+├── core/           контракты между слоями (ir.py), чтение OOXML, каталог автофиксов
+├── llm/            клиент OpenAI-совместимого API, загрузка скиллов
+├── parsing/        .pptx → Template DNA
+├── content/        бриф из шаблона, контент-пакет, outline, иллюстрации
+├── layout/         стратегия → план слайдов, выбор образца, подгонка текста, автофиксы
+├── render/         DeckIR → .pptx клонированием образцов
+├── audit/          детерминированные проверки и VLM-судья
+├── export/         LibreOffice (PDF, PNG), HTML-рендер
+├── pipeline/       этапы прогона, бюджет времени, реестр шаблонов
+└── ui/ api/ cli.py Streamlit, FastAPI, CLI
+skills/             промпты, JSON-схемы и параметры моделей: <скилл>/v<N>/ + registry.yaml
+strategies/         executive / narrative / visual
+configs/            конфиги прогона: run.example.yaml, template_only.yaml, final/*.yaml
+data/               шаблоны датасета, holdout, data/wild и разметка образцов (Git LFS)
+examples/           12 готовых колод (output/) и синтетический контент-пакет
+docs/               документация и питч-дек
+tools/              служебные скрипты: разбор шаблона, рендер, стресс-тест, браузеры, галерея
+tests/              pytest: разбор шаблонов, каждая проверка аудита на своей фикстуре, e2e на кассетах LLM
+deploy/             запасной стенд — Hugging Face Space
+```
+
+## Документация
+
+| Документ | О чём |
+|---|---|
+| [ARCHITECTURE.md](docs/ARCHITECTURE.md) | пайплайн, границы слоёв, режимы входа, ключевые решения, три стратегии, бюджет времени |
+| [AUDIT.md](docs/AUDIT.md) | все проверки: детерминированные и контекстуальные, покрытие тестами, автофиксы |
+| [MODELS.md](docs/MODELS.md) | модели, лицензии, ссылки на Hugging Face, системные требования |
+| [DEMO.md](docs/DEMO.md) | сценарий живого прогона и видео-демо (≤ 7 минут) на незнакомом шаблоне |
+| [DEVELOPMENT.md](docs/DEVELOPMENT.md) | окружение, служебные скрипты, демо-стенд, правила для кода |
+| [PLAN.md](docs/PLAN.md) · [BACKLOG.md](docs/BACKLOG.md) | план разработки и чек-лист сдачи · известные дефекты и что дальше |
+
+Презентация для защиты — [docs/deckforge_pitch.pptx](docs/deckforge_pitch.pptx).
 
 ## Ограничения
 
-- Только модели с открытыми весами (Apache 2.0 / MIT) до 35B; text-to-image до 20B.
-- Десктопные браузеры. HTML-экспорт проверен в Chrome, Firefox 156 и Яндекс.Браузере (Chromium 150) — слайды рендерятся пиксель в пиксель; Streamlit UI — в тех же трёх браузерах. Safari — через его движок WebKit (Playwright, `tools/browser_check.py`): 12 HTML-колод без ошибок JS, расхождение с Chromium ≤ 1 % яркости; UI проходит весь сценарий (шаблон → генерация → вкладки вариантов). Живой Safari на macOS не проверялся (нет Mac); специфичных для WebKit возможностей экспорт не использует (SVG, `@font-face`, flex, `clip-path`).
-- Целевой объём 10–15 слайдов или заданный пользователем (`target_slides` сдвигает диапазоны стратегий: executive 10–11, narrative 12–15, visual 10–12 при объёме 12; стратегия может дать меньше, если контента мало — например 5). Три варианта собираются параллельно и укладываются в 5 минут вместе независимо от латентности инференса — бюджет прогона `RUN_TIME_BUDGET_S`, см. «Инференс и модели».
-- Демо-стенд ([Streamlit Community Cloud](https://deckforge.streamlit.app), бесплатный): генерации всех посетителей идут по одной, остальные видят «В очереди»; VLM-судья по умолчанию выключен (+1–2 мин на колоду, включается в боковой панели); иллюстрации выключены. Приложение засыпает без посетителей — на заставке нужно нажать «Yes, get this app back up», запуск занимает 1–2 минуты. Шрифта Play (шаблоны VK) на стенде нет, PNG-превью и PDF рисуются с подменой; .pptx и .html от этого не зависят. Если ключ LLM стенда недоступен, остаётся режим «Готовый outline» без LLM. Устройство стенда — [DEVELOPMENT.md](docs/DEVELOPMENT.md#демо-стенд).
-- Streamlit UI выполняет прогон in-process: новый прогон, запущенный поверх идущего, обрывает предыдущий (папка прогона остаётся без `run.json` и части колод) — дождитесь завершения; параллельные задания — через API (`POST /generate`, job'ы в пуле).
-- Схемы (замена SmartArt): шаги процесса рисуются нативными автофигурами — ряд шевронов с номерами и подписями, одной группой, в цветах палитры и шрифте шаблона, кегли — из его шкалы (`render/diagrams.py`). visual рисует схему всегда, narrative — если в шаблоне нет своего process-образца, executive оставляет образец шаблона или нумерованный список (`process_form` в стратегии). Это редактируемые фигуры, а не объект SmartArt (`dgm`): в PowerPoint их двигают и правят как обычные фигуры, «Преобразовать в SmartArt» к ним не применяется. Схемы cycle / pyramid пока нет — только процесс, 2–6 шагов.
-- Пиктограммы: иконки берутся только из образцов самого шаблона (`SlotKind.ICON`) — на шаблоне без иконок их не будет; собственная библиотека иконок — в бэклоге.
-- В `.pptx` объекты нативные (текст, фигуры, chart, table, picture) — открытие, сохранение и редактируемость проверены в PowerPoint (Microsoft 365, `tools/powerpoint_check.py`); в `.html` диаграммы рисуются SVG по данным chart, таблицы — HTML-таблицами.
+- **Модели:** только открытые веса (Apache 2.0 / MIT) до 35B; text-to-image — до 20B.
+- **Объём:** 10–15 слайдов или заданный пользователем (`target_slides` сдвигает диапазоны стратегий). Если контента мало, стратегия может дать меньше.
+- **Браузеры:** только десктопные.
+  - HTML-экспорт и Streamlit UI проверены в Chrome, Firefox и Яндекс.Браузере.
+  - Safari — через его движок WebKit (Playwright, `tools/browser_check.py`): 12 HTML-колод без ошибок JS, UI проходит весь сценарий. Живой Safari на macOS не проверялся.
+- **Демо-стенд** (бесплатный Streamlit Community Cloud):
+  - генерации всех посетителей идут по одной;
+  - VLM-судья по умолчанию выключен, иллюстрации выключены;
+  - шрифтов Play и Montserrat на стенде нет, поэтому PNG-превью и PDF рисуются с подменой; .pptx и .html от этого не зависят.
+
+  Устройство стенда — [DEVELOPMENT, «Демо-стенд»](docs/DEVELOPMENT.md#демо-стенд).
+- **UI:** прогон выполняется in-process. Новый прогон, запущенный поверх идущего, обрывает предыдущий. Параллельные задания — через API (`POST /generate`).
+- **Схемы (замена SmartArt):** только процесс из 2–6 шагов — ряд шевронов из автофигур в цветах и шрифте шаблона. Это редактируемые фигуры, а не объект SmartArt; схем cycle и pyramid пока нет.
+- **Пиктограммы** берутся только из образцов самого шаблона: на шаблоне без иконок их не будет.
+- **Проверка в PowerPoint:** в .pptx только нативные объекты. Открытие, сохранение и редактируемость проверены в PowerPoint (Microsoft 365, `tools/powerpoint_check.py`).
+
+## Лицензия
+
+Код — [MIT](LICENSE). Шаблоны презентаций в `data/` и материалы ТЗ в `docs/tz/` принадлежат их правообладателям (VK, организаторы ЛЦТ и авторы шаблонов из `data/wild`) и под лицензию MIT не подпадают.
+
+Команда Ashen One — кейс VK Tech «Цифровой дизайнер презентаций», хакатон «Лидеры цифровой трансформации 2026».

@@ -33,7 +33,9 @@ ALIASES: dict[str, tuple[tuple[str, ...], tuple[str, ...]]] = {
 }
 DEFAULT_ALIAS = "arial"
 # ширина гарнитуры относительно Arial, когда меряем по прокси
-WIDTH_FACTOR = {"play": 0.9, "montserrat": 1.1}
+# Play: кириллица в рендере LibreOffice (встроенный шрифт VK Tech / VK WorkSpace) шире Arial×0,9 на 7–12 % —
+# замер строк абзаца карточки WorkSpace; при 0,9 L03 не видел переполнения на строку
+WIDTH_FACTOR = {"play": 1.0, "montserrat": 1.1}
 AVG_CHAR_WIDTH = 0.5  # фолбэк без TTF, в долях кегля
 LINE_HEIGHT = 1.2  # single, в долях кегля
 MEASURE_PT = 100  # ширина линейна по кеглю

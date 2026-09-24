@@ -682,3 +682,25 @@ def test_paragraph_slides_merge_into_cards() -> None:
     merged = merge_pair([a, b], max_bullets=6)
     assert merged is not None and len(merged) == 1
     assert merged[0].bullets == ["один", "два", "три", "Абзац про интеграцию."] and not merged[0].paragraphs
+
+
+def test_paragraph_goes_to_roomiest_text_slot() -> None:
+    """VK WorkSpace slide15: крупные рамки карточек размечены подписями, единственное тело — однострочное
+    примечание внизу. Абзац идёт в самую вместительную рамку, а не режется «…» в примечании."""
+    from deckforge.layout.builder import build_slide
+
+    slots = [_slot("t", SlotKind.TITLE, 0.05, 0.05, 0.6, 0.1, max_chars=60, size=36),
+             *[_slot(f"card{i}", SlotKind.LABEL, 0.04 + 0.31 * i, 0.27, 0.3, 0.29, max_chars=200) for i in range(3)],
+             _slot("note", SlotKind.BODY, 0.03, 0.81, 0.54, 0.06, max_chars=66)]
+    slots[-1].max_lines = slots[-1].max_items = 1
+    ex = Exemplar(id="slide15", source_index=0, layout_name="a", archetype=Archetype.CARDS, slots=slots)
+    para = ("Система легко подключается к текущим корпоративным сервисам. Это позволяет избежать разрыва "
+            "бизнес-процессов и сохранить привычные инструменты команд.")
+    ir, left = build_slide(0, OutlineSlide(idx=1, archetype=Archetype.IMAGE_TEXT, title="Т", paragraphs=[para]),
+                           ex, SLIDE_H, {})
+    texts = {el.slot_id: "".join(r.text for p in el.paragraphs for r in p.runs) for el in ir.elements if el.paragraphs}
+    assert left is None and texts.get("card0") == para and "note" not in texts, texts
+    # короткий абзац влезает в тело — порядок чтения не меняется
+    ir, _ = build_slide(0, OutlineSlide(idx=1, archetype=Archetype.IMAGE_TEXT, title="Т", paragraphs=["Коротко."]),
+                        ex, SLIDE_H, {})
+    assert {el.slot_id for el in ir.elements if el.paragraphs} == {"t", "note"}

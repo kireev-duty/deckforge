@@ -61,6 +61,9 @@ JUDGE_RESERVE_S = 30.0
 EXPORT_RESERVE_S = 15.0
 # как часто поток прогона разбирает очередь сообщений параллельных колод (с)
 PROGRESS_POLL_S = 0.3
+# проходов автофиксов: перенос строк дискретный, и одного уменьшения кегля бывает мало (ЛЦТ2026:
+# заголовок 36 → 27,9 pt — всё ещё три строки в боксе на две); следующий — пока ошибок становится меньше
+AUTOFIX_ROUNDS = 2
 
 # ступени лестницы входа (OutlineStep.content_source) — для CLI/UI и run.json
 CONTENT_SOURCE_NOTE = {
@@ -746,21 +749,31 @@ def _portable_report(report: AuditReport, base: Path) -> str:
 
 def _autofix(ir: DeckIR, report: AuditReport, parsed: ParsedTemplate, pptx_out: Path,
              findings: list[Finding]) -> tuple[DeckIR, AuditReport, dict]:
-    """Фиксы → правка IR → рендер → детерминированный аудит, один проход."""
+    """Фиксы → правка IR → рендер → детерминированный аудит. Следующий проход (до AUTOFIX_ROUNDS) — к тем же
+    находкам (проверка, слайд, элемент), что остались после рендера, пока ошибок становится меньше."""
     before = audit_summary(report)
     info = {"applied": 0, "skipped": 0, "before": {"errors": before["errors"], "warnings": before["warnings"]},
             "after": {"errors": before["errors"], "warnings": before["warnings"]}, "items": []}
-    if not findings:
-        return ir, report, info
-    fr = apply_fixes(ir, findings, parsed.dna)
-    info["applied"], info["skipped"], info["items"] = len(fr.applied), len(fr.skipped), fr.applied + fr.skipped
-    if not fr.changed:
-        return ir, report, info
-    render_pptx(fr.ir, parsed.template, parsed.exemplars, pptx_out)
-    report = audit_deck(pptx_out, parsed.dna, fr.ir)
-    after = audit_summary(report)
-    info["after"] = {"errors": after["errors"], "warnings": after["warnings"]}
-    return fr.ir, report, info
+    keys = {(f.check_id, f.slide_idx, f.element_id) for f in findings}
+    errors = before["errors"]
+    for _ in range(AUTOFIX_ROUNDS):
+        if not findings:
+            break
+        fr = apply_fixes(ir, findings, parsed.dna)
+        info["applied"] += len(fr.applied)
+        info["skipped"] += len(fr.skipped)
+        info["items"] += fr.applied + fr.skipped
+        if not fr.changed:
+            break
+        render_pptx(fr.ir, parsed.template, parsed.exemplars, pptx_out)
+        ir, report = fr.ir, audit_deck(pptx_out, parsed.dna, fr.ir)
+        after = audit_summary(report)
+        info["after"] = {"errors": after["errors"], "warnings": after["warnings"]}
+        if not 0 < after["errors"] < errors:
+            break
+        errors = after["errors"]
+        findings = [f for f in plan_fixes(report, "all") if (f.check_id, f.slide_idx, f.element_id) in keys]
+    return ir, report, info
 
 
 def _render_pngs(pptx: Path, out_dir: Path, dpi: int, contact: bool) -> tuple[list[Path], str | None]:

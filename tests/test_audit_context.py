@@ -5,6 +5,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import pytest
+
 from deckforge.audit import audit_deck, report_markdown, summary
 from deckforge.audit.context import AuditContext
 from deckforge.audit.deterministic import CHECKS
@@ -38,7 +40,9 @@ def test_text_measurer_wraps_and_scales() -> None:
     assert len(lines) >= 2 and lines[0].startswith("одно")
     assert m.block_height(["a", "b"], 18, 1000) > m.block_height(["a"], 18, 1000)
     if fonts_available():
-        assert TextMeasurer("Play").width("текст", 18) < m.width("текст", 18)  # поправка прокси
+        # поправка прокси: кириллица Play в рендере LibreOffice — как Arial (замер по WorkSpace), Montserrat шире
+        assert TextMeasurer("Play").width("текст", 18) == pytest.approx(m.width("текст", 18))
+        assert TextMeasurer("Montserrat").width("текст", 18) > m.width("текст", 18)
 
 
 def _generated_deck(template_path, tmp_path: Path, strategy: str = "narrative"):

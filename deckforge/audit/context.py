@@ -123,6 +123,17 @@ class AuditContext:
         """id пустых плейсхолдеров образца: рендер их убирает, это не удаление фиксированного элемента."""
         return {sid for sid, (_, _, empty_ph) in self._exemplar_shapes(exemplar.id).items() if empty_ph}
 
+    def exemplar_records(self, exemplar: Exemplar) -> dict[str, ShapeRec]:
+        """id → фигура слайда-образца в шаблоне, прочитанная как фигуры колоды (текст с кеглями, поля, якорь)."""
+        cache = self.__dict__.setdefault("_exemplar_records", {})
+        if exemplar.id not in cache:
+            tp = self.template_pkg
+            ctx = PartCtx.for_slide(tp, tp.slides[exemplar.source_index]) \
+                if tp is not None and exemplar.source_index < len(tp.slides) else None
+            recs = (read_shape(ctx, sp, z) for z, sp in enumerate(iter_shapes(ctx.sp_tree))) if ctx is not None else ()
+            cache[exemplar.id] = {r.id: r for r in recs if r is not None}
+        return cache[exemplar.id]
+
     def _exemplar_shapes(self, exemplar_id: str) -> dict[str, tuple[tuple[int, int, int, int], str, bool]]:
         cache = self.__dict__.setdefault("_exemplar_cache", {})
         if exemplar_id in cache:

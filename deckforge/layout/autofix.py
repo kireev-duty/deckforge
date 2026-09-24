@@ -101,9 +101,10 @@ def fix_shrink_font(slide: SlideIR, el: Element, slot: Slot | None, f: Finding) 
     else:
         floor = text_min_scale(slot) if slot is not None else MIN_SIZE_SCALE
     min_size = (base or current) * floor
-    new_size = max(round(current * scale, 1), round(min_size, 1))
-    if new_size >= current:
-        return None  # кегль уже на пороге — дальше только replan
+    new_size = min(current, max(round(current * scale, 1), round(min_size, 1)))
+    if new_size >= current and el.kind == SlotKind.NUMBER:
+        return None  # крупная цифра на пороге — дальше только replan
+    # кегль уже на пороге (второй проход после рендера) — остаётся подрезать текст
     factor = new_size / current
     cut = ""
     if el.kind != SlotKind.NUMBER and current * scale < min_size:
@@ -126,7 +127,10 @@ def fix_shrink_font(slide: SlideIR, el: Element, slot: Slot | None, f: Finding) 
                 if short and short != core:
                     r.text = short + suffix
                     cut = ", текст укорочен"
-    _scale_runs(el, factor, current)
+    if factor >= 1 and not cut:
+        return None  # кегль на пороге и резать нечего — дальше только replan
+    if factor < 1:
+        _scale_runs(el, factor, current)
     return f"{current:g} pt", f"{new_size:g} pt{cut}"
 
 

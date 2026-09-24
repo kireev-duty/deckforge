@@ -20,6 +20,7 @@ CONTRAST_MIN = 4.5
 CONTRAST_MIN_LARGE = 3.0  # WCAG для крупного текста
 LARGE_PT, LARGE_BOLD_PT = 24.0, 18.7
 EDGE_ZONE = 0.12  # зона колонтитулов, как FIXED_TEXT_ZONE в классификаторе
+CARD_DECOR_MAX_SHARE = 0.25  # = render/pptx_writer.CARD_DECOR_MAX_SHARE: декор уходит с пустой карточкой
 
 
 # ──────────────────────────── T01 ────────────────────────────
@@ -171,7 +172,8 @@ def check_T05(ctx: AuditContext) -> list[Finding]:
             plates = {s.plate_id: s.plate_max_w or 0 for s in slide.exemplar.slots if s.plate_id}
             for fid in slide.exemplar.fixed:
                 bb = ref.get(fid)
-                if bb is None or _is_zone_caption(ctx, slide, fid, bb) or _is_photo_prompt_frame(ctx, slide, bb, ref):
+                if bb is None or _is_zone_caption(ctx, slide, fid, bb) or _is_photo_prompt_frame(ctx, slide, bb, ref) \
+                        or _is_empty_card_decor(slide, bb):
                     continue
                 if fid in empty_ph:
                     # пустой плейсхолдер образца рендер убирает намеренно
@@ -225,6 +227,22 @@ def _is_photo_prompt_frame(ctx: AuditContext, slide: SlideCtx, bb: tuple[int, in
             continue
         cx, cy = pb[0] + pb[2] / 2, pb[1] + pb[3] / 2
         if bb[0] <= cx <= bb[0] + bb[2] and bb[1] <= cy <= bb[1] + bb[3]:
+            return True
+    return False
+
+
+def _is_empty_card_decor(slide: SlideCtx, bb: tuple[int, int, int, int]) -> bool:
+    """Мелкий декор (значок, плашка) внутри незаполненного слота с рамкой, которого в колоде нет: пустую карточку
+    рендер убирает вместе с её декором (VK WorkSpace slide5: значок иконки VLM пометил фиксированным)."""
+    if slide.exemplar is None:
+        return False
+    filled = {e.slot_id for e in slide.ir.elements} if slide.ir is not None else set()
+    x, y, w, h = bb
+    for s in slide.exemplar.slots:
+        b = s.box
+        if s.id in filled or slide.by_id(s.id) is not None or w * h > CARD_DECOR_MAX_SHARE * b.w * b.h:
+            continue
+        if b.x <= x and b.y <= y and x + w <= b.x2 and y + h <= b.y2:
             return True
     return False
 

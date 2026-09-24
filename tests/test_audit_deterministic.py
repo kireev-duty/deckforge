@@ -8,7 +8,7 @@ import pytest
 
 from deckforge.audit import audit_deck, report_markdown, summary
 from deckforge.audit.deterministic import CHECKS, check_by_prefix
-from tests.fixtures.bad_slides import FIXTURES, make_clean
+from tests.fixtures.bad_slides import FIXTURES, make_clean, make_L02_title_under_card
 
 PREFIXES = [c[:3] for c in CHECKS]
 
@@ -93,3 +93,14 @@ def test_summary_and_markdown(tmp_path: Path) -> None:
     assert s["checks_run"] == 24 and s["by_check"].get("D01_bullets") == 1 and 0 in s["slides_with_issues"]
     md = report_markdown(report)
     assert "D01_bullets" in md and md.startswith("**D01.pptx**")
+
+
+def test_l02_our_text_on_exemplar_block_is_error(tmp_path: Path) -> None:
+    """Боксы заголовка и карточки пересекались ещё в образце — warning с in_exemplar; когда наш длинный
+    заголовок лёг строкой на карточку — error: это уже не дизайн шаблона (VK WorkSpace slide5)."""
+    case = make_L02_title_under_card(tmp_path)
+    [f] = audit_deck(case.pptx, case.dna, case.ir, checks=["L02"]).findings
+    assert f.severity == "error" and f.evidence["text_reached"] == 1 and f.evidence["in_exemplar"] == 0
+    short = tmp_path / "L02_card_template.pptx"  # тот же образец с коротким заголовком
+    [f] = audit_deck(short, case.dna, case.ir, checks=["L02"]).findings
+    assert f.severity == "warning" and f.evidence["in_exemplar"] == 1 and f.evidence["text_reached"] == 0

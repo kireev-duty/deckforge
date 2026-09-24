@@ -320,6 +320,12 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
     if plain:
         items = list(s.paragraphs)
     free_labels, bodies = labels[labels_used:], bodies[bodies_used:]
+    if plain and (len(bodies) == 1 or not bodies and len(items) == 1) and (
+        host := _roomier_host(items, bodies, free_labels)
+    ) is not None:
+        # абзацы — в самый вместительный текстовый слот, а не в единственное тело: у VK WorkSpace (slide15)
+        # крупные рамки карточек размечены подписями, тело — однострочное примечание внизу, и абзац резался «…»
+        bodies, free_labels = [host], [lab for lab in free_labels if lab is not host]
     if numbered and numbers and not s.kpis:
         # крупные цифры схемы — номера шагов, иначе рендер их сотрёт
         for i, num in enumerate(numbers[: len(s.steps)]):
@@ -533,6 +539,17 @@ def pair_labels(bodies: list[Slot], labels: list[Slot]) -> dict[str, Slot]:
         if free:
             out[body.id] = free.pop(0)
     return out
+
+
+def _roomier_host(paragraphs: list[str], bodies: list[Slot], labels: list[Slot]) -> Slot | None:
+    """Слот вместительнее того, куда абзацы легли бы по порядку чтения, если там они не помещаются даже
+    мелким кеглем (как считает `list_element`); None — оставить порядок чтения."""
+    room = lambda sl: (sl.max_chars or 0) // len(paragraphs) / MIN_SIZE_SCALE ** 2
+    current = (bodies or labels)[:1]
+    if not current or room(current[0]) >= max(len(normalize(p)) for p in paragraphs):
+        return None
+    best = max(bodies + labels, key=room)
+    return best if room(best) > room(current[0]) else None
 
 
 def _slots_by_kind(slots: list[Slot], slide_h: int) -> dict[SlotKind, list[Slot]]:

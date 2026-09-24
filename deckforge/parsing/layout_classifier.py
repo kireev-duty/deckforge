@@ -60,6 +60,11 @@ TITLE_ZONE = 0.30  # заголовок без плейсхолдера ищем
 COVER_TITLE_ZONE = 1.0  # …на обложке — где угодно
 AGENDA_MANY_BLOCKS = 6  # столько текстовых блоков — не титул
 UNDERLINE_BELOW = 0.4  # линия-декор под заголовком не дальше этой доли высоты бокса
+BLOCK_MIN_SHARE = 0.2  # блок в нижней половине бокса заголовка уже этой доли его ширины — не мешает строке
+LINE_H = 1.2  # высота строки в кеглях
+# строка помещается над блоком, если он ниже её базовой линии: низ строки минус столько кеглей (выносные)
+LINE_SLACK = 0.25
+TEXT_INSET_PT = 3.6  # верхнее поле текстового бокса по умолчанию (bodyPr tIns = 45720 EMU)
 BACKGROUND_PIC_AREA = 0.9  # картинка на весь слайд — фон
 LOGO_PIC_AREA = 0.05  # мелкая картинка у края — логотип
 TITLE_MAX_CHARS = 80
@@ -945,7 +950,7 @@ def _capacity(s: ShapeInfo, box: Box | None = None) -> tuple[int, int]:
     box = box or s.box
     w_pt, h_pt = box.w / EMU_PER_PT, box.h / EMU_PER_PT
     cpl = max(1.0, w_pt / (0.5 * size))
-    lines = max(1, int(h_pt / (1.2 * size)))
+    lines = max(1, int(h_pt / (LINE_H * size)))
     return int(0.9 * cpl * lines), lines
 
 
@@ -1073,10 +1078,50 @@ def _underline_room(s: ShapeInfo, shapes: list[ShapeInfo]) -> Box | None:
     return Box(x=s.box.x, y=s.box.y, w=s.box.w, h=max(1, min(s.box.h, best.box.y - s.box.y)))
 
 
+def _block_below_room(s: ShapeInfo, shapes: list[ShapeInfo]) -> tuple[Box, int | None] | None:
+    """Блоки образца, верх которых в нижней половине бокса заголовка (WorkSpace: колонка карточек справа
+    начинается выше низа бокса): строка, которой над ними нет места, может идти только левее них.
+    Возвращает (вместимость, ширина переноса | None).
+
+    Две строки над блоками помещаются — ограничения нет (VK Tech: телефон под заголовком «в две строчки»).
+    Одна — вместимость как у строки во всю ширину плюс строки до левого края блоков, строк больше нет.
+    Ни одной — бокс сужается до левого края блоков (ширина переноса), строки под первой — как без блока:
+    иначе длинный заголовок либо шёл бы под карточки, либо резался. Блоки ниже бокса не смотрим: они есть
+    почти у каждого шаблона, и вторая строка там — норма."""
+    blocks = []
+    for p in shapes:
+        if p is s or p.kind in ("connector", "sldnum", "footer", "date"):
+            continue
+        if p.kind in ("shape", "title", "subtitle", "body", "text") and not (p.visible or p.text):
+            continue
+        if min(p.box.x2, s.box.x2) - max(p.box.x, s.box.x) < s.box.w * BLOCK_MIN_SHARE:
+            continue
+        if s.box.y + s.box.h * 0.5 <= p.box.y < s.box.y2:
+            blocks.append(p)
+    if not blocks:
+        return None
+    size = s.size_pt or 18.0
+    # базовая линия k-й строки от верха бокса, EMU
+    baseline = lambda k: s.box.y + int(((LINE_H * k - LINE_SLACK) * size + TEXT_INSET_PT) * EMU_PER_PT)
+    top = min(p.box.y for p in blocks)
+    free = sum(top >= baseline(k) for k in (1, 2))
+    if free >= 2:
+        return None
+    # строку за свободными сужают только блоки выше её базовой линии
+    left = max(1, min(p.box.x for p in blocks if p.box.y < baseline(free + 1)) - s.box.x)
+    if free == 0:
+        room = Box(x=s.box.x, y=s.box.y, w=left, h=s.box.h)
+    else:  # высота на две строки с запасом в полстроки — `_capacity` округляет вниз
+        room = Box(x=s.box.x, y=s.box.y, w=(s.box.w + left) // 2, h=int(LINE_H * size * EMU_PER_PT * 2.5))
+    if _capacity(s, room)[0] < max(1, len(s.text.strip())):
+        return None  # образец не уместил бы свой же заголовок — рамка блока врёт (прозрачные поля картинки, WorkSpace slide20)
+    return room, (left if free == 0 else None)
+
+
 def _slot(s: ShapeInfo, kind: SlotKind, shapes: list[ShapeInfo] | None = None) -> Slot:
     max_chars = max_lines = max_items = None
     hard_lines = False
-    plate_id = plate_max_w = None
+    plate_id = plate_max_w = wrap_w = None
     if kind in (SlotKind.TITLE, SlotKind.SUBTITLE, SlotKind.BODY, SlotKind.CAPTION, SlotKind.LABEL, SlotKind.NUMBER):
         room = None
         if shapes and kind == SlotKind.TITLE:
@@ -1086,8 +1131,15 @@ def _slot(s: ShapeInfo, kind: SlotKind, shapes: list[ShapeInfo] | None = None) -
                 room = _backing_plate(s, shapes)
             # текст переносится по краю бокса, а не плашки — лишних строк не разрешаем
             hard_lines = room is not None
-            if (under := _underline_room(s, shapes)) is not None:
-                room, hard_lines = (under if room is None else Box(x=room.x, y=room.y, w=room.w, h=min(room.h, under.h))), True
+            # линия-декор или блок образца в боксе ограничивают вместимость; блок ещё и сужает строки под собой
+            under = _underline_room(s, shapes)
+            block, wrap_w = _block_below_room(s, shapes) or (None, None)
+            for cap in (under, block):
+                if cap is not None:
+                    w = room.w if room is not None and cap.w >= s.box.w else cap.w
+                    room = cap if room is None else Box(x=room.x, y=room.y, w=min(room.w, w), h=min(room.h, cap.h))
+            # лишних строк нет — кроме бокса, суженного до края блока: там строки идут левее него
+            hard_lines = hard_lines or under is not None or (block is not None and wrap_w is None)
         elif shapes and kind == SlotKind.BODY:
             room = _card_room(s, shapes)
         max_chars, max_lines = _capacity(s, room)
@@ -1096,7 +1148,7 @@ def _slot(s: ShapeInfo, kind: SlotKind, shapes: list[ShapeInfo] | None = None) -
     return Slot(
         id=s.id, kind=kind, box=s.box, max_chars=max_chars, max_lines=max_lines, max_items=max_items,
         size_pt=s.size_pt or None, placeholder_type=s.ph_type, sample_text=s.text[:200] or None, hard_lines=hard_lines,
-        plate_id=plate_id, plate_max_w=plate_max_w,
+        plate_id=plate_id, plate_max_w=plate_max_w, wrap_w=wrap_w,
     )
 
 

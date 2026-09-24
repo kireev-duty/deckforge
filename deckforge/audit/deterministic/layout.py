@@ -17,6 +17,7 @@ OVERLAP_MIN = 0.05  # доля площади меньшего блока
 NESTED_MIN = 0.90  # выше — вложенность, не наложение
 OVERFLOW_TOL = 0.10  # точность метрик прокси-шрифта
 OVERFLOW_MIN_PT = 2.0
+REACH_SLACK = 0.25  # базовая линия — выше низа строки на столько кеглей (= layout_classifier.LINE_SLACK)
 MIN_PICTURE_PX = 4  # картинки-линии пропорций не имеют
 GRID_TOL = 91440  # 0.1"
 FULL_BLEED = 0.6
@@ -120,14 +121,81 @@ def check_L02(ctx: AuditContext) -> list[Finding]:
                     continue
                 if ratio >= NESTED_MIN and not (a.has_text and b.has_text):
                     continue  # вложенность, а не наложение
+                # боксы пересекались ещё в образце — дизайн шаблона, пока на чужой блок не легли строки нашего
+                # текста, которых в образце не было (заголовок в образце в одну строку, у нас — в две)
                 in_ex = _pair_in_exemplar(slide, a, b)
-                sev = Severity.WARNING if in_ex else Severity.ERROR
+                reached = in_ex and (_text_reaches(a, b, _exemplar_lines(ctx, slide, a))
+                                     or _text_reaches(b, a, _exemplar_lines(ctx, slide, b)))
+                sev = Severity.WARNING if in_ex and not reached else Severity.ERROR
                 box = Box(x=max(a.box.x, b.box.x), y=max(a.box.y, b.box.y),
                           w=min(a.box.x2, b.box.x2) - max(a.box.x, b.box.x), h=min(a.box.y2, b.box.y2) - max(a.box.y, b.box.y))
-                out.append(finding("L02_overlap", slide, sev,
-                                   f"Блоки {_label(a)} и {_label(b)} наложились ({ratio:.0%} площади меньшего)",
+                msg = f"Блоки {_label(a)} и {_label(b)} наложились ({ratio:.0%} площади меньшего)"
+                out.append(finding("L02_overlap", slide, sev, msg + (" — текст зашёл на блок" if reached else ""),
                                    a, autofix="reflow_vertical", box=box, other_id=b.id, ratio=round(ratio, 3),
-                                   in_exemplar=int(in_ex)))
+                                   in_exemplar=int(in_ex and not reached), text_reached=int(reached)))
+    return out
+
+
+def _exemplar_lines(ctx: AuditContext, slide: SlideCtx, sh: ShapeRec) -> int:
+    """Сколько строк было у текста этой фигуры в образце (0 — образца нет или текста не было)."""
+    if slide.exemplar is None:
+        return 0
+    rec = ctx.exemplar_records(slide.exemplar).get(sh.id)
+    return len(_line_boxes(rec)) if rec is not None else 0
+
+
+def _text_reaches(a: ShapeRec, b: ShapeRec, skip: int = 0) -> bool:
+    """Строка нашего текста a — кроме первых skip, которые были и в образце, — легла на блок b: на его рамку,
+    если он виден (заливка, обводка, картинка, данные), иначе — на его строки: пустая часть текстового бокса
+    не блок. Видимый b, внутри которого лежит a (подпись в карточке), — контейнер: тогда тоже только строки.
+
+    Заголовок WorkSpace, ушедший второй строкой под колонку карточек: боксы пересекались уже в образце
+    (in_exemplar), но там заголовок был в одну строку. Крупная цифра KPI, чья запятая заходит на подпись,
+    как и в образце, — дизайн шаблона."""
+    if not a.is_ours:
+        return False
+    solid = (bool(b.fill) and b.fill_alpha > 0.05) or (bool(b.line) and b.line_w_emu > 0) or b.is_picture \
+        or b.chart is not None or b.table is not None
+    nested = _intersection(a.box, b.box) >= NESTED_MIN * max(1, a.area)
+    targets = [b.box] if solid and not nested else _line_boxes(b)
+    return any(_intersection(line, tb) > 0 for line in _line_boxes(a)[skip:] for tb in targets)
+
+
+def _line_boxes(sh: ShapeRec) -> list[Box]:
+    """Строки текста фигуры: по горизонтали — ширина строки, по вертикали — от верха строки до базовой линии.
+
+    Метрики — прокси-шрифт (шире настоящего), поэтому край строки с допуском OVERFLOW_TOL, а выносные
+    элементы не считаются (REACH_SLACK) — касание блока низом букв не находка."""
+    if not (sh.has_text and sh.tag == "sp" and sh.wrap):
+        return []
+    l, t, r, bot = sh.insets
+    width_pt = (sh.box.w - l - r) / EMU_PER_PT
+    if width_pt <= 0:
+        return []
+    # (верх, базовая линия — pt от верха текста; отступ слева и ширина — pt; выравнивание)
+    lines: list[tuple[float, float, float, float, str]] = []
+    y = 0.0
+    for p in sh.paragraphs:
+        run = max(p.runs, key=lambda x: len(x.text), default=None)
+        if run is None or not p.text.strip():
+            continue
+        m = TextMeasurer(run.font, run.bold)
+        step = (p.line_spacing or LINE_HEIGHT) * run.size_pt
+        indent = p.indent_emu / EMU_PER_PT
+        y += p.space_before_pt
+        for line in m.wrap_lines(p.text, run.size_pt, width_pt - indent):
+            lines.append((y, y + step - REACH_SLACK * run.size_pt, indent, m.width(line, run.size_pt), p.align))
+            y += step
+        y += p.space_after_pt
+    inner_h = (sh.box.h - t - bot) / EMU_PER_PT
+    shift_y = {"ctr": (inner_h - y) / 2, "b": inner_h - y}.get(sh.anchor, 0.0)
+    y0, x0 = sh.box.y + t + shift_y * EMU_PER_PT, sh.box.x + l
+    out: list[Box] = []
+    for top, base, indent, w, align in lines:
+        free = width_pt - indent - w
+        x = x0 + (indent + {"ctr": free / 2, "r": free}.get(align, 0.0)) * EMU_PER_PT
+        out.append(Box(x=int(x), y=int(y0 + top * EMU_PER_PT), w=int(w * (1 - OVERFLOW_TOL) * EMU_PER_PT),
+                       h=max(1, int((base - top - OVERFLOW_MIN_PT) * EMU_PER_PT))))
     return out
 
 

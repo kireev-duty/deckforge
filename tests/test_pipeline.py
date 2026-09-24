@@ -476,9 +476,14 @@ def test_decks_build_in_parallel(monkeypatch: pytest.MonkeyPatch) -> None:
 
 
 @pytest.mark.skipif(not _soffice(), reason="нужен LibreOffice для PNG")
-def test_parallel_decks_share_deadline_and_keep_own_calls(template_path, tmp_path: Path) -> None:
+def test_parallel_decks_share_deadline_and_keep_own_calls(template_path, tmp_path: Path,
+                                                         monkeypatch: pytest.MonkeyPatch) -> None:
     """Три колоды с судьёй параллельно: дедлайн один на прогон, в manifest колоды — только её вызовы LLM."""
+    from deckforge.audit.contextual import judge as judge_mod
     from deckforge.pipeline.run import EXPORT_RESERVE_S
+
+    # окно слайда (у каждого своё, test_audit_contextual) шире бюджета — в запрос уходит дедлайн прогона
+    monkeypatch.setattr(judge_mod, "SLIDE_TIMEOUT_S", 10_000.0)
 
     cfg = RunConfig(template=template_path("VK Tech"), content_pack=REPO / "examples" / "content_pack",
                     strategies=["executive", "narrative", "visual"], output_dir=tmp_path, images="off", render_dpi=40,

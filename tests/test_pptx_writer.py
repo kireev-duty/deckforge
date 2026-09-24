@@ -18,7 +18,7 @@ from deckforge.core.ir import (
     SlotKind,
     TextRun,
 )
-from deckforge.core.ooxml import NS, R, iter_shapes, shape_id, shape_text
+from deckforge.core.ooxml import NS, R, absolute_bbox, iter_shapes, shape_id, shape_text
 from deckforge.parsing.layout_classifier import classify_template
 from deckforge.render.pptx_writer import crop_rect, fill_text, render_pptx
 
@@ -339,3 +339,41 @@ def test_title_chip_plate_grows(template_path, tmp_path: Path):
     # короткий заголовок плашку не трогает
     shapes = _render_one(tpl, exemplars, e, [_text_el(title, "Итоги")], tmp_path / "chip_short.pptx")
     assert int(shapes[title.plate_id].find("p:spPr/a:xfrm/a:ext", NS).get("cx")) == w0
+
+
+def test_title_box_narrowed_left_of_cards(template_path, tmp_path: Path):
+    """VK WorkSpace slide5: колонка карточек справа задевает первую строку заголовка — бокс сужается до карточек
+    (Slot.wrap_w), длинный заголовок переносится левее них, а не уходит под карточки."""
+    tpl = template_path("WorkSpace")
+    exemplars = [p.to_exemplar() for p in classify_template(tpl)]
+    e = next(e for e in exemplars if e.id == "slide5")
+    title = next(s for s in e.slots if s.kind == SlotKind.TITLE)
+    assert title.wrap_w and title.wrap_w < title.box.w
+    shapes = _render_one(tpl, exemplars, e, [_text_el(title, "Этап 3: Масштабирование и передача полномочий")],
+                         tmp_path / "narrow.pptx")
+    assert int(shapes[title.id].find("p:spPr/a:xfrm/a:ext", NS).get("cx")) == title.wrap_w
+
+
+def test_empty_card_removed_with_its_icon_decor(template_path, tmp_path: Path):
+    """VK WorkSpace slide5 (разметка VLM из data/archetypes): значок иконки в карточке — декор, не слот, плашка
+    под ним — тоже не слот. Пустая карточка уходит вместе с ними, у заполненной иконка остаётся."""
+    from deckforge.parsing.exemplars import load_exemplars
+
+    tpl = template_path("WorkSpace")
+    exemplars = load_exemplars(tpl)
+    e = next(e for e in exemplars if e.id == "slide5")
+    title = next(s for s in e.slots if s.kind == SlotKind.TITLE)
+    cards = sorted((s for s in e.slots if s.kind == SlotKind.BODY), key=lambda s: s.box.y)
+    assert len(cards) == 3
+    src = {shape_id(sp): sp for sp in iter_shapes(
+        Presentation(str(tpl)).slides[4].part._element.find("p:cSld/p:spTree", NS))}
+    slot_ids = {s.id for s in e.slots}
+    inside = lambda card: {sid for sid, sp in src.items() if sid not in slot_ids and sid != card.id
+                           and (bb := absolute_bbox(sp)) and card.box.x <= bb[0] and card.box.y <= bb[1]
+                           and bb[0] + bb[2] <= card.box.x2 and bb[1] + bb[3] <= card.box.y2}
+    decor = [inside(c) for c in cards]
+    assert all(decor), "у каждой карточки плашка и значок"
+    shapes = _render_one(tpl, exemplars, e, [_text_el(title, "Т"), _text_el(cards[0], "Первая карточка")],
+                         tmp_path / "cards.pptx")
+    assert decor[0] <= set(shapes), "у заполненной карточки иконка остаётся"
+    assert not (decor[1] | decor[2]) & set(shapes), "иконки пустых карточек уходят вместе с ними"

@@ -17,6 +17,7 @@ from deckforge.core.ir import (
     Paragraph,
     Severity,
     SlideIR,
+    Slot,
     SlotKind,
     TextRun,
 )
@@ -95,6 +96,26 @@ def test_shrink_font_scales_runs_and_cuts_at_floor() -> None:
     fixed2 = res2.ir.slides[0].elements[0]
     assert float(fixed2.style_overrides["size_pt"]) == 14.0 and "укорочен" in res2.applied[0]["after"]
     assert len(fixed2.paragraphs[0].runs[0].text) < len(el.paragraphs[0].runs[0].text)
+
+
+def test_shrink_font_at_floor_still_cuts_text() -> None:
+    """Второй проход после рендера: кегль уже на пороге, а текст всё ещё не влезает — фикс подрезает текст,
+    а не отказывается (L03 оставался после выбора пользователя, когда метрика Play стала честной)."""
+    slot = Slot(id="1", kind=SlotKind.BODY, box=Box(x=0, y=0, w=914400, h=914400), size_pt=20.0)
+    el = _text("1", "Результаты пилота, которые не помещаются в однострочную рамку даже мелким кеглем", size_pt=12.0)
+    fixed, change = _apply_one(el, slot, _finding("L03_text_overflow", "shrink_font_by_scale", need_pt=20, have_pt=15))
+    assert change is not None and "укорочен" in change[1] and float(fixed.style_overrides["size_pt"]) == 12.0
+    assert len(fixed.paragraphs[0].runs[0].text) < len(el.paragraphs[0].runs[0].text)
+    # на пороге (слот 20 pt → 12 pt) и резать нечего — фикса нет
+    short = _text("1", "Итоги", size_pt=12.0)
+    assert _apply_one(short, slot, _finding("L03_text_overflow", "shrink_font_by_scale", need_pt=20, have_pt=15))[1] is None
+
+
+def _apply_one(el: Element, slot: Slot, f: Finding) -> tuple[Element, tuple[str, str] | None]:
+    from deckforge.layout.autofix import fix_shrink_font
+
+    el = el.model_copy(deep=True)
+    return el, fix_shrink_font(_slide(el), el, slot, f)
 
 
 def test_shrink_font_title_cuts_clause_not_words() -> None:

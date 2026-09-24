@@ -7,7 +7,7 @@ import json
 import pytest
 from lxml import etree
 
-from deckforge.core.ir import Archetype, Box, SlotKind
+from deckforge.core.ir import Archetype, Box, Slot, SlotKind
 from deckforge.parsing.layout_classifier import (
     ShapeInfo,
     SlideProfile,
@@ -221,6 +221,33 @@ def test_title_over_decor_line_gets_hard_lines() -> None:
     assert slot.hard_lines and slot.max_lines == 1
     f2 = build_features([title], index=3, n_slides=20)
     assert not next(s for s in build_slots(f2, Archetype.BULLETS)).hard_lines
+
+
+def _title_slot(block: tuple[float, float, float, float] | None, title_h: float) -> Slot:
+    """Заголовок 36 pt в боксе как у VK WorkSpace (слайд 540 pt высотой) и, если задан, текстовый блок (x, y, w, h)."""
+    shapes = [_shape("t", "Заголовок", 0.035, 0.062, 0.642, title_h, size=36)]
+    if block is not None:
+        shapes.append(_shape("b", "Карточка с текстом", *block))
+    f = build_features(shapes, index=4, n_slides=20)
+    return next(s for s in build_slots(f, Archetype.CARDS) if s.kind == SlotKind.TITLE)
+
+
+def test_title_over_block_inside_box_gets_hard_lines() -> None:
+    alone = _title_slot(None, 0.091)
+    assert not alone.hard_lines and alone.max_lines == 1
+    assert alone.wrap_w is None
+    # WorkSpace slide5: колонка карточек справа начинается выше низа бокса — не помещается даже первая строка:
+    # бокс сужается до карточек, строки идут левее них (вторая — как у любого заголовка, не hard)
+    cards = _title_slot((0.442, 0.125, 0.485, 0.249), 0.091)
+    assert cards.wrap_w == int(0.442 * SW) - int(0.035 * SW)
+    assert not cards.hard_lines and cards.max_lines == 1 and cards.max_chars < alone.max_chars
+    # бокс на две строки, описание во всю ширину сразу под первой (slide16) — строка одна, бокс не сужается
+    two = _title_slot(None, 0.170)
+    desc = _title_slot((0.035, 0.181, 0.796, 0.094), 0.170)
+    assert desc.hard_lines and desc.wrap_w is None and desc.max_chars <= two.max_chars // 2 + 1
+    # вторая строка помещается над блоком — ограничения нет; блок ниже бокса не смотрим
+    assert not _title_slot((0.035, 0.225, 0.796, 0.094), 0.170).hard_lines
+    assert not _title_slot((0.035, 0.160, 0.796, 0.094), 0.091).hard_lines
 
 
 # ── геометрия групп ──

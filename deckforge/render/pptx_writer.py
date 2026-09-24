@@ -39,6 +39,7 @@ DIAGRAM_KEEP_KINDS = {SlotKind.TITLE, SlotKind.SUBTITLE, SlotKind.SLIDE_NUMBER, 
 # поля (номер, колонтитулы) при отсутствии элемента не очищаем
 KEEP_IF_UNFILLED = {SlotKind.SLIDE_NUMBER, SlotKind.FOOTER, SlotKind.DATE}
 PHOTO_FRAME_MAX_SHARE = 0.1  # рамка под подсказкой «Вставить фото» крупнее — это уже часть композиции, не трогаем
+CARD_DECOR_MAX_SHARE = 0.25  # декор внутри пустой карточки (плашка, значок) — не крупнее этой доли её площади
 LAYOUT_FIELD_PH = {"sldNum", "dt", "ftr"}
 # связи, которые в копии не нужны
 SKIP_RELTYPES = {RT.SLIDE_LAYOUT, RT.NOTES_SLIDE, RT.SLIDE}
@@ -317,6 +318,8 @@ class DeckWriter:
                 slot = next((s for s in exemplar.slots if s.id == el.slot_id), None)
                 if slot is not None and slot.plate_id and (plate := shapes.get(slot.plate_id)) is not None:
                     _grow_plate(plate, sp, slot, el)
+                if slot is not None and slot.wrap_w:
+                    _narrow_text_box(sp, slot)
         # незаполненные слоты очищаем, чтобы не остался текст образца
         unfilled: list[Box] = []
         filled_boxes = [s.box for s in exemplar.slots if s.id in filled]
@@ -349,10 +352,16 @@ class DeckWriter:
             elif framed:
                 # пустой плейсхолдер показывает подсказку, слот с рамкой — пустую карточку: удаляем целиком,
                 # вместе с незаполненными слотами внутри (иконка третьей карточки не остаётся одна)
+                attached = sp.getparent() is not None  # схема процесса уже убрала слот и оставила нужный декор
                 _remove(sp)
                 for inner in exemplar.slots:
                     if inner.id not in filled and inner.id != slot.id and inner.kind not in KEEP_IF_UNFILLED \
                             and _contains_center(slot.box, inner.box) and (isp := shapes.get(inner.id)) is not None:
+                        _remove(isp)
+                # и декор карточки не из слотов: плашка и значок иконки (VK WorkSpace slide5 — значок VLM пометил
+                # декором), иначе на месте пустой карточки висит одна иконка; аудит (T05) это знает
+                for sid, isp in list(shapes.items()):
+                    if attached and sid not in slot_ids and isp.getparent() is not None and _is_card_decor(isp, slot.box):
                         _remove(isp)
             elif sp.find("p:txBody", NS) is not None:
                 clear_text(sp)
@@ -891,6 +900,40 @@ def _grow_plate(plate: etree._Element, text_sp: etree._Element, slot: Slot, el: 
         ext.set("cx", str(new))
         if surrounds:
             text_ext.set("cx", str(int(text_ext.get("cx", "0")) + new - cur))
+
+
+def _is_card_decor(sp: etree._Element, card: Box) -> bool:
+    """Мелкая фигура без текста целиком внутри карточки (плашка, значок) и не плейсхолдер (поля не трогаем)."""
+    bb = absolute_bbox(sp)
+    if bb is None or shape_text(sp).strip() or sp.find(".//p:nvPr/p:ph", NS) is not None:
+        return False
+    x, y, w, h = bb
+    return (card.x <= x and card.y <= y and x + w <= card.x2 and y + h <= card.y2
+            and w * h <= CARD_DECOR_MAX_SHARE * card.w * card.h)
+
+
+def _narrow_text_box(sp: etree._Element, slot: Slot) -> None:
+    """Сузить бокс текста до slot.wrap_w: блок образца задевает первую строку (WorkSpace: колонка карточек справа
+    от заголовка), и текст должен переноситься левее него, а не уходить под блок.
+
+    Бокс без своего xfrm (наследует лейаут) получает его из slot.box — `_materialize_placeholders` его уже не тронет.
+    Центрированный и выровненный вправо текст и фигуры в группе не трогаем: сдвинулись бы или координаты не те."""
+    parent = sp.getparent()
+    if localname(sp) != "sp" or parent is None or parent.tag == P + "grpSp":
+        return
+    if any(p.get("algn") in ("ctr", "r") for p in sp.iter(A + "pPr")):
+        return
+    sp_pr = sp.find("p:spPr", NS)
+    if sp_pr is None:
+        return
+    ext = sp_pr.find("a:xfrm/a:ext", NS)
+    if ext is None:
+        xfrm = etree.Element(A + "xfrm")
+        etree.SubElement(xfrm, A + "off", x=str(slot.box.x), y=str(slot.box.y))
+        ext = etree.SubElement(xfrm, A + "ext", cx=str(slot.box.w), cy=str(slot.box.h))
+        sp_pr.insert(0, xfrm)
+    if slot.wrap_w < int(ext.get("cx", "0")):
+        ext.set("cx", str(slot.wrap_w))
 
 
 def _contains_center(outer: Box, inner: Box) -> bool:

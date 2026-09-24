@@ -22,7 +22,21 @@ from pptx.enum.chart import XL_CHART_TYPE
 from pptx.enum.text import MSO_AUTO_SIZE
 from pptx.util import Inches, Pt
 
-from deckforge.core.ir import Box, ColorToken, DeckIR, FixedElement, GridSpec, TemplateDNA, TypeToken
+from deckforge.core.ir import (
+    Archetype,
+    Box,
+    ColorToken,
+    DeckIR,
+    Element,
+    Exemplar,
+    FixedElement,
+    GridSpec,
+    SlideIR,
+    Slot,
+    SlotKind,
+    TemplateDNA,
+    TypeToken,
+)
 from deckforge.core.ooxml import NS, A
 
 SW, SH = Inches(13.333), Inches(7.5)
@@ -211,6 +225,30 @@ def make_L02(tmp: Path) -> Case:
     return Case(p, dna, None, "L02", 0)
 
 
+def make_L02_title_under_card(tmp: Path) -> Case:
+    """L02 на колоде с образцом: бокс заголовка заходит на карточку ещё в шаблоне (VK WorkSpace slide5) —
+    это дизайн (warning), но наш длинный заголовок лёг строкой на карточку — error. Вариант L02, вне FIXTURES."""
+    title_box = (MARGIN, MARGIN, Inches(8), Inches(0.7))
+    card_box = (Inches(4), Inches(0.9), Inches(6), Inches(3))
+
+    def deck(name: str, title: str) -> tuple[Path, list[str]]:
+        b = _builder(tmp)
+        s = b.slide()
+        shapes = [b.text(s, *title_box, title, size=32), b.text(s, *card_box, "Пункт карточки", fill="F2F2F2")]
+        return b.save(tmp / f"{name}.pptx"), [str(sh.shape_id) for sh in shapes]
+
+    template, ids = deck("L02_card_template", "Заголовок")
+    path, _ = deck("L02_card", "Этап 3: масштабирование и передача полномочий заказчику")
+    slots = [Slot(id=sid, kind=kind, box=Box(x=x, y=y, w=w, h=h))
+             for sid, kind, (x, y, w, h) in zip(ids, (SlotKind.TITLE, SlotKind.BODY), (title_box, card_box))]
+    dna = fixture_dna(template)
+    dna.exemplars = [Exemplar(id="slide1", source_index=0, layout_name="", archetype=Archetype.CARDS, slots=slots)]
+    ir = DeckIR(template_id=dna.template_id, strategy="test", slide_w=SW, slide_h=SH, slides=[
+        SlideIR(idx=0, exemplar_id="slide1", archetype=Archetype.CARDS, outline_ref=0,
+                elements=[Element(slot_id=s.id, kind=s.kind, box=s.box) for s in slots])])
+    return Case(path, dna, ir, "L02", 0)
+
+
 def make_L03(tmp: Path) -> Case:
     words = " ".join(["согласование"] * 40)
     p, dna = _one_slide_deck(tmp, "L03", lambda b, s: b.text(s, MARGIN, Inches(2), Inches(3), Inches(0.5), words))
@@ -373,8 +411,9 @@ def make_I06(tmp: Path) -> Case:
     return Case(b.save(tmp / "I06.pptx"), fixture_dna(clean), None, "I06", 1)
 
 
+# по одной фикстуре на проверку (make_<ID>); варианты вроде make_L02_title_under_card — отдельными тестами
 FIXTURES: dict[str, Callable[[Path], Case]] = {
-    name[5:]: fn for name, fn in globals().items() if name.startswith("make_") and name != "make_clean"
+    name[5:]: fn for name, fn in globals().items() if re.fullmatch(r"make_[LTDI]\d\d", name)
 }
 
-__all__ = ["FIXTURES", "Case", "DeckBuilder", "fixture_dna", "make_clean"]
+__all__ = ["FIXTURES", "Case", "DeckBuilder", "fixture_dna", "make_L02_title_under_card", "make_clean"]

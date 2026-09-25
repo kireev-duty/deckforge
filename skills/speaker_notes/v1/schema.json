@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SpeakerNotes",
+  "type": "object",
+  "required": ["notes"],
+  "properties": {
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["idx", "text"],
+        "properties": {
+          "idx": {"type": "integer", "minimum": 0},
+          "text": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}

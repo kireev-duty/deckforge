@@ -93,6 +93,11 @@ def test_public_mode_without_key_runs_ready_outline(template_path, tmp_path: Pat
     assert any("Демо-стенд" in i.value for i in at.info)
     judge = next(c for c in at.sidebar.checkbox if c.label.startswith("VLM-судья"))
     assert judge.disabled and not judge.value
+    images = next(c for c in at.sidebar.checkbox if c.label.startswith("Иллюстрации"))
+    assert images.disabled and not images.value
+    notes = next(c for c in at.sidebar.checkbox if c.label.startswith("Текст выступления"))
+    assert notes.disabled and not notes.value  # без ключа — только заметки из готового outline
+    assert next(n for n in at.sidebar.number_input if n.label.startswith("Длительность")).value == 7
     assert at.button[0].disabled and at.warning  # «Только шаблон» без ключа
 
     at.radio(key="content_mode").set_value("Готовый outline").run()
@@ -107,6 +112,30 @@ def test_public_mode_without_key_runs_ready_outline(template_path, tmp_path: Pat
     res = at.session_state["result"]
     assert res.content_source == "outline" and [d.strategy for d in res.decks] == ["executive"]
     assert res.decks[0].pptx.exists() and Path(at.session_state["run_dir"]).is_relative_to(tmp_path)
+
+
+@pytest.mark.filterwarnings("ignore::DeprecationWarning")
+def test_repository_mode_inputs(template_path, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Режим «Репозиторий»: задача, zip и папка (по умолчанию — сам deckforge); на стенде папок сервера нет."""
+    from streamlit.testing.v1 import AppTest
+
+    template_path("VK Tech")
+    monkeypatch.delenv("DECKFORGE_PUBLIC", raising=False)
+    monkeypatch.setenv("LLM_API_KEY", "sk-test")
+    monkeypatch.setenv("DECKFORGE_UI_ROOT", str(tmp_path))
+    at = AppTest.from_file(str(REPO / "deckforge" / "ui" / "app.py"), default_timeout=120).run()
+    at.radio(key="content_mode").set_value("Репозиторий").run()
+    assert not at.exception, at.exception
+    labels = [t.label for t in at.text_input]
+    assert "Задача презентации" in labels and "или папка на этом компьютере" in labels
+    assert next(t for t in at.text_input if t.label.startswith("или папка")).value == str(REPO)
+    assert not at.button[0].disabled
+
+    monkeypatch.setenv("DECKFORGE_PUBLIC", "1")
+    at = AppTest.from_file(str(REPO / "deckforge" / "ui" / "app.py"), default_timeout=120).run()
+    at.radio(key="content_mode").set_value("Репозиторий").run()
+    assert not any(t.label.startswith("или папка") for t in at.text_input)
+    assert at.button[0].disabled  # без архива запускать нечего
 
 
 @pytest.mark.filterwarnings("ignore::DeprecationWarning")

@@ -1,0 +1,27 @@
+# Сценарий жюри → examples/output/jury_scenario/ (вводная: «контекст на входе — репозиторий, документация
+# и история; на выходе слайды и текст к каждому слайду; выступление ограничено по длительности»).
+# Контекст — сам репозиторий deckforge; готовится заранее, вне бюджета генерации:
+#   deckforge prepare-context . -o examples/output/jury_scenario/context.json
+#   deckforge run -c configs/final/jury_scenario.yaml
+# Задача повторяет структуру питча из ТЗ §4. Шаблон — VK Tech: в контексте есть цифры, и у VK Tech для них
+# есть свои образцы KPI, диаграмм и таблиц. На ЛЦТ2026 тот же сценарий показал дефекты вёрстки (BACKLOG, layout).
+
+template: data/templates/VK Tech шаблон.pptx
+context: examples/output/jury_scenario/context.json
+topic: "Питч DECKFORGE для жюри хакатона на 7 минут: проблема, подход, архитектура пайплайна, демо-прогон, архитектура аудита, выводы"
+purpose: project
+audience: "жюри хакатона и эксперты VK Tech"
+language: ru
+target_slides: 12
+talk_minutes: 7                              # текст выступления к слайдам — на 7 минут
+strategies: [executive, narrative, visual]
+images: auto
+audit:
+  deterministic: true
+  contextual: true
+  autofix: true
+export: [pptx, pdf, html]
+output_dir: examples/output/jury_scenario
+render_png: true
+render_dpi: 72
+seed: 42

@@ -1,6 +1,10 @@
-"""check_env — проверка окружения перед работой: .env, доступ к LLM, зрение, LibreOffice, картинки.
+"""check_env — проверка окружения перед работой: репозиторий, .env, доступ к LLM, зрение, картинки, LibreOffice.
 
-    .venv\\Scripts\\python.exe tools\\check_env.py
+    .venv\\Scripts\\python.exe tools\\check_env.py      (Windows)
+    .venv/bin/python tools/check_env.py                (Linux, macOS)
+
+Без ключа проверяются репозиторий и LibreOffice — этого хватает для прогона без LLM
+(`run --outline … --no-judge --no-images --no-notes`). Код выхода 1, если есть [FAIL].
 """
 
 from __future__ import annotations
@@ -8,10 +12,13 @@ from __future__ import annotations
 import os
 import sys
 import time
+import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
+
+FAILS: list[str] = []
 
 
 def load_dotenv() -> bool:
@@ -31,26 +38,42 @@ def ok(msg: str) -> None:
 
 
 def fail(msg: str) -> None:
+    FAILS.append(msg)
     print(f"  [FAIL] {msg}")
 
 
-def main() -> None:
-    print("1. .env")
-    if load_dotenv():
-        ok(".env найден")
-    else:
-        fail(".env не найден — скопируйте .env.example в .env и заполните LLM_API_KEY")
-        return
-    if not os.environ.get("LLM_API_KEY") or os.environ["LLM_API_KEY"].endswith("..."):
-        fail("LLM_API_KEY не заполнен")
-        return
-    ok(f"LLM_BASE_URL={os.environ.get('LLM_BASE_URL')}  LLM_MODEL={os.environ.get('LLM_MODEL')}")
+def skip(msg: str) -> None:
+    print(f"  [SKIP] {msg}")
 
+
+def check_repo() -> None:
+    """Python и шаблоны датасета: после clone без git-lfs вместо .pptx лежат указатели ~130 байт."""
+    v = sys.version_info
+    (ok if v >= (3, 12) else fail)(f"Python {v.major}.{v.minor}.{v.micro} (нужен ≥ 3.12)")
+    templates = sorted((ROOT / "data" / "templates").glob("*.pptx")) + sorted((ROOT / "data" / "holdout").glob("*.pptx"))
+    pointers = [p.name for p in templates if not zipfile.is_zipfile(p)]
+    if not templates:
+        fail("в data/templates нет .pptx — репозиторий склонирован не целиком")
+    elif pointers:
+        fail(f"указатели Git LFS вместо шаблонов: {', '.join(pointers)} — поставьте git-lfs и выполните `git lfs pull`")
+    else:
+        ok(f"шаблоны датасета: {len(templates)} .pptx")
+    labels = list((ROOT / "data" / "archetypes").glob("*.json"))
+    (ok if labels else fail)(f"разметка образцов data/archetypes: файлов — {len(labels)}")
+
+
+def vision_probe() -> Path | None:
+    """PNG для проверки зрения: слайд из прошлого рендера или картинка из README (есть в любом clone)."""
+    return next((ROOT / "out" / "render").rglob("slide_01.png"), None) or next(
+        (p for p in (ROOT / "docs" / "img" / "strategies.png",) if p.exists()), None)
+
+
+def check_models() -> None:
     from deckforge.llm.client import LLMClient
 
     c = LLMClient()
 
-    print("2. Текстовая модель (через скилл slide_filler, JSON по схеме, без «размышлений»)")
+    print("3. Текстовая модель (через скилл slide_filler, JSON по схеме, без «размышлений»)")
     from deckforge.llm.skills import load_skill
 
     t0 = time.perf_counter()
@@ -66,10 +89,10 @@ def main() -> None:
         fail(f"{c.text_model}: {e}")
         return
 
-    print("3. Зрение (VLM)")
-    png = next((ROOT / "out" / "render").rglob("slide_01.png"), None)
+    print("4. Зрение (VLM)")
+    png = vision_probe()
     if png is None:
-        print("  [SKIP] нет PNG в out/render — сначала tools/render_deck.py")
+        skip("нет PNG для проверки — сначала tools/render_deck.py")
     else:
         from deckforge.llm.client import _data_url
 
@@ -78,16 +101,16 @@ def main() -> None:
             r = c._client.chat.completions.create(
                 model=c.vision_model, max_tokens=60, temperature=0, extra_body=c.no_think_extra(),
                 messages=[{"role": "user", "content": [
-                    {"type": "text", "text": "Опиши слайд одним предложением по-русски."},
+                    {"type": "text", "text": "Опиши картинку одним предложением по-русски."},
                     {"type": "image_url", "image_url": {"url": _data_url(png)}}]}],
             )
             ok(f"{c.vision_model} видит картинку ({time.perf_counter() - t0:.1f}с): {r.choices[0].message.content!r}")
         except Exception as e:  # noqa: BLE001
             fail(f"{c.vision_model}: {e}")
 
-    print("4. Text-to-image")
+    print("5. Text-to-image")
     if not c.images_enabled:
-        print("  [SKIP] картинки отключены (T2I_MODEL пуст или нет ключа) — допустимо, задача со звёздочкой")
+        skip("картинки отключены (T2I_MODEL пуст или нет ключа) — допустимо, задача со звёздочкой")
     else:
         out = ROOT / "out" / "t2i_check.png"
         out.parent.mkdir(exist_ok=True)
@@ -98,7 +121,28 @@ def main() -> None:
         except Exception as e:  # noqa: BLE001
             fail(f"{c.image_model}: {e}")
 
-    print("5. LibreOffice")
+
+def main() -> int:
+    print("1. Репозиторий")
+    check_repo()
+
+    print("2. .env")
+    key = False
+    if not load_dotenv():
+        fail(".env не найден — скопируйте .env.example в .env и заполните LLM_API_KEY")
+    elif not os.environ.get("LLM_API_KEY") or os.environ["LLM_API_KEY"].endswith("..."):
+        skip("LLM_API_KEY не заполнен — доступен только прогон без LLM (готовый outline, без судьи, картинок и речи)")
+    else:
+        key = True
+        ok(f"LLM_BASE_URL={os.environ.get('LLM_BASE_URL')}  LLM_MODEL={os.environ.get('LLM_MODEL')}")
+
+    if key:
+        check_models()
+    else:
+        print("3–5. Модели")
+        skip("без ключа модели не проверяются")
+
+    print("6. LibreOffice (PDF, PNG, VLM-судья)")
     try:
         from deckforge.export.render import find_soffice
 
@@ -106,7 +150,10 @@ def main() -> None:
     except Exception as e:  # noqa: BLE001
         fail(str(e))
 
+    print(f"\nИтог: {'всё в порядке' if not FAILS else f'ошибок — {len(FAILS)}'}")
+    return 1 if FAILS else 0
+
 
 if __name__ == "__main__":
     sys.stdout.reconfigure(encoding="utf-8")
-    main()
+    sys.exit(main())

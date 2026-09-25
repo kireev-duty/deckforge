@@ -155,6 +155,11 @@ class DeckBuilder:
     def logo(self, slide, x=LOGO_BOX.x, y=LOGO_BOX.y):
         return self.picture(slide, x, y, LOGO_BOX.w, LOGO_BOX.h, px=(200, 100))
 
+    @staticmethod
+    def notes(slide, text: str) -> None:
+        """Текст выступления — заметки докладчика слайда (N01/N02)."""
+        slide.notes_slide.notes_text_frame.text = text
+
     def save(self, path: Path) -> Path:
         self.prs.save(str(path))
         return path
@@ -205,8 +210,19 @@ def make_clean(tmp: Path) -> Case:
     b.title(s4, "До и после пилота по трём метрикам")
     b.table(s4, MARGIN, Inches(2), Inches(8), Inches(3))
     b.logo(s4)
+    for s, text in zip((s1, s2, s3, s4), CLEAN_NOTES):
+        b.notes(s, text)
     b.save(path)
     return Case(path, fixture_dna(path), None, "", -1)
+
+
+# текст выступления чистой колоды: по фразе-двум на слайд
+CLEAN_NOTES = (
+    "Добрый день. Расскажу, как пилот «Пульса» показал перегрузку команд за неделю, а не на ретро.",
+    "Главная потеря — время на согласования: статусы, ручные отчёты и поздние сигналы о выгорании.",
+    "За месяц пилота время на согласования сократилось вдвое — это видно по каждой неделе.",
+    "Три метрики до и после пилота: согласования, скорость реакции и доля ручных отчётов.",
+)
 
 
 # ──────────────────────────── вёрстка ────────────────────────────
@@ -411,9 +427,35 @@ def make_I06(tmp: Path) -> Case:
     return Case(b.save(tmp / "I06.pptx"), fixture_dna(clean), None, "I06", 1)
 
 
+# ──────────────────────────── текст выступления ────────────────────────────
+
+
+def make_N01(tmp: Path) -> Case:
+    """Второй слайд без заметок докладчика, первый — с «Далее.» (меньше трёх слов — не текст)."""
+    clean = make_clean(tmp).pptx
+    b = _builder(tmp)
+    s1, s2 = b.slide(), b.slide()
+    b.title(s1, "Команды теряют треть времени на согласования")
+    b.notes(s1, "Далее.")
+    b.title(s2, "Время на согласования упало вдвое за месяц")
+    return Case(b.save(tmp / "N01.pptx"), fixture_dna(clean), None, "N01", 0)
+
+
+def make_N02(tmp: Path) -> Case:
+    """Выступление на 7 минут, а текста — на полминуты: N02 на уровне файла (нужна цель из DeckIR)."""
+    clean = make_clean(tmp).pptx
+    b = _builder(tmp)
+    s = b.slide()
+    b.title(s, "Команды теряют треть времени на согласования")
+    b.notes(s, CLEAN_NOTES[1])
+    ir = DeckIR(template_id="fixture", strategy="test", slide_w=SW, slide_h=SH, talk_minutes=7, slides=[
+        SlideIR(idx=0, exemplar_id="slide1", archetype=Archetype.BULLETS, outline_ref=0, elements=[])])
+    return Case(b.save(tmp / "N02.pptx"), fixture_dna(clean), ir, "N02", -1)
+
+
 # по одной фикстуре на проверку (make_<ID>); варианты вроде make_L02_title_under_card — отдельными тестами
 FIXTURES: dict[str, Callable[[Path], Case]] = {
-    name[5:]: fn for name, fn in globals().items() if re.fullmatch(r"make_[LTDI]\d\d", name)
+    name[5:]: fn for name, fn in globals().items() if re.fullmatch(r"make_[LTDIN]\d\d", name)
 }
 
 __all__ = ["FIXTURES", "Case", "DeckBuilder", "fixture_dna", "make_L02_title_under_card", "make_clean"]

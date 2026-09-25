@@ -52,6 +52,7 @@ OVERLAP_SHARE = 0.2
 # ...и сам заголовок длиннее видимой части строки: текст переносится по всей ширине бокса и уходит под блок
 TITLE_UNDER_CONTENT_PENALTY = 8.0
 EXTRA_PICTURE_PENALTY = 2.5  # за каждую рамку под картинку сверх одной
+EXTRA_DATA_SLOT_PENALTY = 3.0  # за каждую диаграмму / таблицу образца сверх одной (рендер уберёт её, останется дыра)
 # рамка, в которую ляжет картинка слайда, — подложка под текст образца (VK Tech slide32: код на тёмной картинке):
 # цвет текста рассчитан на подложку шаблона, на сгенерированной иллюстрации контраст — дело случая
 BACKDROP_PICTURE_PENALTY = 8.0
@@ -89,7 +90,7 @@ class Needs:
     table_cols: int = 0
     quote_chars: int = 0
     item_chars: tuple[int, ...] = ()  # длина каждого пункта — тесноту слота считаем к его пункту, а не к среднему
-    diagram: int = 0  # шагов схемы из автофигур (DiagramSpec): ей нужен один широкий body
+    diagram: int = 0  # шагов схемы SmartArt (DiagramSpec): ей нужен один широкий body
 
     @classmethod
     def of(cls, s: OutlineSlide) -> Needs:
@@ -123,7 +124,7 @@ def pick_exemplar(
     """Лучший образец и его скор; (None, IMPOSSIBLE), если ни один не годится. `exclude` — уже отвергнутые."""
     used = used or {}
     needs = Needs.of(slide)
-    # схеме из автофигур нужен образец с одним широким текстовым блоком, а не process-образец шаблона
+    # схеме SmartArt нужен образец с одним широким текстовым блоком, а не process-образец шаблона
     chain = DIAGRAM_CHAIN if needs.diagram else candidate_archetypes(slide.archetype, strategy)
     rank_penalty = FLEX_RANK_PENALTY if slide.archetype in FLEXIBLE else ARCH_RANK_PENALTY
     # структурные образцы для контентного слайда — последний резерв, иначе штраф за повторы
@@ -174,6 +175,8 @@ def score_exemplar(e: Exemplar, n: Needs, strategy: Strategy, slide_area: int) -
             score -= DATA_IN_BODY_PENALTY
         else:
             score += 2.0 if (n.chart and kinds[SlotKind.CHART]) or (n.table and kinds[SlotKind.TABLE]) else 0.0
+            # на слайде один объект данных: лишняя диаграмма образца уйдёт вместе с цифрами шаблона и оставит дыру
+            score -= EXTRA_DATA_SLOT_PENALTY * (len(data_slots) - 1)
         if n.table_cols and data_slots[0].box.w / n.table_cols < MIN_TABLE_COL_W:
             score -= TRUNCATION_PENALTY
     if n.diagram:

@@ -231,10 +231,10 @@ class KpiSpec(BaseModel):
 
 
 class DiagramSpec(BaseModel):
-    """Схема из нативных автофигур (замена SmartArt): шаги процесса слева направо.
+    """Схема шагов процесса слева направо — настоящий SmartArt «Простой процесс» (process1).
 
     Ставит её planner (`apply_process_form`), когда стратегия просит схему, а своего process-образца
-    в шаблоне нет; рисует `render/diagrams.py` одной группой в цветах и шрифте шаблона."""
+    в шаблоне нет; рисует `render/smartart.py` — узлы в цветах и шрифте шаблона, стрелки между ними."""
 
     kind: Literal["process"] = "process"
     items: list[str]
@@ -261,7 +261,7 @@ class OutlineSlide(BaseModel):
     table: TableSpec | None = None
     image: ImageSpec | None = None
     steps: list[str] = Field(default_factory=list)  # для PROCESS
-    diagram: DiagramSpec | None = None  # шаги схемой из автофигур; ставит planner, не outline_writer
+    diagram: DiagramSpec | None = None  # шаги схемой SmartArt; ставит planner, не outline_writer
     quote: str | None = None
     quote_author: str | None = None
     speaker_notes: str = ""
@@ -313,8 +313,29 @@ class SlideIR(BaseModel):
     exemplar_id: str
     archetype: Archetype
     elements: list[Element]
-    notes: str = ""
+    notes: str = ""  # текст выступления (заметки докладчика)
     outline_ref: int  # OutlineSlide.idx
+
+    def title_and_text(self) -> tuple[str, list[str]]:
+        """Заголовок и строки текста слайда; диаграмма, таблица и схема — одной строкой-сводкой.
+
+        Общее для судьи (`audit/contextual`) и текста выступления (`content/speaker_notes`)."""
+        title, lines = "", []
+        for el in self.elements:
+            txt = " ".join(r.text for p in el.paragraphs for r in p.runs).strip()
+            if el.kind == SlotKind.TITLE and not title:
+                title = txt
+            elif txt:
+                lines.append(txt)
+            if el.chart:
+                lines.append(f"[диаграмма: {el.chart.title}; категории: {', '.join(el.chart.categories)}; "
+                             + "; ".join(f"{k}: {v}" for k, v in el.chart.series.items()) + "]")
+            if el.table:
+                lines.append("[таблица: " + " | ".join(el.table.header) + "; "
+                             + "; ".join(" | ".join(r) for r in el.table.rows) + "]")
+            if el.diagram:
+                lines.append("[схема: " + " → ".join(el.diagram.items) + "]")
+        return title, lines
 
 
 class DeckIR(BaseModel):
@@ -323,6 +344,7 @@ class DeckIR(BaseModel):
     slides: list[SlideIR]
     slide_w: int
     slide_h: int
+    talk_minutes: float | None = None  # длительность выступления, под которую написаны заметки (аудит N02)
 
 
 # ──────────────────────────────── Audit ────────────────────────────────

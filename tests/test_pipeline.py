@@ -44,14 +44,20 @@ def test_example_config_loads() -> None:
 
 
 def test_final_configs_run_on_templates_alone() -> None:
-    """9 витринных колод + holdout собираются из шаблонов; контент один на все — через --outline."""
+    """9 витринных колод + holdout собираются из шаблонов; контент один на все — через --outline.
+    Сценарий жюри — контекст репозитория и задача на шаблоне VK Tech."""
     finals = sorted((REPO / "configs" / "final").glob("*.yaml"))
-    assert [p.stem for p in finals] == ["lct2026_holdout", "vk_education", "vk_tech", "vk_workspace"]
+    assert [p.stem for p in finals] == ["jury_scenario", "lct2026_holdout", "vk_education", "vk_tech", "vk_workspace"]
     for path in finals:
         cfg = load_config(path)
-        assert cfg.content_pack is None and not cfg.topic, f"{path.name}: контент-пакета в датасете нет"
         assert cfg.template.is_absolute() and cfg.strategies == ["executive", "narrative", "visual"]
         assert cfg.output_dir.name == path.stem and cfg.output_dir.parent.name == "output"
+        if path.stem == "jury_scenario":
+            assert cfg.context is not None and cfg.context.parent == cfg.output_dir and cfg.topic
+            assert cfg.template.name.startswith("VK Tech") and cfg.talk_minutes == 7
+        else:
+            assert cfg.content_pack is None and cfg.context is None and not cfg.topic, \
+                f"{path.name}: контент-пакета в датасете нет"
 
 
 def test_empty_pack_falls_back_to_template_brief(template_path, tmp_path: Path) -> None:
@@ -77,9 +83,9 @@ def test_empty_pack_falls_back_to_template_brief(template_path, tmp_path: Path) 
 
 
 def test_topic_only_run(template_path, tmp_path: Path) -> None:
-    """Тема одной строкой: LLM зовётся только за outline, бриф — сама тема."""
+    """Тема одной строкой: до вёрстки LLM зовётся только за outline, бриф — сама тема."""
     cfg = RunConfig(template=template_path("VK Tech"), topic="Пульс команды: как мерить вовлечённость",
-                    strategies=["executive"], output_dir=tmp_path / "run", audit=NO_JUDGE)
+                    strategies=["executive"], output_dir=tmp_path / "run", audit=NO_JUDGE, speaker_notes=False)
     client = FakeClient(cassette("outline_writer_pulse"))
     res = run(cfg, client=client)
 
@@ -119,21 +125,24 @@ def test_run_with_fake_llm(template_path, tmp_path: Path) -> None:
         audience="руководители", target_slides=12, strategies=["executive", "visual"], output_dir=tmp_path / "run",
         audit=NO_JUDGE,
     )
-    client = FakeClient(cassette("outline_writer_pulse"))
+    from tests.conftest import fake_notes
+
+    client = FakeClient(cassette("outline_writer_pulse"), by_skill={"speaker_notes": [fake_notes]})
     messages: list[str] = []
     res = run(cfg, client=client, progress=messages.append)
 
-    assert len(client.calls) == 1 and (tmp_path / "run" / "outline.json").exists()
-    assert (tmp_path / "run" / "outline.raw.json").exists()
+    # outline — один на прогон, текст выступления — по вызову на колоду
+    assert [c.skill for c in client.calls].count("outline_writer@v3") == 1 and len(client.calls) == 3
+    assert (tmp_path / "run" / "outline.json").exists() and (tmp_path / "run" / "outline.raw.json").exists()
     assert [d.strategy for d in res.decks] == ["executive", "visual"]
     for d in res.decks:
         assert d.pptx.exists() and d.pptx.stat().st_size > 100_000 and d.ir_json.exists()
         m = json.loads(d.manifest.read_text("utf-8"))
-        assert m["skills"] == {"outline_writer": "v3"}
+        assert m["skills"] == {"outline_writer": "v3", "speaker_notes": "v3"}
         assert m["models"]["text"] == "fake-text"
-        assert m["llm_calls"][0]["skill"] == "outline_writer@v3"
-        assert {"parse", "outline", "layout", "render", "audit", "autofix"} <= set(m["timings_s"])
-        assert d.audit is not None and d.audit.exists() and m["audit"]["checks_run"] == 24
+        assert [c["skill"] for c in m["llm_calls"]] == ["outline_writer@v3", "speaker_notes@v3"]
+        assert {"parse", "outline", "layout", "render", "audit", "autofix", "notes"} <= set(m["timings_s"])
+        assert d.audit is not None and d.audit.exists() and m["audit"]["checks_run"] == 26
         assert m["audit"]["errors"] == d.audit_summary["errors"] and "by_check" in m["audit"]
         assert m["audit"]["kind"] == "deterministic" and m["audit"]["contextual"] == 0
         fix = m["audit"]["autofix"]
@@ -149,7 +158,7 @@ def test_run_with_fake_llm(template_path, tmp_path: Path) -> None:
     assert run_json["timings_s"]["total"] > 0
     assert run_json["not_implemented"] == []
     assert all(json.loads(d.manifest.read_text("utf-8"))["images"].get("generated", 0) == 0 for d in res.decks)
-    assert (tmp_path / "run" / "dna.json").exists() and run_json["decks"][0]["audit"]["checks_run"] == 24
+    assert (tmp_path / "run" / "dna.json").exists() and run_json["decks"][0]["audit"]["checks_run"] == 26
     assert (tmp_path / "run" / "compare.md").read_text("utf-8").count("\n") >= 3
     assert any(m.startswith("outline:") for m in messages)
 
@@ -268,6 +277,157 @@ def test_image_generated_once_for_parallel_decks(tmp_path: Path) -> None:
     assert not list(tmp_path.glob("*.tmp"))
 
 
+def test_illustrate_does_not_wait_past_deadline(tmp_path: Path) -> None:
+    """Начатую генерацию, не ответившую к дедлайну, колода не ждёт — как и судью: бюджет прогона важнее картинки."""
+    import threading
+
+    from deckforge.content.images import illustrate
+    from deckforge.core.strategy import load_strategy
+
+    release = threading.Event()
+
+    class Hanging(ImageFakeClient):
+        def generate_image(self, prompt: str, out_path: Path, size: str = "1024x576", deadline: float | None = None):
+            release.wait(10)  # ответа к дедлайну не будет
+            return super().generate_image(prompt, out_path, size, deadline)
+
+    client = Hanging(by_skill={"image_prompter": [{"prompt": "abstract blue gradient"}]})
+    try:
+        t0 = time.monotonic()
+        res = illustrate(_outline(), load_strategy("visual"), {"palette": "0077FF"}, client, tmp_path,
+                         cfg_mode="always", deadline=t0 + 0.5)
+        assert time.monotonic() - t0 < 5  # вернулись сразу после дедлайна, а не через 10 с
+    finally:
+        release.set()  # брошенные потоки держат локи ключей кэша — отпустить до следующих тестов
+    assert res.items and all(i.source == "failed" and "бюджет" in (i.error or "") for i in res.items)
+    assert len(res.warnings) == len(res.items)
+    assert not any(s.image and s.image.path for s in res.outline.slides)
+
+
+def test_speaker_notes_for_every_slide_of_every_deck(template_path, tmp_path: Path) -> None:
+    """Вводная жюри: у каждого слайда каждого варианта есть текст выступления под заданную длительность —
+    в заметках .pptx, в speech.md, в manifest; N01/N02 чистые. Разделители narrative тоже с текстом."""
+    from pptx import Presentation
+
+    from tests.conftest import fake_notes
+
+    cfg = RunConfig(template=template_path("VK Tech"), content_pack=REPO / "examples" / "content_pack",
+                    strategies=["executive", "narrative"], output_dir=tmp_path, images="off", talk_minutes=5,
+                    audit=NO_JUDGE)
+    client = FakeClient(by_skill={"speaker_notes": [fake_notes]})
+    res = run(cfg, client=client, outline=_outline())
+    assert len(client.calls) == 2 and all(c.skill == "speaker_notes@v3" for c in client.calls)
+    for d in res.decks:
+        m = d.load_manifest()
+        prs = Presentation(str(d.pptx))
+        assert all(s.has_notes_slide and s.notes_slide.notes_text_frame.text.strip() for s in prs.slides)
+        assert m["skills"]["speaker_notes"] == "v3" and "notes" in m["timings_s"]
+        assert m["speech"]["talk_minutes"] == 5 and 3.75 <= m["speech"]["minutes"] <= 6.25
+        assert m["speech"]["slides_without_notes"] == [] and m["exports"]["speech"] == f"{d.strategy}.speech.md"
+        assert d.speech is not None and d.speech.read_text("utf-8").count("\n## ") == m["stats"]["slides"]
+        report = d.load_report()
+        assert report is not None and {"N01_notes_missing", "N02_talk_duration"} <= set(report.checks_run)
+        assert not [f for f in report.findings if f.check_id.startswith("N0")]
+        ir = d.load_ir()
+        assert ir.talk_minutes == 5 and all(s.notes for s in ir.slides)
+    assert any(s.archetype.value == "section" for s in res.decks[1].load_ir().slides)
+    assert "| речь, мин |" in (tmp_path / "compare.md").read_text("utf-8")
+
+
+def test_speaker_notes_do_not_outlive_deadline(template_path, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Модель не ответила к дедлайну прогона — колода готова без текста, с предупреждением и N01, а не ждёт ответа."""
+    import importlib
+    import threading
+
+    run_mod = importlib.import_module("deckforge.pipeline.run")
+    monkeypatch.setattr(run_mod, "EXPORT_RESERVE_S", 0.0)
+    monkeypatch.setattr(run_mod, "NOTES_MIN_LEFT_S", 0.0)
+    release = threading.Event()
+
+    def hang(inputs: dict) -> dict:
+        release.wait(30)  # ответа к дедлайну не будет
+        return {"notes": []}
+
+    cfg = RunConfig(template=template_path("VK Tech"), content_pack=REPO / "examples" / "content_pack",
+                    strategies=["executive"], output_dir=tmp_path, images="off", time_budget_s=10, audit=NO_JUDGE)
+    try:
+        res = run(cfg, client=FakeClient(by_skill={"speaker_notes": [hang]}), outline=_outline())
+    finally:
+        release.set()
+    d = res.decks[0]
+    m = d.load_manifest()
+    assert m["timings_s"]["deck_total"] < 15  # дедлайн 10 с + экспорт, а не 30 с ожидания
+    assert any("не готов к дедлайну" in w for w in m["warnings"])
+    # остались только черновики заметок из outline «Пульса» — у остальных слайдов N01
+    missing = m["speech"]["slides_without_notes"]
+    assert 0 < len(missing) < m["stats"]["slides"] and "notes" not in m["timings_s"]
+    report = d.load_report()
+    assert report is not None
+    assert sorted(f.slide_idx + 1 for f in report.findings if f.check_id == "N01_notes_missing") == missing
+
+
+def test_ready_outline_without_judge_and_images_still_gets_notes(template_path, tmp_path: Path,
+                                                                 monkeypatch: pytest.MonkeyPatch) -> None:
+    """`run --outline … --no-judge --no-images`: судье и картинкам клиент не нужен, но текст выступления пишет
+    модель — клиент создаётся по ключу. Без ключа колоды собираются без текста, с предупреждением."""
+    import importlib
+
+    from tests.conftest import fake_notes
+
+    run_mod = importlib.import_module("deckforge.pipeline.run")
+    made: list[FakeClient] = []
+    monkeypatch.setattr(run_mod, "LLMClient",
+                        lambda: made.append(FakeClient(by_skill={"speaker_notes": [fake_notes]})) or made[-1])
+    cfg = RunConfig(template=template_path("VK Tech"), strategies=["executive"], output_dir=tmp_path / "key",
+                    images="off", audit=NO_JUDGE)
+
+    monkeypatch.setenv("LLM_API_KEY", "sk-test")
+    m = run(cfg, outline=_outline()).decks[0].load_manifest()
+    assert len(made) == 1 and m["speech"]["slides_without_notes"] == [] and "notes" in m["timings_s"]
+
+    monkeypatch.setenv("LLM_API_KEY", "")
+    res = run(cfg.model_copy(update={"output_dir": tmp_path / "nokey"}), outline=_outline())
+    assert len(made) == 1  # без ключа клиента нет — и запросов в API тоже
+    assert any("LLM_API_KEY не задан" in w for w in res.warnings)
+    report = res.decks[0].load_report()
+    assert report is not None and not [f for f in report.findings if f.check_id.startswith("N0")]
+
+
+def test_keep_awake_sets_and_clears_execution_state(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Прогон держит систему бодрствующей (Modern Standby посреди прогона съел бюджет) и снимает флаг даже при ошибке."""
+    import importlib
+
+    run_mod = importlib.import_module("deckforge.pipeline.run")  # в пакете имя run — функция
+    calls: list[int] = []
+    monkeypatch.setattr(run_mod, "_set_execution_state", calls.append)
+    with pytest.raises(RuntimeError), run_mod._keep_awake():
+        assert calls[-1] & run_mod.ES_DISPLAY_REQUIRED and calls[-1] & run_mod.ES_SYSTEM_REQUIRED
+        raise RuntimeError("колода упала")
+    assert calls == [run_mod.ES_CONTINUOUS | run_mod.ES_SYSTEM_REQUIRED | run_mod.ES_DISPLAY_REQUIRED,
+                     run_mod.ES_CONTINUOUS]
+
+
+def test_set_execution_state_is_noop_off_windows(monkeypatch: pytest.MonkeyPatch) -> None:
+    import ctypes
+    import importlib
+
+    run_mod = importlib.import_module("deckforge.pipeline.run")
+    called: list[int] = []
+
+    class Kernel32:
+        def SetThreadExecutionState(self, flags: int) -> int:  # noqa: N802 — имя WinAPI
+            called.append(flags)
+            return 1
+
+    monkeypatch.setattr(ctypes, "windll", type("WinDLL", (), {"kernel32": Kernel32()})(), raising=False)
+    monkeypatch.setattr(run_mod.sys, "platform", "linux")
+    run_mod._set_execution_state(run_mod.ES_CONTINUOUS)
+    assert called == []
+    monkeypatch.setattr(run_mod.sys, "platform", "win32")
+    run_mod._set_execution_state(run_mod.ES_CONTINUOUS)
+    assert called == [run_mod.ES_CONTINUOUS]
+
+
 def _outline():
     from deckforge.core.ir import DeckOutline
 
@@ -291,7 +451,8 @@ def test_build_deck_matches_run(template_path, tmp_path: Path) -> None:
     assert deck.pptx.exists() and deck.audit_summary["errors"] == whole.audit_summary["errors"]
     assert set(deck.load_manifest()) == set(whole.load_manifest())
     m = deck.load_manifest()
-    assert m["exports"] == {"pptx": "executive.pptx"} and deck.pdf is None
+    # без LLM текст выступления — черновики заметок outline «Пульса»
+    assert m["exports"] == {"pptx": "executive.pptx", "speech": "executive.speech.md"} and deck.pdf is None
     # пути в manifest — относительные
     assert m["outline"] == "outline.json" and m["audit"]["path"] == "executive.audit.json"
     assert json.loads(deck.audit.read_text("utf-8"))["deck_path"] == "executive.pptx"
@@ -345,7 +506,8 @@ def test_pdf_export(template_path, tmp_path: Path) -> None:
     assert not list(tmp_path.glob("_pdf*"))
     assert d.html is not None and d.html.exists() and d.html.name == "executive.html"
     m = d.load_manifest()
-    assert m["exports"] == {"pptx": "executive.pptx", "pdf": "executive.pdf", "html": "executive.html"}
+    assert m["exports"] == {"pptx": "executive.pptx", "pdf": "executive.pdf", "html": "executive.html",
+                            "speech": "executive.speech.md"}
     assert "export_pdf" in m["timings_s"] and "export_html" in m["timings_s"]
     run_json = json.loads(res.run_json.read_text("utf-8"))
     assert run_json["not_implemented"] == [] and run_json["decks"][0]["exports"]["html"] == "executive.html"
@@ -359,7 +521,7 @@ def test_run_with_contextual_judge(template_path, tmp_path: Path) -> None:
 
     outline = DeckOutline.model_validate_json((REPO / "examples" / "content_pack" / "outline.json").read_text("utf-8"))
     cfg = RunConfig(template=template_path("VK Tech"), content_pack=REPO / "examples" / "content_pack",
-                    strategies=["executive"], output_dir=tmp_path, images="off", render_dpi=40,
+                    strategies=["executive"], output_dir=tmp_path, images="off", render_dpi=40, speaker_notes=False,
                     audit={"deterministic": True, "contextual": True, "autofix": False})
     client = FakeClient(by_skill={"audit_judge": cassette("audit_judge_pulse")})
     res = run(cfg, client=client, outline=outline)

@@ -14,8 +14,8 @@ PREFIXES = [c[:3] for c in CHECKS]
 
 
 def test_registry_matches_audit_md() -> None:
-    assert len(CHECKS) == 24 and set(PREFIXES) == set(FIXTURES)
-    assert PREFIXES == sorted(PREFIXES, key=lambda p: ("LTDI".index(p[0]), p))
+    assert len(CHECKS) == 26 and set(PREFIXES) == set(FIXTURES)
+    assert PREFIXES == sorted(PREFIXES, key=lambda p: ("LTDIN".index(p[0]), p))
 
 
 def test_clean_deck_has_no_findings(tmp_path: Path) -> None:
@@ -36,7 +36,8 @@ def test_check_catches_its_fixture(prefix: str, tmp_path: Path) -> None:
     assert any(f.slide_idx == case.slide_idx for f in hits), [f.slide_idx for f in hits]
     for f in hits:
         assert f.kind == "deterministic" and f.message
-        if f.slide_idx >= 0 and check_id not in ("D05_fill", "I06_duplicate_slides", "I03_empty_slide", "T04_layout"):
+        if f.slide_idx >= 0 and check_id not in ("D05_fill", "I06_duplicate_slides", "I03_empty_slide", "T04_layout",
+                                                 "N01_notes_missing"):
             assert f.element_id and f.box is not None
 
 
@@ -90,7 +91,7 @@ def test_summary_and_markdown(tmp_path: Path) -> None:
     case = FIXTURES["D01"](tmp_path)
     report = audit_deck(case.pptx, case.dna)
     s = summary(report)
-    assert s["checks_run"] == 24 and s["by_check"].get("D01_bullets") == 1 and 0 in s["slides_with_issues"]
+    assert s["checks_run"] == 26 and s["by_check"].get("D01_bullets") == 1 and 0 in s["slides_with_issues"]
     md = report_markdown(report)
     assert "D01_bullets" in md and md.startswith("**D01.pptx**")
 

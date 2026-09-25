@@ -14,7 +14,7 @@ import logging
 import os
 import threading
 import time
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, wait
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any
@@ -101,7 +101,7 @@ def illustrate(
     """Копия outline с `image.path` у проиллюстрированных слайдов.
 
     `deadline` (`time.monotonic()`) — бюджет времени прогона: промпт и генерация после него не вызываются,
-    слайд остаётся без иллюстрации с предупреждением (кэш читается всегда).
+    а начатых и не ответивших к нему не ждём; слайд остаётся без иллюстрации с предупреждением (кэш читается всегда).
     """
     mode = effective_mode(cfg_mode, strategy)
     res = IllustrateResult(outline.model_copy(deep=True), mode)
@@ -123,8 +123,20 @@ def illustrate(
     def work(s: OutlineSlide) -> ImageItem:
         return _illustrate_one(s, client, skill, style, style_tags, img_dir, deadline)
 
-    with ThreadPoolExecutor(max_workers=max(1, parallel)) as ex:
-        items = list(ex.map(work, todo))
+    pool = ThreadPoolExecutor(max_workers=max(1, parallel))
+    try:
+        futures = [pool.submit(work, s) for s in todo]
+        wait(futures, timeout=max(0.0, deadline - time.monotonic()) if deadline is not None else None)
+        items: list[ImageItem] = []
+        for fut, s in zip(futures, todo):
+            if not fut.done():
+                # как у судьи: начатый запрос не прервать — ответа не ждём, бюджет прогона важнее картинки
+                fut.cancel()
+                items.append(ImageItem(s.idx, s.title, "failed", error="бюджет времени прогона исчерпан"))
+                continue
+            items.append(fut.result())
+    finally:
+        pool.shutdown(wait=False, cancel_futures=True)
     for item in items:
         res.items.append(item)
         if item.path:

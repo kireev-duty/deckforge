@@ -67,19 +67,7 @@ def slides_from_ir(ir: DeckIR, outline: DeckOutline | None = None, pack: Any = N
     by_ref = {s.idx: s for s in outline.slides} if outline else {}
     out: list[SlideText] = []
     for s in ir.slides:
-        title, lines = "", []
-        for el in s.elements:
-            txt = " ".join(r.text for p in el.paragraphs for r in p.runs).strip()
-            if el.kind == SlotKind.TITLE and not title:
-                title = txt
-            elif txt:
-                lines.append(txt)
-            if el.chart:
-                lines.append(f"[диаграмма: {el.chart.title}; категории: {', '.join(el.chart.categories)}; "
-                             + "; ".join(f"{k}: {v}" for k, v in el.chart.series.items()) + "]")
-            if el.table:
-                lines.append("[таблица: " + " | ".join(el.table.header) + "; "
-                             + "; ".join(" | ".join(r) for r in el.table.rows) + "]")
+        title, lines = s.title_and_text()
         o = by_ref.get(s.outline_ref)
         sources = list(o.sources) if o else []
         out.append(SlideText(idx=s.idx, title=title or (o.title if o else ""), text="\n".join(lines)[:MAX_TEXT_CHARS],

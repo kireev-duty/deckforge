@@ -1,17 +1,20 @@
 """HTTP API поверх `pipeline/`: `uvicorn deckforge.api.app:app --reload`, Swagger на /docs.
 
-Цикл: `POST /templates` [→ `POST /templates/{id}/prepare`] → `POST /generate` → `GET /jobs/{id}`
+Цикл: `POST /templates` [→ `POST /templates/{id}/prepare`] → `POST /generate` (+ `repo` — .zip репозитория
+как контекст) → `GET /jobs/{id}`
 → `.../decks/{strategy}/audit` → `POST .../fix` → `GET .../files/{name}`. Job'ы в памяти, файлы в `out/api/`.
 """
 
 # без `from __future__ import annotations`: FastAPI резолвит аннотации
+import io
 import json
 import re
 import uuid
+import zipfile
 from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
-from typing import Annotated
+from typing import Annotated, Literal
 
 from fastapi import Depends, FastAPI, File, Form, HTTPException, Request, UploadFile
 from fastapi.responses import FileResponse
@@ -40,13 +43,21 @@ from deckforge.api.schemas import (
     TemplateInfo,
 )
 from deckforge.core.autofix import fix_plan_rows
+from deckforge.core.speech import DEFAULT_TALK_MINUTES
 from deckforge.core.strategy import list_strategies, load_strategy
 from deckforge.llm import load_dotenv
 from deckforge.llm.client import LLMClient
-from deckforge.pipeline import RunConfig, prepare_template, refine_deck, run, soffice_available
+from deckforge.pipeline import (
+    RunConfig,
+    prepare_context,
+    prepare_template,
+    refine_deck,
+    run,
+    soffice_available,
+)
 from deckforge.pipeline.config import Purpose
 
-DECK_FILES = ("pptx", "pdf", "html", "ir.json", "audit.json", "manifest.json")
+DECK_FILES = ("pptx", "pdf", "html", "speech.md", "ir.json", "audit.json", "manifest.json")
 # brief.md — бриф по теме или выведенный из шаблона (режим «на входе только шаблон»)
 RUN_FILES = ("outline.json", "outline.raw.json", "run.json", "compare.md", "dna.json", "brief.md")
 _PNG = re.compile(r"^(slide_\d{2}\.png|contact\.png)$")
@@ -146,12 +157,18 @@ def create_app(root: Path | str = Path("out/api"), client_factory: Callable[[], 
         audience: str = Form(""),
         language: str = Form("ru"),
         target_slides: int | None = Form(None, ge=3, le=25),
+        notes: bool = Form(True, description="текст выступления к каждому слайду (заметки докладчика, speech.md)"),
+        talk_minutes: float = Form(DEFAULT_TALK_MINUTES, ge=1, le=60, description="длительность выступления, мин"),
         strategies: str = Form("executive,narrative,visual", description="через запятую"),
         judge: bool = Form(True, description="VLM-судья по PNG"),
+        images: Literal["off", "auto", "always"] = Form(
+            "off", description="иллюстрации T2I: off; auto — по стратегии (narrative, visual); always — везде, где можно"),
         autofix: bool = Form(True, description="безопасные автофиксы"),
         render_png: bool = Form(True),
         export: str = Form("pptx,pdf,html", description="через запятую: pptx, pdf, html"),
         files: list[UploadFile] = File(default=[], description="контент-пакет: текст .md/.txt/.docx/.pdf, данные .json/.csv/.xlsx"),
+        repo: UploadFile | None = File(None, description="контекст: .zip репозитория — README, docs, история git; факты "
+                                                         "готовятся в job'е до прогона, вне бюджета; topic — задача"),
     ) -> JobCreated:
         """Запустить прогон; ответ — id job'а."""
         entry = _template(s, template_id)
@@ -166,10 +183,18 @@ def create_app(root: Path | str = Path("out/api"), client_factory: Callable[[], 
             uploads = [(f.filename or "file", await f.read()) for f in files]
             pack_dir = (write_content_pack(job.dir / "content_pack", brief, uploads)
                         if brief.strip() or uploads else None)
+            repo_zip = None
+            if repo is not None and repo.filename:
+                data = await repo.read()
+                if not zipfile.is_zipfile(io.BytesIO(data)):
+                    raise BadUpload(f"repo: нужен .zip — {safe_name(repo.filename)}")
+                repo_zip = job.dir / "context_src.zip"
+                repo_zip.write_bytes(data)
             cfg = RunConfig(
                 template=entry.path, content_pack=pack_dir, topic=topic,
                 purpose=purpose, audience=audience, language=language,
-                target_slides=target_slides, strategies=names, images="off", output_dir=job.dir,
+                target_slides=target_slides, speaker_notes=notes, talk_minutes=talk_minutes,
+                strategies=names, images=images, output_dir=job.dir,
                 render_png=render_png, export=[e.strip() for e in export.split(",") if e.strip()],  # type: ignore[arg-type]
                 audit={"deterministic": True, "contextual": judge, "autofix": autofix},
             )
@@ -177,7 +202,21 @@ def create_app(root: Path | str = Path("out/api"), client_factory: Callable[[], 
             s.jobs.discard(job)
             raise HTTPException(400, str(e)) from e
         factory = s.client_factory
-        s.jobs.submit(job, lambda j: run(cfg, client=factory(), progress=j.say))
+        contexts = s.root / "contexts"
+
+        def work(j: Job):
+            client = factory()
+            ready = cfg
+            if repo_zip is not None:
+                # подготовка контекста — до прогона: часы бюджета стартуют в run()
+                report = prepare_context(repo_zip, client, progress=j.say, language=language, cache_dir=contexts)
+                if report.digest.pack.fragments:
+                    ready = cfg.model_copy(update={"context": report.path})
+                else:
+                    j.say("контекст: фактов нет — контент по брифу, теме или шаблону")
+            return run(ready, client=client, progress=j.say)
+
+        s.jobs.submit(job, work)
         return JobCreated(id=job.id, status=job.status)
 
     @app.get("/jobs", response_model=list[JobInfo])

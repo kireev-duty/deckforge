@@ -26,6 +26,7 @@ TEMPLATES = {
     "vk_education": "VK Education",
     "vk_workspace": "VK WorkSpace",
     "lct2026_holdout": "ЛЦТ 2026 — holdout (не использовался при разработке)",
+    "jury_scenario": "Сценарий жюри: контекст — репозиторий deckforge, задача — питч на 7 минут (VK Tech)",
 }
 THUMB_DPI = 40
 

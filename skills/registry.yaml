@@ -26,6 +26,13 @@ skills:
       - {version: v1, note: "initial; режим без контент-пакета — бриф выводится из самого шаблона"}
       - {version: v2, note: "тезисов столько, сколько содержательных слайдов (было 5–8 → колода на 9 слайдов при целевых 12); задан состав тезисов"}
 
+  context_digest:
+    description: Подготовка контекста — факты о проекте из README, документации, структуры и истории git (по чанку на вызов)
+    model_role: text
+    current: v1
+    history:
+      - {version: v1, note: "initial; вводная жюри: контекст на входе — репозиторий, документация и история; подготовка вне бюджета генерации"}
+
   slide_filler:
     description: Подгоняет текст слайда под слоты выбранного образца (лимиты символов/строк), не меняя смысл
     model_role: text
@@ -48,13 +55,31 @@ skills:
     history:
       - {version: v1, note: initial}
 
+  speaker_notes:
+    description: Текст выступления к каждому слайду готовой колоды под заданную длительность (заметки докладчика)
+    model_role: text
+    current: v3
+    history:
+      - {version: v1, note: "initial; вызывается на колоду каждой стратегии параллельно с судьёй — состав слайдов у вариантов разный"}
+      - {version: v2, note: "объём в предложениях (sentences) и итог total_words: v1 писала в 2–3 раза короче бюджета (2,4–3,9 мин из 7)"}
+      - {version: v3, note: "предложения по 12–18 слов с причиной и следствием: v2 держала число предложений, но по 5–7 слов (3,4–5,6 мин из 7)"}
+
 agents:
   # Оркестраторы, объединяющие скиллы: состав и порядок шагов версионируются здесь,
   # исполняет их pipeline/run.py (ретраи и бюджет времени — LLMClient и RUN_TIME_BUDGET_S — один дедлайн на прогон).
+  context_preparer:
+    current: v1
+    # вне бюджета генерации, как подготовка шаблона: pipeline/prepare.prepare_context → context.json (кэш по sha1)
+    steps: [collect_sources, context_digest, select_facts]
+    history:
+      - {version: v1, note: "папка или zip → README, docs, манифест, дерево, история git → факты по чанкам → отбор в лимит промпта"}
+
   deck_generator:
-    current: v2
-    # template_brief — только когда на входе один шаблон; image_prompter и audit_judge пропускаются при нехватке бюджета
-    steps: [template_brief, outline_writer, image_prompter, layout, render, audit, autofix, audit_judge, export]
+    current: v3
+    # template_brief — только когда на входе один шаблон; image_prompter, audit_judge и speaker_notes пропускаются
+    # при нехватке бюджета; speaker_notes идёт параллельно с PNG и audit_judge
+    steps: [template_brief, outline_writer, image_prompter, layout, render, audit, autofix, speaker_notes, audit_judge, export]
     history:
       - {version: v1, steps: [outline_writer, layout, slide_filler, render, audit, autofix], note: "план; slide_filler так и не подключён"}
       - {version: v2, note: "шаги по факту pipeline/run.py: бриф из шаблона, иллюстрации, VLM-судья, экспорт; схема процесса — шаг layout (process_form стратегии)"}
+      - {version: v3, note: "speaker_notes — текст выступления к каждому слайду под длительность (вводная жюри), параллельно с судьёй"}

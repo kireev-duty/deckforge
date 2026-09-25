@@ -10,10 +10,12 @@ purpose: other                               # feature | product | project | ini
 audience: ""                                 # пусто — назначение и аудиторию предложит template_brief
 language: ru
 target_slides: 12                            # ориентир для outline; итоговый объём задаёт стратегия
+speaker_notes: true                          # текст выступления к каждому слайду (заметки .pptx, speech.md; --no-notes выключает)
+talk_minutes: 7                              # длительность выступления, под неё пишется текст (--minutes)
 strategies: [executive, narrative, visual]   # три варианта вёрстки на одном outline
 images: auto                                 # off | auto (по стратегии: executive без картинок, narrative — где уместно, visual — везде) | always
 audit:
-  deterministic: true                        # 24 проверки по XML (docs/AUDIT.md) → <strategy>.audit.json
+  deterministic: true                        # 26 проверок по XML (docs/AUDIT.md) → <strategy>.audit.json
   contextual: true                           # VLM-судья по PNG (нужны LibreOffice и API; --no-judge выключает)
   autofix: true                              # безопасные фиксы без вопросов → re-render → повторный аудит (--no-fix выключает)
 export: [pptx, pdf, html]                    # pdf — LibreOffice; html — свой рендер (один файл, без LibreOffice); всё рядом с .pptx

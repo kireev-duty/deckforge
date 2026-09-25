@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
 from PIL import Image
 from pptx import Presentation
 from pptx.parts.chart import ChartPart
@@ -143,13 +144,12 @@ def test_chart_slide_cloned_twice(template_path, tmp_path: Path):
     e = exemplars[chart_idx]
     chart_slot = next(s for s in e.slots if s.kind == SlotKind.CHART)
 
-    # 1) дважды без ChartSpec → две независимые копии chart-части и её xlsx
+    # 1) дважды без ChartSpec → диаграмма образца с его цифрами на слайд не попадает, а её chart-части и xlsx
+    #    не остаются в пакете сиротами (связи переносятся только для того, на что ссылается итоговый XML)
     slides = [SlideIR(idx=i, exemplar_id=e.id, archetype=e.archetype, elements=[], outline_ref=i) for i in range(2)]
     prs = Presentation(str(render_pptx(_deck(exemplars, slides), tpl, exemplars, tmp_path / "twice.pptx")))
-    charts = [p for p in prs.part.package.iter_parts() if isinstance(p, ChartPart)]
-    assert len(charts) == 2 and len({c.partname for c in charts}) == 2
-    xlsx = {r.target_part.partname for c in charts for r in c.rels.values() if r.reltype.endswith("/package")}
-    assert len(xlsx) == 2
+    assert not [sh for s in prs.slides for sh in s.shapes if sh.has_chart]
+    assert not [p for p in prs.part.package.iter_parts() if isinstance(p, ChartPart)]
     assert _dangling(prs) == 0
 
     # 2) с ChartSpec → образцовой диаграммы нет, есть новая нативная; data_labels → c:dLbls, y_label → ось
@@ -163,6 +163,23 @@ def test_chart_slide_cloned_twice(template_path, tmp_path: Path):
     chart = charts[0].chart
     assert chart.plots[0].has_data_labels and chart.plots[0].data_labels.number_format == "0"
     assert chart.value_axis.has_title and chart.value_axis.axis_title.text_frame.text == "часы"
+    assert _dangling(prs) == 0
+
+
+def test_unfilled_chart_of_exemplar_is_removed(template_path, tmp_path: Path):
+    """МТУСИ slide20: две нативные диаграммы, данные — у одной; вторая с цифрами шаблона («1 кв», «Основной») уходит."""
+    tpl = template_path("МТУСИ")
+    exemplars = [p.to_exemplar() for p in classify_template(tpl)]
+    e = next((x for x in exemplars if sum(s.kind == SlotKind.CHART for s in x.slots) == 2), None)
+    if e is None:
+        pytest.skip("в шаблоне нет образца с двумя диаграммами")
+    first = next(s for s in e.slots if s.kind == SlotKind.CHART)
+    spec = ChartSpec(kind="column", title="", categories=["a", "b"], series={"s1": [1, 2]})
+    el = Element(slot_id=first.id, kind=SlotKind.CHART, box=first.box, chart=spec)
+    slides = [SlideIR(idx=0, exemplar_id=e.id, archetype=e.archetype, elements=[el], outline_ref=0)]
+    prs = Presentation(str(render_pptx(_deck(exemplars, slides), tpl, exemplars, tmp_path / "one_of_two.pptx")))
+    charts = [sh.chart for sh in prs.slides[0].shapes if sh.has_chart]
+    assert len(charts) == 1 and list(charts[0].plots[0].categories) == ["a", "b"]
     assert _dangling(prs) == 0
 
 

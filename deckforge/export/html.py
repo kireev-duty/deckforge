@@ -24,6 +24,7 @@ from deckforge.core.deck_reader import (
     TableRec,
     background_picture_part,
     part_chain,
+    read_notes,
     read_shapes,
 )
 from deckforge.core.ir import ChartSpec, DeckIR
@@ -34,11 +35,16 @@ from deckforge.core.units import emu_to_px
 log = logging.getLogger(__name__)
 
 PX_PER_PT = 96 / 72
-# многоугольники стрелочных автофигур (w, h, глубина острия d) — схема шагов из render/diagrams
+# многоугольники стрелочных автофигур (w, h, глубина острия d): шевроны; стрелка SmartArt «Простой процесс»
+# (rightArrow: древко 60 % высоты, как у render/smartart)
 ARROW_POLYGONS = {
     "homePlate": lambda w, h, d: [(0, 0), (w - d, 0), (w, h / 2), (w - d, h), (0, h)],
     "chevron": lambda w, h, d: [(0, 0), (w - d, 0), (w, h / 2), (w - d, h), (0, h), (d, h / 2)],
+    "rightArrow": lambda w, h, d: [(0, 0.2 * h), (w - d, 0.2 * h), (w - d, 0), (w, h / 2), (w - d, h),
+                                   (w - d, 0.8 * h), (0, 0.8 * h)],
 }
+# фигуры отрисовки SmartArt, которые HTML рисует верно
+SMARTART_GEOMS = {"rect", "roundRect", "ellipse", *ARROW_POLYGONS}
 MIME = {".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".gif": "image/gif", ".svg": "image/svg+xml",
         ".webp": "image/webp", ".bmp": "image/bmp", ".tif": "image/tiff", ".tiff": "image/tiff"}
 SKIP_MEDIA = (".emf", ".wmf")
@@ -125,11 +131,14 @@ class HtmlExporter:
         text_color, font = _dominant_text(shapes) or (ctx.theme.colors.get(ctx.clr_map.get("tx1", "dk1"), "212121"),
                                                       ctx.theme.minor_font)
         body.extend(self._shape(s, text_color, font) for s in shapes)
-        notes = ""
-        if self.ir and idx < len(self.ir.slides) and self.ir.slides[idx].notes.strip():
-            notes = f'<aside class="notes" hidden>{html.escape(self.ir.slides[idx].notes)}</aside>'
+        # текст выступления — из заметок колоды (есть и у чужой .pptx), IR — запасной источник
+        text = read_notes(self.pkg, part)
+        if not text and self.ir and idx < len(self.ir.slides):
+            text = self.ir.slides[idx].notes.strip()
+        notes = f'<aside class="notes" aria-label="Текст к слайду {idx + 1}">{html.escape(text)}</aside>' if text else ""
+        # заметки — соседом слайда, а не внутри: слайд масштабируется целиком, текст под ним — нет
         return (f'<section class="slide" id="s{idx + 1}" aria-label="Слайд {idx + 1}">'
-                + "".join(body) + notes + "</section>")
+                + "".join(body) + "</section>" + notes)
 
     def _inherited_shapes(self, ctx: PartCtx | None, cache: bool = True) -> str:
         """Фигуры мастера/лейаута под слайдом, кроме плейсхолдеров."""
@@ -158,6 +167,11 @@ class HtmlExporter:
     def _shape(self, s: ShapeRec, text_color: str, font: str) -> str:
         if s.hidden or s.box.w <= 0 and s.box.h <= 0:
             return ""
+        if s.children:  # SmartArt — фигуры его готовой отрисовки, уже в координатах слайда
+            # формы, которых HTML не умеет (свой контур, сектор, дуговая стрелка), не рисуем: квадрат вместо
+            # сектора хуже пустого места
+            return "".join(self._shape(c, text_color, font) for c in s.children
+                           if c.geom in SMARTART_GEOMS and c.el.find("p:spPr/a:custGeom", NS) is None)
         x, y, w, h = (emu_to_px(v) for v in (s.box.x, s.box.y, s.box.w, s.box.h))
         css = [f"left:{x:.1f}px", f"top:{y:.1f}px", f"width:{max(w, 0):.1f}px", f"height:{max(h, 0):.1f}px"]
         if s.tag == "cxnSp" or s.geom in ("line", "straightConnector1", "bentConnector3"):
@@ -171,7 +185,7 @@ class HtmlExporter:
         elif s.geom == "roundRect":
             css.append(f"border-radius:{min(w, h) * (s.geom_adj if s.geom_adj is not None else 0.16667):.1f}px")
         elif s.geom in ARROW_POLYGONS:
-            # шаги схемы из автофигур: остриё глубиной adj·min(w, h), у шеврона — выемка слева
+            # стрелочные автофигуры: остриё глубиной adj·min(w, h), у шеврона — выемка слева
             d = min(w, h) * (s.geom_adj if s.geom_adj is not None else 0.5)
             pts = ARROW_POLYGONS[s.geom](w, h, d)
             css.append("clip-path:polygon(" + ",".join(f"{px:.1f}px {py:.1f}px" for px, py in pts) + ")")
@@ -679,10 +693,14 @@ body.present .bar{{display:none}}
 body.present .deck{{padding:0;gap:0}}
 body.present .frame{{display:none;margin:auto}}
 body.present .frame.cur{{display:block}}
+.notes{{display:none;width:100%;max-width:var(--w);margin-top:calc(8px - var(--gap));padding:12px 16px;border-radius:6px;background:#2a2d34;font-size:15px;line-height:1.5;white-space:pre-wrap}}
+body.with-notes .notes{{display:block}}
+body.present .notes{{display:none}}
+body.present.with-notes .notes.cur{{display:block;position:fixed;left:0;right:0;bottom:0;max-width:none;max-height:30vh;overflow:auto;margin:0;border-radius:0;background:rgba(20,22,26,.92);z-index:6}}
 @media print{{
   @page{{size:{w}px {h}px;margin:0}}
   html,body{{background:#fff}}
-  .bar{{display:none}}
+  .bar,.notes{{display:none!important}}
   .deck{{padding:0;gap:0}}
   .frame{{transform:none!important;page-break-after:always;break-after:page}}
   .slide{{box-shadow:none}}
@@ -691,7 +709,7 @@ body.present .frame.cur{{display:block}}
 </head>
 <body>
 {defs}
-<div class="bar"><b>{title}</b><span id="pos">1 / {n}</span><button id="btnp" title="F — во весь экран, ←/→ — листать">Показ</button><button onclick="window.print()">Печать</button></div>
+<div class="bar"><b>{title}</b><span id="pos">1 / {n}</span><button id="btnp" title="F — во весь экран, ←/→ — листать">Показ</button><button id="btnn" title="N — текст выступления к слайдам">Заметки</button><button onclick="window.print()">Печать</button></div>
 <main class="deck" id="deck">
 {slides}
 </main>
@@ -708,7 +726,11 @@ body.present .frame.cur{{display:block}}
     const s=Math.min(aw/W,ah/H);
     frames.forEach(f=>{{f.style.width=W*s+'px';f.style.height=H*s+'px';f.firstChild.style.transform='scale('+s+')';}});
   }}
+  const notes=[...deck.querySelectorAll('.notes')],btnn=document.getElementById('btnn');
+  function notesOn(){{document.body.classList.toggle('with-notes');}}
+  if(notes.length)btnn.onclick=notesOn;else btnn.style.display='none';
   function go(i){{cur=Math.max(0,Math.min(frames.length-1,i));frames.forEach((f,k)=>f.classList.toggle('cur',k===cur));
+    notes.forEach(n=>n.classList.toggle('cur',n.previousElementSibling===frames[cur]));
     document.getElementById('pos').textContent=(cur+1)+' / '+frames.length;history.replaceState(null,'','#'+(cur+1));
     if(!document.body.classList.contains('present'))frames[cur].scrollIntoView({{block:'start'}});}}
   function toggle(){{document.body.classList.toggle('present');fit();go(cur);
@@ -716,7 +738,8 @@ body.present .frame.cur{{display:block}}
     else if(document.fullscreenElement)document.exitFullscreen();}}
   document.getElementById('btnp').onclick=toggle;
   addEventListener('keydown',e=>{{if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' ')go(cur+1);else if(e.key==='ArrowLeft'||e.key==='PageUp')go(cur-1);
-    else if(e.key==='f'||e.key==='F'||e.key==='а'||e.key==='А')toggle();else if(e.key==='Escape'&&document.body.classList.contains('present'))toggle();}});
+    else if(e.key==='f'||e.key==='F'||e.key==='а'||e.key==='А')toggle();else if(e.key==='Escape'&&document.body.classList.contains('present'))toggle();
+    else if(notes.length&&(e.key==='n'||e.key==='N'||e.key==='т'||e.key==='Т'))notesOn();}});
   addEventListener('resize',fit);
   const io=new IntersectionObserver(es=>{{es.forEach(x=>{{if(x.isIntersecting&&!document.body.classList.contains('present')){{cur=frames.indexOf(x.target);document.getElementById('pos').textContent=(cur+1)+' / '+frames.length;}}}});}},{{threshold:.6}});
   frames.forEach(f=>io.observe(f));
@@ -728,6 +751,7 @@ body.present .frame.cur{{display:block}}
   }});}}
   (document.fonts?document.fonts.ready:Promise.resolve()).then(shrink);
   fit();const h=parseInt(location.hash.slice(1));if(h)go(h-1);
+  if(/notes/.test(location.search)&&notes.length)document.body.classList.add('with-notes');
   if(/present/.test(location.search)){{document.body.classList.add('present');fit();go(cur);}}
 }})();
 </script>
@@ -737,7 +761,7 @@ body.present .frame.cur{{display:block}}
 
 
 def export_html(pptx: Path, out: Path, *, ir: DeckIR | None = None, title: str | None = None) -> Path:
-    """Колода .pptx → самодостаточный .html; `ir` — только для заметок к слайдам."""
+    """Колода .pptx → самодостаточный .html; текст выступления — из заметок колоды, `ir` — запасной источник."""
     out = Path(out)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(HtmlExporter(Path(pptx), ir, title).build(), "utf-8")

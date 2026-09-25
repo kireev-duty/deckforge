@@ -46,6 +46,11 @@ def _select(checks: Iterable[str] | None) -> dict:
 
 def with_contextual(report: AuditReport, findings: list[Finding], checks: Iterable[str], duration_s: float = 0.0) -> AuditReport:
     """Добавить находки VLM-судьи к детерминированному отчёту."""
+    return merge_findings(report, findings, checks, duration_s)
+
+
+def merge_findings(report: AuditReport, findings: list[Finding], checks: Iterable[str], duration_s: float = 0.0) -> AuditReport:
+    """Добавить к отчёту находки ещё одного прохода (судья, проверки текста выступления)."""
     merged = [*report.findings, *findings]
     merged.sort(key=lambda f: (f.slide_idx, SEVERITY_ORDER[f.severity], f.check_id))
     return report.model_copy(update={"findings": merged, "checks_run": [*report.checks_run, *checks],
@@ -81,4 +86,4 @@ def report_markdown(report: AuditReport, max_rows: int = 80) -> str:
     return "\n".join(lines)
 
 
-__all__ = ["audit_deck", "report_markdown", "summary", "with_contextual"]
+__all__ = ["audit_deck", "merge_findings", "report_markdown", "summary", "with_contextual"]

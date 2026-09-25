@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ContextDigest",
+  "type": "object",
+  "required": ["facts"],
+  "properties": {
+    "facts": {
+      "type": "array",
+      "maxItems": 20,
+      "items": {
+        "type": "object",
+        "required": ["text", "sources"],
+        "properties": {
+          "text": {"type": "string", "minLength": 12, "maxLength": 400},
+          "kind": {"type": "string", "enum": ["overview", "problem", "solution", "architecture", "feature", "metric",
+                                               "milestone", "decision", "limitation", "plan", "other"]},
+          "sources": {"type": "array", "items": {"type": "string"}},
+          "weight": {"type": "integer", "minimum": 1, "maximum": 3}
+        }
+      }
+    }
+  }
+}

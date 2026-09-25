@@ -5,6 +5,7 @@ from __future__ import annotations
 import copy
 import io
 import logging
+import re
 from dataclasses import dataclass, field
 
 from lxml import etree
@@ -14,6 +15,7 @@ from deckforge.core.ir import Box, ChartSpec
 from deckforge.core.ooxml import (
     NS,
     A,
+    P,
     R,
     absolute_bbox,
     graphic_kind,
@@ -23,12 +25,15 @@ from deckforge.core.ooxml import (
     shape_id,
     shape_name,
 )
-from deckforge.core.package import PartCtx, font_scale
+from deckforge.core.package import Package, PartCtx, font_scale
 
 log = logging.getLogger(__name__)
 
 C_NS = "http://schemas.openxmlformats.org/drawingml/2006/chart"
 C = f"{{{C_NS}}}"
+DGM_NS = "http://schemas.openxmlformats.org/drawingml/2006/diagram"
+DSP_NS = "http://schemas.microsoft.com/office/drawing/2008/diagram"
+DRAWING_REL_ID = re.compile(rb'dataModelExt\b[^>]*\brelId="([^"]+)"')
 DEFAULT_INSETS = (91440, 45720, 91440, 45720)  # lIns, tIns, rIns, bIns
 SYMBOL_FONTS = ("Wingdings", "Webdings", "Symbol", "MT Extra")
 DEFAULT_LINE_W = 9525  # 0,75 pt
@@ -153,6 +158,8 @@ class ShapeRec:
     flip_h: bool = False
     flip_v: bool = False
     hidden: bool = False
+    # SmartArt: фигуры его готовой отрисовки (dsp:drawing) в координатах слайда; текст рамки — их текст
+    children: list[ShapeRec] = field(default_factory=list)
 
     @property
     def has_text(self) -> bool:
@@ -167,10 +174,14 @@ class ShapeRec:
         """Содержательный блок: текст, картинка, диаграмма, таблица — не декор и не фон."""
         if self.is_fixed or self.is_decor or self.ph_type in ("sldNum", "ftr", "dt"):
             return False
-        return self.has_text or self.is_picture or self.chart is not None or self.table is not None
+        return (self.has_text or self.is_picture or self.chart is not None or self.table is not None
+                or bool(self.children))
 
     @property
     def area(self) -> int:
+        # SmartArt: рамка на всю контентную область, а занято — фигурами его отрисовки (D05 «перегружен» на 88 %)
+        if self.children:
+            return sum(c.area for c in self.children)
         return max(0, self.box.w) * max(0, self.box.h)
 
     @property
@@ -224,7 +235,49 @@ def read_shape(ctx: PartCtx, sp: etree._Element, z: int = 0) -> ShapeRec | None:
             rec.chart = read_chart(ctx, sp)
         elif kind == "table":
             rec.table = read_table(ctx, sp, rec)
+        elif kind == "diagram":
+            rec.children = read_diagram(ctx, sp, rec.box)
+            rec.text = "\n".join(c.text for c in rec.children if c.has_text)
     return rec
+
+
+def read_diagram(ctx: PartCtx, frame: etree._Element, box: Box) -> list[ShapeRec]:
+    """Фигуры готовой отрисовки SmartArt (`dsp:drawing`) в координатах слайда; нет отрисовки — пусто.
+
+    Путь как у PowerPoint: `dgm:relIds/@r:dm` → data-часть → `dsp:dataModelExt/@relId` (id связи слайда) → drawing.
+    Фигуры `dsp:sp` устроены как `p:sp` в другом пространстве имён — читаются тем же `read_shape`."""
+    rel_ids = frame.find(f".//{{{DGM_NS}}}relIds")
+    if rel_ids is None:
+        return []
+    data = ctx.pkg.rel_by_id(ctx.part, rel_ids.get(R + "dm") or "")
+    if data is None or data not in ctx.pkg.names:
+        return []
+    m = DRAWING_REL_ID.search(ctx.pkg.zip.read(data))
+    drawing = ctx.pkg.rel_by_id(ctx.part, m.group(1).decode()) if m else None
+    if drawing is None or drawing not in ctx.pkg.names:
+        return []
+    out: list[ShapeRec] = []
+    for z, dsp in enumerate(ctx.pkg.xml(drawing).iter(f"{{{DSP_NS}}}sp")):
+        rec = read_shape(ctx, _dsp_as_p(dsp, box.x, box.y), z)
+        if rec is not None:
+            out.append(rec)
+    return out
+
+
+def _dsp_as_p(dsp: etree._Element, dx: int, dy: int) -> etree._Element:
+    """Копия `dsp:sp` как `p:sp`, сдвинутая из координат рамки SmartArt в координаты слайда."""
+    sp = copy.deepcopy(dsp)
+    for el in list(sp.iter()):
+        if isinstance(el.tag, str) and el.tag.startswith(f"{{{DSP_NS}}}"):
+            if localname(el) == "txXfrm":
+                el.getparent().remove(el)
+            else:
+                el.tag = P + localname(el)
+    off = sp.find("p:spPr/a:xfrm/a:off", NS)
+    if off is not None:
+        off.set("x", str(int(off.get("x", "0")) + dx))
+        off.set("y", str(int(off.get("y", "0")) + dy))
+    return sp
 
 
 def background_picture_part(ctx: PartCtx) -> str | None:
@@ -618,6 +671,21 @@ def read_table(ctx: PartCtx, sp: etree._Element, rec: ShapeRec) -> TableRec | No
                     row_heights_emu=[int(r.get("h", "0") or 0) for r in rows])
 
 
+def read_notes(pkg: Package, slide_part: str) -> str:
+    """Текст заметок докладчика слайда (плейсхолдер body части notesSlide); нет заметок — пустая строка."""
+    notes = pkg.rels(slide_part).get("notesSlide")
+    if not notes or notes[0] not in pkg.names:
+        return ""
+    paras = []
+    for sp in iter_shapes(pkg.xml(notes[0]).find("p:cSld/p:spTree", NS)):
+        ph = placeholder(sp)
+        if ph is None or ph[0] != "body":
+            continue
+        for p in sp.findall("p:txBody/a:p", NS):
+            paras.append("".join(t.text or "" for t in p.iter(f"{A}t")))
+    return "\n".join(paras).strip()
+
+
 # ── вспомогательное ──
 
 
@@ -649,6 +717,8 @@ __all__ = [
     "inherited_bbox",
     "para_props_chain",
     "read_chart",
+    "read_diagram",
+    "read_notes",
     "read_paragraphs",
     "read_picture",
     "read_shape",

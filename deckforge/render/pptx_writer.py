@@ -21,10 +21,10 @@ from pptx.parts.slide import SlidePart
 from pptx.slide import Slide
 
 from deckforge.core.ir import Box, DeckIR, Element, Exemplar, Paragraph, SlideIR, Slot, SlotKind, TemplateDNA
-from deckforge.core.ooxml import NS, A, P, R, absolute_bbox, iter_shapes, localname, shape_id, shape_text
+from deckforge.core.ooxml import NS, A, P, R, absolute_bbox, graphic_kind, iter_shapes, localname, shape_id, shape_text
 from deckforge.core.placeholders import is_photo_prompt, is_placeholder_text, is_speaker_text
 from deckforge.render.charts import add_chart
-from deckforge.render.diagrams import add_diagram
+from deckforge.render.smartart import DIAGRAM_DRAWING_RT, add_smartart
 from deckforge.render.tables import add_table
 
 log = logging.getLogger(__name__)
@@ -34,7 +34,8 @@ TEXT_KINDS = {
     SlotKind.FOOTER, SlotKind.DATE, SlotKind.OTHER,
 }
 PICTURE_KINDS = {SlotKind.PICTURE, SlotKind.ICON}
-# слоты, которые схема из автофигур не убирает: заголовки и поля
+DATA_KINDS = {SlotKind.CHART, SlotKind.TABLE}
+# слоты, которые схема SmartArt не убирает: заголовки и поля
 DIAGRAM_KEEP_KINDS = {SlotKind.TITLE, SlotKind.SUBTITLE, SlotKind.SLIDE_NUMBER, SlotKind.FOOTER, SlotKind.DATE}
 # поля (номер, колонтитулы) при отсутствии элемента не очищаем
 KEEP_IF_UNFILLED = {SlotKind.SLIDE_NUMBER, SlotKind.FOOTER, SlotKind.DATE}
@@ -43,9 +44,13 @@ CARD_DECOR_MAX_SHARE = 0.25  # декор внутри пустой карточ
 LAYOUT_FIELD_PH = {"sldNum", "dt", "ftr"}
 # связи, которые в копии не нужны
 SKIP_RELTYPES = {RT.SLIDE_LAYOUT, RT.NOTES_SLIDE, RT.SLIDE}
+# связи, на которые XML слайда не ссылается, но они нужны: отрисовку SmartArt называет его data-часть
+IMPLICIT_RELTYPES = SKIP_RELTYPES | {DIAGRAM_DRAWING_RT}
 # бинарные части можно разделять между слайдами, а не копировать
 SHARED_RELTYPES = {RT.IMAGE, RT.MEDIA, RT.VIDEO, RT.AUDIO, RT.FONT}
-R_ATTRS = (R + "embed", R + "id", R + "link", R + "pict")
+# r:dm / r:lo / r:qs / r:cs — части SmartArt (dgm:relIds); без них его связи считались неиспользуемыми
+R_ATTRS = (R + "embed", R + "id", R + "link", R + "pict", R + "dm", R + "lo", R + "qs", R + "cs")
+DRAWING_REL_ID = re.compile(rb'(<dsp:dataModelExt\b[^>]*\brelId=")([^"]+)(")')
 FILL_TAGS = ("noFill", "solidFill", "gradFill", "blipFill", "pattFill", "grpFill")
 BULLET_TAGS = ("buNone", "buChar", "buAutoNum", "buBlip")
 DEFAULT_BULLET_MARL = 285750  # 0.3125", как в Office
@@ -71,6 +76,18 @@ def render_pptx(
 
 def render_deck(ir: DeckIR, dna: TemplateDNA, out_path: str | Path) -> Path:
     return render_pptx(ir, dna.source_path, dna.exemplars, out_path)
+
+
+def write_notes(pptx_path: str | Path, notes: list[str]) -> Path:
+    """Заметки докладчика в готовую колоду по порядку слайдов; вёрстку не трогает (перерендер не нужен).
+
+    Текст выступления приходит, когда колода уже свёрстана и отрендерена в PNG (`pipeline/run.build_deck`)."""
+    prs = Presentation(str(pptx_path))
+    for slide, text in zip(prs.slides, notes):
+        if text or slide.has_notes_slide:
+            slide.notes_slide.notes_text_frame.text = text
+    prs.save(str(pptx_path))
+    return Path(pptx_path)
 
 
 # ──────────────────────────── писатель ────────────────────────────
@@ -231,8 +248,18 @@ class DeckWriter:
     def _copy_rels(self, src: Part, dst: Part, xml: etree._Element, only_used: bool = True) -> None:
         """Перенести связи src на dst и переписать rId в xml.
 
-        Для слайда — только те, на которые ссылается XML; для чарта — все (chartStyle без r:id)."""
+        Для слайда — только те, на которые ссылается XML; для чарта — все (chartStyle без r:id). Отрисовку SmartArt
+        называет не XML слайда, а его data-часть (`dsp:dataModelExt/@relId` — id связи слайда): она переносится
+        вместе с data-частью, и id в копии data-части переписывается."""
         used = {el.get(attr) for el in xml.iter() for attr in R_ATTRS if el.get(attr)}
+        drawing_of: dict[str, str] = {}  # rId data-части → rId её отрисовки у src
+        for rId in list(used):
+            rel = src.rels.get(rId)
+            if rel is not None and not rel.is_external and rel.reltype == RT.DIAGRAM_DATA:
+                m = DRAWING_REL_ID.search(rel.target_part.blob)
+                if m and m.group(2).decode() in src.rels:
+                    drawing_of[rId] = m.group(2).decode()
+                    used.add(drawing_of[rId])
         mapping: dict[str, str | None] = {}
         for rId, rel in list(src.rels.items()):
             if only_used and rId not in used:
@@ -245,6 +272,11 @@ class DeckWriter:
                 mapping[rId] = dst.relate_to(rel.target_part, rel.reltype)
             else:  # chart, diagram, oleObject, xlsx — у каждой копии свой экземпляр
                 mapping[rId] = dst.relate_to(self._clone_part(rel.target_part), rel.reltype)
+        for data_rid, drawing_rid in drawing_of.items():
+            new_data, new_drawing = mapping.get(data_rid), mapping.get(drawing_rid)
+            if new_data and new_drawing:
+                data = dst.related_part(new_data)
+                data._blob = DRAWING_REL_ID.sub(lambda m: m.group(1) + new_drawing.encode() + m.group(3), data.blob, 1)
         for el in list(xml.iter()):
             for attr in R_ATTRS:
                 old = el.get(attr)
@@ -262,10 +294,18 @@ class DeckWriter:
 
     @staticmethod
     def _prune_rels(part: Part) -> None:
-        """Убрать связи, на которые после заполнения не ссылается XML; неявные (лейаут, notes) не трогаем."""
+        """Убрать связи, на которые после заполнения не ссылается XML; неявные (лейаут, notes, отрисовка SmartArt)
+        не трогаем — отрисовку без своей data-части убираем."""
         used = {el.get(attr) for el in part._element.iter() for attr in R_ATTRS if el.get(attr)}
         for rId, rel in list(part.rels.items()):
-            if rId not in used and rel.reltype not in SKIP_RELTYPES:
+            if rId not in used and rel.reltype not in IMPLICIT_RELTYPES:
+                part.rels.pop(rId)
+        # отрисовка SmartArt нужна, пока жива data-часть, которая на неё ссылается (схему могли удалить с декором)
+        drawings_used = {m.group(2).decode() for rel in part.rels.values()
+                         if not rel.is_external and rel.reltype == RT.DIAGRAM_DATA
+                         for m in [DRAWING_REL_ID.search(rel.target_part.blob)] if m}
+        for rId, rel in list(part.rels.items()):
+            if rel.reltype == DIAGRAM_DRAWING_RT and rId not in drawings_used:
                 part.rels.pop(rId)
 
     def _clone_part(self, part: Part) -> Part:
@@ -324,6 +364,13 @@ class DeckWriter:
         unfilled: list[Box] = []
         filled_boxes = [s.box for s in exemplar.slots if s.id in filled]
         for slot in exemplar.slots:
+            if slot.id not in filled and slot.kind in DATA_KINDS:
+                # нативная диаграмма или таблица образца без наших данных показывала бы цифры шаблона (МТУСИ slide20:
+                # две диаграммы, заполнена одна — вторая оставалась с «Основной» и «1 кв»); нарисованную фигурами не трогаем
+                sp = shapes.get(slot.id)
+                if sp is not None and localname(sp) == "graphicFrame" and graphic_kind(sp) in ("chart", "table"):
+                    _remove(sp)
+                continue
             if slot.id in filled or slot.kind not in TEXT_KINDS | PICTURE_KINDS:
                 continue
             sp = shapes.get(slot.id)
@@ -444,9 +491,8 @@ class DeckWriter:
             _remove(sp)
 
     def _place_diagram(self, slide: Slide, el: Element, shapes: dict[str, etree._Element], keep: set[str]) -> None:
-        """Схема на всю контентную область: слоты и декор внутри неё уходят, фон и подложки крупнее — остаются.
-
-        Цвет подписей — по заливке того, что под боксом (белая карточка на тёмном слайде), а не только по фону."""
+        """Схема (SmartArt «Простой процесс») на всю контентную область: слоты и декор внутри неё уходят,
+        фон и подложки крупнее — остаются. Текст — внутри узлов, его цвет — по заливке узла (`smartart.on_fill`)."""
         box_area = el.box.w * el.box.h
         for sid, sp in shapes.items():
             if sid in keep or sp.getparent() is None or localname(sp) not in ("sp", "pic", "grpSp", "graphicFrame", "cxnSp"):
@@ -455,18 +501,7 @@ class DeckWriter:
             if bb is None or bb[2] * bb[3] > box_area or not _center_inside(sp, el.box):
                 continue
             _remove(sp)
-        overrides = dict(el.style_overrides)
-        lum = _under_luminance(slide, shapes, el.box)
-        if lum is not None and lum < DARK_BG_LUMINANCE:
-            overrides["palette_text"] = overrides.get("text_color") or ""  # номер на светлом шевроне — тёмным
-            overrides["text_color"] = LIGHT_TEXT
-
-        def caption_color(b: Box) -> str | None:
-            # под центром бокса может быть зазор между карточками (тёмный фон), а под подписью — белая карточка
-            under = _under_luminance(slide, shapes, b)
-            return LIGHT_TEXT if under is not None and under < DARK_BG_LUMINANCE else None
-
-        add_diagram(slide, el.diagram, el.box, overrides, caption_color=caption_color)
+        add_smartart(slide, el.diagram, el.box, dict(el.style_overrides))
 
     def _replace_with_native(
         self, slide: Slide, sp: etree._Element, el: Element, shapes: dict[str, etree._Element],
@@ -794,28 +829,6 @@ def background_luminance(slide: Slide) -> float | None:
     return None
 
 
-def _under_luminance(slide: Slide, shapes: dict[str, etree._Element], box: Box) -> float | None:
-    """Яркость того, что под боксом: наименьшая залитая фигура, накрывающая его центр, иначе фон слайда."""
-    cx, cy = box.x + box.w / 2, box.y + box.h / 2
-    best: tuple[int, etree._Element] | None = None
-    for sp in shapes.values():
-        if sp.getparent() is None or localname(sp) != "sp":
-            continue
-        sp_pr = sp.find("p:spPr", NS)
-        if sp_pr is None or sp_pr.find("a:solidFill", NS) is None:
-            continue
-        bb = absolute_bbox(sp)
-        if bb is None or not (bb[0] <= cx <= bb[0] + bb[2] and bb[1] <= cy <= bb[1] + bb[3]):
-            continue
-        if bb[2] * bb[3] < 0.5 * box.w * box.h:
-            continue  # мелкая фигура (иконка, маркер) — не подложка
-        if best is None or bb[2] * bb[3] < best[0]:
-            best = (bb[2] * bb[3], sp_pr)
-    if best is not None:
-        return _fill_luminance(best[1], slide.part)
-    return background_luminance(slide)
-
-
 def _fill_luminance(bg: etree._Element, part: Part) -> float | None:
     if (blip := bg.find(".//a:blipFill/a:blip", NS)) is not None and blip.get(R + "embed"):
         try:
@@ -995,4 +1008,4 @@ def _partname_template(partname: PackURI) -> str:
     return f"{stem}%d.{ext}" if ext else f"{s}%d"
 
 
-__all__ = ["DeckWriter", "clear_text", "crop_rect", "fill_text", "render_deck", "render_pptx"]
+__all__ = ["DeckWriter", "clear_text", "crop_rect", "fill_text", "render_deck", "render_pptx", "write_notes"]

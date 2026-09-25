@@ -13,34 +13,43 @@ from __future__ import annotations
 import hashlib
 import json
 import logging
+import os
 import queue
 import shutil
+import sys
 import time
-from collections.abc import Callable, Iterable
+from collections.abc import Callable, Iterable, Iterator
 from concurrent.futures import FIRST_COMPLETED, Future, ThreadPoolExecutor, wait
+from contextlib import contextmanager
 from dataclasses import asdict, dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
-from deckforge.audit import audit_deck, with_contextual
+from deckforge.audit import audit_deck, merge_findings, with_contextual
 from deckforge.audit import summary as audit_summary
 from deckforge.audit.contextual import CHECK_IDS as CONTEXTUAL_CHECKS
 from deckforge.audit.contextual import ERROR_CHECK_ID, judge_deck, slides_from_ir
+from deckforge.audit.deterministic import DECK_CHECKS, NOTES_CHECKS
 from deckforge.content import (
     ContentPack,
+    Fragment,
     drop_unsourced_numbers,
     load_content_pack,
     pack_from_brief,
     write_outline,
     write_template_brief,
 )
+from deckforge.content.context import ContextDigest, ContextError, load_context, prepare_context
 from deckforge.content.images import illustrate
+from deckforge.content.speaker_notes import NotesResult, write_speaker_notes
 from deckforge.core.autofix import plan_fixes
 from deckforge.core.ir import Archetype, AuditReport, DeckIR, DeckOutline, Exemplar, Finding, TemplateDNA
+from deckforge.core.speech import speech_minutes, word_count
 from deckforge.core.strategy import load_strategy
 from deckforge.export.html import export_html
 from deckforge.export.render import find_soffice, pptx_to_pdf
+from deckforge.export.speech import export_speech
 from deckforge.layout import LayoutResult, apply_fixes, build_deck_ir
 from deckforge.llm.client import LLMClient
 from deckforge.parsing.dna import build_dna
@@ -49,7 +58,7 @@ from deckforge.parsing.extract_tokens import TemplateTokens, extract_tokens
 from deckforge.parsing.normalize import needs_normalize, normalize_template
 from deckforge.pipeline.config import ROOT, RunConfig
 from deckforge.pipeline.stats import compare_table, deck_stats
-from deckforge.render import render_pptx
+from deckforge.render import render_pptx, write_notes
 
 log = logging.getLogger(__name__)
 
@@ -60,6 +69,14 @@ Progress = Callable[[str], None]
 IMAGES_RESERVE_S = 90.0
 JUDGE_RESERVE_S = 30.0
 EXPORT_RESERVE_S = 15.0
+# текст выступления не начинается, если до дедлайна (за вычетом EXPORT_RESERVE_S) меньше этого: ответ ≈ 20–60 с
+NOTES_MIN_LEFT_S = 20.0
+# SetThreadExecutionState (Windows): пока идёт прогон, система не засыпает и не гасит экран. Modern Standby
+# наступает, когда гаснет экран, а ожидания с таймаутом (`wait`, `Lock.acquire`) время сна не считают, хотя
+# часы прогона (`time.monotonic`) его считают: 24.09 прогон занял 348 с, из них 231 с сна — судья проспал дедлайн
+ES_CONTINUOUS = 0x80000000
+ES_SYSTEM_REQUIRED = 0x00000001
+ES_DISPLAY_REQUIRED = 0x00000002
 # как часто поток прогона разбирает очередь сообщений параллельных колод (с)
 PROGRESS_POLL_S = 0.3
 # проходов автофиксов: перенос строк дискретный, и одного уменьшения кегля бывает мало (ЛЦТ2026:
@@ -67,9 +84,12 @@ PROGRESS_POLL_S = 0.3
 AUTOFIX_ROUNDS = 2
 # нормализованные копии шаблонов (.potx, шаблон без слайдов) — `prepared_template`
 PREPARED_DIR = ROOT / "out" / "prepared"
+# подготовленный контекст (факты из репозитория) — кэш по sha1 источников, `content/context.prepare_context`
+CONTEXT_DIR = ROOT / "out" / "contexts"
 
 # ступени лестницы входа (OutlineStep.content_source) — для CLI/UI и run.json
 CONTENT_SOURCE_NOTE = {
+    "context": "контекст из репозитория, документации и истории (факты context_digest)",
     "pack": "контент-пакет пользователя",
     "topic": "тема одной строкой (brief.md)",
     "template": "только шаблон — бриф выведен из него (skill template_brief)",
@@ -140,7 +160,7 @@ class OutlineStep:
     attempts: int = 0
     skills_used: dict[str, str] = field(default_factory=dict)
     llm_calls: list[dict] = field(default_factory=list)
-    content_source: str = "pack"  # pack | topic | template | outline
+    content_source: str = "pack"  # context | pack | topic | template | outline
     brief_path: Path | None = None  # бриф, выведенный из темы или шаблона
     pack: ContentPack | None = None  # то, из чего собран outline — факты для судьи
     brief_seconds: float = 0.0  # вызов template_brief, входит в `seconds`
@@ -162,6 +182,7 @@ class DeckResult:
     pdf: Path | None = None
     html: Path | None = None
     audience_hint: str = ""  # кому нужен этот вариант (Strategy.audience_hint)
+    speech: Path | None = None  # <strategy>.speech.md — текст выступления по слайдам
 
     @property
     def exports(self) -> dict[str, str]:
@@ -172,6 +193,8 @@ class DeckResult:
             out["pdf"] = rel_path(self.pdf, base)
         if self.html is not None:
             out["html"] = rel_path(self.html, base)
+        if self.speech is not None:
+            out["speech"] = rel_path(self.speech, base)
         return out
 
     def load_report(self) -> AuditReport | None:
@@ -224,6 +247,12 @@ class RunContext:
             ctx.contextual_on = False
         if ctx.contextual_on and ctx.client is None:
             ctx.client = LLMClient()  # outline готовый, но судье нужна VLM
+        if ctx.client is None and cfg.speaker_notes:
+            # текст выступления пишет модель и к готовому outline (`--outline --no-judge --no-images`)
+            if os.environ.get("LLM_API_KEY"):
+                ctx.client = LLMClient()
+            else:
+                ctx.warnings.append("speaker_notes: LLM_API_KEY не задан — колоды без текста выступления")
         if ctx.client is None and cfg.images != "off":
             # клиент картинок — здесь, а не лениво в колоде: колоды собираются параллельно
             try:
@@ -261,7 +290,7 @@ class RunResult:
     warnings: list[str] = field(default_factory=list)
     run_json: Path | None = None
     parsed: ParsedTemplate | None = None
-    content_source: str = "pack"  # pack | topic | template | outline
+    content_source: str = "pack"  # context | pack | topic | template | outline
     brief_path: Path | None = None  # бриф по теме или выведенный из шаблона
 
     @property
@@ -307,10 +336,10 @@ def parse_template(template: Path, out_dir: Path | None = None) -> ParsedTemplat
 
 @dataclass
 class ContentStep:
-    """Из чего собирается outline: пакет пользователя, тема строкой или бриф, выведенный из шаблона."""
+    """Из чего собирается outline: контекст репозитория, пакет пользователя, тема строкой или бриф из шаблона."""
 
     pack: ContentPack
-    source: str  # pack | topic | template
+    source: str  # context | pack | topic | template
     purpose: str
     audience: str
     brief_path: Path | None = None
@@ -319,11 +348,16 @@ class ContentStep:
 
 
 def content_for_outline(cfg: RunConfig, parsed: ParsedTemplate, out_dir: Path, client: LLMClient) -> ContentStep:
-    """Лестница входа: контент-пакет → тема одной строкой → только шаблон (бриф пишет `template_brief`).
+    """Лестница входа: контекст репозитория → контент-пакет → тема одной строкой → только шаблон
+    (бриф пишет `template_brief`).
 
     Пустой или отсутствующий пакет — не ошибка, а спуск на ступень ниже с предупреждением.
     """
     warnings: list[str] = []
+    if cfg.context is not None:
+        step = _context_step(cfg, out_dir, client, warnings)
+        if step is not None:
+            return step
     if cfg.content_pack is not None:
         try:
             pack = load_content_pack(cfg.content_pack)
@@ -331,7 +365,7 @@ def content_for_outline(cfg: RunConfig, parsed: ParsedTemplate, out_dir: Path, c
             warnings.append(f"контент-пакет не найден ({cfg.content_pack}) — контент по теме или по шаблону")
         else:
             if pack.fragments:
-                return ContentStep(pack, "pack", cfg.purpose, cfg.audience)
+                return ContentStep(pack, "pack", cfg.purpose, cfg.audience, warnings=warnings)
             warnings.append(f"контент-пакет пуст ({cfg.content_pack}) — контент по теме или по шаблону")
 
     if cfg.topic.strip():
@@ -353,6 +387,46 @@ def content_for_outline(cfg: RunConfig, parsed: ParsedTemplate, out_dir: Path, c
     return ContentStep(pack_from_brief(brief.to_brief_text()), "template", brief.purpose or cfg.purpose,
                     brief.audience or cfg.audience, path, warnings,
                     {"template_brief": _skill_version(client, "template_brief")})
+
+
+def _context_step(cfg: RunConfig, out_dir: Path, client: LLMClient, warnings: list[str]) -> ContentStep | None:
+    """Ступень «контекст»: факты `fact:<n>` + задача (`topic`) брифом; контент-пакет, если задан, — рядом.
+
+    Готовый `context.json` читается как есть; папка или .zip готовятся здесь же (кэш по sha1 источников), но это
+    время уже идёт в бюджет прогона — заранее: `deckforge prepare-context`. Не читается или пуст — ступенью ниже."""
+    assert cfg.context is not None
+    try:
+        if cfg.context.suffix.lower() == ".json":
+            digest: ContextDigest = load_context(cfg.context)
+        else:
+            digest, _, cached = prepare_context(cfg.context, client, cache_dir=CONTEXT_DIR, language=cfg.language,
+                                                workers=cfg.max_parallel_llm)
+            if not cached:
+                warnings.append(f"контекст подготовлен внутри прогона за {digest.seconds:.0f} с (в бюджете); "
+                                "заранее — deckforge prepare-context")
+    except (OSError, ContextError, ValueError) as e:
+        warnings.append(f"контекст не прочитан ({cfg.context.name}: {str(e)[:80]}) — контент по пакету, теме или шаблону")
+        return None
+    if not digest.pack.fragments:
+        warnings.append(f"в контексте нет фактов ({cfg.context.name}) — контент по пакету, теме или шаблону")
+        return None
+    extra: list[Fragment] = []
+    if cfg.content_pack is not None:
+        try:
+            extra = load_content_pack(cfg.content_pack).fragments
+        except FileNotFoundError:
+            warnings.append(f"контент-пакет не найден ({cfg.content_pack}) — только контекст")
+    task = cfg.topic.strip()
+    own_brief = next((f.text for f in extra if f.id == "brief"), "")
+    brief = (f"# {task}\n\n_Задача пользователя; факты — из контекста «{digest.title}»._\n" if task
+             else own_brief or digest.default_brief())
+    path = out_dir / "brief.md"
+    path.write_text(brief, "utf-8")
+    pack = ContentPack(root=f"context:{digest.root}", fragments=[
+        Fragment(id="brief", kind="text", text=brief.strip(), source="brief.md"),
+        *[f for f in extra if f.id != "brief"], *digest.pack.fragments])
+    return ContentStep(pack, "context", cfg.purpose, cfg.audience, path, warnings,
+                       {"context_digest": digest.skill.split("@")[-1]} if digest.skill else {})
 
 
 def make_outline(cfg: RunConfig, parsed: ParsedTemplate, out_dir: Path, client: LLMClient | None = None,
@@ -379,6 +453,10 @@ def make_outline(cfg: RunConfig, parsed: ParsedTemplate, out_dir: Path, client: 
     if content.source in ("template", "topic"):
         # источника у чисел нет: KPI «100 %» и «24/7» модель дорисовывает сама
         outline_out, num_warnings = drop_unsourced_numbers(res.outline, content.pack.brief)
+    elif content.source == "context":
+        # факты выписала модель из исходников — числа колоды только из них
+        outline_out, num_warnings = drop_unsourced_numbers(
+            res.outline, "\n".join(f.to_prompt() for f in content.pack.fragments))
     (out_dir / "outline.raw.json").write_text(json.dumps(res.raw, ensure_ascii=False, indent=1), "utf-8")
     path.write_text(outline_out.model_dump_json(indent=1), "utf-8")
     return OutlineStep(outline_out, path, content.warnings + list(res.warnings) + num_warnings,
@@ -448,14 +526,22 @@ def build_deck(ctx: RunContext, strategy_name: str, progress: Progress | None = 
     audit_info: dict = {}
     report: AuditReport | None = None
     if cfg.audit.deterministic:
+        # проверки текста выступления (N01/N02) — отдельным проходом, когда заметки будут в колоде
         t0 = time.perf_counter()
-        report = audit_deck(pptx_out, parsed.dna, res.ir)
+        report = audit_deck(pptx_out, parsed.dna, res.ir, checks=DECK_CHECKS)
         deck_timings["audit"] = round(time.perf_counter() - t0, 3)
         if cfg.audit.autofix:
             t0 = time.perf_counter()
-            res.ir, report, fix_info = _autofix(res.ir, report, parsed, pptx_out, plan_fixes(report, "safe"))
+            res.ir, report, fix_info = _autofix(res.ir, report, parsed, pptx_out, plan_fixes(report, "safe"),
+                                                DECK_CHECKS)
             deck_timings["autofix"] = round(time.perf_counter() - t0, 3)
             audit_info["autofix"] = fix_info
+    # текст выступления — по готовой вёрстке, в фоне: пока модель пишет, идут PNG и судья
+    want_notes = cfg.speaker_notes and client is not None
+    notes_job: Future[NotesResult] | None = None
+    if want_notes:
+        res.ir.talk_minutes = cfg.talk_minutes
+        notes_job = _start_notes(ctx, client, res.ir, outline, deadline, deck_warnings)
     ir_path = out_dir / f"{strategy.name}.ir.json"
     ir_path.write_text(res.ir.model_dump_json(indent=1), "utf-8")
     st = deck_stats(res)
@@ -482,6 +568,28 @@ def build_deck(ctx: RunContext, strategy_name: str, progress: Progress | None = 
         n_skipped = sum(1 for f in found if f.check_id == ERROR_CHECK_ID and "бюджет" in f.message)
         if n_skipped:
             deck_warnings.append(f"audit.contextual: {n_skipped} слайдов не проверены судьёй — бюджет времени прогона")
+    if want_notes:
+        notes = _finish_notes(notes_job, deadline, deck_warnings)
+        if notes is not None:
+            deck_timings["notes"] = notes.seconds
+            skills_used["speaker_notes"] = notes.skill_version or _skill_version(client, "speaker_notes")
+            for s, text in zip(res.ir.slides, notes.notes):
+                if text:  # пустой ответ модели не затирает черновик из outline
+                    s.notes = text
+        write_notes(pptx_out, [s.notes for s in res.ir.slides])
+        ir_path.write_text(res.ir.model_dump_json(indent=1), "utf-8")
+        if report is not None:
+            n_report = audit_deck(pptx_out, parsed.dna, res.ir, checks=NOTES_CHECKS)
+            report = merge_findings(report, n_report.findings, n_report.checks_run, n_report.duration_s)
+    speech_path: Path | None = None
+    speech_info: dict = {}
+    if any(s.notes.strip() for s in res.ir.slides):
+        speech_path = export_speech(res.ir, outline.title, out_dir / f"{strategy.name}.speech.md")
+        words = sum(word_count(s.notes) for s in res.ir.slides)
+        st["speech_minutes"] = round(speech_minutes(words), 1)
+        speech_info = {"talk_minutes": res.ir.talk_minutes, "minutes": st["speech_minutes"], "words": words,
+                       "slides_without_notes": [s.idx + 1 for s in res.ir.slides if not s.notes.strip()],
+                       "path": rel_path(speech_path, out_dir)}
     if report is not None:
         audit_path = out_dir / f"{strategy.name}.audit.json"
         audit_path.write_text(_portable_report(report, out_dir), "utf-8")
@@ -517,7 +625,8 @@ def build_deck(ctx: RunContext, strategy_name: str, progress: Progress | None = 
     llm_calls = list(ctx.outline.llm_calls) + ([asdict(c) for c in client.calls] if client is not None else [])
     choices = [c.__dict__ for c in res.choices]
     deck = DeckResult(strategy.name, pptx_out, ir_path, out_dir / f"{strategy.name}.manifest.json", st, deck_warnings,
-                      choices, pngs, deck_timings, audit_path, audit_info, pdf_path, html_path, strategy.audience_hint)
+                      choices, pngs, deck_timings, audit_path, audit_info, pdf_path, html_path, strategy.audience_hint,
+                      speech_path)
     manifest = {
         "created": datetime.now(UTC).isoformat(timespec="seconds"),
         "template": {**parsed.meta, "path": rel_path(parsed.template, out_dir)},
@@ -537,6 +646,7 @@ def build_deck(ctx: RunContext, strategy_name: str, progress: Progress | None = 
         "stats": st,
         "audit": audit_info,
         "images": images_info,
+        "speech": speech_info,
         "exports": deck.exports,
         "timings_s": {"parse": parsed.seconds, **({"brief": ctx.outline.brief_seconds} if ctx.outline.brief_seconds
                                                   else {}), "outline": ctx.outline.seconds, **deck_timings},
@@ -553,6 +663,8 @@ def build_deck(ctx: RunContext, strategy_name: str, progress: Progress | None = 
            if audit_info else "") + fix_note
         + (f", judge {deck_timings['audit_contextual']:.1f}s: {audit_info.get('contextual', 0)} находок"
            if "audit_contextual" in deck_timings else "")
+        + (f", речь ≈{speech_info['minutes']} мин" + (f" за {deck_timings['notes']:.0f}s" if "notes" in deck_timings
+                                                         else "") if speech_info else "")
         + (f", png {deck_timings['png']:.1f}s" if pngs else "")
         + (f", pdf {deck_timings['export_pdf']:.1f}s" if pdf_path else "")
         + (f", html {deck_timings['export_html']:.1f}s" if html_path else "")
@@ -577,7 +689,9 @@ def refine_deck(deck: DeckResult, parsed: ParsedTemplate, selected: Iterable[int
     base = report.model_copy(update={"findings": [f for f in report.findings if f.kind == "deterministic"],
                                      "checks_run": [c for c in report.checks_run if c not in CONTEXTUAL_CHECKS]})
     contextual = [f for f in report.findings if f.kind == "contextual"]
-    ir, new_report, info = _autofix(ir, base, parsed, deck.pptx, chosen)
+    # заметки уже в IR и переживут перерендер; N01/N02 — только если текст выступления заказывали при сборке
+    checks = None if ir.talk_minutes else DECK_CHECKS
+    ir, new_report, info = _autofix(ir, base, parsed, deck.pptx, chosen, checks)
     changed = info["applied"] > 0
     if contextual:
         new_report = with_contextual(new_report, [f for f in contextual if f.slide_idx < len(ir.slides)],
@@ -607,6 +721,8 @@ def refine_deck(deck: DeckResult, parsed: ParsedTemplate, selected: Iterable[int
             if err:
                 deck.warnings.append(err)
             timings["export_html"] = round(time.perf_counter() - t0, 3)
+        if deck.speech is not None:  # фикс мог снять слайд — нумерация текста выступления сдвинулась
+            export_speech(ir, manifest.get("outline_title") or "", deck.speech)
     deck.audit.write_text(_portable_report(new_report, deck.pptx.parent), "utf-8")  # type: ignore[union-attr]
 
     prev = manifest.get("audit", {}).get("autofix") or {"applied": 0, "skipped": 0, "items": [],
@@ -624,7 +740,7 @@ def refine_deck(deck: DeckResult, parsed: ParsedTemplate, selected: Iterable[int
     manifest["audit"] = audit_info
     manifest["timings_s"] = {**manifest.get("timings_s", {}), **timings}
     new = DeckResult(deck.strategy, deck.pptx, deck.ir_json, deck.manifest, deck.stats, deck.warnings, deck.choices,
-                     pngs, timings, deck.audit, audit_info, pdf, html, deck.audience_hint)
+                     pngs, timings, deck.audit, audit_info, pdf, html, deck.audience_hint, deck.speech)
     manifest["exports"] = new.exports
     manifest["warnings"] = list(dict.fromkeys([*manifest.get("warnings", []), *deck.warnings]))
     deck.manifest.write_text(json.dumps(manifest, ensure_ascii=False, indent=1), "utf-8")
@@ -633,6 +749,30 @@ def refine_deck(deck: DeckResult, parsed: ParsedTemplate, selected: Iterable[int
     return new
 
 
+def _set_execution_state(flags: int) -> None:
+    """`SetThreadExecutionState` на Windows; на других ОС и при ошибке ctypes — ничего."""
+    if sys.platform != "win32":
+        return
+    try:
+        import ctypes
+
+        ctypes.windll.kernel32.SetThreadExecutionState(flags)
+    except (AttributeError, OSError):
+        pass
+
+
+@contextmanager
+def _keep_awake() -> Iterator[None]:
+    """Система не засыпает и не гасит экран, пока идёт прогон. Флаги живут на потоке — ставятся и снимаются
+    в одном, вызвавшем `run` (скрипт Streamlit, job API, CLI)."""
+    _set_execution_state(ES_CONTINUOUS | ES_SYSTEM_REQUIRED | ES_DISPLAY_REQUIRED)
+    try:
+        yield
+    finally:
+        _set_execution_state(ES_CONTINUOUS)
+
+
+@_keep_awake()
 def run(
     cfg: RunConfig,
     client: LLMClient | None = None,
@@ -771,10 +911,43 @@ def _portable_report(report: AuditReport, base: Path) -> str:
     return report.model_copy(update={"deck_path": rel_path(report.deck_path, base)}).model_dump_json(indent=1)
 
 
+def _start_notes(ctx: RunContext, client: LLMClient, ir: DeckIR, outline: DeckOutline, deadline: float,
+                 warnings: list[str]) -> Future[NotesResult] | None:
+    """Текст выступления в фоне (скилл `speaker_notes`); колода тем временем рендерит PNG и ждёт судью."""
+    if deadline - EXPORT_RESERVE_S - time.monotonic() < NOTES_MIN_LEFT_S:
+        warnings.append("notes: текст выступления пропущен — бюджет времени прогона почти исчерпан")
+        return None
+    pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix=f"notes-{ir.strategy}")
+    job = pool.submit(write_speaker_notes, client, ir.model_copy(deep=True), talk_minutes=ctx.cfg.talk_minutes,
+                      deck_title=outline.title, purpose=outline.purpose, audience=outline.audience or ctx.cfg.audience,
+                      language=outline.language, brief=getattr(ctx.pack, "brief", "") or "",
+                      deadline=deadline - EXPORT_RESERVE_S)
+    pool.shutdown(wait=False)  # задача уже в работе; поток не держим после ответа
+    return job
+
+
+def _finish_notes(job: Future[NotesResult] | None, deadline: float, warnings: list[str]) -> NotesResult | None:
+    """Ответ не позже дедлайна прогона (за вычетом резерва на экспорт): как у судьи, начатого запроса не ждём."""
+    if job is None:
+        return None
+    try:
+        res = job.result(timeout=max(0.0, deadline - EXPORT_RESERVE_S - time.monotonic()))
+    except TimeoutError:
+        job.cancel()
+        warnings.append("notes: текст выступления не готов к дедлайну прогона — колода без него")
+        return None
+    except Exception as e:  # noqa: BLE001 — модель не ответила: колода без текста, N01 это покажет
+        warnings.append(f"notes: {str(e)[:160]}")
+        return None
+    warnings.extend(res.warnings)
+    return res
+
+
 def _autofix(ir: DeckIR, report: AuditReport, parsed: ParsedTemplate, pptx_out: Path,
-             findings: list[Finding]) -> tuple[DeckIR, AuditReport, dict]:
+             findings: list[Finding], checks: Iterable[str] | None = None) -> tuple[DeckIR, AuditReport, dict]:
     """Фиксы → правка IR → рендер → детерминированный аудит. Следующий проход (до AUTOFIX_ROUNDS) — к тем же
-    находкам (проверка, слайд, элемент), что остались после рендера, пока ошибок становится меньше."""
+    находкам (проверка, слайд, элемент), что остались после рендера, пока ошибок становится меньше.
+    `checks` — набор проверок повторного аудита (без N01/N02, пока заметок в колоде ещё нет)."""
     before = audit_summary(report)
     info = {"applied": 0, "skipped": 0, "before": {"errors": before["errors"], "warnings": before["warnings"]},
             "after": {"errors": before["errors"], "warnings": before["warnings"]}, "items": []}
@@ -790,7 +963,7 @@ def _autofix(ir: DeckIR, report: AuditReport, parsed: ParsedTemplate, pptx_out: 
         if not fr.changed:
             break
         render_pptx(fr.ir, parsed.template, parsed.exemplars, pptx_out)
-        ir, report = fr.ir, audit_deck(pptx_out, parsed.dna, fr.ir)
+        ir, report = fr.ir, audit_deck(pptx_out, parsed.dna, fr.ir, checks=checks)
         after = audit_summary(report)
         info["after"] = {"errors": after["errors"], "warnings": after["warnings"]}
         if not 0 < after["errors"] < errors:
@@ -854,7 +1027,7 @@ def _style(tokens: TemplateTokens) -> dict:
         "palette": ",".join(tokens.palette("accent") + tokens.palette("secondary")),
         "font": tokens.fonts[0] if tokens.fonts else "Arial",
         "text_color": (tokens.palette("text") or ["212121"])[0],
-        # шкала кеглей шаблона — схема из автофигур берёт кегли из неё (T02)
+        # шкала кеглей шаблона — SmartArt берёт кегль из неё (T02)
         "type_scale": ",".join(f"{v:g}" for v in sorted({t.size_pt for t in tokens.typography})),
     }
 

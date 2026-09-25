@@ -85,7 +85,7 @@ def layout_deck(outline: DeckOutline, dna: TemplateDNA, strategy: Strategy) -> L
     style = {"accent": (dna.palette("accent") or ["000000"])[0], "font": dna.fonts[0] if dna.fonts else "Arial",
              "palette": ",".join(dna.palette("accent") + dna.palette("secondary")),
              "text_color": (dna.palette("text") or ["212121"])[0],
-             # шкала кеглей шаблона — схема из автофигур берёт кегли из неё (T02)
+             # шкала кеглей шаблона — SmartArt берёт кегль из неё (T02)
              "type_scale": ",".join(f"{v:g}" for v in sorted({t.size_pt for t in dna.typography}))}
     return build_deck_ir(outline, strategy, dna.exemplars, dna.template_id, dna.slide_w, dna.slide_h, style)
 
@@ -223,7 +223,7 @@ def build_slide(idx: int, s: OutlineSlide, e: Exemplar, slide_h: int, style: dic
         # образец без тела (структурный резерв) — шаги обычным списком
         s = s.model_copy(update={"steps": list(s.diagram.items), "diagram": None})
     if s.diagram:
-        # схема из автофигур — на всю контентную область образца; слоты внутри неё рендер убирает
+        # схема (SmartArt) — на всю контентную область образца; слоты внутри неё рендер убирает
         host = max(by_kind[SlotKind.BODY], key=lambda x: x.box.w * x.box.h)
         area = content_box(e.slots) or host.box
         for kind in (SlotKind.BODY, SlotKind.LABEL, SlotKind.CAPTION, SlotKind.NUMBER, SlotKind.PICTURE, SlotKind.ICON):

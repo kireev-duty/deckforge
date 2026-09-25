@@ -287,7 +287,7 @@ def apply_density(slides: list[OutlineSlide], strategy: Strategy) -> list[Outlin
 
 
 def apply_process_form(s: OutlineSlide, strategy: Strategy, available: set[Archetype]) -> OutlineSlide:
-    """Шаги процесса → схема из автофигур (замена SmartArt) по `Strategy.process_form`.
+    """Шаги процесса → схема (SmartArt «Простой процесс», `render/smartart.py`) по `Strategy.process_form`.
 
     `diagram` — всегда (visual: процессы видны с задних рядов); `template` — только если в шаблоне нет
     своего process-образца (narrative держит стиль автора, где он есть); `list` — никогда.

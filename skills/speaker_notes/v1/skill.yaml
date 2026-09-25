@@ -1,0 +1,13 @@
+name: speaker_notes
+version: v1
+model_role: text
+temperature: 0.5
+max_tokens: 5000
+response_format: json_schema   # schema.json
+inputs: [deck_title, purpose, audience, language, talk_minutes, brief, slides]
+changelog: |
+  v1 — текст выступления к каждому слайду (вводная жюри: «на выходе слайды и текст к каждому слайду;
+  выступление ограничено по длительности»). Вызывается на готовую колоду каждой стратегии, а не на outline:
+  состав слайдов у вариантов разный (разделители, продолжения, слитые слайды), а текст должен идти к каждому.
+  Объём задан бюджетом слов на слайд (`words`, core/speech.word_budget: минуты × 120 слов/мин по весам архетипов);
+  факты — только со слайда и из брифа, как у outline_writer.

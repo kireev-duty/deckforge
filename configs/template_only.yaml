@@ -11,6 +11,7 @@ purpose: other                               # не задано — назна�
 audience: ""                                 # то же самое: аудиторию выведет модель
 language: ru
 target_slides: 12
+talk_minutes: 7                              # текст выступления к слайдам — на 7 минут
 strategies: [executive, narrative, visual]
 images: auto
 audit:

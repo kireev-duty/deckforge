@@ -9,7 +9,7 @@ from fastapi.testclient import TestClient
 
 from deckforge.api.app import create_app
 from deckforge.api.jobs import safe_name, write_content_pack
-from tests.conftest import FakeClient, cassette
+from tests.conftest import FakeClient, cassette, fake_notes
 
 REPO = Path(__file__).resolve().parents[1]
 BRIEF = (REPO / "examples" / "content_pack" / "brief.md").read_text("utf-8")
@@ -17,7 +17,8 @@ BRIEF = (REPO / "examples" / "content_pack" / "brief.md").read_text("utf-8")
 
 @pytest.fixture
 def api(tmp_path: Path):
-    app = create_app(root=tmp_path / "api", client_factory=lambda: FakeClient(cassette("outline_writer_pulse")),
+    app = create_app(root=tmp_path / "api", client_factory=lambda: FakeClient(cassette("outline_writer_pulse"),
+                                                           by_skill={"speaker_notes": [fake_notes]}),
                      executor=None)
     with TestClient(app) as c:
         yield c
@@ -87,7 +88,7 @@ def test_generate_audit_fix_download(api: TestClient, no_fitting) -> None:
     assert any(p.startswith("outline:") for p in j["progress"])
     assert len(j["decks"]) == 1 and j["decks"][0]["strategy"] == "executive"
     files_ = j["decks"][0]["files"]
-    assert set(files_) >= {"pptx", "ir.json", "audit.json", "manifest.json", "pngs"} and "pdf" not in files_
+    assert set(files_) >= {"pptx", "speech.md", "ir.json", "audit.json", "manifest.json", "pngs"} and "pdf" not in files_
     assert api.get("/jobs").json()[0]["id"] == jid
 
     # контент-пакет собран из брифа и файлов
@@ -95,7 +96,8 @@ def test_generate_audit_fix_download(api: TestClient, no_fitting) -> None:
     assert (pack / "brief.md").exists() and (pack / "product.md").exists() and (pack / "data" / "metrics.json").exists()
 
     a = api.get(f"/jobs/{jid}/decks/executive/audit").json()
-    assert a["summary"]["checks_run"] == 24 and a["report"]["findings"] and a["fix_plan"]
+    assert a["summary"]["checks_run"] == 26 and a["report"]["findings"] and a["fix_plan"]
+    assert not [f for f in a["report"]["findings"] if f["check_id"].startswith("N0")]  # текст к каждому слайду
     l03 = [i for i, f in enumerate(a["report"]["findings"])
            if f["check_id"] == "L03_text_overflow" and f["severity"] == "error"]
     assert l03, "на VK Tech без подгонки текста и автофиксов ожидаются L03-ошибки"
@@ -112,6 +114,8 @@ def test_generate_audit_fix_download(api: TestClient, no_fitting) -> None:
 
     r = api.get(f"/jobs/{jid}/decks/executive/files/executive.pptx")
     assert r.status_code == 200 and r.content[:2] == b"PK" and len(r.content) > 100_000
+    r = api.get(f"/jobs/{jid}/decks/executive/files/executive.speech.md")
+    assert r.status_code == 200 and "Текст выступления" in r.text
     assert api.get(f"/jobs/{jid}/decks/executive/files/executive.pdf").status_code == 404
     assert api.get(f"/jobs/{jid}/decks/executive/files/..%2Frun.json").status_code == 404
     assert api.get(f"/jobs/{jid}/decks/executive/files/dna.json").status_code == 404
@@ -126,6 +130,7 @@ def test_generate_rejects_bad_input(api: TestClient) -> None:
     base = {"template_id": vk["id"], "brief": BRIEF, "strategies": "executive", "judge": False, "render_png": False}
     assert api.post("/generate", data={**base, "template_id": "nope"}).status_code == 404
     assert api.post("/generate", data={**base, "strategies": "executive,fancy"}).status_code == 400
+    assert api.post("/generate", data={**base, "images": "sometimes"}).status_code == 422
     r = api.post("/generate", data=base, files=[("files", ("evil.exe", b"MZ", "application/octet-stream"))])
     assert r.status_code == 400
 
@@ -135,8 +140,10 @@ def test_generate_without_brief_is_accepted(api: TestClient) -> None:
     vk = _vk_tech(api)
     base = {"template_id": vk["id"], "strategies": "executive", "judge": False, "autofix": False,
             "render_png": False, "export": "pptx"}
-    r = api.post("/generate", data={**base, "brief": "коротко"})
+    # images=auto принимается: у executive картинки только из контента — генерации нет
+    r = api.post("/generate", data={**base, "brief": "коротко", "images": "auto"})
     assert r.status_code == 202, r.text
+    assert api.get(f"/jobs/{r.json()['id']}").json()["status"] == "done"
 
     r = api.post("/generate", data={**base, "brief": ""})
     assert r.status_code == 202, r.text
@@ -152,7 +159,7 @@ def test_audit_foreign_deck(api: TestClient) -> None:
         r = api.post("/audit", data={"template_id": vk["id"]}, files={"deck": ("deck.pptx", fh, "application/octet-stream")})
     assert r.status_code == 200, r.text
     body = r.json()
-    assert body["summary"]["checks_run"] == 24 and isinstance(body["fix_plan"], list)
+    assert body["summary"]["checks_run"] == 26 and isinstance(body["fix_plan"], list)
     r = api.post("/audit", files={"deck": ("deck.pptx", b"PK\x03\x04", "application/octet-stream")})
     assert r.status_code == 400
 
@@ -191,7 +198,8 @@ def test_concurrent_jobs_and_fixes(template_path, tmp_path: Path, no_fitting) ->
     from concurrent.futures import ThreadPoolExecutor
 
     template_path("VK Tech")
-    app = create_app(root=tmp_path / "api", client_factory=lambda: FakeClient(cassette("outline_writer_pulse")),
+    app = create_app(root=tmp_path / "api", client_factory=lambda: FakeClient(cassette("outline_writer_pulse"),
+                                                           by_skill={"speaker_notes": [fake_notes]}),
                      executor=ThreadPoolExecutor(max_workers=1))
     with TestClient(app) as api:
         vk = _vk_tech(api)
@@ -264,3 +272,36 @@ def test_upload_edge_cases(api: TestClient, template_path, tmp_path: Path) -> No
     assert r.status_code == 200
     audits = Path(api.app.state.df.root) / "audits"
     assert not list(audits.glob("*.pptx"))
+
+
+def test_generate_with_repo_context(tmp_path: Path) -> None:
+    """`repo` — .zip репозитория: job готовит контекст до прогона, колоды собираются по фактам (content_source: context)."""
+    import io
+    import json
+    import zipfile
+
+    from tests.test_context import _digest_answer, _repo
+
+    app = create_app(root=tmp_path / "api", executor=None, client_factory=lambda: FakeClient(
+        cassette("outline_writer_pulse"), by_skill={"speaker_notes": [fake_notes], "context_digest": [_digest_answer]}))
+    repo = _repo(tmp_path / "pulse-main", git=False)
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, "w") as z:
+        for p in repo.rglob("*"):
+            if p.is_file():
+                z.write(p, p.relative_to(tmp_path).as_posix())
+    with TestClient(app) as api:
+        vk = _vk_tech(api)
+        base = {"template_id": vk["id"], "strategies": "executive", "judge": False, "autofix": False,
+                "render_png": False, "export": "pptx", "topic": "Питч «Пульса» на 7 минут"}
+        r = api.post("/generate", data=base, files={"repo": ("pulse.zip", buf.getvalue(), "application/zip")})
+        assert r.status_code == 202, r.text
+        job = api.get(f"/jobs/{r.json()['id']}").json()
+        assert job["status"] == "done", job.get("error")
+        run_json = json.loads(api.get(f"/jobs/{job['id']}/files/run.json").content)
+        assert run_json["content_source"] == "context"
+        assert api.get(f"/jobs/{job['id']}/files/brief.md").text.startswith("# Питч «Пульса»")
+        assert list((tmp_path / "api" / "contexts").glob("*.json"))  # кэш — в папке API, а не в out/ репозитория
+
+        bad = api.post("/generate", data=base, files={"repo": ("x.zip", b"not a zip", "application/zip")})
+        assert bad.status_code == 400 and "zip" in bad.text

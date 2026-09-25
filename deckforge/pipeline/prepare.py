@@ -16,13 +16,15 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from deckforge.content import context as repo_context
+from deckforge.content.context import ContextDigest
 from deckforge.export.render import find_soffice, render
 from deckforge.llm.client import LLMClient
 from deckforge.parsing import exemplars
 from deckforge.parsing.exemplars import cache_payload
 from deckforge.parsing.layout_classifier import SlideProfile, classify_template, markdown_table
 from deckforge.pipeline.config import ROOT
-from deckforge.pipeline.run import prepared_template
+from deckforge.pipeline.run import CONTEXT_DIR, prepared_template
 
 log = logging.getLogger(__name__)
 RENDER_DIR = ROOT / "out" / "render"
@@ -122,4 +124,51 @@ def prepare_template(
     return report
 
 
-__all__ = ["PrepareReport", "prepare_template", "thumbnails_for"]
+@dataclass
+class ContextReport:
+    """Что дала подготовка контекста: источники, факты, вызовы, где лежит context.json."""
+
+    digest: ContextDigest
+    path: Path
+    cached: bool
+
+    def summary(self) -> dict:
+        """Сводка для CLI, API и UI (только JSON-типы)."""
+        d = self.digest
+        return {
+            "title": d.title, "sources": len(d.sources), "facts": len(d.pack.fragments), "facts_total": len(d.facts),
+            "calls": d.calls, "errors": d.errors, "seconds": d.seconds, "cached": self.cached,
+            "path": str(self.path), "skill": d.skill, "warnings": d.warnings,
+        }
+
+    def markdown(self, limit: int = 12) -> str:
+        """Первые факты с источниками — посмотреть глазами, что увидит outline."""
+        rows = [f"- `{f.id}` ({f.title}) {f.text}" for f in self.digest.pack.fragments[:limit]]
+        more = len(self.digest.pack.fragments) - limit
+        return "\n".join(rows + ([f"- …ещё {more}"] if more > 0 else []))
+
+
+def prepare_context(
+    source: Path,
+    client: LLMClient,
+    progress: Callable[[str], None] | None = None,
+    max_parallel: int = 4,
+    language: str = "ru",
+    cache_dir: Path | None = None,
+) -> ContextReport:
+    """Папка или .zip репозитория → факты `fact:<n>` → `out/contexts/<имя>__<sha1>.json` (кэш по sha1 источников).
+
+    Вводная жюри: подготовка контекста — без лимита времени, поэтому она здесь, а не в `run`: генерация
+    получает готовый `context.json` (`RunConfig.context`). Задача (тема) в подготовку не входит."""
+    say = progress or log.info
+    digest, path, cached = repo_context.prepare_context(
+        Path(source), client, cache_dir=cache_dir or CONTEXT_DIR, language=language, workers=max_parallel,
+        progress=say)
+    report = ContextReport(digest, path, cached)
+    s = report.summary()
+    say(f"контекст «{s['title']}»: источников {s['sources']}, фактов {s['facts']} из {s['facts_total']}, "
+        f"вызовов {s['calls']} (ошибок {s['errors']}) — " + ("из кэша" if cached else f"{s['seconds']:.0f} с"))
+    return report
+
+
+__all__ = ["ContextReport", "PrepareReport", "prepare_context", "prepare_template", "thumbnails_for"]

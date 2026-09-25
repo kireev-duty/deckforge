@@ -9,6 +9,8 @@ from typing import Literal
 import yaml
 from pydantic import BaseModel, Field, field_validator
 
+from deckforge.core.speech import DEFAULT_TALK_MINUTES
+
 ROOT = Path(__file__).resolve().parents[2]
 
 Purpose = Literal["feature", "product", "project", "initiative", "report", "other"]
@@ -33,11 +35,17 @@ class RunConfig(BaseModel):
     template: Path
     # контент-пакет и тема опциональны: без них бриф выводится из самого шаблона (content/template_brief.py)
     content_pack: Path | None = None
-    topic: str = ""  # тема/задача одной строкой — средняя ступень между пакетом и «только шаблон»
+    # контекст из репозитория, документации и истории (вводная жюри): готовый context.json из
+    # `deckforge prepare-context`, либо папка / .zip — тогда подготовка в начале прогона (с кэшем по sha1)
+    context: Path | None = None
+    topic: str = ""  # тема/задача одной строкой — средняя ступень между пакетом и «только шаблон»; с контекстом — задача
     purpose: Purpose = "other"
     audience: str = ""
     language: str = "ru"
     target_slides: int | None = Field(default=None, ge=3, le=25)
+    # вводная жюри: на выходе слайды и текст к каждому слайду, выступление ограничено по длительности
+    speaker_notes: bool = True  # текст выступления (скилл speaker_notes) — нужен LLM; без него только заметки outline
+    talk_minutes: float = Field(default=DEFAULT_TALK_MINUTES, ge=1, le=60)
     strategies: list[str] = Field(default_factory=lambda: ["executive", "narrative", "visual"])
     images: Literal["off", "auto", "always"] = "auto"
     audit: AuditConfig = Field(default_factory=AuditConfig)
@@ -56,7 +64,7 @@ class RunConfig(BaseModel):
     # параллельных вызовов LLM внутри одной колоды (судья по слайдам, картинки)
     max_parallel_llm: int = Field(default_factory=lambda: _env_int("DECK_MAX_PARALLEL_LLM", 4), ge=1, le=16)
 
-    @field_validator("template", "content_pack", "output_dir", mode="after")
+    @field_validator("template", "content_pack", "context", "output_dir", mode="after")
     @classmethod
     def _abs(cls, p: Path | None) -> Path | None:
         if p is None:

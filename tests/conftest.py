@@ -66,11 +66,19 @@ class FakeClient:
                 resp = self.responses.pop(0) if len(self.responses) > 1 else self.responses[0]
             else:
                 raise RuntimeError(f"FakeClient: нет ответа для скилла {skill.id}")
+        if callable(resp):  # ответ по входам вызова (fake_notes)
+            resp = resp(inputs)
         if isinstance(resp, Exception):
             self._log(LLMCall(skill.id, self.text_model, 0.01, ok=False, error=str(resp)))
             raise resp
         self._log(LLMCall(skill.id, self.text_model, 0.01, 10, 10))
         return resp
+
+
+def fake_notes(inputs: dict) -> dict:
+    """Ответ `speaker_notes` по его входу: по тексту на слайд ровно в бюджет `words` — длительность совпадёт с целью."""
+    slides = json.loads(inputs["slides"])
+    return {"notes": [{"idx": s["idx"], "text": " ".join(["слово"] * s["words"])} for s in slides]}
 
 
 def find_template(name_part: str) -> Path | None:
@@ -104,6 +112,14 @@ def build_sample_deck(out_dir: Path, strategy: str = "narrative"):
     res = build_deck_ir(outline, load_strategy(strategy), dna.exemplars, dna.template_id, dna.slide_w, dna.slide_h,
                         {"accent": "0077FF", "font": "Play", "palette": "0077FF,00AEE8"})
     return render_pptx(res.ir, pptx, dna.exemplars, out_dir / f"{strategy}.pptx"), res.ir
+
+
+@pytest.fixture(autouse=True)
+def no_llm_key(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Тесты не ходят в API: пустой ключ, а не удалённый — `load_dotenv` (UI, CLI) не перетирает заданное
+    и не подхватит ключ из .env разработчика; без ключа пайплайн не создаёт клиента сам (`RunContext.prepare`)."""
+    monkeypatch.setenv("LLM_API_KEY", "")
+    monkeypatch.setenv("T2I_API_KEY", "")
 
 
 @pytest.fixture

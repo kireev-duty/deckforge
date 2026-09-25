@@ -20,6 +20,7 @@ from deckforge.core.deck_reader import (  # noqa: F401 — реэкспорт
     RunRec,
     ShapeRec,
     TableRec,
+    read_notes,
     read_shape,
 )
 from deckforge.core.ir import Archetype, DeckIR, Exemplar, SlideIR, Slot, TemplateDNA
@@ -69,6 +70,11 @@ class SlideCtx:
     @property
     def all_text(self) -> str:
         return "\n".join(s.text for s in self.shapes if s.has_text)
+
+    @cached_property
+    def notes(self) -> str:
+        """Текст выступления — заметки докладчика слайда (N01/N02)."""
+        return read_notes(self.ctx.pkg, self.part)
 
 
 # ──────────────────────────── контекст колоды ────────────────────────────

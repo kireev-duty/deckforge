@@ -2,7 +2,7 @@
 
 Пайплайн вызывается in-process; файлы прогона — `out/ui/runs/<время>/`, загруженные шаблоны — `out/ui/templates/`.
 `DECKFORGE_PUBLIC=1` — публичный демо-стенд (Streamlit Community Cloud, DEVELOPMENT «Демо-стенд»): генерации всех сессий идут
-по одной, VLM-судья по умолчанию выключен, в списке шаблонов — датасет и загруженные в этой сессии.
+по одной, VLM-судья и иллюстрации по умолчанию выключены, в списке шаблонов — датасет и загруженные в этой сессии.
 """
 
 from __future__ import annotations
@@ -21,6 +21,7 @@ if str(ROOT) not in sys.path:  # `streamlit run` запускает файл к�
 
 from deckforge.core.autofix import FIXES, fix_plan_rows
 from deckforge.core.ir import AuditReport, DeckOutline, Finding
+from deckforge.core.speech import DEFAULT_TALK_MINUTES
 from deckforge.core.strategy import list_strategies
 from deckforge.llm import load_dotenv
 from deckforge.llm.client import LLMClient
@@ -28,6 +29,7 @@ from deckforge.pipeline import (
     DeckResult,
     ParsedTemplate,
     RunConfig,
+    prepare_context,
     prepare_template,
     refine_deck,
     run,
@@ -52,9 +54,10 @@ CONTENT_MODES = {
     "Только шаблон": "ничего вводить не нужно",
     "Тема одной строкой": "одна фраза вместо брифа",
     "Бриф и файлы": "свои исходные материалы",
+    "Репозиторий": "README, docs и история git → факты",
     "Готовый outline": "без LLM, ≈30 с — контент примеров VK Tech",
 }
-LLM_MODES = ("Только шаблон", "Тема одной строкой", "Бриф и файлы")
+LLM_MODES = ("Только шаблон", "Тема одной строкой", "Бриф и файлы", "Репозиторий")
 PURPOSES = ["product", "feature", "project", "initiative", "report", "other"]
 HOW_LABEL = {"safe": "безопасный", "ir": "по выбору (теряет часть контента)", "replan": "нужен пересбор",
              "template": "дизайн шаблона — не чиним", "n/a": "—"}
@@ -132,11 +135,20 @@ def sidebar() -> tuple[TemplateEntry | None, dict]:
         "audience": st.sidebar.text_input("Аудитория", "руководители продуктовых направлений"),
         "language": st.sidebar.selectbox("Язык", ["ru", "en"], index=0),
         "target_slides": st.sidebar.slider("Ориентир по объёму (слайдов)", 6, 20, 12),
+        "notes": st.sidebar.checkbox("Текст выступления к слайдам", HAS_KEY, disabled=not HAS_KEY,
+                                     help="заметки докладчика к каждому слайду каждого варианта под заданную длительность; "
+                                          "пишутся параллельно с проверкой судьи" if HAS_KEY else "нет LLM_API_KEY"),
+        "talk_minutes": st.sidebar.number_input("Длительность выступления, мин", min_value=1, max_value=60,
+                                                value=int(DEFAULT_TALK_MINUTES), step=1),
         "strategies": st.sidebar.multiselect("Варианты вёрстки", list_strategies(), default=list_strategies()),
         "autofix": st.sidebar.checkbox("Безопасные автофиксы", True, help="Уменьшить кегль, привести к шкале и т.п. — без потери смысла"),
         "judge": st.sidebar.checkbox("VLM-судья (11 вопросов по PNG)", HAS_KEY and not PUBLIC, disabled=not HAS_KEY,
                                      help="≈1–2 мин на все варианты (колоды проверяются параллельно), нужны "
                                           "LibreOffice и API" if HAS_KEY else "нет LLM_API_KEY"),
+        "images": st.sidebar.checkbox("Иллюстрации (T2I)", HAS_KEY and not PUBLIC, disabled=not HAS_KEY,
+                                      help="narrative и visual иллюстрируют слайды моделью FLUX.2 [klein] 4B — до 4 "
+                                           "на колоду, +10–20 с; executive берёт картинки только из контента"
+                                           if HAS_KEY else "нет LLM_API_KEY"),
         "render_png": st.sidebar.checkbox("PNG-превью", soffice_available(), disabled=not soffice_available(),
                                           help="LibreOffice не найден" if not soffice_available() else "≈10 с на колоду"),
         "pdf": st.sidebar.checkbox("Экспорт PDF", soffice_available(), disabled=not soffice_available()),
@@ -234,6 +246,7 @@ def brief_form(entry: TemplateEntry, opts: dict) -> None:
         captions=[CONTENT_MODES[m] for m in CONTENT_MODES],
     )
     brief, topic, files, use_example = "", "", [], False
+    repo_zip, repo_path = None, ""
     if mode in LLM_MODES and not HAS_KEY:
         st.warning("Ключ LLM не задан (`LLM_API_KEY`) — этот режим недоступен. Режим «Готовый outline» работает без LLM.")
     if mode == "Готовый outline":
@@ -247,6 +260,21 @@ def brief_form(entry: TemplateEntry, opts: dict) -> None:
         topic = st.text_input("Тема презентации", "",
                               placeholder="Платформа для совместной работы: что она даёт корпоративным командам")
         st.caption("Структуру и тексты сервис придумает сам; чисел без источника не будет.")
+    elif mode == "Репозиторий":
+        st.info("Контекст — репозиторий, документация и история. Подготовка идёт до генерации и в 5 минут не входит: "
+                "README, docs, структура и `git log` → факты скиллом `context_digest` (кэш по содержимому — "
+                "повторно без модели). Числа на слайдах — только из этих фактов.")
+        topic = st.text_input("Задача презентации", "",
+                              placeholder="Питч проекта для жюри на 7 минут: проблема, подход, архитектура, результаты",
+                              help="Пусто — презентация о проекте по его материалам.")
+        c1, c2 = st.columns(2)
+        with c1:
+            repo_zip = st.file_uploader("Архив репозитория (.zip)", type=["zip"],
+                                        help="GitHub «Download ZIP» — без истории коммитов; zip папки вместе с .git — с ней.")
+        with c2:
+            if not PUBLIC:  # на стенде файлы сервера не читаем
+                repo_path = st.text_input("или папка на этом компьютере", str(ROOT),
+                                          help="По умолчанию — репозиторий самого deckforge.")
     else:
         default_brief = (EXAMPLE_PACK / "brief.md").read_text("utf-8") if (EXAMPLE_PACK / "brief.md").exists() else ""
         brief = st.text_area("Бриф (brief.md)", default_brief, height=260,
@@ -262,14 +290,50 @@ def brief_form(entry: TemplateEntry, opts: dict) -> None:
             st.caption("Файлов нет — колода только по брифу: цифры берутся из текста брифа, "
                        "диаграмм и таблиц без данных не будет.")
     disabled = not opts["strategies"] or (mode == "Тема одной строкой" and not topic.strip()) \
-        or (mode == "Бриф и файлы" and not brief.strip()) or (mode in LLM_MODES and not HAS_KEY)
+        or (mode == "Бриф и файлы" and not brief.strip()) or (mode in LLM_MODES and not HAS_KEY)         or (mode == "Репозиторий" and not (repo_zip or repo_path.strip()))
     if st.button("Сгенерировать варианты", type="primary", disabled=disabled, width="stretch"):
-        generate(entry, opts, brief, files or [], use_example, topic, ready=mode == "Готовый outline")
+        context_src = (repo_zip or Path(repo_path.strip())) if mode == "Репозиторий" else None
+        generate(entry, opts, brief, files or [], use_example, topic, ready=mode == "Готовый outline",
+                 context_src=context_src)
+
+
+def prepare_repo_context(src, run_dir: Path, language: str) -> Path | None:
+    """Контекст до прогона: его время не входит в бюджет генерации (вводная жюри). Путь к context.json или None."""
+    if isinstance(src, Path):
+        if not src.is_dir():
+            st.error(f"Папка не найдена: {src}")
+            return None
+        source = src
+    else:
+        run_dir.mkdir(parents=True, exist_ok=True)
+        source = run_dir / "context_src.zip"
+        source.write_bytes(src.getvalue())
+    with st.status("Подготовка контекста — до генерации, вне бюджета 5 минут…", expanded=True) as status:
+        try:
+            report = prepare_context(source, LLMClient(), progress=status.write, language=language)
+        except Exception as e:  # noqa: BLE001
+            status.update(label=f"Контекст не подготовлен: {type(e).__name__}: {str(e)[:120]}", state="error")
+            return None
+        for w in report.digest.warnings[:8]:
+            status.write(f"⚠ {w}")
+        s = report.summary()
+        if not s["facts"]:
+            status.update(label="В источниках не нашлось фактов о проекте", state="error")
+            return None
+        status.update(label=f"Контекст «{s['title']}»: фактов {s['facts']} из {s['sources']} источников "
+                            + ("— из кэша" if s["cached"] else f"за {s['seconds']:.0f} с"),
+                      state="complete", expanded=False)
+    return report.path
 
 
 def generate(entry: TemplateEntry, opts: dict, brief: str, files: list, use_example: bool, topic: str = "",
-             ready: bool = False) -> None:
+             ready: bool = False, context_src=None) -> None:
     run_dir = UI_ROOT / "runs" / datetime.now().strftime("%Y%m%d-%H%M%S")
+    context = None
+    if context_src is not None:
+        context = prepare_repo_context(context_src, run_dir, opts["language"])
+        if context is None:
+            return
     pack_files = [(f.name, f.getvalue()) for f in files]
     if use_example:
         pack_files += [(p.name, p.read_bytes()) for p in EXAMPLE_PACK.glob("*.md") if p.name != "brief.md"]
@@ -282,8 +346,11 @@ def generate(entry: TemplateEntry, opts: dict, brief: str, files: list, use_exam
             st.error(str(e))
             return
     cfg = RunConfig(
-        template=entry.path, content_pack=pack_dir, topic=topic, purpose=opts["purpose"], audience=opts["audience"],
-        language=opts["language"], target_slides=opts["target_slides"], strategies=opts["strategies"], images="off",
+        template=entry.path, content_pack=pack_dir, context=context, topic=topic, purpose=opts["purpose"],
+        audience=opts["audience"],
+        language=opts["language"], target_slides=opts["target_slides"], strategies=opts["strategies"],
+        speaker_notes=opts["notes"], talk_minutes=opts["talk_minutes"],
+        images="auto" if opts["images"] else "off",  # auto — режим каждой стратегии (Strategy.images)
         output_dir=run_dir, render_png=opts["render_png"],
         export=["pptx", *(["pdf"] if opts["pdf"] else []), *(["html"] if opts["html"] else [])],
         audit={"deterministic": True, "contextual": opts["judge"], "autofix": opts["autofix"]},
@@ -326,7 +393,8 @@ def show_results() -> None:
     if compare.exists():
         st.markdown(compare.read_text("utf-8"))
     if getattr(result, "brief_path", None) and Path(result.brief_path).exists():
-        label = ("Бриф, выведенный из шаблона" if result.content_source == "template" else "Тема прогона")
+        label = {"template": "Бриф, выведенный из шаблона",
+                 "context": "Задача прогона — факты из контекста репозитория"}.get(result.content_source, "Тема прогона")
         with st.expander(f"{label} (brief.md)"):
             st.markdown(Path(result.brief_path).read_text("utf-8"))
     if result.warnings:
@@ -356,6 +424,16 @@ def show_deck(name: str, deck: DeckResult) -> None:
     else:
         st.caption("PNG-превью выключено или LibreOffice не найден — доступны только таблицы и скачивание.")
 
+    # ── текст выступления ──
+    if any(s.notes.strip() for s in ir.slides):
+        speech = manifest.get("speech") or {}
+        target = f" из {speech['talk_minutes']:g}" if speech.get("talk_minutes") else ""
+        with st.expander(f"Текст выступления · ≈ {speech.get('minutes', '?')} мин{target}"):
+            for s in ir.slides:
+                title, _ = s.title_and_text()
+                st.markdown(f"**{s.idx + 1}. {title or s.archetype.value}**")
+                st.text(s.notes.strip() or "— текста нет —")
+
     # ── аудит ──
     st.markdown("#### Аудит")
     if report is None:
@@ -365,7 +443,7 @@ def show_deck(name: str, deck: DeckResult) -> None:
 
     # ── экспорт ──
     st.markdown("#### Экспорт")
-    c = st.columns(6)
+    c = st.columns(7)
     c[0].download_button("⬇ .pptx", deck.pptx.read_bytes(), file_name=f"{name}.pptx", key=f"dl_pptx_{name}",
                          mime="application/vnd.openxmlformats-officedocument.presentationml.presentation")
     if deck.pdf and deck.pdf.exists():
@@ -385,6 +463,9 @@ def show_deck(name: str, deck: DeckResult) -> None:
     if deck.audit and deck.audit.exists():
         c[5].download_button("⬇ audit.json", deck.audit.read_bytes(), file_name=f"{name}.audit.json",
                              key=f"dl_a_{name}", mime="application/json")
+    if deck.speech and deck.speech.exists():
+        c[6].download_button("⬇ speech.md", deck.speech.read_bytes(), file_name=f"{name}.speech.md",
+                             key=f"dl_s_{name}", mime="text/markdown")
     st.caption("Тайминги: " + ", ".join(f"{k} {v:.1f}с" for k, v in manifest.get("timings_s", {}).items()))
 
 

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from deckforge.audit.deterministic import density, integrity, layout, template
+from deckforge.audit.deterministic import density, integrity, layout, speech, template
 from deckforge.audit.deterministic.base import Check, finding
 
 CHECKS: dict[str, Check] = {
@@ -30,7 +30,12 @@ CHECKS: dict[str, Check] = {
     "I04_raster_slide": integrity.check_I04,
     "I05_chart_labels": integrity.check_I05,
     "I06_duplicate_slides": integrity.check_I06,
+    "N01_notes_missing": speech.check_N01,
+    "N02_talk_duration": speech.check_N02,
 }
+# проверки текста выступления: в пайплайне идут отдельным проходом — заметки пишутся в колоду позже вёрстки
+NOTES_CHECKS = ("N01_notes_missing", "N02_talk_duration")
+DECK_CHECKS = tuple(c for c in CHECKS if c not in NOTES_CHECKS)
 
 
 def check_by_prefix(prefix: str) -> tuple[str, Check]:
@@ -41,4 +46,4 @@ def check_by_prefix(prefix: str) -> tuple[str, Check]:
     raise KeyError(prefix)
 
 
-__all__ = ["CHECKS", "Check", "check_by_prefix", "finding"]
+__all__ = ["CHECKS", "DECK_CHECKS", "NOTES_CHECKS", "Check", "check_by_prefix", "finding"]

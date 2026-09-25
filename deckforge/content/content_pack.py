@@ -310,4 +310,11 @@ def _csv_fragments(path: Path, root: Path) -> list[Fragment]:
     return [_table_fragment(f"csv:{path.stem}", path.stem, rows or [[]], _rel(path, root))]
 
 
-__all__ = ["ContentPack", "Fragment", "FragmentKind", "load_content_pack", "slug"]
+def document_text(path: Path) -> str:
+    """Текст документа целиком (.md/.txt/.docx/.pdf) — тем же чтением, что у пакета; для контекста репозитория."""
+    readers = {".md": _md_fragments, ".txt": _md_fragments, ".docx": _docx_fragments, ".pdf": _pdf_fragments}
+    frags = readers[path.suffix.lower()](path, path.parent)
+    return frags[0].text if frags else ""
+
+
+__all__ = ["ContentPack", "Fragment", "FragmentKind", "document_text", "load_content_pack", "slug"]

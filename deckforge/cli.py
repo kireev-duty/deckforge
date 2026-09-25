@@ -1,4 +1,4 @@
-"""CLI: parse / prepare / run / audit / export."""
+"""CLI: parse / prepare / prepare-context / run / audit / export."""
 
 from __future__ import annotations
 
@@ -17,7 +17,7 @@ app = typer.Typer(help="deckforge — цифровой дизайнер през
 
 @app.callback()
 def _root() -> None:
-    """Подкоманды: parse, prepare, run, audit, export."""
+    """Подкоманды: parse, prepare, prepare-context, run, audit, export."""
 
 
 @app.command("parse")
@@ -71,26 +71,68 @@ def prepare_cmd(
         typer.echo(f"\nразметка VLM → {report.cache}")
 
 
+@app.command("prepare-context")
+def prepare_context_cmd(
+    source: Path = typer.Argument(..., help="папка репозитория или .zip: README, docs, история git"),
+    output: Path | None = typer.Option(None, "--output", "-o", help="куда ещё положить context.json"),
+    parallel: int = typer.Option(4, "--parallel", help="одновременных запросов к модели"),
+    language: str = typer.Option("ru", "--language", help="язык фактов"),
+) -> None:
+    """Подготовка контекста (вне бюджета генерации): репозиторий, документация, история → факты → context.json.
+
+    Дальше: `deckforge run -c <конфиг> --context <context.json> --topic "задача"`."""
+    import shutil
+
+    from deckforge.llm.client import LLMClient
+    from deckforge.pipeline import prepare_context
+
+    load_dotenv()
+    report = prepare_context(source, LLMClient(), progress=lambda m: typer.echo(f"  {m}"), max_parallel=parallel,
+                             language=language)
+    for w in report.digest.warnings:
+        typer.echo(f"  ! {w}")
+    typer.echo(f"\n{report.markdown()}")
+    if not report.digest.pack.fragments:
+        typer.echo("\nфактов нет — context.json не записан", err=True)
+        raise typer.Exit(1)
+    path = report.path
+    if output is not None:
+        output.parent.mkdir(parents=True, exist_ok=True)
+        path = Path(shutil.copyfile(report.path, output))
+    typer.echo(f"\ncontext.json → {path}")
+
+
 @app.command("run")
 def run_cmd(
     config: Path = typer.Option(..., "--config", "-c", help="YAML-конфиг прогона (см. configs/run.example.yaml)"),
+    template: Path | None = typer.Option(None, "--template", "-t", help="другой шаблон вместо template из конфига"),
+    context: Path | None = typer.Option(None, "--context",
+                                        help="контекст: context.json из prepare-context (или папка / .zip репозитория)"),
     outline: Path | None = typer.Option(None, "--outline", help="готовый outline.json — шаг content и LLM пропускаются"),
-    topic: str | None = typer.Option(None, "--topic", help="тема одной строкой вместо контент-пакета"),
+    topic: str | None = typer.Option(None, "--topic", help="тема одной строкой вместо контент-пакета; с --context — задача"),
     output_dir: Path | None = typer.Option(None, "--output-dir", "-o", help="переопределить output_dir из конфига"),
     render_png: bool = typer.Option(False, "--png", help="PNG-превью и contact.png для каждой колоды"),
     no_fix: bool = typer.Option(False, "--no-fix", help="не применять автофиксы (audit.autofix: false)"),
     no_judge: bool = typer.Option(False, "--no-judge", help="без VLM-судьи (audit.contextual: false) — быстрее и без API"),
     no_images: bool = typer.Option(False, "--no-images", help="без иллюстраций (images: off)"),
+    minutes: float | None = typer.Option(None, "--minutes", min=1, max=60,
+                                         help="длительность выступления, мин — под неё пишется текст к слайдам"),
+    no_notes: bool = typer.Option(False, "--no-notes", help="без текста выступления к слайдам (speaker_notes: false)"),
     verbose: bool = typer.Option(False, "--verbose", "-v"),
 ) -> None:
     """Прогон по конфигу: outline → колоды по стратегиям → аудит и автофиксы → экспорт.
 
     `content_pack` в конфиге опционален: без него контент берётся из `--topic`, а если нет и темы —
-    бриф выводится из самого шаблона (скилл `template_brief`).
+    бриф выводится из самого шаблона (скилл `template_brief`). `--context` — факты из репозитория
+    (`prepare-context`), `--topic` тогда — задача презентации.
     """
     logging.basicConfig(level=logging.INFO if verbose else logging.WARNING, format="%(levelname)s %(name)s: %(message)s")
     load_dotenv()
     cfg = load_config(config)
+    if template is not None:
+        cfg = cfg.model_copy(update={"template": template.resolve()})
+    if context is not None:
+        cfg = cfg.model_copy(update={"context": context.resolve()})
     if topic:
         cfg = cfg.model_copy(update={"topic": topic, "content_pack": None})
     if output_dir is not None:
@@ -103,7 +145,11 @@ def run_cmd(
         cfg = cfg.model_copy(update={"audit": audit})
     if no_images:
         cfg = cfg.model_copy(update={"images": "off"})
-    ready = DeckOutline.model_validate_json(outline.read_text("utf-8")) if outline else None
+    if minutes is not None:
+        cfg = cfg.model_copy(update={"talk_minutes": minutes})
+    if no_notes:
+        cfg = cfg.model_copy(update={"speaker_notes": False})
+    ready =DeckOutline.model_validate_json(outline.read_text("utf-8")) if outline else None
     result = run(cfg, outline=ready, progress=lambda m: typer.echo(f"  {m}"), outline_path=outline)
     for w in result.warnings:
         typer.echo(f"  ! {w}")
@@ -154,7 +200,7 @@ def export_cmd(
     html: Path | None = typer.Option(None, "--html", help="куда писать .html (по умолчанию рядом с .pptx)"),
     pdf: bool = typer.Option(False, "--pdf", help="плюс .pdf через LibreOffice"),
     png: bool = typer.Option(False, "--png", help="плюс PNG по слайдам и contact.png (LibreOffice) в out/render/<stem>"),
-    ir: Path | None = typer.Option(None, "--ir", help="<strategy>.ir.json — заметки к слайдам в HTML"),
+    ir: Path | None = typer.Option(None, "--ir", help="<strategy>.ir.json — запасной источник заметок к слайдам в HTML"),
     title: str | None = typer.Option(None, "--title", help="заголовок HTML-страницы"),
 ) -> None:
     """Экспорт готовой колоды: .html, опционально .pdf и PNG."""

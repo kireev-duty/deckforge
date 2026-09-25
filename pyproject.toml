@@ -1,6 +1,6 @@
 [project]
 name = "deckforge"
-version = "0.1.3"
+version = "0.1.4"
 description = "Digital presentation designer: parses any .pptx template into a design system and generates on-brand decks from a brief"
 requires-python = ">=3.12"
 dependencies = [
@@ -31,6 +31,10 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 include = ["deckforge*"]
+
+[tool.setuptools.package-data]
+# заготовки SmartArt «Простой процесс» (tools/make_smartart_assets.py) — рендер читает их через importlib.resources
+"deckforge.render" = ["assets/smartart/*.xml"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

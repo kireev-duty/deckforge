@@ -9,6 +9,7 @@ purpose: other
 audience: ""
 language: ru
 target_slides: 12
+talk_minutes: 7                              # текст выступления к слайдам — на 7 минут
 strategies: [executive, narrative, visual]
 images: auto
 audit:

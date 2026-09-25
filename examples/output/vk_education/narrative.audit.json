@@ -2,102 +2,64 @@
  "deck_path": "narrative.pptx",
  "findings": [
   {
-   "check_id": "C07_no_garbage",
-   "kind": "contextual",
-   "severity": "error",
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
    "slide_idx": 0,
-   "element_id": null,
-   "box": null,
-   "message": "Подзаголовок обрывается многоточием, что выглядит как служебный текст или заглушка.",
-   "autofix": null,
-   "evidence": {
-    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "D02_bullet_words",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 3,
-   "element_id": "819",
+   "element_id": "261",
    "box": {
-    "x": 671514,
-    "y": 2055970,
-    "w": 4841390,
-    "h": 4144805
+    "x": 658813,
+    "y": 4728001,
+    "w": 5012644,
+    "h": 553998
    },
-   "message": "Пункт из 17 слов (норма ≤ 15): «Мы создаем комплексные IT-решения, соответствующие междунаро…»",
-   "autofix": "refill_slot",
+   "message": "Кегль 18 pt не из шкалы шаблона (ближайший 16.1 pt) (подгонка: 90% от кегля образца 20 pt)",
+   "autofix": "snap_font_size",
    "evidence": {
-    "words": 17
+    "size_pt": 18.0,
+    "nearest_pt": 16.1,
+    "base_pt": 20.0
    }
   },
   {
-   "check_id": "C07_no_garbage",
-   "kind": "contextual",
-   "severity": "error",
-   "slide_idx": 5,
-   "element_id": null,
-   "box": null,
-   "message": "В тексте на изображении присутствуют бессмысленные слова-заглушки с опечатками (Seanse, Intergnation, Actimataed).",
-   "autofix": null,
-   "evidence": {
-    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "C08_no_typos",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 5,
-   "element_id": null,
-   "box": null,
-   "message": "В тексте на изображении есть опечатки: Intergnation, Actimataed, Processs.",
-   "autofix": null,
-   "evidence": {
-    "question": "Текст без опечаток",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "C09_one_language",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 5,
-   "element_id": null,
-   "box": null,
-   "message": "Текст на изображении на английском языке, что нарушает требование единообразия языка слайда.",
-   "autofix": null,
-   "evidence": {
-    "question": "Текст слайда на языке колоды",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "D02_bullet_words",
+   "check_id": "T02_font_size",
    "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 0,
+   "element_id": "262",
+   "box": {
+    "x": 622261,
+    "y": 2598003,
+    "w": 7597065,
+    "h": 1661993
+   },
+   "message": "Кегль 53.7 pt не из шкалы шаблона (ближайший 48 pt) (подгонка: 90% от кегля образца 60 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 53.7,
+    "nearest_pt": 48.0,
+    "base_pt": 60.0
+   }
+  },
+  {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
    "severity": "warning",
    "slide_idx": 5,
-   "element_id": "405",
-   "box": {
-    "x": 671513,
-    "y": 2040889,
-    "w": 4897265,
-    "h": 3107760
-   },
-   "message": "Пункт из 18 слов (норма ≤ 15): «Наши решения позволяют автоматизировать рутинные операции, с…»",
-   "autofix": "refill_slot",
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок является тематическим описанием, а не содержит конкретного вывода или тезиса.",
+   "autofix": null,
    "evidence": {
-    "words": 18
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "brief"
    }
   },
   {
    "check_id": "D05_fill",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 5,
+   "slide_idx": 6,
    "element_id": null,
    "box": null,
    "message": "Слайд перегружен: контент занимает 78% рабочей области (норма 25%–75%)",
@@ -107,10 +69,44 @@
    }
   },
   {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 6,
+   "element_id": "406",
+   "box": {
+    "x": 677334,
+    "y": 692150,
+    "w": 5418666,
+    "h": 1081088
+   },
+   "message": "Кегль 28.8 pt не из шкалы шаблона (ближайший 24 pt) (подгонка: 80% от кегля образца 36 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 28.8,
+    "nearest_pt": 24.0,
+    "base_pt": 36.0
+   }
+  },
+  {
+   "check_id": "C04_facts_consistent",
+   "kind": "contextual",
+   "severity": "error",
+   "slide_idx": 7,
+   "element_id": null,
+   "box": null,
+   "message": "Текст слайда содержит тавтологию и не несёт новой информации, дублируя заголовок.",
+   "autofix": null,
+   "evidence": {
+    "question": "Цифры и утверждения непротиворечивы и не спорят с исходными материалами, если они есть",
+    "sources": "brief"
+   }
+  },
+  {
    "check_id": "D05_fill",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 6,
+   "slide_idx": 7,
    "element_id": null,
    "box": null,
    "message": "Слайд пустоват: контент занимает 23% рабочей области (норма 25%–75%)",
@@ -123,7 +119,7 @@
    "check_id": "T06_contrast",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 6,
+   "slide_idx": 7,
    "element_id": "430",
    "box": {
     "x": 4308816,
@@ -142,16 +138,113 @@
    }
   },
   {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок является тематическим, а не содержит вывод или утверждение о ценности.",
+   "autofix": null,
+   "evidence": {
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "brief"
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд перегружен: контент занимает 85% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.848
+   }
+  },
+  {
+   "check_id": "C02_content_matches_title",
+   "kind": "contextual",
+   "severity": "error",
+   "slide_idx": 9,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд перечисляет три разных преимущества (автоматизация, экономия, скорость), а не раскрывает тему заголовка (снижение затрат).",
+   "autofix": null,
+   "evidence": {
+    "question": "Содержимое слайда соответствует заголовку",
+    "sources": "brief"
+   }
+  },
+  {
    "check_id": "C06_images_relevant",
    "kind": "contextual",
    "severity": "warning",
-   "slide_idx": 12,
+   "slide_idx": 9,
    "element_id": null,
    "box": null,
-   "message": "Иллюстрация с образовательным дайвингом не относится к теме корпоративных IT-решений и операционных рисков.",
+   "message": "Иконка книги (в центре) не имеет отношения к теме «Экономия» или «Снижение затрат».",
    "autofix": null,
    "evidence": {
     "question": "Картинки и иконки относятся к теме слайда",
+    "sources": "brief"
+   }
+  },
+  {
+   "check_id": "C08_no_typos",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 9,
+   "element_id": null,
+   "box": null,
+   "message": "В первом блоке текст дублируется: «Автоматизация — Автоматизация...».",
+   "autofix": null,
+   "evidence": {
+    "question": "Текст без опечаток",
+    "sources": "brief"
+   }
+  },
+  {
+   "check_id": "C05_has_content",
+   "kind": "contextual",
+   "severity": "error",
+   "slide_idx": 11,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд содержит только схему из четырех слов без пояснений, что является недостаточным содержанием.",
+   "autofix": null,
+   "evidence": {
+    "question": "На слайде есть содержание, а не только заголовок",
+    "sources": "brief"
+   }
+  },
+  {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 11,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок описывает процесс, а не содержит вывод или ключевую мысль.",
+   "autofix": null,
+   "evidence": {
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "brief"
+   }
+  },
+  {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 13,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок является тематическим, а не содержит вывода или утверждения.",
+   "autofix": null,
+   "evidence": {
+    "question": "Заголовок содержит вывод, а не просто называет тему",
     "sources": ""
    }
   },
@@ -159,13 +252,56 @@
    "check_id": "D05_fill",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 12,
+   "slide_idx": 13,
    "element_id": null,
    "box": null,
-   "message": "Слайд перегружен: контент занимает 85% рабочей области (норма 25%–75%)",
+   "message": "Слайд перегружен: контент занимает 83% рабочей области (норма 25%–75%)",
    "autofix": "change_exemplar",
    "evidence": {
-    "fill": 0.848
+    "fill": 0.827
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 13,
+   "element_id": "267",
+   "box": {
+    "x": 6096000,
+    "y": 692150,
+    "w": 755651,
+    "h": 1380285
+   },
+   "message": "Блоки «Демонстрация платформы на ваше…» и картинка наложились (12% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "269",
+    "ratio": 0.122,
+    "in_exemplar": 1,
+    "text_reached": 0
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 13,
+   "element_id": "268",
+   "box": {
+    "x": 658813,
+    "y": 2357767,
+    "w": 5142954,
+    "h": 2142466
+   },
+   "message": "Контраст текста #FFFFFF к фону #0077FF = 4.1:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.13,
+    "text_color": "FFFFFF",
+    "background": "0077FF",
+    "need": 4.5,
+    "template_color": 1
    }
   }
  ],
@@ -204,7 +340,9 @@
   "C08_no_typos",
   "C09_one_language",
   "C10_table_legend_relevant",
-  "C11_flow"
+  "C11_flow",
+  "N01_notes_missing",
+  "N02_talk_duration"
  ],
- "duration_s": 40.728
+ "duration_s": 42.073
 }

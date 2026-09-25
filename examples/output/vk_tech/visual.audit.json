@@ -22,109 +22,91 @@
    }
   },
   {
-   "check_id": "D02_bullet_words",
+   "check_id": "T02_font_size",
    "kind": "deterministic",
-   "severity": "warning",
+   "severity": "info",
    "slide_idx": 2,
-   "element_id": "505",
+   "element_id": "503",
    "box": {
-    "x": 4637088,
-    "y": 676278,
-    "w": 3862387,
-    "h": 3737102
+    "x": 430360,
+    "y": 338829,
+    "w": 3945697,
+    "h": 753371
    },
-   "message": "Пункт из 17 слов (норма ≤ 15): «Мы создаем комплексные IT-решения, соответствующие междунаро…»",
-   "autofix": "refill_slot",
+   "message": "Кегль 19.2 pt не из шкалы шаблона (ближайший 16.2 pt) (подгонка: 80% от кегля образца 24 pt)",
+   "autofix": "snap_font_size",
    "evidence": {
-    "words": 17
+    "size_pt": 19.2,
+    "nearest_pt": 16.2,
+    "base_pt": 24.0
    }
   },
   {
-   "check_id": "C07_no_garbage",
-   "kind": "contextual",
-   "severity": "error",
-   "slide_idx": 4,
-   "element_id": null,
-   "box": null,
-   "message": "В центре слайда присутствует служебный текст-заглушка 'Some Service'.",
-   "autofix": null,
-   "evidence": {
-    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "C03_one_message",
+   "check_id": "C01_title_insight",
    "kind": "contextual",
    "severity": "warning",
-   "slide_idx": 4,
+   "slide_idx": 3,
    "element_id": null,
    "box": null,
-   "message": "Слайд содержит только один абзац текста без структуры или визуальных элементов.",
+   "message": "Заголовок является тематическим описанием, а не содержит конкретного вывода или тезиса.",
    "autofix": null,
    "evidence": {
-    "question": "Слайд пересказывается одним предложением",
+    "question": "Заголовок содержит вывод, а не просто называет тему",
     "sources": "brief"
    }
   },
   {
-   "check_id": "C09_one_language",
-   "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 4,
-   "element_id": null,
-   "box": null,
-   "message": "В тексте присутствует английская фраза 'Some Service'.",
-   "autofix": null,
-   "evidence": {
-    "question": "Текст слайда на языке колоды",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "D02_bullet_words",
+   "check_id": "T02_font_size",
    "kind": "deterministic",
-   "severity": "warning",
+   "severity": "info",
    "slide_idx": 4,
-   "element_id": "505",
+   "element_id": "503",
    "box": {
-    "x": 4637088,
-    "y": 676278,
-    "w": 3862387,
-    "h": 3737102
+    "x": 430360,
+    "y": 338829,
+    "w": 3945697,
+    "h": 753371
    },
-   "message": "Пункт из 18 слов (норма ≤ 15): «Наши решения позволяют автоматизировать рутинные операции, с…»",
-   "autofix": "refill_slot",
+   "message": "Кегль 19.2 pt не из шкалы шаблона (ближайший 16.2 pt) (подгонка: 80% от кегля образца 24 pt)",
+   "autofix": "snap_font_size",
    "evidence": {
-    "words": 18
+    "size_pt": 19.2,
+    "nearest_pt": 16.2,
+    "base_pt": 24.0
    }
   },
   {
-   "check_id": "C04_facts_consistent",
-   "kind": "contextual",
-   "severity": "error",
-   "slide_idx": 5,
-   "element_id": null,
-   "box": null,
-   "message": "Фраза «Поддержка как малого бизнеса» обрывается и не имеет смысла, что противоречит тезису о масштабируемости.",
-   "autofix": null,
-   "evidence": {
-    "question": "Цифры и утверждения непротиворечивы и не спорят с исходными материалами, если они есть",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "C08_no_typos",
+   "check_id": "C01_title_insight",
    "kind": "contextual",
    "severity": "warning",
-   "slide_idx": 5,
+   "slide_idx": 6,
    "element_id": null,
    "box": null,
-   "message": "Второй пункт содержит грамматическую ошибку или обрыв фразы («Поддержка как малого бизнеса»).",
+   "message": "Заголовок является тематическим, а не утверждающим вывод.",
    "autofix": null,
    "evidence": {
-    "question": "Текст без опечаток",
+    "question": "Заголовок содержит вывод, а не просто называет тему",
     "sources": "brief"
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 6,
+   "element_id": "503",
+   "box": {
+    "x": 430360,
+    "y": 338829,
+    "w": 3945697,
+    "h": 753371
+   },
+   "message": "Кегль 21.6 pt не из шкалы шаблона (ближайший 24 pt) (подгонка: 90% от кегля образца 24 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 21.6,
+    "nearest_pt": 24.0,
+    "base_pt": 24.0
    }
   },
   {
@@ -194,16 +176,30 @@
    }
   },
   {
-   "check_id": "C03_one_message",
+   "check_id": "C01_title_insight",
    "kind": "contextual",
    "severity": "warning",
    "slide_idx": 8,
    "element_id": null,
    "box": null,
-   "message": "Слайд описывает три отдельных этапа (тестирование, логистику и сервис), а не сводится к одному предложению.",
+   "message": "Заголовок описывает тему процесса, но не содержит конкретного вывода или тезиса.",
    "autofix": null,
    "evidence": {
-    "question": "Слайд пересказывается одним предложением",
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "brief"
+   }
+  },
+  {
+   "check_id": "C08_no_typos",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": null,
+   "box": null,
+   "message": "В блоке «Пилотный запуск» пропущена буква «о» в слове «запуск».",
+   "autofix": null,
+   "evidence": {
+    "question": "Текст без опечаток",
     "sources": "brief"
    }
   },
@@ -211,14 +207,63 @@
    "check_id": "C05_has_content",
    "kind": "contextual",
    "severity": "error",
-   "slide_idx": 9,
+   "slide_idx": 10,
    "element_id": null,
    "box": null,
-   "message": "Слайд содержит только заголовок и одну короткую фразу, что является недостаточным содержанием для полноценного слайда.",
+   "message": "Слайд содержит только заголовок, одну строку текста и иконку, что является пустым содержанием.",
    "autofix": null,
    "evidence": {
     "question": "На слайде есть содержание, а не только заголовок",
     "sources": "brief"
+   }
+  },
+  {
+   "check_id": "C07_no_garbage",
+   "kind": "contextual",
+   "severity": "error",
+   "slide_idx": 10,
+   "element_id": null,
+   "box": null,
+   "message": "Текст содержит многоточие, что выглядит как незавершенная заглушка.",
+   "autofix": null,
+   "evidence": {
+    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
+    "sources": "brief"
+   }
+  },
+  {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 10,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок описывает действие (демонстрация), а не содержит вывод или ключевую мысль.",
+   "autofix": null,
+   "evidence": {
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "brief"
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 10,
+   "element_id": "2262",
+   "box": {
+    "x": 3195621,
+    "y": 1157472,
+    "w": 1092919,
+    "h": 261746
+   },
+   "message": "Блоки картинка и «Следующий шаг — демонстрация п…» наложились (21% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "2264",
+    "ratio": 0.213,
+    "in_exemplar": 1,
+    "text_reached": 0
    }
   }
  ],
@@ -257,7 +302,9 @@
   "C08_no_typos",
   "C09_one_language",
   "C10_table_legend_relevant",
-  "C11_flow"
+  "C11_flow",
+  "N01_notes_missing",
+  "N02_talk_duration"
  ],
- "duration_s": 32.221
+ "duration_s": 56.702
 }

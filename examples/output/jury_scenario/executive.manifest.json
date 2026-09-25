@@ -1,0 +1,412 @@
+{
+ "created": "2026-09-25T13:14:03+00:00",
+ "template": {
+  "id": "33d997b25b4c",
+  "path": "data/templates/VK Tech шаблон.pptx",
+  "sha1": "33d997b25b4c",
+  "labels": "rules+vlm"
+ },
+ "content_source": "context",
+ "content_pack": "",
+ "brief": "brief.md",
+ "outline": "outline.json",
+ "outline_title": "DECKFORGE",
+ "strategy": {
+  "name": "executive",
+  "version": "v1",
+  "target_slides": {
+   "min": 10,
+   "max": 11
+  },
+  "audience_hint": "руководителю на 5 минут — статус, отчёт, решение по цифрам; читается без докладчика"
+ },
+ "skills": {
+  "context_digest": "v1",
+  "outline_writer": "v3",
+  "audit_judge": "v2",
+  "speaker_notes": "v3"
+ },
+ "models": {
+  "text": "qwen/qwen3.8-27b-20260814",
+  "vision": "qwen/qwen3.8-27b-20260814",
+  "image": "black-forest-labs/flux.2-klein-4b",
+  "base_url": "https://openrouter.ai/api/v1"
+ },
+ "llm_calls": [
+  {
+   "skill": "outline_writer@v3",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 32.52044049999677,
+   "prompt_tokens": 5163,
+   "completion_tokens": 2076,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 6.711413600001833,
+   "prompt_tokens": 2854,
+   "completion_tokens": 433,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 8.652453199989395,
+   "prompt_tokens": 2882,
+   "completion_tokens": 530,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 8.73242040000332,
+   "prompt_tokens": 2809,
+   "completion_tokens": 470,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 11.618022499998915,
+   "prompt_tokens": 2911,
+   "completion_tokens": 513,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 3.0088328999991063,
+   "prompt_tokens": 2877,
+   "completion_tokens": 460,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "speaker_notes@v3",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 21.021080999998958,
+   "prompt_tokens": 1864,
+   "completion_tokens": 1535,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 6.486377399996854,
+   "prompt_tokens": 2837,
+   "completion_tokens": 403,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 6.6397121000045445,
+   "prompt_tokens": 2845,
+   "completion_tokens": 456,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 6.638412700005574,
+   "prompt_tokens": 2839,
+   "completion_tokens": 435,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 11.411999100004323,
+   "prompt_tokens": 2867,
+   "completion_tokens": 469,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 17.19937899999786,
+   "prompt_tokens": 2856,
+   "completion_tokens": 351,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 38.136364100006176,
+   "prompt_tokens": 2820,
+   "completion_tokens": 488,
+   "ok": true,
+   "error": null
+  }
+ ],
+ "plan": [
+  {
+   "idx": 0,
+   "archetype": "title",
+   "title": "DECKFORGE"
+  },
+  {
+   "idx": 1,
+   "archetype": "cards",
+   "title": "Проблема: ручной дизайн не масштабируется"
+  },
+  {
+   "idx": 2,
+   "archetype": "cards",
+   "title": "Три стратегии подачи на одном контенте"
+  },
+  {
+   "idx": 3,
+   "archetype": "process",
+   "title": "Пайплайн: от шаблона к готовой колоде"
+  },
+  {
+   "idx": 4,
+   "archetype": "kpi",
+   "title": "Скорость: 3 варианта за 200 секунд"
+  },
+  {
+   "idx": 5,
+   "archetype": "table",
+   "title": "Оптимизация: готовый outline экономит время"
+  },
+  {
+   "idx": 6,
+   "archetype": "image_text",
+   "title": "Демо: загрузка неизвестного шаблона"
+  },
+  {
+   "idx": 7,
+   "archetype": "cards",
+   "title": "Аудит: 26 проверок и VLM-судья"
+  },
+  {
+   "idx": 8,
+   "archetype": "kpi",
+   "title": "Качество: 0 ошибок в 12 колодах"
+  },
+  {
+   "idx": 9,
+   "archetype": "table",
+   "title": "Технологический стек проекта"
+  },
+  {
+   "idx": 10,
+   "archetype": "closing",
+   "title": "DECKFORGE"
+  }
+ ],
+ "choices": [
+  {
+   "idx": 0,
+   "archetype": "title",
+   "exemplar_id": "slide2",
+   "exemplar_archetype": "title",
+   "score": 0.95
+  },
+  {
+   "idx": 1,
+   "archetype": "cards",
+   "exemplar_id": "slide14",
+   "exemplar_archetype": "cards",
+   "score": 3.0
+  },
+  {
+   "idx": 2,
+   "archetype": "cards",
+   "exemplar_id": "slide24",
+   "exemplar_archetype": "cards",
+   "score": 2.75
+  },
+  {
+   "idx": 3,
+   "archetype": "process",
+   "exemplar_id": "slide18",
+   "exemplar_archetype": "cards",
+   "score": -4.15
+  },
+  {
+   "idx": 4,
+   "archetype": "kpi",
+   "exemplar_id": "slide45",
+   "exemplar_archetype": "kpi",
+   "score": 2.9
+  },
+  {
+   "idx": 5,
+   "archetype": "table",
+   "exemplar_id": "slide34",
+   "exemplar_archetype": "table",
+   "score": 2.95
+  },
+  {
+   "idx": 6,
+   "archetype": "image_text",
+   "exemplar_id": "slide9",
+   "exemplar_archetype": "image_text",
+   "score": -5.1
+  },
+  {
+   "idx": 7,
+   "archetype": "cards",
+   "exemplar_id": "slide24",
+   "exemplar_archetype": "cards",
+   "score": 0.75
+  },
+  {
+   "idx": 8,
+   "archetype": "kpi",
+   "exemplar_id": "slide45",
+   "exemplar_archetype": "kpi",
+   "score": 0.8999999999999999
+  },
+  {
+   "idx": 9,
+   "archetype": "table",
+   "exemplar_id": "slide35",
+   "exemplar_archetype": "table",
+   "score": 2.95
+  },
+  {
+   "idx": 10,
+   "archetype": "closing",
+   "exemplar_id": "slide6",
+   "exemplar_archetype": "closing",
+   "score": 0.95
+  }
+ ],
+ "warnings": [
+  "outline: слайд 1 «Проблема: ручной дизайн не масштабируетс»: поле «cards» → bullets",
+  "outline: слайд 2 «Решение: генерация из .pptx-шаблона»: поле «text» → paragraphs",
+  "outline: слайд 3 «Три стратегии подачи на одном контенте»: поле «cards» → bullets",
+  "outline: слайд 7 «Демо: загрузка неизвестного шаблона»: поле «text» → paragraphs",
+  "outline: слайд 8 «Аудит: 26 проверок и VLM-судья»: поле «cards» → bullets"
+ ],
+ "stats": {
+  "slides": 11,
+  "archetypes": [
+   "title",
+   "cards",
+   "cards",
+   "cards",
+   "kpi",
+   "table",
+   "image_text",
+   "cards",
+   "kpi",
+   "table",
+   "closing"
+  ],
+  "exemplars": [
+   "slide2",
+   "slide14",
+   "slide24",
+   "slide18",
+   "slide45",
+   "slide34",
+   "slide9",
+   "slide24",
+   "slide45",
+   "slide35",
+   "slide6"
+  ],
+  "text_items_per_slide": 4.3,
+  "words_per_item": 4.8,
+  "chart": 0,
+  "table": 2,
+  "kpi": 2,
+  "picture": 0,
+  "skipped": 0,
+  "speech_minutes": 6.1
+ },
+ "audit": {
+  "errors": 1,
+  "warnings": 28,
+  "info": 1,
+  "contextual": 6,
+  "by_check": {
+   "C01_title_insight": 5,
+   "C04_facts_consistent": 1,
+   "D05_fill": 4,
+   "L02_overlap": 4,
+   "T02_font_size": 1,
+   "T06_contrast": 15
+  },
+  "slides_with_issues": [
+   1,
+   2,
+   3,
+   4,
+   6,
+   7,
+   8,
+   9
+  ],
+  "checks_run": 37,
+  "duration_s": 45.46,
+  "path": "executive.audit.json",
+  "kind": "deterministic+contextual",
+  "autofix": {
+   "applied": 0,
+   "skipped": 0,
+   "before": {
+    "errors": 0,
+    "warnings": 23
+   },
+   "after": {
+    "errors": 0,
+    "warnings": 23
+   },
+   "items": []
+  }
+ },
+ "images": {
+  "mode": "minimal",
+  "generated": 0,
+  "cache": 0,
+  "content": 0,
+  "failed": 0,
+  "items": []
+ },
+ "speech": {
+  "talk_minutes": 7.0,
+  "minutes": 6.1,
+  "words": 728,
+  "slides_without_notes": [],
+  "path": "executive.speech.md"
+ },
+ "exports": {
+  "pptx": "executive.pptx",
+  "pdf": "executive.pdf",
+  "html": "executive.html",
+  "speech": "executive.speech.md"
+ },
+ "timings_s": {
+  "parse": 0.913,
+  "outline": 32.729,
+  "layout": 0.013,
+  "render": 0.738,
+  "audit": 0.4,
+  "autofix": 0.0,
+  "png": 5.876,
+  "audit_contextual": 44.867,
+  "notes": 21.022,
+  "export_pdf": 0.003,
+  "export_html": 2.57,
+  "deck_build": 55.26,
+  "deck_total": 88.91
+ },
+ "time_budget_s": 300
+}

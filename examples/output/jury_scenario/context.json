@@ -1,0 +1,3173 @@
+{
+ "root": "deckforge",
+ "title": "DECKFORGE",
+ "sha1": "b4e2483e6d5ae09def613e4d812a17ddf988a425",
+ "created": "2026-09-25T13:01:34+00:00",
+ "skill": "context_digest@v1",
+ "model": "qwen/qwen3.8-27b-20260814",
+ "sources": [
+  {
+   "id": "doc:README",
+   "path": "README.md",
+   "chars": 23757
+  },
+  {
+   "id": "repo:manifest",
+   "path": "pyproject.toml",
+   "chars": 327
+  },
+  {
+   "id": "repo:tree",
+   "path": "",
+   "chars": 700
+  },
+  {
+   "id": "history:git",
+   "path": ".git",
+   "chars": 8610
+  },
+  {
+   "id": "doc:docs/ARCHITECTURE",
+   "path": "docs/ARCHITECTURE.md",
+   "chars": 40000
+  },
+  {
+   "id": "doc:docs/AUDIT",
+   "path": "docs/AUDIT.md",
+   "chars": 17395
+  },
+  {
+   "id": "doc:docs/BACKLOG",
+   "path": "docs/BACKLOG.md",
+   "chars": 6009
+  },
+  {
+   "id": "doc:docs/DEMO",
+   "path": "docs/DEMO.md",
+   "chars": 9148
+  },
+  {
+   "id": "doc:docs/DEVELOPMENT",
+   "path": "docs/DEVELOPMENT.md",
+   "chars": 6143
+  },
+  {
+   "id": "doc:docs/INSTALL",
+   "path": "docs/INSTALL.md",
+   "chars": 15633
+  },
+  {
+   "id": "doc:docs/MODELS",
+   "path": "docs/MODELS.md",
+   "chars": 5477
+  },
+  {
+   "id": "doc:docs/PLAN",
+   "path": "docs/PLAN.md",
+   "chars": 14655
+  },
+  {
+   "id": "doc:docs/tz/4. VK Tech ТЗ",
+   "path": "docs/tz/4. VK Tech ТЗ.pdf",
+   "chars": 9694
+  },
+  {
+   "id": "doc:CLAUDE",
+   "path": "CLAUDE.md",
+   "chars": 17237
+  },
+  {
+   "id": "doc:examples/content_pack/brief",
+   "path": "examples/content_pack/brief.md",
+   "chars": 1543
+  },
+  {
+   "id": "doc:examples/content_pack/product",
+   "path": "examples/content_pack/product.md",
+   "chars": 2067
+  },
+  {
+   "id": "doc:examples/output/lct2026_holdout/brief",
+   "path": "examples/output/lct2026_holdout/brief.md",
+   "chars": 1841
+  },
+  {
+   "id": "doc:examples/output/lct2026_holdout/compare",
+   "path": "examples/output/lct2026_holdout/compare.md",
+   "chars": 1138
+  },
+  {
+   "id": "doc:examples/output/lct2026_holdout/executive",
+   "path": "examples/output/lct2026_holdout/executive.pdf",
+   "chars": 1907
+  },
+  {
+   "id": "doc:examples/output/lct2026_holdout/executive.speech",
+   "path": "examples/output/lct2026_holdout/executive.speech.md",
+   "chars": 5580
+  },
+  {
+   "id": "doc:examples/output/lct2026_holdout/narrative",
+   "path": "examples/output/lct2026_holdout/narrative.pdf",
+   "chars": 1978
+  },
+  {
+   "id": "doc:examples/output/lct2026_holdout/narrative.speech",
+   "path": "examples/output/lct2026_holdout/narrative.speech.md",
+   "chars": 6166
+  },
+  {
+   "id": "doc:examples/output/lct2026_holdout/visual",
+   "path": "examples/output/lct2026_holdout/visual.pdf",
+   "chars": 1963
+  },
+  {
+   "id": "doc:examples/output/lct2026_holdout/visual.speech",
+   "path": "examples/output/lct2026_holdout/visual.speech.md",
+   "chars": 5960
+  },
+  {
+   "id": "doc:examples/output/lct2026_holdout/executive/executive",
+   "path": "examples/output/lct2026_holdout/executive/executive.pdf",
+   "chars": 1907
+  },
+  {
+   "id": "doc:examples/output/lct2026_holdout/narrative/narrative",
+   "path": "examples/output/lct2026_holdout/narrative/narrative.pdf",
+   "chars": 1978
+  },
+  {
+   "id": "doc:examples/output/lct2026_holdout/visual/visual",
+   "path": "examples/output/lct2026_holdout/visual/visual.pdf",
+   "chars": 1963
+  },
+  {
+   "id": "doc:examples/output/vk_education/brief",
+   "path": "examples/output/vk_education/brief.md",
+   "chars": 1841
+  },
+  {
+   "id": "doc:examples/output/vk_education/compare",
+   "path": "examples/output/vk_education/compare.md",
+   "chars": 1168
+  },
+  {
+   "id": "doc:examples/output/vk_education/executive",
+   "path": "examples/output/vk_education/executive.pdf",
+   "chars": 1880
+  },
+  {
+   "id": "doc:examples/output/vk_education/executive.speech",
+   "path": "examples/output/vk_education/executive.speech.md",
+   "chars": 6840
+  },
+  {
+   "id": "doc:examples/output/vk_education/narrative",
+   "path": "examples/output/vk_education/narrative.pdf",
+   "chars": 1964
+  },
+  {
+   "id": "doc:examples/output/vk_education/narrative.speech",
+   "path": "examples/output/vk_education/narrative.speech.md",
+   "chars": 6512
+  },
+  {
+   "id": "doc:examples/output/vk_education/visual",
+   "path": "examples/output/vk_education/visual.pdf",
+   "chars": 1925
+  },
+  {
+   "id": "doc:examples/output/vk_education/visual.speech",
+   "path": "examples/output/vk_education/visual.speech.md",
+   "chars": 7136
+  },
+  {
+   "id": "doc:examples/output/vk_education/executive/executive",
+   "path": "examples/output/vk_education/executive/executive.pdf",
+   "chars": 1880
+  },
+  {
+   "id": "doc:examples/output/vk_education/narrative/narrative",
+   "path": "examples/output/vk_education/narrative/narrative.pdf",
+   "chars": 1964
+  },
+  {
+   "id": "doc:examples/output/vk_education/visual/visual",
+   "path": "examples/output/vk_education/visual/visual.pdf",
+   "chars": 1925
+  },
+  {
+   "id": "doc:examples/output/vk_tech/brief",
+   "path": "examples/output/vk_tech/brief.md",
+   "chars": 1841
+  },
+  {
+   "id": "doc:examples/output/vk_tech/compare",
+   "path": "examples/output/vk_tech/compare.md",
+   "chars": 1169
+  },
+  {
+   "id": "doc:examples/output/vk_tech/executive",
+   "path": "examples/output/vk_tech/executive.pdf",
+   "chars": 1868
+  },
+  {
+   "id": "doc:examples/output/vk_tech/executive.speech",
+   "path": "examples/output/vk_tech/executive.speech.md",
+   "chars": 6846
+  },
+  {
+   "id": "doc:examples/output/vk_tech/narrative",
+   "path": "examples/output/vk_tech/narrative.pdf",
+   "chars": 1938
+  },
+  {
+   "id": "doc:examples/output/vk_tech/narrative.speech",
+   "path": "examples/output/vk_tech/narrative.speech.md",
+   "chars": 4858
+  },
+  {
+   "id": "doc:examples/output/vk_tech/visual",
+   "path": "examples/output/vk_tech/visual.pdf",
+   "chars": 1906
+  },
+  {
+   "id": "doc:examples/output/vk_tech/visual.speech",
+   "path": "examples/output/vk_tech/visual.speech.md",
+   "chars": 5958
+  },
+  {
+   "id": "doc:examples/output/vk_tech/executive/executive",
+   "path": "examples/output/vk_tech/executive/executive.pdf",
+   "chars": 1868
+  },
+  {
+   "id": "doc:examples/output/vk_tech/narrative/narrative",
+   "path": "examples/output/vk_tech/narrative/narrative.pdf",
+   "chars": 1938
+  },
+  {
+   "id": "doc:examples/output/vk_tech/visual/visual",
+   "path": "examples/output/vk_tech/visual/visual.pdf",
+   "chars": 1906
+  },
+  {
+   "id": "doc:examples/output/vk_workspace/brief",
+   "path": "examples/output/vk_workspace/brief.md",
+   "chars": 1841
+  },
+  {
+   "id": "doc:examples/output/vk_workspace/compare",
+   "path": "examples/output/vk_workspace/compare.md",
+   "chars": 1084
+  },
+  {
+   "id": "doc:examples/output/vk_workspace/executive",
+   "path": "examples/output/vk_workspace/executive.pdf",
+   "chars": 1868
+  },
+  {
+   "id": "doc:examples/output/vk_workspace/executive.speech",
+   "path": "examples/output/vk_workspace/executive.speech.md",
+   "chars": 7711
+  },
+  {
+   "id": "doc:examples/output/vk_workspace/narrative",
+   "path": "examples/output/vk_workspace/narrative.pdf",
+   "chars": 1925
+  },
+  {
+   "id": "doc:examples/output/vk_workspace/narrative.speech",
+   "path": "examples/output/vk_workspace/narrative.speech.md",
+   "chars": 6400
+  },
+  {
+   "id": "doc:examples/output/vk_workspace/visual",
+   "path": "examples/output/vk_workspace/visual.pdf",
+   "chars": 1915
+  },
+  {
+   "id": "doc:examples/output/vk_workspace/visual.speech",
+   "path": "examples/output/vk_workspace/visual.speech.md",
+   "chars": 7190
+  },
+  {
+   "id": "doc:examples/output/vk_workspace/executive/executive",
+   "path": "examples/output/vk_workspace/executive/executive.pdf",
+   "chars": 1868
+  },
+  {
+   "id": "doc:examples/output/vk_workspace/narrative/narrative",
+   "path": "examples/output/vk_workspace/narrative/narrative.pdf",
+   "chars": 1925
+  },
+  {
+   "id": "doc:examples/output/vk_workspace/visual/visual",
+   "path": "examples/output/vk_workspace/visual/visual.pdf",
+   "chars": 1915
+  },
+  {
+   "id": "doc:skills/audit_judge/v1/prompt",
+   "path": "skills/audit_judge/v1/prompt.md",
+   "chars": 1300
+  },
+  {
+   "id": "doc:skills/audit_judge/v2/prompt",
+   "path": "skills/audit_judge/v2/prompt.md",
+   "chars": 1564
+  },
+  {
+   "id": "doc:skills/context_digest/v1/prompt",
+   "path": "skills/context_digest/v1/prompt.md",
+   "chars": 1960
+  },
+  {
+   "id": "doc:skills/image_prompter/v1/prompt",
+   "path": "skills/image_prompter/v1/prompt.md",
+   "chars": 921
+  },
+  {
+   "id": "doc:skills/outline_writer/v1/prompt",
+   "path": "skills/outline_writer/v1/prompt.md",
+   "chars": 2328
+  },
+  {
+   "id": "doc:skills/outline_writer/v2/prompt",
+   "path": "skills/outline_writer/v2/prompt.md",
+   "chars": 2813
+  },
+  {
+   "id": "doc:skills/outline_writer/v3/prompt",
+   "path": "skills/outline_writer/v3/prompt.md",
+   "chars": 3034
+  },
+  {
+   "id": "doc:skills/slide_filler/v1/prompt",
+   "path": "skills/slide_filler/v1/prompt.md",
+   "chars": 1023
+  },
+  {
+   "id": "doc:skills/speaker_notes/v1/prompt",
+   "path": "skills/speaker_notes/v1/prompt.md",
+   "chars": 1467
+  },
+  {
+   "id": "doc:skills/speaker_notes/v2/prompt",
+   "path": "skills/speaker_notes/v2/prompt.md",
+   "chars": 1853
+  },
+  {
+   "id": "doc:skills/speaker_notes/v3/prompt",
+   "path": "skills/speaker_notes/v3/prompt.md",
+   "chars": 1997
+  },
+  {
+   "id": "doc:skills/template_brief/v1/prompt",
+   "path": "skills/template_brief/v1/prompt.md",
+   "chars": 1933
+  },
+  {
+   "id": "doc:skills/template_brief/v2/prompt",
+   "path": "skills/template_brief/v2/prompt.md",
+   "chars": 2407
+  },
+  {
+   "id": "doc:skills/template_tagger/v1/prompt",
+   "path": "skills/template_tagger/v1/prompt.md",
+   "chars": 3621
+  }
+ ],
+ "facts": [
+  {
+   "text": "DECKFORGE — цифровой дизайнер презентаций, который читает .pptx-шаблон как дизайн-систему и собирает новую презентацию из нативных объектов PowerPoint.",
+   "kind": "overview",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Проект генерирует три варианта вёрстки (executive, narrative, visual) на одном контенте, различающиеся плотностью и способом показа данных.",
+   "kind": "feature",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Слайды собираются клонированием образцов шаблона с использованием нативных объектов PowerPoint: текст, фигуры, chart, table, picture и SmartArt.",
+   "kind": "architecture",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Система извлекает дизайн-токены (палитру, типографику, сетку) из фактического использования на слайдах, а не из файла theme.xml.",
+   "kind": "decision",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Аудит является частью пайплайна и включает 26 детерминированных проверок по XML и VLM-судью, оценивающего 11 вопросов по PNG слайда.",
+   "kind": "feature",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Три варианта колоды собираются параллельно и должны быть готовы не более чем за 5 минут суммарно.",
+   "kind": "metric",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Для каждого слайда генерируется текст выступления под заданную длительность (по умолчанию 7 минут), который проверяется на укладывание во время.",
+   "kind": "feature",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Результат экспортируется в форматы .pptx, .pdf и .html, при этом в HTML-версии текст остается текстом, а диаграммы — SVG.",
+   "kind": "feature",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Промпты и скиллы версионируются в отдельных файлах (skills/<name>/v<N>/), а manifest.json хранит версии скиллов, моделей и стратегий.",
+   "kind": "decision",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Галерея проекта содержит 12 готовых колод, сформированных из 4 шаблонов и 3 стратегий, доступных прямо в браузере.",
+   "kind": "metric",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Для работы требуются Python ≥ 3.12, Git LFS, LibreOffice и доступ к OpenAI-совместимому inference API.",
+   "kind": "limitation",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Если ключ LLM исчерпан или API недоступен, работает режим «Готовый outline», который собирает колоды без использования LLM.",
+   "kind": "feature",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Проект DeckForge генерирует презентации из исходного кода репозитория, используя LLM-модели и шаблоны.",
+   "kind": "overview",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Система поддерживает три стратегии подачи: executive (для руководителей), narrative (для докладов) и visual (для конференций).",
+   "kind": "feature",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Три варианта колоды собираются параллельно за 200 секунд при общем временном бюджете 300 секунд.",
+   "kind": "metric",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "При использовании готового outline время генерации сокращается до 91 секунды против 213 секунд при последовательной сборке.",
+   "kind": "metric",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Для генерации текста и визуального анализа используется модель Qwen3.8-27B, для создания иллюстраций — FLUX.2 klein 4B.",
+   "kind": "architecture",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Проект предоставляет HTTP API с документацией Swagger и веб-интерфейс на базе Streamlit.",
+   "kind": "feature",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Каждая сгенерированная колода сопровождается файлом manifest.json, содержащим провенанс: модели, версии скиллов и журнал вызовов.",
+   "kind": "feature",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "В режиме экономии времени при приближении к дедлайну система пропускает генерацию иллюстраций и работу VLM-судьи.",
+   "kind": "decision",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Контейнерный образ Docker включает Python 3.12 и LibreOffice Impress, его размер составляет примерно 1,6 ГБ.",
+   "kind": "architecture",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Экспорт в PDF и PNG из Docker-контейнера отличается от локального из-за замены шрифтов Play и Montserrat на DejaVu.",
+   "kind": "limitation",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Параметры LLM-вызовов, такие как temperature и max_tokens, заданы в файлах скиллов и могут быть настроены.",
+   "kind": "architecture",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Переход на инференс VK требует изменения только переменных LLM_BASE_URL и LLM_API_KEY, модель остается прежней.",
+   "kind": "decision",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "DeckForge генерирует презентации из шаблонов и контента, предоставляя интерфейс из пяти шагов: от выбора шаблона до скачивания результата.",
+   "kind": "overview",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Система поддерживает три стратегии сборки колод: executive, narrative и visual, которые применяются параллельно.",
+   "kind": "feature",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Три варианта колоды собираются параллельно за 62 секунды в режиме «Только шаблон».",
+   "kind": "metric",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "HTML-экспорт использует собственный рендер по XML, сохраняя текст, SVG-диаграммы и таблицы в векторном виде.",
+   "kind": "architecture",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "В проекте созданы 12 готовых колод на основе четырёх шаблонов, включая holdout-шаблон ЛЦТ 2026.",
+   "kind": "metric",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Аудит колод не выявил детерминированных ошибок ни в одной из 12 сгенерированных презентаций.",
+   "kind": "metric",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Архитектура разделена на слои: core, llm, parsing, content, layout, render, audit, export, pipeline и ui.",
+   "kind": "architecture",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Проект использует только открытые модели с лицензиями Apache 2.0 или MIT, размером до 35B параметров.",
+   "kind": "limitation",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Генерация ограничена объёмом в 10–15 слайдов, хотя пользователь может задать другое количество через параметр target_slides.",
+   "kind": "limitation",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Демо-стенд на Streamlit Community Cloud обрабатывает генерации последовательно и по умолчанию отключает VLM-судью.",
+   "kind": "limitation",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Синтетический контент-пакет «Пульс команды» позволяет воспроизвести генерацию без использования LLM.",
+   "kind": "feature",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "На демо-стенде отсутствуют шрифты Play и Montserrat, что приводит к подмене шрифтов в PNG и PDF.",
+   "kind": "limitation",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "DeckForge — цифровой дизайнер презентаций, который парсит любой .pptx-шаблон в дизайн-систему и генерирует брендовые колоды по брифу.",
+   "kind": "overview",
+   "sources": [
+    "repo:manifest"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Проект создан командой Ashen One в рамках кейса VK Tech «Цифровой дизайнер презентаций» на хакатоне «Лидеры цифровой трансформации 2026».",
+   "kind": "overview",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Текущая версия проекта — 0.1.4, код распространяется под лицензией MIT.",
+   "kind": "milestone",
+   "sources": [
+    "repo:manifest",
+    "doc:README"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Система поддерживает только схему SmartArt «Простой процесс» из 2–6 шагов; циклы, пирамиды и иерархии пока не реализованы.",
+   "kind": "limitation",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Пиктограммы берутся исключительно из образцов самого шаблона; если в шаблоне нет иконок, они не будут добавлены в результат.",
+   "kind": "limitation",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Шаблон без слайдов (.potx) размечается по лейаутам, что приводит к более простой колоде, чем при использовании шаблона со слайдами-примерами.",
+   "kind": "architecture",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Генерация выполняется in-process: новый прогон обрывает предыдущий, а параллельные задания запускаются через API (POST /generate).",
+   "kind": "architecture",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Результат сохраняется в .pptx только с нативными объектами, что обеспечивает полную редактируемость в PowerPoint (Microsoft 365).",
+   "kind": "feature",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "В репозитории 530 файлов, включая 116 Python-скриптов, 30 .pptx-файлов и 307 примеров вывода в каталоге examples/output.",
+   "kind": "metric",
+   "sources": [
+    "repo:tree"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Архитектура включает модули для аудита, контента, экспорта, лейаута, LLM, парсинга, пайплайна, рендера и UI.",
+   "kind": "architecture",
+   "sources": [
+    "repo:tree"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Проект использует Python >=3.12 и зависимости, включая python-pptx, pydantic, fastapi, streamlit и openai.",
+   "kind": "architecture",
+   "sources": [
+    "repo:manifest"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Шаблоны презентаций в data/ и материалы ТЗ принадлежат VK, организаторам ЛЦТ и авторам шаблонов, не подпадая под лицензию MIT.",
+   "kind": "limitation",
+   "sources": [
+    "doc:README"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Проект DECKFORGE генерирует презентации (колоды) по шаблонам, используя LLM и генерацию изображений.",
+   "kind": "overview",
+   "sources": [
+    "history:git"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Разработка велась с 2026-09-15 по 2026-09-24, всего 75 коммитов без слияний.",
+   "kind": "milestone",
+   "sources": [
+    "history:git"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Выпущены версии v0.1.0 (2026-09-21), v0.1.1 (2026-09-23), v0.1.2 и v0.1.3 (2026-09-24).",
+   "kind": "milestone",
+   "sources": [
+    "history:git"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Система использует модели Qwen3.8-27B для текста и FLUX.2 klein 4B для генерации изображений.",
+   "kind": "architecture",
+   "sources": [
+    "history:git"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Интерфейс включает Streamlit UI на порту 8501 и FastAPI сервис на порту 8000.",
+   "kind": "architecture",
+   "sources": [
+    "history:git"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Поддерживается экспорт презентаций в формат HTML с сохранением диаграмм, таблиц и шрифтов.",
+   "kind": "feature",
+   "sources": [
+    "history:git"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "В репозитории хранятся 12 финальных колод, сгенерированных по 4 шаблонам и 3 стратегиям.",
+   "kind": "metric",
+   "sources": [
+    "history:git"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Аудит качества проверяет 980 колод, матрица из 306 пар не выявила проблем после доработок.",
+   "kind": "metric",
+   "sources": [
+    "history:git"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Проект упакован в Docker с использованием Python 3.12 и LibreOffice Impress для рендеринга.",
+   "kind": "architecture",
+   "sources": [
+    "history:git"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Демо-стенд развернут на Streamlit Community Cloud, Hugging Face Space используется как запасной вариант.",
+   "kind": "feature",
+   "sources": [
+    "history:git"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Ограничения включают отсутствие поддержки WebKit (Safari) и проблемы с пиктограммами/SmartArt.",
+   "kind": "limitation",
+   "sources": [
+    "history:git"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Использованы внешние шаблоны от VK Tech, VK Education, VK WorkSpace и ЛЦТ2026 для проверки адаптивности.",
+   "kind": "other",
+   "sources": [
+    "history:git"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Проект deckforge собирает презентации, клонируя слайды-образцы из шаблона .pptx и заполняя их слоты контентом, подготовленным LLM.",
+   "kind": "overview",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Шаблон .pptx интерпретируется как набор правил (Template DNA), включающий палитру, типографику, сетку и слайды-образцы с размеченными слотами.",
+   "kind": "architecture",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Пайплайн состоит из этапов: parsing, content, layout, render, audit и export.",
+   "kind": "architecture",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Если входного контента нет, бриф для презентации выводится автоматически из самого шаблона.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Аудит включает детерминированные проверки по XML и контекстуальные проверки по PNG с возможностью авто-фиксов.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Экспорт поддерживается в форматах нативных объектов .pptx, PDF через LibreOffice и HTML через собственный рендер.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "15 сентября 2026 года добавлены стратегии вёрстки, позволяющие генерировать 3 варианта на одном контенте.",
+   "kind": "milestone",
+   "sources": [
+    "history:git"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "16 сентября 2026 года в пайплайн интегрирован VLM-судья (audit_judge) и механизм авто-фиксов.",
+   "kind": "milestone",
+   "sources": [
+    "history:git"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "16 сентября 2026 года реализована оркестрация запуска через команду run --config и manifest с провенансом.",
+   "kind": "milestone",
+   "sources": [
+    "history:git"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "15 сентября 2026 года датасет и техническое задание добавлены в репозиторий через Git LFS.",
+   "kind": "milestone",
+   "sources": [
+    "history:git"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Проект имеет модульную архитектуру с слоями parsing, content, layout, render, audit, export, pipeline, api, ui и cli.",
+   "kind": "architecture",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Слой parsing преобразует файлы .pptx в структуру TemplateDNA, используя OOXML, LibreOffice и VLM.",
+   "kind": "architecture",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Слой content генерирует DeckOutline и до 4 параллельных изображений на колоду с кэшированием по sha1.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Слой layout детерминированно подгоняет текст под слоты и собирает DeckIR без вызовов LLM.",
+   "kind": "architecture",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Слой audit выполняет 26 детерминированных проверок и использует VLM-судью для анализа PNG слайдов.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Слой export рендерит колоду в самодостаточный HTML-файл с inline SVG диаграммами и встроенными шрифтами.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Колоды разных стратегий собираются параллельно в потоках под общим дедлайном прогона.",
+   "kind": "decision",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Интерфейс UI на Streamlit позволяет выбирать фиксы аудита и скачивать результаты в pptx, pdf и json.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "API на FastAPI предоставляет функции генерации и аудита через job-запросы с белым списком имён файлов.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Каждая колода сопровождается файлом manifest.json, содержащим информацию о провенансе.",
+   "kind": "other",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Проект использует pydantic v2 для контрактов данных (TemplateDNA, DeckOutline, DeckIR, AuditReport), которые сериализуются в JSON для воспроизводимости.",
+   "kind": "architecture",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Система поддерживает пять режимов входа в зависимости от доступных данных: репозиторий, контент-пакет, тема, только шаблон или готовый outline.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "При входе только по шаблонному файлу .pptx система генерирует бриф из слепка шаблона, совершая один вызов LLM до этапа outline.",
+   "kind": "decision",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Подготовка контекста из репозитория включает сбор источников, нарезку на чанки по 8 тыс. символов и выписывание фактов со ссылками на источники.",
+   "kind": "architecture",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Факты из контекста отбираются в лимит промпта 12 тыс. символов по приоритету веса (3, 2, 1) и важности источника.",
+   "kind": "decision",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Система запрещает модели выдумывать числа, даты и имена, отсутствующие в исходных материалах, чтобы избежать фальшивой фактуры в презентации.",
+   "kind": "decision",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Манифест прогона фиксирует версии скиллов, модели, журнал вызовов LLM с токенами и длительностью, а также статистику плотности слайдов.",
+   "kind": "architecture",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Расчетная длительность выступления для текста слайдов оценивается исходя из темпа 120 слов в минуту.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Пути к файлам в манифесте и журнале прогона хранятся в относительном виде, чтобы примеры в репозитории не зависели от путей конкретной машины.",
+   "kind": "decision",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Отсутствие контент-пакета при входе не является ошибкой, а вызывает предупреждение и автоматический переход к следующему доступному источнику контента.",
+   "kind": "decision",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Проект генерирует презентации в формате .pptx, клонируя XML слайдов-образцов из шаблона, а не создавая их по лейаутам.",
+   "kind": "solution",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Клонирование образцов позволяет автоматически экспортировать результат в нативные объекты PowerPoint, сохраняя дизайн и медиафайлы.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Экстрактор цветов и шрифтов строит гистограммы по фактическому использованию в слайдах, используя тему только как fallback.",
+   "kind": "architecture",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Классификация архетипов слайдов выполняется детерминированными правилами за ~1 секунду, VLM уточняет сложные случаи за 30–60 секунд.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Существуют три стратегии вёрстки (executive, narrative, visual), различающиеся плотностью контента и способом визуализации данных.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Стратегии версионируются как YAML-файлы с пятью параметрами, что позволяет описывать их без изменения кода.",
+   "kind": "decision",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Детерминированный аудит колоды выполняется менее чем за 1 секунду, контекстуальный VLM-аудит занимает 30–70 секунд для 15 слайдов.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Система автофикса разделяет исправления на безопасные (автоприменяются), теряющие контент (по выбору) и требующие перепланирования.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Аудит различает ошибки генерации и особенности исходного шаблона, не изменяя дизайн, унаследованный от образца.",
+   "kind": "decision",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Скиллы версионируются как данные в отдельных папках, версии фиксируются в manifest.json каждой сгенерированной колоды.",
+   "kind": "architecture",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Генерация трех вариантов колоды должна укладываться в 5-минутный лимит времени, что диктует архитектуру параллельного аудита.",
+   "kind": "limitation",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Шаблон без слайдов-примеров (.potx) автоматически получает образцы из лейаутов для корректного наследования геометрии и стиля.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Стратегия executive ориентирована на чтение без докладчика, используя максимум фактов и сравнимые таблицы.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Стратегия narrative предназначена для сопровождения рассказа, предлагая одну мысль на слайд и крупные цифры.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Стратегия visual рассчитана на просмотр издалека, заменяя таблицы диаграммами и короткими тезисами с пиктограммами.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Поле audience_hint стратегии отображается в UI, файле compare.md и в manifest.json.",
+   "kind": "architecture",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Диапазоны объёма в YAML описаны для значения по умолчанию DEFAULT_TARGET_SLIDES = 12.",
+   "kind": "decision",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Пользовательский параметр target_slides сдвигает диапазон стратегии через метод Strategy.for_target с обрезкой 3–25.",
+   "kind": "architecture",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "При target_slides 15 диапазоны стратегий составляют: executive 13–14, narrative 15–18, visual 13–15.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Контент DeckOutline генерируется один раз на прогон одним вызовом LLM и не зависит от стратегии.",
+   "kind": "architecture",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Компонент outline_writer не видит стратегию и получает от нее только ориентир по объёму.",
+   "kind": "architecture",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Планировщик слайдов выполняет фиксированную последовательность шагов: санитизация данных, визуализация, разделение смешанных данных, контроль плотности, добавление разделов и оптимизация объема.",
+   "kind": "architecture",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Санитизация данных выравнивает серии по категориям, заменяет NaN/inf и пустые графики на буллеты с предупреждением, не выдумывая чисел.",
+   "kind": "decision",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Слайды с буллетами сверх лимита плотности автоматически делятся на части с пометкой «(1/2)», а текст укорачивается по смысловым разделителям.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Схемы процессов (2–6 шагов) рендерятся как нативный SmartArt «Простой процесс» в PowerPoint, а в LibreOffice и HTML — как статичная отрисовка.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Геометрия отрисовки SmartArt сверена с PowerPoint на 2–6 шагах, включая увеличение размера узла до ×1,5 при нехватке места для текста.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Выбор образца слайда использует цепочки фолбэков, что позволяет собирать презентацию даже на шаблонах, не имеющих нужных архетипов (например, без section или kpi).",
+   "kind": "solution",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Если контент не помещается в выбранный образец, система перебирает до MAX_RETRIES других вариантов, чтобы избежать потери данных и каскадных слайдов-продолжений.",
+   "kind": "decision",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "При превышении лимита слайдов система переключает контент в компактные формы (KPI в карточки, шаги в списки), чтобы уложиться в целевой объем.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Стресс-тест на шаблоне с ограниченной вместимостью KPI показал, что компактные формы предотвращают рост колоды с 22 до 67 слайдов.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Подгонка текста начинается с уменьшения кегля шрифта до 70% от исходного (для крупных заголовков — до 18 pt), и только затем применяется обрезка текста.",
+   "kind": "decision",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Заголовки при нехватке места обрезаются по двоеточию или тире, а многоточие используется как крайняя мера для сохранения смысла.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Проект генерирует три варианта презентаций (executive, narrative, visual) параллельно, укладываясь в бюджет 5 минут на прогон.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Время сборки колод варьируется от 131 до 162 секунд в зависимости от стратегии при лимите 300 секунд.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Стратегия executive генерирует 11 слайдов без разделителей и иллюстраций, используя нумерованные карточки для процессов.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Стратегия narrative создает 15 слайдов с тремя разделителями и четырьмя сгенерированными иллюстрациями.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Стратегия visual формирует 12 слайдов с четырьмя иллюстрациями и использованием SmartArt для процессов.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Ни одна из 12 сгенерированных колод не содержит детерминированных ошибок вёрстки.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "VLM-судья выявил 18 предупреждений на 12 колод, преимущественно из-за отсутствия исходных данных для раскрытия тезисов.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Текст выступления генерируется для каждого слайда, достигая 4,0–7,2 минут при целевой длительности 7 минут.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Параллельная сборка использует пул потоков с настраиваемым лимитом (по умолчанию 3) для одновременной генерации колод.",
+   "kind": "architecture",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Система автоматически корректирует KPI-слайды без цифр, переводя их в формат буллетов для избежания визуальных артефактов.",
+   "kind": "decision",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Оценка вместимости слотов основана на геометрии, а не метриках шрифта, что может приводить к ложным срабатываниям аудита.",
+   "kind": "limitation",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Классификатор динамически адаптирует размеры заголовков и плашек под текст, предотвращая наложение на соседние элементы.",
+   "kind": "solution",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Проект генерирует презентации, используя параллельную сборку колод с общим бюджетом времени 300 секунд.",
+   "kind": "overview",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Система использует единый дедлайн для всех этапов: иллюстрации отменяются при остатке менее 90 секунд, VLM-судья — менее 30 секунд.",
+   "kind": "decision",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Три варианта колоды собираются параллельно в трех потоках, что позволяет уложиться в общий лимит времени прогона.",
+   "kind": "architecture",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Кэш изображений общий для всех колод: повторная генерация одного и того же слайда не происходит, второй поток ждет результата первого.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Конвертация в PDF и растеризация выполняются последовательно из-за ограничений LibreOffice и PyMuPDF, что создает очередь на 10–20 секунд.",
+   "kind": "limitation",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Аудит слайдов включает детерминированные проверки по XML и контекстуальные проверки с помощью VLM-модели по PNG-изображениям.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/AUDIT"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Детерминированные проверки всегда дают одинаковый результат, тогда как контекстуальные проверки VLM могут отличаться между запусками.",
+   "kind": "architecture",
+   "sources": [
+    "doc:docs/AUDIT"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Каждая проверка аудита возвращает объект Finding с координатами, серьезностью и именем автофикса для последующей обработки.",
+   "kind": "architecture",
+   "sources": [
+    "doc:docs/AUDIT"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Метрики текста рассчитываются с помощью библиотеки Pillow, с поправкой ширины для шрифта Play, так как он отсутствует в системе.",
+   "kind": "decision",
+   "sources": [
+    "doc:docs/AUDIT"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Пороги для детерминированных проверок заданы константами в начале модулей, а не в тестах, для удобства настройки.",
+   "kind": "decision",
+   "sources": [
+    "doc:docs/AUDIT"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "В режиме «только шаблон» с LLM-outline прогон выполняется с использованием OpenRouter и включает судью и генерацию картинок.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Система предотвращает засыпание устройства во время прогона на Windows, чтобы таймеры работали корректно.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/ARCHITECTURE"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Аудит вёрстки проверяет выход элементов за границы слайда, наложение блоков и обрезание текста краем.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/AUDIT"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Проверка L03 фиксирует, если текст не помещается в рамку с учётом метрик шрифта и отступов.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/AUDIT"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Аудит шаблона контролирует использование шрифтов, кегля и цветов строго из разрешённой палитры.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/AUDIT"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Проверка T06 требует контрастности текста к фону не ниже 4,5:1, снижая порог до 3,0:1 для крупного шрифта.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/AUDIT"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Модуль плотности ограничивает количество пунктов на слайде шестью и длину пункта пятнадцатью словами.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/AUDIT"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Проверка D05 предупреждает, если слайд заполнен менее чем на 25 % или более чем на 75 % рабочей области.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/AUDIT"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Аудит целостности выявляет текст-заглушки, пустые слайды и дубликаты слайдов с коэффициентом Jaccard выше 0,8.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/AUDIT"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Контекстуальный аудит использует один вызов VLM на слайд с параллельной обработкой четырьмя воркерами.",
+   "kind": "architecture",
+   "sources": [
+    "doc:docs/AUDIT"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Вход для контекстуального судьи включает PNG слайда, текст из IR и факты из контент-пакета до 6 000 символов.",
+   "kind": "architecture",
+   "sources": [
+    "doc:docs/AUDIT"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "На реальных колодах аудит нашёл ошибки вёрстки, низкий контраст 3,2:1 и пустые плейсхолдеры.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/AUDIT"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Проверки текста выступления N01 и N02 запускаются отдельным проходом параллельно с генерацией PNG.",
+   "kind": "architecture",
+   "sources": [
+    "doc:docs/AUDIT"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Проверка N02 сравнивает длительность речи, рассчитанную из 120 слов в минуту, с целевой длительностью колоды.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/AUDIT"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Система аудита включает 26 детерминированных проверок (L01–L07, T01–T06, D01–D05, I01–I06, N01–N02) и 11 контекстных (C01–C11).",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/AUDIT"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "На реальной колоде VK Tech (15 слайдов) аудит занял 33 секунды и потребовал около 22k токенов.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/AUDIT"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Автофиксы разделены на три категории: safe (применяются автоматически), ir (по выбору пользователя) и replan (только предложение).",
+   "kind": "architecture",
+   "sources": [
+    "doc:docs/AUDIT"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Безопасные фиксы на колоде VK Tech полностью устраняют все ошибки уровня error, оставляя лишь предупреждения warning.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/AUDIT"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Процесс автофикса включает повторный рендер и аудит; при необходимости выполняется второй проход для устранения остаточных проблем.",
+   "kind": "solution",
+   "sources": [
+    "doc:docs/AUDIT"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Находки, связанные с дизайном шаблона (evidence.in_exemplar) или уровнем info, никогда не подлежат автоматическому исправлению.",
+   "kind": "limitation",
+   "sources": [
+    "doc:docs/AUDIT"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Тестовое покрытие включает фикстуры для всех 26 детерминированных нарушений и проверку чистоты на эталонной колоде.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/AUDIT"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Система поддерживает генерацию заметок спикера с контролем бюджета слов и записью их в итоговый файл презентации.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/AUDIT"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Контекстный аудит выявляет несоответствие цифр слайда переданным источникам и дублирование заголовков у разбитых слайдов.",
+   "kind": "problem",
+   "sources": [
+    "doc:docs/AUDIT"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Правило добавления нового фикса требует регистрации в каталоге, реализации обработчика и создания теста на чистоту после рендера.",
+   "kind": "decision",
+   "sources": [
+    "doc:docs/AUDIT"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Проект deckforge генерирует презентации из шаблонов PowerPoint, используя образцы слайдов и LLM для заполнения контента.",
+   "kind": "overview",
+   "sources": [
+    "doc:docs/BACKLOG"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Измерение времени генерации трёх вариантов колоды для VK Tech составило 200 секунд при лимите 5 минут.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/BACKLOG"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Латентность работы судьи на OpenRouter составляет от 26 до 150 секунд на одну колоду.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/BACKLOG"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Система поддерживает до 190 тысяч символов входных данных, ограниченных параметрами MAX_CHUNKS и CHUNK_CHARS.",
+   "kind": "limitation",
+   "sources": [
+    "doc:docs/BACKLOG"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Конвертация трёх параллельных колод в LibreOffice выполняется последовательно из-за общего профиля, ожидание до 20 секунд.",
+   "kind": "limitation",
+   "sources": [
+    "doc:docs/BACKLOG"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Поддержка SmartArt ограничена простым процессом в один ряд на 2–6 шагов, сложные структуры отсутствуют.",
+   "kind": "limitation",
+   "sources": [
+    "doc:docs/BACKLOG"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "API хранит задачи в памяти процесса, поэтому после перезапуска идентификаторы задач становятся недоступны.",
+   "kind": "limitation",
+   "sources": [
+    "doc:docs/BACKLOG"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "В HTML-экспорте подписи SVG-диаграмм могут становиться невидимыми на тёмном фоне из-за выбора цвета текста.",
+   "kind": "limitation",
+   "sources": [
+    "doc:docs/BACKLOG"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Планировщик не удаляет избыточные данные, а лишь предупреждает, что приводит к превышению лимита слайдов.",
+   "kind": "limitation",
+   "sources": [
+    "doc:docs/BACKLOG"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Сокращение тезисов через LLM не подключено, используется только детерминированная обрезка текста.",
+   "kind": "limitation",
+   "sources": [
+    "doc:docs/BACKLOG"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Планируется создание видео-демо одним дублем и публикация репозитория на публичной платформе.",
+   "kind": "plan",
+   "sources": [
+    "doc:docs/BACKLOG"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Стресс-тестирование с LLM на аномальных брифах (пустые, длинные, не по теме) ещё не проводилось.",
+   "kind": "plan",
+   "sources": [
+    "doc:docs/BACKLOG"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Проект генерирует презентацию по неизвестному шаблону .pptx, создавая три варианта вёрстки параллельно за один прогон.",
+   "kind": "overview",
+   "sources": [
+    "doc:docs/DEMO"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Видео-демо должно длиться не более 7 минут и показывать процесс без монтажных склеек.",
+   "kind": "other",
+   "sources": [
+    "doc:docs/DEMO"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Система работает в режиме «Только шаблон», извлекая бренд и лексику из слайдов-образцов без внешнего ввода.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/DEMO"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Пайплайн включает один вызов LLM для плана, параллельную сборку трех стратегий, детерминированный аудит и проверку VLM-судьёй.",
+   "kind": "architecture",
+   "sources": [
+    "doc:docs/DEMO"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Бюджет времени на генерацию всех трех вариантов презентации составляет 5 минут.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/DEMO"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Среднее время генерации с судьёй составляет около 3 минут, из которых 1 минута уходит на план и 1,5–2 минуты на сборку.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/DEMO"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Генерируемые слайды являются клонами XML образцов шаблона, что обеспечивает нативные объекты и редактируемость в PowerPoint.",
+   "kind": "decision",
+   "sources": [
+    "doc:docs/DEMO"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Система автоматически применяет безопасные автофиксы ошибок вёрстки, а рискованные изменения требует ручного подтверждения.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/DEMO"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "При превышении лимита времени система пропускает генерацию картинок и работу судьи, сохраняя вёрстку в рамках бюджета.",
+   "kind": "decision",
+   "sources": [
+    "doc:docs/DEMO"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Результат прогона включает экспорт в форматы .pptx, .html и PDF, а также manifest.json с информацией о версиях и таймингах.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/DEMO"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "В репозитории доступны примеры результатов: 12 сгенерированных колод в директории examples/output.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/DEMO"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Для демо используется внешний шаблон МТУСИ с 41 образцом, прошедший аудит без ошибок на трех стратегиях.",
+   "kind": "other",
+   "sources": [
+    "doc:docs/DEMO"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "При таймаутах OpenRouter прогон без VLM-судьи занимает около 1,5 минуты, а судья демонстрируется на готовых данных.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/DEMO"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Колоды генерируются за 5 минут, при этом медленный инференс урезает только работу судьи из-за лимита времени.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/DEMO"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Генерация трех колод с готовым outline занимает около 50 секунд при отключенных судье и картинках.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/DEMO"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Режим «Только шаблон» позволяет работать без контент-пакета, генерируя бриф и варианты на основе шаблона.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/DEMO"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Подготовка контекста из репозитория занимает около 1,5 минуты, а повторное использование кэша ускоряет процесс до секунды.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/DEMO"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Включение генерации иллюстраций (T2I) увеличивает время сборки колоды на 10–20 секунд.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/DEMO"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Система гарантирует готовность колод в срок даже при задержках генерации текста выступления, фиксируя это в манифесте.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/DEMO"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Критерий демонстрации включает загрузку неизвестного шаблона и автоматический разбор его дизайн-системы.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/DEMO"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Система генерирует три варианта слайдов на одном контенте, поддерживая разные режимы входа, включая работу без пакета.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/DEMO"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Аудит включает детерминированные находки с подсветкой, контекстуальные проверки судьи, автофиксы и выбор пользователя.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/DEMO"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Экспорт поддерживает редактируемые объекты в .pptx, а также форматы .pdf и .html.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/DEMO"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Манифест фиксирует версии скиллов и моделей, а также тайминги выполнения этапов генерации.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/DEMO"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Проект требует Python 3.12+ и использует Git LFS для хранения шаблонов датасетов в формате .pptx.",
+   "kind": "limitation",
+   "sources": [
+    "doc:docs/DEVELOPMENT"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Полная матрица стресс-теста выполняется около 40 минут, во время которого код в deckforge/ запрещено менять.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/DEVELOPMENT"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Публичный демо-стенд размещён на Streamlit Community Cloud по адресу deckforge.streamlit.app.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/DEVELOPMENT"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Галерея готовых колод публикуется на GitHub Pages по адресу kireev-duty.github.io/deckforge.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/DEVELOPMENT"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Лимит загрузки файлов в публичном режиме UI составляет 60 МБ, телеметрия отключена.",
+   "kind": "limitation",
+   "sources": [
+    "doc:docs/DEVELOPMENT"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "В публичном режиме UI одна генерация на процесс с очередью до 10 минут, судья по умолчанию выключен.",
+   "kind": "limitation",
+   "sources": [
+    "doc:docs/DEVELOPMENT"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Архитектура строго иерархична: ui, api, cli зависят от pipeline, который зависит от parsing, content, layout, render, audit, export и core.",
+   "kind": "architecture",
+   "sources": [
+    "doc:docs/DEVELOPMENT"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Промпты и схемы ответов моделей хранятся только в папках skills/<name>/v<N>/, изменение промпта требует создания новой версии.",
+   "kind": "decision",
+   "sources": [
+    "doc:docs/DEVELOPMENT"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Стратегии вёрстки описаны в YAML-файлах strategies/*.yaml, схема определена в core/strategy.py.",
+   "kind": "architecture",
+   "sources": [
+    "doc:docs/DEVELOPMENT"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Пороги проверок аудита заданы константами в модулях audit/deterministic/*.py, ложные срабатывания чинятся фикстурами.",
+   "kind": "decision",
+   "sources": [
+    "doc:docs/DEVELOPMENT"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "LibreOffice рисует плейсхолдеры лейаута без пары на слайде, поэтому render/pptx_writer.py материализует и гасит их.",
+   "kind": "decision",
+   "sources": [
+    "doc:docs/DEVELOPMENT"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Кэш VLM-разметки хранит только ответы теггера, слоты и архетипы пересчитываются правилами при каждой загрузке.",
+   "kind": "decision",
+   "sources": [
+    "doc:docs/DEVELOPMENT"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Deckforge — инструмент для автоматической сборки презентаций, поддерживающий три варианта вёрстки на одном контенте.",
+   "kind": "overview",
+   "sources": [
+    "doc:docs/INSTALL"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Проект требует Python версии 3.12 или выше и работает на Linux (проверено на Ubuntu 24.04 LTS).",
+   "kind": "limitation",
+   "sources": [
+    "doc:docs/INSTALL"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Для генерации презентаций используются модели Qwen3.8-27B (текст и зрение) и FLUX.2 [klein] 4B (картинки).",
+   "kind": "architecture",
+   "sources": [
+    "doc:docs/INSTALL"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "GPU не требуется, так как все модели вызываются через внешний API (OpenRouter или VK).",
+   "kind": "decision",
+   "sources": [
+    "doc:docs/INSTALL"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Пиковое потребление оперативной памяти при прогоне на трёх вариантах презентации составляет около 1,3 ГБ.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/INSTALL"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Общий размер данных для установки и работы проекта составляет примерно 3 ГБ.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/INSTALL"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Текущая зафиксированная версия проекта для экспертизы — v0.1.4.",
+   "kind": "milestone",
+   "sources": [
+    "doc:docs/INSTALL"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Тестовый набор проекта включает 393 теста, которые проходят за 6 минут без обращения к модели.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/INSTALL"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "В репозитории хранятся 12 готовых колод в каталоге examples/output, доступные также в онлайн-галерее.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/INSTALL"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Без API-ключа проект поддерживает сборку презентаций по заранее подготовленному outline.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/INSTALL"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Для генерации PDF, PNG-превью и работы VLM-судьи требуется установленный LibreOffice.",
+   "kind": "limitation",
+   "sources": [
+    "doc:docs/INSTALL"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Клиент автоматически отключает режим «размышлений» в Qwen для оптимизации запросов.",
+   "kind": "decision",
+   "sources": [
+    "doc:docs/INSTALL"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Система генерирует три варианта презентации (executive, narrative, visual) параллельно с общим бюджетом времени 5 минут.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/INSTALL"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "На Ubuntu 24.04 с OpenRouter полный прогон занимает 118 секунд, включая 40 секунд на бриф и outline.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/INSTALL"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Время генерации варьируется от 90 до 200 секунд в зависимости от скорости провайдера LLM.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/INSTALL"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Каждый вариант проходит 26 детерминированных проверок аудита, при этом количество ошибок аудита равно нулю.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/INSTALL"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Текст выступления генерируется автоматически и занимает от 5,7 до 6,1 минуты при целевой длительности 7 минут.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/INSTALL"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "При медленном инференсе система пропускает генерацию картинок и работу VLM-судьи, сохраняя вёрстку, аудит и экспорт.",
+   "kind": "decision",
+   "sources": [
+    "doc:docs/INSTALL"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Сборка без API-ключа занимает 25 секунд и включает вёрстку, аудит, автофиксы, PDF и HTML, но без текста выступления.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/INSTALL"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Подготовка контекста из репозитория занимает около 1,5 минуты и требует 24 вызова модели для 65 источников.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/INSTALL"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Из примерно 270 извлечённых фактов в промпт для генерации попадают только 70 самых важных.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/INSTALL"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Результатом являются файлы .pptx, .pdf, .html, PNG-превью, JSON-аудит и manifest с провенансом для каждого варианта.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/INSTALL"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Поддерживаются форматы шаблонов .pptx, .potx, .ppsx и .pptm, включая шаблоны без слайдов-примеров.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/INSTALL"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Docker-образ весит около 1,6 ГБ и собирается за 5–10 минут, включая Python 3.12 и LibreOffice.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/INSTALL"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Проект использует открытые модели Qwen3.8-27B и FLUX.2 [klein] 4B с лицензиями Apache 2.0, соответствующие требованиям ТЗ.",
+   "kind": "decision",
+   "sources": [
+    "doc:docs/MODELS"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Qwen3.8-27B выбрана как единая мультимодальная модель для текста и зрения, так как она нативно поддерживает обе модальности.",
+   "kind": "decision",
+   "sources": [
+    "doc:docs/MODELS"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "FLUX.2 [klein] 4B выбрана для генерации изображений, так как версия 9B имеет некоммерческую лицензию, а 4B укладывается в лимит 20B.",
+   "kind": "decision",
+   "sources": [
+    "doc:docs/MODELS"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Смена провайдера или переход на инференс VK выполняется через изменение файла .env без правки кода.",
+   "kind": "architecture",
+   "sources": [
+    "doc:docs/MODELS"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Три варианта колоды собираются параллельно и укладываются в общий дедлайн 300 секунд при любой латентности инференса.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/MODELS"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Стоимость генерации одной картинки 1024×576 через OpenRouter составляет примерно 0.014 доллара.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/MODELS"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Для локального запуска Qwen3.8-27B в 4-bit требуется видеопамять не менее 24 ГБ, а для FLUX.2 [klein] 4B — не менее 13 ГБ.",
+   "kind": "limitation",
+   "sources": [
+    "doc:docs/MODELS"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Сервис полностью функционален без T2I-провайдера: слайды собираются с иконками и нативной графикой, но без иллюстраций.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/MODELS"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Иконки берутся исключительно из исходного шаблона, собственная библиотека иконок отсутствует.",
+   "kind": "limitation",
+   "sources": [
+    "doc:docs/MODELS"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Промпты и параметры моделей хранятся в файлах skill.yaml, а не в коде, и версионируются в манифесте колоды.",
+   "kind": "architecture",
+   "sources": [
+    "doc:docs/MODELS"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Клиент отключает режим «размышлений» Qwen по умолчанию, чтобы не тратить max_tokens и не замедлять ответы втрое.",
+   "kind": "decision",
+   "sources": [
+    "doc:docs/MODELS"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Скилл slide_filler существует, но в основной пайплайн не подключен.",
+   "kind": "limitation",
+   "sources": [
+    "doc:docs/MODELS"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Проект «Цифровой дизайнер презентаций» разработан для хакатона ЛЦТ 2026 по кейсу VK Tech.",
+   "kind": "overview",
+   "sources": [
+    "doc:docs/PLAN"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Стек проекта включает Python (FastAPI) и Streamlit, инференс использует внешние API открытых моделей ≤35B.",
+   "kind": "architecture",
+   "sources": [
+    "doc:docs/PLAN"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Срок разработки составляет 2 недели, итоговый релиз отмечен тегом v0.1.4 с лицензией MIT.",
+   "kind": "milestone",
+   "sources": [
+    "doc:docs/PLAN"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Сдача включает 9 презентаций (1 контент × 3 шаблона × 3 варианта вёрстки) и holdout на 12 колод.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/PLAN"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Сборка трёх вариантов колод занимает 200 секунд при лимите 300 секунд, что зафиксировано в манифесте.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/PLAN"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Экспорт в .pptx проверен в PowerPoint через COM: объекты нативные, пустых плейсхолдеров нет.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/PLAN"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Тесты pytest включают 393 успешных проверки, включая парсинг 4 шаблонов и e2e с мок-LLM.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/PLAN"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Пик потребления памяти демо-стенда составляет 1,3 ГБ в условиях эмуляции Cloud.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/PLAN"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Прогон без ключа API занимает 25 секунд, с ключом — 118 секунд из бюджета 300 секунд.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/PLAN"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "В режиме «только шаблон» бриф выводится из исходного .pptx, что позволяет генерировать контент без внешних данных.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/PLAN"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Аудит слайдов включает детерминированные проверки и VLM-судью, который оценивает 11 вопросов.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/PLAN"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Репозиторий был открыт 24.09, но снова закрыт 25.09 до финальной сдачи материалов.",
+   "kind": "milestone",
+   "sources": [
+    "doc:docs/PLAN"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Проект генерирует три варианта презентации по одному шаблону и задаче, демонстрируя различия в подаче для разных аудиторий.",
+   "kind": "overview",
+   "sources": [
+    "doc:docs/PLAN"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Ключевое ограничение времени: генерация всех трёх вариантов колод должна уложиться в 5 минут суммарно.",
+   "kind": "limitation",
+   "sources": [
+    "doc:docs/PLAN"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Для соблюдения временного бюджета три варианта колод собираются параллельно, а не последовательно.",
+   "kind": "decision",
+   "sources": [
+    "doc:docs/PLAN"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Целевой объём презентации составляет 10–15 слайдов, либо пользователь может задать свой объём.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/PLAN"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Текст слайдов генерируется на основе задачи, контекста из репозитория, брифа и указания типа аудитории.",
+   "kind": "architecture",
+   "sources": [
+    "doc:docs/PLAN"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "На финальной защите презентации генерируются по шаблону, который команды не видели ранее, для проверки обобщающей способности.",
+   "kind": "milestone",
+   "sources": [
+    "doc:docs/PLAN"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Система автоматически генерирует текст выступления (speaker notes) к каждому слайду под заданную длительность, по умолчанию 7 минут.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/PLAN"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Контекст из репозитория обрабатывается так: 64 источника превращаются в 271 факт, из которых 72 попадают в лимит промпта за 92 секунды.",
+   "kind": "metric",
+   "sources": [
+    "doc:docs/PLAN"
+   ],
+   "weight": 3
+  },
+  {
+   "text": "Для генерации изображений используется собственная модель text-to-image класса до 20B параметров с лицензией Apache 2.0 или MIT.",
+   "kind": "decision",
+   "sources": [
+    "doc:docs/PLAN"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "В презентациях реализован настоящий SmartArt «Простой процесс», который PowerPoint распознаёт как редактируемый элемент.",
+   "kind": "feature",
+   "sources": [
+    "doc:docs/PLAN"
+   ],
+   "weight": 2
+  },
+  {
+   "text": "Инструкция по разворачиванию проекта проверена на чистой Ubuntu 24.04, так как эксперты запускают код на Linux.",
+   "kind": "limitation",
+   "sources": [
+    "doc:docs/PLAN"
+   ],
+   "weight": 1
+  },
+  {
+   "text": "Анимации и переходы из исходного шаблона не переносятся в результат, копируются только структура слайда и цветовые схемы.",
+   "kind": "limitation",
+   "sources": [
+    "doc:docs/PLAN"
+   ],
+   "weight": 1
+  }
+ ],
+ "pack": {
+  "root": "context:",
+  "fragments": [
+   {
+    "id": "fact:1",
+    "kind": "text",
+    "title": "overview",
+    "text": "DECKFORGE — цифровой дизайнер презентаций, который читает .pptx-шаблон как дизайн-систему и собирает новую презентацию из нативных объектов PowerPoint. (источник: README.md)",
+    "data": null,
+    "source": "README.md"
+   },
+   {
+    "id": "fact:2",
+    "kind": "text",
+    "title": "feature",
+    "text": "Проект генерирует три варианта вёрстки (executive, narrative, visual) на одном контенте, различающиеся плотностью и способом показа данных. (источник: README.md)",
+    "data": null,
+    "source": "README.md"
+   },
+   {
+    "id": "fact:3",
+    "kind": "text",
+    "title": "architecture",
+    "text": "Слайды собираются клонированием образцов шаблона с использованием нативных объектов PowerPoint: текст, фигуры, chart, table, picture и SmartArt. (источник: README.md)",
+    "data": null,
+    "source": "README.md"
+   },
+   {
+    "id": "fact:4",
+    "kind": "text",
+    "title": "decision",
+    "text": "Система извлекает дизайн-токены (палитру, типографику, сетку) из фактического использования на слайдах, а не из файла theme.xml. (источник: README.md)",
+    "data": null,
+    "source": "README.md"
+   },
+   {
+    "id": "fact:5",
+    "kind": "text",
+    "title": "feature",
+    "text": "Аудит является частью пайплайна и включает 26 детерминированных проверок по XML и VLM-судью, оценивающего 11 вопросов по PNG слайда. (источник: README.md)",
+    "data": null,
+    "source": "README.md"
+   },
+   {
+    "id": "fact:6",
+    "kind": "text",
+    "title": "metric",
+    "text": "Три варианта колоды собираются параллельно и должны быть готовы не более чем за 5 минут суммарно. (источник: README.md)",
+    "data": null,
+    "source": "README.md"
+   },
+   {
+    "id": "fact:7",
+    "kind": "text",
+    "title": "feature",
+    "text": "Для каждого слайда генерируется текст выступления под заданную длительность (по умолчанию 7 минут), который проверяется на укладывание во время. (источник: README.md)",
+    "data": null,
+    "source": "README.md"
+   },
+   {
+    "id": "fact:8",
+    "kind": "text",
+    "title": "feature",
+    "text": "Результат экспортируется в форматы .pptx, .pdf и .html, при этом в HTML-версии текст остается текстом, а диаграммы — SVG. (источник: README.md)",
+    "data": null,
+    "source": "README.md"
+   },
+   {
+    "id": "fact:9",
+    "kind": "text",
+    "title": "decision",
+    "text": "Промпты и скиллы версионируются в отдельных файлах (skills/<name>/v<N>/), а manifest.json хранит версии скиллов, моделей и стратегий. (источник: README.md)",
+    "data": null,
+    "source": "README.md"
+   },
+   {
+    "id": "fact:10",
+    "kind": "text",
+    "title": "overview",
+    "text": "Проект DeckForge генерирует презентации из исходного кода репозитория, используя LLM-модели и шаблоны. (источник: README.md)",
+    "data": null,
+    "source": "README.md"
+   },
+   {
+    "id": "fact:11",
+    "kind": "text",
+    "title": "feature",
+    "text": "Система поддерживает три стратегии подачи: executive (для руководителей), narrative (для докладов) и visual (для конференций). (источник: README.md)",
+    "data": null,
+    "source": "README.md"
+   },
+   {
+    "id": "fact:12",
+    "kind": "text",
+    "title": "metric",
+    "text": "Три варианта колоды собираются параллельно за 200 секунд при общем временном бюджете 300 секунд. (источник: README.md)",
+    "data": null,
+    "source": "README.md"
+   },
+   {
+    "id": "fact:13",
+    "kind": "text",
+    "title": "metric",
+    "text": "При использовании готового outline время генерации сокращается до 91 секунды против 213 секунд при последовательной сборке. (источник: README.md)",
+    "data": null,
+    "source": "README.md"
+   },
+   {
+    "id": "fact:14",
+    "kind": "text",
+    "title": "architecture",
+    "text": "Для генерации текста и визуального анализа используется модель Qwen3.8-27B, для создания иллюстраций — FLUX.2 klein 4B. (источник: README.md)",
+    "data": null,
+    "source": "README.md"
+   },
+   {
+    "id": "fact:15",
+    "kind": "text",
+    "title": "feature",
+    "text": "Проект предоставляет HTTP API с документацией Swagger и веб-интерфейс на базе Streamlit. (источник: README.md)",
+    "data": null,
+    "source": "README.md"
+   },
+   {
+    "id": "fact:16",
+    "kind": "text",
+    "title": "feature",
+    "text": "Каждая сгенерированная колода сопровождается файлом manifest.json, содержащим провенанс: модели, версии скиллов и журнал вызовов. (источник: README.md)",
+    "data": null,
+    "source": "README.md"
+   },
+   {
+    "id": "fact:17",
+    "kind": "text",
+    "title": "decision",
+    "text": "В режиме экономии времени при приближении к дедлайну система пропускает генерацию иллюстраций и работу VLM-судьи. (источник: README.md)",
+    "data": null,
+    "source": "README.md"
+   },
+   {
+    "id": "fact:18",
+    "kind": "text",
+    "title": "overview",
+    "text": "DeckForge генерирует презентации из шаблонов и контента, предоставляя интерфейс из пяти шагов: от выбора шаблона до скачивания результата. (источник: README.md)",
+    "data": null,
+    "source": "README.md"
+   },
+   {
+    "id": "fact:19",
+    "kind": "text",
+    "title": "metric",
+    "text": "Три варианта колоды собираются параллельно за 62 секунды в режиме «Только шаблон». (источник: README.md)",
+    "data": null,
+    "source": "README.md"
+   },
+   {
+    "id": "fact:20",
+    "kind": "text",
+    "title": "architecture",
+    "text": "HTML-экспорт использует собственный рендер по XML, сохраняя текст, SVG-диаграммы и таблицы в векторном виде. (источник: README.md)",
+    "data": null,
+    "source": "README.md"
+   },
+   {
+    "id": "fact:21",
+    "kind": "text",
+    "title": "metric",
+    "text": "В проекте созданы 12 готовых колод на основе четырёх шаблонов, включая holdout-шаблон ЛЦТ 2026. (источник: README.md)",
+    "data": null,
+    "source": "README.md"
+   },
+   {
+    "id": "fact:22",
+    "kind": "text",
+    "title": "overview",
+    "text": "DeckForge — цифровой дизайнер презентаций, который парсит любой .pptx-шаблон в дизайн-систему и генерирует брендовые колоды по брифу. (источник: pyproject.toml)",
+    "data": null,
+    "source": "pyproject.toml"
+   },
+   {
+    "id": "fact:23",
+    "kind": "text",
+    "title": "milestone",
+    "text": "Текущая версия проекта — 0.1.4, код распространяется под лицензией MIT. (источник: pyproject.toml, README.md)",
+    "data": null,
+    "source": "pyproject.toml, README.md"
+   },
+   {
+    "id": "fact:24",
+    "kind": "text",
+    "title": "limitation",
+    "text": "Система поддерживает только схему SmartArt «Простой процесс» из 2–6 шагов; циклы, пирамиды и иерархии пока не реализованы. (источник: README.md)",
+    "data": null,
+    "source": "README.md"
+   },
+   {
+    "id": "fact:25",
+    "kind": "text",
+    "title": "architecture",
+    "text": "Шаблон без слайдов (.potx) размечается по лейаутам, что приводит к более простой колоде, чем при использовании шаблона со слайдами-примерами. (источник: README.md)",
+    "data": null,
+    "source": "README.md"
+   },
+   {
+    "id": "fact:26",
+    "kind": "text",
+    "title": "architecture",
+    "text": "Генерация выполняется in-process: новый прогон обрывает предыдущий, а параллельные задания запускаются через API (POST /generate). (источник: README.md)",
+    "data": null,
+    "source": "README.md"
+   },
+   {
+    "id": "fact:27",
+    "kind": "text",
+    "title": "feature",
+    "text": "Результат сохраняется в .pptx только с нативными объектами, что обеспечивает полную редактируемость в PowerPoint (Microsoft 365). (источник: README.md)",
+    "data": null,
+    "source": "README.md"
+   },
+   {
+    "id": "fact:28",
+    "kind": "text",
+    "title": "architecture",
+    "text": "Архитектура включает модули для аудита, контента, экспорта, лейаута, LLM, парсинга, пайплайна, рендера и UI. (источник: repo:tree)",
+    "data": null,
+    "source": "repo:tree"
+   },
+   {
+    "id": "fact:29",
+    "kind": "text",
+    "title": "milestone",
+    "text": "Разработка велась с 2026-09-15 по 2026-09-24, всего 75 коммитов без слияний. (источник: .git)",
+    "data": null,
+    "source": ".git"
+   },
+   {
+    "id": "fact:30",
+    "kind": "text",
+    "title": "milestone",
+    "text": "Выпущены версии v0.1.0 (2026-09-21), v0.1.1 (2026-09-23), v0.1.2 и v0.1.3 (2026-09-24). (источник: .git)",
+    "data": null,
+    "source": ".git"
+   },
+   {
+    "id": "fact:31",
+    "kind": "text",
+    "title": "architecture",
+    "text": "Интерфейс включает Streamlit UI на порту 8501 и FastAPI сервис на порту 8000. (источник: .git)",
+    "data": null,
+    "source": ".git"
+   },
+   {
+    "id": "fact:32",
+    "kind": "text",
+    "title": "feature",
+    "text": "Поддерживается экспорт презентаций в формат HTML с сохранением диаграмм, таблиц и шрифтов. (источник: .git)",
+    "data": null,
+    "source": ".git"
+   },
+   {
+    "id": "fact:33",
+    "kind": "text",
+    "title": "metric",
+    "text": "В репозитории хранятся 12 финальных колод, сгенерированных по 4 шаблонам и 3 стратегиям. (источник: .git)",
+    "data": null,
+    "source": ".git"
+   },
+   {
+    "id": "fact:34",
+    "kind": "text",
+    "title": "metric",
+    "text": "Аудит качества проверяет 980 колод, матрица из 306 пар не выявила проблем после доработок. (источник: .git)",
+    "data": null,
+    "source": ".git"
+   },
+   {
+    "id": "fact:35",
+    "kind": "text",
+    "title": "architecture",
+    "text": "Проект упакован в Docker с использованием Python 3.12 и LibreOffice Impress для рендеринга. (источник: .git)",
+    "data": null,
+    "source": ".git"
+   },
+   {
+    "id": "fact:36",
+    "kind": "text",
+    "title": "overview",
+    "text": "Проект deckforge собирает презентации, клонируя слайды-образцы из шаблона .pptx и заполняя их слоты контентом, подготовленным LLM. (источник: docs/ARCHITECTURE.md)",
+    "data": null,
+    "source": "docs/ARCHITECTURE.md"
+   },
+   {
+    "id": "fact:37",
+    "kind": "text",
+    "title": "architecture",
+    "text": "Шаблон .pptx интерпретируется как набор правил (Template DNA), включающий палитру, типографику, сетку и слайды-образцы с размеченными слотами. (источник: docs/ARCHITECTURE.md)",
+    "data": null,
+    "source": "docs/ARCHITECTURE.md"
+   },
+   {
+    "id": "fact:38",
+    "kind": "text",
+    "title": "feature",
+    "text": "Если входного контента нет, бриф для презентации выводится автоматически из самого шаблона. (источник: docs/ARCHITECTURE.md)",
+    "data": null,
+    "source": "docs/ARCHITECTURE.md"
+   },
+   {
+    "id": "fact:39",
+    "kind": "text",
+    "title": "feature",
+    "text": "Экспорт поддерживается в форматах нативных объектов .pptx, PDF через LibreOffice и HTML через собственный рендер. (источник: docs/ARCHITECTURE.md)",
+    "data": null,
+    "source": "docs/ARCHITECTURE.md"
+   },
+   {
+    "id": "fact:40",
+    "kind": "text",
+    "title": "milestone",
+    "text": "15 сентября 2026 года добавлены стратегии вёрстки, позволяющие генерировать 3 варианта на одном контенте. (источник: .git)",
+    "data": null,
+    "source": ".git"
+   },
+   {
+    "id": "fact:41",
+    "kind": "text",
+    "title": "milestone",
+    "text": "16 сентября 2026 года в пайплайн интегрирован VLM-судья (audit_judge) и механизм авто-фиксов. (источник: .git)",
+    "data": null,
+    "source": ".git"
+   },
+   {
+    "id": "fact:42",
+    "kind": "text",
+    "title": "architecture",
+    "text": "Проект имеет модульную архитектуру с слоями parsing, content, layout, render, audit, export, pipeline, api, ui и cli. (источник: docs/ARCHITECTURE.md)",
+    "data": null,
+    "source": "docs/ARCHITECTURE.md"
+   },
+   {
+    "id": "fact:43",
+    "kind": "text",
+    "title": "feature",
+    "text": "Система поддерживает пять режимов входа в зависимости от доступных данных: репозиторий, контент-пакет, тема, только шаблон или готовый outline. (источник: docs/ARCHITECTURE.md)",
+    "data": null,
+    "source": "docs/ARCHITECTURE.md"
+   },
+   {
+    "id": "fact:44",
+    "kind": "text",
+    "title": "decision",
+    "text": "Система запрещает модели выдумывать числа, даты и имена, отсутствующие в исходных материалах, чтобы избежать фальшивой фактуры в презентации. (источник: docs/ARCHITECTURE.md)",
+    "data": null,
+    "source": "docs/ARCHITECTURE.md"
+   },
+   {
+    "id": "fact:45",
+    "kind": "text",
+    "title": "metric",
+    "text": "Детерминированный аудит колоды выполняется менее чем за 1 секунду, контекстуальный VLM-аудит занимает 30–70 секунд для 15 слайдов. (источник: docs/ARCHITECTURE.md)",
+    "data": null,
+    "source": "docs/ARCHITECTURE.md"
+   },
+   {
+    "id": "fact:46",
+    "kind": "text",
+    "title": "limitation",
+    "text": "Генерация трех вариантов колоды должна укладываться в 5-минутный лимит времени, что диктует архитектуру параллельного аудита. (источник: docs/ARCHITECTURE.md)",
+    "data": null,
+    "source": "docs/ARCHITECTURE.md"
+   },
+   {
+    "id": "fact:47",
+    "kind": "text",
+    "title": "architecture",
+    "text": "Контент DeckOutline генерируется один раз на прогон одним вызовом LLM и не зависит от стратегии. (источник: docs/ARCHITECTURE.md)",
+    "data": null,
+    "source": "docs/ARCHITECTURE.md"
+   },
+   {
+    "id": "fact:48",
+    "kind": "text",
+    "title": "feature",
+    "text": "Схемы процессов (2–6 шагов) рендерятся как нативный SmartArt «Простой процесс» в PowerPoint, а в LibreOffice и HTML — как статичная отрисовка. (источник: docs/ARCHITECTURE.md)",
+    "data": null,
+    "source": "docs/ARCHITECTURE.md"
+   },
+   {
+    "id": "fact:49",
+    "kind": "text",
+    "title": "metric",
+    "text": "Стресс-тест на шаблоне с ограниченной вместимостью KPI показал, что компактные формы предотвращают рост колоды с 22 до 67 слайдов. (источник: docs/ARCHITECTURE.md)",
+    "data": null,
+    "source": "docs/ARCHITECTURE.md"
+   },
+   {
+    "id": "fact:50",
+    "kind": "text",
+    "title": "metric",
+    "text": "Проект генерирует три варианта презентаций (executive, narrative, visual) параллельно, укладываясь в бюджет 5 минут на прогон. (источник: docs/ARCHITECTURE.md)",
+    "data": null,
+    "source": "docs/ARCHITECTURE.md"
+   },
+   {
+    "id": "fact:51",
+    "kind": "text",
+    "title": "metric",
+    "text": "Время сборки колод варьируется от 131 до 162 секунд в зависимости от стратегии при лимите 300 секунд. (источник: docs/ARCHITECTURE.md)",
+    "data": null,
+    "source": "docs/ARCHITECTURE.md"
+   },
+   {
+    "id": "fact:52",
+    "kind": "text",
+    "title": "metric",
+    "text": "Ни одна из 12 сгенерированных колод не содержит детерминированных ошибок вёрстки. (источник: docs/ARCHITECTURE.md)",
+    "data": null,
+    "source": "docs/ARCHITECTURE.md"
+   },
+   {
+    "id": "fact:53",
+    "kind": "text",
+    "title": "metric",
+    "text": "На реальных колодах аудит нашёл ошибки вёрстки, низкий контраст 3,2:1 и пустые плейсхолдеры. (источник: docs/AUDIT.md)",
+    "data": null,
+    "source": "docs/AUDIT.md"
+   },
+   {
+    "id": "fact:54",
+    "kind": "text",
+    "title": "metric",
+    "text": "На реальной колоде VK Tech (15 слайдов) аудит занял 33 секунды и потребовал около 22k токенов. (источник: docs/AUDIT.md)",
+    "data": null,
+    "source": "docs/AUDIT.md"
+   },
+   {
+    "id": "fact:55",
+    "kind": "text",
+    "title": "metric",
+    "text": "Безопасные фиксы на колоде VK Tech полностью устраняют все ошибки уровня error, оставляя лишь предупреждения warning. (источник: docs/AUDIT.md)",
+    "data": null,
+    "source": "docs/AUDIT.md"
+   },
+   {
+    "id": "fact:56",
+    "kind": "text",
+    "title": "metric",
+    "text": "Измерение времени генерации трёх вариантов колоды для VK Tech составило 200 секунд при лимите 5 минут. (источник: docs/BACKLOG.md)",
+    "data": null,
+    "source": "docs/BACKLOG.md"
+   },
+   {
+    "id": "fact:57",
+    "kind": "text",
+    "title": "overview",
+    "text": "Проект генерирует презентацию по неизвестному шаблону .pptx, создавая три варианта вёрстки параллельно за один прогон. (источник: docs/DEMO.md)",
+    "data": null,
+    "source": "docs/DEMO.md"
+   },
+   {
+    "id": "fact:58",
+    "kind": "text",
+    "title": "architecture",
+    "text": "Пайплайн включает один вызов LLM для плана, параллельную сборку трех стратегий, детерминированный аудит и проверку VLM-судьёй. (источник: docs/DEMO.md)",
+    "data": null,
+    "source": "docs/DEMO.md"
+   },
+   {
+    "id": "fact:59",
+    "kind": "text",
+    "title": "decision",
+    "text": "Генерируемые слайды являются клонами XML образцов шаблона, что обеспечивает нативные объекты и редактируемость в PowerPoint. (источник: docs/DEMO.md)",
+    "data": null,
+    "source": "docs/DEMO.md"
+   },
+   {
+    "id": "fact:60",
+    "kind": "text",
+    "title": "feature",
+    "text": "Критерий демонстрации включает загрузку неизвестного шаблона и автоматический разбор его дизайн-системы. (источник: docs/DEMO.md)",
+    "data": null,
+    "source": "docs/DEMO.md"
+   },
+   {
+    "id": "fact:61",
+    "kind": "text",
+    "title": "feature",
+    "text": "Система генерирует три варианта слайдов на одном контенте, поддерживая разные режимы входа, включая работу без пакета. (источник: docs/DEMO.md)",
+    "data": null,
+    "source": "docs/DEMO.md"
+   },
+   {
+    "id": "fact:62",
+    "kind": "text",
+    "title": "feature",
+    "text": "Аудит включает детерминированные находки с подсветкой, контекстуальные проверки судьи, автофиксы и выбор пользователя. (источник: docs/DEMO.md)",
+    "data": null,
+    "source": "docs/DEMO.md"
+   },
+   {
+    "id": "fact:63",
+    "kind": "text",
+    "title": "overview",
+    "text": "Deckforge — инструмент для автоматической сборки презентаций, поддерживающий три варианта вёрстки на одном контенте. (источник: docs/INSTALL.md)",
+    "data": null,
+    "source": "docs/INSTALL.md"
+   },
+   {
+    "id": "fact:64",
+    "kind": "text",
+    "title": "metric",
+    "text": "На Ubuntu 24.04 с OpenRouter полный прогон занимает 118 секунд, включая 40 секунд на бриф и outline. (источник: docs/INSTALL.md)",
+    "data": null,
+    "source": "docs/INSTALL.md"
+   },
+   {
+    "id": "fact:65",
+    "kind": "text",
+    "title": "decision",
+    "text": "Проект использует открытые модели Qwen3.8-27B и FLUX.2 [klein] 4B с лицензиями Apache 2.0, соответствующие требованиям ТЗ. (источник: docs/MODELS.md)",
+    "data": null,
+    "source": "docs/MODELS.md"
+   },
+   {
+    "id": "fact:66",
+    "kind": "text",
+    "title": "overview",
+    "text": "Проект «Цифровой дизайнер презентаций» разработан для хакатона ЛЦТ 2026 по кейсу VK Tech. (источник: docs/PLAN.md)",
+    "data": null,
+    "source": "docs/PLAN.md"
+   },
+   {
+    "id": "fact:67",
+    "kind": "text",
+    "title": "metric",
+    "text": "Сдача включает 9 презентаций (1 контент × 3 шаблона × 3 варианта вёрстки) и holdout на 12 колод. (источник: docs/PLAN.md)",
+    "data": null,
+    "source": "docs/PLAN.md"
+   },
+   {
+    "id": "fact:68",
+    "kind": "text",
+    "title": "metric",
+    "text": "Сборка трёх вариантов колод занимает 200 секунд при лимите 300 секунд, что зафиксировано в манифесте. (источник: docs/PLAN.md)",
+    "data": null,
+    "source": "docs/PLAN.md"
+   },
+   {
+    "id": "fact:69",
+    "kind": "text",
+    "title": "overview",
+    "text": "Проект генерирует три варианта презентации по одному шаблону и задаче, демонстрируя различия в подаче для разных аудиторий. (источник: docs/PLAN.md)",
+    "data": null,
+    "source": "docs/PLAN.md"
+   },
+   {
+    "id": "fact:70",
+    "kind": "text",
+    "title": "limitation",
+    "text": "Ключевое ограничение времени: генерация всех трёх вариантов колод должна уложиться в 5 минут суммарно. (источник: docs/PLAN.md)",
+    "data": null,
+    "source": "docs/PLAN.md"
+   },
+   {
+    "id": "fact:71",
+    "kind": "text",
+    "title": "metric",
+    "text": "Контекст из репозитория обрабатывается так: 64 источника превращаются в 271 факт, из которых 72 попадают в лимит промпта за 92 секунды. (источник: docs/PLAN.md)",
+    "data": null,
+    "source": "docs/PLAN.md"
+   }
+  ],
+  "warnings": []
+ },
+ "calls": 24,
+ "errors": 0,
+ "seconds": 97.1,
+ "warnings": [
+  "docs/ARCHITECTURE.md: взяты первые 40000 из 42388 символов",
+  "не вошли в лимит 24×8000 символов: doc:docs/tz/4. VK Tech ТЗ, doc:CLAUDE, doc:examples/content_pack/brief, doc:examples/content_pack/product, doc:examples/output/lct2026_holdout/brief, doc:examples/output/lct2026_holdout/compare, doc:examples/output/lct2026_holdout/executive, doc:examples/output/lct2026_holdout/executive.speech и ещё 54",
+  "в лимит 12000 символов вошли 71 из 276 фактов (сначала самые важные)"
+ ]
+}

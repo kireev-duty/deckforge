@@ -20,7 +20,7 @@
       {
        "runs": [
         {
-         "text": "VK Tech: IT-решения для бизнеса",
+         "text": "VK Tech: корпоративные ИТ-решения",
          "bold": false,
          "italic": false,
          "color": null,
@@ -58,7 +58,7 @@
       {
        "runs": [
         {
-         "text": "Безопасность, инфраструктура и сервис для цифровой трансформации",
+         "text": "Архитектура, безопасность и внедрение",
          "bold": false,
          "italic": false,
          "color": null,
@@ -79,16 +79,61 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "type_scale": "4,6.9,9,10.1,12,16.2,24",
-      "size_pt": 8.8
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
      }
     }
    ],
-   "notes": "",
+   "notes": "Добрый день, уважаемые коллеги, рад приветствовать вас на презентации VK Tech. Сегодня мы подробно обсудим архитектуру, безопасность и процесс внедрения корпоративных решений. Вы узнаете, как эти инструменты помогут оптимизировать ваши текущие ИТ-процессы.",
    "outline_ref": 0
   },
   {
    "idx": 1,
+   "exemplar_id": "slide3",
+   "archetype": "section",
+   "elements": [
+    {
+     "slot_id": "417",
+     "kind": "title",
+     "box": {
+      "x": 210243,
+      "y": 878488,
+      "w": 4288279,
+      "h": 1496698
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Проблема",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    }
+   ],
+   "notes": "Перейдем к анализу текущих проблем, с которыми сталкиваются корпоративные ИТ-отделы. Эта часть покажет, почему стандартные подходы уже не работают.",
+   "outline_ref": 1
+  },
+  {
+   "idx": 2,
    "exemplar_id": "slide24",
    "archetype": "cards",
    "elements": [
@@ -105,7 +150,7 @@
       {
        "runs": [
         {
-         "text": "Цифровая трансформация требует надежной технологической основы",
+         "text": "Устаревание инфраструктуры усложняет управление ИТ",
          "bold": false,
          "italic": false,
          "color": null,
@@ -142,7 +187,7 @@
       {
        "runs": [
         {
-         "text": "Надежность — Стабильная работа систем критически важна для непрерывности бизнеса.",
+         "text": "Сложность — Растущая сложность управления корпоративными ИТ-системами",
          "bold": false,
          "italic": false,
          "color": null,
@@ -179,7 +224,7 @@
       {
        "runs": [
         {
-         "text": "Безопасность — Защита данных и инфраструктуры от внешних угроз.",
+         "text": "Устаревание — Устаревание инфраструктуры снижает эффективность",
          "bold": false,
          "italic": false,
          "color": null,
@@ -216,7 +261,7 @@
       {
        "runs": [
         {
-         "text": "Эффективность — Снижение операционных рисков и повышение продуктивности процессов.",
+         "text": "Фрагментация — Отсутствие единой цифровой среды для процессов",
          "bold": false,
          "italic": false,
          "color": null,
@@ -241,11 +286,112 @@
      }
     }
    ],
-   "notes": "",
-   "outline_ref": 1
+   "notes": "Растущая сложность управления системами требует новых подходов к контролю. Устаревание инфраструктуры напрямую снижает общую эффективность работы отдела. Фрагментация процессов мешает видеть полную картину происходящего. Отсутствие единой цифровой среды усугубляет эти проблемы. Поэтому компании теряют время на ручные операции. Это значит, что без изменений вы не сможете масштабироваться.",
+   "outline_ref": 2
   },
   {
-   "idx": 2,
+   "idx": 3,
+   "exemplar_id": "slide9",
+   "archetype": "image_text",
+   "elements": [
+    {
+     "slot_id": "503",
+     "kind": "title",
+     "box": {
+      "x": 430360,
+      "y": 338829,
+      "w": 3945697,
+      "h": 753371
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Единая среда обеспечивает прозрачность и управляемость",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24",
+      "size_pt": 19.2
+     }
+    },
+    {
+     "slot_id": "505",
+     "kind": "body",
+     "box": {
+      "x": 4637088,
+      "y": 676278,
+      "w": 3862387,
+      "h": 3737102
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Бизнес-процессы требуют единой цифровой среды. Это обеспечивает прозрачность и управляемость операций.",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "506",
+     "kind": "picture",
+     "box": {
+      "x": 354563,
+      "y": 2341984,
+      "w": 4142792,
+      "h": 2090058
+     },
+     "paragraphs": [],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\images\\549362648a4495ab.jpg",
+     "icon_name": null,
+     "style_overrides": {}
+    }
+   ],
+   "notes": "Бизнес-процессы критически нуждаются в единой цифровой среде. Только так обеспечивается полная прозрачность всех операций. Управляемость становится возможной при централизации данных. Это позволяет быстро принимать обоснованные решения. Например, вы сможете видеть статус задач в реальном времени. Следовательно, риски сбоев значительно уменьшаются.",
+   "outline_ref": 3
+  },
+  {
+   "idx": 4,
    "exemplar_id": "slide3",
    "archetype": "section",
    "elements": [
@@ -287,112 +433,11 @@
      }
     }
    ],
-   "notes": "",
-   "outline_ref": 2
+   "notes": "Теперь рассмотрим конкретное техническое решение от VK Tech. Мы покажем, как платформа решает описанные проблемы.",
+   "outline_ref": 4
   },
   {
-   "idx": 3,
-   "exemplar_id": "slide9",
-   "archetype": "image_text",
-   "elements": [
-    {
-     "slot_id": "503",
-     "kind": "title",
-     "box": {
-      "x": 430360,
-      "y": 338829,
-      "w": 3945697,
-      "h": 753371
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "VK Tech разрабатывает корпоративное ПО по строгим стандартам",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "diagram": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000",
-      "type_scale": "4,6.9,9,10.1,12,16.2,24",
-      "size_pt": 16.8
-     }
-    },
-    {
-     "slot_id": "505",
-     "kind": "body",
-     "box": {
-      "x": 4637088,
-      "y": 676278,
-      "w": 3862387,
-      "h": 3737102
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Мы создаем комплексные IT-решения, соответствующие международным стандартам безопасности. Архитектура обеспечивает защиту корпоративной инфраструктуры и соответствие регуляторным требованиям.",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "diagram": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000",
-      "type_scale": "4,6.9,9,10.1,12,16.2,24"
-     }
-    },
-    {
-     "slot_id": "506",
-     "kind": "picture",
-     "box": {
-      "x": 354563,
-      "y": 2341984,
-      "w": 4142792,
-      "h": 2090058
-     },
-     "paragraphs": [],
-     "chart": null,
-     "table": null,
-     "diagram": null,
-     "image_path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\images\\5f4d61e03fef3c9a.jpg",
-     "icon_name": null,
-     "style_overrides": {}
-    }
-   ],
-   "notes": "",
-   "outline_ref": 3
-  },
-  {
-   "idx": 4,
+   "idx": 5,
    "exemplar_id": "slide24",
    "archetype": "cards",
    "elements": [
@@ -409,7 +454,7 @@
       {
        "runs": [
         {
-         "text": "Архитектура решений обеспечивает масштабируемость и защиту",
+         "text": "VK Tech: комплексная платформа для ИТ-операций",
          "bold": false,
          "italic": false,
          "color": null,
@@ -446,7 +491,7 @@
       {
        "runs": [
         {
-         "text": "Масштабируемость — Гибкое расширение функциональности под рост бизнеса.",
+         "text": "Автоматизация — Автоматизация корпоративных ИТ-операций",
          "bold": false,
          "italic": false,
          "color": null,
@@ -483,7 +528,7 @@
       {
        "runs": [
         {
-         "text": "Защита — Многоуровневая безопасность данных и сетевой инфраструктуры.",
+         "text": "Масштабируемость — Гибкая архитектура под задачи любого уровня",
          "bold": false,
          "italic": false,
          "color": null,
@@ -520,7 +565,7 @@
       {
        "runs": [
         {
-         "text": "Интеграция — Соединение с существующими корпоративными системами.",
+         "text": "Интеграция — Поддержка интеграции с существующими системами",
          "bold": false,
          "italic": false,
          "color": null,
@@ -545,11 +590,11 @@
      }
     }
    ],
-   "notes": "",
-   "outline_ref": 4
+   "notes": "VK Tech предлагает комплексную платформу для ИТ-операций. Автоматизация рутинных задач освобождает ресурсы команды. Гибкая архитектура адаптируется под задачи любого уровня. Интеграция с существующими системами проходит безболезненно. Это значит, что вам не нужно менять всё. Вы сохраняете текущие инвестиции в инфраструктуру.",
+   "outline_ref": 5
   },
   {
-   "idx": 5,
+   "idx": 6,
    "exemplar_id": "slide9",
    "archetype": "image_text",
    "elements": [
@@ -566,7 +611,7 @@
       {
        "runs": [
         {
-         "text": "Интеграция сервисов автоматизирует ключевые бизнес-процессы",
+         "text": "Архитектура обеспечивает масштабируемость и гибкость",
          "bold": false,
          "italic": false,
          "color": null,
@@ -588,7 +633,7 @@
       "font": "Play",
       "text_color": "000000",
       "type_scale": "4,6.9,9,10.1,12,16.2,24",
-      "size_pt": 16.8
+      "size_pt": 19.2
      }
     },
     {
@@ -604,7 +649,7 @@
       {
        "runs": [
         {
-         "text": "Наши решения позволяют автоматизировать рутинные операции, снижая нагрузку на сотрудников и минимизируя риск человеческих ошибок в критических процессах.",
+         "text": "Архитектура решения обеспечивает масштабируемость. Она гибко адаптируется под задачи любого уровня.",
          "bold": false,
          "italic": false,
          "color": null,
@@ -641,16 +686,16 @@
      "chart": null,
      "table": null,
      "diagram": null,
-     "image_path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\images\\c43832cb45b12f07.jpg",
+     "image_path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\images\\c0a5a7167932d6e0.jpg",
      "icon_name": null,
      "style_overrides": {}
     }
    ],
-   "notes": "",
-   "outline_ref": 5
+   "notes": "Архитектура решения обеспечивает высокую масштабируемость в будущем. Она гибко адаптируется под задачи любого уровня сложности. Модульная структура позволяет добавлять новые функции. Это важно для растущих компаний. Например, вы легко добавите новые сервисы. Поэтому платформа не станет узким местом.",
+   "outline_ref": 6
   },
   {
-   "idx": 6,
+   "idx": 7,
    "exemplar_id": "slide14",
    "archetype": "cards",
    "elements": [
@@ -667,7 +712,7 @@
       {
        "runs": [
         {
-         "text": "Решения адаптируются под требования отраслей и масштабов",
+         "text": "Безопасность соответствует современным стандартам защиты",
          "bold": false,
          "italic": false,
          "color": null,
@@ -704,7 +749,7 @@
       {
        "runs": [
         {
-         "text": "Гибкость",
+         "text": "Стандарты",
          "bold": false,
          "italic": false,
          "color": null,
@@ -741,7 +786,7 @@
       {
        "runs": [
         {
-         "text": "Настройка под специфические потребности различных отраслей.",
+         "text": "Соответствие современным стандартам защиты данных",
          "bold": false,
          "italic": false,
          "color": null,
@@ -778,7 +823,7 @@
       {
        "runs": [
         {
-         "text": "Масштаб",
+         "text": "Защищенность",
          "bold": false,
          "italic": false,
          "color": null,
@@ -815,7 +860,7 @@
       {
        "runs": [
         {
-         "text": "Поддержка как малого бизнеса, так и крупных корпораций.",
+         "text": "Высокий уровень защищенности инфраструктуры",
          "bold": false,
          "italic": false,
          "color": null,
@@ -852,7 +897,7 @@
       {
        "runs": [
         {
-         "text": "Кастомизация",
+         "text": "Ключевое отличие",
          "bold": false,
          "italic": false,
          "color": null,
@@ -889,7 +934,7 @@
       {
        "runs": [
         {
-         "text": "Учет уникальных бизнес-процессов клиента.",
+         "text": "Безопасность — ключевое отличие решения",
          "bold": false,
          "italic": false,
          "color": null,
@@ -914,74 +959,66 @@
      }
     }
    ],
-   "notes": "",
-   "outline_ref": 6
-  },
-  {
-   "idx": 7,
-   "exemplar_id": "slide3",
-   "archetype": "section",
-   "elements": [
-    {
-     "slot_id": "417",
-     "kind": "title",
-     "box": {
-      "x": 210243,
-      "y": 878488,
-      "w": 4288279,
-      "h": 1496698
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Процесс",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "diagram": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000",
-      "type_scale": "4,6.9,9,10.1,12,16.2,24"
-     }
-    }
-   ],
-   "notes": "",
+   "notes": "Безопасность соответствует современным стандартам защиты данных. Высокий уровень защищенности инфраструктуры является приоритетом. Это ключевое отличие нашего решения от конкурентов. Мы следим за актуальными угрозами. Это значит, что ваши данные в безопасности. Вы можете быть уверены в надежности системы.",
    "outline_ref": 7
   },
   {
    "idx": 8,
-   "exemplar_id": "slide17",
-   "archetype": "cards",
+   "exemplar_id": "slide9",
+   "archetype": "image_text",
    "elements": [
     {
-     "slot_id": "808",
+     "slot_id": "503",
      "kind": "title",
      "box": {
-      "x": 177970,
-      "y": 282949,
-      "w": 6792985,
-      "h": 724203
+      "x": 430360,
+      "y": 338829,
+      "w": 3945697,
+      "h": 753371
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "Внедрение проходит поэтапно: от аудита до поддержки",
+         "text": "Интеграция с существующими корпоративными системами",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24",
+      "size_pt": 21.6
+     }
+    },
+    {
+     "slot_id": "505",
+     "kind": "body",
+     "box": {
+      "x": 4637088,
+      "y": 676278,
+      "w": 3862387,
+      "h": 3737102
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Решение поддерживает интеграцию с существующими системами. Обеспечивает совместимость с корпоративными сервисами.",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1006,13 +1043,316 @@
      }
     },
     {
-     "slot_id": "780",
+     "slot_id": "506",
+     "kind": "picture",
+     "box": {
+      "x": 354563,
+      "y": 2341984,
+      "w": 4142792,
+      "h": 2090058
+     },
+     "paragraphs": [],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\images\\a549f5754d6e0e74.jpg",
+     "icon_name": null,
+     "style_overrides": {}
+    }
+   ],
+   "notes": "Решение поддерживает интеграцию с существующими системами. Обеспечивается полная совместимость с корпоративными сервисами. API позволяет легко связывать компоненты. Это упрощает процесс внедрения. Например, вы подключите CRM без доработок. Следовательно, переход на новую платформу будет плавным.",
+   "outline_ref": 8
+  },
+  {
+   "idx": 9,
+   "exemplar_id": "slide24",
+   "archetype": "cards",
+   "elements": [
+    {
+     "slot_id": "1050",
+     "kind": "title",
+     "box": {
+      "x": 177970,
+      "y": 282949,
+      "w": 6792985,
+      "h": 724203
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Автоматизация снижает операционные затраты",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "1036",
+     "kind": "body",
+     "box": {
+      "x": 476248,
+      "y": 1628898,
+      "w": 2463787,
+      "h": 831742
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Автоматизация — Автоматизация рутинных ИТ-задач",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "1042",
+     "kind": "body",
+     "box": {
+      "x": 3365479,
+      "y": 1628898,
+      "w": 2463787,
+      "h": 831742
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Экономия — Снижение операционных затрат",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "1047",
+     "kind": "body",
+     "box": {
+      "x": 6254721,
+      "y": 1628898,
+      "w": 2463787,
+      "h": 831742
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Скорость — Сокращение времени вывода сервисов на рынок",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    }
+   ],
+   "notes": "Автоматизация рутинных ИТ-задач экономит время сотрудников. Это приводит к снижению операционных затрат. Скорость вывода сервисов на рынок увеличивается. Это значит, что вы быстрее реагируете на рынок. Например, деплой происходит в автоматическом режиме. Поэтому конкуренция становится для вас преимуществом.",
+   "outline_ref": 9
+  },
+  {
+   "idx": 10,
+   "exemplar_id": "slide3",
+   "archetype": "section",
+   "elements": [
+    {
+     "slot_id": "417",
+     "kind": "title",
+     "box": {
+      "x": 210243,
+      "y": 878488,
+      "w": 4288279,
+      "h": 1496698
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Внедрение",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    }
+   ],
+   "notes": "Рассмотрим этапы внедрения платформы в вашу компанию. Процесс структурирован и прозрачен для всех участников.",
+   "outline_ref": 10
+  },
+  {
+   "idx": 11,
+   "exemplar_id": "slide19",
+   "archetype": "cards",
+   "elements": [
+    {
+     "slot_id": "872",
+     "kind": "title",
+     "box": {
+      "x": 177971,
+      "y": 282949,
+      "w": 5025400,
+      "h": 753371
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Внедрение: от аудита до масштабирования",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "857",
      "kind": "label",
      "box": {
       "x": 438148,
       "y": 1590803,
-      "w": 2539987,
+      "w": 3022584,
       "h": 165079
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "01",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "858",
+     "kind": "body",
+     "box": {
+      "x": 438148,
+      "y": 1819373,
+      "w": 3009884,
+      "h": 854757
      },
      "paragraphs": [
       {
@@ -1043,56 +1383,19 @@
      }
     },
     {
-     "slot_id": "781",
-     "kind": "body",
-     "box": {
-      "x": 438148,
-      "y": 1819373,
-      "w": 2527287,
-      "h": 854757
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Анализ текущих процессов и инфраструктуры.",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "diagram": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000",
-      "type_scale": "4,6.9,9,10.1,12,16.2,24"
-     }
-    },
-    {
-     "slot_id": "785",
+     "slot_id": "861",
      "kind": "label",
      "box": {
-      "x": 3327380,
+      "x": 3809980,
       "y": 1590803,
-      "w": 2539986,
+      "w": 3022584,
       "h": 165079
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "Проектирование",
+         "text": "02",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1117,19 +1420,19 @@
      }
     },
     {
-     "slot_id": "786",
+     "slot_id": "862",
      "kind": "body",
      "box": {
-      "x": 3327380,
+      "x": 3809981,
       "y": 1819373,
-      "w": 2527287,
+      "w": 3009884,
       "h": 854757
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "Разработка архитектуры и плана внедрения.",
+         "text": "Настройка",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1154,93 +1457,19 @@
      }
     },
     {
-     "slot_id": "790",
-     "kind": "label",
-     "box": {
-      "x": 6216621,
-      "y": 1590803,
-      "w": 2539986,
-      "h": 165079
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Внедрение",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "diagram": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000",
-      "type_scale": "4,6.9,9,10.1,12,16.2,24"
-     }
-    },
-    {
-     "slot_id": "791",
-     "kind": "body",
-     "box": {
-      "x": 6216621,
-      "y": 1819373,
-      "w": 2527287,
-      "h": 854757
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Установка, настройка и интеграция решений.",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "diagram": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000",
-      "type_scale": "4,6.9,9,10.1,12,16.2,24"
-     }
-    },
-    {
-     "slot_id": "796",
+     "slot_id": "866",
      "kind": "label",
      "box": {
       "x": 438148,
       "y": 3264604,
-      "w": 2539987,
+      "w": 3022584,
       "h": 165079
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "Запуск",
+         "text": "03",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1265,19 +1494,19 @@
      }
     },
     {
-     "slot_id": "797",
+     "slot_id": "867",
      "kind": "body",
      "box": {
       "x": 438148,
       "y": 3493174,
-      "w": 2527287,
+      "w": 3009884,
       "h": 854757
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "Переход на новые процессы и обучение.",
+         "text": "Пилотный запуск",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1302,19 +1531,19 @@
      }
     },
     {
-     "slot_id": "801",
+     "slot_id": "870",
      "kind": "label",
      "box": {
-      "x": 3327380,
+      "x": 3809980,
       "y": 3264604,
-      "w": 2539986,
+      "w": 3022584,
       "h": 165079
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "Поддержка",
+         "text": "04",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1339,19 +1568,19 @@
      }
     },
     {
-     "slot_id": "802",
+     "slot_id": "871",
      "kind": "body",
      "box": {
-      "x": 3327380,
+      "x": 3809981,
       "y": 3493174,
-      "w": 2527287,
+      "w": 3009884,
       "h": 854757
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "Сервисное обслуживание и развитие.",
+         "text": "Масштабирование",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1376,214 +1605,11 @@
      }
     }
    ],
-   "notes": "",
-   "outline_ref": 8
+   "notes": "Внедрение начинается с детального аудита инфраструктуры. Затем идет настройка под ваши задачи. Пилотный запуск позволяет проверить систему в деле. Масштабирование охватывает все подразделения компании. Это значит, что риски минимальны. Вы контролируете каждый этап процесса.",
+   "outline_ref": 11
   },
   {
-   "idx": 9,
-   "exemplar_id": "slide24",
-   "archetype": "cards",
-   "elements": [
-    {
-     "slot_id": "1050",
-     "kind": "title",
-     "box": {
-      "x": 177970,
-      "y": 282949,
-      "w": 6792985,
-      "h": 724203
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Защищенность данных соответствует международным стандартам",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "diagram": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000",
-      "type_scale": "4,6.9,9,10.1,12,16.2,24"
-     }
-    },
-    {
-     "slot_id": "1036",
-     "kind": "body",
-     "box": {
-      "x": 476248,
-      "y": 1628898,
-      "w": 2463787,
-      "h": 831742
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Стандарты — Соответствие глобальным требованиям к безопасности данных.",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "diagram": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000",
-      "type_scale": "4,6.9,9,10.1,12,16.2,24"
-     }
-    },
-    {
-     "slot_id": "1042",
-     "kind": "body",
-     "box": {
-      "x": 3365479,
-      "y": 1628898,
-      "w": 2463787,
-      "h": 831742
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Шифрование — Защита информации при передаче и хранении.",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "diagram": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000",
-      "type_scale": "4,6.9,9,10.1,12,16.2,24"
-     }
-    },
-    {
-     "slot_id": "1047",
-     "kind": "body",
-     "box": {
-      "x": 6254721,
-      "y": 1628898,
-      "w": 2463787,
-      "h": 831742
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Контроль — Мониторинг доступа и действий пользователей.",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "diagram": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000",
-      "type_scale": "4,6.9,9,10.1,12,16.2,24"
-     }
-    }
-   ],
-   "notes": "",
-   "outline_ref": 9
-  },
-  {
-   "idx": 10,
-   "exemplar_id": "slide3",
-   "archetype": "section",
-   "elements": [
-    {
-     "slot_id": "417",
-     "kind": "title",
-     "box": {
-      "x": 210243,
-      "y": 878488,
-      "w": 4288279,
-      "h": 1496698
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Сервис",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "diagram": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000",
-      "type_scale": "4,6.9,9,10.1,12,16.2,24"
-     }
-    }
-   ],
-   "notes": "",
-   "outline_ref": 10
-  },
-  {
-   "idx": 11,
+   "idx": 12,
    "exemplar_id": "slide14",
    "archetype": "cards",
    "elements": [
@@ -1600,7 +1626,7 @@
       {
        "runs": [
         {
-         "text": "Гибкая модель обслуживания включает полный цикл поддержки",
+         "text": "Поддержка гарантирует стабильность платформы",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1637,7 +1663,7 @@
       {
        "runs": [
         {
-         "text": "Тестирование",
+         "text": "Сопровождение",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1674,7 +1700,7 @@
       {
        "runs": [
         {
-         "text": "Проверка стабильности и функциональности систем.",
+         "text": "Сервисное сопровождение платформы",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1711,7 +1737,7 @@
       {
        "runs": [
         {
-         "text": "Логистика",
+         "text": "Стабильность",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1748,7 +1774,7 @@
       {
        "runs": [
         {
-         "text": "Организация поставок и развертывания оборудования.",
+         "text": "Гарантия стабильности работы",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1785,7 +1811,7 @@
       {
        "runs": [
         {
-         "text": "Сервис",
+         "text": "Целевая аудитория",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1822,7 +1848,7 @@
       {
        "runs": [
         {
-         "text": "Оперативная техническая поддержка и консультации.",
+         "text": "Для средних и крупных компаний",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1847,116 +1873,16 @@
      }
     }
    ],
-   "notes": "",
-   "outline_ref": 11
-  },
-  {
-   "idx": 12,
-   "exemplar_id": "slide9",
-   "archetype": "image_text",
-   "elements": [
-    {
-     "slot_id": "503",
-     "kind": "title",
-     "box": {
-      "x": 430360,
-      "y": 338829,
-      "w": 3945697,
-      "h": 753371
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Комплексные решения снижают операционные риски",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "diagram": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000",
-      "type_scale": "4,6.9,9,10.1,12,16.2,24"
-     }
-    },
-    {
-     "slot_id": "505",
-     "kind": "body",
-     "box": {
-      "x": 4637088,
-      "y": 676278,
-      "w": 3862387,
-      "h": 3737102
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Использование единой экосистемы VK Tech минимизирует уязвимости",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "diagram": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000",
-      "type_scale": "4,6.9,9,10.1,12,16.2,24"
-     }
-    },
-    {
-     "slot_id": "506",
-     "kind": "picture",
-     "box": {
-      "x": 354563,
-      "y": 2341984,
-      "w": 4142792,
-      "h": 2090058
-     },
-     "paragraphs": [],
-     "chart": null,
-     "table": null,
-     "diagram": null,
-     "image_path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\images\\c8e8312a1b8447b2.jpg",
-     "icon_name": null,
-     "style_overrides": {}
-    }
-   ],
-   "notes": "",
+   "notes": "Сервисное сопровождение гарантирует стабильность работы платформы. Мы поддерживаем систему в рабочем состоянии. Это важно для средних и крупных компаний. Вы получаете помощь экспертов 24/7. Например, мы быстро решаем инциденты. Поэтому ваш бизнес не останавливается.",
    "outline_ref": 12
   },
   {
    "idx": 13,
-   "exemplar_id": "slide24",
-   "archetype": "cards",
+   "exemplar_id": "slide43",
+   "archetype": "image_text",
    "elements": [
     {
-     "slot_id": "1050",
+     "slot_id": "2263",
      "kind": "title",
      "box": {
       "x": 177970,
@@ -1968,7 +1894,7 @@
       {
        "runs": [
         {
-         "text": "Следующий шаг — обсуждение деталей и приоритетов",
+         "text": "Демонстрация платформы на вашей инфраструктуре",
          "bold": false,
          "italic": false,
          "color": null,
@@ -1993,19 +1919,19 @@
      }
     },
     {
-     "slot_id": "1036",
+     "slot_id": "2264",
      "kind": "body",
      "box": {
-      "x": 476248,
-      "y": 1628898,
-      "w": 2463787,
-      "h": 831742
+      "x": 181435,
+      "y": 1091781,
+      "w": 4107105,
+      "h": 327437
      },
      "paragraphs": [
       {
        "runs": [
         {
-         "text": "Консультация — Обсуждение текущих задач и целей проекта.",
+         "text": "Следующий шаг — демонстрация платформы. Покажем работу решения на вашей…",
          "bold": false,
          "italic": false,
          "color": null,
@@ -2026,85 +1952,29 @@
       "palette": "0077FF",
       "font": "Play",
       "text_color": "000000",
-      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+      "type_scale": "4,6.9,9,10.1,12,16.2,24",
+      "size_pt": 11.2
      }
     },
     {
-     "slot_id": "1042",
-     "kind": "body",
+     "slot_id": "2262",
+     "kind": "picture",
      "box": {
-      "x": 3365479,
-      "y": 1628898,
-      "w": 2463787,
-      "h": 831742
+      "x": 3195621,
+      "y": 1157472,
+      "w": 5634008,
+      "h": 3642838
      },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "План — Определение приоритетных направлений развития.",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
+     "paragraphs": [],
      "chart": null,
      "table": null,
      "diagram": null,
-     "image_path": null,
+     "image_path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\vk_tech\\images\\a1e5c84f0f0b96ee.jpg",
      "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000",
-      "type_scale": "4,6.9,9,10.1,12,16.2,24"
-     }
-    },
-    {
-     "slot_id": "1047",
-     "kind": "body",
-     "box": {
-      "x": 6254721,
-      "y": 1628898,
-      "w": 2463787,
-      "h": 831742
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Старт — Запуск пилотного этапа или полного внедрения.",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "diagram": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000",
-      "type_scale": "4,6.9,9,10.1,12,16.2,24"
-     }
+     "style_overrides": {}
     }
    ],
-   "notes": "",
+   "notes": "Следующий шаг — демонстрация платформы на вашей инфраструктуре. Мы покажем работу решения вживую. Вы увидите, как оно встраивается в процессы. Это позволит оценить реальную пользу. Например, мы смоделируем ваш сценарий. Следовательно, вы примете взвешенное решение.",
    "outline_ref": 13
   },
   {
@@ -2148,50 +2018,13 @@
       "text_color": "000000",
       "type_scale": "4,6.9,9,10.1,12,16.2,24"
      }
-    },
-    {
-     "slot_id": "448",
-     "kind": "body",
-     "box": {
-      "x": 572960,
-      "y": 2919770,
-      "w": 4107105,
-      "h": 502938
-     },
-     "paragraphs": [
-      {
-       "runs": [
-        {
-         "text": "Готовы обсудить детали вашего проекта. Свяжитесь с нами для начала сотрудничества.",
-         "bold": false,
-         "italic": false,
-         "color": null,
-         "size_pt": null
-        }
-       ],
-       "level": 0,
-       "bullet": false
-      }
-     ],
-     "chart": null,
-     "table": null,
-     "diagram": null,
-     "image_path": null,
-     "icon_name": null,
-     "style_overrides": {
-      "accent": "0077FF",
-      "palette": "0077FF",
-      "font": "Play",
-      "text_color": "000000",
-      "type_scale": "4,6.9,9,10.1,12,16.2,24",
-      "size_pt": 15.0
-     }
     }
    ],
-   "notes": "",
+   "notes": "Спасибо за внимание, надеюсь, презентация была полезной. VK Tech готова помочь вам в цифровизации. Свяжитесь с нами для начала сотрудничества. Мы ждем ваших вопросов и предложений.",
    "outline_ref": 14
   }
  ],
  "slide_w": 9144000,
- "slide_h": 5143500
+ "slide_h": 5143500,
+ "talk_minutes": 7.0
 }

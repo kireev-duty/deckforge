@@ -1,0 +1,365 @@
+{
+ "title": "DECKFORGE",
+ "purpose": "project",
+ "audience": "жюри хакатона и эксперты VK Tech",
+ "language": "ru",
+ "slides": [
+  {
+   "idx": 0,
+   "archetype": "title",
+   "title": "DECKFORGE",
+   "subtitle": "Цифровой дизайнер презентаций для VK Tech",
+   "section": null,
+   "bullets": [],
+   "paragraphs": [],
+   "kpis": [],
+   "chart": null,
+   "table": null,
+   "image": null,
+   "steps": [],
+   "diagram": null,
+   "quote": null,
+   "quote_author": null,
+   "speaker_notes": "",
+   "sources": [
+    "fact:1",
+    "fact:66"
+   ]
+  },
+  {
+   "idx": 1,
+   "archetype": "cards",
+   "title": "Проблема: ручной дизайн не масштабируется",
+   "subtitle": null,
+   "section": "Проблема",
+   "bullets": [
+    "Время — Создание брендированной колоды занимает часы ручной работы.",
+    "Консистентность — Сложно выдержать дизайн-систему при частых изменениях контента.",
+    "Вариативность — Нет возможности быстро адаптировать подачу под разные аудитории."
+   ],
+   "paragraphs": [],
+   "kpis": [],
+   "chart": null,
+   "table": null,
+   "image": null,
+   "steps": [],
+   "diagram": null,
+   "quote": null,
+   "quote_author": null,
+   "speaker_notes": "",
+   "sources": [
+    "brief"
+   ]
+  },
+  {
+   "idx": 2,
+   "archetype": "image_text",
+   "title": "Решение: генерация из .pptx-шаблона",
+   "subtitle": null,
+   "section": "Решение",
+   "bullets": [],
+   "paragraphs": [
+    "DECKFORGE читает .pptx-шаблон как дизайн-систему и собирает новую презентацию из нативных объектов PowerPoint."
+   ],
+   "kpis": [],
+   "chart": null,
+   "table": null,
+   "image": null,
+   "steps": [],
+   "diagram": null,
+   "quote": null,
+   "quote_author": null,
+   "speaker_notes": "",
+   "sources": [
+    "fact:1",
+    "fact:22"
+   ]
+  },
+  {
+   "idx": 3,
+   "archetype": "cards",
+   "title": "Три стратегии подачи на одном контенте",
+   "subtitle": null,
+   "section": "Решение",
+   "bullets": [
+    "Executive — Компактная подача для руководителей, фокус на ключевых метриках.",
+    "Narrative — Повествовательная структура для докладов и презентаций.",
+    "Visual — Визуально насыщенный вариант для конференций и выставок."
+   ],
+   "paragraphs": [],
+   "kpis": [],
+   "chart": null,
+   "table": null,
+   "image": null,
+   "steps": [],
+   "diagram": null,
+   "quote": null,
+   "quote_author": null,
+   "speaker_notes": "",
+   "sources": [
+    "fact:2",
+    "fact:11"
+   ]
+  },
+  {
+   "idx": 4,
+   "archetype": "process",
+   "title": "Пайплайн: от шаблона к готовой колоде",
+   "subtitle": null,
+   "section": "Архитектура",
+   "bullets": [],
+   "paragraphs": [],
+   "kpis": [],
+   "chart": null,
+   "table": null,
+   "image": null,
+   "steps": [
+    "Парсинг — Извлечение дизайн-токенов и слайдов-образцов из .pptx.",
+    "Контент — Генерация DeckOutline одним вызовом LLM.",
+    "Сборка — Параллельная генерация 3 вариантов вёрстки.",
+    "Аудит — Детерминированные проверки и оценка VLM-судьёй.",
+    "Экспорт — Формирование .pptx, .pdf и .html."
+   ],
+   "diagram": null,
+   "quote": null,
+   "quote_author": null,
+   "speaker_notes": "",
+   "sources": [
+    "fact:58",
+    "fact:47",
+    "fact:42"
+   ]
+  },
+  {
+   "idx": 5,
+   "archetype": "kpi",
+   "title": "Скорость: 3 варианта за 200 секунд",
+   "subtitle": null,
+   "section": "Архитектура",
+   "bullets": [],
+   "paragraphs": [],
+   "kpis": [
+    {
+     "value": "200 сек",
+     "label": "Время сборки 3 колод"
+    },
+    {
+     "value": "300 сек",
+     "label": "Временной лимит"
+    },
+    {
+     "value": "3",
+     "label": "Варианта вёрстки"
+    }
+   ],
+   "chart": null,
+   "table": null,
+   "image": null,
+   "steps": [],
+   "diagram": null,
+   "quote": null,
+   "quote_author": null,
+   "speaker_notes": "",
+   "sources": [
+    "fact:12",
+    "fact:56",
+    "fact:68"
+   ]
+  },
+  {
+   "idx": 6,
+   "archetype": "chart",
+   "title": "Оптимизация: готовый outline экономит время",
+   "subtitle": null,
+   "section": "Архитектура",
+   "bullets": [],
+   "paragraphs": [],
+   "kpis": [],
+   "chart": {
+    "kind": "bar",
+    "title": "Время генерации (сек)",
+    "categories": [
+     "Последовательная сборка",
+     "С готовым outline"
+    ],
+    "series": {
+     "Время": [
+      213.0,
+      91.0
+     ]
+    },
+    "unit": "сек",
+    "x_label": null,
+    "y_label": null
+   },
+   "table": null,
+   "image": null,
+   "steps": [],
+   "diagram": null,
+   "quote": null,
+   "quote_author": null,
+   "speaker_notes": "",
+   "sources": [
+    "fact:13"
+   ]
+  },
+  {
+   "idx": 7,
+   "archetype": "image_text",
+   "title": "Демо: загрузка неизвестного шаблона",
+   "subtitle": null,
+   "section": "Демо",
+   "bullets": [],
+   "paragraphs": [
+    "Система автоматически разбивает дизайн-систему нового .pptx-файла и генерирует три варианта слайдов."
+   ],
+   "kpis": [],
+   "chart": null,
+   "table": null,
+   "image": null,
+   "steps": [],
+   "diagram": null,
+   "quote": null,
+   "quote_author": null,
+   "speaker_notes": "",
+   "sources": [
+    "fact:57",
+    "fact:60"
+   ]
+  },
+  {
+   "idx": 8,
+   "archetype": "cards",
+   "title": "Аудит: 26 проверок и VLM-судья",
+   "subtitle": null,
+   "section": "Аудит",
+   "bullets": [
+    "XML-проверки — 26 детерминированных проверок структуры и вёрстки.",
+    "VLM-судья — Оценка 11 вопросов по PNG-скриншотам слайдов.",
+    "Автофиксы — Безопасные исправления ошибок уровня error."
+   ],
+   "paragraphs": [],
+   "kpis": [],
+   "chart": null,
+   "table": null,
+   "image": null,
+   "steps": [],
+   "diagram": null,
+   "quote": null,
+   "quote_author": null,
+   "speaker_notes": "",
+   "sources": [
+    "fact:5",
+    "fact:62",
+    "fact:55"
+   ]
+  },
+  {
+   "idx": 9,
+   "archetype": "kpi",
+   "title": "Качество: 0 ошибок в 12 колодах",
+   "subtitle": null,
+   "section": "Аудит",
+   "bullets": [],
+   "paragraphs": [],
+   "kpis": [
+    {
+     "value": "12",
+     "label": "Готовых колод"
+    },
+    {
+     "value": "0",
+     "label": "Детерминированных ошибок"
+    },
+    {
+     "value": "980",
+     "label": "Проверенных колод"
+    }
+   ],
+   "chart": null,
+   "table": null,
+   "image": null,
+   "steps": [],
+   "diagram": null,
+   "quote": null,
+   "quote_author": null,
+   "speaker_notes": "",
+   "sources": [
+    "fact:21",
+    "fact:52",
+    "fact:34"
+   ]
+  },
+  {
+   "idx": 10,
+   "archetype": "table",
+   "title": "Технологический стек проекта",
+   "subtitle": null,
+   "section": "Стек",
+   "bullets": [],
+   "paragraphs": [],
+   "kpis": [],
+   "chart": null,
+   "table": {
+    "header": [
+     "Компонент",
+     "Технология"
+    ],
+    "rows": [
+     [
+      "LLM для текста",
+      "Qwen3.8-27B"
+     ],
+     [
+      "Генерация изображений",
+      "FLUX.2 klein 4B"
+     ],
+     [
+      "Бэкенд API",
+      "FastAPI"
+     ],
+     [
+      "Фронтенд",
+      "Streamlit"
+     ],
+     [
+      "Рендеринг PDF",
+      "LibreOffice Impress"
+     ]
+    ]
+   },
+   "image": null,
+   "steps": [],
+   "diagram": null,
+   "quote": null,
+   "quote_author": null,
+   "speaker_notes": "",
+   "sources": [
+    "fact:14",
+    "fact:31",
+    "fact:35"
+   ]
+  },
+  {
+   "idx": 11,
+   "archetype": "closing",
+   "title": "DECKFORGE",
+   "subtitle": "Спасибо за внимание",
+   "section": null,
+   "bullets": [],
+   "paragraphs": [],
+   "kpis": [],
+   "chart": null,
+   "table": null,
+   "image": null,
+   "steps": [],
+   "diagram": null,
+   "quote": null,
+   "quote_author": null,
+   "speaker_notes": "",
+   "sources": [
+    "fact:1"
+   ]
+  }
+ ]
+}

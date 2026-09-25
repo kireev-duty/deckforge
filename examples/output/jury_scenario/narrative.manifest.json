@@ -1,0 +1,540 @@
+{
+ "created": "2026-09-25T13:14:11+00:00",
+ "template": {
+  "id": "33d997b25b4c",
+  "path": "data/templates/VK Tech шаблон.pptx",
+  "sha1": "33d997b25b4c",
+  "labels": "rules+vlm"
+ },
+ "content_source": "context",
+ "content_pack": "",
+ "brief": "brief.md",
+ "outline": "outline.json",
+ "outline_title": "DECKFORGE",
+ "strategy": {
+  "name": "narrative",
+  "version": "v2",
+  "target_slides": {
+   "min": 12,
+   "max": 15
+  },
+  "audience_hint": "доклад со сцены, обучение, онбординг — слайд поддерживает рассказ, а не заменяет его"
+ },
+ "skills": {
+  "context_digest": "v1",
+  "outline_writer": "v3",
+  "image_prompter": "v1",
+  "audit_judge": "v2",
+  "speaker_notes": "v3"
+ },
+ "models": {
+  "text": "qwen/qwen3.8-27b-20260814",
+  "vision": "qwen/qwen3.8-27b-20260814",
+  "image": "black-forest-labs/flux.2-klein-4b",
+  "base_url": "https://openrouter.ai/api/v1"
+ },
+ "llm_calls": [
+  {
+   "skill": "outline_writer@v3",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 32.52044049999677,
+   "prompt_tokens": 5163,
+   "completion_tokens": 2076,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 7.2788552999991225,
+   "prompt_tokens": 2832,
+   "completion_tokens": 500,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 9.786434299996472,
+   "prompt_tokens": 2851,
+   "completion_tokens": 420,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 10.957861600007163,
+   "prompt_tokens": 2854,
+   "completion_tokens": 418,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 14.849032500002068,
+   "prompt_tokens": 2869,
+   "completion_tokens": 339,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 3.0278495000093244,
+   "prompt_tokens": 2853,
+   "completion_tokens": 506,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 11.425659999993513,
+   "prompt_tokens": 2839,
+   "completion_tokens": 247,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 10.6987955999939,
+   "prompt_tokens": 2919,
+   "completion_tokens": 457,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 11.205885999996099,
+   "prompt_tokens": 2844,
+   "completion_tokens": 485,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 3.0016825999919092,
+   "prompt_tokens": 2832,
+   "completion_tokens": 465,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 6.887375800011796,
+   "prompt_tokens": 2842,
+   "completion_tokens": 412,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 5.709905100011383,
+   "prompt_tokens": 2804,
+   "completion_tokens": 249,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 6.550693600001978,
+   "prompt_tokens": 2818,
+   "completion_tokens": 399,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 12.41696519999823,
+   "prompt_tokens": 2898,
+   "completion_tokens": 262,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 12.417011600002297,
+   "prompt_tokens": 0,
+   "completion_tokens": 0,
+   "ok": false,
+   "error": "Expecting ',' delimiter: line 1 column 703 (char 702)"
+  },
+  {
+   "skill": "speaker_notes@v3",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 42.53196540000499,
+   "prompt_tokens": 2116,
+   "completion_tokens": 1587,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 18.13715840000077,
+   "prompt_tokens": 2875,
+   "completion_tokens": 491,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 12.626515500000096,
+   "prompt_tokens": 2861,
+   "completion_tokens": 281,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 5.578118200006429,
+   "prompt_tokens": 2838,
+   "completion_tokens": 371,
+   "ok": true,
+   "error": null
+  }
+ ],
+ "plan": [
+  {
+   "idx": 0,
+   "archetype": "title",
+   "title": "DECKFORGE"
+  },
+  {
+   "idx": 1,
+   "archetype": "cards",
+   "title": "Проблема: ручной дизайн не масштабируется"
+  },
+  {
+   "idx": 2,
+   "archetype": "image_text",
+   "title": "Решение: генерация из .pptx-шаблона"
+  },
+  {
+   "idx": 3,
+   "archetype": "cards",
+   "title": "Три стратегии подачи на одном контенте"
+  },
+  {
+   "idx": 4,
+   "archetype": "section",
+   "title": "Архитектура"
+  },
+  {
+   "idx": 5,
+   "archetype": "process",
+   "title": "Пайплайн: от шаблона к готовой колоде"
+  },
+  {
+   "idx": 6,
+   "archetype": "kpi",
+   "title": "Скорость: 3 варианта за 200 секунд"
+  },
+  {
+   "idx": 7,
+   "archetype": "chart",
+   "title": "Оптимизация: готовый outline экономит время"
+  },
+  {
+   "idx": 8,
+   "archetype": "image_text",
+   "title": "Демо: загрузка неизвестного шаблона"
+  },
+  {
+   "idx": 9,
+   "archetype": "cards",
+   "title": "Аудит: 26 проверок и VLM-судья"
+  },
+  {
+   "idx": 10,
+   "archetype": "kpi",
+   "title": "Качество: 0 ошибок в 12 колодах"
+  },
+  {
+   "idx": 11,
+   "archetype": "section",
+   "title": "Стек"
+  },
+  {
+   "idx": 12,
+   "archetype": "two_column",
+   "title": "Технологический стек проекта (1/2)"
+  },
+  {
+   "idx": 13,
+   "archetype": "two_column",
+   "title": "Технологический стек проекта (2/2)"
+  },
+  {
+   "idx": 14,
+   "archetype": "closing",
+   "title": "DECKFORGE"
+  }
+ ],
+ "choices": [
+  {
+   "idx": 0,
+   "archetype": "title",
+   "exemplar_id": "slide2",
+   "exemplar_archetype": "title",
+   "score": 0.95
+  },
+  {
+   "idx": 1,
+   "archetype": "cards",
+   "exemplar_id": "slide24",
+   "exemplar_archetype": "cards",
+   "score": 0.75
+  },
+  {
+   "idx": 2,
+   "archetype": "image_text",
+   "exemplar_id": "slide9",
+   "exemplar_archetype": "image_text",
+   "score": 2.6558947300424034
+  },
+  {
+   "idx": 3,
+   "archetype": "cards",
+   "exemplar_id": "slide24",
+   "exemplar_archetype": "cards",
+   "score": -1.25
+  },
+  {
+   "idx": 4,
+   "archetype": "section",
+   "exemplar_id": "slide3",
+   "exemplar_archetype": "section",
+   "score": 0.95
+  },
+  {
+   "idx": 5,
+   "archetype": "process",
+   "exemplar_id": "slide17",
+   "exemplar_archetype": "cards",
+   "score": -4.5
+  },
+  {
+   "idx": 6,
+   "archetype": "kpi",
+   "exemplar_id": "slide45",
+   "exemplar_archetype": "kpi",
+   "score": 2.9
+  },
+  {
+   "idx": 7,
+   "archetype": "chart",
+   "exemplar_id": "slide52",
+   "exemplar_archetype": "chart",
+   "score": 1.9851342666629166
+  },
+  {
+   "idx": 8,
+   "archetype": "image_text",
+   "exemplar_id": "slide9",
+   "exemplar_archetype": "image_text",
+   "score": 0.6558947300424034
+  },
+  {
+   "idx": 9,
+   "archetype": "cards",
+   "exemplar_id": "slide14",
+   "exemplar_archetype": "cards",
+   "score": -2.5
+  },
+  {
+   "idx": 10,
+   "archetype": "kpi",
+   "exemplar_id": "slide45",
+   "exemplar_archetype": "kpi",
+   "score": 0.8999999999999999
+  },
+  {
+   "idx": 11,
+   "archetype": "section",
+   "exemplar_id": "slide3",
+   "exemplar_archetype": "section",
+   "score": -1.05
+  },
+  {
+   "idx": 12,
+   "archetype": "two_column",
+   "exemplar_id": "slide24",
+   "exemplar_archetype": "cards",
+   "score": -5.25
+  },
+  {
+   "idx": 13,
+   "archetype": "two_column",
+   "exemplar_id": "slide9",
+   "exemplar_archetype": "image_text",
+   "score": -9.344105269957598
+  },
+  {
+   "idx": 14,
+   "archetype": "closing",
+   "exemplar_id": "slide6",
+   "exemplar_archetype": "closing",
+   "score": 0.95
+  }
+ ],
+ "warnings": [
+  "outline: слайд 1 «Проблема: ручной дизайн не масштабируетс»: поле «cards» → bullets",
+  "outline: слайд 2 «Решение: генерация из .pptx-шаблона»: поле «text» → paragraphs",
+  "outline: слайд 3 «Три стратегии подачи на одном контенте»: поле «cards» → bullets",
+  "outline: слайд 7 «Демо: загрузка неизвестного шаблона»: поле «text» → paragraphs",
+  "outline: слайд 8 «Аудит: 26 проверок и VLM-судья»: поле «cards» → bullets"
+ ],
+ "stats": {
+  "slides": 15,
+  "archetypes": [
+   "title",
+   "cards",
+   "image_text",
+   "cards",
+   "section",
+   "cards",
+   "kpi",
+   "chart",
+   "image_text",
+   "cards",
+   "kpi",
+   "section",
+   "cards",
+   "image_text",
+   "closing"
+  ],
+  "exemplars": [
+   "slide2",
+   "slide24",
+   "slide9",
+   "slide24",
+   "slide3",
+   "slide17",
+   "slide45",
+   "slide52",
+   "slide9",
+   "slide14",
+   "slide45",
+   "slide3",
+   "slide24",
+   "slide9",
+   "slide6"
+  ],
+  "text_items_per_slide": 3.5,
+  "words_per_item": 4.9,
+  "chart": 1,
+  "table": 0,
+  "kpi": 2,
+  "picture": 2,
+  "skipped": 0,
+  "speech_minutes": 5.8
+ },
+ "audit": {
+  "errors": 0,
+  "warnings": 23,
+  "info": 1,
+  "contextual": 6,
+  "by_check": {
+   "C01_title_insight": 6,
+   "D05_fill": 3,
+   "T02_font_size": 1,
+   "T06_contrast": 14
+  },
+  "slides_with_issues": [
+   3,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   12,
+   13
+  ],
+  "checks_run": 37,
+  "duration_s": 43.864,
+  "path": "narrative.audit.json",
+  "kind": "deterministic+contextual",
+  "autofix": {
+   "applied": 0,
+   "skipped": 0,
+   "before": {
+    "errors": 0,
+    "warnings": 17
+   },
+   "after": {
+    "errors": 0,
+    "warnings": 17
+   },
+   "items": []
+  }
+ },
+ "images": {
+  "mode": "preferred",
+  "generated": 0,
+  "cache": 2,
+  "content": 0,
+  "failed": 0,
+  "items": [
+   {
+    "slide_idx": 2,
+    "title": "Решение: генерация из .pptx-шаблона",
+    "source": "cache",
+    "path": "images/ff2a169a888efb13.jpg",
+    "prompt": "Abstract corporate illustration featuring a sleek, glowing blue document icon transforming into structured geometric shapes. Use a clean white background with soft gradients of #0077FF blue and light gray. Minimalist 3D render style, professional and modern. Wide 16:9 composition with ample negative space on the left for text overlay. No text, no letters, no numbers, no watermark, no logos.",
+    "error": null
+   },
+   {
+    "slide_idx": 7,
+    "title": "Демо: загрузка неизвестного шаблона",
+    "source": "cache",
+    "path": "images/b2693ec837a6dbb2.jpg",
+    "prompt": "Minimal corporate illustration on a light background featuring abstract geometric shapes and soft gradients in electric blue (#0077FF), white, and light gray. Visualize the concept of a design system being automatically parsed and split into three distinct, clean slide layout variants. Clean composition with ample negative space on the left for text overlay. No people, no logos, no text, no letters, no watermark.",
+    "error": null
+   }
+  ]
+ },
+ "speech": {
+  "talk_minutes": 7.0,
+  "minutes": 5.8,
+  "words": 695,
+  "slides_without_notes": [],
+  "path": "narrative.speech.md"
+ },
+ "exports": {
+  "pptx": "narrative.pptx",
+  "pdf": "narrative.pdf",
+  "html": "narrative.html",
+  "speech": "narrative.speech.md"
+ },
+ "timings_s": {
+  "parse": 0.913,
+  "outline": 32.729,
+  "images": 8.169,
+  "layout": 0.013,
+  "render": 1.044,
+  "audit": 0.504,
+  "autofix": 0.0,
+  "png": 6.108,
+  "audit_contextual": 43.009,
+  "notes": 42.533,
+  "export_pdf": 0.002,
+  "export_html": 2.656,
+  "deck_build": 62.496,
+  "deck_total": 96.163
+ },
+ "time_budget_s": 300
+}

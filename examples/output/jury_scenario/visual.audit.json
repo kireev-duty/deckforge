@@ -1,0 +1,321 @@
+{
+ "deck_path": "visual.pptx",
+ "findings": [
+  {
+   "check_id": "N02_talk_duration",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": -1,
+   "element_id": null,
+   "box": null,
+   "message": "Выступление по заметкам ≈ 4.9 мин — короче заданных 7 мин (больше чем на 25%, темп 120 слов/мин)",
+   "autofix": null,
+   "evidence": {
+    "words": 585,
+    "minutes": 4.88,
+    "target_minutes": 7.0
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 0,
+   "element_id": "408",
+   "box": {
+    "x": 581272,
+    "y": 2362284,
+    "w": 4288279,
+    "h": 285750
+   },
+   "message": "Кегль 14.4 pt не из шкалы шаблона (ближайший 16.2 pt) (подгонка: 90% от кегля образца 16 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 14.4,
+    "nearest_pt": 16.2,
+    "base_pt": 16.0
+   }
+  },
+  {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 3,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок просто называет тему (список стратегий), а не содержит вывод или ключевую мысль.",
+   "autofix": null,
+   "evidence": {
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "fact:2,fact:11"
+   }
+  },
+  {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 4,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок описывает тему процесса, но не содержит вывода или ключевой идеи.",
+   "autofix": null,
+   "evidence": {
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "fact:58,fact:47,fact:42"
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 5,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд пустоват: контент занимает 18% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.177
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 5,
+   "element_id": "2342",
+   "box": {
+    "x": 285749,
+    "y": 1307494,
+    "w": 1614880,
+    "h": 149630
+   },
+   "message": "Контраст текста #0077FF к фону #FAFCFF = 4.0:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.02,
+    "text_color": "0077FF",
+    "background": "FAFCFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 5,
+   "element_id": "2344",
+   "box": {
+    "x": 3333728,
+    "y": 1307494,
+    "w": 1614880,
+    "h": 149630
+   },
+   "message": "Контраст текста #0077FF к фону #FAFCFF = 4.0:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.02,
+    "text_color": "0077FF",
+    "background": "FAFCFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 5,
+   "element_id": "2346",
+   "box": {
+    "x": 6381707,
+    "y": 1306712,
+    "w": 1614880,
+    "h": 149630
+   },
+   "message": "Контраст текста #0077FF к фону #FAFCFF = 4.0:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.02,
+    "text_color": "0077FF",
+    "background": "FAFCFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 6,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд перегружен: контент занимает 85% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.853
+   }
+  },
+  {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 7,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок называет тему демо, но не содержит вывода или результата.",
+   "autofix": null,
+   "evidence": {
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "fact:57,fact:60"
+   }
+  },
+  {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок является тематическим (называет тему), а не содержит вывод.",
+   "autofix": null,
+   "evidence": {
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "fact:5,fact:62,fact:55"
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 9,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд пустоват: контент занимает 18% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.177
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 9,
+   "element_id": "2342",
+   "box": {
+    "x": 285749,
+    "y": 1307494,
+    "w": 1614880,
+    "h": 149630
+   },
+   "message": "Контраст текста #0077FF к фону #FAFCFF = 4.0:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.02,
+    "text_color": "0077FF",
+    "background": "FAFCFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 9,
+   "element_id": "2344",
+   "box": {
+    "x": 3333728,
+    "y": 1307494,
+    "w": 1614880,
+    "h": 149630
+   },
+   "message": "Контраст текста #0077FF к фону #FAFCFF = 4.0:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.02,
+    "text_color": "0077FF",
+    "background": "FAFCFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 9,
+   "element_id": "2346",
+   "box": {
+    "x": 6381707,
+    "y": 1306712,
+    "w": 1614880,
+    "h": 149630
+   },
+   "message": "Контраст текста #0077FF к фону #FAFCFF = 4.0:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 4.02,
+    "text_color": "0077FF",
+    "background": "FAFCFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 10,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок является нейтральным названием темы, а не содержит вывод.",
+   "autofix": null,
+   "evidence": {
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "fact:14,fact:31,fact:35"
+   }
+  }
+ ],
+ "checks_run": [
+  "L01_out_of_bounds",
+  "L02_overlap",
+  "L03_text_overflow",
+  "L04_text_clipped",
+  "L05_off_grid",
+  "L06_in_margins",
+  "L07_picture_stretched",
+  "T01_font",
+  "T02_font_size",
+  "T03_color",
+  "T04_layout",
+  "T05_fixed_moved",
+  "T06_contrast",
+  "D01_bullets",
+  "D02_bullet_words",
+  "D03_table_size",
+  "D04_chart_series",
+  "D05_fill",
+  "I01_file",
+  "I02_placeholder_text",
+  "I03_empty_slide",
+  "I04_raster_slide",
+  "I05_chart_labels",
+  "I06_duplicate_slides",
+  "C01_title_insight",
+  "C02_content_matches_title",
+  "C03_one_message",
+  "C04_facts_consistent",
+  "C05_has_content",
+  "C06_images_relevant",
+  "C07_no_garbage",
+  "C08_no_typos",
+  "C09_one_language",
+  "C10_table_legend_relevant",
+  "C11_flow",
+  "N01_notes_missing",
+  "N02_talk_duration"
+ ],
+ "duration_s": 54.375
+}

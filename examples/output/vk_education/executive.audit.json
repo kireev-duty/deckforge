@@ -2,100 +2,50 @@
  "deck_path": "executive.pptx",
  "findings": [
   {
-   "check_id": "C07_no_garbage",
-   "kind": "contextual",
-   "severity": "error",
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
    "slide_idx": 0,
-   "element_id": null,
-   "box": null,
-   "message": "Текст подзаголовка обрывается многоточием, что выглядит как служебный мусор или заглушка.",
-   "autofix": null,
-   "evidence": {
-    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "D02_bullet_words",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 1,
-   "element_id": "278",
+   "element_id": "261",
    "box": {
-    "x": 6154737,
-    "y": 4044294,
-    "w": 5391150,
-    "h": 2156481
+    "x": 658813,
+    "y": 4728001,
+    "w": 5012644,
+    "h": 553998
    },
-   "message": "Пункт из 17 слов (норма ≤ 15): «Мы создаем комплексные IT-решения, соответствующие междунаро…»",
-   "autofix": "refill_slot",
+   "message": "Кегль 18 pt не из шкалы шаблона (ближайший 16.1 pt) (подгонка: 90% от кегля образца 20 pt)",
+   "autofix": "snap_font_size",
    "evidence": {
-    "words": 17
+    "size_pt": 18.0,
+    "nearest_pt": 16.1,
+    "base_pt": 20.0
    }
   },
   {
-   "check_id": "D05_fill",
+   "check_id": "T02_font_size",
    "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 1,
-   "element_id": null,
-   "box": null,
-   "message": "Слайд перегружен: контент занимает 89% рабочей области (норма 25%–75%)",
-   "autofix": "change_exemplar",
-   "evidence": {
-    "fill": 0.89
-   }
-  },
-  {
-   "check_id": "C02_content_matches_title",
-   "kind": "contextual",
-   "severity": "error",
-   "slide_idx": 2,
-   "element_id": null,
-   "box": null,
-   "message": "Заголовок упоминает только масштабируемость и защиту, но в содержимом присутствует блок про интеграцию.",
-   "autofix": null,
-   "evidence": {
-    "question": "Содержимое слайда соответствует заголовку",
-    "sources": "brief"
-   }
-  },
-  {
-   "check_id": "D02_bullet_words",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 3,
-   "element_id": "405",
+   "severity": "info",
+   "slide_idx": 0,
+   "element_id": "262",
    "box": {
-    "x": 671513,
-    "y": 2040889,
-    "w": 4897265,
-    "h": 3107760
+    "x": 622261,
+    "y": 2598003,
+    "w": 7597065,
+    "h": 1661993
    },
-   "message": "Пункт из 18 слов (норма ≤ 15): «Наши решения позволяют автоматизировать рутинные операции, с…»",
-   "autofix": "refill_slot",
+   "message": "Кегль 53.7 pt не из шкалы шаблона (ближайший 48 pt) (подгонка: 90% от кегля образца 60 pt)",
+   "autofix": "snap_font_size",
    "evidence": {
-    "words": 18
-   }
-  },
-  {
-   "check_id": "D05_fill",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 4,
-   "element_id": null,
-   "box": null,
-   "message": "Слайд пустоват: контент занимает 23% рабочей области (норма 25%–75%)",
-   "autofix": "change_exemplar",
-   "evidence": {
-    "fill": 0.229
+    "size_pt": 53.7,
+    "nearest_pt": 48.0,
+    "base_pt": 60.0
    }
   },
   {
    "check_id": "T06_contrast",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 4,
+   "slide_idx": 1,
    "element_id": "430",
    "box": {
     "x": 4308816,
@@ -117,7 +67,102 @@
    "check_id": "T02_font_size",
    "kind": "deterministic",
    "severity": "info",
-   "slide_idx": 8,
+   "slide_idx": 1,
+   "element_id": "436",
+   "box": {
+    "x": 8112125,
+    "y": 4325071,
+    "w": 2495059,
+    "h": 1059689
+   },
+   "message": "Кегль 12.6 pt не из шкалы шаблона (ближайший 14.1 pt) (подгонка: 70% от кегля образца 18 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 12.6,
+    "nearest_pt": 14.1,
+    "base_pt": 18.0
+   }
+  },
+  {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 2,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок является тематическим описанием продукта, а не содержит конкретного вывода или тезиса.",
+   "autofix": null,
+   "evidence": {
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "brief"
+   }
+  },
+  {
+   "check_id": "C00_judge_error",
+   "kind": "contextual",
+   "severity": "info",
+   "slide_idx": 3,
+   "element_id": null,
+   "box": null,
+   "message": "VLM-судья: не ответил: skill audit_judge@v2 failed after 3 attempts: бюджет времени исчерпан (после: Expecting ',' delimiter: line 30 column 6 ",
+   "autofix": null,
+   "evidence": {
+    "error": "не ответил: skill audit_judge@v2 failed after 3 attempts: бюджет времени исчерпан (после: Expecting ',' delimiter: line 30 column 6 "
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 3,
+   "element_id": "406",
+   "box": {
+    "x": 677334,
+    "y": 692150,
+    "w": 5418666,
+    "h": 1081088
+   },
+   "message": "Кегль 28.8 pt не из шкалы шаблона (ближайший 24 pt) (подгонка: 80% от кегля образца 36 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 28.8,
+    "nearest_pt": 24.0,
+    "base_pt": 36.0
+   }
+  },
+  {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 5,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок является тематическим, а не утверждающим вывод.",
+   "autofix": null,
+   "evidence": {
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "brief"
+   }
+  },
+  {
+   "check_id": "C06_images_relevant",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 5,
+   "element_id": null,
+   "box": null,
+   "message": "Изображение мобильного приложения не иллюстрирует интеграцию с корпоративными системами.",
+   "autofix": null,
+   "evidence": {
+    "question": "Картинки и иконки относятся к теме слайда",
+    "sources": "brief"
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 5,
    "element_id": "820",
    "box": {
     "x": 677334,
@@ -125,12 +170,81 @@
     "w": 5418666,
     "h": 1081088
    },
-   "message": "Кегль 32.4 pt не из шкалы шаблона (ближайший 36 pt) (подгонка: 90% от кегля образца 36 pt)",
+   "message": "Кегль 28.8 pt не из шкалы шаблона (ближайший 24 pt) (подгонка: 80% от кегля образца 36 pt)",
    "autofix": "snap_font_size",
    "evidence": {
-    "size_pt": 32.4,
-    "nearest_pt": 36.0,
+    "size_pt": 28.8,
+    "nearest_pt": 24.0,
     "base_pt": 36.0
+   }
+  },
+  {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 7,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок описывает тему процесса, но не содержит конкретного вывода или тезиса.",
+   "autofix": null,
+   "evidence": {
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "brief"
+   }
+  },
+  {
+   "check_id": "C08_no_typos",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": null,
+   "box": null,
+   "message": "В тексте есть опечатка: «Сервисное сопровождение» написано с заглавной буквы в середине предложения.",
+   "autofix": null,
+   "evidence": {
+    "question": "Текст без опечаток",
+    "sources": "brief"
+   }
+  },
+  {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 9,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок называет тему (демонстрация), а не содержит вывод или конкретный результат.",
+   "autofix": null,
+   "evidence": {
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "brief"
+   }
+  },
+  {
+   "check_id": "C06_images_relevant",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 9,
+   "element_id": null,
+   "box": null,
+   "message": "Изображение показывает пост VK Education об «IT-дайвинге», что не относится к теме демонстрации корпоративной платформы.",
+   "autofix": null,
+   "evidence": {
+    "question": "Картинки и иконки относятся к теме слайда",
+    "sources": "brief"
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 9,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд перегружен: контент занимает 85% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.848
    }
   }
  ],
@@ -169,7 +283,9 @@
   "C08_no_typos",
   "C09_one_language",
   "C10_table_legend_relevant",
-  "C11_flow"
+  "C11_flow",
+  "N01_notes_missing",
+  "N02_talk_duration"
  ],
- "duration_s": 42.149
+ "duration_s": 66.088
 }

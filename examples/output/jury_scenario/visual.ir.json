@@ -1,0 +1,1622 @@
+{
+ "template_id": "33d997b25b4c",
+ "strategy": "visual@v2",
+ "slides": [
+  {
+   "idx": 0,
+   "exemplar_id": "slide2",
+   "archetype": "title",
+   "elements": [
+    {
+     "slot_id": "407",
+     "kind": "title",
+     "box": {
+      "x": 581272,
+      "y": 1531415,
+      "w": 4288279,
+      "h": 800046
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "DECKFORGE",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "408",
+     "kind": "subtitle",
+     "box": {
+      "x": 581272,
+      "y": 2362284,
+      "w": 4288279,
+      "h": 285750
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Цифровой дизайнер презентаций для VK Tech",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24",
+      "size_pt": 14.4
+     }
+    }
+   ],
+   "notes": "Здравствуйте, уважаемые члены жюри и эксперты VK Tech. Мы представляем DECKFORGE, цифровой дизайнера презентаций, который автоматизирует создание слайдов. Вы узнаете, как наш инструмент экономит время и сохраняет качество.",
+   "outline_ref": 0
+  },
+  {
+   "idx": 1,
+   "exemplar_id": "slide24",
+   "archetype": "cards",
+   "elements": [
+    {
+     "slot_id": "1050",
+     "kind": "title",
+     "box": {
+      "x": 177970,
+      "y": 282949,
+      "w": 6792985,
+      "h": 724203
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Проблема: ручной дизайн не масштабируется",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "1036",
+     "kind": "body",
+     "box": {
+      "x": 476248,
+      "y": 1628898,
+      "w": 2463787,
+      "h": 831742
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Время — Создание брендированной колоды занимает часы ручной работы.",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "1042",
+     "kind": "body",
+     "box": {
+      "x": 3365479,
+      "y": 1628898,
+      "w": 2463787,
+      "h": 831742
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Консистентность — Сложно выдержать дизайн-систему при частых изменениях контента.",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "1047",
+     "kind": "body",
+     "box": {
+      "x": 6254721,
+      "y": 1628898,
+      "w": 2463787,
+      "h": 831742
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Вариативность — Нет возможности быстро адаптировать подачу под разные аудитории.",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    }
+   ],
+   "notes": "Создание брендированной колоды вручную занимает часы, потому что дизайнер тратит время на рутину. Это приводит к тому, что команда не успевает за меняющимися требованиями бизнеса. Консистентность страдает, когда контент часто обновляется, ведь сложно выдержать единый стиль. Поэтому ошибки в дизайне неизбежны при частых правках. Вариативность подачи ограничена, так как нет времени на адаптацию под разные аудитории. В результате компания теряет возможность эффективно донести сообщение до каждой группы слушателей.",
+   "outline_ref": 1
+  },
+  {
+   "idx": 2,
+   "exemplar_id": "slide9",
+   "archetype": "image_text",
+   "elements": [
+    {
+     "slot_id": "503",
+     "kind": "title",
+     "box": {
+      "x": 430360,
+      "y": 338829,
+      "w": 3945697,
+      "h": 753371
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Решение: генерация из .pptx-шаблона",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "505",
+     "kind": "body",
+     "box": {
+      "x": 4637088,
+      "y": 676278,
+      "w": 3862387,
+      "h": 3737102
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "DECKFORGE читает .pptx-шаблон как дизайн-систему и собирает новую презентацию из нативных объектов PowerPoint.",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "506",
+     "kind": "picture",
+     "box": {
+      "x": 354563,
+      "y": 2341984,
+      "w": 4142792,
+      "h": 2090058
+     },
+     "paragraphs": [],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\jury_scenario\\images\\ff2a169a888efb13.jpg",
+     "icon_name": null,
+     "style_overrides": {}
+    }
+   ],
+   "notes": "DECKFORGE решает эту проблему, читая .pptx-шаблон как полноценную дизайн-систему. Мы извлекаем из него правила оформления и собираем новую презентацию из нативных объектов. Такой подход гарантирует, что результат будет полностью совместим с PowerPoint. Поэтому пользователи могут свободно редактировать полученные слайды без потери качества. Это значит, что вы получаете не картинку, а живой документ. Например, вы можете менять текст прямо в готовой колоде.",
+   "outline_ref": 2
+  },
+  {
+   "idx": 3,
+   "exemplar_id": "slide24",
+   "archetype": "cards",
+   "elements": [
+    {
+     "slot_id": "1050",
+     "kind": "title",
+     "box": {
+      "x": 177970,
+      "y": 282949,
+      "w": 6792985,
+      "h": 724203
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Три стратегии подачи на одном контенте",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "1036",
+     "kind": "body",
+     "box": {
+      "x": 476248,
+      "y": 1628898,
+      "w": 2463787,
+      "h": 831742
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Executive — Компактная подача для руководителей",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "1042",
+     "kind": "body",
+     "box": {
+      "x": 3365479,
+      "y": 1628898,
+      "w": 2463787,
+      "h": 831742
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Narrative — Повествовательная структура для докладов и презентаций.",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "1047",
+     "kind": "body",
+     "box": {
+      "x": 6254721,
+      "y": 1628898,
+      "w": 2463787,
+      "h": 831742
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Visual — Визуально насыщенный вариант для конференций и выставок.",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    }
+   ],
+   "notes": "Система генерирует три стратегии подачи на одном и том же контенте. Executive-вариант предлагает компактную подачу для руководителей, потому что им важна суть. Это позволяет быстро принять решение, не углубляясь в детали. Narrative-версия использует повествовательную структуру для докладов, чтобы удержать внимание аудитории. Поэтому слушатели запоминают историю, а не просто сухие факты. Visual-вариант визуально насыщен и подходит для конференций и выставок. Таким образом, вы выбираете оптимальный формат под конкретную задачу.",
+   "outline_ref": 3
+  },
+  {
+   "idx": 4,
+   "exemplar_id": "slide21",
+   "archetype": "cards",
+   "elements": [
+    {
+     "slot_id": "914",
+     "kind": "body",
+     "box": {
+      "x": 514283,
+      "y": 1457949,
+      "w": 8082260,
+      "h": 2313526
+     },
+     "paragraphs": [],
+     "chart": null,
+     "table": null,
+     "diagram": {
+      "kind": "process",
+      "items": [
+       "Парсинг — Извлечение дизайн-токенов и слайдов-образцов из .pptx.",
+       "Контент — Генерация DeckOutline одним вызовом LLM.",
+       "Сборка — Параллельная генерация 3 вариантов вёрстки.",
+       "Аудит — Детерминированные проверки и оценка VLM-судьёй.",
+       "Экспорт — Формирование .pptx, .pdf и .html."
+      ]
+     },
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "906",
+     "kind": "title",
+     "box": {
+      "x": 177971,
+      "y": 282949,
+      "w": 5559889,
+      "h": 753371
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Пайплайн: от шаблона к готовой колоде",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    }
+   ],
+   "notes": "Пайплайн начинается с парсинга шаблона и извлечения дизайн-токенов из файла. Затем LLM генерирует DeckOutline одним вызовом, что ускоряет процесс. После этого система параллельно генерирует три варианта вёрстки слайдов. Такой подход экономит время, потому что задачи выполняются одновременно. Далее происходит аудит с детерминированными проверками и оценкой VLM-судьёй. В финале мы экспортируем результат в форматы .pptx, .pdf и .html.",
+   "outline_ref": 4
+  },
+  {
+   "idx": 5,
+   "exemplar_id": "slide45",
+   "archetype": "kpi",
+   "elements": [
+    {
+     "slot_id": "2341",
+     "kind": "title",
+     "box": {
+      "x": 177970,
+      "y": 282949,
+      "w": 6792985,
+      "h": 724203
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Скорость: 3 варианта за 200 секунд",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "2348",
+     "kind": "number",
+     "box": {
+      "x": 854932,
+      "y": 2991623,
+      "w": 1423651,
+      "h": 417135
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "200",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        },
+        {
+         "text": " сек",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": 11.2
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "2342",
+     "kind": "label",
+     "box": {
+      "x": 285749,
+      "y": 1307494,
+      "w": 1614880,
+      "h": 149630
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Время сборки 3 колод",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24",
+      "size_pt": 11.2
+     }
+    },
+    {
+     "slot_id": "2349",
+     "kind": "number",
+     "box": {
+      "x": 3776371,
+      "y": 2991622,
+      "w": 1423651,
+      "h": 417135
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "300",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        },
+        {
+         "text": " сек",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": 11.2
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "2344",
+     "kind": "label",
+     "box": {
+      "x": 3333728,
+      "y": 1307494,
+      "w": 1614880,
+      "h": 149630
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Временной лимит",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "2350",
+     "kind": "number",
+     "box": {
+      "x": 6795780,
+      "y": 2980839,
+      "w": 1423651,
+      "h": 417135
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "3",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "2346",
+     "kind": "label",
+     "box": {
+      "x": 6381707,
+      "y": 1306712,
+      "w": 1614880,
+      "h": 149630
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Варианта вёрстки",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    }
+   ],
+   "notes": "Скорость работы системы составляет 200 секунд на сборку трех колод. Это быстрее лимита в 300 секунд, установленного для задачи. Поэтому мы гарантируем быструю обратную связь пользователю. Вы получаете три варианта вёрстки почти мгновенно. Это значит, что вы можете выбрать лучший вариант сразу. Например, вы экономите время на ожидание результата.",
+   "outline_ref": 5
+  },
+  {
+   "idx": 6,
+   "exemplar_id": "slide44",
+   "archetype": "chart",
+   "elements": [
+    {
+     "slot_id": "2296",
+     "kind": "title",
+     "box": {
+      "x": 177970,
+      "y": 282949,
+      "w": 6792985,
+      "h": 724203
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Оптимизация: готовый outline экономит время",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "2286",
+     "kind": "chart",
+     "box": {
+      "x": 285749,
+      "y": 1143186,
+      "w": 8572455,
+      "h": 3004746
+     },
+     "paragraphs": [],
+     "chart": {
+      "kind": "bar",
+      "title": "Время генерации (сек)",
+      "categories": [
+       "Последовательная сборка",
+       "С готовым outline"
+      ],
+      "series": {
+       "Время": [
+        213.0,
+        91.0
+       ]
+      },
+      "unit": "сек",
+      "x_label": null,
+      "y_label": null
+     },
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    }
+   ],
+   "notes": "Диаграмма показывает, как готовый outline экономит время генерации. Последовательная сборка занимает 213 секунд, что довольно долго. С готовым outline время сокращается до 91 секунды. Такой прирост скорости достигается за счет оптимизации процесса. Поэтому мы рекомендуем использовать предварительную генерацию структуры. Это значит, что вы получаете результат в два раза быстрее.",
+   "outline_ref": 6
+  },
+  {
+   "idx": 7,
+   "exemplar_id": "slide9",
+   "archetype": "image_text",
+   "elements": [
+    {
+     "slot_id": "503",
+     "kind": "title",
+     "box": {
+      "x": 430360,
+      "y": 338829,
+      "w": 3945697,
+      "h": 753371
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Демо: загрузка неизвестного шаблона",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "505",
+     "kind": "body",
+     "box": {
+      "x": 4637088,
+      "y": 676278,
+      "w": 3862387,
+      "h": 3737102
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Система автоматически разбивает дизайн-систему нового .pptx-файла и генерирует три варианта слайдов.",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "506",
+     "kind": "picture",
+     "box": {
+      "x": 354563,
+      "y": 2341984,
+      "w": 4142792,
+      "h": 2090058
+     },
+     "paragraphs": [],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\jury_scenario\\images\\b2693ec837a6dbb2.jpg",
+     "icon_name": null,
+     "style_overrides": {}
+    }
+   ],
+   "notes": "В демо мы загружаем неизвестный .pptx-файл в систему. Она автоматически разбивает дизайн-систему этого нового шаблона. Затем генерируются три варианта слайдов без ручной настройки. Это доказывает универсальность нашего подхода. Вы можете использовать любой корпоративный шаблон. Например, вы загружаете старый файл и получаете новую колоду.",
+   "outline_ref": 7
+  },
+  {
+   "idx": 8,
+   "exemplar_id": "slide24",
+   "archetype": "cards",
+   "elements": [
+    {
+     "slot_id": "1050",
+     "kind": "title",
+     "box": {
+      "x": 177970,
+      "y": 282949,
+      "w": 6792985,
+      "h": 724203
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Аудит: 26 проверок и VLM-судья",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "1036",
+     "kind": "body",
+     "box": {
+      "x": 476248,
+      "y": 1628898,
+      "w": 2463787,
+      "h": 831742
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "XML-проверки — 26 детерминированных проверок структуры и вёрстки.",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "1042",
+     "kind": "body",
+     "box": {
+      "x": 3365479,
+      "y": 1628898,
+      "w": 2463787,
+      "h": 831742
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "VLM-судья — Оценка 11 вопросов по PNG-скриншотам слайдов.",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "1047",
+     "kind": "body",
+     "box": {
+      "x": 6254721,
+      "y": 1628898,
+      "w": 2463787,
+      "h": 831742
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Автофиксы — Безопасные исправления ошибок уровня error.",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    }
+   ],
+   "notes": "Аудит включает 26 детерминированных проверок структуры и вёрстки. VLM-судья оценивает 11 вопросов по PNG-скриншотам слайдов. Это обеспечивает комплексный контроль качества. Автофиксы безопасно исправляют ошибки уровня error. Поэтому финальный результат всегда соответствует стандартам. Вы можете быть уверены в корректности каждого слайда.",
+   "outline_ref": 8
+  },
+  {
+   "idx": 9,
+   "exemplar_id": "slide45",
+   "archetype": "kpi",
+   "elements": [
+    {
+     "slot_id": "2341",
+     "kind": "title",
+     "box": {
+      "x": 177970,
+      "y": 282949,
+      "w": 6792985,
+      "h": 724203
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Качество: 0 ошибок в 12 колодах",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "2348",
+     "kind": "number",
+     "box": {
+      "x": 854932,
+      "y": 2991623,
+      "w": 1423651,
+      "h": 417135
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "12",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "2342",
+     "kind": "label",
+     "box": {
+      "x": 285749,
+      "y": 1307494,
+      "w": 1614880,
+      "h": 149630
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Готовых колод",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "2349",
+     "kind": "number",
+     "box": {
+      "x": 3776371,
+      "y": 2991622,
+      "w": 1423651,
+      "h": 417135
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "0",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "2344",
+     "kind": "label",
+     "box": {
+      "x": 3333728,
+      "y": 1307494,
+      "w": 1614880,
+      "h": 149630
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Детерминированных ошибок",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24",
+      "size_pt": 9.8
+     }
+    },
+    {
+     "slot_id": "2350",
+     "kind": "number",
+     "box": {
+      "x": 6795780,
+      "y": 2980839,
+      "w": 1423651,
+      "h": 417135
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "980",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "2346",
+     "kind": "label",
+     "box": {
+      "x": 6381707,
+      "y": 1306712,
+      "w": 1614880,
+      "h": 149630
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Проверенных колод",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24",
+      "size_pt": 12.6
+     }
+    }
+   ],
+   "notes": "Мы протестировали систему на 980 проверенных колодах. В 12 готовых колодах не было ни одной детерминированной ошибки. Это подтверждает высокую надежность нашего решения. Поэтому мы уверены в стабильности работы DECKFORGE. Вы получаете качественный продукт без ручных правок. Например, вы можете доверить систему критически важным презентациям.",
+   "outline_ref": 9
+  },
+  {
+   "idx": 10,
+   "exemplar_id": "slide34",
+   "archetype": "table",
+   "elements": [
+    {
+     "slot_id": "1351",
+     "kind": "title",
+     "box": {
+      "x": 177970,
+      "y": 282949,
+      "w": 6792985,
+      "h": 724203
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "Технологический стек проекта",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    },
+    {
+     "slot_id": "1368",
+     "kind": "table",
+     "box": {
+      "x": 4071917,
+      "y": 1281280,
+      "w": 4786287,
+      "h": 3196198
+     },
+     "paragraphs": [],
+     "chart": null,
+     "table": {
+      "header": [
+       "Компонент",
+       "Технология"
+      ],
+      "rows": [
+       [
+        "LLM для текста",
+        "Qwen3.8-27B"
+       ],
+       [
+        "Генерация изображений",
+        "FLUX.2 klein 4B"
+       ],
+       [
+        "Бэкенд API",
+        "FastAPI"
+       ],
+       [
+        "Фронтенд",
+        "Streamlit"
+       ],
+       [
+        "Рендеринг PDF",
+        "LibreOffice Impress"
+       ]
+      ]
+     },
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    }
+   ],
+   "notes": "Технологический стек включает Qwen3.8-27B для генерации текста. FLUX.2 klein 4B используется для создания изображений. Бэкенд API построен на FastAPI для высокой производительности. Фронтенд реализован на Streamlit для простоты использования. Рендеринг PDF выполняется через LibreOffice Impress. Такой выбор технологий обеспечивает баланс скорости и качества.",
+   "outline_ref": 10
+  },
+  {
+   "idx": 11,
+   "exemplar_id": "slide6",
+   "archetype": "closing",
+   "elements": [
+    {
+     "slot_id": "447",
+     "kind": "title",
+     "box": {
+      "x": 572960,
+      "y": 1682878,
+      "w": 4373113,
+      "h": 1085547
+     },
+     "paragraphs": [
+      {
+       "runs": [
+        {
+         "text": "DECKFORGE",
+         "bold": false,
+         "italic": false,
+         "color": null,
+         "size_pt": null
+        }
+       ],
+       "level": 0,
+       "bullet": false
+      }
+     ],
+     "chart": null,
+     "table": null,
+     "diagram": null,
+     "image_path": null,
+     "icon_name": null,
+     "style_overrides": {
+      "accent": "0077FF",
+      "palette": "0077FF",
+      "font": "Play",
+      "text_color": "000000",
+      "type_scale": "4,6.9,9,10.1,12,16.2,24"
+     }
+    }
+   ],
+   "notes": "DECKFORGE автоматизирует дизайн презентаций, сохраняя качество и скорость. Мы предлагаем вам внедрить этот инструмент в свои процессы. Это позволит вашей команде сфокусироваться на контенте. Начните использовать DECKFORGE уже сегодня для экономии времени.",
+   "outline_ref": 11
+  }
+ ],
+ "slide_w": 9144000,
+ "slide_h": 5143500,
+ "talk_minutes": 7.0
+}

@@ -1,13 +1,16 @@
 {
- "created": "2026-09-24T12:33:22+00:00",
+ "created": "2026-09-25T12:52:38+00:00",
  "config": {
   "template": "data/templates/VK_WorkSpace_Клиентская_конференция_Шаблон_03.pptx",
   "content_pack": null,
+  "context": null,
   "topic": "",
   "purpose": "other",
   "audience": "",
   "language": "ru",
   "target_slides": 12,
+  "speaker_notes": true,
+  "talk_minutes": 7.0,
   "strategies": [
    "executive",
    "narrative",
@@ -56,7 +59,7 @@
      "cards",
      "cards",
      "cards",
-     "cards",
+     "process",
      "cards",
      "cards",
      "closing"
@@ -67,135 +70,81 @@
      "slide5",
      "slide15",
      "slide6",
-     "slide22",
+     "slide15",
      "slide10",
+     "slide27",
      "slide5",
      "slide15",
-     "slide6",
-     "slide29"
+     "slide28"
     ],
-    "text_items_per_slide": 3.6,
-    "words_per_item": 6.1,
+    "text_items_per_slide": 3.7,
+    "words_per_item": 4.4,
     "chart": 0,
     "table": 0,
     "kpi": 0,
     "picture": 0,
-    "skipped": 0
+    "skipped": 0,
+    "speech_minutes": 7.2
    },
    "audit": {
-    "errors": 0,
-    "warnings": 28,
-    "info": 1,
-    "contextual": 1,
+    "errors": 2,
+    "warnings": 26,
+    "info": 5,
+    "contextual": 6,
     "by_check": {
-     "C03_one_message": 1,
-     "D02_bullet_words": 2,
-     "D05_fill": 2,
-     "L02_overlap": 6,
-     "T02_font_size": 1,
-     "T06_contrast": 17
+     "C01_title_insight": 4,
+     "C05_has_content": 2,
+     "D05_fill": 4,
+     "L02_overlap": 3,
+     "T02_font_size": 5,
+     "T06_contrast": 15
     },
     "slides_with_issues": [
-     1,
      2,
      3,
      4,
+     5,
      6,
      7,
      8,
      9
     ],
-    "checks_run": 35,
-    "duration_s": 30.574,
+    "checks_run": 37,
+    "duration_s": 25.828,
     "path": "executive.audit.json",
     "kind": "deterministic+contextual",
     "autofix": {
-     "applied": 7,
+     "applied": 0,
      "skipped": 0,
      "before": {
       "errors": 0,
-      "warnings": 32
+      "warnings": 22
      },
      "after": {
       "errors": 0,
-      "warnings": 27
+      "warnings": 22
      },
-     "items": [
-      {
-       "slide_idx": 1,
-       "element_id": "657",
-       "check_id": "D02_bullet_words",
-       "fix": "refill_slot",
-       "before": "17 слов",
-       "after": "17 слов"
-      },
-      {
-       "slide_idx": 2,
-       "element_id": "441",
-       "check_id": "T02_font_size",
-       "fix": "snap_font_size",
-       "before": "21.6 pt",
-       "after": "20 pt"
-      },
-      {
-       "slide_idx": 3,
-       "element_id": "681",
-       "check_id": "D02_bullet_words",
-       "fix": "refill_slot",
-       "before": "18 слов",
-       "after": "18 слов"
-      },
-      {
-       "slide_idx": 5,
-       "element_id": "768",
-       "check_id": "T02_font_size",
-       "fix": "snap_font_size",
-       "before": "21.6 pt",
-       "after": "20 pt"
-      },
-      {
-       "slide_idx": 6,
-       "element_id": "547",
-       "check_id": "T02_font_size",
-       "fix": "snap_font_size",
-       "before": "21.6 pt",
-       "after": "20 pt"
-      },
-      {
-       "slide_idx": 7,
-       "element_id": "441",
-       "check_id": "T02_font_size",
-       "fix": "snap_font_size",
-       "before": "21.6 pt",
-       "after": "20 pt"
-      },
-      {
-       "slide_idx": 8,
-       "element_id": "681",
-       "check_id": "D02_bullet_words",
-       "fix": "refill_slot",
-       "before": "16 слов",
-       "after": "7 слов"
-      }
-     ]
+     "items": []
     }
    },
    "exports": {
     "pptx": "executive.pptx",
     "pdf": "executive.pdf",
-    "html": "executive.html"
+    "html": "executive.html",
+    "speech": "executive.speech.md"
    },
    "timings_s": {
-    "layout": 0.007,
-    "render": 0.813,
-    "audit": 0.535,
-    "autofix": 1.186,
-    "png": 8.663,
-    "audit_contextual": 30.075,
-    "export_pdf": 0.003,
-    "export_html": 6.245,
-    "deck_build": 47.533,
-    "deck_total": 48.044
+    "layout": 0.008,
+    "render": 1.137,
+    "audit": 0.613,
+    "autofix": 0.0,
+    "png": 12.66,
+    "audit_contextual": 24.815,
+    "notes": 67.934,
+    "export_pdf": 0.005,
+    "export_html": 10.068,
+    "deck_build": 81.421,
+    "deck_total": 82.035
    }
   },
   {
@@ -213,7 +162,7 @@
      "cards",
      "cards",
      "cards",
-     "cards",
+     "process",
      "cards",
      "cards",
      "closing"
@@ -225,32 +174,34 @@
      "slide10",
      "slide15",
      "slide6",
-     "slide22",
      "slide5",
      "slide10",
-     "slide15",
+     "slide27",
      "slide6",
-     "slide29"
+     "slide15",
+     "slide28"
     ],
-    "text_items_per_slide": 3.0,
-    "words_per_item": 6.8,
+    "text_items_per_slide": 3.3,
+    "words_per_item": 4.4,
     "chart": 0,
     "table": 0,
     "kpi": 0,
     "picture": 0,
-    "skipped": 0
+    "skipped": 0,
+    "speech_minutes": 5.7
    },
    "audit": {
-    "errors": 0,
-    "warnings": 32,
-    "info": 0,
-    "contextual": 1,
+    "errors": 1,
+    "warnings": 35,
+    "info": 6,
+    "contextual": 5,
     "by_check": {
-     "C01_title_insight": 1,
-     "D02_bullet_words": 2,
-     "D05_fill": 2,
+     "C01_title_insight": 4,
+     "C05_has_content": 1,
+     "D05_fill": 6,
      "L02_overlap": 6,
-     "T06_contrast": 21
+     "T02_font_size": 6,
+     "T06_contrast": 19
     },
     "slides_with_issues": [
      1,
@@ -258,119 +209,49 @@
      3,
      4,
      5,
+     6,
      7,
      8,
      9,
      10
     ],
-    "checks_run": 35,
-    "duration_s": 39.727,
+    "checks_run": 37,
+    "duration_s": 35.139,
     "path": "narrative.audit.json",
     "kind": "deterministic+contextual",
     "autofix": {
-     "applied": 9,
+     "applied": 0,
      "skipped": 0,
      "before": {
-      "errors": 1,
-      "warnings": 37
+      "errors": 0,
+      "warnings": 31
      },
      "after": {
       "errors": 0,
       "warnings": 31
      },
-     "items": [
-      {
-       "slide_idx": 1,
-       "element_id": "441",
-       "check_id": "T02_font_size",
-       "fix": "snap_font_size",
-       "before": "21.6 pt",
-       "after": "20 pt"
-      },
-      {
-       "slide_idx": 2,
-       "element_id": "681",
-       "check_id": "L03_text_overflow",
-       "fix": "shrink_font_by_scale",
-       "before": "18 pt",
-       "after": "15.9 pt"
-      },
-      {
-       "slide_idx": 2,
-       "element_id": "681",
-       "check_id": "D02_bullet_words",
-       "fix": "refill_slot",
-       "before": "17 слов",
-       "after": "17 слов"
-      },
-      {
-       "slide_idx": 3,
-       "element_id": "547",
-       "check_id": "T02_font_size",
-       "fix": "snap_font_size",
-       "before": "21.6 pt",
-       "after": "20 pt"
-      },
-      {
-       "slide_idx": 4,
-       "element_id": "681",
-       "check_id": "D02_bullet_words",
-       "fix": "refill_slot",
-       "before": "18 слов",
-       "after": "18 слов"
-      },
-      {
-       "slide_idx": 6,
-       "element_id": "768",
-       "check_id": "T02_font_size",
-       "fix": "snap_font_size",
-       "before": "21.6 pt",
-       "after": "20 pt"
-      },
-      {
-       "slide_idx": 7,
-       "element_id": "441",
-       "check_id": "T02_font_size",
-       "fix": "snap_font_size",
-       "before": "21.6 pt",
-       "after": "20 pt"
-      },
-      {
-       "slide_idx": 8,
-       "element_id": "547",
-       "check_id": "T02_font_size",
-       "fix": "snap_font_size",
-       "before": "21.6 pt",
-       "after": "20 pt"
-      },
-      {
-       "slide_idx": 9,
-       "element_id": "681",
-       "check_id": "D02_bullet_words",
-       "fix": "refill_slot",
-       "before": "16 слов",
-       "after": "7 слов"
-      }
-     ]
+     "items": []
     }
    },
    "exports": {
     "pptx": "narrative.pptx",
     "pdf": "narrative.pdf",
-    "html": "narrative.html"
+    "html": "narrative.html",
+    "speech": "narrative.speech.md"
    },
    "timings_s": {
-    "images": 8.08,
-    "layout": 0.012,
-    "render": 0.867,
-    "audit": 0.604,
-    "autofix": 2.142,
-    "png": 8.334,
-    "audit_contextual": 39.362,
+    "images": 14.059,
+    "layout": 0.045,
+    "render": 2.251,
+    "audit": 1.324,
+    "autofix": 0.0,
+    "png": 21.854,
+    "audit_contextual": 33.507,
+    "notes": 16.378,
     "export_pdf": 0.004,
-    "export_html": 4.441,
-    "deck_build": 63.854,
-    "deck_total": 64.375
+    "export_html": 7.894,
+    "deck_build": 82.308,
+    "deck_total": 82.933
    }
   },
   {
@@ -402,33 +283,32 @@
      "slide6",
      "slide15",
      "slide10",
+     "slide9",
      "slide5",
-     "slide13",
-     "slide6",
-     "slide29"
+     "slide15",
+     "slide28"
     ],
-    "text_items_per_slide": 3.1,
-    "words_per_item": 5.8,
+    "text_items_per_slide": 2.8,
+    "words_per_item": 5.4,
     "chart": 0,
     "table": 0,
     "kpi": 0,
     "picture": 0,
-    "skipped": 0
+    "skipped": 0,
+    "speech_minutes": 6.3
    },
    "audit": {
-    "errors": 2,
+    "errors": 1,
     "warnings": 37,
-    "info": 1,
-    "contextual": 3,
+    "info": 6,
+    "contextual": 5,
     "by_check": {
-     "C04_facts_consistent": 1,
+     "C01_title_insight": 4,
      "C05_has_content": 1,
-     "C08_no_typos": 1,
-     "D02_bullet_words": 2,
-     "D05_fill": 5,
-     "L02_overlap": 9,
-     "T02_font_size": 1,
-     "T06_contrast": 20
+     "D05_fill": 7,
+     "L02_overlap": 7,
+     "T02_font_size": 6,
+     "T06_contrast": 19
     },
     "slides_with_issues": [
      1,
@@ -436,127 +316,57 @@
      3,
      4,
      5,
+     6,
      7,
      8,
      9,
      10
     ],
-    "checks_run": 35,
-    "duration_s": 27.264,
+    "checks_run": 37,
+    "duration_s": 28.746,
     "path": "visual.audit.json",
     "kind": "deterministic+contextual",
     "autofix": {
-     "applied": 9,
+     "applied": 0,
      "skipped": 0,
      "before": {
-      "errors": 2,
-      "warnings": 41
+      "errors": 0,
+      "warnings": 33
      },
      "after": {
       "errors": 0,
-      "warnings": 36
+      "warnings": 33
      },
-     "items": [
-      {
-       "slide_idx": 2,
-       "element_id": "681",
-       "check_id": "L03_text_overflow",
-       "fix": "shrink_font_by_scale",
-       "before": "18 pt",
-       "after": "15.9 pt"
-      },
-      {
-       "slide_idx": 2,
-       "element_id": "681",
-       "check_id": "D02_bullet_words",
-       "fix": "refill_slot",
-       "before": "17 слов",
-       "after": "17 слов"
-      },
-      {
-       "slide_idx": 3,
-       "element_id": "547",
-       "check_id": "T02_font_size",
-       "fix": "snap_font_size",
-       "before": "21.6 pt",
-       "after": "20 pt"
-      },
-      {
-       "slide_idx": 4,
-       "element_id": "442",
-       "check_id": "L03_text_overflow",
-       "fix": "shrink_font_by_scale",
-       "before": "18 pt",
-       "after": "15.9 pt"
-      },
-      {
-       "slide_idx": 4,
-       "element_id": "442",
-       "check_id": "D02_bullet_words",
-       "fix": "refill_slot",
-       "before": "18 слов",
-       "after": "18 слов"
-      },
-      {
-       "slide_idx": 4,
-       "element_id": "441",
-       "check_id": "T02_font_size",
-       "fix": "snap_font_size",
-       "before": "21.6 pt",
-       "after": "20 pt"
-      },
-      {
-       "slide_idx": 7,
-       "element_id": "547",
-       "check_id": "T02_font_size",
-       "fix": "snap_font_size",
-       "before": "21.6 pt",
-       "after": "20 pt"
-      },
-      {
-       "slide_idx": 8,
-       "element_id": "441",
-       "check_id": "T02_font_size",
-       "fix": "snap_font_size",
-       "before": "21.6 pt",
-       "after": "20 pt"
-      },
-      {
-       "slide_idx": 9,
-       "element_id": "648",
-       "check_id": "D02_bullet_words",
-       "fix": "refill_slot",
-       "before": "16 слов",
-       "after": "7 слов"
-      }
-     ]
+     "items": []
     }
    },
    "exports": {
     "pptx": "visual.pptx",
     "pdf": "visual.pdf",
-    "html": "visual.html"
+    "html": "visual.html",
+    "speech": "visual.speech.md"
    },
    "timings_s": {
-    "images": 8.074,
-    "layout": 0.007,
-    "render": 0.957,
-    "audit": 0.806,
-    "autofix": 2.291,
-    "png": 16.386,
-    "audit_contextual": 26.751,
-    "export_pdf": 0.005,
-    "export_html": 6.555,
-    "deck_build": 61.857,
-    "deck_total": 62.384
+    "images": 14.058,
+    "layout": 0.05,
+    "render": 2.22,
+    "audit": 1.427,
+    "autofix": 0.0,
+    "png": 37.495,
+    "audit_contextual": 27.118,
+    "notes": 29.984,
+    "export_pdf": 0.001,
+    "export_html": 2.071,
+    "deck_build": 85.327,
+    "deck_total": 85.955
    }
   }
  ],
  "timings_s": {
-  "parse": 0.338,
+  "parse": 0.353,
   "outline": 0.0,
-  "decks": 63.873,
-  "total": 64.379
+  "decks": 85.363,
+  "total": 85.969
  },
  "warnings": [],
  "not_implemented": []

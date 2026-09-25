@@ -1,5 +1,5 @@
 {
- "created": "2026-09-24T12:33:22+00:00",
+ "created": "2026-09-25T12:52:35+00:00",
  "template": {
   "id": "69e4a68c4372",
   "path": "data/templates/VK_WorkSpace_Клиентская_конференция_Шаблон_03.pptx",
@@ -10,7 +10,7 @@
  "content_pack": "",
  "brief": "brief.md",
  "outline": "outline.json",
- "outline_title": "VK Tech: IT-решения для бизнеса",
+ "outline_title": "VK Tech: корпоративные ИТ-решения",
  "strategy": {
   "name": "narrative",
   "version": "v2",
@@ -22,7 +22,8 @@
  },
  "skills": {
   "image_prompter": "v1",
-  "audit_judge": "v2"
+  "audit_judge": "v2",
+  "speaker_notes": "v3"
  },
  "models": {
   "text": "qwen/qwen3.8-27b-20260814",
@@ -34,8 +35,26 @@
   {
    "skill": "image_prompter@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 2.7219370000020717,
-   "prompt_tokens": 363,
+   "duration_s": 3.9973226000001887,
+   "prompt_tokens": 347,
+   "completion_tokens": 111,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "image_prompter@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 4.610533899991424,
+   "prompt_tokens": 354,
+   "completion_tokens": 130,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "image_prompter@v1",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 5.120745199994417,
+   "prompt_tokens": 342,
    "completion_tokens": 126,
    "ok": true,
    "error": null
@@ -43,53 +62,98 @@
   {
    "skill": "image_prompter@v1",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 3.5555712999994284,
-   "prompt_tokens": 361,
-   "completion_tokens": 138,
+   "duration_s": 7.386821299995063,
+   "prompt_tokens": 341,
+   "completion_tokens": 118,
    "ok": true,
    "error": null
   },
   {
-   "skill": "image_prompter@v1",
+   "skill": "image_gen",
+   "model": "black-forest-labs/flux.2-klein-4b",
+   "duration_s": 3.274572599999374,
+   "prompt_tokens": 0,
+   "completion_tokens": 0,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "image_gen",
+   "model": "black-forest-labs/flux.2-klein-4b",
+   "duration_s": 4.986457100007101,
+   "prompt_tokens": 0,
+   "completion_tokens": 0,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "image_gen",
+   "model": "black-forest-labs/flux.2-klein-4b",
+   "duration_s": 4.901725300005637,
+   "prompt_tokens": 0,
+   "completion_tokens": 0,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "image_gen",
+   "model": "black-forest-labs/flux.2-klein-4b",
+   "duration_s": 6.616166499996325,
+   "prompt_tokens": 0,
+   "completion_tokens": 0,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "speaker_notes@v3",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 4.305457700000261,
-   "prompt_tokens": 414,
-   "completion_tokens": 131,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "image_gen",
-   "model": "black-forest-labs/flux.2-klein-4b",
-   "duration_s": 3.753182200001902,
-   "prompt_tokens": 0,
-   "completion_tokens": 0,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "image_gen",
-   "model": "black-forest-labs/flux.2-klein-4b",
-   "duration_s": 3.343644399996265,
-   "prompt_tokens": 0,
-   "completion_tokens": 0,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "image_gen",
-   "model": "black-forest-labs/flux.2-klein-4b",
-   "duration_s": 3.748628200002713,
-   "prompt_tokens": 0,
-   "completion_tokens": 0,
+   "duration_s": 16.375705900005414,
+   "prompt_tokens": 2150,
+   "completion_tokens": 1404,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v2",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 12.015786200005095,
-   "prompt_tokens": 1489,
+   "duration_s": 6.454605299994,
+   "prompt_tokens": 1552,
+   "completion_tokens": 436,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 7.053772999992361,
+   "prompt_tokens": 1541,
+   "completion_tokens": 463,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 9.810775999998441,
+   "prompt_tokens": 1587,
+   "completion_tokens": 479,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 10.85339620000741,
+   "prompt_tokens": 1580,
+   "completion_tokens": 446,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 5.352785199997015,
+   "prompt_tokens": 1551,
    "completion_tokens": 419,
    "ok": true,
    "error": null
@@ -97,35 +161,26 @@
   {
    "skill": "audit_judge@v2",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 13.103753499999584,
-   "prompt_tokens": 1453,
-   "completion_tokens": 480,
+   "duration_s": 5.987914199999068,
+   "prompt_tokens": 1574,
+   "completion_tokens": 451,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v2",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 3.393653600003745,
-   "prompt_tokens": 1485,
-   "completion_tokens": 469,
+   "duration_s": 6.783768900000723,
+   "prompt_tokens": 1557,
+   "completion_tokens": 432,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v2",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 2.66081700000359,
-   "prompt_tokens": 1503,
-   "completion_tokens": 260,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v2",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 16.33087049999449,
-   "prompt_tokens": 1546,
+   "duration_s": 9.907766999996966,
+   "prompt_tokens": 1557,
    "completion_tokens": 424,
    "ok": true,
    "error": null
@@ -133,63 +188,36 @@
   {
    "skill": "audit_judge@v2",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 3.219359599999734,
-   "prompt_tokens": 1504,
-   "completion_tokens": 443,
+   "duration_s": 8.848748399992473,
+   "prompt_tokens": 1564,
+   "completion_tokens": 415,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v2",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 21.25282159999915,
-   "prompt_tokens": 1560,
-   "completion_tokens": 470,
+   "duration_s": 5.926443199990899,
+   "prompt_tokens": 1526,
+   "completion_tokens": 308,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v2",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 10.978176399999938,
-   "prompt_tokens": 1481,
-   "completion_tokens": 460,
+   "duration_s": 20.09036859999469,
+   "prompt_tokens": 1627,
+   "completion_tokens": 413,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v2",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 15.085390600004757,
-   "prompt_tokens": 1509,
-   "completion_tokens": 408,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v2",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 17.436167100000603,
-   "prompt_tokens": 1531,
-   "completion_tokens": 491,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v2",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 10.191492099998868,
-   "prompt_tokens": 1452,
-   "completion_tokens": 468,
-   "ok": true,
-   "error": null
-  },
-  {
-   "skill": "audit_judge@v2",
-   "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 18.085025999993377,
-   "prompt_tokens": 1531,
-   "completion_tokens": 510,
+   "duration_s": 14.87419129999762,
+   "prompt_tokens": 1586,
+   "completion_tokens": 375,
    "ok": true,
    "error": null
   }
@@ -198,57 +226,57 @@
   {
    "idx": 0,
    "archetype": "title",
-   "title": "VK Tech: IT-решения для бизнеса"
+   "title": "VK Tech: корпоративные ИТ-решения"
   },
   {
    "idx": 1,
    "archetype": "cards",
-   "title": "Цифровая трансформация требует надежной технологической основы"
+   "title": "Устаревание инфраструктуры усложняет управление ИТ"
   },
   {
    "idx": 2,
    "archetype": "image_text",
-   "title": "VK Tech разрабатывает корпоративное ПО по строгим стандартам"
+   "title": "Единая среда обеспечивает прозрачность и управляемость"
   },
   {
    "idx": 3,
    "archetype": "cards",
-   "title": "Архитектура решений обеспечивает масштабируемость и защиту"
+   "title": "VK Tech: комплексная платформа для ИТ-операций"
   },
   {
    "idx": 4,
    "archetype": "image_text",
-   "title": "Интеграция сервисов автоматизирует ключевые бизнес-процессы"
+   "title": "Архитектура обеспечивает масштабируемость и гибкость"
   },
   {
    "idx": 5,
    "archetype": "cards",
-   "title": "Решения адаптируются под требования отраслей и масштабов"
+   "title": "Безопасность соответствует современным стандартам защиты"
   },
   {
    "idx": 6,
-   "archetype": "process",
-   "title": "Внедрение проходит поэтапно: от аудита до поддержки"
+   "archetype": "image_text",
+   "title": "Интеграция с существующими корпоративными системами"
   },
   {
    "idx": 7,
    "archetype": "cards",
-   "title": "Защищенность данных соответствует международным стандартам"
+   "title": "Автоматизация снижает операционные затраты"
   },
   {
    "idx": 8,
-   "archetype": "cards",
-   "title": "Гибкая модель обслуживания включает полный цикл поддержки"
+   "archetype": "process",
+   "title": "Внедрение: от аудита до масштабирования"
   },
   {
    "idx": 9,
-   "archetype": "image_text",
-   "title": "Комплексные решения снижают операционные риски"
+   "archetype": "cards",
+   "title": "Поддержка гарантирует стабильность платформы"
   },
   {
    "idx": 10,
-   "archetype": "cards",
-   "title": "Следующий шаг — обсуждение деталей и приоритетов"
+   "archetype": "image_text",
+   "title": "Демонстрация платформы на вашей инфраструктуре"
   },
   {
    "idx": 11,
@@ -301,45 +329,45 @@
   },
   {
    "idx": 6,
-   "archetype": "process",
-   "exemplar_id": "slide22",
+   "archetype": "image_text",
+   "exemplar_id": "slide5",
    "exemplar_archetype": "cards",
-   "score": -1.0499999999999998
+   "score": -12.05
   },
   {
    "idx": 7,
-   "archetype": "cards",
-   "exemplar_id": "slide5",
-   "exemplar_archetype": "cards",
-   "score": -1.0499999999999998
-  },
-  {
-   "idx": 8,
    "archetype": "cards",
    "exemplar_id": "slide10",
    "exemplar_archetype": "cards",
    "score": -1.1
   },
   {
-   "idx": 9,
-   "archetype": "image_text",
-   "exemplar_id": "slide15",
-   "exemplar_archetype": "cards",
-   "score": -12.05
+   "idx": 8,
+   "archetype": "process",
+   "exemplar_id": "slide27",
+   "exemplar_archetype": "process",
+   "score": 3.0
   },
   {
-   "idx": 10,
+   "idx": 9,
    "archetype": "cards",
    "exemplar_id": "slide6",
    "exemplar_archetype": "cards",
    "score": -1.320202370764664
   },
   {
+   "idx": 10,
+   "archetype": "image_text",
+   "exemplar_id": "slide15",
+   "exemplar_archetype": "cards",
+   "score": -6.05
+  },
+  {
    "idx": 11,
    "archetype": "closing",
-   "exemplar_id": "slide29",
+   "exemplar_id": "slide28",
    "exemplar_archetype": "closing",
-   "score": -3.0
+   "score": 0.95
   }
  ],
  "warnings": [],
@@ -354,7 +382,7 @@
    "cards",
    "cards",
    "cards",
-   "cards",
+   "process",
    "cards",
    "cards",
    "closing"
@@ -366,32 +394,34 @@
    "slide10",
    "slide15",
    "slide6",
-   "slide22",
    "slide5",
    "slide10",
-   "slide15",
+   "slide27",
    "slide6",
-   "slide29"
+   "slide15",
+   "slide28"
   ],
-  "text_items_per_slide": 3.0,
-  "words_per_item": 6.8,
+  "text_items_per_slide": 3.3,
+  "words_per_item": 4.4,
   "chart": 0,
   "table": 0,
   "kpi": 0,
   "picture": 0,
-  "skipped": 0
+  "skipped": 0,
+  "speech_minutes": 5.7
  },
  "audit": {
-  "errors": 0,
-  "warnings": 32,
-  "info": 0,
-  "contextual": 1,
+  "errors": 1,
+  "warnings": 35,
+  "info": 6,
+  "contextual": 5,
   "by_check": {
-   "C01_title_insight": 1,
-   "D02_bullet_words": 2,
-   "D05_fill": 2,
+   "C01_title_insight": 4,
+   "C05_has_content": 1,
+   "D05_fill": 6,
    "L02_overlap": 6,
-   "T06_contrast": 21
+   "T02_font_size": 6,
+   "T06_contrast": 19
   },
   "slides_with_issues": [
    1,
@@ -399,154 +429,99 @@
    3,
    4,
    5,
+   6,
    7,
    8,
    9,
    10
   ],
-  "checks_run": 35,
-  "duration_s": 39.727,
+  "checks_run": 37,
+  "duration_s": 35.139,
   "path": "narrative.audit.json",
   "kind": "deterministic+contextual",
   "autofix": {
-   "applied": 9,
+   "applied": 0,
    "skipped": 0,
    "before": {
-    "errors": 1,
-    "warnings": 37
+    "errors": 0,
+    "warnings": 31
    },
    "after": {
     "errors": 0,
     "warnings": 31
    },
-   "items": [
-    {
-     "slide_idx": 1,
-     "element_id": "441",
-     "check_id": "T02_font_size",
-     "fix": "snap_font_size",
-     "before": "21.6 pt",
-     "after": "20 pt"
-    },
-    {
-     "slide_idx": 2,
-     "element_id": "681",
-     "check_id": "L03_text_overflow",
-     "fix": "shrink_font_by_scale",
-     "before": "18 pt",
-     "after": "15.9 pt"
-    },
-    {
-     "slide_idx": 2,
-     "element_id": "681",
-     "check_id": "D02_bullet_words",
-     "fix": "refill_slot",
-     "before": "17 слов",
-     "after": "17 слов"
-    },
-    {
-     "slide_idx": 3,
-     "element_id": "547",
-     "check_id": "T02_font_size",
-     "fix": "snap_font_size",
-     "before": "21.6 pt",
-     "after": "20 pt"
-    },
-    {
-     "slide_idx": 4,
-     "element_id": "681",
-     "check_id": "D02_bullet_words",
-     "fix": "refill_slot",
-     "before": "18 слов",
-     "after": "18 слов"
-    },
-    {
-     "slide_idx": 6,
-     "element_id": "768",
-     "check_id": "T02_font_size",
-     "fix": "snap_font_size",
-     "before": "21.6 pt",
-     "after": "20 pt"
-    },
-    {
-     "slide_idx": 7,
-     "element_id": "441",
-     "check_id": "T02_font_size",
-     "fix": "snap_font_size",
-     "before": "21.6 pt",
-     "after": "20 pt"
-    },
-    {
-     "slide_idx": 8,
-     "element_id": "547",
-     "check_id": "T02_font_size",
-     "fix": "snap_font_size",
-     "before": "21.6 pt",
-     "after": "20 pt"
-    },
-    {
-     "slide_idx": 9,
-     "element_id": "681",
-     "check_id": "D02_bullet_words",
-     "fix": "refill_slot",
-     "before": "16 слов",
-     "after": "7 слов"
-    }
-   ]
+   "items": []
   }
  },
  "images": {
   "mode": "preferred",
-  "generated": 3,
+  "generated": 4,
   "cache": 0,
   "content": 0,
   "failed": 0,
   "items": [
    {
     "slide_idx": 2,
-    "title": "VK Tech разрабатывает корпоративное ПО по строгим стандартам",
+    "title": "Единая среда обеспечивает прозрачность и управляемость",
     "source": "generated",
-    "path": "images/cb068e15461b9354.jpg",
-    "prompt": "Abstract corporate illustration featuring a secure digital shield and layered geometric architecture, symbolizing robust IT infrastructure and regulatory compliance. Dark background with soft gradients of vibrant blue #0077FF and cyan #00AEE8. Minimalist, clean composition with ample negative space on the left for text overlay. Modern, professional, and sleek 3D render style. No text, no letters, no watermark, no people close-up.",
+    "path": "images/bea2944992b49c64.jpg",
+    "prompt": "Abstract corporate illustration featuring interconnected translucent glass nodes and soft flowing lines. Dark background with vibrant blue (#0077FF) and cyan (#00AEE8) gradients. Minimalist 3D render style, clean composition. Large negative space on the left for text overlay. No people, no logos, no text, no letters, no watermark.",
     "error": null
    },
    {
     "slide_idx": 4,
-    "title": "Интеграция сервисов автоматизирует ключевые бизнес-процессы",
+    "title": "Архитектура обеспечивает масштабируемость и гибкость",
     "source": "generated",
-    "path": "images/791e6493f81d136e.jpg",
-    "prompt": "Abstract corporate illustration featuring interconnected geometric nodes and flowing data streams, symbolizing automated business processes. Dark background with soft gradients in vivid blue #0077FF and cyan #00AEE8. Minimalist, clean composition with ample negative space on the left for text overlay. No people, no logos, no text, no letters, no watermark, no numbers.",
+    "path": "images/984d02e45a252936.jpg",
+    "prompt": "Abstract corporate illustration of scalable modular architecture, interlocking geometric shapes, soft gradients in blue #0077FF and cyan #00AEE8 on dark background, minimal clean composition, wide aspect ratio with empty space for text, no people, no logos, no text, no letters, no watermark",
     "error": null
    },
    {
-    "slide_idx": 9,
-    "title": "Комплексные решения снижают операционные риски",
+    "slide_idx": 6,
+    "title": "Интеграция с существующими корпоративными системами",
     "source": "generated",
-    "path": "images/96be85ee024bbcc7.jpg",
-    "prompt": "Abstract corporate illustration featuring interconnected geometric shapes and soft glowing lines, symbolizing a unified technology ecosystem. Deep dark background with vibrant blue (#0077FF) and cyan (#00AEE8) gradients. Minimalist, clean 3D render style. Wide 16:9 composition with ample negative space on the left for text overlay. No people, no logos, no text, no letters, no watermark.",
+    "path": "images/1bc426cf67239e9e.jpg",
+    "prompt": "Abstract corporate illustration featuring interconnected geometric nodes and flowing lines on a deep dark background. Use a palette of vibrant blue (#0077FF) and cyan (#00AEE8) with soft gradients. Minimalist 3D render style, clean composition with ample negative space on the left for text overlay. No people, no logos, no text, no letters, no watermark.",
+    "error": null
+   },
+   {
+    "slide_idx": 10,
+    "title": "Демонстрация платформы на вашей инфраструктуре",
+    "source": "generated",
+    "path": "images/a247c08d43d04a56.jpg",
+    "prompt": "Minimalist 3D render of abstract server racks and floating data nodes, symbolizing infrastructure integration. Dark background with soft gradients in #0077FF and #00AEE8. Clean corporate style, no people, no text, no letters, no watermark. Wide 16:9 composition with ample negative space on the left for text overlay.",
     "error": null
    }
   ]
  },
+ "speech": {
+  "talk_minutes": 7.0,
+  "minutes": 5.7,
+  "words": 689,
+  "slides_without_notes": [],
+  "path": "narrative.speech.md"
+ },
  "exports": {
   "pptx": "narrative.pptx",
   "pdf": "narrative.pdf",
-  "html": "narrative.html"
+  "html": "narrative.html",
+  "speech": "narrative.speech.md"
  },
  "timings_s": {
-  "parse": 0.338,
+  "parse": 0.353,
   "outline": 0.0,
-  "images": 8.08,
-  "layout": 0.012,
-  "render": 0.867,
-  "audit": 0.604,
-  "autofix": 2.142,
-  "png": 8.334,
-  "audit_contextual": 39.362,
+  "images": 14.059,
+  "layout": 0.045,
+  "render": 2.251,
+  "audit": 1.324,
+  "autofix": 0.0,
+  "png": 21.854,
+  "audit_contextual": 33.507,
+  "notes": 16.378,
   "export_pdf": 0.004,
-  "export_html": 4.441,
-  "deck_build": 63.854,
-  "deck_total": 64.375
+  "export_html": 7.894,
+  "deck_build": 82.308,
+  "deck_total": 82.933
  },
  "time_budget_s": 300
 }

@@ -1,5 +1,5 @@
 {
- "created": "2026-09-24T12:31:37+00:00",
+ "created": "2026-09-25T12:50:57+00:00",
  "template": {
   "id": "6576a887482e",
   "path": "data/templates/Шаблон презентации VK Education.pptx",
@@ -10,7 +10,7 @@
  "content_pack": "",
  "brief": "brief.md",
  "outline": "outline.json",
- "outline_title": "VK Tech: IT-решения для бизнеса",
+ "outline_title": "VK Tech: корпоративные ИТ-решения",
  "strategy": {
   "name": "executive",
   "version": "v1",
@@ -21,7 +21,8 @@
   "audience_hint": "руководителю на 5 минут — статус, отчёт, решение по цифрам; читается без докладчика"
  },
  "skills": {
-  "audit_judge": "v2"
+  "audit_judge": "v2",
+  "speaker_notes": "v3"
  },
  "models": {
   "text": "qwen/qwen3.8-27b-20260814",
@@ -33,17 +34,17 @@
   {
    "skill": "audit_judge@v2",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 15.996826800001145,
-   "prompt_tokens": 1498,
-   "completion_tokens": 430,
+   "duration_s": 6.396262199996272,
+   "prompt_tokens": 1541,
+   "completion_tokens": 445,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v2",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 16.02468940000108,
-   "prompt_tokens": 1555,
+   "duration_s": 8.258996800010209,
+   "prompt_tokens": 1607,
    "completion_tokens": 438,
    "ok": true,
    "error": null
@@ -51,135 +52,162 @@
   {
    "skill": "audit_judge@v2",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 18.205154800001765,
-   "prompt_tokens": 1485,
-   "completion_tokens": 446,
+   "duration_s": 13.212266099988483,
+   "prompt_tokens": 1589,
+   "completion_tokens": 455,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v2",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 23.381924699999217,
-   "prompt_tokens": 1534,
-   "completion_tokens": 481,
+   "duration_s": 5.718418700009352,
+   "prompt_tokens": 1557,
+   "completion_tokens": 398,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v2",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 8.250570800002606,
-   "prompt_tokens": 1514,
-   "completion_tokens": 441,
+   "duration_s": 8.656798800002434,
+   "prompt_tokens": 1570,
+   "completion_tokens": 458,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v2",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 9.18961880000279,
-   "prompt_tokens": 1503,
-   "completion_tokens": 480,
+   "duration_s": 5.789897800001199,
+   "prompt_tokens": 1580,
+   "completion_tokens": 412,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v2",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 2.6593941999963135,
-   "prompt_tokens": 1482,
-   "completion_tokens": 509,
+   "duration_s": 10.082073400000809,
+   "prompt_tokens": 1560,
+   "completion_tokens": 430,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v2",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 7.077931199994055,
-   "prompt_tokens": 1461,
-   "completion_tokens": 480,
+   "duration_s": 10.00872120000713,
+   "prompt_tokens": 1539,
+   "completion_tokens": 428,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v2",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 17.018401900000754,
-   "prompt_tokens": 1528,
-   "completion_tokens": 470,
+   "duration_s": 16.337117899995064,
+   "prompt_tokens": 1600,
+   "completion_tokens": 452,
+   "ok": true,
+   "error": null
+  },
+  {
+   "skill": "speaker_notes@v3",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 39.15131370000017,
+   "prompt_tokens": 2081,
+   "completion_tokens": 1524,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v2",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 12.408246599996346,
-   "prompt_tokens": 1452,
-   "completion_tokens": 474,
+   "duration_s": 12.013009399990551,
+   "prompt_tokens": 1524,
+   "completion_tokens": 443,
    "ok": true,
    "error": null
   },
   {
    "skill": "audit_judge@v2",
    "model": "qwen/qwen3.8-27b-20260814",
-   "duration_s": 17.736969699995825,
-   "prompt_tokens": 1531,
-   "completion_tokens": 488,
+   "duration_s": 63.74131870000565,
+   "prompt_tokens": 3137,
+   "completion_tokens": 321,
    "ok": true,
    "error": null
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 63.741420700011076,
+   "prompt_tokens": 0,
+   "completion_tokens": 0,
+   "ok": false,
+   "error": "Expecting ',' delimiter: line 30 column 6 (char 806)"
+  },
+  {
+   "skill": "audit_judge@v2",
+   "model": "qwen/qwen3.8-27b-20260814",
+   "duration_s": 0.0,
+   "prompt_tokens": 0,
+   "completion_tokens": 0,
+   "ok": false,
+   "error": "бюджет времени исчерпан (после: Expecting ',' delimiter: line 30 column 6 (char 806))"
   }
  ],
  "plan": [
   {
    "idx": 0,
    "archetype": "title",
-   "title": "VK Tech: IT-решения для бизнеса"
+   "title": "VK Tech: корпоративные ИТ-решения"
   },
   {
    "idx": 1,
    "archetype": "cards",
-   "title": "Цифровая трансформация требует надежной технологической основы"
+   "title": "Устаревание инфраструктуры усложняет управление ИТ"
   },
   {
    "idx": 2,
    "archetype": "cards",
-   "title": "Архитектура решений обеспечивает масштабируемость и защиту"
+   "title": "VK Tech: комплексная платформа для ИТ-операций"
   },
   {
    "idx": 3,
    "archetype": "image_text",
-   "title": "Интеграция сервисов автоматизирует ключевые бизнес-процессы"
+   "title": "Архитектура обеспечивает масштабируемость и гибкость"
   },
   {
    "idx": 4,
    "archetype": "cards",
-   "title": "Решения адаптируются под требования отраслей и масштабов"
+   "title": "Безопасность соответствует современным стандартам защиты"
   },
   {
    "idx": 5,
-   "archetype": "process",
-   "title": "Внедрение проходит поэтапно: от аудита до поддержки"
+   "archetype": "image_text",
+   "title": "Интеграция с существующими корпоративными системами"
   },
   {
    "idx": 6,
    "archetype": "cards",
-   "title": "Защищенность данных соответствует международным стандартам"
+   "title": "Автоматизация снижает операционные затраты"
   },
   {
    "idx": 7,
-   "archetype": "cards",
-   "title": "Гибкая модель обслуживания включает полный цикл поддержки"
+   "archetype": "process",
+   "title": "Внедрение: от аудита до масштабирования"
   },
   {
    "idx": 8,
-   "archetype": "image_text",
-   "title": "Комплексные решения снижают операционные риски"
+   "archetype": "cards",
+   "title": "Поддержка гарантирует стабильность платформы"
   },
   {
    "idx": 9,
-   "archetype": "cards",
-   "title": "Следующий шаг — обсуждение деталей и приоритетов"
+   "archetype": "image_text",
+   "title": "Демонстрация платформы на вашей инфраструктуре"
   },
   {
    "idx": 10,
@@ -198,16 +226,16 @@
   {
    "idx": 1,
    "archetype": "cards",
-   "exemplar_id": "slide7",
+   "exemplar_id": "slide17",
    "exemplar_archetype": "cards",
-   "score": 2.7
+   "score": 2.85
   },
   {
    "idx": 2,
    "archetype": "cards",
    "exemplar_id": "slide7",
    "exemplar_archetype": "cards",
-   "score": -2.8
+   "score": -0.8
   },
   {
    "idx": 3,
@@ -219,16 +247,16 @@
   {
    "idx": 4,
    "archetype": "cards",
-   "exemplar_id": "slide17",
+   "exemplar_id": "slide7",
    "exemplar_archetype": "cards",
-   "score": -4.15
+   "score": -2.8
   },
   {
    "idx": 5,
-   "archetype": "process",
-   "exemplar_id": "slide22",
-   "exemplar_archetype": "cards",
-   "score": -1.1
+   "archetype": "image_text",
+   "exemplar_id": "slide30",
+   "exemplar_archetype": "image_text",
+   "score": -5.05
   },
   {
    "idx": 6,
@@ -239,34 +267,36 @@
   },
   {
    "idx": 7,
+   "archetype": "process",
+   "exemplar_id": "slide21",
+   "exemplar_archetype": "process",
+   "score": 2.95
+  },
+  {
+   "idx": 8,
    "archetype": "cards",
    "exemplar_id": "slide27",
    "exemplar_archetype": "cards",
    "score": -4.25
   },
   {
-   "idx": 8,
+   "idx": 9,
    "archetype": "image_text",
-   "exemplar_id": "slide30",
+   "exemplar_id": "slide33",
    "exemplar_archetype": "image_text",
    "score": -5.05
   },
   {
-   "idx": 9,
-   "archetype": "cards",
-   "exemplar_id": "slide28",
-   "exemplar_archetype": "cards",
-   "score": -4.25
-  },
-  {
    "idx": 10,
    "archetype": "closing",
-   "exemplar_id": "slide4",
-   "exemplar_archetype": "title",
-   "score": -2.1
+   "exemplar_id": "slide53",
+   "exemplar_archetype": "closing",
+   "score": 0.85
   }
  ],
- "warnings": [],
+ "warnings": [
+  "audit.contextual: 1 слайдов не проверены судьёй — бюджет времени прогона"
+ ],
  "stats": {
   "slides": 11,
   "archetypes": [
@@ -275,109 +305,88 @@
    "cards",
    "image_text",
    "cards",
-   "cards",
-   "cards",
-   "cards",
    "image_text",
    "cards",
-   "title"
+   "process",
+   "cards",
+   "image_text",
+   "closing"
   ],
   "exemplars": [
    "slide5",
-   "slide7",
+   "slide17",
    "slide7",
    "slide15",
-   "slide17",
-   "slide22",
-   "slide26",
-   "slide27",
+   "slide7",
    "slide30",
-   "slide28",
-   "slide4"
+   "slide26",
+   "slide21",
+   "slide27",
+   "slide33",
+   "slide53"
   ],
-  "text_items_per_slide": 2.9,
-  "words_per_item": 8.4,
+  "text_items_per_slide": 2.6,
+  "words_per_item": 6.4,
   "chart": 0,
   "table": 0,
   "kpi": 1,
   "picture": 0,
-  "skipped": 0
+  "skipped": 0,
+  "speech_minutes": 5.9
  },
  "audit": {
-  "errors": 2,
-  "warnings": 5,
-  "info": 1,
-  "contextual": 2,
+  "errors": 0,
+  "warnings": 9,
+  "info": 6,
+  "contextual": 8,
   "by_check": {
-   "C02_content_matches_title": 1,
-   "C07_no_garbage": 1,
-   "D02_bullet_words": 2,
-   "D05_fill": 2,
-   "T02_font_size": 1,
+   "C00_judge_error": 1,
+   "C01_title_insight": 4,
+   "C06_images_relevant": 2,
+   "C08_no_typos": 1,
+   "D05_fill": 1,
+   "T02_font_size": 5,
    "T06_contrast": 1
   },
   "slides_with_issues": [
-   0,
    1,
    2,
-   3,
-   4
+   5,
+   7,
+   8,
+   9
   ],
-  "checks_run": 35,
-  "duration_s": 42.149,
+  "checks_run": 37,
+  "duration_s": 66.088,
   "path": "executive.audit.json",
   "kind": "deterministic+contextual",
   "autofix": {
-   "applied": 5,
+   "applied": 2,
    "skipped": 0,
    "before": {
     "errors": 0,
-    "warnings": 8
+    "warnings": 4
    },
    "after": {
     "errors": 0,
-    "warnings": 5
+    "warnings": 2
    },
    "items": [
     {
      "slide_idx": 0,
-     "element_id": "261",
-     "check_id": "T02_font_size",
-     "fix": "snap_font_size",
-     "before": "12 pt",
-     "after": "14.1 pt"
+     "element_id": "262",
+     "check_id": "L03_text_overflow",
+     "fix": "shrink_font_by_scale",
+     "before": "60 pt",
+     "after": "53.7 pt"
     },
     {
      "slide_idx": 1,
-     "element_id": "278",
-     "check_id": "D02_bullet_words",
-     "fix": "refill_slot",
-     "before": "17 слов",
-     "after": "17 слов"
-    },
-    {
-     "slide_idx": 3,
-     "element_id": "405",
-     "check_id": "D02_bullet_words",
-     "fix": "refill_slot",
-     "before": "18 слов",
-     "after": "18 слов"
-    },
-    {
-     "slide_idx": 4,
      "element_id": "430",
      "check_id": "T02_font_size",
      "fix": "snap_font_size",
      "before": "21.6 pt",
      "after": "20 pt"
-    },
-    {
-     "slide_idx": 8,
-     "element_id": "819",
-     "check_id": "D02_bullet_words",
-     "fix": "refill_slot",
-     "before": "16 слов",
-     "after": "7 слов"
     }
    ]
   }
@@ -390,24 +399,33 @@
   "failed": 0,
   "items": []
  },
+ "speech": {
+  "talk_minutes": 7.0,
+  "minutes": 5.9,
+  "words": 712,
+  "slides_without_notes": [],
+  "path": "executive.speech.md"
+ },
  "exports": {
   "pptx": "executive.pptx",
   "pdf": "executive.pdf",
-  "html": "executive.html"
+  "html": "executive.html",
+  "speech": "executive.speech.md"
  },
  "timings_s": {
-  "parse": 1.744,
+  "parse": 0.682,
   "outline": 0.0,
-  "layout": 0.024,
-  "render": 2.917,
-  "audit": 1.042,
-  "autofix": 3.011,
-  "png": 10.823,
-  "audit_contextual": 41.138,
-  "export_pdf": 0.002,
-  "export_html": 2.672,
-  "deck_build": 61.637,
-  "deck_total": 63.841
+  "layout": 0.009,
+  "render": 1.61,
+  "audit": 0.576,
+  "autofix": 1.914,
+  "png": 7.639,
+  "audit_contextual": 65.26,
+  "notes": 39.156,
+  "export_pdf": 0.001,
+  "export_html": 1.783,
+  "deck_build": 79.802,
+  "deck_total": 80.723
  },
  "time_budget_s": 300
 }

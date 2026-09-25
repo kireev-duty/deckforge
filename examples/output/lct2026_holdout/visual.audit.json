@@ -22,34 +22,39 @@
    }
   },
   {
-   "check_id": "D05_fill",
-   "kind": "deterministic",
+   "check_id": "C08_no_typos",
+   "kind": "contextual",
    "severity": "warning",
    "slide_idx": 1,
    "element_id": null,
    "box": null,
-   "message": "Слайд перегружен: контент занимает 88% рабочей области (норма 25%–75%)",
-   "autofix": "change_exemplar",
+   "message": "В первом блоке нарушен падеж: «управление корпоративными».",
+   "autofix": null,
    "evidence": {
-    "fill": 0.877
+    "question": "Текст без опечаток",
+    "sources": "brief"
    }
   },
   {
-   "check_id": "D02_bullet_words",
+   "check_id": "T06_contrast",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 2,
-   "element_id": "7",
+   "slide_idx": 1,
+   "element_id": "9",
    "box": {
-    "x": 595433,
-    "y": 1143695,
-    "w": 4807840,
-    "h": 4717356
+    "x": 525817,
+    "y": 421226,
+    "w": 9862734,
+    "h": 376138
    },
-   "message": "Пункт из 17 слов (норма ≤ 15): «Мы создаем комплексные IT-решения, соответствующие междунаро…»",
-   "autofix": "refill_slot",
+   "message": "Контраст текста #F2F2F2 к фону #FF0053 = 3.5:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
    "evidence": {
-    "words": 17
+    "contrast": 3.49,
+    "text_color": "F2F2F2",
+    "background": "FF0053",
+    "need": 4.5,
+    "template_color": 1
    }
   },
   {
@@ -63,6 +68,20 @@
    "autofix": "change_exemplar",
    "evidence": {
     "fill": 0.928
+   }
+  },
+  {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 3,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок является тематическим описанием, а не содержит конкретного вывода или тезиса.",
+   "autofix": null,
+   "evidence": {
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "brief"
    }
   },
   {
@@ -88,24 +107,6 @@
    }
   },
   {
-   "check_id": "D02_bullet_words",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 4,
-   "element_id": "7",
-   "box": {
-    "x": 595433,
-    "y": 1143695,
-    "w": 4807840,
-    "h": 4717356
-   },
-   "message": "Пункт из 18 слов (норма ≤ 15): «Наши решения позволяют автоматизировать рутинные операции, с…»",
-   "autofix": "refill_slot",
-   "evidence": {
-    "words": 18
-   }
-  },
-  {
    "check_id": "D05_fill",
    "kind": "deterministic",
    "severity": "warning",
@@ -119,27 +120,80 @@
    }
   },
   {
-   "check_id": "C04_facts_consistent",
-   "kind": "contextual",
-   "severity": "error",
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
    "slide_idx": 5,
    "element_id": null,
    "box": null,
-   "message": "Текст пункта «Масштаб» обрывается на полуслове («как малого бизнеса»), что делает утверждение непротиворечивым и некорректным.",
+   "message": "Слайд перегружен: контент занимает 88% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.877
+   }
+  },
+  {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 6,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок является тематическим, а не утверждающим вывод.",
    "autofix": null,
    "evidence": {
-    "question": "Цифры и утверждения непротиворечивы и не спорят с исходными материалами, если они есть",
+    "question": "Заголовок содержит вывод, а не просто называет тему",
     "sources": "brief"
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 6,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд перегружен: контент занимает 93% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.928
+   }
+  },
+  {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок описывает тему процесса, но не содержит конкретного вывода или тезиса.",
+   "autofix": null,
+   "evidence": {
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "brief"
+   }
+  },
+  {
+   "check_id": "D05_fill",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": null,
+   "box": null,
+   "message": "Слайд перегружен: контент занимает 88% рабочей области (норма 25%–75%)",
+   "autofix": "change_exemplar",
+   "evidence": {
+    "fill": 0.877
    }
   },
   {
    "check_id": "C08_no_typos",
    "kind": "contextual",
    "severity": "warning",
-   "slide_idx": 5,
+   "slide_idx": 9,
    "element_id": null,
    "box": null,
-   "message": "В пункте «Масштаб» отсутствует окончание фразы, что является грубой ошибкой оформления.",
+   "message": "В первом блоке слово «сопровождение» написано с ошибкой («сопровождение»).",
    "autofix": null,
    "evidence": {
     "question": "Текст без опечаток",
@@ -150,7 +204,7 @@
    "check_id": "T06_contrast",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 7,
+   "slide_idx": 9,
    "element_id": "9",
    "box": {
     "x": 525817,
@@ -169,38 +223,17 @@
    }
   },
   {
-   "check_id": "D05_fill",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 9,
-   "element_id": null,
-   "box": null,
-   "message": "Слайд перегружен: контент занимает 93% рабочей области (норма 25%–75%)",
-   "autofix": "change_exemplar",
-   "evidence": {
-    "fill": 0.928
-   }
-  },
-  {
-   "check_id": "T06_contrast",
-   "kind": "deterministic",
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
    "severity": "warning",
    "slide_idx": 10,
-   "element_id": "9",
-   "box": {
-    "x": 525817,
-    "y": 421226,
-    "w": 9862734,
-    "h": 376138
-   },
-   "message": "Контраст текста #F2F2F2 к фону #FF0053 = 3.5:1 (нужно 4.5:1)",
-   "autofix": "snap_color",
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок называет тему (демонстрация), а не содержит вывод или конкретное действие/результат.",
+   "autofix": null,
    "evidence": {
-    "contrast": 3.49,
-    "text_color": "F2F2F2",
-    "background": "FF0053",
-    "need": 4.5,
-    "template_color": 1
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "brief"
    }
   }
  ],
@@ -239,7 +272,9 @@
   "C08_no_typos",
   "C09_one_language",
   "C10_table_legend_relevant",
-  "C11_flow"
+  "C11_flow",
+  "N01_notes_missing",
+  "N02_talk_duration"
  ],
- "duration_s": 42.984
+ "duration_s": 57.842
 }

@@ -2,6 +2,21 @@
  "deck_path": "narrative.pptx",
  "findings": [
   {
+   "check_id": "N02_talk_duration",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": -1,
+   "element_id": null,
+   "box": null,
+   "message": "Выступление по заметкам ≈ 4.0 мин — короче заданных 7 мин (больше чем на 25%, темп 120 слов/мин)",
+   "autofix": null,
+   "evidence": {
+    "words": 484,
+    "minutes": 4.03,
+    "target_minutes": 7.0
+   }
+  },
+  {
    "check_id": "T02_font_size",
    "kind": "deterministic",
    "severity": "warning",
@@ -22,74 +37,78 @@
    }
   },
   {
-   "check_id": "D02_bullet_words",
+   "check_id": "T02_font_size",
    "kind": "deterministic",
-   "severity": "warning",
+   "severity": "info",
    "slide_idx": 3,
-   "element_id": "505",
+   "element_id": "503",
    "box": {
-    "x": 4637088,
-    "y": 676278,
-    "w": 3862387,
-    "h": 3737102
+    "x": 430360,
+    "y": 338829,
+    "w": 3945697,
+    "h": 753371
    },
-   "message": "Пункт из 17 слов (норма ≤ 15): «Мы создаем комплексные IT-решения, соответствующие междунаро…»",
-   "autofix": "refill_slot",
+   "message": "Кегль 19.2 pt не из шкалы шаблона (ближайший 16.2 pt) (подгонка: 80% от кегля образца 24 pt)",
+   "autofix": "snap_font_size",
    "evidence": {
-    "words": 17
+    "size_pt": 19.2,
+    "nearest_pt": 16.2,
+    "base_pt": 24.0
    }
   },
   {
-   "check_id": "C07_no_garbage",
+   "check_id": "C01_title_insight",
    "kind": "contextual",
-   "severity": "error",
+   "severity": "warning",
    "slide_idx": 5,
    "element_id": null,
    "box": null,
-   "message": "В центре слайда виден служебный текст-заглушка 'Same Service'.",
+   "message": "Заголовок просто называет тему, не формулируя вывод или ключевую мысль.",
    "autofix": null,
    "evidence": {
-    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
+    "question": "Заголовок содержит вывод, а не просто называет тему",
     "sources": "brief"
    }
   },
   {
-   "check_id": "D02_bullet_words",
+   "check_id": "C08_no_typos",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 5,
+   "element_id": null,
+   "box": null,
+   "message": "В первом пункте есть тавтология: «Автоматизация — Автоматизация...».",
+   "autofix": null,
+   "evidence": {
+    "question": "Текст без опечаток",
+    "sources": "brief"
+   }
+  },
+  {
+   "check_id": "T02_font_size",
    "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 5,
-   "element_id": "505",
-   "box": {
-    "x": 4637088,
-    "y": 676278,
-    "w": 3862387,
-    "h": 3737102
-   },
-   "message": "Пункт из 18 слов (норма ≤ 15): «Наши решения позволяют автоматизировать рутинные операции, с…»",
-   "autofix": "refill_slot",
-   "evidence": {
-    "words": 18
-   }
-  },
-  {
-   "check_id": "C03_one_message",
-   "kind": "contextual",
-   "severity": "warning",
+   "severity": "info",
    "slide_idx": 6,
-   "element_id": null,
-   "box": null,
-   "message": "Слайд содержит три отдельных тезиса, которые не сводятся к одному предложению без потери смысла.",
-   "autofix": null,
+   "element_id": "503",
+   "box": {
+    "x": 430360,
+    "y": 338829,
+    "w": 3945697,
+    "h": 753371
+   },
+   "message": "Кегль 19.2 pt не из шкалы шаблона (ближайший 16.2 pt) (подгонка: 80% от кегля образца 24 pt)",
+   "autofix": "snap_font_size",
    "evidence": {
-    "question": "Слайд пересказывается одним предложением",
-    "sources": "brief"
+    "size_pt": 19.2,
+    "nearest_pt": 16.2,
+    "base_pt": 24.0
    }
   },
   {
    "check_id": "T06_contrast",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 6,
+   "slide_idx": 7,
    "element_id": "669",
    "box": {
     "x": 438148,
@@ -111,7 +130,7 @@
    "check_id": "T06_contrast",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 6,
+   "slide_idx": 7,
    "element_id": "674",
    "box": {
     "x": 2605074,
@@ -133,7 +152,7 @@
    "check_id": "T06_contrast",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 6,
+   "slide_idx": 7,
    "element_id": "679",
    "box": {
     "x": 4772001,
@@ -152,111 +171,71 @@
    }
   },
   {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 8,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок является тематическим, а не утверждающим вывод.",
+   "autofix": null,
+   "evidence": {
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "brief"
+   }
+  },
+  {
+   "check_id": "T02_font_size",
+   "kind": "deterministic",
+   "severity": "info",
+   "slide_idx": 8,
+   "element_id": "503",
+   "box": {
+    "x": 430360,
+    "y": 338829,
+    "w": 3945697,
+    "h": 753371
+   },
+   "message": "Кегль 21.6 pt не из шкалы шаблона (ближайший 24 pt) (подгонка: 90% от кегля образца 24 pt)",
+   "autofix": "snap_font_size",
+   "evidence": {
+    "size_pt": 21.6,
+    "nearest_pt": 24.0,
+    "base_pt": 24.0
+   }
+  },
+  {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 11,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок описывает тему процесса, а не содержит конкретный вывод или тезис.",
+   "autofix": null,
+   "evidence": {
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": "brief"
+   }
+  },
+  {
    "check_id": "T06_contrast",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 8,
-   "element_id": "781",
+   "slide_idx": 11,
+   "element_id": "858",
    "box": {
     "x": 438148,
     "y": 1819373,
-    "w": 2527287,
+    "w": 3009884,
     "h": 854757
    },
-   "message": "Контраст текста #8F8F8F к фону #FFFFFF = 3.2:1 (нужно 4.5:1)",
+   "message": "Контраст текста #8F8F8F к фону #FAFCFF = 3.1:1 (нужно 4.5:1)",
    "autofix": "snap_color",
    "evidence": {
-    "contrast": 3.23,
+    "contrast": 3.15,
     "text_color": "8F8F8F",
-    "background": "FFFFFF",
-    "need": 4.5,
-    "template_color": 1
-   }
-  },
-  {
-   "check_id": "T06_contrast",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 8,
-   "element_id": "786",
-   "box": {
-    "x": 3327380,
-    "y": 1819373,
-    "w": 2527287,
-    "h": 854757
-   },
-   "message": "Контраст текста #8F8F8F к фону #FFFFFF = 3.2:1 (нужно 4.5:1)",
-   "autofix": "snap_color",
-   "evidence": {
-    "contrast": 3.23,
-    "text_color": "8F8F8F",
-    "background": "FFFFFF",
-    "need": 4.5,
-    "template_color": 1
-   }
-  },
-  {
-   "check_id": "T06_contrast",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 8,
-   "element_id": "791",
-   "box": {
-    "x": 6216621,
-    "y": 1819373,
-    "w": 2527287,
-    "h": 854757
-   },
-   "message": "Контраст текста #8F8F8F к фону #FFFFFF = 3.2:1 (нужно 4.5:1)",
-   "autofix": "snap_color",
-   "evidence": {
-    "contrast": 3.23,
-    "text_color": "8F8F8F",
-    "background": "FFFFFF",
-    "need": 4.5,
-    "template_color": 1
-   }
-  },
-  {
-   "check_id": "T06_contrast",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 8,
-   "element_id": "797",
-   "box": {
-    "x": 438148,
-    "y": 3493174,
-    "w": 2527287,
-    "h": 854757
-   },
-   "message": "Контраст текста #8F8F8F к фону #FFFFFF = 3.2:1 (нужно 4.5:1)",
-   "autofix": "snap_color",
-   "evidence": {
-    "contrast": 3.23,
-    "text_color": "8F8F8F",
-    "background": "FFFFFF",
-    "need": 4.5,
-    "template_color": 1
-   }
-  },
-  {
-   "check_id": "T06_contrast",
-   "kind": "deterministic",
-   "severity": "warning",
-   "slide_idx": 8,
-   "element_id": "802",
-   "box": {
-    "x": 3327380,
-    "y": 3493174,
-    "w": 2527287,
-    "h": 854757
-   },
-   "message": "Контраст текста #8F8F8F к фону #FFFFFF = 3.2:1 (нужно 4.5:1)",
-   "autofix": "snap_color",
-   "evidence": {
-    "contrast": 3.23,
-    "text_color": "8F8F8F",
-    "background": "FFFFFF",
+    "background": "FAFCFF",
     "need": 4.5,
     "template_color": 1
    }
@@ -266,6 +245,72 @@
    "kind": "deterministic",
    "severity": "warning",
    "slide_idx": 11,
+   "element_id": "862",
+   "box": {
+    "x": 3809981,
+    "y": 1819373,
+    "w": 3009884,
+    "h": 854757
+   },
+   "message": "Контраст текста #8F8F8F к фону #FAFCFF = 3.1:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 3.15,
+    "text_color": "8F8F8F",
+    "background": "FAFCFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 11,
+   "element_id": "867",
+   "box": {
+    "x": 438148,
+    "y": 3493174,
+    "w": 3009884,
+    "h": 854757
+   },
+   "message": "Контраст текста #8F8F8F к фону #FAFCFF = 3.1:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 3.15,
+    "text_color": "8F8F8F",
+    "background": "FAFCFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 11,
+   "element_id": "871",
+   "box": {
+    "x": 3809981,
+    "y": 3493174,
+    "w": 3009884,
+    "h": 854757
+   },
+   "message": "Контраст текста #8F8F8F к фону #FAFCFF = 3.1:1 (нужно 4.5:1)",
+   "autofix": "snap_color",
+   "evidence": {
+    "contrast": 3.15,
+    "text_color": "8F8F8F",
+    "background": "FAFCFF",
+    "need": 4.5,
+    "template_color": 1
+   }
+  },
+  {
+   "check_id": "T06_contrast",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 12,
    "element_id": "669",
    "box": {
     "x": 438148,
@@ -287,7 +332,7 @@
    "check_id": "T06_contrast",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 11,
+   "slide_idx": 12,
    "element_id": "674",
    "box": {
     "x": 2605074,
@@ -309,7 +354,7 @@
    "check_id": "T06_contrast",
    "kind": "deterministic",
    "severity": "warning",
-   "slide_idx": 11,
+   "slide_idx": 12,
    "element_id": "679",
    "box": {
     "x": 4772001,
@@ -331,10 +376,10 @@
    "check_id": "C05_has_content",
    "kind": "contextual",
    "severity": "error",
-   "slide_idx": 12,
+   "slide_idx": 13,
    "element_id": null,
    "box": null,
-   "message": "На слайде нет реального содержания, только заголовок и одна фраза-подзаголовок.",
+   "message": "Слайд содержит только заголовок, одну строку текста и иконку, что является пустым содержанием.",
    "autofix": null,
    "evidence": {
     "question": "На слайде есть содержание, а не только заголовок",
@@ -342,17 +387,52 @@
    }
   },
   {
-   "check_id": "C03_one_message",
+   "check_id": "C07_no_garbage",
    "kind": "contextual",
-   "severity": "warning",
-   "slide_idx": 12,
+   "severity": "error",
+   "slide_idx": 13,
    "element_id": null,
    "box": null,
-   "message": "Слайд не пересказывается одним предложением, так как текст дублирует смысл заголовка без добавления новой информации.",
+   "message": "Текст содержит многоточие, что выглядит как незавершенная заглушка.",
    "autofix": null,
    "evidence": {
-    "question": "Слайд пересказывается одним предложением",
+    "question": "Нет служебного мусора: реплик спикера, кусков промпта, заглушек",
     "sources": ""
+   }
+  },
+  {
+   "check_id": "C01_title_insight",
+   "kind": "contextual",
+   "severity": "warning",
+   "slide_idx": 13,
+   "element_id": null,
+   "box": null,
+   "message": "Заголовок описывает действие (демонстрация), а не содержит вывод или ключевую мысль.",
+   "autofix": null,
+   "evidence": {
+    "question": "Заголовок содержит вывод, а не просто называет тему",
+    "sources": ""
+   }
+  },
+  {
+   "check_id": "L02_overlap",
+   "kind": "deterministic",
+   "severity": "warning",
+   "slide_idx": 13,
+   "element_id": "2262",
+   "box": {
+    "x": 3195621,
+    "y": 1157472,
+    "w": 1092919,
+    "h": 261746
+   },
+   "message": "Блоки картинка и «Следующий шаг — демонстрация п…» наложились (21% площади меньшего)",
+   "autofix": "reflow_vertical",
+   "evidence": {
+    "other_id": "2264",
+    "ratio": 0.213,
+    "in_exemplar": 1,
+    "text_reached": 0
    }
   }
  ],
@@ -391,7 +471,9 @@
   "C08_no_typos",
   "C09_one_language",
   "C10_table_legend_relevant",
-  "C11_flow"
+  "C11_flow",
+  "N01_notes_missing",
+  "N02_talk_duration"
  ],
- "duration_s": 55.94
+ "duration_s": 46.248
 }

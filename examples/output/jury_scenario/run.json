@@ -1,0 +1,381 @@
+{
+ "created": "2026-09-25T13:14:27+00:00",
+ "config": {
+  "template": "data/templates/VK Tech шаблон.pptx",
+  "content_pack": null,
+  "context": "C:\\Users\\Eltara\\Documents\\MHK\\deckforge\\examples\\output\\jury_scenario\\context.json",
+  "topic": "Питч DECKFORGE для жюри хакатона на 7 минут: проблема, подход, архитектура пайплайна, демо-прогон, архитектура аудита, выводы",
+  "purpose": "project",
+  "audience": "жюри хакатона и эксперты VK Tech",
+  "language": "ru",
+  "target_slides": 12,
+  "speaker_notes": true,
+  "talk_minutes": 7.0,
+  "strategies": [
+   "executive",
+   "narrative",
+   "visual"
+  ],
+  "images": "auto",
+  "audit": {
+   "deterministic": true,
+   "contextual": true,
+   "autofix": true
+  },
+  "export": [
+   "pptx",
+   "pdf",
+   "html"
+  ],
+  "output_dir": "examples/output/jury_scenario",
+  "seed": 42,
+  "render_png": true,
+  "render_dpi": 72,
+  "time_budget_s": 300,
+  "max_parallel_decks": 3,
+  "max_parallel_llm": 4
+ },
+ "template": {
+  "id": "33d997b25b4c",
+  "path": "data/templates/VK Tech шаблон.pptx",
+  "sha1": "33d997b25b4c",
+  "labels": "rules+vlm"
+ },
+ "content_source": "context",
+ "brief": "brief.md",
+ "outline": "outline.json",
+ "decks": [
+  {
+   "strategy": "executive",
+   "pptx": "executive.pptx",
+   "manifest": "executive.manifest.json",
+   "stats": {
+    "slides": 11,
+    "archetypes": [
+     "title",
+     "cards",
+     "cards",
+     "cards",
+     "kpi",
+     "table",
+     "image_text",
+     "cards",
+     "kpi",
+     "table",
+     "closing"
+    ],
+    "exemplars": [
+     "slide2",
+     "slide14",
+     "slide24",
+     "slide18",
+     "slide45",
+     "slide34",
+     "slide9",
+     "slide24",
+     "slide45",
+     "slide35",
+     "slide6"
+    ],
+    "text_items_per_slide": 4.3,
+    "words_per_item": 4.8,
+    "chart": 0,
+    "table": 2,
+    "kpi": 2,
+    "picture": 0,
+    "skipped": 0,
+    "speech_minutes": 6.1
+   },
+   "audit": {
+    "errors": 1,
+    "warnings": 28,
+    "info": 1,
+    "contextual": 6,
+    "by_check": {
+     "C01_title_insight": 5,
+     "C04_facts_consistent": 1,
+     "D05_fill": 4,
+     "L02_overlap": 4,
+     "T02_font_size": 1,
+     "T06_contrast": 15
+    },
+    "slides_with_issues": [
+     1,
+     2,
+     3,
+     4,
+     6,
+     7,
+     8,
+     9
+    ],
+    "checks_run": 37,
+    "duration_s": 45.46,
+    "path": "executive.audit.json",
+    "kind": "deterministic+contextual",
+    "autofix": {
+     "applied": 0,
+     "skipped": 0,
+     "before": {
+      "errors": 0,
+      "warnings": 23
+     },
+     "after": {
+      "errors": 0,
+      "warnings": 23
+     },
+     "items": []
+    }
+   },
+   "exports": {
+    "pptx": "executive.pptx",
+    "pdf": "executive.pdf",
+    "html": "executive.html",
+    "speech": "executive.speech.md"
+   },
+   "timings_s": {
+    "layout": 0.013,
+    "render": 0.738,
+    "audit": 0.4,
+    "autofix": 0.0,
+    "png": 5.876,
+    "audit_contextual": 44.867,
+    "notes": 21.022,
+    "export_pdf": 0.003,
+    "export_html": 2.57,
+    "deck_build": 55.26,
+    "deck_total": 88.91
+   }
+  },
+  {
+   "strategy": "narrative",
+   "pptx": "narrative.pptx",
+   "manifest": "narrative.manifest.json",
+   "stats": {
+    "slides": 15,
+    "archetypes": [
+     "title",
+     "cards",
+     "image_text",
+     "cards",
+     "section",
+     "cards",
+     "kpi",
+     "chart",
+     "image_text",
+     "cards",
+     "kpi",
+     "section",
+     "cards",
+     "image_text",
+     "closing"
+    ],
+    "exemplars": [
+     "slide2",
+     "slide24",
+     "slide9",
+     "slide24",
+     "slide3",
+     "slide17",
+     "slide45",
+     "slide52",
+     "slide9",
+     "slide14",
+     "slide45",
+     "slide3",
+     "slide24",
+     "slide9",
+     "slide6"
+    ],
+    "text_items_per_slide": 3.5,
+    "words_per_item": 4.9,
+    "chart": 1,
+    "table": 0,
+    "kpi": 2,
+    "picture": 2,
+    "skipped": 0,
+    "speech_minutes": 5.8
+   },
+   "audit": {
+    "errors": 0,
+    "warnings": 23,
+    "info": 1,
+    "contextual": 6,
+    "by_check": {
+     "C01_title_insight": 6,
+     "D05_fill": 3,
+     "T02_font_size": 1,
+     "T06_contrast": 14
+    },
+    "slides_with_issues": [
+     3,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     12,
+     13
+    ],
+    "checks_run": 37,
+    "duration_s": 43.864,
+    "path": "narrative.audit.json",
+    "kind": "deterministic+contextual",
+    "autofix": {
+     "applied": 0,
+     "skipped": 0,
+     "before": {
+      "errors": 0,
+      "warnings": 17
+     },
+     "after": {
+      "errors": 0,
+      "warnings": 17
+     },
+     "items": []
+    }
+   },
+   "exports": {
+    "pptx": "narrative.pptx",
+    "pdf": "narrative.pdf",
+    "html": "narrative.html",
+    "speech": "narrative.speech.md"
+   },
+   "timings_s": {
+    "images": 8.169,
+    "layout": 0.013,
+    "render": 1.044,
+    "audit": 0.504,
+    "autofix": 0.0,
+    "png": 6.108,
+    "audit_contextual": 43.009,
+    "notes": 42.533,
+    "export_pdf": 0.002,
+    "export_html": 2.656,
+    "deck_build": 62.496,
+    "deck_total": 96.163
+   }
+  },
+  {
+   "strategy": "visual",
+   "pptx": "visual.pptx",
+   "manifest": "visual.manifest.json",
+   "stats": {
+    "slides": 12,
+    "archetypes": [
+     "title",
+     "cards",
+     "image_text",
+     "cards",
+     "cards",
+     "kpi",
+     "chart",
+     "image_text",
+     "cards",
+     "kpi",
+     "table",
+     "closing"
+    ],
+    "exemplars": [
+     "slide2",
+     "slide24",
+     "slide9",
+     "slide24",
+     "slide21",
+     "slide45",
+     "slide44",
+     "slide9",
+     "slide24",
+     "slide45",
+     "slide34",
+     "slide6"
+    ],
+    "text_items_per_slide": 2.4,
+    "words_per_item": 6.6,
+    "chart": 1,
+    "table": 1,
+    "kpi": 2,
+    "picture": 2,
+    "skipped": 0,
+    "speech_minutes": 4.9
+   },
+   "audit": {
+    "errors": 0,
+    "warnings": 15,
+    "info": 1,
+    "contextual": 5,
+    "by_check": {
+     "C01_title_insight": 5,
+     "D05_fill": 3,
+     "N02_talk_duration": 1,
+     "T02_font_size": 1,
+     "T06_contrast": 6
+    },
+    "slides_with_issues": [
+     -1,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "checks_run": 37,
+    "duration_s": 54.375,
+    "path": "visual.audit.json",
+    "kind": "deterministic+contextual",
+    "autofix": {
+     "applied": 0,
+     "skipped": 0,
+     "before": {
+      "errors": 0,
+      "warnings": 9
+     },
+     "after": {
+      "errors": 0,
+      "warnings": 9
+     },
+     "items": []
+    }
+   },
+   "exports": {
+    "pptx": "visual.pptx",
+    "pdf": "visual.pdf",
+    "html": "visual.html",
+    "speech": "visual.speech.md"
+   },
+   "timings_s": {
+    "images": 8.17,
+    "layout": 0.008,
+    "render": 1.037,
+    "audit": 0.529,
+    "autofix": 0.0,
+    "png": 11.582,
+    "audit_contextual": 53.658,
+    "notes": 55.038,
+    "export_pdf": 0.002,
+    "export_html": 2.756,
+    "deck_build": 78.548,
+    "deck_total": 112.213
+   }
+  }
+ ],
+ "timings_s": {
+  "parse": 0.913,
+  "outline": 32.729,
+  "decks": 78.572,
+  "total": 112.217
+ },
+ "warnings": [
+  "outline: слайд 1 «Проблема: ручной дизайн не масштабируетс»: поле «cards» → bullets",
+  "outline: слайд 2 «Решение: генерация из .pptx-шаблона»: поле «text» → paragraphs",
+  "outline: слайд 3 «Три стратегии подачи на одном контенте»: поле «cards» → bullets",
+  "outline: слайд 7 «Демо: загрузка неизвестного шаблона»: поле «text» → paragraphs",
+  "outline: слайд 8 «Аудит: 26 проверок и VLM-судья»: поле «cards» → bullets",
+  "visual: notes: первый ответ короче цели (585 из 843 слов) — второй проход, по каждому слайду взят более длинный текст"
+ ],
+ "not_implemented": []
+}

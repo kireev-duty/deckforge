@@ -12,3 +12,5 @@ examples/output/**/*.png
 examples/output/**/outline.raw.json
 # PDF в папке PNG-превью — побайтовая копия <strategy>.pdf рядом (промежуточный файл рендера)
 examples/output/*/*/*.pdf
+# сырые записи экрана (видео-демо лежит ассетом релиза)
+/*.mp4

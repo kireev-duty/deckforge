@@ -4,9 +4,9 @@
 
 **Цифровой дизайнер презентаций.** Читает любой .pptx-шаблон как дизайн-систему и собирает по нему новую презентацию из нативных объектов PowerPoint — в трёх вариантах вёрстки, с аудитом и экспортом в .pptx, .pdf и .html.
 
-[![Открыть в Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://deckforge.streamlit.app) [![Галерея: 15 колод](https://img.shields.io/badge/%D0%B3%D0%B0%D0%BB%D0%B5%D1%80%D0%B5%D1%8F-15_%D0%BA%D0%BE%D0%BB%D0%BE%D0%B4-0077FF?logo=githubpages&logoColor=white)](https://kireev-duty.github.io/deckforge/) [![Release v0.1.4](https://img.shields.io/badge/release-v0.1.4-2ea44f?logo=github)](https://github.com/kireev-duty/deckforge/releases/tag/v0.1.4) [![Python 3.12+](https://img.shields.io/badge/python-3.12+-3776AB?logo=python&logoColor=white)](pyproject.toml) [![License: MIT](https://img.shields.io/badge/license-MIT-yellow)](LICENSE) [![ЛЦТ 2026 · кейс VK Tech](https://img.shields.io/badge/%D0%9B%D0%A6%D0%A2_2026-%D0%BA%D0%B5%D0%B9%D1%81_VK_Tech-7B2CBF)](docs/PLAN.md)
+[![Видео-демо 5:37](https://img.shields.io/badge/%E2%96%B6_%D0%B2%D0%B8%D0%B4%D0%B5%D0%BE--%D0%B4%D0%B5%D0%BC%D0%BE-5%3A37-E5383B)](https://cloud.mail.ru/public/FRoE/fubzUBvYV) [![Открыть в Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://deckforge.streamlit.app) [![Галерея: 15 колод](https://img.shields.io/badge/%D0%B3%D0%B0%D0%BB%D0%B5%D1%80%D0%B5%D1%8F-15_%D0%BA%D0%BE%D0%BB%D0%BE%D0%B4-0077FF?logo=githubpages&logoColor=white)](https://kireev-duty.github.io/deckforge/) [![Release v0.1.4](https://img.shields.io/badge/release-v0.1.4-2ea44f?logo=github)](https://github.com/kireev-duty/deckforge/releases/tag/v0.1.4) [![Python 3.12+](https://img.shields.io/badge/python-3.12+-3776AB?logo=python&logoColor=white)](pyproject.toml) [![License: MIT](https://img.shields.io/badge/license-MIT-yellow)](LICENSE) [![ЛЦТ 2026 · кейс VK Tech](https://img.shields.io/badge/%D0%9B%D0%A6%D0%A2_2026-%D0%BA%D0%B5%D0%B9%D1%81_VK_Tech-7B2CBF)](docs/PLAN.md)
 
-[Демо-стенд](https://deckforge.streamlit.app) · [Галерея колод](https://kireev-duty.github.io/deckforge/) · [Архитектура](docs/ARCHITECTURE.md) · [Аудит](docs/AUDIT.md) · [Модели](docs/MODELS.md) · [Сценарий демо](docs/DEMO.md)
+[Видео-демо](#видео-демо) · [Демо-стенд](https://deckforge.streamlit.app) · [Галерея колод](https://kireev-duty.github.io/deckforge/) · [Архитектура](docs/ARCHITECTURE.md) · [Аудит](docs/AUDIT.md) · [Модели](docs/MODELS.md) · [Сценарий демо](docs/DEMO.md)
 
 </div>
 
@@ -14,6 +14,28 @@
   <img src="docs/img/hero.png" alt="Один и тот же контент на четырёх шаблонах: VK Tech, VK Education, VK WorkSpace и ЛЦТ 2026 — титул, этапы внедрения, карточки" width="100%">
 </p>
 <p align="center"><sub>Один контент — четыре шаблона (вариант visual). Шаблон ЛЦТ 2026 не использовался при разработке правил разбора.</sub></p>
+
+## Видео-демо
+
+<p align="center">
+  <a href="https://cloud.mail.ru/public/FRoE/fubzUBvYV"><img src="docs/img/demo_video.jpg" alt="Видео-демо deckforge, 5:37: только шаблон → три варианта за 91 с → аудит → экспорт в PowerPoint" width="100%"></a>
+</p>
+<p align="center">
+  <b><a href="https://cloud.mail.ru/public/FRoE/fubzUBvYV">▶ Смотреть онлайн</a></b> — Облако Mail.ru &nbsp;·&nbsp;
+  <a href="https://github.com/kireev-duty/deckforge/releases/download/v0.1.4/deckforge-demo.mp4">⬇ Скачать .mp4</a> — GitHub Release, 24 МБ &nbsp;·&nbsp;
+  <a href="docs/DEMO_VIDEO.md">Сценарий видео</a>
+</p>
+
+Один дубль без склеек на публичном [демо-стенде](https://deckforge.streamlit.app). На входе только шаблон VK Tech — без брифа и файлов: бриф сервис выводит из самого шаблона. Три варианта вёрстки собираются параллельно за 91 с из 300 с бюджета.
+
+| Время | Что в кадре |
+|---|---|
+| 0:00 | шаблон как дизайн-система: палитра с ролями, шрифты, шкала кеглей, образцы по архетипам |
+| 0:40 | параметры и пять режимов входа — от репозитория до «Только шаблон» |
+| 1:36 | запуск «Сгенерировать варианты», прогресс по шагам |
+| 3:07 | три варианта: таблица сравнения, превью слайдов |
+| 4:00 | аудит: метрики, фиксы по выбору, подсветка находки на слайде |
+| 4:50 | экспорт: .pptx в PowerPoint с текстом выступления в заметках, PDF |
 
 ## Что умеет
 
@@ -331,6 +353,7 @@ tests/              pytest: разбор шаблонов, каждая пров
 | [MODELS.md](docs/MODELS.md) | модели, лицензии, ссылки на Hugging Face, системные требования |
 | [INSTALL.md](docs/INSTALL.md) | установка и запуск на Linux шаг за шагом: пакеты, клон, ключ, проверка, прогон конфигом, Docker, неполадки |
 | [DEMO.md](docs/DEMO.md) | сценарий живого прогона и видео-демо (≤ 7 минут) на незнакомом шаблоне |
+| [DEMO_VIDEO.md](docs/DEMO_VIDEO.md) | сценарий записанного [видео-демо](#видео-демо): куда нажимать, что говорить, запасные ходы |
 | [DEVELOPMENT.md](docs/DEVELOPMENT.md) | окружение, служебные скрипты, демо-стенд, правила для кода |
 | [PLAN.md](docs/PLAN.md) · [BACKLOG.md](docs/BACKLOG.md) | план разработки и чек-лист сдачи · известные дефекты и что дальше |
 

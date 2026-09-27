@@ -4,9 +4,9 @@
 
 **Цифровой дизайнер презентаций.** Читает любой .pptx-шаблон как дизайн-систему и собирает по нему новую презентацию из нативных объектов PowerPoint — в трёх вариантах вёрстки, с аудитом и экспортом в .pptx, .pdf и .html.
 
-[![Видео-демо 5:37](https://img.shields.io/badge/%E2%96%B6_%D0%B2%D0%B8%D0%B4%D0%B5%D0%BE--%D0%B4%D0%B5%D0%BC%D0%BE-5%3A37-E5383B)](https://cloud.mail.ru/public/FRoE/fubzUBvYV) [![Открыть в Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://deckforge.streamlit.app) [![Галерея: 15 колод](https://img.shields.io/badge/%D0%B3%D0%B0%D0%BB%D0%B5%D1%80%D0%B5%D1%8F-15_%D0%BA%D0%BE%D0%BB%D0%BE%D0%B4-0077FF?logo=githubpages&logoColor=white)](https://kireev-duty.github.io/deckforge/) [![Release v0.1.4](https://img.shields.io/badge/release-v0.1.4-2ea44f?logo=github)](https://github.com/kireev-duty/deckforge/releases/tag/v0.1.4) [![Python 3.12+](https://img.shields.io/badge/python-3.12+-3776AB?logo=python&logoColor=white)](pyproject.toml) [![License: MIT](https://img.shields.io/badge/license-MIT-yellow)](LICENSE) [![ЛЦТ 2026 · кейс VK Tech](https://img.shields.io/badge/%D0%9B%D0%A6%D0%A2_2026-%D0%BA%D0%B5%D0%B9%D1%81_VK_Tech-7B2CBF)](docs/PLAN.md)
+[![Видео-демо 5:37](https://img.shields.io/badge/%E2%96%B6_%D0%B2%D0%B8%D0%B4%D0%B5%D0%BE--%D0%B4%D0%B5%D0%BC%D0%BE-5%3A37-E5383B)](https://cloud.mail.ru/public/FRoE/fubzUBvYV) [![Питч-дек: 16 слайдов](https://img.shields.io/badge/%D0%BF%D0%B8%D1%82%D1%87--%D0%B4%D0%B5%D0%BA-16_%D1%81%D0%BB%D0%B0%D0%B9%D0%B4%D0%BE%D0%B2-7B2CBF)](#презентация-для-защиты) [![Открыть в Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://deckforge.streamlit.app) [![Галерея: 15 колод](https://img.shields.io/badge/%D0%B3%D0%B0%D0%BB%D0%B5%D1%80%D0%B5%D1%8F-15_%D0%BA%D0%BE%D0%BB%D0%BE%D0%B4-0077FF?logo=githubpages&logoColor=white)](https://kireev-duty.github.io/deckforge/) [![Release v0.1.4](https://img.shields.io/badge/release-v0.1.4-2ea44f?logo=github)](https://github.com/kireev-duty/deckforge/releases/tag/v0.1.4) [![Python 3.12+](https://img.shields.io/badge/python-3.12+-3776AB?logo=python&logoColor=white)](pyproject.toml) [![License: MIT](https://img.shields.io/badge/license-MIT-yellow)](LICENSE) [![ЛЦТ 2026 · кейс VK Tech](https://img.shields.io/badge/%D0%9B%D0%A6%D0%A2_2026-%D0%BA%D0%B5%D0%B9%D1%81_VK_Tech-7B2CBF)](docs/PLAN.md)
 
-[Видео-демо](#видео-демо) · [Демо-стенд](https://deckforge.streamlit.app) · [Галерея колод](https://kireev-duty.github.io/deckforge/) · [Архитектура](docs/ARCHITECTURE.md) · [Аудит](docs/AUDIT.md) · [Модели](docs/MODELS.md) · [Сценарий демо](docs/DEMO.md)
+[Видео-демо](#видео-демо) · [Презентация](#презентация-для-защиты) · [Демо-стенд](https://deckforge.streamlit.app) · [Галерея колод](https://kireev-duty.github.io/deckforge/) · [Архитектура](docs/ARCHITECTURE.md) · [Аудит](docs/AUDIT.md) · [Модели](docs/MODELS.md) · [Сценарий демо](docs/DEMO.md)
 
 </div>
 
@@ -23,6 +23,16 @@
 <p align="center">
   <b><a href="https://cloud.mail.ru/public/FRoE/fubzUBvYV">▶ Смотреть онлайн</a></b> — Облако Mail.ru &nbsp;·&nbsp;
   <a href="https://github.com/kireev-duty/deckforge/releases/download/v0.1.4/deckforge-demo.mp4">⬇ Скачать .mp4</a> — GitHub Release, 24 МБ
+</p>
+
+## Презентация для защиты
+
+<p align="center">
+  <a href="docs/deckforge_pitch.pdf"><img src="docs/img/pitch.png" alt="Питч-дек deckforge на шаблоне ЛЦТ 2026: титул, подход, три варианта вёрстки, аудит, holdout-шаблон, результаты в цифрах" width="100%"></a>
+</p>
+<p align="center">
+  <b><a href="docs/deckforge_pitch.pdf">📄 Открыть PDF</a></b> — прямо на GitHub, 2 МБ &nbsp;·&nbsp;
+  <a href="https://github.com/kireev-duty/deckforge/raw/master/docs/deckforge_pitch.pptx">⬇ Скачать .pptx</a> — текст выступления с таймкодами в заметках, 16 МБ
 </p>
 
 ## Что умеет
@@ -344,8 +354,7 @@ tests/              pytest: разбор шаблонов, каждая пров
 | [DEMO_VIDEO.md](docs/DEMO_VIDEO.md) | сценарий записанного [видео-демо](#видео-демо): куда нажимать, что говорить, запасные ходы |
 | [DEVELOPMENT.md](docs/DEVELOPMENT.md) | окружение, служебные скрипты, демо-стенд, правила для кода |
 | [PLAN.md](docs/PLAN.md) · [BACKLOG.md](docs/BACKLOG.md) | план разработки и чек-лист сдачи · известные дефекты и что дальше |
-
-Презентация для защиты — [docs/deckforge_pitch.pptx](docs/deckforge_pitch.pptx).
+| [deckforge_pitch.pptx](docs/deckforge_pitch.pptx) · [.pdf](docs/deckforge_pitch.pdf) | [презентация для защиты](#презентация-для-защиты): 16 слайдов на шаблоне ЛЦТ 2026, текст выступления — в заметках |
 
 ## Ограничения
 
@@ -367,4 +376,11 @@ tests/              pytest: разбор шаблонов, каждая пров
 
 Код — [MIT](LICENSE). Шаблоны презентаций в `data/` и материалы ТЗ в `docs/tz/` принадлежат их правообладателям (VK, организаторы ЛЦТ и авторы шаблонов из `data/wild`) и под лицензию MIT не подпадают.
 
-Команда Ashen One — кейс VK Tech «Цифровой дизайнер презентаций», хакатон «Лидеры цифровой трансформации 2026».
+## Команда
+
+**Ashen One** — семейная команда: код и дизайн делаем вдвоём. Кейс VK Tech «Цифровой дизайнер презентаций», хакатон «Лидеры цифровой трансформации 2026».
+
+| Участник | Роль |
+|---|---|
+| **Артём Киреев** | капитан, разработка |
+| **Лариса Киреева** | дизайн и макет |

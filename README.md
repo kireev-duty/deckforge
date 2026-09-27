@@ -18,24 +18,12 @@
 ## Видео-демо
 
 <p align="center">
-  <a href="https://cloud.mail.ru/public/FRoE/fubzUBvYV"><img src="docs/img/demo_video.jpg" alt="Видео-демо deckforge, 5:37: только шаблон → три варианта за 91 с → аудит → экспорт в PowerPoint" width="100%"></a>
+  <a href="https://cloud.mail.ru/public/FRoE/fubzUBvYV"><img src="docs/img/demo_video.jpg" alt="Видео-демо deckforge, 5:37" width="100%"></a>
 </p>
 <p align="center">
   <b><a href="https://cloud.mail.ru/public/FRoE/fubzUBvYV">▶ Смотреть онлайн</a></b> — Облако Mail.ru &nbsp;·&nbsp;
-  <a href="https://github.com/kireev-duty/deckforge/releases/download/v0.1.4/deckforge-demo.mp4">⬇ Скачать .mp4</a> — GitHub Release, 24 МБ &nbsp;·&nbsp;
-  <a href="docs/DEMO_VIDEO.md">Сценарий видео</a>
+  <a href="https://github.com/kireev-duty/deckforge/releases/download/v0.1.4/deckforge-demo.mp4">⬇ Скачать .mp4</a> — GitHub Release, 24 МБ
 </p>
-
-Один дубль без склеек на публичном [демо-стенде](https://deckforge.streamlit.app). На входе только шаблон VK Tech — без брифа и файлов: бриф сервис выводит из самого шаблона. Три варианта вёрстки собираются параллельно за 91 с из 300 с бюджета.
-
-| Время | Что в кадре |
-|---|---|
-| 0:00 | шаблон как дизайн-система: палитра с ролями, шрифты, шкала кеглей, образцы по архетипам |
-| 0:40 | параметры и пять режимов входа — от репозитория до «Только шаблон» |
-| 1:36 | запуск «Сгенерировать варианты», прогресс по шагам |
-| 3:07 | три варианта: таблица сравнения, превью слайдов |
-| 4:00 | аудит: метрики, фиксы по выбору, подсветка находки на слайде |
-| 4:50 | экспорт: .pptx в PowerPoint с текстом выступления в заметках, PDF |
 
 ## Что умеет
 

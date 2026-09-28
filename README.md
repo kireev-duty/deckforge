@@ -6,7 +6,7 @@
 
 [![Видео-демо 5:43](https://img.shields.io/badge/%E2%96%B6_%D0%B2%D0%B8%D0%B4%D0%B5%D0%BE--%D0%B4%D0%B5%D0%BC%D0%BE-5%3A43-E5383B)](https://cloud.mail.ru/public/JFkd/v7Uxs1LRy) [![Питч-дек: 16 слайдов](https://img.shields.io/badge/%D0%BF%D0%B8%D1%82%D1%87--%D0%B4%D0%B5%D0%BA-16_%D1%81%D0%BB%D0%B0%D0%B9%D0%B4%D0%BE%D0%B2-7B2CBF)](#презентация-для-защиты) [![Открыть в Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://deckforge.streamlit.app) [![Галерея: 9 колод](https://img.shields.io/badge/%D0%B3%D0%B0%D0%BB%D0%B5%D1%80%D0%B5%D1%8F-9_%D0%BA%D0%BE%D0%BB%D0%BE%D0%B4-0077FF?logo=githubpages&logoColor=white)](https://kireev-duty.github.io/deckforge/) [![Release v0.1.4](https://img.shields.io/badge/release-v0.1.4-2ea44f?logo=github)](https://github.com/kireev-duty/deckforge/releases/tag/v0.1.4) [![Python 3.12+](https://img.shields.io/badge/python-3.12+-3776AB?logo=python&logoColor=white)](pyproject.toml) [![License: MIT](https://img.shields.io/badge/license-MIT-yellow)](LICENSE) [![ЛЦТ 2026 · кейс VK Tech](https://img.shields.io/badge/%D0%9B%D0%A6%D0%A2_2026-%D0%BA%D0%B5%D0%B9%D1%81_VK_Tech-7B2CBF)](docs/PLAN.md)
 
-[Видео-демо](#видео-демо) · [Презентация](#презентация-для-защиты) · [Демо-стенд](https://deckforge.streamlit.app) · [Галерея колод](https://kireev-duty.github.io/deckforge/) · [Архитектура](docs/ARCHITECTURE.md) · [Аудит](docs/AUDIT.md) · [Модели](docs/MODELS.md) · [Сценарий демо](docs/DEMO.md)
+[Видео-демо](#видео-демо) · [Презентация](#презентация-для-защиты) · [Видео и презентация в Облаке](https://cloud.mail.ru/public/B5Nw/rTH5qtkcR) · [Демо-стенд](https://deckforge.streamlit.app) · [Галерея колод](https://kireev-duty.github.io/deckforge/) · [Архитектура](docs/ARCHITECTURE.md) · [Аудит](docs/AUDIT.md) · [Модели](docs/MODELS.md) · [Сценарий демо](docs/DEMO.md)
 
 </div>
 
@@ -32,7 +32,8 @@
 </p>
 <p align="center">
   <b><a href="docs/deckforge_pitch.pdf">📄 Открыть PDF</a></b> — прямо на GitHub, 2 МБ &nbsp;·&nbsp;
-  <a href="https://github.com/kireev-duty/deckforge/raw/master/docs/deckforge_pitch.pptx">⬇ Скачать .pptx</a> — текст выступления с таймкодами в заметках, 16 МБ
+  <a href="https://github.com/kireev-duty/deckforge/raw/master/docs/deckforge_pitch.pptx">⬇ Скачать .pptx</a> — текст выступления с таймкодами в заметках, 16 МБ &nbsp;·&nbsp;
+  <a href="https://cloud.mail.ru/public/B5Nw/rTH5qtkcR">☁ Папка в Облаке</a> — видео и презентация вместе, Облако Mail.ru
 </p>
 
 ## Что умеет

@@ -3,7 +3,7 @@
     python tools/build_gallery.py [--out out/gallery] [--demo-url URL] [--ref master]
 
 В галерею копируются самодостаточные .html и .pdf колод; превью — первая страница PDF (PyMuPDF);
-.pptx тяжёлые (≈160 МБ на 12 колод) — ссылка на файл в репозитории (LFS отдаёт его как raw).
+.pptx тяжёлые (≈190 МБ на все колоды) — ссылка на файл в репозитории (LFS отдаёт его как raw).
 Публикует `.github/workflows/pages.yml`.
 """
 
@@ -25,7 +25,6 @@ TEMPLATES = {
     "vk_tech": "VK Tech",
     "vk_education": "VK Education",
     "vk_workspace": "VK WorkSpace",
-    "lct2026_holdout": "ЛЦТ 2026 — holdout (не использовался при разработке)",
     "jury_scenario": "Сценарий жюри: контекст — репозиторий deckforge, задача — питч на 7 минут (VK Tech)",
 }
 THUMB_DPI = 40
@@ -130,7 +129,7 @@ footer {{ color:var(--muted); font-size:13px; padding-bottom:40px; }}
 <body>
 <header>
   <h1>deckforge — цифровой дизайнер презентаций</h1>
-  <p class="lead">Один контент × 4 шаблона × 3 стратегии вёрстки. На входе только .pptx-шаблон: бриф выведен из
+  <p class="lead">Один контент × 3 шаблона VK × 3 стратегии вёрстки. На входе только .pptx-шаблон: бриф выведен из
   шаблона VK Tech, его outline свёрстан по образцам каждого шаблона. HTML открывается в браузере
   (←/→ — листать, F — режим показа); .pptx — нативные объекты, редактируются в PowerPoint.
   «Аудит» — ошибки/предупреждения после автофиксов.</p>

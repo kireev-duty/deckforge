@@ -4,7 +4,7 @@
 #   deckforge prepare-context . -o examples/output/jury_scenario/context.json
 #   deckforge run -c configs/final/jury_scenario.yaml
 # Задача повторяет структуру питча из ТЗ §4. Шаблон — VK Tech: в контексте есть цифры, и у VK Tech для них
-# есть свои образцы KPI, диаграмм и таблиц. На ЛЦТ2026 тот же сценарий показал дефекты вёрстки (BACKLOG, layout).
+# есть свои образцы KPI, диаграмм и таблиц.
 
 template: data/templates/VK Tech шаблон.pptx
 context: examples/output/jury_scenario/context.json

@@ -44,10 +44,10 @@ def test_example_config_loads() -> None:
 
 
 def test_final_configs_run_on_templates_alone() -> None:
-    """9 витринных колод + holdout собираются из шаблонов; контент один на все — через --outline.
+    """9 витринных колод собираются из трёх шаблонов VK; контент один на все — через --outline.
     Сценарий жюри — контекст репозитория и задача на шаблоне VK Tech."""
     finals = sorted((REPO / "configs" / "final").glob("*.yaml"))
-    assert [p.stem for p in finals] == ["jury_scenario", "lct2026_holdout", "vk_education", "vk_tech", "vk_workspace"]
+    assert [p.stem for p in finals] == ["jury_scenario", "vk_education", "vk_tech", "vk_workspace"]
     for path in finals:
         cfg = load_config(path)
         assert cfg.template.is_absolute() and cfg.strategies == ["executive", "narrative", "visual"]

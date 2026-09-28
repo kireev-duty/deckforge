@@ -45,8 +45,6 @@ from deckforge.pipeline.workspace import (
 from deckforge.ui.overlay import draw_findings
 
 UI_ROOT = Path(os.environ.get("DECKFORGE_UI_ROOT") or ROOT / "out" / "ui")  # тесты подменяют на tmp
-# в списке UI — только три шаблона VK; holdout ЛЦТ2026 видят API и CLI, в UI его можно загрузить как свой
-UI_DATASET_DIRS = [ROOT / "data" / "templates"]
 EXAMPLE_PACK = ROOT / "examples" / "content_pack"
 # outline финальных примеров (бриф выведен из шаблона VK Tech) — режим без LLM: работает без ключа и при сбое API
 READY_OUTLINE = ROOT / "examples" / "output" / "vk_tech" / "outline.json"
@@ -88,7 +86,7 @@ HAS_KEY = bool(os.environ.get("LLM_API_KEY", "").strip())
 
 @st.cache_resource
 def store() -> TemplateStore:
-    return TemplateStore(UI_ROOT, dataset_dirs=UI_DATASET_DIRS)
+    return TemplateStore(UI_ROOT)
 
 
 @st.cache_resource(show_spinner="Разбираю шаблон…")

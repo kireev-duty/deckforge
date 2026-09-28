@@ -50,7 +50,10 @@ def test_templates_registry_and_upload(api: TestClient, template_path, tmp_path:
     holdout = template_path("ЛЦТ2026")
     with holdout.open("rb") as fh:
         r = api.post("/templates", files={"file": ("copy.pptx", fh, "application/octet-stream")})
-    assert r.status_code == 200 and r.json()["builtin"] and r.json()["summary"]["fonts"][0] == "Montserrat"
+    # holdout не встроенный шаблон (в реестре только три шаблона VK) — обычная загрузка
+    assert r.status_code == 200 and not r.json()["builtin"] and r.json()["name"] == "copy"
+    assert r.json()["summary"]["fonts"][0] == "Montserrat"
+    assert not any("ЛЦТ" in t["name"] for t in api.get("/templates").json() if t["builtin"])
 
     from tests.fixtures.bad_slides import make_clean
 

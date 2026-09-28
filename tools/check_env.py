@@ -50,7 +50,7 @@ def check_repo() -> None:
     """Python и шаблоны датасета: после clone без git-lfs вместо .pptx лежат указатели ~130 байт."""
     v = sys.version_info
     (ok if v >= (3, 12) else fail)(f"Python {v.major}.{v.minor}.{v.micro} (нужен ≥ 3.12)")
-    templates = sorted((ROOT / "data" / "templates").glob("*.pptx")) + sorted((ROOT / "data" / "holdout").glob("*.pptx"))
+    templates = sorted((ROOT / "data" / "templates").glob("*.pptx"))
     pointers = [p.name for p in templates if not zipfile.is_zipfile(p)]
     if not templates:
         fail("в data/templates нет .pptx — репозиторий склонирован не целиком")
@@ -58,8 +58,9 @@ def check_repo() -> None:
         fail(f"указатели Git LFS вместо шаблонов: {', '.join(pointers)} — поставьте git-lfs и выполните `git lfs pull`")
     else:
         ok(f"шаблоны датасета: {len(templates)} .pptx")
-    labels = list((ROOT / "data" / "archetypes").glob("*.json"))
-    (ok if labels else fail)(f"разметка образцов data/archetypes: файлов — {len(labels)}")
+    labeled = [p for p in templates if (ROOT / "data" / "archetypes" / f"{p.stem}.json").exists()]
+    (ok if templates and len(labeled) == len(templates) else fail)(
+        f"разметка образцов data/archetypes: {len(labeled)} из {len(templates)}")
 
 
 def vision_probe() -> Path | None:

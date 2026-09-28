@@ -22,7 +22,8 @@ from deckforge.parsing.normalize import UPLOAD_SUFFIXES, needs_normalize, normal
 from deckforge.pipeline.config import ROOT
 from deckforge.pipeline.run import ParsedTemplate, parse_template, sha1_of
 
-DATASET_DIRS = [ROOT / "data" / "templates", ROOT / "data" / "holdout"]
+# встроенные шаблоны UI и API — три шаблона VK; data/holdout — только для тестов
+DATASET_DIRS = [ROOT / "data" / "templates"]
 MAX_TEMPLATE_BYTES = 60 << 20
 MAX_PACK_FILE_BYTES = 20 << 20
 # текст — в корень, данные — в data/ (см. content/content_pack.py)
@@ -93,16 +94,15 @@ def fetch_lfs(path: Path, base_url: str) -> bool:
 class TemplateStore:
     """Шаблоны датасета + загруженные (`root/templates/<sha1>/<name>__<sha1>.pptx`).
 
-    sha1 в имени — чтобы кэш разметки по stem не подхватил чужой шаблон с тем же именем.
-    `dataset_dirs` — папки датасета (по умолчанию `DATASET_DIRS`, с holdout)."""
+    sha1 в имени — чтобы кэш разметки по stem не подхватил чужой шаблон с тем же именем."""
 
-    def __init__(self, root: Path, dataset_dirs: list[Path] | None = None) -> None:
+    def __init__(self, root: Path) -> None:
         self.root = root / "templates"
         self.root.mkdir(parents=True, exist_ok=True)
         self._items: dict[str, TemplateEntry] = {}
         self._lock = threading.Lock()
         lfs_base = os.environ.get("DECKFORGE_LFS_BASE", "").strip()
-        for d in DATASET_DIRS if dataset_dirs is None else dataset_dirs:
+        for d in DATASET_DIRS:
             if d.is_dir():
                 for p in sorted(d.glob("*.pptx")):
                     if p.stat().st_size <= LFS_POINTER_MAX and lfs_base:

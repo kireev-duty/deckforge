@@ -31,7 +31,7 @@ deckforge run -c configs/run.example.yaml --png        # три варианта
 | ОС | Ubuntu 24.04 LTS, x86_64 |
 | CPU / RAM | 2 ядра / 4 ГБ (пик одного прогона на трёх вариантах ≈ 1,3 ГБ) |
 | Диск | ≈ 3 ГБ: LibreOffice ≈ 0,5 ГБ, репозиторий с шаблонами и примерами ≈ 0,5 ГБ, окружение Python ≈ 1 ГБ |
-| Сеть | GitHub (клон и Git LFS ≈ 370 МБ), PyPI, OpenAI-совместимый API модели |
+| Сеть | GitHub (клон и Git LFS ≈ 335 МБ), PyPI, OpenAI-совместимый API модели |
 | Ключ API | OpenRouter или инференс VK — [раздел 5](#5-ключ-и-модели-env). Без ключа работает сборка по готовому outline — [раздел 7](#без-ключа-api) |
 
 GPU не нужен: модели вызываются через API.
@@ -75,7 +75,7 @@ ls -l data/templates/
 
 Если файлы весят около 130 байт, git-lfs не сработал: `git lfs install && git lfs pull`.
 
-**Без готовых колод.** Git LFS скачивает ≈ 370 МБ, из них 170 МБ — шаблоны в `data/`, остальное — 12 готовых колод в `examples/output/`. Колоды открываются и в [галерее](https://kireev-duty.github.io/deckforge/). Если качать их не нужно:
+**Без готовых колод.** Git LFS скачивает ≈ 335 МБ, из них 170 МБ — шаблоны в `data/`, остальное — 9 готовых колод и сценарий жюри в `examples/output/`. Колоды открываются и в [галерее](https://kireev-duty.github.io/deckforge/). Если качать их не нужно:
 
 ```bash
 GIT_LFS_SKIP_SMUDGE=1 git clone --branch v0.1.4 https://github.com/kireev-duty/deckforge.git
@@ -141,8 +141,8 @@ python tools/check_env.py
 ```text
 1. Репозиторий
   [OK]   Python 3.12.3 (нужен ≥ 3.12)
-  [OK]   шаблоны датасета: 4 .pptx
-  [OK]   разметка образцов data/archetypes: файлов — 4
+  [OK]   шаблоны датасета: 3 .pptx
+  [OK]   разметка образцов data/archetypes: 3 из 3
 2. .env
   [OK]   LLM_BASE_URL=https://openrouter.ai/api/v1  LLM_MODEL=qwen/qwen3.8-27b-20260814
 3. Текстовая модель (через скилл slide_filler, JSON по схеме, без «размышлений»)
@@ -224,7 +224,7 @@ deckforge run -c configs/run.example.yaml --outline examples/output/vk_tech/outl
 
 | конфиг | что собирает |
 |---|---|
-| `configs/template_only.yaml` | на входе только шаблон — holdout ЛЦТ 2026, которого не было при разработке правил |
+| `configs/template_only.yaml` | на входе только шаблон — VK WorkSpace (тёмный фон, другой набор образцов) |
 | `configs/final/vk_tech.yaml` | колоды из `examples/output/vk_tech`; остальные шаблоны — `configs/final/*.yaml` с `--outline examples/output/vk_tech/outline.json` (один контент на все шаблоны) |
 
 ### Свой шаблон

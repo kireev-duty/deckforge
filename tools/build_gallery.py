@@ -20,12 +20,11 @@ import pymupdf
 ROOT = Path(__file__).resolve().parents[1]
 EXAMPLES = ROOT / "examples" / "output"
 REPO = "kireev-duty/deckforge"
-# порядок и подписи шаблонов; незнакомая папка в examples/output попадёт в конец под своим именем
+# папки examples/output, которые попадают в галерею, их порядок и подписи; остальные (сценарий жюри) — только в репозитории
 TEMPLATES = {
     "vk_tech": "VK Tech",
     "vk_education": "VK Education",
     "vk_workspace": "VK WorkSpace",
-    "jury_scenario": "Сценарий жюри: контекст — репозиторий deckforge, задача — питч на 7 минут (VK Tech)",
 }
 THUMB_DPI = 40
 
@@ -148,9 +147,8 @@ def build(out: Path, demo_url: str = "", ref: str = "master") -> Path:
     if out.exists():
         shutil.rmtree(out)
     out.mkdir(parents=True)
-    dirs = sorted((d for d in EXAMPLES.iterdir() if (d / "run.json").exists()),
-                  key=lambda d: (list(TEMPLATES).index(d.name) if d.name in TEMPLATES else len(TEMPLATES), d.name))
-    sections = [(TEMPLATES.get(d.name, d.name), f"https://github.com/{REPO}/blob/{ref}/examples/output/{d.name}/compare.md",
+    dirs = [EXAMPLES / name for name in TEMPLATES if (EXAMPLES / name / "run.json").exists()]
+    sections = [(TEMPLATES[d.name], f"https://github.com/{REPO}/blob/{ref}/examples/output/{d.name}/compare.md",
                  deck_cards(d, out, ref)) for d in dirs]
     (out / "index.html").write_text(render_page(sections, demo_url, ref), "utf-8")
     (out / ".nojekyll").write_text("", "utf-8")

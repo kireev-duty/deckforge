@@ -4,7 +4,7 @@
 
 **Цифровой дизайнер презентаций.** Читает любой .pptx-шаблон как дизайн-систему и собирает по нему новую презентацию из нативных объектов PowerPoint — в трёх вариантах вёрстки, с аудитом и экспортом в .pptx, .pdf и .html.
 
-[![Видео-демо 5:37](https://img.shields.io/badge/%E2%96%B6_%D0%B2%D0%B8%D0%B4%D0%B5%D0%BE--%D0%B4%D0%B5%D0%BC%D0%BE-5%3A37-E5383B)](https://cloud.mail.ru/public/FRoE/fubzUBvYV) [![Питч-дек: 16 слайдов](https://img.shields.io/badge/%D0%BF%D0%B8%D1%82%D1%87--%D0%B4%D0%B5%D0%BA-16_%D1%81%D0%BB%D0%B0%D0%B9%D0%B4%D0%BE%D0%B2-7B2CBF)](#презентация-для-защиты) [![Открыть в Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://deckforge.streamlit.app) [![Галерея: 12 колод](https://img.shields.io/badge/%D0%B3%D0%B0%D0%BB%D0%B5%D1%80%D0%B5%D1%8F-12_%D0%BA%D0%BE%D0%BB%D0%BE%D0%B4-0077FF?logo=githubpages&logoColor=white)](https://kireev-duty.github.io/deckforge/) [![Release v0.1.4](https://img.shields.io/badge/release-v0.1.4-2ea44f?logo=github)](https://github.com/kireev-duty/deckforge/releases/tag/v0.1.4) [![Python 3.12+](https://img.shields.io/badge/python-3.12+-3776AB?logo=python&logoColor=white)](pyproject.toml) [![License: MIT](https://img.shields.io/badge/license-MIT-yellow)](LICENSE) [![ЛЦТ 2026 · кейс VK Tech](https://img.shields.io/badge/%D0%9B%D0%A6%D0%A2_2026-%D0%BA%D0%B5%D0%B9%D1%81_VK_Tech-7B2CBF)](docs/PLAN.md)
+[![Видео-демо 5:37](https://img.shields.io/badge/%E2%96%B6_%D0%B2%D0%B8%D0%B4%D0%B5%D0%BE--%D0%B4%D0%B5%D0%BC%D0%BE-5%3A37-E5383B)](https://cloud.mail.ru/public/FRoE/fubzUBvYV) [![Питч-дек: 16 слайдов](https://img.shields.io/badge/%D0%BF%D0%B8%D1%82%D1%87--%D0%B4%D0%B5%D0%BA-16_%D1%81%D0%BB%D0%B0%D0%B9%D0%B4%D0%BE%D0%B2-7B2CBF)](#презентация-для-защиты) [![Открыть в Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://deckforge.streamlit.app) [![Галерея: 9 колод](https://img.shields.io/badge/%D0%B3%D0%B0%D0%BB%D0%B5%D1%80%D0%B5%D1%8F-9_%D0%BA%D0%BE%D0%BB%D0%BE%D0%B4-0077FF?logo=githubpages&logoColor=white)](https://kireev-duty.github.io/deckforge/) [![Release v0.1.4](https://img.shields.io/badge/release-v0.1.4-2ea44f?logo=github)](https://github.com/kireev-duty/deckforge/releases/tag/v0.1.4) [![Python 3.12+](https://img.shields.io/badge/python-3.12+-3776AB?logo=python&logoColor=white)](pyproject.toml) [![License: MIT](https://img.shields.io/badge/license-MIT-yellow)](LICENSE) [![ЛЦТ 2026 · кейс VK Tech](https://img.shields.io/badge/%D0%9B%D0%A6%D0%A2_2026-%D0%BA%D0%B5%D0%B9%D1%81_VK_Tech-7B2CBF)](docs/PLAN.md)
 
 [Видео-демо](#видео-демо) · [Презентация](#презентация-для-защиты) · [Демо-стенд](https://deckforge.streamlit.app) · [Галерея колод](https://kireev-duty.github.io/deckforge/) · [Архитектура](docs/ARCHITECTURE.md) · [Аудит](docs/AUDIT.md) · [Модели](docs/MODELS.md) · [Сценарий демо](docs/DEMO.md)
 
@@ -51,7 +51,7 @@
 ## Попробовать
 
 - **[Демо-стенд](https://deckforge.streamlit.app):** выбрать шаблон слева или загрузить свой .pptx → «Только шаблон» → «Сгенерировать варианты». Три колоды за 1–3 минуты, с аудитом и скачиванием .pptx / .pdf / .html.
-- **[Галерея](https://kireev-duty.github.io/deckforge/):** 12 готовых колод открываются прямо в браузере: 3 шаблона × 3 стратегии и сценарий жюри (контекст — репозиторий).
+- **[Галерея](https://kireev-duty.github.io/deckforge/):** 9 готовых колод открываются прямо в браузере: 3 шаблона × 3 стратегии.
 
 > [!NOTE]
 > Стенд работает на бесплатном Streamlit Community Cloud и засыпает без посетителей. На заставке нажмите «Yes, get this app back up» — запуск занимает 1–2 минуты. Если ключ LLM стенда исчерпан или API недоступен, работает режим «Готовый outline»: он собирает колоды без LLM.
@@ -309,13 +309,7 @@ HTML-экспорт — собственный рендер по XML готов�
 
 Рядом с каждой колодой лежат её .pdf, `manifest.json`, `ir.json`, `audit.json` и текст выступления `speech.md`.
 
-**Сценарий жюри** — контекст из репозитория. `prepare-context .` на самом deckforge (README, docs, история git → 71 факт), задача «питч на 7 минут: проблема, подход, архитектура, демо, аудит, выводы», шаблон VK Tech (`configs/final/jury_scenario.yaml`). В фактах есть цифры, поэтому здесь видна и ось визуализации данных: у executive — таблицы, у narrative и visual — диаграмма и KPI.
-
-| Сценарий | executive | narrative | visual | Сравнение |
-|---|---|---|---|---|
-| Контекст — репозиторий deckforge | [.pptx](examples/output/jury_scenario/executive.pptx) · [.html](https://kireev-duty.github.io/deckforge/jury_scenario/executive.html) · 11 сл. | [.pptx](examples/output/jury_scenario/narrative.pptx) · [.html](https://kireev-duty.github.io/deckforge/jury_scenario/narrative.html) · 15 сл. | [.pptx](examples/output/jury_scenario/visual.pptx) · [.html](https://kireev-duty.github.io/deckforge/jury_scenario/visual.html) · 12 сл. | [compare.md](examples/output/jury_scenario/compare.md) |
-
-Ось визуализации данных (таблица ↔ диаграмма ↔ KPI) лучше видна на синтетическом пакете «Пульс команды» (`examples/content_pack`), где есть ряды, таблица и метрики. Он воспроизводится без LLM: `tools/build_variants.py "data/templates/VK Tech шаблон.pptx"`.
+Ось визуализации данных (таблица ↔ диаграмма ↔ KPI) видна на синтетическом пакете «Пульс команды» (`examples/content_pack`), где есть ряды, таблица и метрики. Он воспроизводится без LLM: `tools/build_variants.py "data/templates/VK Tech шаблон.pptx"`.
 
 ## Структура репозитория
 
@@ -335,7 +329,7 @@ skills/             промпты, JSON-схемы и параметры мод
 strategies/         executive / narrative / visual
 configs/            конфиги прогона: run.example.yaml, template_only.yaml, final/*.yaml
 data/               шаблоны датасета, тестовые шаблоны (holdout, wild) и разметка образцов (Git LFS)
-examples/           12 готовых колод (output/: 3 шаблона × 3 стратегии + сценарий жюри) и синтетический контент-пакет
+examples/           готовые колоды (output/: 3 шаблона × 3 стратегии) и синтетический контент-пакет
 docs/               документация и питч-дек
 tools/              служебные скрипты: разбор шаблона, рендер, стресс-тест, браузеры, галерея
 tests/              pytest: разбор шаблонов, каждая проверка аудита на своей фикстуре, e2e на кассетах LLM

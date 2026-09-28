@@ -75,7 +75,7 @@ ls -l data/templates/
 
 Если файлы весят около 130 байт, git-lfs не сработал: `git lfs install && git lfs pull`.
 
-**Без готовых колод.** Git LFS скачивает ≈ 335 МБ, из них 170 МБ — шаблоны в `data/`, остальное — 9 готовых колод и сценарий жюри в `examples/output/`. Колоды открываются и в [галерее](https://kireev-duty.github.io/deckforge/). Если качать их не нужно:
+**Без готовых колод.** Git LFS скачивает ≈ 335 МБ, из них 170 МБ — шаблоны в `data/`, остальное — 9 готовых колод и сценарий жюри в `examples/output/`. Колоды трёх шаблонов открываются и в [галерее](https://kireev-duty.github.io/deckforge/). Если качать их не нужно:
 
 ```bash
 GIT_LFS_SKIP_SMUDGE=1 git clone --branch v0.1.4 https://github.com/kireev-duty/deckforge.git

@@ -44,6 +44,18 @@ def test_lfs_pointer_skipped_without_base_or_on_bad_download(tmp_path: Path, mon
     assert (d / "Шаблон VK.pptx").read_bytes() == POINTER and not list(d.glob(".*.part"))
 
 
+def test_dataset_dirs_limit_registry(template_path, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """UI передаёт свои папки датасета (без holdout); без них — модульный DATASET_DIRS."""
+    real = template_path("VK Tech").read_bytes()
+    vk, holdout = tmp_path / "templates", tmp_path / "holdout"
+    for d, name in ((vk, "VK.pptx"), (holdout, "Holdout.pptx")):
+        d.mkdir()
+        (d / name).write_bytes(real + name.encode())  # разный sha1 — разные записи реестра
+    monkeypatch.setattr(workspace, "DATASET_DIRS", [vk, holdout])
+    assert [e.name for e in workspace.TemplateStore(tmp_path / "ui", dataset_dirs=[vk]).list()] == ["VK"]
+    assert sorted(e.name for e in workspace.TemplateStore(tmp_path / "ui").list()) == ["Holdout", "VK"]
+
+
 def test_requirements_match_pyproject() -> None:
     """Streamlit Community Cloud ставит requirements.txt — он не должен отставать от pyproject."""
     deps = tomllib.loads((REPO / "pyproject.toml").read_text("utf-8"))["project"]["dependencies"]

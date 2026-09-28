@@ -2,7 +2,7 @@
 
 Пайплайн вызывается in-process; файлы прогона — `out/ui/runs/<время>/`, загруженные шаблоны — `out/ui/templates/`.
 `DECKFORGE_PUBLIC=1` — публичный демо-стенд (Streamlit Community Cloud, DEVELOPMENT «Демо-стенд»): генерации всех сессий идут
-по одной, VLM-судья и иллюстрации по умолчанию выключены, в списке шаблонов — датасет и загруженные в этой сессии.
+по одной, VLM-судья и иллюстрации по умолчанию выключены, в списке шаблонов — три шаблона VK и загруженные в этой сессии.
 """
 
 from __future__ import annotations
@@ -45,6 +45,8 @@ from deckforge.pipeline.workspace import (
 from deckforge.ui.overlay import draw_findings
 
 UI_ROOT = Path(os.environ.get("DECKFORGE_UI_ROOT") or ROOT / "out" / "ui")  # тесты подменяют на tmp
+# в списке UI — только три шаблона VK; holdout ЛЦТ2026 видят API и CLI, в UI его можно загрузить как свой
+UI_DATASET_DIRS = [ROOT / "data" / "templates"]
 EXAMPLE_PACK = ROOT / "examples" / "content_pack"
 # outline финальных примеров (бриф выведен из шаблона VK Tech) — режим без LLM: работает без ключа и при сбое API
 READY_OUTLINE = ROOT / "examples" / "output" / "vk_tech" / "outline.json"
@@ -86,7 +88,7 @@ HAS_KEY = bool(os.environ.get("LLM_API_KEY", "").strip())
 
 @st.cache_resource
 def store() -> TemplateStore:
-    return TemplateStore(UI_ROOT)
+    return TemplateStore(UI_ROOT, dataset_dirs=UI_DATASET_DIRS)
 
 
 @st.cache_resource(show_spinner="Разбираю шаблон…")

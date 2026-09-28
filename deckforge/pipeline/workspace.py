@@ -93,15 +93,16 @@ def fetch_lfs(path: Path, base_url: str) -> bool:
 class TemplateStore:
     """Шаблоны датасета + загруженные (`root/templates/<sha1>/<name>__<sha1>.pptx`).
 
-    sha1 в имени — чтобы кэш разметки по stem не подхватил чужой шаблон с тем же именем."""
+    sha1 в имени — чтобы кэш разметки по stem не подхватил чужой шаблон с тем же именем.
+    `dataset_dirs` — папки датасета (по умолчанию `DATASET_DIRS`, с holdout)."""
 
-    def __init__(self, root: Path) -> None:
+    def __init__(self, root: Path, dataset_dirs: list[Path] | None = None) -> None:
         self.root = root / "templates"
         self.root.mkdir(parents=True, exist_ok=True)
         self._items: dict[str, TemplateEntry] = {}
         self._lock = threading.Lock()
         lfs_base = os.environ.get("DECKFORGE_LFS_BASE", "").strip()
-        for d in DATASET_DIRS:
+        for d in DATASET_DIRS if dataset_dirs is None else dataset_dirs:
             if d.is_dir():
                 for p in sorted(d.glob("*.pptx")):
                     if p.stat().st_size <= LFS_POINTER_MAX and lfs_base:

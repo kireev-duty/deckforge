@@ -16,6 +16,8 @@ def test_app_renders(template_path) -> None:
     assert not at.exception, at.exception
     assert at.title[0].value.startswith("Цифровой дизайнер")
     assert at.sidebar.selectbox[0].value
+    options = at.sidebar.selectbox[0].options  # в UI — только шаблоны VK, holdout ЛЦТ2026 не показывается
+    assert any("VK Tech" in o for o in options) and not any("ЛЦТ" in o for o in options)
     assert any("Шаблон:" in h.value for h in at.subheader)
     assert at.button[0].label.startswith("Сгенерировать")
     assert "result" not in at.session_state

@@ -59,6 +59,8 @@ DECKFORGE_LFS_BASE = "https://media.githubusercontent.com/media/kireev-duty/deck
 
 Логи сборки и перезапуск — «Manage app» в правом нижнем углу приложения.
 
+Push Cloud подхватывает без перезапуска процесса, а Streamlit перезагружает только модули из папки главного скрипта (`deckforge/ui/`) и из `PYTHONPATH`. Правки в остальных пакетах (`pipeline/`, `render/`, `layout/`…) и объекты `st.cache_resource` остаются от старого кода, пока приложение не перезапущено. После такого push — «Manage app» → ⋮ → «Reboot app». Так 28.09 стенд после чистки датасета ещё показывал ЛЦТ2026: в памяти процесса оставался старый `workspace.DATASET_DIRS`.
+
 ## Правила
 
 - Слои и направление зависимостей: `ui, api, cli → pipeline → {parsing, content, layout, render, audit, export} → core, llm`. Импорт вверх или между соседями (`audit → layout`, `export → audit`) запрещён. Контракты между слоями — `core/ir.py`.

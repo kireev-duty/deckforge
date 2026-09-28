@@ -36,6 +36,7 @@ from deckforge.pipeline import (
     soffice_available,
 )
 from deckforge.pipeline.workspace import (
+    DATASET_DIRS,
     UPLOAD_SUFFIXES,
     BadUpload,
     TemplateEntry,
@@ -85,8 +86,14 @@ HAS_KEY = bool(os.environ.get("LLM_API_KEY", "").strip())
 
 
 @st.cache_resource
-def store() -> TemplateStore:
+def _store(dataset_dirs: tuple[str, ...]) -> TemplateStore:
     return TemplateStore(UI_ROOT)
+
+
+def store() -> TemplateStore:
+    """Реестр шаблонов процесса. Ключ кэша — папки датасета: Streamlit Cloud подхватывает push без перезапуска,
+    а cache_resource ключуется текстом функции — без аргумента новый DATASET_DIRS не пересобрал бы реестр."""
+    return _store(tuple(str(d) for d in DATASET_DIRS))
 
 
 @st.cache_resource(show_spinner="Разбираю шаблон…")

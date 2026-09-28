@@ -23,6 +23,27 @@ def test_app_renders(template_path) -> None:
     assert "result" not in at.session_state
 
 
+@pytest.mark.filterwarnings("ignore::DeprecationWarning")
+def test_template_registry_follows_dataset_dirs(template_path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Streamlit Cloud подхватывает push без перезапуска процесса: сменились папки датасета — реестр
+    пересобирается, а не отдаётся из cache_resource (так на стенде вернулся ЛЦТ после d08e01e)."""
+    from streamlit.testing.v1 import AppTest
+
+    from deckforge.pipeline import workspace
+
+    holdout = template_path("ЛЦТ2026").parent
+    template_path("VK Tech")
+
+    def options() -> list[str]:
+        at = AppTest.from_file(str(REPO / "deckforge" / "ui" / "app.py"), default_timeout=60).run()
+        assert not at.exception, at.exception
+        return at.sidebar.selectbox[0].options
+
+    assert not any("ЛЦТ" in o for o in options())
+    monkeypatch.setattr(workspace, "DATASET_DIRS", [*workspace.DATASET_DIRS, holdout])
+    assert any("ЛЦТ" in o for o in options())
+
+
 def test_overlay_draws_boxes(tmp_path: Path) -> None:
     from PIL import Image
 
